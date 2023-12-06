@@ -20,6 +20,7 @@ void GamePlayState::Initialize()
 
 void GamePlayState::Update()
 {
+//デバッグカメラ
 #ifdef _DEBUG
 if (input->IspushKey(DIK_LALT)) {
 		camera_->DebugCamera(true);
@@ -28,7 +29,13 @@ else {
 	camera_->DebugCamera(false);
 }
 #endif // _DEBUG
-
+#ifdef _DEBUG
+ImGui::Begin("PlayState");
+if (input->pushPad(XINPUT_GAMEPAD_A)) {
+	
+}
+ImGui::End();
+#endif
 
 
 

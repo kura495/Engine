@@ -23,25 +23,31 @@ void Input::Initialize(WinApp*winApp_){
 	//排他制御レベルのセット
 	hr = keyboard->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	key = {};
-	preKey = {};
+	keyPre = {};
 
 	//コントローラー
-
+	GetJoystickState();
 }
 
 void Input::Update()
 {
-	preKey = key;
+	//前フレームの結果を代入
+	keyPre = key;
 	//キーボード情報の取得開始
 	keyboard->Acquire();
 	key = {};
 	//全キーの入力状態を取得する
 	keyboard->GetDeviceState(sizeof(key), key.data());
+
+	//前フレームの結果を代入
+	joyStatePre = joyState;
+
+	GetJoystickState();
 }
 
 bool Input::pushKey(uint8_t keyNumber)
 {
-	if (key[keyNumber]!=0&&preKey[keyNumber]==0) {
+	if (key[keyNumber]!=0&& keyPre[keyNumber]==0) {
 		return true;
 	}
 	return false;
@@ -56,7 +62,7 @@ return false;
 
 bool Input::TriggerKey(uint8_t keyNumber)
 {
-	if (preKey[keyNumber] == 0) {
+	if (keyPre[keyNumber] == 0) {
 		return true;
 	}
 	return false;
@@ -64,27 +70,35 @@ bool Input::TriggerKey(uint8_t keyNumber)
 
 bool Input::IsTriggerKey(uint8_t keyNumber)
 {
-	if (key[keyNumber] == 0 && preKey[keyNumber] != 0) {
+	if (key[keyNumber] == 0 && keyPre[keyNumber] != 0) {
 		return true;
 	}
 	return false;
 }
 
-bool Input::GetJoystickState(int32_t stickNo, XINPUT_STATE& out)
+bool Input::pushPad(uint32_t buttonNumber)
 {
-	DWORD dwResult = XInputGetState(stickNo, &out);
-	Vector3 move = { (float)out.Gamepad.sThumbLX, 0.0f, (float)out.Gamepad.sThumbLY};
+	if (joyState.Gamepad.wButtons & buttonNumber && joyStatePre.Gamepad.wButtons & buttonNumber) {
+		return true;
+	}
+	return false;
+}
+
+bool Input::GetJoystickState()
+{
+	DWORD dwResult = XInputGetState(0,&joyState);
+	Vector3 move = { (float)joyState.Gamepad.sThumbLX, 0.0f, (float)joyState.Gamepad.sThumbLY};
 
 	if (Length(move) < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 	{
-		out.Gamepad.sThumbLX = 0;
-		out.Gamepad.sThumbLY = 0;
+		joyState.Gamepad.sThumbLX = 0;
+		joyState.Gamepad.sThumbLY = 0;
 	}
-	move = { (float)out.Gamepad.sThumbRX, 0.0f, (float)out.Gamepad.sThumbRY };
+	move = { (float)joyState.Gamepad.sThumbRX, 0.0f, (float)joyState.Gamepad.sThumbRY };
 	if (Length(move) < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
 	{
-		out.Gamepad.sThumbRX = 0;
-		out.Gamepad.sThumbRY = 0;
+		joyState.Gamepad.sThumbRX = 0;
+		joyState.Gamepad.sThumbRY = 0;
 	}
 	return dwResult == ERROR_SUCCESS;
 
