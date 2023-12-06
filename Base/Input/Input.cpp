@@ -24,6 +24,12 @@ void Input::Initialize(WinApp*winApp_){
 	hr = keyboard->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	key = {};
 	keyPre = {};
+	//マウスデバイスを作成
+	hr = directInput->CreateDevice(GUID_SysMouse,&mouse,NULL);
+	//入力データ形式のセット
+	hr = mouse->SetDataFormat(&c_dfDIMouse);
+	//排他制御レベルのセット
+	hr = mouse->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 
 	//コントローラー
 	GetJoystickState();
@@ -52,17 +58,9 @@ bool Input::pushKey(uint8_t keyNumber)
 	}
 	return false;
 }
-bool Input::IspushKey(uint8_t keyNumber)
-{
-	if (key[keyNumber] != 0) {
-			return true;
-	}
-return false;
-}
-
 bool Input::TriggerKey(uint8_t keyNumber)
 {
-	if (keyPre[keyNumber] == 0) {
+	if (keyPre[keyNumber] != 0) {
 		return true;
 	}
 	return false;
@@ -77,6 +75,14 @@ bool Input::IsTriggerKey(uint8_t keyNumber)
 }
 
 bool Input::pushPad(uint32_t buttonNumber)
+{
+	if (joyState.Gamepad.wButtons & buttonNumber && !(joyStatePre.Gamepad.wButtons & buttonNumber)) {
+		return true;
+	}
+	return false;
+}
+
+bool Input::IsTriggerPad(uint32_t buttonNumber)
 {
 	if (joyState.Gamepad.wButtons & buttonNumber && joyStatePre.Gamepad.wButtons & buttonNumber) {
 		return true;
@@ -102,4 +108,10 @@ bool Input::GetJoystickState()
 	}
 	return dwResult == ERROR_SUCCESS;
 
+}
+
+bool Input::GetMouse()
+{
+
+	return false;
 }

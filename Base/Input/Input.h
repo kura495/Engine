@@ -29,12 +29,6 @@ public:
 	/// </summary>
 	/// <param name="keyNumber"></param>
 	/// <returns></returns>
-	bool IspushKey(uint8_t keyNumber);
-	/// <summary>
-	/// 離している間
-	/// </summary>
-	/// <param name="keyNumber"></param>
-	/// <returns></returns>
 	bool TriggerKey(uint8_t keyNumber);
 	/// <summary>
 	/// 離した瞬間
@@ -48,6 +42,12 @@ public:
 	/// <param name="keyNumber"></param>
 	/// <returns></returns>
 	bool pushPad(uint32_t buttonNumber);
+	/// <summary>
+	/// 押している間
+	/// </summary>
+	/// <param name="buttonNumber">XINPUT_GAMEPAD</param>
+	/// <returns></returns>
+	bool IsTriggerPad(uint32_t buttonNumber);
 
 private:
 	Input() = default;
@@ -59,10 +59,16 @@ private:
 	/// ゲームパッドを取得
 	/// </summary>
 	bool GetJoystickState();
+	/// <summary>
+	/// マウスの情報を取得
+	/// </summary>
+	/// <returns></returns>
+	bool GetMouse();
 	
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard = nullptr;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> mouse = nullptr;
 	std::array<BYTE, 256> key;
 	std::array<BYTE, 256> keyPre;
 	
