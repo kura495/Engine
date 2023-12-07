@@ -15,21 +15,21 @@ void Input::Initialize(WinApp*winApp_){
 	hr = DirectInput8Create(winApp_->GetHINSTANCE(),DIRECTINPUT_VERSION,IID_IDirectInput8,(void**)&directInput,nullptr);
 	assert(SUCCEEDED(hr));
 	//キーボードデバイスを生成
-	hr = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	hr = directInput->CreateDevice(GUID_SysKeyboard, &divKeyboard, NULL);
 	assert(SUCCEEDED(hr));
 	//入力データ形式のセット
-	hr = keyboard->SetDataFormat(&c_dfDIKeyboard);
+	hr = divKeyboard->SetDataFormat(&c_dfDIKeyboard);
 	assert(SUCCEEDED(hr));
 	//排他制御レベルのセット
-	hr = keyboard->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	hr = divKeyboard->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	key = {};
 	keyPre = {};
 	//マウスデバイスを作成
-	hr = directInput->CreateDevice(GUID_SysMouse,&mouse,NULL);
+	hr = directInput->CreateDevice(GUID_SysMouse,&divMouse,NULL);
 	//入力データ形式のセット
-	hr = mouse->SetDataFormat(&c_dfDIMouse2);
+	hr = divMouse->SetDataFormat(&c_dfDIMouse2);
 	//排他制御レベルのセット
-	hr = mouse->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	hr = divMouse->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 	//コントローラー
 	GetJoystickState();
@@ -40,15 +40,16 @@ void Input::Update()
 	//前フレームの結果を代入
 	keyPre = key;
 	//キーボード情報の取得開始
-	keyboard->Acquire();
+	divKeyboard->Acquire();
 	key = {};
 	//全キーの入力状態を取得する
-	keyboard->GetDeviceState(sizeof(key), key.data());
+	divKeyboard->GetDeviceState(sizeof(key), key.data());
 
+	mousePre_ = mouse_;
 	//マウス情報の取得開始
-	mouse->Acquire();
+	divMouse->Acquire();
 	
-	mouse->GetDeviceState(sizeof(mouse_),&mouse_);
+	divMouse->GetDeviceState(sizeof(mouse_),&mouse_);
 
 	//前フレームの結果を代入
 	joyStatePre = joyState;
@@ -86,10 +87,25 @@ bool Input::pushPad(uint32_t buttonNumber)
 	}
 	return false;
 }
+bool Input::TriggerPad(uint32_t buttonNumber)
+{
+	if (joyState.Gamepad.wButtons & buttonNumber) {
+		return true;
+	}
+	return false;
+}
 
 bool Input::IsTriggerPad(uint32_t buttonNumber)
 {
-	if (joyState.Gamepad.wButtons & buttonNumber && joyStatePre.Gamepad.wButtons & buttonNumber) {
+	if (!(joyState.Gamepad.wButtons & buttonNumber) && joyStatePre.Gamepad.wButtons & buttonNumber) {
+		return true;
+	}
+	return false;
+}
+
+bool Input::pushMouse(uint32_t Mousebutton)
+{
+	if (mouse_.rgbButtons[Mousebutton] != 0) {
 		return true;
 	}
 	return false;
@@ -113,10 +129,4 @@ bool Input::GetJoystickState()
 	}
 	return dwResult == ERROR_SUCCESS;
 
-}
-
-bool Input::GetMouse()
-{
-
-	return false;
 }

@@ -9,8 +9,16 @@
 #include <array>
 
 #include <XInput.h>
-
 #include "Base/Math/VectorCalc.h"
+
+#define MOUSE_BOTTON0	0
+#define MOUSE_BOTTON1	1
+#define MOUSE_BOTTON2	2
+#define MOUSE_BOTTON3	3
+#define MOUSE_BOTTON4	4
+#define MOUSE_BOTTON5	5
+#define MOUSE_BOTTON6	6
+#define MOUSE_BOTTON7	7
 
 class Input
 {
@@ -45,9 +53,21 @@ public:
 	/// <summary>
 	/// 押している間
 	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns></returns>
+	bool TriggerPad(uint32_t buttonNumber);
+	/// <summary>
+	/// 押している間
+	/// </summary>
 	/// <param name="buttonNumber">XINPUT_GAMEPAD</param>
 	/// <returns></returns>
 	bool IsTriggerPad(uint32_t buttonNumber);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="Mousebutton">DIMOFS</param>
+	/// <returns></returns>
+	bool pushMouse(uint32_t Mousebutton);
 
 private:
 	Input() = default;
@@ -59,16 +79,11 @@ private:
 	/// ゲームパッドを取得
 	/// </summary>
 	bool GetJoystickState();
-	/// <summary>
-	/// マウスの情報を取得
-	/// </summary>
-	/// <returns></returns>
-	bool GetMouse();
 	
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard = nullptr;
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> mouse = nullptr;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> divKeyboard = nullptr;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> divMouse = nullptr;
 	//キーボード
 	std::array<BYTE, 256> key;
 	std::array<BYTE, 256> keyPre;

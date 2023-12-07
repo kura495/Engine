@@ -58,51 +58,51 @@ void Camera::DebugCameraMove()
 {
 #pragma region rotation
 		Matrix4x4 matRotDelta = CreateIdentity4x4();
-		if (input->IspushKey(DIK_UP)) {
+		if (input->TriggerKey(DIK_UP)) {
 			const float speed = -0.05f;
 			matRotDelta = Multiply(matRotDelta, MakeRotateXMatrix(speed));
 		}
-		else if (input->IspushKey(DIK_DOWN)) {
+		else if (input->TriggerKey(DIK_DOWN)) {
 			const float speed = 0.05f;
 			matRotDelta = Multiply(matRotDelta, MakeRotateXMatrix(speed));
 		}
-		if (input->IspushKey(DIK_LEFT)) {
+		if (input->TriggerKey(DIK_LEFT)) {
 			const float speed = -0.05f;
 			matRotDelta = Multiply(matRotDelta, MakeRotateYMatrix(speed));
 		}
-		else if (input->IspushKey(DIK_RIGHT)) {
+		else if (input->TriggerKey(DIK_RIGHT)) {
 			const float speed = 0.05f;
 			matRotDelta = Multiply(matRotDelta, MakeRotateYMatrix(speed));
 		}
 		matRot_ = Multiply(matRotDelta,matRot_);
 #pragma endregion 回転
 #pragma region translation_
-		if (input->IspushKey(DIK_A)) {
+		if (input->TriggerKey(DIK_A)) {
 			const float speed = -0.5f;
 			Vector3 translate{ speed,0,0 };
 			translation_ = Add(translation_, translate);
 		}
-		else if (input->IspushKey(DIK_D)) {
+		else if (input->TriggerKey(DIK_D)) {
 			const float speed = 0.5f;
 			Vector3 translate{ speed,0,0 };
 			translation_ = Add(translation_, translate);
 		}
-		if (input->IspushKey(DIK_W)) {
+		if (input->TriggerKey(DIK_W)) {
 			const float speed = 0.5f;
 			Vector3 translate{ 0,speed,0 };
 			translation_ = Add(translation_, translate);
 		}
-		else if (input->IspushKey(DIK_S)) {
+		else if (input->TriggerKey(DIK_S)) {
 			const float speed = -0.5f;
 			Vector3 translate{ 0,speed,0 };
 			translation_ = Add(translation_, translate);
 		}
-		if (input->IspushKey(DIK_E)) {
+		if (input->TriggerKey(DIK_E)) {
 			const float speed = 0.5f;
 			Vector3 translate{ 0,0,speed };
 			translation_ = Add(translation_, translate);
 		}
-		else if (input->IspushKey(DIK_Q)) {
+		else if (input->TriggerKey(DIK_Q)) {
 			const float speed = -0.5f;
 			Vector3 translate{ 0,0,speed };
 			translation_ = Add(translation_, translate);

@@ -22,7 +22,7 @@ void GamePlayState::Update()
 {
 //デバッグカメラ
 #ifdef _DEBUG
-if (input->IspushKey(DIK_LALT)) {
+if (input->TriggerKey(DIK_LALT)) {
 		camera_->DebugCamera(true);
 }
 else {
@@ -31,30 +31,30 @@ else {
 #endif // _DEBUG
 #ifdef _DEBUG
 ImGui::Begin("PlayState");
-if (input->IspushPad(XINPUT_GAMEPAD_A)) {
+if (input->pushMouse(MOUSE_BOTTON0)) {
 	ImGui::Text("A");
 }
-if (input->IspushPad(XINPUT_GAMEPAD_B)) {
+if (input->TriggerPad(XINPUT_GAMEPAD_B)) {
 	ImGui::Text("B");
 }
-if (input->IspushPad(XINPUT_GAMEPAD_X)) {
+if (input->TriggerPad(XINPUT_GAMEPAD_X)) {
 	ImGui::Text("X");
 }
-if (input->IspushPad(XINPUT_GAMEPAD_Y)) {
+if (input->TriggerPad(XINPUT_GAMEPAD_Y)) {
 	ImGui::Text("Y");
 }
-if (input->IspushPad(XINPUT_GAMEPAD_START)) {
+if (input->TriggerPad(XINPUT_GAMEPAD_START)) {
 	ImGui::Text("START");
 }
-if (input->IspushPad(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+if (input->TriggerPad(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 	ImGui::Text("LEFT");
 }
-if (input->IspushPad(XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
+if (input->TriggerPad(XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
 	ImGui::Text("RIGHT");
 }
-if (input->IspushPad(XINPUT_GAMEPAD_LEFT_THUMB)) {
+if (input->TriggerPad(XINPUT_GAMEPAD_LEFT_THUMB)) {
 	ImGui::Text("LEFT_THUMB");
-}if (input->IspushPad(XINPUT_GAMEPAD_RIGHT_THUMB)) {
+}if (input->TriggerPad(XINPUT_GAMEPAD_RIGHT_THUMB)) {
 	ImGui::Text("RIGHT_THUMB");
 }
 ImGui::End();
