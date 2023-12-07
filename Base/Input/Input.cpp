@@ -27,9 +27,9 @@ void Input::Initialize(WinApp*winApp_){
 	//マウスデバイスを作成
 	hr = directInput->CreateDevice(GUID_SysMouse,&mouse,NULL);
 	//入力データ形式のセット
-	hr = mouse->SetDataFormat(&c_dfDIMouse);
+	hr = mouse->SetDataFormat(&c_dfDIMouse2);
 	//排他制御レベルのセット
-	hr = mouse->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	hr = mouse->SetCooperativeLevel(winApp_->GetHWND(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 	//コントローラー
 	GetJoystickState();
@@ -44,6 +44,11 @@ void Input::Update()
 	key = {};
 	//全キーの入力状態を取得する
 	keyboard->GetDeviceState(sizeof(key), key.data());
+
+	//マウス情報の取得開始
+	mouse->Acquire();
+	
+	mouse->GetDeviceState(sizeof(mouse_),&mouse_);
 
 	//前フレームの結果を代入
 	joyStatePre = joyState;

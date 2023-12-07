@@ -69,9 +69,13 @@ private:
 	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard = nullptr;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> mouse = nullptr;
+	//キーボード
 	std::array<BYTE, 256> key;
 	std::array<BYTE, 256> keyPre;
-	
+	//マウス
+	DIMOUSESTATE2 mouse_;
+	DIMOUSESTATE2 mousePre_;
+	//パッド
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
 };
