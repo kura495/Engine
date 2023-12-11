@@ -20,6 +20,11 @@
 #define MOUSE_BOTTON6	6
 #define MOUSE_BOTTON7	7
 
+struct MousePosition {
+	Vector2 Pos;
+	float Scroll;
+};
+
 class Input
 {
 public:
@@ -65,9 +70,13 @@ public:
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="Mousebutton">DIMOFS</param>
+	/// <param name="Mousebutton">MOUSE_BOTTON</param>
 	/// <returns></returns>
 	bool pushMouse(uint32_t Mousebutton);
+
+	MousePosition GetMousePosition() {
+		return m_Position;
+	}
 
 private:
 	Input() = default;
@@ -79,7 +88,14 @@ private:
 	/// ゲームパッドを取得
 	/// </summary>
 	bool GetJoystickState();
-	
+	/// <summary>
+	/// マウスの位置をVector2にする
+	/// </summary>
+	/// <returns></returns>
+	Vector2 PositionMouse();
+
+	float ScrollMouse();
+
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> divKeyboard = nullptr;
@@ -90,6 +106,7 @@ private:
 	//マウス
 	DIMOUSESTATE2 mouse_;
 	DIMOUSESTATE2 mousePre_;
+	MousePosition m_Position = { {0.0f,0.0f},0.0f };
 	//パッド
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;

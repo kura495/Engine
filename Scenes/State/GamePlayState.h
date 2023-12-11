@@ -40,7 +40,7 @@ private:
 	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
 
-
+	MousePosition m_pos;
 
 	
 };

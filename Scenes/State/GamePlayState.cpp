@@ -30,7 +30,14 @@ else {
 }
 #endif // _DEBUG
 #ifdef _DEBUG
+
+m_pos = input->GetMousePosition();
+
 ImGui::Begin("PlayState");
+ImGui::Text("PosX : %f",m_pos.Pos.x);
+ImGui::Text("PosY : %f",m_pos.Pos.y);
+ImGui::Text("Scroll : %f",m_pos.Scroll);
+
 if (input->pushMouse(MOUSE_BOTTON0)) {
 	ImGui::Text("A");
 }

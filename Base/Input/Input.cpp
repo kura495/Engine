@@ -51,6 +51,9 @@ void Input::Update()
 	
 	divMouse->GetDeviceState(sizeof(mouse_),&mouse_);
 
+	m_Position.Pos = PositionMouse();
+	m_Position.Scroll += ScrollMouse();
+
 	//前フレームの結果を代入
 	joyStatePre = joyState;
 
@@ -109,6 +112,15 @@ bool Input::pushMouse(uint32_t Mousebutton)
 		return true;
 	}
 	return false;
+}
+
+Vector2 Input::PositionMouse() {
+	return { (float)mouse_.lX,(float)mouse_.lY };
+}
+
+float Input::ScrollMouse()
+{
+	return (float)mouse_.lZ;
 }
 
 bool Input::GetJoystickState()
