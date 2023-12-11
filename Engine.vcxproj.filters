@@ -145,9 +145,6 @@
     <ClCompile Include="Base\Utility\Log.cpp">
       <Filter>Engine\Base\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Base\DirectXCommon.cpp">
-      <Filter>Engine\Base</Filter>
-    </ClCompile>
     <ClCompile Include="Base\Light.cpp">
       <Filter>Engine\Base</Filter>
     </ClCompile>
@@ -199,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="Base\Camera\Camera.cpp">
       <Filter>Engine\Base\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\DirectXCommon.cpp">
+      <Filter>Engine\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,9 +301,6 @@
     <ClInclude Include="Base\Utility\OBBoxCollider.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Base\DirectXCommon.h">
-      <Filter>Engine\Base</Filter>
-    </ClInclude>
     <ClInclude Include="Base\Light.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
@@ -375,6 +372,9 @@
     </ClInclude>
     <ClInclude Include="Base\Camera\Camera.h">
       <Filter>Engine\Base\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\DirectXCommon.h">
+      <Filter>Engine\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

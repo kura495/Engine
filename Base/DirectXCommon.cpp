@@ -364,17 +364,25 @@ void DirectXCommon::InitalizeFixFPS()
 {
 	//現在時間で初期化
 	reference_ = std::chrono::steady_clock::now();
+	//sleepの精度をあげる
+	timeBeginPeriod(1);
 }
 
 void DirectXCommon::UpdateFixFPS()
 {
+
+	//1/60秒ぴったりの時間
+	const std::chrono::microseconds kMinTime(uint64_t(1000000.0f / 60.0f));
+	//1/60秒よりわずかに短い時間
+	const std::chrono::microseconds kMinCheckTime(uint64_t(1000000.0f / 65.0f));
+
 	//現在時間を取得する
 	std::chrono::steady_clock::time_point now =  std::chrono::steady_clock::now();
 	//前回記録からの経過時間を取得する
 	std::chrono::microseconds elapsed = std::chrono::duration_cast<std::chrono::microseconds>(now - reference_);
 
 	//1/60秒(よりわずかに短い時間)たっていない場合
-	if (elapsed < kMinTime) {
+	if (elapsed < kMinCheckTime) {
 		//1/60秒経過するまで微小なスリープを繰り返す
 		while (std::chrono::steady_clock::now() - reference_ < kMinTime) {
 			//1マイクロ秒スリープ
