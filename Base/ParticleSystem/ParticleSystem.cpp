@@ -79,24 +79,18 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
 
-	/*for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end(); ) {
-		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {
-			particleIt = particles.erase(particleIt);
+	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
+		if (particles[Volume_i].lifeTime <= particles[Volume_i].currentTime) {
 			continue;
 		}
-		Vector3 velcity = (*particleIt).velocity * kDeltaTime;
-		(*particleIt).translate += velcity;
-		float alpha = 1.0f - ((*particleIt).currentTime / (*particleIt).lifeTime);
-		(*particleIt).color.w = alpha;
-		(*particleIt).currentTime += kDeltaTime;
-		(*particleIt).matWorld = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, Vector3{ 0.0f,0.0f,0.0f }, (*particleIt).translate);
-
-		(*particleIt).matWorld = Multiply((*particleIt).matWorld, billboardMatrix);
-
-		++particleIt;
-
+		Vector3 velcity = particles[Volume_i].velocity * kDeltaTime;
+		particles[Volume_i].translate += velcity;
+		float alpha = 1.0f - (particles[Volume_i].currentTime / particles[Volume_i].lifeTime);
+		particles[Volume_i].color.w = alpha;
+		particles[Volume_i].currentTime += kDeltaTime;
+		particles[Volume_i].matWorld = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, Vector3{ 0.0f,0.0f,0.0f }, particles[Volume_i].translate);
 		++numInstance;
-	}*/
+	}
 
 }
 
