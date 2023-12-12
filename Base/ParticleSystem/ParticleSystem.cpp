@@ -1,16 +1,16 @@
-﻿#include "Particle.h"
+﻿#include "ParticleSystem.h"
 
-void Particle::Initalize(int particleVolume,const std::string filePath)
+void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 {
 	textureManager_ = TextureManager::GetInstance();
 	directX_ = DirectXCommon::GetInstance();
 
 	modelData.vertices.push_back({ .position = { -1.0f,1.0f,0.0f,1.0f },.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
-	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f}, .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
+	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},   .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
 	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f},  .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f}, .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
-	modelData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
+	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
+	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},	 .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
+	modelData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},	 .texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
 	modelData.material.textureFilePath = filePath;
 	int Texture = textureManager_->LoadTexture(modelData.material.textureFilePath);
 	modelData.TextureIndex = Texture;
@@ -35,7 +35,7 @@ void Particle::Initalize(int particleVolume,const std::string filePath)
 	Pipeline_->Initalize();
 
 }
-void Particle::Initalize(int particleVolume,const std::string filePath, Vector3 Pos)
+void ParticleSystem::Initalize(int particleVolume,const std::string filePath, Vector3 Pos)
 {
 	textureManager_ = TextureManager::GetInstance();
 	directX_ = DirectXCommon::GetInstance();
@@ -73,7 +73,7 @@ void Particle::Initalize(int particleVolume,const std::string filePath, Vector3 
 
 }
 
-void Particle::Update(const ViewProjection& viewProjection)
+void ParticleSystem::Update(const ViewProjection& viewProjection)
 {
 	numInstance = 0;
 	Matrix4x4 billboardMatrix = viewProjection.CameraMatrix;
@@ -96,7 +96,7 @@ void Particle::Update(const ViewProjection& viewProjection)
 	}
 }
 
-void Particle::Draw(const ViewProjection& viewProjection)
+void ParticleSystem::Draw(const ViewProjection& viewProjection)
 {
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//頂点
@@ -114,13 +114,13 @@ void Particle::Draw(const ViewProjection& viewProjection)
 	directX_->GetcommandList()->DrawInstanced(6, numInstance, 0, 0);
 }
 
-void Particle::PreDraw()
+void ParticleSystem::PreDraw()
 {
 	directX_->GetcommandList()->SetGraphicsRootSignature(Pipeline_->GetPSO().rootSignature.Get());
 	directX_->GetcommandList()->SetPipelineState(Pipeline_->GetPSO().graphicsPipelineState.Get());
 }
 
-void Particle::SetPos(Vector3 Pos)
+void ParticleSystem::SetPos(Vector3 Pos)
 {
 	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
 	 particles[Volume_i].translate = Pos;
@@ -128,7 +128,7 @@ void Particle::SetPos(Vector3 Pos)
 
 }
 
-void Particle::CreateResources()
+void ParticleSystem::CreateResources()
 {
 	//CreateVertexResource
 	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
@@ -144,13 +144,13 @@ void Particle::CreateResources()
 	//maping materialResource
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	//Create InstancingResources
-	InstancingResource = directX_->CreateBufferResource(sizeof(ParticleForGPU)* kNumMaxInstance);
+	InstancingResource = directX_->CreateBufferResource(sizeof(Particle)* kNumMaxInstance);
 	//maping InstancingResources
 	InstancingResource->Map(0,nullptr,reinterpret_cast<void**>(&particles));
 	
 }
 
-void Particle::CreateSRV()
+void ParticleSystem::CreateSRV()
 {
 	uint32_t descriptorSizeSRV = directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
@@ -161,31 +161,31 @@ void Particle::CreateSRV()
 	instancingSrvDesc.Buffer.FirstElement = 0;
 	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 	instancingSrvDesc.Buffer.NumElements = kNumMaxInstance;
-	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
+	instancingSrvDesc.Buffer.StructureByteStride = sizeof(Particle);
 
 	instancingSRVHandleCPU = GetCPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), descriptorSizeSRV, 100);
 	instancingSRVHandleGPU = GetGPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), descriptorSizeSRV, 100);
 	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, instancingSRVHandleCPU);
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE Particle::GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
+D3D12_CPU_DESCRIPTOR_HANDLE ParticleSystem::GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
 {
 	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	handleCPU.ptr += (descriptorSize * index);
 	return handleCPU;
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE Particle::GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
+D3D12_GPU_DESCRIPTOR_HANDLE ParticleSystem::GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
 {
 	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
 	handleGPU.ptr += (descriptorSize * index);
 	return handleGPU;
 }
 
-ParticleForGPU Particle::MakeNewParticle(std::mt19937& randomEngine)
+Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
-	ParticleForGPU particle;
+	Particle particle;
 	particle.translate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.color = MakeParticleColor(randomEngine);
@@ -194,14 +194,14 @@ ParticleForGPU Particle::MakeNewParticle(std::mt19937& randomEngine)
 	return particle;
 }
 
-Vector4 Particle::MakeParticleColor(std::mt19937& randomEngine)
+Vector4 ParticleSystem::MakeParticleColor(std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
 	return { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) 
 	,distribution(randomEngine) };
 }
 
-float Particle::MakeParticleLifeTime(std::mt19937& randomEngine)
+float ParticleSystem::MakeParticleLifeTime(std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(1.0f, 3.0f);
 	return distribution(randomEngine);

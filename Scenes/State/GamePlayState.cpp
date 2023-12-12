@@ -18,7 +18,7 @@ void GamePlayState::Initialize()
 	sampleModel_->Initialize("resources/Cube","Cube.obj");
 	world_Model.Initialize();
 
-	particle = std::make_unique<Particle>();
+	particle = std::make_unique<ParticleSystem>();
 	particle->Initalize(10, "resources/circle.png");
 
 	SpriteNum = textureManager_->LoadTexture("resources/uvChecker.png");

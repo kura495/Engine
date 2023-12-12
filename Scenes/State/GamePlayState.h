@@ -18,7 +18,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Math_Structs.h"
-#include "Base/ParticleSystem/Particle.h"
+#include "Base/ParticleSystem/ParticleSystem.h"
 
 
 class GamePlayState :public GameState
@@ -50,5 +50,5 @@ private:
 	Sprite* sprite;
 	WorldTransform world_;
 
-	std::unique_ptr<Particle>particle;
+	std::unique_ptr<ParticleSystem>particle;
 };

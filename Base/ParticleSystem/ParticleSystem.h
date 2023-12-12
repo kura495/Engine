@@ -14,7 +14,7 @@
 
 #include "PipeLine/ParticlePipeLine.h"
 
-struct ParticleForGPU {
+struct Particle {
 	Matrix4x4 matWorld;
 	Vector3 velocity;
 	Vector4 color;
@@ -23,7 +23,7 @@ struct ParticleForGPU {
 	Vector3 translate;
 };
 
-class Particle
+class ParticleSystem
 {
 public:
 
@@ -59,7 +59,7 @@ private:
 	//Instancing用にTransformMatrixを複数格納できるResourcesを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> InstancingResource = nullptr;
 	WorldTransform InstancingDeta[10];
-	ParticleForGPU* particles;
+	Particle* particles;
 
 	//パーティクルの数
 	int particleVolume_;
@@ -80,7 +80,7 @@ private:
 	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ランダム
-	ParticleForGPU MakeNewParticle(std::mt19937& randomEngine);
+	Particle MakeNewParticle(std::mt19937& randomEngine);
 	Vector4 MakeParticleColor(std::mt19937& randomEngine);
 	float MakeParticleLifeTime(std::mt19937& randomEngine);
 };
