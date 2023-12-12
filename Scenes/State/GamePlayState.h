@@ -40,6 +40,8 @@ private:
 	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
 
+	ViewProjection viewProjction;
+
 	MousePosition m_pos;
 
 	int SpriteNum;

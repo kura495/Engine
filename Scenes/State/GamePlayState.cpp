@@ -4,7 +4,7 @@ void GamePlayState::Initialize()
 {
 	//基本機能生成
 	camera_ = new Camera();
-	camera_->Initialize(1280, 720);
+	camera_->Initialize();
 	input = Input::GetInstance();
 	audio = Audio::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
@@ -31,6 +31,7 @@ else {
 	camera_->DebugCamera(false);
 }
 #endif // _DEBUG
+ viewProjction = camera_->GetViewProjection();
 
 }
 
