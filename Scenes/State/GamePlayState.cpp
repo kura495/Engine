@@ -14,6 +14,10 @@ void GamePlayState::Initialize()
 
 	//
 	//3Dオブジェクト生成
+	sampleModel_ = std::make_unique<Model>();
+	sampleModel_->Initialize("resources/Cube","Cube.obj");
+	world_Model.Initialize();
+
 	SpriteNum = textureManager_->LoadTexture("resources/uvChecker.png");
 	sprite = new Sprite();
 	sprite->Initialize({0.0f,0.0f},{0.0f,120.0f},{120.0f,0.0f},{120.0f,120.0f});
@@ -31,14 +35,16 @@ else {
 	camera_->DebugCamera(false);
 }
 #endif // _DEBUG
- viewProjction = camera_->GetViewProjection();
 
+	camera_->Update();
+	viewProjction = camera_->GetViewProjection();
+ 
 }
 
 void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
-
+	sampleModel_->Draw(world_Model, viewProjction);
 	//3Dモデル描画ここまで	
 
 

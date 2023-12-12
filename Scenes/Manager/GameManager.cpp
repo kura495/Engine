@@ -60,9 +60,9 @@ void GameManager::Gameloop()
 			}
 			imGuiManager->BeginFrame();
 			directX->PreView();
-			renderer_->Draw(PipelineType::Standerd);
 			input->Update();
 			state[currentSceneNum_]->Update();
+			renderer_->Draw(PipelineType::Standerd);
 			state[currentSceneNum_]->Draw();
 			imGuiManager->EndFrame();
 			directX->PostView();
