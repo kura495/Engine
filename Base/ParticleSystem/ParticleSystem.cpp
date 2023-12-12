@@ -23,9 +23,9 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 	std::random_device seedGenerator;
 	std::mt19937 ranndomEngine(seedGenerator());
 
-	particles.push_back(MakeNewParticle(ranndomEngine));
-	particles.push_back(MakeNewParticle(ranndomEngine));
-	particles.push_back(MakeNewParticle(ranndomEngine));
+	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
+		particles[Volume_i] = MakeNewParticle(ranndomEngine);
+	}
 
 	materialData->enableLighting = false;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
@@ -58,7 +58,9 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath, Ve
 	std::random_device seedGenerator;
 	std::mt19937 ranndomEngine(seedGenerator());
 
-	particles.push_back(MakeNewParticle(ranndomEngine));
+	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
+		particles[Volume_i] = MakeNewParticle(ranndomEngine);
+	}
 
 	materialData->enableLighting = false;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
@@ -120,10 +122,8 @@ void ParticleSystem::PreDraw()
 
 void ParticleSystem::SetPos(Vector3 Pos)
 {
-	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end(); ) {
-		//(*particleIt).translate = Pos;
-		Pos;
-		++particleIt;
+	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
+		particles[Volume_i].translate =Pos;
 	}
 }
 
