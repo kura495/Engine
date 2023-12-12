@@ -14,8 +14,10 @@ void GamePlayState::Initialize()
 
 	//
 	//3Dオブジェクト生成
-
-
+	SpriteNum = textureManager_->LoadTexture("resources/uvChecker.png");
+	sprite = new Sprite();
+	sprite->Initialize({0.0f,0.0f},{0.0f,1200.0f},{1200.0f,0.0f},{1200.0f,1200.0f});
+	world_.Initialize();
 }
 
 void GamePlayState::Update()
@@ -29,45 +31,6 @@ else {
 	camera_->DebugCamera(false);
 }
 #endif // _DEBUG
-#ifdef _DEBUG
-
-m_pos = input->GetMousePosition();
-
-ImGui::Begin("PlayState");
-ImGui::Text("PosX : %f",m_pos.Pos.x);
-ImGui::Text("PosY : %f",m_pos.Pos.y);
-ImGui::Text("Scroll : %f",m_pos.Scroll);
-
-if (input->pushMouse(MOUSE_BOTTON0)) {
-	ImGui::Text("A");
-}
-if (input->TriggerPad(XINPUT_GAMEPAD_B)) {
-	ImGui::Text("B");
-}
-if (input->TriggerPad(XINPUT_GAMEPAD_X)) {
-	ImGui::Text("X");
-}
-if (input->TriggerPad(XINPUT_GAMEPAD_Y)) {
-	ImGui::Text("Y");
-}
-if (input->TriggerPad(XINPUT_GAMEPAD_START)) {
-	ImGui::Text("START");
-}
-if (input->TriggerPad(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
-	ImGui::Text("LEFT");
-}
-if (input->TriggerPad(XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
-	ImGui::Text("RIGHT");
-}
-if (input->TriggerPad(XINPUT_GAMEPAD_LEFT_THUMB)) {
-	ImGui::Text("LEFT_THUMB");
-}if (input->TriggerPad(XINPUT_GAMEPAD_RIGHT_THUMB)) {
-	ImGui::Text("RIGHT_THUMB");
-}
-ImGui::End();
-#endif
-
-
 
 }
 
@@ -79,8 +42,7 @@ void GamePlayState::Draw()
 
 
 	//Sprite描画ここから
-
-
+	sprite->Draw(world_, SpriteNum);
 	//Sprite描画ここまで
 	
 	//描画ここまで

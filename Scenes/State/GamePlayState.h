@@ -42,5 +42,7 @@ private:
 
 	MousePosition m_pos;
 
-	
+	int SpriteNum;
+	Sprite* sprite;
+	WorldTransform world_;
 };
