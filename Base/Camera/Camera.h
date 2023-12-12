@@ -21,9 +21,8 @@ public:
 private:
 	// X,Y,Z軸回りのローカル回転角
 	Vector3 rotation_ = { 0,0,0 };
-	// 累積回転行列
-	Matrix4x4 matRot_;
-	Vector3 GetmatRot();
+	
+	Quaternion quaternion = {0.0f,0.0f,0.0f,1.0f};
 	// ローカル座標
 	Vector3 translation_ = { 0,2,-5 };
 	//　ビュー行列

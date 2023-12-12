@@ -16,7 +16,7 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 	SpriteNum = textureManager_->LoadTexture("resources/uvChecker.png");
 	sprite = new Sprite();
-	sprite->Initialize({0.0f,0.0f},{0.0f,1200.0f},{1200.0f,0.0f},{1200.0f,1200.0f});
+	sprite->Initialize({0.0f,0.0f},{0.0f,120.0f},{120.0f,0.0f},{120.0f,120.0f});
 	world_.Initialize();
 }
 
