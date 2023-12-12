@@ -30,7 +30,7 @@ public:
 	void Initalize(int particleVolume,const std::string filePath);
 	void Initalize(int particleVolume,const std::string filePath,Vector3 Pos);
 
-	void Update();
+	void Update(const ViewProjection& viewProjection);
 
 	void Draw(const ViewProjection& viewProjection);
 

@@ -5,7 +5,6 @@ void Particle::Initalize(int particleVolume,const std::string filePath)
 	textureManager_ = TextureManager::GetInstance();
 	directX_ = DirectXCommon::GetInstance();
 
-
 	modelData.vertices.push_back({ .position = { -1.0f,1.0f,0.0f,1.0f },.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
 	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f}, .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
 	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
@@ -74,10 +73,13 @@ void Particle::Initalize(int particleVolume,const std::string filePath, Vector3 
 
 }
 
-void Particle::Update()
+void Particle::Update(const ViewProjection& viewProjection)
 {
 	numInstance = 0;
-
+	Matrix4x4 billboardMatrix = viewProjection.CameraMatrix;
+	billboardMatrix.m[3][0] = 0.0f;
+	billboardMatrix.m[3][1] = 0.0f;
+	billboardMatrix.m[3][2] = 0.0f;
 	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
 		if (particles[Volume_i].lifeTime <= particles[Volume_i].currentTime) {
 			continue;
@@ -88,30 +90,17 @@ void Particle::Update()
 		particles[Volume_i].color.w = alpha;
 		particles[Volume_i].currentTime += kDeltaTime;
 		particles[Volume_i].matWorld = MakeAffineMatrix({1.0f,1.0f,1.0f}, Vector3{0.0f,0.0f,0.0f}, particles[Volume_i].translate);
+
+		particles[Volume_i].matWorld = Multiply(particles[Volume_i].matWorld, billboardMatrix);
 		++numInstance;
 	}
 }
 
 void Particle::Draw(const ViewProjection& viewProjection)
 {
-	Matrix4x4 Camera = viewProjection.CameraMatrix;
-	Matrix4x4 billboardMatrix = MakeAffineMatrix({1.0f,1.0f,1.0f}, viewProjection.rotation_, viewProjection.translation_);
-	billboardMatrix = Multiply(billboardMatrix, Camera);
-	billboardMatrix.m[3][0] = 0.0f;
-	billboardMatrix.m[3][1] = 0.0f;
-	billboardMatrix.m[3][2] = 0.0f;
-	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
-		if (particles[Volume_i].lifeTime <= particles[Volume_i].currentTime) {
-			continue;
-		}
-		particles[Volume_i].matWorld = Multiply(particles[Volume_i].matWorld, billboardMatrix);
-	}
-
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
 	//頂点
 	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
-
 	//ViewProjection
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(2, viewProjection.constBuff_->GetGPUVirtualAddress());
 	//色とuvTransform

@@ -18,7 +18,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Math_Structs.h"
-#include "Base/Math/Quaternion/Quaternion.h"
+#include "Base/ParticleSystem/Particle.h"
 
 
 class GamePlayState :public GameState
@@ -49,4 +49,6 @@ private:
 	int SpriteNum;
 	Sprite* sprite;
 	WorldTransform world_;
+
+	std::unique_ptr<Particle>particle;
 };
