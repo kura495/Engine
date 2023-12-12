@@ -59,7 +59,7 @@ private:
 	//Instancing用にTransformMatrixを複数格納できるResourcesを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> InstancingResource = nullptr;
 
-	Particle* particles;
+	std::list<Particle> particles;
 
 	//パーティクルの数
 	int particleVolume_;
