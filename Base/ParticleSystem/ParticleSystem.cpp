@@ -23,9 +23,9 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
 
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
+	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
+		particles[Volume_i] = MakeNewParticle(randomEngine);
+	}
 
 	materialData->enableLighting = false;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
@@ -58,9 +58,9 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath, Ve
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
 
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
+	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
+		particles[Volume_i] = MakeNewParticle(randomEngine);
+	}
 
 	materialData->enableLighting = false;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
@@ -81,24 +81,22 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
 
-	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
-		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {
-			particleIt = particles.erase(particleIt);
+	for (uint32_t Volume_i = 0; Volume_i < kNumMaxInstance; Volume_i++) {
+		if (particles[Volume_i].lifeTime <= particles[Volume_i].currentTime) {
 			continue;
 		}
-		Vector3 velcity = (*particleIt).velocity * kDeltaTime;
-		(*particleIt).translate += velcity;
-		float alpha = 1.0f - ((*particleIt).currentTime / (*particleIt).lifeTime);
-		(*particleIt).color.w = alpha;
-		(*particleIt).currentTime += kDeltaTime;
-		(*particleIt).matWorld = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, Vector3{ 0.0f,0.0f,0.0f }, (*particleIt).translate);
-
-		++particleIt;
+		Vector3 velcity = particles[Volume_i].velocity * kDeltaTime;
+		particles[Volume_i].translate += velcity;
+		float alpha = 1.0f - (particles[Volume_i].currentTime / particles[Volume_i].lifeTime);
+		particles[Volume_i].color.w = alpha;
+		particles[Volume_i].currentTime += kDeltaTime;
+		particles[Volume_i].matWorld = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, Vector3{ 0.0f,0.0f,0.0f }, particles[Volume_i].translate);
 
 		instancinsData[Volume_i].matWorld = Multiply(particles[Volume_i].matWorld, billboardMatrix);
 		instancinsData[Volume_i].color = particles[Volume_i].color;
 		++numInstance;
 	}
+
 
 }
 
