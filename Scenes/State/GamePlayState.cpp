@@ -14,17 +14,10 @@ void GamePlayState::Initialize()
 
 	//
 	//3Dオブジェクト生成
-	sampleModel_ = std::make_unique<Model>();
-	sampleModel_->Initialize("resources/Cube","Cube.obj");
-	world_Model.Initialize();
 
 	particle = std::make_unique<ParticleSystem>();
 	particle->Initalize(10, "resources/circle.png");
 
-	SpriteNum = textureManager_->LoadTexture("resources/uvChecker.png");
-	sprite = new Sprite();
-	sprite->Initialize({0.0f,0.0f},{0.0f,120.0f},{120.0f,0.0f},{120.0f,120.0f});
-	world_.Initialize();
 }
 
 void GamePlayState::Update()
@@ -39,13 +32,7 @@ else {
 }
 #endif // _DEBUG
 
-#ifdef _DEBUG
-ImGui::Begin("Particle");
-if (ImGui::Button("Add Particle")) {
-	particle->AddParticle(2);
-	}
-ImGui::End();
-#endif
+
 
 
 	camera_->Update();
@@ -61,7 +48,7 @@ void GamePlayState::Draw()
 
 
 	//Sprite描画ここから
-	sprite->Draw(world_, SpriteNum);
+
 	//Sprite描画ここまで
 	
 	//パーティクル描画ここから

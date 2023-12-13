@@ -27,7 +27,10 @@ struct ParticleForGPU {
 	Vector4 color;
 };
 struct Emitter {
-	Transform transform;
+	Transform transform;//エミッタのTransform
+	uint32_t count;		//発生数
+	float frequency;	//発生頻度
+	float frequencyTime;//頻度用時刻
 };
 
 class ParticleSystem
@@ -35,7 +38,6 @@ class ParticleSystem
 public:
 
 	void Initalize(int particleVolume,const std::string filePath);
-	void Initalize(int particleVolume,const std::string filePath,Vector3 Pos);
 
 	void Update(const ViewProjection& viewProjection);
 
@@ -45,13 +47,13 @@ public:
 
 	void SetPos(Vector3 Pos);
 
-	void AddParticle(uint32_t ParticleVolume);
+	void AddParticle(const Emitter& emitter);
 
-	std::list<Particle> Emit();
+	std::list<Particle> Emit(const Emitter& emitter, std::mt19937& randomEngine);
 
 private:
 	//インスタンスの数
-	static const uint32_t kNumMaxInstance = 10;
+	static const uint32_t kNumMaxInstance = 100;
 	//生きているインスタンスの数
 	uint32_t numInstance = 0;
 
@@ -95,5 +97,7 @@ private:
 	Particle MakeNewParticle(std::mt19937& randomEngine);
 	Vector4 MakeParticleColor(std::mt19937& randomEngine);
 	float MakeParticleLifeTime(std::mt19937& randomEngine);
+
+	Emitter Testemitter;
 };
 

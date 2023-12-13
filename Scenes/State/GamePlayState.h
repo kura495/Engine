@@ -44,11 +44,6 @@ private:
 
 	MousePosition m_pos;
 
-	std::unique_ptr<Model> sampleModel_;
-	WorldTransform world_Model;
-	int SpriteNum;
-	Sprite* sprite;
-	WorldTransform world_;
-
 	std::unique_ptr<ParticleSystem>particle;
+
 };

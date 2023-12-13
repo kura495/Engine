@@ -34,47 +34,25 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 	Pipeline_ = std::make_unique<ParticlePipeLine>();
 	Pipeline_->Initalize();
 
-}
-void ParticleSystem::Initalize(int particleVolume,const std::string filePath, Vector3 Pos)
-{
-	textureManager_ = TextureManager::GetInstance();
-	directX_ = DirectXCommon::GetInstance();
-
-	modelData.vertices.push_back({ .position = { -1.0f,1.0f,0.0f,1.0f },.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
-	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f}, .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
-	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f},  .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f}, .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
-	modelData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
-	modelData.material.textureFilePath = filePath;
-	int Texture = textureManager_->LoadTexture(modelData.material.textureFilePath);
-	modelData.TextureIndex = Texture;
-	particleVolume_ = particleVolume;
-
-	CreateResources();
-	CreateSRV();	
-
-	//ランダム生成用
-	std::random_device seedGenerator;
-	std::mt19937 randomEngine(seedGenerator());
-
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
-
-	materialData->enableLighting = false;
-	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
-	materialData->uvTransform = CreateIdentity4x4();
-
-	Pipeline_ = std::make_unique<ParticlePipeLine>();
-	Pipeline_->Initalize();
-
-	SetPos(Pos);
+	Testemitter.count = 5;
+	Testemitter.frequency = 0.5f;
+	Testemitter.frequencyTime = 0.0f;
 
 }
 
 void ParticleSystem::Update(const ViewProjection& viewProjection)
 {
+	Testemitter.frequencyTime += kDeltaTime;
+	if (Testemitter.frequency <= Testemitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		particles.splice(particles.end(), Emit(Testemitter, randomEngine));
+
+		Testemitter.frequencyTime -= Testemitter.frequency;
+	}
+
 	numInstance = 0;
 	Matrix4x4 billboardMatrix = viewProjection.CameraMatrix;
 	billboardMatrix.m[3][0] = 0.0f;
@@ -136,16 +114,23 @@ void ParticleSystem::SetPos(Vector3 Pos)
 	}
 }
 
-void ParticleSystem::AddParticle(uint32_t ParticleVolume)
+void ParticleSystem::AddParticle(const Emitter& emitter)
 {
 	//ランダム生成用
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
 
-	for (uint32_t Particle_i = 0; Particle_i < ParticleVolume; Particle_i++) {
-		particles.push_back(MakeNewParticle(randomEngine));
-	}
+	particles.splice(particles.end(), Emit(emitter, randomEngine));
 
+}
+
+std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& randomEngine)
+{
+	std::list<Particle> Emitparticles;
+	for (uint32_t count = 0; count < emitter.count; ++count) {
+		Emitparticles.push_back(MakeNewParticle(randomEngine));
+	}
+	return Emitparticles;
 }
 
 void ParticleSystem::CreateResources()
