@@ -39,6 +39,13 @@ else {
 }
 #endif // _DEBUG
 
+#ifdef _DEBUG
+ImGui::Begin("Particle");
+if (ImGui::Button("Add Particle")) {
+	particle->AddParticle(2);
+	}
+ImGui::End();
+#endif
 
 
 	camera_->Update();

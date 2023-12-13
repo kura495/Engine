@@ -9,7 +9,7 @@
 #include "Math/MatrixCalc.h"
 #include "ModelData.h"
 #include "Base/Light.h"
-
+#include "Transform.h"
 #include "Utility/ImGuiManager.h"
 
 #include "PipeLine/ParticlePipeLine.h"
@@ -20,11 +20,14 @@ struct Particle {
 	Vector4 color;
 	float lifeTime;
 	float currentTime;
-	Vector3 translate;
+	Transform transform;
 };
 struct ParticleForGPU {
 	Matrix4x4 matWorld;
 	Vector4 color;
+};
+struct Emitter {
+	Transform transform;
 };
 
 class ParticleSystem
@@ -41,6 +44,10 @@ public:
 	void PreDraw();
 
 	void SetPos(Vector3 Pos);
+
+	void AddParticle(uint32_t ParticleVolume);
+
+	std::list<Particle> Emit();
 
 private:
 	//インスタンスの数
@@ -63,7 +70,7 @@ private:
 	//Instancing用にTransformMatrixを複数格納できるResourcesを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> InstancingResource = nullptr;
 
-	Particle particles[kNumMaxInstance];
+	std::list<Particle> particles;
 	ParticleForGPU* instancinsData;
 
 	//パーティクルの数
