@@ -386,6 +386,9 @@
     <None Include="resources\hlsl\Object3d.hlsli">
       <Filter>リソース ファイル\hlsl</Filter>
     </None>
+    <None Include="resources\hlsl\Particle.hlsli">
+      <Filter>リソース ファイル\hlsl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\hlsl\Object3d.PS.hlsl">
@@ -401,6 +404,12 @@
       <Filter>リソース ファイル\hlsl</Filter>
     </FxCompile>
     <FxCompile Include="resources\hlsl\Sprite.VS.hlsl">
+      <Filter>リソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\hlsl\Particle.PS.hlsl">
+      <Filter>リソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\hlsl\Particle.VS.hlsl">
       <Filter>リソース ファイル\hlsl</Filter>
     </FxCompile>
   </ItemGroup>

@@ -22,6 +22,10 @@ struct Particle {
 	float currentTime;
 	Vector3 translate;
 };
+struct ParticleForGPU {
+	Matrix4x4 matWorld;
+	Vector4 color;
+};
 
 class ParticleSystem
 {
@@ -40,7 +44,7 @@ public:
 
 private:
 	//インスタンスの数
-	const uint32_t kNumMaxInstance = 10;
+	static const uint32_t kNumMaxInstance = 10;
 	//生きているインスタンスの数
 	uint32_t numInstance = 0;
 
@@ -58,8 +62,9 @@ private:
 	Material* materialData = nullptr;
 	//Instancing用にTransformMatrixを複数格納できるResourcesを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> InstancingResource = nullptr;
-	WorldTransform InstancingDeta[10];
-	Particle* particles;
+
+	Particle particles[kNumMaxInstance];
+	ParticleForGPU* instancinsData;
 
 	//パーティクルの数
 	int particleVolume_;

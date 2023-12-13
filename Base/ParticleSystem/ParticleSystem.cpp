@@ -91,7 +91,8 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 		particles[Volume_i].currentTime += kDeltaTime;
 		particles[Volume_i].matWorld = MakeAffineMatrix({1.0f,1.0f,1.0f}, Vector3{0.0f,0.0f,0.0f}, particles[Volume_i].translate);
 
-		particles[Volume_i].matWorld = Multiply(particles[Volume_i].matWorld, billboardMatrix);
+		instancinsData[Volume_i].matWorld = Multiply(particles[Volume_i].matWorld, billboardMatrix);
+		instancinsData[Volume_i].color = particles[Volume_i].color;
 		++numInstance;
 	}
 }
@@ -144,9 +145,9 @@ void ParticleSystem::CreateResources()
 	//maping materialResource
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	//Create InstancingResources
-	InstancingResource = directX_->CreateBufferResource(sizeof(Particle)* kNumMaxInstance);
+	InstancingResource = directX_->CreateBufferResource(sizeof(ParticleForGPU)* kNumMaxInstance);
 	//maping InstancingResources
-	InstancingResource->Map(0,nullptr,reinterpret_cast<void**>(&particles));
+	InstancingResource->Map(0,nullptr,reinterpret_cast<void**>(&instancinsData));
 	
 }
 
@@ -161,7 +162,7 @@ void ParticleSystem::CreateSRV()
 	instancingSrvDesc.Buffer.FirstElement = 0;
 	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 	instancingSrvDesc.Buffer.NumElements = kNumMaxInstance;
-	instancingSrvDesc.Buffer.StructureByteStride = sizeof(Particle);
+	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 
 	instancingSRVHandleCPU = GetCPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), descriptorSizeSRV, 100);
 	instancingSRVHandleGPU = GetGPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), descriptorSizeSRV, 100);
@@ -193,14 +194,12 @@ Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine)
 	particle.currentTime = 0;
 	return particle;
 }
-
 Vector4 ParticleSystem::MakeParticleColor(std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
 	return { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) 
 	,distribution(randomEngine) };
 }
-
 float ParticleSystem::MakeParticleLifeTime(std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(1.0f, 3.0f);
