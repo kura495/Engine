@@ -18,7 +18,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Math_Structs.h"
-#include "Base/Math/Quaternion/Quaternion.h"
+#include "Base/ParticleSystem/ParticleSystem.h"
 
 
 class GamePlayState :public GameState
@@ -40,7 +40,10 @@ private:
 	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
 
+	ViewProjection viewProjction;
+
 	MousePosition m_pos;
 
-	
+	std::unique_ptr<ParticleSystem>particle;
+
 };

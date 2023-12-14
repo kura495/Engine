@@ -1,5 +1,5 @@
 ﻿#include"Sprite.h"
-void Sprite::Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const Vector4& RightTop, const Vector4& RightBottom)
+void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const Vector2& RightTop, const Vector2& RightBottom)
 {
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
@@ -14,16 +14,16 @@ void Sprite::Initialize(const Vector4& LeftTop, const Vector4& LeftBottom, const
 	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 
 	//左下
-	vertexData[0].position = LeftBottom;
+	vertexData[0].position = { LeftBottom.x,LeftBottom.y,0.0f,1.0f };
 	vertexData[0].texcoord = { 0.0f,1.0f };
 	//左上
-	vertexData[1].position = LeftTop;
+	vertexData[1].position = { LeftTop.x, LeftTop.y, 0.0f, 1.0f };
 	vertexData[1].texcoord = { 0.0f,0.0f };
 	//右下
-	vertexData[2].position = RightBottom;
+	vertexData[2].position = { RightBottom.x, RightBottom.y, 0.0f, 1.0f };
 	vertexData[2].texcoord = { 1.0f,1.0f };
 	//右上
-	vertexData[3].position = RightTop;
+	vertexData[3].position = { RightTop.x, RightTop.y, 0.0f, 1.0f };
 	vertexData[3].texcoord = { 1.0f,0.0f };
 
 	//インデックスリソースにデータを書き込む

@@ -9,28 +9,41 @@
 #include "Math/MatrixCalc.h"
 #include "ModelData.h"
 #include "Base/Light.h"
-
+#include "Transform.h"
 #include "Utility/ImGuiManager.h"
-
+#include "Base/Utility/BoxCollider.h"
 #include "PipeLine/ParticlePipeLine.h"
 
-struct ParticleForGPU {
+struct Particle {
 	Matrix4x4 matWorld;
 	Vector3 velocity;
 	Vector4 color;
 	float lifeTime;
 	float currentTime;
-	Vector3 translate;
+	Transform transform;
+};
+struct ParticleForGPU {
+	Matrix4x4 matWorld;
+	Vector4 color;
+};
+struct Emitter {
+	Transform transform;//エミッタのTransform
+	uint32_t count;		//発生数
+	float frequency;	//発生頻度
+	float frequencyTime;//頻度用時刻
+};
+struct AccelerationField {
+	Vector3 acceleration;//加速度
+	AABB area;			 //範囲
 };
 
-class Particle
+class ParticleSystem
 {
 public:
 
 	void Initalize(int particleVolume,const std::string filePath);
-	void Initalize(int particleVolume,const std::string filePath,Vector3 Pos);
 
-	void Update();
+	void Update(const ViewProjection& viewProjection);
 
 	void Draw(const ViewProjection& viewProjection);
 
@@ -38,9 +51,15 @@ public:
 
 	void SetPos(Vector3 Pos);
 
+	void AddParticle(const Emitter& emitter);
+
+	std::list<Particle> Emit(const Emitter& emitter, std::mt19937& randomEngine);
+
+	bool IsCollision(const AABB& aabb, const Vector3& point);
+
 private:
 	//インスタンスの数
-	const uint32_t kNumMaxInstance = 10;
+	static const uint32_t kNumMaxInstance = 100;
 	//生きているインスタンスの数
 	uint32_t numInstance = 0;
 
@@ -58,8 +77,9 @@ private:
 	Material* materialData = nullptr;
 	//Instancing用にTransformMatrixを複数格納できるResourcesを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> InstancingResource = nullptr;
-	WorldTransform InstancingDeta[10];
-	ParticleForGPU* particles;
+
+	std::list<Particle> particles;
+	ParticleForGPU* instancinsData;
 
 	//パーティクルの数
 	int particleVolume_;
@@ -80,8 +100,12 @@ private:
 	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ランダム
-	ParticleForGPU MakeNewParticle(std::mt19937& randomEngine);
+	Particle MakeNewParticle(std::mt19937& randomEngine,const Vector3& translate);
 	Vector4 MakeParticleColor(std::mt19937& randomEngine);
 	float MakeParticleLifeTime(std::mt19937& randomEngine);
+
+	Emitter Testemitter;
+
+	AccelerationField TestField;
 };
 
