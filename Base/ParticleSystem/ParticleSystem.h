@@ -11,7 +11,7 @@
 #include "Base/Light.h"
 #include "Transform.h"
 #include "Utility/ImGuiManager.h"
-
+#include "Base/Utility/BoxCollider.h"
 #include "PipeLine/ParticlePipeLine.h"
 
 struct Particle {
@@ -32,6 +32,10 @@ struct Emitter {
 	float frequency;	//発生頻度
 	float frequencyTime;//頻度用時刻
 };
+struct AccelerationField {
+	Vector3 acceleration;//加速度
+	AABB area;			 //範囲
+};
 
 class ParticleSystem
 {
@@ -50,6 +54,8 @@ public:
 	void AddParticle(const Emitter& emitter);
 
 	std::list<Particle> Emit(const Emitter& emitter, std::mt19937& randomEngine);
+
+	bool IsCollision(const AABB& aabb, const Vector3& point);
 
 private:
 	//インスタンスの数
@@ -94,10 +100,12 @@ private:
 	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ランダム
-	Particle MakeNewParticle(std::mt19937& randomEngine);
+	Particle MakeNewParticle(std::mt19937& randomEngine,const Vector3& translate);
 	Vector4 MakeParticleColor(std::mt19937& randomEngine);
 	float MakeParticleLifeTime(std::mt19937& randomEngine);
 
 	Emitter Testemitter;
+
+	AccelerationField TestField;
 };
 

@@ -23,10 +23,6 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
 
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
-	particles.push_back(MakeNewParticle(randomEngine));
-
 	materialData->enableLighting = false;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
 	materialData->uvTransform = CreateIdentity4x4();
@@ -37,11 +33,25 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 	Testemitter.count = 5;
 	Testemitter.frequency = 0.5f;
 	Testemitter.frequencyTime = 0.0f;
+	Testemitter.transform.scale		= { 1.0f,1.0f,1.0f };
+	Testemitter.transform.rotate	= { 0.0f,0.0f,0.0f };
+	Testemitter.transform.translate = { 0.0f,0.0f,0.0f };
 
+	TestField.acceleration = {15.0f,0.0f,0.0f};
+	TestField.area.min = {-1.0f,-1.0f,-1.0f};
+	TestField.area.max = { 1.0f,1.0f,1.0f };
+	
 }
 
 void ParticleSystem::Update(const ViewProjection& viewProjection)
 {
+
+#ifdef _DEBUG
+	ImGui::Begin("Particle");
+	ImGui::DragFloat3("EmitterPos", &Testemitter.transform.translate.x, 0.1f, -100.0f, 100.0f);
+	ImGui::End();
+#endif
+
 	Testemitter.frequencyTime += kDeltaTime;
 	if (Testemitter.frequency <= Testemitter.frequencyTime) {
 		//ランダム生成用
@@ -52,6 +62,8 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 
 		Testemitter.frequencyTime -= Testemitter.frequency;
 	}
+
+
 
 	numInstance = 0;
 	Matrix4x4 billboardMatrix = viewProjection.CameraMatrix;
@@ -64,6 +76,11 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 			particleIt = particles.erase(particleIt);
 			continue;
 		}
+
+		if (IsCollision(TestField.area,(*particleIt).transform.translate)) {
+			(*particleIt).velocity += TestField.acceleration * kDeltaTime;
+		}
+
 		Vector3 velcity = (*particleIt).velocity * kDeltaTime;
 		(*particleIt).transform.translate += velcity;
 		float alpha = 1.0f - ((*particleIt).currentTime / (*particleIt).lifeTime);
@@ -128,9 +145,20 @@ std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& r
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(MakeNewParticle(randomEngine));
+		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.transform.translate));
 	}
 	return Emitparticles;
+}
+
+bool ParticleSystem::IsCollision(const AABB& aabb, const Vector3& point)
+{
+	if (aabb.min.x < point.x && point.x < aabb.max.x &&
+		aabb.min.y < point.y && point.y < aabb.max.y &&
+		aabb.min.z < point.z && point.z < aabb.max.z) {
+
+		return true;
+	}
+	return false;
 }
 
 void ParticleSystem::CreateResources()
@@ -187,11 +215,14 @@ D3D12_GPU_DESCRIPTOR_HANDLE ParticleSystem::GetGPUDescriptorHandle(Microsoft::WR
 	return handleGPU;
 }
 
-Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine)
+Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate)
 {
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Particle particle;
-	particle.transform.translate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
+	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
+	particle.transform.translate.x = translate.x + ramdomTranslate.x;
+	particle.transform.translate.y = translate.y + ramdomTranslate.y;
+	particle.transform.translate.z = translate.z + ramdomTranslate.z;
 	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.color = MakeParticleColor(randomEngine);
 	particle.lifeTime = MakeParticleLifeTime(randomEngine);
