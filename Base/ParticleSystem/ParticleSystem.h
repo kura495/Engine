@@ -41,7 +41,7 @@ class ParticleSystem
 {
 public:
 
-	void Initalize(int particleVolume,const std::string filePath);
+	void Initalize(const std::string filePath);
 
 	void Update(const ViewProjection& viewProjection);
 
@@ -80,11 +80,6 @@ private:
 
 	std::list<Particle> particles;
 	ParticleForGPU* instancinsData;
-
-	//パーティクルの数
-	int particleVolume_;
-	//パーティクルの数分のtransform
-	std::vector<WorldTransform> transform_;
 
 	void CreateResources();
 	void CreateSRV();

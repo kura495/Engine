@@ -1,6 +1,6 @@
 ﻿#include "ParticleSystem.h"
 
-void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
+void ParticleSystem::Initalize(const std::string filePath)
 {
 	textureManager_ = TextureManager::GetInstance();
 	directX_ = DirectXCommon::GetInstance();
@@ -14,7 +14,6 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 	modelData.material.textureFilePath = filePath;
 	int Texture = textureManager_->LoadTexture(modelData.material.textureFilePath);
 	modelData.TextureIndex = Texture;
-	particleVolume_ = particleVolume;
 
 	CreateResources();
 	CreateSRV();	
@@ -31,7 +30,7 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 	Pipeline_->Initalize();
 
 	Testemitter.count = 5;
-	Testemitter.frequency = 0.5f;
+	Testemitter.frequency = 0.1f;
 	Testemitter.frequencyTime = 0.0f;
 	Testemitter.transform.scale		= { 1.0f,1.0f,1.0f };
 	Testemitter.transform.rotate	= { 0.0f,0.0f,0.0f };
@@ -45,12 +44,6 @@ void ParticleSystem::Initalize(int particleVolume,const std::string filePath)
 
 void ParticleSystem::Update(const ViewProjection& viewProjection)
 {
-
-#ifdef _DEBUG
-	ImGui::Begin("Particle");
-	ImGui::DragFloat3("EmitterPos", &Testemitter.transform.translate.x, 0.1f, -100.0f, 100.0f);
-	ImGui::End();
-#endif
 
 	Testemitter.frequencyTime += kDeltaTime;
 	if (Testemitter.frequency <= Testemitter.frequencyTime) {

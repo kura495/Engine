@@ -16,7 +16,7 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 
 	particle = std::make_unique<ParticleSystem>();
-	particle->Initalize(10, "resources/circle.png");
+	particle->Initalize( "resources/circle.png");
 
 }
 
