@@ -14,9 +14,8 @@ void GamePlayState::Initialize()
 
 	//
 	//3Dオブジェクト生成
-	texturePath = textureManager_->LoadTexture("uvChecker.png");
-	texturePath2 = textureManager_->LoadTexture("uvChecker.png");
-	texturePath2 = textureManager_->LoadTexture("checkerBoard.png");
+	texturePath = textureManager_->LoadTexture("a.png");
+
 	testSirite = std::make_unique<Sprite>();
 	testSirite->Initialize({0.0f,0.0f},{64.0f,64.0f});
 	world_.Initialize();
@@ -34,12 +33,6 @@ else {
 }
 #endif // _DEBUG
 
-	#ifdef _DEBUG
-	ImGui::Begin("Tex");
-	ImGui::DragFloat4("Pos",&world_.translation_.x,0.1f);
-	ImGui::DragFloat4("Color",&Color.x,0.01f);
-	ImGui::End();
-	#endif
 	world_.UpdateMatrix();
 	testSirite->SetColor(Color);
 
@@ -50,12 +43,12 @@ else {
 void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
-	//sampleModel_->Draw(world_Model, viewProjction);
+
 	//3Dモデル描画ここまで	
 
 
 	//Sprite描画ここから
-	testSirite->Draw(world_, texturePath2);
+	testSirite->Draw(world_, texturePath);
 	//Sprite描画ここまで
 	
 	//パーティクル描画ここから
