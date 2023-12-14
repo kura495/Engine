@@ -14,10 +14,12 @@ void GamePlayState::Initialize()
 
 	//
 	//3Dオブジェクト生成
-
-	particle = std::make_unique<ParticleSystem>();
-	particle->Initalize( "resources/circle.png");
-
+	texturePath = textureManager_->LoadTexture("uvChecker.png");
+	texturePath2 = textureManager_->LoadTexture("uvChecker.png");
+	texturePath2 = textureManager_->LoadTexture("checkerBoard.png");
+	testSirite = std::make_unique<Sprite>();
+	testSirite->Initialize({0.0f,0.0f},{64.0f,64.0f});
+	world_.Initialize();
 }
 
 void GamePlayState::Update()
@@ -32,12 +34,17 @@ else {
 }
 #endif // _DEBUG
 
-
-
+	#ifdef _DEBUG
+	ImGui::Begin("Tex");
+	ImGui::DragFloat4("Pos",&world_.translation_.x,0.1f);
+	ImGui::DragFloat4("Color",&Color.x,0.01f);
+	ImGui::End();
+	#endif
+	world_.UpdateMatrix();
+	testSirite->SetColor(Color);
 
 	camera_->Update();
 	viewProjction = camera_->GetViewProjection();
- 	particle->Update(viewProjction);
 }
 
 void GamePlayState::Draw()
@@ -48,12 +55,11 @@ void GamePlayState::Draw()
 
 
 	//Sprite描画ここから
-
+	testSirite->Draw(world_, texturePath2);
 	//Sprite描画ここまで
 	
 	//パーティクル描画ここから
-	particle->PreDraw();
-	particle->Draw(viewProjction);
+
 	//パーティクル描画ここまで
 
 	//描画ここまで

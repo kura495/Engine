@@ -44,6 +44,9 @@ private:
 
 	MousePosition m_pos;
 
-	std::unique_ptr<ParticleSystem>particle;
-
+	uint32_t texturePath;
+	uint32_t texturePath2;
+	std::unique_ptr<Sprite> testSirite;
+	WorldTransform world_;
+	Vector4 Color = {1.0f,1.0f,1.0f,1.0f};
 };

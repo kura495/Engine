@@ -41,6 +41,8 @@ private:
 	TextureManager& operator=(const TextureManager& obj) = delete;
 
 	HRESULT hr;
+
+	const std::string directoryPath = "resources/";
 	
 	bool IsusedTextureIndex[kMaxTexture];
 	DirectXCommon* directX_ = nullptr;
