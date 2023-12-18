@@ -14,7 +14,9 @@ void GamePlayState::Initialize()
 
 	//
 	//3Dオブジェクト生成
-	texturePath = textureManager_->LoadTexture("circle.png");
+	model_ = Model::CreateModelFromObj("resources/Cube/","Cube.obj");
+
+	texturePath = textureManager_->LoadTexture("resources/circle.png");
 
 	testSirite = std::make_unique<Sprite>();
 	testSirite->Initialize({0.0f,0.0f},{64.0f,64.0f});
@@ -32,6 +34,13 @@ else {
 	camera_->DebugCamera(false);
 }
 #endif // _DEBUG
+#ifdef _DEBUG
+ImGui::Begin("Tex");
+ImGuizmo::DecomposeMatrixToComponents(&world_.matWorld_.m[0][0], &world_.translation_.x, &world_.quaternion.x, &world_.scale_.x);
+ImGui::DragFloat2("Translate",&world_.translation_.x);
+ImGui::End();
+#endif
+
 
 	world_.UpdateMatrix();
 	testSirite->SetColor(Color);
@@ -44,11 +53,19 @@ void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
 
+
+	model_->Draw(world_,viewProjction);
 	//3Dモデル描画ここまで	
 
+#ifdef _DEBUG
+	ImGui::Begin("a");
+	ImGuizmo::DrawCubes(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], &world_.matWorld_.m[0][0],1);
+	ImGuizmo::DrawGrid(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], &world_.matWorld_.m[0][0],10);
+	ImGui::End();
+#endif
 
 	//Sprite描画ここから
-	testSirite->Draw(world_, texturePath);
+	//testSirite->Draw(world_, texturePath);
 	//Sprite描画ここまで
 	
 	//パーティクル描画ここから

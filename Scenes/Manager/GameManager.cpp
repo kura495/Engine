@@ -41,7 +41,6 @@ void GameManager::Initialize()
 	state[CLEAR] = std::make_unique<GameClearState>();
 	state[TITLE]->Initialize();
 	currentSceneNum_ = TITLE;
-	/*state[Boss]->Initialize();*/
 }
 void GameManager::Gameloop()
 {

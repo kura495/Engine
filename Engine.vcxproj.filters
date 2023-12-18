@@ -71,6 +71,9 @@
     <Filter Include="Engine\Base\Camera">
       <UniqueIdentifier>{83eb9341-d07b-4046-8525-96393a50cc9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imGuizmo">
+      <UniqueIdentifier>{bc7ba27f-1740-4601-8aaf-f9012648c7ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">

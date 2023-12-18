@@ -37,7 +37,7 @@ uint32_t TextureManager::LoadTexture(const std::string& filePath)
 
 	textures_.at(index).IsUsed = true;
 
-	std::string fullpath = directoryPath + filePath;
+	std::string fullpath = filePath;
 
 	//Textureを読んで転送する
 	DirectX::ScratchImage mipImages = ImageFileOpen(fullpath);

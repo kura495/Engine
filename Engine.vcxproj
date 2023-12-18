@@ -47,10 +47,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(ExternalIncludePath)</ExternalIncludePath>
     <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
+    <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
     <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgTriplet>x64-windows</VcpkgTriplet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
