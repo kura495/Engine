@@ -24,6 +24,10 @@ void ImGuiManager::BeginFrame()
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
+	ImGuizmo::IsOver();
+	ImGuizmo::IsUsing();
+	ImGuizmo::Enable(true);
 }
 
 void ImGuiManager::EndFrame()

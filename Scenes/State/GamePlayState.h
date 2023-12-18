@@ -14,6 +14,7 @@
 #include <dinput.h>
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
+
 #include "Base/Camera/Camera.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
@@ -49,4 +50,5 @@ private:
 	std::unique_ptr<Sprite> testSirite;
 	WorldTransform world_;
 	Vector4 Color = {1.0f,1.0f,1.0f,1.0f};
+	Model* model_;
 };
