@@ -14,7 +14,7 @@ void GamePlayState::Initialize()
 
 	//
 	//3Dオブジェクト生成
-	texturePath = textureManager_->LoadTexture("a.png");
+	texturePath = textureManager_->LoadTexture("circle.png");
 
 	testSirite = std::make_unique<Sprite>();
 	testSirite->Initialize({0.0f,0.0f},{64.0f,64.0f});
