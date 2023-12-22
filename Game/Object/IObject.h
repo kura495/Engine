@@ -2,15 +2,12 @@
 #include <vector>
 #include "Model.h"
 
-static uint32_t objectNumber = 0;
+
 
 class IObject
 {
 public:
-	IObject() {
-		objectNumber_ = objectNumber;
-		objectNumber++;
-	}
+	IObject() {}
 
 	virtual void Initalize(std::vector<Model*> models) = 0;
 	virtual void Update() = 0;
