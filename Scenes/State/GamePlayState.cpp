@@ -15,7 +15,7 @@ void GamePlayState::Initialize()
 	//
 	//3Dオブジェクト生成
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
-	//planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
+	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
 	selectNumber_ = 0;
 }
 
@@ -103,5 +103,20 @@ void GamePlayState::ControllBox()
 			break;
 		}
 	}
+}
+
+void GamePlayState::AddPlane()
+{
+
+}
+
+void GamePlayState::DeletePlane()
+{
+
+}
+
+void GamePlayState::ControllPlane()
+{
+
 }
 
