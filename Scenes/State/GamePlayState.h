@@ -59,6 +59,6 @@ private:
 	//void DeletePlane();
 	//void ControllPlane();
 
-	std::list<BoxObject*> object_;
+	std::list<IObject*> object_;
 	int selectNumber_;
 };

@@ -57,7 +57,7 @@ else {
 void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
-	for (std::list<BoxObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 		(*ObjectIt)->Draw(camera_->GetViewProjection());
 
 	}
@@ -78,7 +78,7 @@ void GamePlayState::Draw()
 
 void GamePlayState::AddBox()
 {
-	BoxObject* box = new BoxObject;
+	IObject* box = new BoxObject;
 	box->Initalize(boxModel_);
 	object_.push_back(box);
 }
@@ -86,7 +86,7 @@ void GamePlayState::AddBox()
 void GamePlayState::DeleteBox()
 {
 
-	for (std::list<BoxObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 		if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
 			ObjectIt = object_.erase(ObjectIt);
 			break;
@@ -96,7 +96,7 @@ void GamePlayState::DeleteBox()
 
 void GamePlayState::ControllBox()
 {
-	for (std::list<BoxObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 		if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
 			(*ObjectIt)->ImGui();
 			(*ObjectIt)->Update();
