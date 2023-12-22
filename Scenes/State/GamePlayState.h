@@ -21,6 +21,9 @@
 #include "Math_Structs.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 
+#include "Game/Object/Box/BoxObject.h"
+#include "Game/Object/Plane/PlaneObject.h"
+
 
 class GamePlayState :public GameState
 {
@@ -43,12 +46,19 @@ private:
 
 	ViewProjection viewProjction;
 
-	MousePosition m_pos;
 
-	uint32_t texturePath;
-	uint32_t texturePath2;
-	std::unique_ptr<Sprite> testSirite;
 	WorldTransform world_;
-	Vector4 Color = {1.0f,1.0f,1.0f,1.0f};
-	Model* model_;
+	std::vector<Model*> boxModel_;
+	std::vector<Model*> planeModel_;
+
+	void AddBox();
+	void DeleteBox();
+	void ControllBox();
+
+	//void AddPlane();
+	//void DeletePlane();
+	//void ControllPlane();
+
+	std::list<BoxObject*> object_;
+	int selectNumber_;
 };

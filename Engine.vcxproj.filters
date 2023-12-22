@@ -203,6 +203,8 @@
     <ClCompile Include="Base\DirectXCommon.cpp">
       <Filter>Engine\Base</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
+    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -379,6 +381,9 @@
     <ClInclude Include="Base\DirectXCommon.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Box\BoxObject.h" />
+    <ClInclude Include="Game\Object\IObject.h" />
+    <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
