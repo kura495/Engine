@@ -67,16 +67,14 @@ ImGui::End();
 //ImGuizmo
 #ifdef _DEBUG
 static ImGuiWindowFlags gizmoWindowFlags = 0;
+ImGuiIO& io = ImGui::GetIO();
+ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+Matrix4x4 IdentityMat = CreateIdentity4x4();
+ImGuizmo::DrawGrid(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 	if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
-		ImGui::Begin("Gizmo",0,gizmoWindowFlags);
-		ImGuizmo::SetOrthographic(false);
-		ImGuizmo::SetDrawlist();
-		float windowWidth = (float)ImGui::GetWindowWidth();
-		float windowHeight = (float)ImGui::GetWindowHeight();
-		ImGuizmo::SetRect(ImGui::GetWindowPos().x,ImGui::GetWindowPos().y,windowWidth,windowHeight);
-		ImGuizmo::Manipulate(&viewProjction.CameraMatrix.m[0][0],&viewProjction.matProjection.m[0][0],ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
-		ImGui::End();
+	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::LOCAL,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
+	(*ObjectIt)->GetWorld().translation_ = (*ObjectIt)->GetWorld().GetTranslateFromMatWorld();
 	break;
 	}
 }
@@ -164,7 +162,7 @@ void GamePlayState::ControllObject()
 	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 		if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
 			(*ObjectIt)->ImGui();
-			//(*ObjectIt)->Update();
+			(*ObjectIt)->Update();
 			break;
 		}
 	}
