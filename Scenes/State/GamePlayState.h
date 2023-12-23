@@ -50,14 +50,12 @@ private:
 	WorldTransform world_;
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
+	void ControllObject();
+	void DeleteObject();
 
 	void AddBox();
-	void DeleteBox();
-	void ControllBox();
 
 	void AddPlane();
-	void DeletePlane();
-	void ControllPlane();
 
 	std::list<IObject*> object_;
 	int selectNumber_;

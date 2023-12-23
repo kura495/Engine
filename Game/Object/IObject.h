@@ -2,12 +2,16 @@
 #include <vector>
 #include "Model.h"
 
-
+static uint32_t ObjectNumber = 0;
 
 class IObject
 {
 public:
-	IObject() {}
+	IObject() {
+		objectNumber_ = ObjectNumber;
+		ObjectNumber++;
+	}
+	~IObject(){}
 
 	virtual void Initalize(std::vector<Model*> models) = 0;
 	virtual void Update() = 0;
@@ -16,6 +20,8 @@ public:
 	virtual void ImGui() = 0;
 
 	uint32_t GetNumber()const { return objectNumber_; };
+
+	WorldTransform& GetWorld() { return world_; };
 
 protected:
 

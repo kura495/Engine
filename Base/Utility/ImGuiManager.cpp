@@ -26,13 +26,14 @@ void ImGuiManager::BeginFrame()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
-	ImGuizmo::Enable(true);
-	ImGuizmo::IsOver();
-	ImGuizmo::IsUsing();
+}
+
+void ImGuiManager::GizmoUpdate()
+{
+	
 }
 
 void ImGuiManager::EndFrame()
 {
-	ImGuizmo::SetDrawlist();
 	ImGui::Render();
 }

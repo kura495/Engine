@@ -17,6 +17,7 @@ void GamePlayState::Initialize()
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
 	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
 	selectNumber_ = 0;
+	
 }
 
 void GamePlayState::Update()
@@ -30,21 +31,55 @@ else {
 	camera_->DebugCamera(false);
 }
 #endif // _DEBUG
-
-
+//ImGui
 #ifdef _DEBUG
-	ImGui::Begin("Box");
-	if (ImGui::Button("Add Box")) {
-		AddBox();
+ImGui::Begin("Object",nullptr,ImGuiWindowFlags_MenuBar);
+if (ImGui::BeginMenuBar()) {
+	if (ImGui::BeginMenu("Box")) {
+			
+		if (ImGui::Button("Add Box")) {
+			AddBox();
+		}
+
+		ImGui::EndMenu();
 	}
-	if (ImGui::Button("Delete Box")) {
-		DeleteBox();
+
+	if (ImGui::BeginMenu("Plane")) {
+
+		if (ImGui::Button("Add Plane")) {
+			AddPlane();
+		}
+
+		ImGui::EndMenu();
 	}
-	//Boxの数字を選択
-	ImGui::InputInt("Select",&selectNumber_);
-	//選択したBoxの操作と更新
-	ControllBox();
-	ImGui::End();
+
+
+	ImGui::EndMenuBar();
+
+	ImGui::InputInt("Select", &selectNumber_);
+	if (ImGui::Button("Delete")) {
+		DeleteObject();
+	}
+	ControllObject();
+}
+ImGui::End();
+#endif
+//ImGuizmo
+#ifdef _DEBUG
+static ImGuiWindowFlags gizmoWindowFlags = 0;
+for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+	if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
+		ImGui::Begin("Gizmo",0,gizmoWindowFlags);
+		ImGuizmo::SetOrthographic(false);
+		ImGuizmo::SetDrawlist();
+		float windowWidth = (float)ImGui::GetWindowWidth();
+		float windowHeight = (float)ImGui::GetWindowHeight();
+		ImGuizmo::SetRect(ImGui::GetWindowPos().x,ImGui::GetWindowPos().y,windowWidth,windowHeight);
+		ImGuizmo::Manipulate(&viewProjction.CameraMatrix.m[0][0],&viewProjction.matProjection.m[0][0],ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
+		ImGui::End();
+	break;
+	}
+}
 
 #endif
 
@@ -80,10 +115,40 @@ void GamePlayState::AddBox()
 {
 	IObject* box = new BoxObject;
 	box->Initalize(boxModel_);
+
+	if (selectNumber_ >= object_.size()) {
+		object_.push_back(box);
+		return;
+	}
+
+	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+		if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
+			object_.insert(ObjectIt,box);
+			return;
+		}
+	}
 	object_.push_back(box);
+
 }
 
-void GamePlayState::DeleteBox()
+void GamePlayState::AddPlane()
+{
+	IObject* plane = new PlaneObject;
+	plane->Initalize(planeModel_);
+	if (selectNumber_ >= object_.size()) {
+		object_.push_back(plane);
+		return;
+	}
+	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+		if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
+			object_.insert(ObjectIt, plane);
+			break;
+		}
+	}
+	object_.push_back(plane);
+}
+
+void GamePlayState::DeleteObject()
 {
 
 	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
@@ -94,29 +159,16 @@ void GamePlayState::DeleteBox()
 	}
 }
 
-void GamePlayState::ControllBox()
+void GamePlayState::ControllObject()
 {
 	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 		if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
 			(*ObjectIt)->ImGui();
-			(*ObjectIt)->Update();
+			//(*ObjectIt)->Update();
 			break;
 		}
 	}
 }
 
-void GamePlayState::AddPlane()
-{
 
-}
-
-void GamePlayState::DeletePlane()
-{
-
-}
-
-void GamePlayState::ControllPlane()
-{
-
-}
 
