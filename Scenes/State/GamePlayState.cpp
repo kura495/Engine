@@ -40,20 +40,15 @@ if (ImGui::BeginMenuBar()) {
 		if (ImGui::Button("Add Box")) {
 			AddBox();
 		}
-
 		ImGui::EndMenu();
 	}
-
 	if (ImGui::BeginMenu("Plane")) {
 
 		if (ImGui::Button("Add Plane")) {
 			AddPlane();
 		}
-
 		ImGui::EndMenu();
 	}
-
-
 	ImGui::EndMenuBar();
 
 	ImGui::InputInt("Select", &selectNumber_);
@@ -63,6 +58,23 @@ if (ImGui::BeginMenuBar()) {
 	ControllObject();
 }
 ImGui::End();
+ImGui::Begin("Editer");
+if (ImGuizmo::IsUsing())
+{
+	ImGui::Text("Using gizmo");
+}
+else
+{
+	ImGui::Text(ImGuizmo::IsOver() ? "Over gizmo" : "");
+	ImGui::SameLine();
+	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::TRANSLATE) ? "Over translate gizmo" : "");
+	ImGui::SameLine();
+	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::ROTATE) ? "Over rotate gizmo" : "");
+	ImGui::SameLine();
+	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::SCALE) ? "Over scale gizmo" : "");
+}
+ImGui::End();
+
 #endif
 //ImGuizmo
 #ifdef _DEBUG
@@ -73,8 +85,11 @@ Matrix4x4 IdentityMat = CreateIdentity4x4();
 ImGuizmo::DrawGrid(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 	if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
-	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::LOCAL,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
+	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
 	(*ObjectIt)->GetWorld().translation_ = (*ObjectIt)->GetWorld().GetTranslateFromMatWorld();
+
+	//ImGuizmo::ViewManipulate(&camera_->GetViewProjection().matView.m[0][0], 10, ImVec2(io.DisplaySize.x - 128, 0), ImVec2(128, 128), 0x10101010);
+
 	break;
 	}
 }
