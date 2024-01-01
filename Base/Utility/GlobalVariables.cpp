@@ -51,6 +51,26 @@ void GlobalVariables::Update()
 					Vector3* ptr = std::get_if<Vector3>(&item.value);
 					ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), -10, 10);
 				}
+			else if (std::holds_alternative<Matrix4x4>(item.value)) {
+				Matrix4x4* ptr = std::get_if<Matrix4x4>(&item.value);
+				std::string Name = itemName + "0";
+					ImGui::SliderFloat4(Name.c_str(), &ptr->m[0][0], -10, 10);
+					Name = itemName + "1";
+					ImGui::SliderFloat4(Name.c_str(), &ptr->m[1][0], -10, 10);
+					Name = itemName + "2";
+					ImGui::SliderFloat4(Name.c_str(), &ptr->m[2][0], -10, 10);
+					Name = itemName + "3";
+					ImGui::SliderFloat4(Name.c_str(), &ptr->m[3][0], -10, 10);
+				}
+			else if (std::holds_alternative<TransformQua>(item.value)) {
+			/*	TransformQua* ptr = std::get_if<TransformQua>(&item.value);
+				ImGui::Begin("Box");
+				ImGui::DragFloat3("Scale", &ptr->scale.x);
+				ImGui::DragFloat4("Rotate", &ptr->quaternion.x);
+				ImGui::DragFloat3("Translate", &ptr->translate.x);
+				ImGui::End();*/
+				continue;
+				}
 			//読み込んだ型がItem構造体にない時とか
 			else {
 					assert(false);
@@ -100,6 +120,24 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 		SetValue(groupName, key, value);
 	}
 }
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Matrix4x4& value)
+{
+	//グループの参照を取得
+	Group& group = datas_[groupName];
+	//アイテムが未登録なら
+	if (!group.items.contains(key)) {
+		SetValue(groupName, key, value);
+	}
+}
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const TransformQua& value)
+{
+	//グループの参照を取得
+	Group& group = datas_[groupName];
+	//アイテムが未登録なら
+	if (!group.items.contains(key)) {
+		SetValue(groupName, key, value);
+	}
+}
 //void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const bool& value)
 //{
 //	//グループの参照を取得
@@ -133,6 +171,26 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 	group.items[key] = newItem;
 }
 void GlobalVariables::SetValue(const std::string& groupName, const std::string& key,const Vector3& value)
+{
+	//グループの参照を取得
+	Group& group = datas_[groupName];
+	//新しい項目のデータを設定
+	Item newItem{};
+	newItem.value = value;
+	//設定した項目をstd::mapに追加
+	group.items[key] = newItem;
+}
+void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, const Matrix4x4& value)
+{
+	//グループの参照を取得
+	Group& group = datas_[groupName];
+	//新しい項目のデータを設定
+	Item newItem{};
+	newItem.value = value;
+	//設定した項目をstd::mapに追加
+	group.items[key] = newItem;
+}
+void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, const TransformQua& value)
 {
 	//グループの参照を取得
 	Group& group = datas_[groupName];
@@ -189,6 +247,17 @@ Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std
 
 	return std::get<Vector3>(group.items.at(key).value);
 }
+TransformQua GlobalVariables::GetTransformQuaValue(const std::string& groupName, const std::string& key) const
+{
+	//グループがあるか見てみる　なければアサ―ト
+	assert(datas_.contains(groupName));
+	//グループの参照を取得
+	const Group& group = datas_.at(groupName);
+	//指定したグループに指定したキーが存在しない
+	assert(group.items.contains(key));
+
+	return std::get<TransformQua>(group.items.at(key).value);
+}
 //bool GlobalVariables::GetboolValue(const std::string& groupName, const std::string& key) const
 //{
 //	//グループがあるか見てみる　なければアサ―ト
@@ -201,6 +270,17 @@ Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std
 //	return std::get<bool>(group.items.at(key).value);
 //}
 #pragma endregion Getter
+
+void GlobalVariables::UpdateTransformQuaItem(const std::string& groupName, const std::string& key,const TransformQua& value)
+{
+	//グループの参照を取得
+	Group& group = datas_[groupName];
+	//新しい項目のデータを設定
+	Item newItem{};
+	newItem.value = value;
+	//設定した項目をstd::mapに追加
+	group.items[key] = newItem;
+}
 
 void GlobalVariables::SaveFile(const std::string& groupName)
 {
@@ -236,6 +316,25 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 			//float型のjson配列登録をする
 			Vector3 value = std::get<Vector3>(item.value);
 			root[groupName][itemName] = json::array({ value.x, value.y, value.z });
+		}
+		else if (std::holds_alternative<Matrix4x4>(item.value)) {
+			//float型のjson配列登録をする
+			Matrix4x4 value = std::get<Matrix4x4>(item.value);
+			root[groupName][itemName] = json::array({ 
+				value.m[0][0], value.m[0][1], value.m[0][2],value.m[0][3],
+				value.m[1][0], value.m[1][1], value.m[1][2],value.m[1][3],
+				value.m[2][0], value.m[2][1], value.m[2][2],value.m[2][3],
+				value.m[3][0], value.m[3][1], value.m[3][2],value.m[3][3],
+				});
+		}
+		else if (std::holds_alternative<TransformQua>(item.value)) {
+			//float型のjson配列登録をする
+			TransformQua value = std::get<TransformQua>(item.value);
+			root[groupName][itemName] = json::array({ 
+				value.scale.x,value.scale.y,value.scale.z,
+				value.quaternion.x,value.quaternion.y,value.quaternion.z,value.quaternion.w,
+				value.translate.x,value.translate.y,value.translate.z,
+				});
 		}
 		//ディレクトリのパス
 		std::filesystem::path dir(kDirectoryPath);
@@ -312,6 +411,8 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 	json::iterator itGroup = root.find(groupName);
 	//未登録チェック
 	assert(itGroup != root.end());
+
+
 	//各アイテムを探す
 	for (json::iterator itItem = itGroup->begin(); itItem != itGroup->end(); ++itItem) {
 		//アイテム名を取得
@@ -334,6 +435,24 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 		else if (itItem->is_array() && itItem->size() == 3) {
 			//float型のjson配列登録
 			Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
+			SetValue(groupName, itemName, value);
+		}
+		else if (itItem->is_array() && itItem->size() == 10) {
+			//float型のjson配列登録
+			TransformQua value = { 
+				.scale{ itItem->at(0), itItem->at(1), itItem->at(2)},
+				.quaternion{itItem->at(3), itItem->at(4), itItem->at(5), itItem->at(6)},
+				.translate{ itItem->at(7), itItem->at(8), itItem->at(9)}
+			};
+			SetValue(groupName, itemName, value);
+		}
+		else if (itItem->is_array() && itItem->size() == 16) {
+			//float型のjson配列登録
+			Matrix4x4 value = { 
+				itItem->at(0), itItem->at(1), itItem->at(2),itItem->at(3),
+				itItem->at(4), itItem->at(5), itItem->at(6),itItem->at(7),
+				itItem->at(8), itItem->at(9), itItem->at(10),itItem->at(11),
+				itItem->at(12), itItem->at(13), itItem->at(14),itItem->at(15), };
 			SetValue(groupName, itemName, value);
 		}
 	}

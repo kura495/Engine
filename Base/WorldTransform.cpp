@@ -25,7 +25,7 @@ void WorldTransform::TransferMatrix()
 
 void WorldTransform::UpdateMatrix()
 {
-	Matrix4x4 AffineMatrix = MakeAffineMatrix(scale_, quaternion, translation_);
+	Matrix4x4 AffineMatrix = MakeAffineMatrix(transform_.scale, transform_.quaternion, transform_.translate);
 	matWorld_ = AffineMatrix;
 	//親があれば親のワールド行列を掛ける
 	if (parent_) {

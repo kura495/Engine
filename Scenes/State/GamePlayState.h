@@ -48,6 +48,8 @@ private:
 
 
 	WorldTransform world_;
+
+	void LoadObject();
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	void ControllObject();

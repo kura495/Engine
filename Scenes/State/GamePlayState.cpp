@@ -12,11 +12,15 @@ void GamePlayState::Initialize()
 
 	DirectX_ = DirectXCommon::GetInstance();
 
-	//
+	// 
 	//3Dオブジェクト生成
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
 	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
 	selectNumber_ = 0;
+	
+	globalVariables = GlobalVariables::GetInstance();
+
+	globalVariables->CreateGroup("Editer");
 	
 }
 
@@ -58,22 +62,23 @@ if (ImGui::BeginMenuBar()) {
 	ControllObject();
 }
 ImGui::End();
-ImGui::Begin("Editer");
-if (ImGuizmo::IsUsing())
-{
-	ImGui::Text("Using gizmo");
-}
-else
-{
-	ImGui::Text(ImGuizmo::IsOver() ? "Over gizmo" : "");
-	ImGui::SameLine();
-	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::TRANSLATE) ? "Over translate gizmo" : "");
-	ImGui::SameLine();
-	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::ROTATE) ? "Over rotate gizmo" : "");
-	ImGui::SameLine();
-	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::SCALE) ? "Over scale gizmo" : "");
-}
-ImGui::End();
+
+//ImGui::Begin("Editer");
+//if (ImGuizmo::IsUsing())
+//{
+//	ImGui::Text("Using gizmo");
+//}
+//else
+//{
+//	ImGui::Text(ImGuizmo::IsOver() ? "Over gizmo" : "");
+//	ImGui::SameLine();
+//	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::TRANSLATE) ? "Over translate gizmo" : "");
+//	ImGui::SameLine();
+//	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::ROTATE) ? "Over rotate gizmo" : "");
+//	ImGui::SameLine();
+//	ImGui::Text(ImGuizmo::IsOver(ImGuizmo::SCALE) ? "Over scale gizmo" : "");
+//}
+//ImGui::End();
 
 #endif
 //ImGuizmo
@@ -86,7 +91,7 @@ ImGuizmo::DrawGrid(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetV
 for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
 	if ((uint32_t)selectNumber_ == (*ObjectIt)->GetNumber()) {
 	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
-	(*ObjectIt)->GetWorld().translation_ = (*ObjectIt)->GetWorld().GetTranslateFromMatWorld();
+	(*ObjectIt)->GetWorld().transform_.translate = (*ObjectIt)->GetWorld().GetTranslateFromMatWorld();
 
 	//ImGuizmo::ViewManipulate(&camera_->GetViewProjection().matView.m[0][0], 10, ImVec2(io.DisplaySize.x - 128, 0), ImVec2(128, 128), 0x10101010);
 
@@ -129,6 +134,12 @@ void GamePlayState::AddBox()
 	IObject* box = new BoxObject;
 	box->Initalize(boxModel_);
 
+	std::string Number = std::to_string(box->GetNumber());
+
+	std::string Name = "Box" + Number;
+	globalVariables->AddItem("Editer",Name, box->GetWorld().transform_);
+	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
+
 	if (selectNumber_ >= object_.size()) {
 		object_.push_back(box);
 		return;
@@ -170,6 +181,11 @@ void GamePlayState::DeleteObject()
 			break;
 		}
 	}
+}
+
+void GamePlayState::LoadObject()
+{
+
 }
 
 void GamePlayState::ControllObject()

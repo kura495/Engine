@@ -22,8 +22,8 @@ void PlaneObject::ImGui()
 {
 	ImGui::Begin("PlaneObject");
 	ImGui::Text("Objectnumber %d", objectNumber_);
-	ImGui::DragFloat3("Scale", &world_.scale_.x);
-	ImGui::DragFloat3("Rotate", &world_.quaternion.x);
-	ImGui::DragFloat3("Translate", &world_.translation_.x);
+	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
+	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
+	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
 	ImGui::End();
 }
