@@ -6,24 +6,24 @@ void Plane::Initalize(const std::string filePath)
 	directX_ = DirectXCommon::GetInstance();
 	light_ = Light::GetInstance();
 
-	modelData.vertices.push_back({ .position = { left.top },  .texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
-	modelData.vertices.push_back({ .position = {right.top},	  .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
-	modelData.vertices.push_back({ .position = {left.bottom}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {left.bottom}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {right.top},	  .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
-	modelData.vertices.push_back({ .position = {right.bottom},.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
+	modelData.vertices.push_back({ .position = { left.top },  .texcoord = {0.0f,0.0f},.normal = {0.0f,1.0f,0.0f} });//左上
+	modelData.vertices.push_back({ .position = {right.top},	  .texcoord = {1.0f,0.0f},.normal = {0.0f,1.0f,0.0f} });//右上
+	modelData.vertices.push_back({ .position = {left.bottom}, .texcoord = {0.0f,1.0f},.normal = {0.0f,1.0f,0.0f} });//左下
+	modelData.vertices.push_back({ .position = {left.bottom}, .texcoord = {0.0f,1.0f},.normal = {0.0f,1.0f,0.0f} });//左下
+	modelData.vertices.push_back({ .position = {right.top},	  .texcoord = {1.0f,0.0f},.normal = {0.0f,1.0f,0.0f} });//右上
+	modelData.vertices.push_back({ .position = {right.bottom},.texcoord = {1.0f,1.0f},.normal = {0.0f,1.0f,0.0f} });//右下
 	modelData.material.textureFilePath = filePath;
 	int Texture = textureManager_->LoadTexture(modelData.material.textureFilePath);
 	modelData.TextureIndex = Texture;
-
+	
 	world_.Initialize();
 
 	CreateResources();
 
 	materialData->enableLighting = Lighting::NotDo;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
-
-
+	materialData->uvTransform = CreateIdentity4x4();
+	
 }
 
 void Plane::Update()
@@ -85,15 +85,19 @@ void Plane::ImGui()
 	Vector4 Manipulate;
 	if (selectNumber_ == 0) {
 		Manipulate = modelData.vertices[0].position;
+		ImGui::Text("LeftTop");
 	}
 	if (selectNumber_ == 1) {
 		Manipulate = modelData.vertices[2].position;
+		ImGui::Text("LeftBottom");
 	}
 	if (selectNumber_ == 2) {
 		Manipulate = modelData.vertices[5].position;
+		ImGui::Text("LeftBottom");
 	}
 	if (selectNumber_ == 3) {
 		Manipulate = modelData.vertices[1].position;
+		ImGui::Text("RightTop");
 	}
 	ImGui::DragFloat3("PointTranslate",&Manipulate.x);
 	if (selectNumber_ == 0) {
