@@ -17,6 +17,9 @@ void GamePlayState::Initialize()
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
 	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
 	selectNumber_ = 0;
+
+	plane_ = std::make_unique<Plane>();
+	plane_->Initalize("resources/uvChecker.png");
 	
 	globalVariables = GlobalVariables::GetInstance();
 
@@ -101,6 +104,8 @@ for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != objec
 
 #endif
 
+	plane_->Update();
+
 	camera_->Update();
 	viewProjction = camera_->GetViewProjection();
 
@@ -114,6 +119,7 @@ void GamePlayState::Draw()
 		(*ObjectIt)->Draw(camera_->GetViewProjection());
 
 	}
+	plane_->Draw(camera_->GetViewProjection());
 
 	//3Dモデル描画ここまで	
 	
