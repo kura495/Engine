@@ -24,7 +24,7 @@
 
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
-
+#include "Game/Object/Player/Player.h"
 
 class GamePlayState :public GameState
 {
@@ -52,9 +52,12 @@ private:
 
 	std::unique_ptr<Plane>plane_;
 
+	std::unique_ptr<Player>player_;
+
 	void LoadObject();
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
+	std::vector<Model*> playerModel_;
 	void ControllObject();
 	void DeleteObject();
 

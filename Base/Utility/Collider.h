@@ -9,7 +9,7 @@ public:
 
 	virtual ~Collider(){};
 	//衝突時に呼ばれる関数
-	virtual void OnCollision(uint32_t collisionAttribute) = 0;
+	virtual void OnCollision(const Collider* collider) = 0;
 	float GetRadius() { return Radius_; }
 
 	uint32_t GetcollitionAttribute() const { return collisionAttribute_; }

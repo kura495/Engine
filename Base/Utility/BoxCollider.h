@@ -14,13 +14,10 @@ class BoxCollider : public Collider
 public:
 
 	void Initialize();
-	void Update(const WorldTransform* Parent);
-	//void Draw();
-	
-	//virtual void OnCollision(uint32_t collisionAttribute) = 0;
+	void Update();
 
 	///worldの親を設定
-	void SetParent(const WorldTransform& Parent) { world_ = Parent; }
+	void SetWorld(WorldTransform* Parent) { center_ = Parent; }
 	
 	void SetSize(Vector3 range) { range_ = range; }
 	AABB GetSize() { return aabb_; }
@@ -33,13 +30,9 @@ private:
 	/// <summary>
 	/// 原点
 	/// </summary>
-	WorldTransform world_;
+	WorldTransform* center_;
 	/// <summary>
 	/// 箱の大きさ
 	/// </summary>
 	AABB aabb_ = {};
-	/// <summary>
-	/// 箱の中心
-	/// </summary>
-	Vector3 center = {0.0f,0.0f,0.0f};
 };

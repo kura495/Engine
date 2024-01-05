@@ -92,17 +92,17 @@ void CollisionManager::CheckCollisionBox(BoxCollider * colliderA, BoxCollider * 
 		) {
 		if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0) {
 			// コライダーAの衝突時コールバック
-			colliderA->OnCollision(colliderB->GetcollitionAttribute());
+			colliderA->OnCollision(colliderB);
 		}
 		else if ((colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
 			// コライダーBの衝突時コールバック
-			colliderB->OnCollision(colliderA->GetcollitionAttribute());
+			colliderB->OnCollision(colliderA);
 		}
 		else {
 			// コライダーAの衝突時コールバック
-			colliderA->OnCollision(colliderB->GetcollitionAttribute());
+			colliderA->OnCollision(colliderB);
 			// コライダーBの衝突時コールバック
-			colliderB->OnCollision(colliderA->GetcollitionAttribute());
+			colliderB->OnCollision(colliderA);
 		}
 	}
 
