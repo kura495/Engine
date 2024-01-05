@@ -17,6 +17,9 @@ public:
 
 private:
 
+	void Gravity();
+	const float kGravity = 0.98f;
+
 };
 
 

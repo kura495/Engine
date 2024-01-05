@@ -11,7 +11,7 @@ void GamePlayState::Initialize()
 	light_ = Light::GetInstance();
 
 	DirectX_ = DirectXCommon::GetInstance();
-
+	collisionManager = std::make_unique<CollisionManager>();
 	// 
 	//3Dオブジェクト生成
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
@@ -121,7 +121,10 @@ for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != objec
 	camera_->Update();
 	viewProjction = camera_->GetViewProjection();
 
-
+	collisionManager->AddBoxCollider(player_.get());
+	collisionManager->AddBoxCollider(plane_.get());
+	collisionManager->CheckAllCollisions();
+	collisionManager->ClearCollider();
 }
 
 void GamePlayState::Draw()

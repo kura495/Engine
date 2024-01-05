@@ -21,6 +21,7 @@
 #include "ViewProjection.h"
 #include "Math_Structs.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
+#include "Base/Utility/CollisionManager.h"
 
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
@@ -44,6 +45,7 @@ private:
 	Light* light_ = nullptr;
 	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
+	std::unique_ptr<CollisionManager> collisionManager;
 
 	ViewProjection viewProjction;
 

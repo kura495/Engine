@@ -23,7 +23,12 @@ void Plane::Initalize(const std::string filePath)
 	materialData->enableLighting = Lighting::NotDo;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
 	materialData->uvTransform = CreateIdentity4x4();
-	
+
+	BoxCollider::Initialize();
+	Collider::SetWorld(&world_);
+	BoxCollider::SetSize({ 1.0f,0.0f,1.0f });
+	SetcollitionAttribute(kCollitionAttributeFloor);
+	SetcollisionMask(~kCollitionAttributeFloor);
 }
 
 void Plane::Update()
@@ -31,6 +36,12 @@ void Plane::Update()
 #ifdef _DEBUG
 	ImGui();
 #endif
+
+	BoxCollider::SetSize({ 
+	modelData.vertices[0].position.x - modelData.vertices[1].position.x ,
+	modelData.vertices[0].position.y - modelData.vertices[2].position.y,
+	modelData.vertices[4].position.z - modelData.vertices[5].position.z });
+	BoxCollider::Update();
 	world_.UpdateMatrix();
 }
 
@@ -53,6 +64,14 @@ void Plane::Draw(const ViewProjection& viewProjection)
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
 	directX_->GetcommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+}
+
+void Plane::OnCollision(const Collider* collider)
+{
+	if (collider->GetcollitionAttribute()) {
+		return;
+	}
+
 }
 
 void Plane::CreateResources()
@@ -121,5 +140,7 @@ void Plane::ImGui()
 		vertexData[4].position = Manipulate;
 	}
 	ImGui::End();
+
+
 #endif
 }

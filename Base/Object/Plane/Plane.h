@@ -8,18 +8,23 @@
 #include "Math/MatrixCalc.h"
 #include "ModelData.h"
 
+#include "Utility/BoxCollider.h"
+
 struct Line {
 	Vector4 top;
 	Vector4 bottom;
 };
 
-class Plane {
+class Plane : public BoxCollider
+{
 public:
 	void Initalize(const std::string filePath);
 
 	void Update();
 
 	void Draw(const ViewProjection& viewProjection);
+
+	void OnCollision(const Collider*collider)override;
 
 private:
 	ModelData modelData;

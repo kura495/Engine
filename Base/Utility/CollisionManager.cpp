@@ -32,7 +32,6 @@ void CollisionManager::CheckAllCollisions() {
 		}
 	}
 }
-
 //void CollisionManager::CheckCollisionCircle(Collider * colliderA, Collider * colliderB) {
 //	// 判定対象AとBの座標
 //	Vector3 posA = { 1.0f,1.0f,1.0f }, posB = {1.0f, 1.0f,1.0f};
@@ -67,13 +66,10 @@ void CollisionManager::CheckAllCollisions() {
 //		}
 //	}
 //}
-
-
 //void CollisionManager::CheckCollitionOBBox(OBBoxCollider* colliderA, OBBoxCollider* colliderB)
 //{
 //	
 //}
-
 void CollisionManager::CheckCollisionBox(BoxCollider * colliderA, BoxCollider * colliderB)
 {
 	// 判定対象AとBの座標
