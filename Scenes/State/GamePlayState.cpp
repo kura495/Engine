@@ -29,6 +29,12 @@ void GamePlayState::Initialize()
 
 	globalVariables->CreateGroup("Editer");
 	
+	globalVariables->AddItem("Editer", "BoxCount", boxObjectCount);
+	boxObjectCount = globalVariables->GetIntValue("Editer", "BoxCount");
+	for (int32_t boxit = 0; boxit < boxObjectCount;boxit++) {
+		AddBox();
+	}
+
 }
 
 void GamePlayState::Update()
@@ -50,6 +56,8 @@ if (ImGui::BeginMenuBar()) {
 			
 		if (ImGui::Button("Add Box")) {
 			AddBox();
+			boxObjectCount++;
+			globalVariables->Updateint32_tItem("Editer","BoxCount", boxObjectCount);
 		}
 		ImGui::EndMenu();
 	}
@@ -149,6 +157,7 @@ void GamePlayState::AddBox()
 
 	std::string Name = "Box" + Number;
 	globalVariables->AddItem("Editer",Name, box->GetWorld().transform_);
+
 	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 
 	if (selectNumber_ >= object_.size()) {

@@ -271,6 +271,17 @@ TransformQua GlobalVariables::GetTransformQuaValue(const std::string& groupName,
 //}
 #pragma endregion Getter
 
+void GlobalVariables::Updateint32_tItem(const std::string& groupName, const std::string& key, const int32_t& value)
+{
+	//グループの参照を取得
+	Group& group = datas_[groupName];
+	//新しい項目のデータを設定
+	Item newItem{};
+	newItem.value = value;
+	//設定した項目をstd::mapに追加
+	group.items[key] = newItem;
+}
+
 void GlobalVariables::UpdateTransformQuaItem(const std::string& groupName, const std::string& key,const TransformQua& value)
 {
 	//グループの参照を取得
@@ -281,6 +292,7 @@ void GlobalVariables::UpdateTransformQuaItem(const std::string& groupName, const
 	//設定した項目をstd::mapに追加
 	group.items[key] = newItem;
 }
+
 
 void GlobalVariables::SaveFile(const std::string& groupName)
 {

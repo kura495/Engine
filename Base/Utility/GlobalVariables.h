@@ -44,7 +44,7 @@ public:
 	TransformQua GetTransformQuaValue(const std::string& groupName, const std::string& key)const;
 	//bool GetboolValue(const std::string& groupName, const std::string& key)const;
 #pragma endregion Getter
-
+	void Updateint32_tItem(const std::string& groupName, const std::string& key, const int32_t& value);
 	void UpdateTransformQuaItem(const std::string& groupName, const std::string& key, const TransformQua& value);
 
 	//ファイルにデータを保存

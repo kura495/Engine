@@ -62,6 +62,7 @@ private:
 	void DeleteObject();
 
 	void AddBox();
+	int32_t boxObjectCount;
 
 	void AddPlane();
 
