@@ -56,7 +56,6 @@ private:
 
 	std::unique_ptr<Player>player_;
 
-	void LoadObject();
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> playerModel_;
@@ -65,9 +64,12 @@ private:
 
 	void AddBox();
 	int32_t boxObjectCount;
+	int32_t PlaneObjectCount;
 
 	void AddPlane();
 
-	std::list<IObject*> object_;
-	int selectNumber_;
+	std::list<BoxObject*> boxObject_;
+	std::list<PlaneObject*> planeObject_;
+	int boxSelectNumber_;
+	int planeSelectNumber_;
 };

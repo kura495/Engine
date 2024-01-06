@@ -18,7 +18,7 @@ void Player::Update()
 #ifdef _DEBUG
 	ImGui();
 #endif
-	Gravity();
+	//Gravity();
 	BoxCollider::Update();
 	world_.UpdateMatrix();
 }

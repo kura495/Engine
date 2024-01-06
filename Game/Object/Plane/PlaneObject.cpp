@@ -26,4 +26,8 @@ void PlaneObject::ImGui()
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
 	ImGui::End();
+	std::string Number = std::to_string(GetNumber());
+
+	std::string Name = "Plane" + Number;
+	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform_);
 }
