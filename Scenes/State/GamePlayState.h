@@ -16,7 +16,6 @@
 #pragma comment(lib,"dxguid.lib")
 
 #include "Base/Camera/Camera.h"
-#include "Base/Object/Plane/Plane.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Math_Structs.h"
@@ -51,8 +50,6 @@ private:
 
 
 	WorldTransform world_;
-
-	std::unique_ptr<Plane>plane_;
 
 	std::unique_ptr<Player>player_;
 

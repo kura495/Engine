@@ -205,7 +205,6 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
     <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
-    <ClCompile Include="Base\Object\Plane\Plane.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -386,7 +385,6 @@
     <ClInclude Include="Game\Object\Box\BoxObject.h" />
     <ClInclude Include="Game\Object\IObject.h" />
     <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
-    <ClInclude Include="Base\Object\Plane\Plane.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\Character.h" />
   </ItemGroup>

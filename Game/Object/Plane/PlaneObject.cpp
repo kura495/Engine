@@ -4,11 +4,19 @@ void PlaneObject::Initalize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
+
+	BoxCollider::Initialize();
+	Collider::SetWorld(&world_);
+	BoxCollider::SetSize({ 10.0f,0.0f,10.0f });
+	SetcollitionAttribute(kCollitionAttributeFloor);
+	SetcollisionMask(~kCollitionAttributeFloor);
 }
 
 void PlaneObject::Update()
 {
 	world_.UpdateMatrix();
+
+	BoxCollider::Update();
 }
 
 void PlaneObject::Draw(const ViewProjection& viewProj)
@@ -30,4 +38,11 @@ void PlaneObject::ImGui()
 
 	std::string Name = "Plane" + Number;
 	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform_);
+}
+
+void PlaneObject::OnCollision(const Collider* collider)
+{
+	if (collider->GetcollitionAttribute()) {
+		return;
+	}
 }

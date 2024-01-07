@@ -22,6 +22,7 @@ void GamePlayState::Initialize()
 
 	player_ = std::make_unique<Player>();
 	player_->Initalize(playerModel_);
+	player_->SetViewProjection(&camera_->GetViewProjection());
 	
 	globalVariables = GlobalVariables::GetInstance();
 
@@ -112,10 +113,22 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 	camera_->Update();
 	viewProjction = camera_->GetViewProjection();
 
-	//collisionManager->AddBoxCollider(player_.get());
-	//collisionManager->AddBoxCollider(plane_.get());
-	//collisionManager->CheckAllCollisions();
-	//collisionManager->ClearCollider();
+	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
+		(*ObjectIt)->Update();
+
+	}
+	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
+		(*ObjectIt)->Update();
+
+	}
+
+	collisionManager->AddBoxCollider(player_.get());
+	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
+
+		collisionManager->AddBoxCollider((*ObjectIt));
+	}
+	collisionManager->CheckAllCollisions();
+	collisionManager->ClearCollider();
 }
 
 void GamePlayState::Draw()
@@ -211,14 +224,12 @@ void GamePlayState::ControllObject()
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
 			(*ObjectIt)->ImGui();
-			(*ObjectIt)->Update();
 			break;
 		}
 	}
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
 			(*ObjectIt)->ImGui();
-			(*ObjectIt)->Update();
 			break;
 		}
 	}

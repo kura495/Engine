@@ -4,11 +4,19 @@ void BoxObject::Initalize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
+
+	BoxCollider::Initialize();
+	Collider::SetWorld(&world_);
+	BoxCollider::SetSize({ 1.0f,0.0f,1.0f });
+	SetcollitionAttribute(kCollitionAttributeFloor);
+	SetcollisionMask(~kCollitionAttributeFloor);
 }
 
 void BoxObject::Update()
 {
 	world_.UpdateMatrix();
+
+	BoxCollider::Update();
 }
 
 void BoxObject::Draw(const ViewProjection& viewProj)
@@ -30,5 +38,12 @@ void BoxObject::ImGui()
 
 	std::string Name = "Box" + Number;
 	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name,world_.transform_);
+}
+
+void BoxObject::OnCollision(const Collider* collider)
+{
+	if (collider->GetcollitionAttribute()) {
+		return;
+	}
 }
 

@@ -2,6 +2,7 @@
 
 #include "Game/Object/Character.h"
 #include "Base/Utility/BoxCollider.h"
+#include "Base/Input/Input.h"
 
 class Player : public Character	, public BoxCollider
 {
@@ -15,11 +16,32 @@ public:
 
 	void OnCollision(const Collider* collider)override;
 
+	void Move();
+#pragma region Setter
+	void SetViewProjection(const ViewProjection* viewProjection) {
+		viewProjection_ = viewProjection;
+	}
+#pragma endregion
+
 private:
+	Input* input = nullptr;
 
 	void Gravity();
 	const float kGravity = 0.98f;
 
+	XINPUT_STATE joyState;
+	XINPUT_STATE joyStatePre;
+
+	Vector3 move;
+	//プレイヤーの移動
+	float speed = 0.5f;
+
+	Vector3 jumpForce;
+	//武器や腕の回転クォータニオン
+	Quaternion moveQuaternion_;
+
+	//カメラのビュープロジェクション
+	const ViewProjection* viewProjection_ = nullptr;
 };
 
 
