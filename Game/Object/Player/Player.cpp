@@ -79,8 +79,9 @@ void Player::OnCollision(const Collider* collider)
 		ImGui::End();
 #endif
 		Vector3 colliderPos = collider->GetCenter();
-		if (world_.transform_.translate.x < colliderPos.x) {
-			world_.transform_.translate.x = colliderPos.x;
+		if (world_.transform_.translate.x > colliderPos.x - collider->GetSize().x - Collider::GetSize().x) {
+			world_.transform_.translate.x = colliderPos.x - collider->GetSize().x - Collider::GetSize().x;
+			world_.UpdateMatrix();
 		}
 	}
 	return;
