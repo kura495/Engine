@@ -95,14 +95,12 @@ ImGuizmo::DrawGrid(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetV
 for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 	if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
 	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
-	(*ObjectIt)->GetWorld().transform_.translate = (*ObjectIt)->GetWorld().GetTranslateFromMatWorld();
 	break;
 	}
 }
 for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 	if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
 	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
-	(*ObjectIt)->GetWorld().transform_.translate = (*ObjectIt)->GetWorld().GetTranslateFromMatWorld();
 	break;
 	}
 }
@@ -124,7 +122,9 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 
 	collisionManager->AddBoxCollider(player_.get());
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-
+		collisionManager->AddBoxCollider((*ObjectIt));
+	}
+	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		collisionManager->AddBoxCollider((*ObjectIt));
 	}
 	collisionManager->CheckAllCollisions();
@@ -168,19 +168,7 @@ void GamePlayState::AddBox()
 
 	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 
-	if (boxSelectNumber_ >= boxObject_.size()) {
 		boxObject_.push_back(box);
-		return;
-	}
-
-	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-		if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
-			boxObject_.insert(ObjectIt,box);
-			return;
-		}
-	}
-	boxObject_.push_back(box);
-
 }
 
 void GamePlayState::AddPlane()
@@ -195,17 +183,7 @@ void GamePlayState::AddPlane()
 
 	plane->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 
-	if (planeSelectNumber_ >= planeObject_.size()) {
 		planeObject_.push_back(plane);
-		return;
-	}
-	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-		if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
-			planeObject_.insert(ObjectIt, plane);
-			break;
-		}
-	}
-	planeObject_.push_back(plane);
 }
 
 void GamePlayState::DeleteObject()

@@ -17,6 +17,7 @@ public:
 	void OnCollision(const Collider* collider)override;
 
 	void Move();
+
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
@@ -28,6 +29,7 @@ private:
 
 	void Gravity();
 	const float kGravity = 0.98f;
+	bool IsGravity = true;
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;

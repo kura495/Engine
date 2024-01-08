@@ -8,14 +8,15 @@ void BoxObject::Initalize(std::vector<Model*> models)
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
 	BoxCollider::SetSize({ 1.0f,0.0f,1.0f });
-	SetcollitionAttribute(kCollitionAttributeFloor);
-	SetcollisionMask(~kCollitionAttributeFloor);
+	SetcollitionAttribute(kCollitionAttributeBox);
+	SetcollisionMask(~kCollitionAttributeBox);
 }
 
 void BoxObject::Update()
 {
 	world_.UpdateMatrix();
-
+	BoxCollider::SetSize({
+	world_.transform_.scale.x,world_.transform_.scale.y,world_.transform_.scale.z});
 	BoxCollider::Update();
 }
 

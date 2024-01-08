@@ -26,6 +26,9 @@ public:
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
+
+	ModelData GetModelData() const { return modelData_; }
+
 private:
 
 	DirectXCommon* directX_ = nullptr;

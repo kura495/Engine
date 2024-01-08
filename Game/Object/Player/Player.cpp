@@ -23,8 +23,18 @@ void Player::Update()
 	input->GetJoystickState(joyState);
 
 	Move();
+#ifdef _DEBUG
+	ImGui::Begin("Player");
+	if (ImGui::Button("Gravity")) {
+		IsGravity = !IsGravity;
+	}
+	ImGui::End();
+#endif
+	if (IsGravity == true) {
+		Gravity();
+	}
 
-	Gravity();
+
 	BoxCollider::Update();
 	world_.UpdateMatrix();
 
@@ -47,6 +57,9 @@ void Player::ImGui()
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
+	if (ImGui::Button("Reset")) {
+		world_.transform_.translate = { 0.0f };
+	}
 	ImGui::End();
 #endif
 }
@@ -58,6 +71,16 @@ void Player::OnCollision(const Collider* collider)
 		if (collider->GetCenter().y > world_.transform_.translate.y) {
 			world_.transform_.translate.y = collider->GetCenter().y;
 			world_.UpdateMatrix();
+		}
+	}
+	else if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
+#ifdef _DEBUG
+		ImGui::Begin("BoxHit");
+		ImGui::End();
+#endif
+		Vector3 colliderPos = collider->GetCenter();
+		if (world_.transform_.translate.x < colliderPos.x) {
+			world_.transform_.translate.x = colliderPos.x;
 		}
 	}
 	return;
