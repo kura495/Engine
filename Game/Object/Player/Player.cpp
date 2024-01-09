@@ -5,6 +5,7 @@ void Player::Initalize(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	world_.transform_.translate.y = 1.0f;
+	world_.transform_.scale.y = 2.0f;
 	world_.UpdateMatrix();
 	input = Input::GetInstance();
 
@@ -27,6 +28,7 @@ void Player::Update()
 
 	Move();
 
+	Gravity();
 
 	BoxCollider::Update();
 	world_.UpdateMatrix();
@@ -51,7 +53,7 @@ void Player::ImGui()
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
 	if (ImGui::Button("Reset")) {
-		world_.transform_.translate = { 0.0f };
+		world_.transform_.translate = { 0.0f,1.0f,0.0f };
 	}
 	ImGui::End();
 #endif
@@ -60,15 +62,24 @@ void Player::ImGui()
 void Player::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute() == kCollitionAttributeFloor) {
-
+#ifdef _DEBUG
+		ImGui::Begin("FloorHit");
+		ImGui::End();
+#endif
 		if (collider->GetCenter().y > world_.transform_.translate.y) {
 			world_.transform_.translate.y = collider->GetCenter().y;
 			world_.UpdateMatrix();
 		}
 	}
 	else if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
+#ifdef _DEBUG
+		ImGui::Begin("BoxHit");
+		ImGui::End();
+#endif
+
 		Vector3 colliderPos = collider->GetCenter();
 
+#pragma region
 		if (tlanslatePre.x > colliderPos.x + collider->GetSize().x) {
 			//左から右
 			if (world_.transform_.translate.x - Collider::GetSize().x < colliderPos.x + collider->GetSize().x) {
@@ -93,7 +104,7 @@ void Player::OnCollision(const Collider* collider)
 				world_.transform_.translate.z = colliderPos.z + collider->GetSize().z + Collider::GetSize().z;
 			}
 		}
-		
+#pragma endregion 移動制御	
 
 		world_.UpdateMatrix();
 	}
@@ -114,9 +125,10 @@ void Player::Move()
 		move.z = move.z * speed;
 		//カメラの正面方向に移動するようにする
 		//回転行列を作る
-		//Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
+		Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
 		//移動ベクトルをカメラの角度だけ回転
-		//move = TransformNormal(move, rotateMatrix);
+		move = TransformNormal(move, rotateMatrix);
+		move.y = 0.0f;
 		//移動
 		world_.transform_.translate = Add(world_.transform_.translate, move);
 		//プレイヤーの向きを移動方向に合わせる
@@ -127,4 +139,9 @@ void Player::Move()
 		moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
 	}
+}
+
+void Player::Gravity()
+{
+	world_.transform_.translate.y -= kGravity;
 }

@@ -69,6 +69,8 @@ void GamePlayState::Update()
 		camera_->Update();
 		viewProjction = camera_->GetViewProjection();
 	}
+	ImGui::SliderFloat3("Rotate",&viewProjction.rotation_.x,-100,100);
+	ImGui::SliderFloat3("Translate",&viewProjction.translation_.x,-100,100);
 if (input->TriggerKey(DIK_LALT)) {
 		camera_->DebugCamera(true);
 }
@@ -164,7 +166,12 @@ void GamePlayState::Draw()
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Draw(viewProjction);
 	}
-	player_->Draw(viewProjction);
+#ifdef _DEBUG
+	if (IsDebugCamera == true) {
+		player_->Draw(viewProjction);
+	}
+#endif
+
 
 	//3Dモデル描画ここまで	
 	

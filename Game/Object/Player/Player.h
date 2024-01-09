@@ -41,7 +41,7 @@ private:
 
 	Vector3 move;
 	//プレイヤーの移動
-	float speed = 0.5f;
+	float speed = 0.3f;
 
 	Vector3 jumpForce;
 	//武器や腕の回転クォータニオン

@@ -7,7 +7,7 @@ void BoxObject::Initalize(std::vector<Model*> models)
 
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
-	BoxCollider::SetSize({ 1.0f,0.0f,1.0f });
+	BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
 	SetcollitionAttribute(kCollitionAttributeBox);
 	SetcollisionMask(~kCollitionAttributeBox);
 }

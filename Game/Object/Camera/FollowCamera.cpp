@@ -2,6 +2,7 @@
 
 void FollowCamera::Initalize() {
 	viewProjection_.Initialize();
+	workInter.interParameter_ = 1.0f;
 }
 
 void FollowCamera::Update() {
@@ -65,7 +66,7 @@ void FollowCamera::Reset()
 
 Vector3 FollowCamera::OffsetCalc()
 {
-	Vector3 offset = { 0.0f, 0.0f, 0.0f };
+	Vector3 offset = { 0.0f, 2.0f, 0.0f };
 	//回転行列の合成
 	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_.rotation_);
 

@@ -16,6 +16,8 @@ void PlaneObject::Update()
 {
 	world_.UpdateMatrix();
 
+	BoxCollider::SetSize({world_.transform_.scale.x * 5.0f,0.0f,world_.transform_.scale.z * 5.0f });
+
 	BoxCollider::Update();
 }
 
