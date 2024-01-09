@@ -17,7 +17,12 @@ public:
 
 	void SetParent(const WorldTransform& parent);
 
+	void SetMoveQua(const Quaternion qua) { moveQua = qua; }
+
 private:
 	std::vector<Model*> models_;
 	WorldTransform world_;
+
+	Quaternion firstPos;
+	Quaternion moveQua;
 };

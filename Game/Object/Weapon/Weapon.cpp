@@ -4,12 +4,23 @@ void Weapon::Initalize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
-	world_.transform_.translate.x = 0.5f;
+	world_.transform_.translate.x = 0.7f;
+	world_.transform_.translate.y = 0.7f;
+	world_.transform_.translate.z = 1.0f;
+
+	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
+	firstPos = MakeRotateAxisAngleQuaternion(cross, std::acos(-0.5f));
+	world_.transform_.quaternion = firstPos;
+
 	world_.UpdateMatrix();
 
 	BoxCollider::Initialize();
-	BoxCollider::SetcollisionMask(~kCollitionAttributeWeapon && ~kCollitionAttributeEnemy);
+	Collider::SetWorld(&world_);
 	BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
+	SetcollitionAttribute(kCollitionAttributeWeapon);
+	BoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
+
+
 }
 
 void Weapon::Update()
@@ -27,6 +38,16 @@ void Weapon::Draw(const ViewProjection& viewProj)
 
 void Weapon::ImGui()
 {
+#ifdef _DEBUG
+	ImGui::Begin("Weapon");
+	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
+	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
+	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
+	if (ImGui::Button("Reset")) {
+		world_.transform_.translate = { 0.0f,1.0f,0.0f };
+	}
+	ImGui::End();
+#endif
 }
 
 void Weapon::OnCollision(const Collider* collider)

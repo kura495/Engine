@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Game/Object/Character.h"
+#include "Game/Object/Weapon/Weapon.h"
 #include "Base/Utility/BoxCollider.h"
 #include "Base/Input/Input.h"
 
@@ -51,6 +52,8 @@ private:
 	const ViewProjection* viewProjection_ = nullptr;
 
 	Vector3 tlanslatePre;
+
+	std::unique_ptr<Weapon>weapon_;
 
 };
 

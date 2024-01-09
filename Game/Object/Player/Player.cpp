@@ -4,7 +4,6 @@ void Player::Initalize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
-	world_.transform_.translate.y = 1.0f;
 	world_.transform_.scale.y = 2.0f;
 	world_.UpdateMatrix();
 	input = Input::GetInstance();
@@ -15,6 +14,9 @@ void Player::Initalize(std::vector<Model*> models)
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 
+	weapon_ = std::make_unique<Weapon>();
+	weapon_->Initalize(models);
+	weapon_->SetParent(world_);
 }
 
 void Player::Update()
@@ -28,8 +30,12 @@ void Player::Update()
 
 	Move();
 
+	world_.transform_.quaternion = moveQuaternion_;
+
 	BoxCollider::Update();
 	world_.UpdateMatrix();
+
+	weapon_->Update();
 
 	//前フレームのゲームパッドの状態を保存
 	joyStatePre = joyState;
@@ -37,10 +43,7 @@ void Player::Update()
 
 void Player::Draw(const ViewProjection& viewProj)
 {
-	for (Model* model : models_) {
-		model->Draw(world_, viewProj);
-	}
-
+	weapon_->Draw(viewProj);
 }
 
 void Player::ImGui()
@@ -55,6 +58,7 @@ void Player::ImGui()
 	}
 	ImGui::End();
 #endif
+	weapon_->ImGui();
 }
 
 void Player::OnCollision(const Collider* collider)
