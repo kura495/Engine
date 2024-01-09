@@ -8,7 +8,7 @@ class Character
 {
 public:
 
-	virtual void Initalize(std::vector<Model*> models) = 0;
+	virtual void Initialize(std::vector<Model*> models) = 0;
 	virtual void Update() = 0;
 	virtual void Draw(const ViewProjection& viewProj) = 0;
 

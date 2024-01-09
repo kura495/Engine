@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::Initalize(std::vector<Model*> models)
+void Player::Initialize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
@@ -40,9 +40,11 @@ void Player::Update()
 		{
 		case Behavior::kRoot:
 		default:
-
+			RootInitalize();
+			weapon_->RootInit();
 			break;
 		case Behavior::kAttack:
+			AttackInitalize();
 			weapon_->AttackInit();
 			break;
 		}
@@ -53,9 +55,10 @@ void Player::Update()
 	{
 	case Behavior::kRoot:
 	default:
-		
+		RootUpdate();
 		break;
 	case Behavior::kAttack:
+		AttackUpdate();
 		weapon_->AttackUpdate();
 		break;
 	}
@@ -186,6 +189,30 @@ void Player::PlayerRoring()
 
 	//行きたい方向のQuaternionの作成
 	moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+}
+
+void Player::RootInitalize()
+{
+
+}
+
+void Player::RootUpdate()
+{
+	if (joyState.Gamepad.bRightTrigger != 0 && joyStatePre.Gamepad.bRightTrigger == 0) {
+		behaviorRequest_ = Behavior::kAttack;
+	}
+}
+
+void Player::AttackInitalize()
+{
+
+}
+
+void Player::AttackUpdate()
+{
+	if (weapon_->GetIsAttackOver()) {
+		behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 void Player::Gravity()

@@ -17,13 +17,14 @@ void GamePlayState::Initialize()
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
 	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
 
+	enemyModel_.push_back( Model::CreateModelFromObj("resources/Enemy/", "Enemy.obj"));
 	playerModel_.push_back( Model::CreateModelFromObj("resources/Player/", "Player.obj"));
 	WeaponModel_.push_back( Model::CreateModelFromObj("resources/Weapon/", "Weapon.obj"));
 	boxSelectNumber_ = 0;
 	planeSelectNumber_ = 0;
 
 	player_ = std::make_unique<Player>();
-	player_->Initalize(WeaponModel_);
+	player_->Initialize(WeaponModel_);
 	player_->SetViewProjection(&camera_->GetViewProjection());
 
 	followCamera = std::make_unique<FollowCamera>();
@@ -48,6 +49,8 @@ void GamePlayState::Initialize()
 		AddPlane();
 	}
 #pragma endregion オブジェクト生成
+
+	AddEnemy({0.0f,0.0f,10.0f});
 }
 
 void GamePlayState::Update()
@@ -140,6 +143,9 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 #pragma region
 	player_->Update();
 
+	for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
+		(*ObjectIt)->Update();
+	}
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
 	}
@@ -149,6 +155,11 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 #pragma endregion 更新処理
 #pragma region
 	collisionManager->AddBoxCollider(player_.get());
+	collisionManager->AddBoxCollider(player_->GetWeapon());
+	for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
+		collisionManager->AddBoxCollider((*ObjectIt));
+		collisionManager->AddBoxCollider((*ObjectIt)->GetSearchPoint());
+	}
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		collisionManager->AddBoxCollider((*ObjectIt));
 	}
@@ -163,6 +174,9 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
+	for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
+		(*ObjectIt)->Draw(viewProjction);
+	}
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Draw(viewProjction);
 	}
@@ -207,7 +221,6 @@ void GamePlayState::AddBox()
 
 		boxObject_.push_back(box);
 }
-
 void GamePlayState::AddPlane()
 {
 	PlaneObject* plane = new PlaneObject;
@@ -222,7 +235,6 @@ void GamePlayState::AddPlane()
 
 		planeObject_.push_back(plane);
 }
-
 void GamePlayState::DeleteObject()
 {
 
@@ -233,7 +245,16 @@ void GamePlayState::DeleteObject()
 	//	}
 	//}
 }
+void GamePlayState::AddEnemy(Vector3 Pos)
+{
+	Enemy* enemy = new Enemy();
+	enemy->Initialize(enemyModel_);
 
+	enemy->SetPos(Pos);
+
+	enemy_.push_back(enemy);
+
+}
 void GamePlayState::ControllObject()
 {
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {

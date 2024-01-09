@@ -61,6 +61,21 @@ void Weapon::SetParent(const WorldTransform& parent)
 	world_.parent_ = &parent;
 }
 
+void Weapon::RootInit()
+{
+	world_.transform_.translate.x = 0.7f;
+	world_.transform_.translate.z = 1.0f;
+	world_.transform_.quaternion = firstPos;
+	world_.UpdateMatrix();
+
+	BoxCollider::SetSize({ 0.0f,0.0f,0.0f });
+}
+
+void Weapon::RootUpdate()
+{
+	IsAttackOver = false;
+}
+
 void Weapon::AttackInit()
 {
 	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
@@ -69,14 +84,23 @@ void Weapon::AttackInit()
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
 
 	world_.transform_.quaternion = attackFirstQua;
+	world_.transform_.translate.x = 0.5f;
+	world_.transform_.translate.y = 0.5f;
+	world_.transform_.translate.z = 2.0f;
+	world_.UpdateMatrix();
 
 	AttackQuaParam_t = 0.0f;
+	IsAttackOver = false;
 }
 
 void Weapon::AttackUpdate()
 {
-	AttackQuaParam_t += 0.01f;
+	AttackQuaParam_t += 0.05f;
 
 	world_.transform_.quaternion = Slerp(attackFirstQua, attackEndQua,AttackQuaParam_t);
+
+	if (AttackQuaParam_t >=1.0f) {
+		IsAttackOver = true;
+	}
 }
 

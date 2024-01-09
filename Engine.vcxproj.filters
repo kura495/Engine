@@ -208,6 +208,8 @@
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\SearchPoint\SearchPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -391,6 +393,8 @@
     <ClInclude Include="Game\Object\Character.h" />
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
+    <ClInclude Include="Game\Object\Enemy\Enemy.h" />
+    <ClInclude Include="Game\Object\Enemy\SearchPoint\SearchPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

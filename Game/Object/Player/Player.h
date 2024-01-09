@@ -14,7 +14,7 @@ class Player : public Character	, public BoxCollider
 {
 public:
 
-	void Initalize(std::vector<Model*> models)override;
+	void Initialize(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw(const ViewProjection& viewProj)override;
 
@@ -30,10 +30,13 @@ public:
 		viewProjection_ = viewProjection;
 		weapon_->SetViewProjection(viewProjection_);
 	}
-#pragma endregion
+#pragma endregion Getter
 #pragma region
 	const WorldTransform& GetWorldTransform() {
 		return world_;
+	}
+	Weapon* GetWeapon() {
+		return weapon_.get();
 	}
 #pragma endregion
 
@@ -44,6 +47,12 @@ private:
 	Behavior behavior_ = Behavior::kRoot;
 	//次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+
+	void RootInitalize();
+	void RootUpdate();
+
+	void AttackInitalize();
+	void AttackUpdate();
 
 	void Gravity();
 	const float kGravity = 0.98f;
@@ -67,4 +76,5 @@ private:
 
 	std::unique_ptr<Weapon>weapon_;
 
+	float attack = 0.0f;
 };

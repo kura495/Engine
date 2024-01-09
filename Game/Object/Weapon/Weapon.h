@@ -17,13 +17,21 @@ public:
 
 	void SetParent(const WorldTransform& parent);
 
-	void AttackInit();
+	void RootInit();
+	void RootUpdate();
 
+	void AttackInit();
 	void AttackUpdate();
 
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
+	}
+#pragma endregion
+	
+#pragma region Getter
+	bool GetIsAttackOver() const {
+		return IsAttackOver;
 	}
 #pragma endregion
 
@@ -40,4 +48,5 @@ private:
 	const ViewProjection* viewProjection_ = nullptr;
 	void addCameraRot();
 
+	bool IsAttackOver = false;
 };

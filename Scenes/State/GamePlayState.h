@@ -26,6 +26,7 @@
 #include "Game/Object/Plane/PlaneObject.h"
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"
+#include "Game/Object/Enemy/Enemy.h"
 
 class GamePlayState :public GameState
 {
@@ -53,12 +54,16 @@ private:
 	WorldTransform world_;
 
 	std::unique_ptr<Player>player_;
+	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
 
+	void AddEnemy(Vector3 Pos);
+
+	std::vector<Model*> enemyModel_;
+	std::list<Enemy*> enemy_;
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
-	std::vector<Model*> playerModel_;
 	std::vector<Model*> WeaponModel_;
 	void ControllObject();
 	void DeleteObject();
