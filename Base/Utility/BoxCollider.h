@@ -16,14 +16,10 @@ public:
 	void Initialize();
 	void Update();
 
-	void SetSize(Vector3 size) { size_ = size; }
-	AABB GetSize() const { return aabb_; }
+	AABB GetAABB() const { return aabb_; }
 
 private:
-	/// <summary>
-	/// x,y,zそれぞれの幅
-	/// </summary>
-	Vector3 size_;
+
 
 	/// <summary>
 	/// 箱の大きさ

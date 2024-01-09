@@ -8,7 +8,7 @@ void Player::Initalize(std::vector<Model*> models)
 
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
-	BoxCollider::SetSize({1.0f,2.0f,1.0f});
+	BoxCollider::SetSize({0.5f,0.5f,0.5f});
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 
@@ -16,6 +16,7 @@ void Player::Initalize(std::vector<Model*> models)
 
 void Player::Update()
 {
+	tlanslatePre = world_.transform_.translate;
 #ifdef _DEBUG
 	ImGui();
 #endif
@@ -23,16 +24,6 @@ void Player::Update()
 	input->GetJoystickState(joyState);
 
 	Move();
-#ifdef _DEBUG
-	ImGui::Begin("Player");
-	if (ImGui::Button("Gravity")) {
-		IsGravity = !IsGravity;
-	}
-	ImGui::End();
-#endif
-	if (IsGravity == true) {
-		Gravity();
-	}
 
 
 	BoxCollider::Update();
@@ -79,10 +70,28 @@ void Player::OnCollision(const Collider* collider)
 		ImGui::End();
 #endif
 		Vector3 colliderPos = collider->GetCenter();
-		if (world_.transform_.translate.x > colliderPos.x - collider->GetSize().x - Collider::GetSize().x) {
-			world_.transform_.translate.x = colliderPos.x - collider->GetSize().x - Collider::GetSize().x;
-			world_.UpdateMatrix();
+
+		if (tlanslatePre.x > colliderPos.x ) {
+			//左から右
+			if (world_.transform_.translate.x - Collider::GetSize().x < colliderPos.x + collider->GetSize().x) {
+				world_.transform_.translate.x = colliderPos.x + collider->GetSize().x + Collider::GetSize().x;
+			}
 		}
+		if (tlanslatePre.x < colliderPos.x) {
+			//右から左
+			if (world_.transform_.translate.x + Collider::GetSize().x > colliderPos.x - collider->GetSize().x) {
+			world_.transform_.translate.x = colliderPos.x - collider->GetSize().x - Collider::GetSize().x;
+			}
+		}
+		//if (tlanslatePre.z  < colliderPos.z) {
+		//	//手前から奥
+		//	if (world_.transform_.translate.z + Collider::GetSize().z > colliderPos.z - collider->GetSize().z) {
+		//		world_.transform_.translate.z = colliderPos.z - collider->GetSize().z - Collider::GetSize().z;
+		//	}
+		//}
+		
+
+		world_.UpdateMatrix();
 	}
 	return;
 }
@@ -101,9 +110,9 @@ void Player::Move()
 		move.z = move.z * speed;
 		//カメラの正面方向に移動するようにする
 		//回転行列を作る
-		Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
+		//Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
 		//移動ベクトルをカメラの角度だけ回転
-		move = TransformNormal(move, rotateMatrix);
+		//move = TransformNormal(move, rotateMatrix);
 		//移動
 		world_.transform_.translate = Add(world_.transform_.translate, move);
 		//プレイヤーの向きを移動方向に合わせる
@@ -114,9 +123,4 @@ void Player::Move()
 		moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
 	}
-}
-
-void Player::Gravity()
-{
-	world_.transform_.translate.y -= kGravity;
 }

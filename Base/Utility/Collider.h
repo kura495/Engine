@@ -40,6 +40,10 @@ public:
 		{ center_->transform_.translate.x,center_->transform_.translate.y,center_->transform_.translate.z };
 	}
 
+
+	void SetSize(Vector3 size) { size_ = size; }
+	Vector3 GetSize() const { return size_; }
+
 protected:
 
 	void SetId(int Type) { Id_ = Type; }
@@ -48,6 +52,11 @@ protected:
 	/// </summary>
 	WorldTransform* center_;
 	
+	/// <summary>
+/// x,y,zそれぞれの幅
+/// </summary>
+	Vector3 size_;
+
 private:
 
 	uint32_t Id_ = 0xffffffff;

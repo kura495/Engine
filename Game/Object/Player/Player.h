@@ -44,6 +44,8 @@ private:
 
 	//カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;
+
+	Vector3 tlanslatePre;
 };
 
 

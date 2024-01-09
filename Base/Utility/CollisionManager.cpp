@@ -74,8 +74,8 @@ void CollisionManager::CheckCollisionBox(BoxCollider * colliderA, BoxCollider * 
 {
 	// 判定対象AとBの座標
 	AABB posA, posB;
-	posA = colliderA->GetSize();
-	posB = colliderB->GetSize();
+	posA = colliderA->GetAABB();
+	posB = colliderB->GetAABB();
 
 	// コライダーのフィルターの値でビット演算
 	if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
