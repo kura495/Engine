@@ -41,10 +41,15 @@ public:
 	Vector3 Getsub() {
 		return sub;
 	}
+	bool GetIsGoal() {
+		return IsGoal;
+	}
 #pragma endregion
 
 private:
 	Input* input = nullptr;
+
+	bool IsGoal = false;
 
 	//ふるまい
 	Behavior behavior_ = Behavior::kRoot;

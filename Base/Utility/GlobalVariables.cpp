@@ -14,6 +14,7 @@ void GlobalVariables::CreateGroup(const std::string& groupName)
 void GlobalVariables::Update()
 {
 	//メニューバーを作る
+#ifdef _DEBUG
 	if (!ImGui::Begin("GlobalVariables", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
 		return;
@@ -89,6 +90,8 @@ void GlobalVariables::Update()
 	}
 	ImGui::EndMenuBar();
 	ImGui::End();
+#endif
+
 }
 
 //値がなければ、SetValueを呼ぶ関数たち(すでに値があるときは呼ばない)

@@ -143,6 +143,10 @@ void Player::OnCollision(const Collider* collider)
 
 		world_.UpdateMatrix();
 	}
+
+	if (collider->GetcollitionAttribute() == kCollitionAttributeGoal) {
+		IsGoal = true;
+	}
 	return;
 }
 

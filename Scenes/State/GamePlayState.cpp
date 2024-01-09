@@ -50,10 +50,8 @@ void GamePlayState::Initialize()
 	}
 #pragma endregion オブジェクト生成
 
-	AddEnemy({0.0f,0.0f,10.0f});
-
-
-
+	goal_ = std::make_unique<Goal>();
+	goal_->Initialize(boxModel_);
 }
 
 void GamePlayState::Update()
@@ -143,6 +141,10 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 
 #endif
 
+	if (player_->GetIsGoal()) {
+		StateNo = 2;
+	}
+
 #pragma region
 	player_->Update();
 
@@ -155,6 +157,8 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
 	}
+	goal_->Update();
+
 #pragma endregion 更新処理
 #pragma region
 	collisionManager->AddBoxCollider(player_.get());
@@ -169,6 +173,7 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		collisionManager->AddBoxCollider((*ObjectIt));
 	}
+	collisionManager->AddBoxCollider(goal_.get());
 	collisionManager->CheckAllCollisions();
 	collisionManager->ClearCollider();
 #pragma endregion コリジョンマネージャーに登録
@@ -191,8 +196,9 @@ void GamePlayState::Draw()
 			model->Draw(player_->GetWorldTransform(), viewProjction);
 		}
 	}
+	goal_->Draw(viewProjction);
 
-		player_->Draw(viewProjction);
+	player_->Draw(viewProjction);
 
 
 	//3Dモデル描画ここまで	

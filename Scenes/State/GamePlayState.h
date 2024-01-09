@@ -27,6 +27,7 @@
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"
 #include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Goal/Goal.h"
 
 class GamePlayState :public GameState
 {
@@ -78,5 +79,7 @@ private:
 	std::list<PlaneObject*> planeObject_;
 	int boxSelectNumber_;
 	int planeSelectNumber_;
+
+	std::unique_ptr<Goal>goal_;
 
 };
