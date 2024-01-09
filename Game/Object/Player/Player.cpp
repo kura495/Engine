@@ -71,24 +71,30 @@ void Player::OnCollision(const Collider* collider)
 #endif
 		Vector3 colliderPos = collider->GetCenter();
 
-		if (tlanslatePre.x > colliderPos.x ) {
+		if (tlanslatePre.x > colliderPos.x + collider->GetSize().x) {
 			//左から右
 			if (world_.transform_.translate.x - Collider::GetSize().x < colliderPos.x + collider->GetSize().x) {
 				world_.transform_.translate.x = colliderPos.x + collider->GetSize().x + Collider::GetSize().x;
 			}
 		}
-		if (tlanslatePre.x < colliderPos.x) {
+		if (tlanslatePre.x < colliderPos.x - collider->GetSize().x) {
 			//右から左
 			if (world_.transform_.translate.x + Collider::GetSize().x > colliderPos.x - collider->GetSize().x) {
 			world_.transform_.translate.x = colliderPos.x - collider->GetSize().x - Collider::GetSize().x;
 			}
 		}
-		//if (tlanslatePre.z  < colliderPos.z) {
-		//	//手前から奥
-		//	if (world_.transform_.translate.z + Collider::GetSize().z > colliderPos.z - collider->GetSize().z) {
-		//		world_.transform_.translate.z = colliderPos.z - collider->GetSize().z - Collider::GetSize().z;
-		//	}
-		//}
+		if (tlanslatePre.z < colliderPos.z - collider->GetSize().z) {
+			//手前から奥
+			if (world_.transform_.translate.z + Collider::GetSize().z > colliderPos.z - collider->GetSize().z) {
+				world_.transform_.translate.z = colliderPos.z - collider->GetSize().z - Collider::GetSize().z;
+			}
+		}
+		if (tlanslatePre.z > colliderPos.z + collider->GetSize().z) {
+			//奥から手前
+			if (world_.transform_.translate.z - Collider::GetSize().z < colliderPos.z + collider->GetSize().z) {
+				world_.transform_.translate.z = colliderPos.z + collider->GetSize().z + Collider::GetSize().z;
+			}
+		}
 		
 
 		world_.UpdateMatrix();
