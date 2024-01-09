@@ -31,7 +31,7 @@ void Player::Update()
 
 	Move();
 
-	world_.transform_.quaternion = moveQuaternion_;
+	//world_.transform_.quaternion = moveQuaternion_;
 
 	BoxCollider::Update();
 	world_.UpdateMatrix();

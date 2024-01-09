@@ -25,11 +25,8 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 void Weapon::Update()
 {
+	
 	world_.UpdateMatrix();
-	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
-	//移動ベクトルをカメラの角度だけ回転
-	world_.constMap->matWorld = Multiply(world_.matWorld_,rotateMatrix);
-
 	BoxCollider::Update();
 }
 
