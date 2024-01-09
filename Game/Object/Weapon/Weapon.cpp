@@ -31,6 +31,9 @@ void Weapon::ImGui()
 
 void Weapon::OnCollision(const Collider* collider)
 {
+	if (collider->GetcollitionAttribute()) {
+
+	}
 }
 
 void Weapon::SetParent(const WorldTransform& parent)

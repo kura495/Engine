@@ -28,8 +28,6 @@ void Player::Update()
 
 	Move();
 
-	Gravity();
-
 	BoxCollider::Update();
 	world_.UpdateMatrix();
 
