@@ -32,6 +32,34 @@ void Player::Update()
 	Move();
 	PlayerRoring();
 
+	if (behaviorRequest_) {
+		//ふるまいの変更
+		behavior_ = behaviorRequest_.value();
+		//各ふるまいごとに初期化
+		switch (behavior_)
+		{
+		case Behavior::kRoot:
+		default:
+
+			break;
+		case Behavior::kAttack:
+			weapon_->AttackInit();
+			break;
+		}
+
+		behaviorRequest_ = std::nullopt;
+	}
+	switch (behavior_)
+	{
+	case Behavior::kRoot:
+	default:
+		
+		break;
+	case Behavior::kAttack:
+		weapon_->AttackUpdate();
+		break;
+	}
+
 	world_.transform_.quaternion = moveQuaternion_;
 
 	BoxCollider::Update();
@@ -144,7 +172,6 @@ void Player::PlayerRoring()
 	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
 	//移動ベクトルをカメラの角度だけ回転
 	Vector3 lookPoint = TransformNormal({0.0f,0.0f,1.0f}, rotateMatrix);
-	move.y = 0.0f;
 	//ロックオン座標
 	lookPoint = lookPoint + world_.transform_.translate;
 	lookPoint.y = 0;

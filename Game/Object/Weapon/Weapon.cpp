@@ -5,11 +5,10 @@ void Weapon::Initalize(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	world_.transform_.translate.x = 0.7f;
-	world_.transform_.translate.y = 0.7f;
 	world_.transform_.translate.z = 1.0f;
 
 	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
-	firstPos = MakeRotateAxisAngleQuaternion(cross, std::acos(-0.5f));
+	firstPos = MakeRotateAxisAngleQuaternion(cross, std::acos(-0.8f));
 	world_.transform_.quaternion = firstPos;
 
 	world_.UpdateMatrix();
@@ -64,11 +63,20 @@ void Weapon::SetParent(const WorldTransform& parent)
 
 void Weapon::AttackInit()
 {
+	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
+	attackFirstQua = MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
+	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
+
+	world_.transform_.quaternion = attackFirstQua;
+
+	AttackQuaParam_t = 0.0f;
 }
 
 void Weapon::AttackUpdate()
 {
+	AttackQuaParam_t += 0.01f;
 
+	world_.transform_.quaternion = Slerp(attackFirstQua, attackEndQua,AttackQuaParam_t);
 }
 

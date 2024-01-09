@@ -17,8 +17,6 @@ public:
 
 	void SetParent(const WorldTransform& parent);
 
-	void SetMoveQua(const Quaternion qua) { moveQua = qua; }
-
 	void AttackInit();
 
 	void AttackUpdate();
@@ -34,7 +32,9 @@ private:
 	WorldTransform world_;
 
 	Quaternion firstPos;
-	Quaternion moveQua;
+	Quaternion attackFirstQua;
+	Quaternion attackEndQua;
+	float AttackQuaParam_t = 0.0f;
 
 	//カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;

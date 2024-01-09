@@ -5,6 +5,11 @@
 #include "Base/Utility/BoxCollider.h"
 #include "Base/Input/Input.h"
 
+enum class Behavior {
+	kRoot,
+	kAttack,
+};
+
 class Player : public Character	, public BoxCollider
 {
 public:
@@ -34,6 +39,11 @@ public:
 
 private:
 	Input* input = nullptr;
+
+	//ふるまい
+	Behavior behavior_ = Behavior::kRoot;
+	//次のふるまいリクエスト
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
 	void Gravity();
 	const float kGravity = 0.98f;
