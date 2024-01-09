@@ -42,17 +42,30 @@ void Weapon::ImGui()
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
-	if (ImGui::Button("Reset")) {
-		world_.transform_.translate = { 0.0f,1.0f,0.0f };
-	}
+	Vector3 Cen = BoxCollider::GetSize();
+	ImGui::DragFloat3("Size", &Cen.x);
+	
+
 	ImGui::End();
 #endif
 }
 
 void Weapon::OnCollision(const Collider* collider)
 {
-	if (collider->GetcollitionAttribute()) {
-		return;
+	if (collider->GetcollitionAttribute() == kCollitionAttributeEnemy) {
+#ifdef _DEBUG
+		ImGui::Begin("A");
+
+		ImGui::End();
+#endif
+	}
+
+	if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
+#ifdef _DEBUG
+		ImGui::Begin("Avdvdsfdsfdsfdsfsdf");
+
+		ImGui::End();
+#endif
 	}
 }
 
@@ -82,6 +95,7 @@ void Weapon::AttackInit()
 	attackFirstQua = MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
+	BoxCollider::SetSize({ 0.5f,0.5f,0.5f });
 
 	world_.transform_.quaternion = attackFirstQua;
 	world_.transform_.translate.x = 0.5f;
@@ -103,4 +117,5 @@ void Weapon::AttackUpdate()
 		IsAttackOver = true;
 	}
 }
+
 

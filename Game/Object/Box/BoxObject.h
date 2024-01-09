@@ -20,5 +20,9 @@ public:
 	void ImGui()override;
 
 	void OnCollision(const Collider* collider)override;
+
+	void SetPos(Vector3 pos) {
+		world_.transform_.translate = pos;
+	}
 };
 

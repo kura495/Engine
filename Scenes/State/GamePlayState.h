@@ -78,4 +78,5 @@ private:
 	std::list<PlaneObject*> planeObject_;
 	int boxSelectNumber_;
 	int planeSelectNumber_;
+
 };

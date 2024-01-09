@@ -34,4 +34,6 @@ private:
 	Vector3 tlanslatePre;
 
 	Player* player_;
+
+	bool IsDead = false;
 };

@@ -51,6 +51,9 @@ void GamePlayState::Initialize()
 #pragma endregion オブジェクト生成
 
 	AddEnemy({0.0f,0.0f,10.0f});
+
+
+
 }
 
 void GamePlayState::Update()
@@ -190,7 +193,6 @@ void GamePlayState::Draw()
 	}
 
 		player_->Draw(viewProjction);
-
 
 
 	//3Dモデル描画ここまで	

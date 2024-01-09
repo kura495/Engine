@@ -3,6 +3,7 @@
 #include "Game/Object/Character.h"
 #include "Base/Utility/BoxCollider.h"
 #include "Base/Input/Input.h"
+#include "Base/ParticleSystem/ParticleSystem.h"
 
 class Weapon:public BoxCollider
 {
@@ -22,6 +23,16 @@ public:
 
 	void AttackInit();
 	void AttackUpdate();
+
+	void DrawParticle();
+
+	void SetSize(Vector3 pos) {
+		BoxCollider::SetSize({ pos.x + world_.transform_.translate.x,1.0f,pos.z + +world_.transform_.translate.z});
+	}
+	void SetPos(Vector3 vec) {
+		world_.transform_.translate = vec;
+		world_.UpdateMatrix();
+	}
 
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
@@ -43,6 +54,7 @@ private:
 	Quaternion attackFirstQua;
 	Quaternion attackEndQua;
 	float AttackQuaParam_t = 0.0f;
+
 
 	//カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;

@@ -38,6 +38,9 @@ public:
 	Weapon* GetWeapon() {
 		return weapon_.get();
 	}
+	Vector3 Getsub() {
+		return sub;
+	}
 #pragma endregion
 
 private:
@@ -60,6 +63,9 @@ private:
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
+
+	Vector3 lookPoint;
+	Vector3 sub;
 
 	Vector3 move;
 	//プレイヤーの移動
