@@ -16,7 +16,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
-	BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
+	BoxCollider::SetSize({ 0.0f,0.0f,0.0f });
 	SetcollitionAttribute(kCollitionAttributeWeapon);
 	BoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
 
@@ -25,7 +25,6 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 void Weapon::Update()
 {
-	
 	world_.UpdateMatrix();
 	BoxCollider::Update();
 }
@@ -54,7 +53,7 @@ void Weapon::ImGui()
 void Weapon::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute()) {
-
+		return;
 	}
 }
 
@@ -63,7 +62,13 @@ void Weapon::SetParent(const WorldTransform& parent)
 	world_.parent_ = &parent;
 }
 
-void Weapon::addCameraRot()
+void Weapon::AttackInit()
 {
 
 }
+
+void Weapon::AttackUpdate()
+{
+
+}
+

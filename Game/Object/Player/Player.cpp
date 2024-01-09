@@ -30,8 +30,9 @@ void Player::Update()
 	input->GetJoystickState(joyState);
 
 	Move();
+	PlayerRoring();
 
-	//world_.transform_.quaternion = moveQuaternion_;
+	world_.transform_.quaternion = moveQuaternion_;
 
 	BoxCollider::Update();
 	world_.UpdateMatrix();
@@ -134,14 +135,30 @@ void Player::Move()
 		move.y = 0.0f;
 		//移動
 		world_.transform_.translate = Add(world_.transform_.translate, move);
-		//プレイヤーの向きを移動方向に合わせる
-		move = Normalize(move);
-		move.y = 0.0f;
-		Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, move));
-		float dot = Dot({ 0.0f,0.0f,1.0f }, move);
-		moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
 	}
+}
+
+void Player::PlayerRoring()
+{
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
+	//移動ベクトルをカメラの角度だけ回転
+	Vector3 lookPoint = TransformNormal({0.0f,0.0f,1.0f}, rotateMatrix);
+	move.y = 0.0f;
+	//ロックオン座標
+	lookPoint = lookPoint + world_.transform_.translate;
+	lookPoint.y = 0;
+	//追従対象からロックオン対象へのベクトル
+	Vector3 sub = lookPoint - world_.transform_.translate;
+
+	//プレイヤーの現在の向き
+	sub = Normalize(sub);
+
+	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, sub));
+	float dot = Dot({ 0.0f,0.0f,1.0f }, sub);
+
+	//行きたい方向のQuaternionの作成
+	moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 }
 
 void Player::Gravity()

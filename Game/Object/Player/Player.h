@@ -18,6 +18,7 @@ public:
 	void OnCollision(const Collider* collider)override;
 
 	void Move();
+	void PlayerRoring();
 
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
