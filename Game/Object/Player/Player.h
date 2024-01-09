@@ -51,6 +51,7 @@ private:
 	const ViewProjection* viewProjection_ = nullptr;
 
 	Vector3 tlanslatePre;
+
 };
 
 

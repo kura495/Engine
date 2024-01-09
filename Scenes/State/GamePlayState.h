@@ -59,6 +59,7 @@ private:
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> playerModel_;
+	std::vector<Model*> WeaponModel_;
 	void ControllObject();
 	void DeleteObject();
 

@@ -16,12 +16,14 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
 	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
+
 	playerModel_.push_back( Model::CreateModelFromObj("resources/Player/", "Player.obj"));
+	WeaponModel_.push_back( Model::CreateModelFromObj("resources/Weapon/", "Weapon.obj"));
 	boxSelectNumber_ = 0;
 	planeSelectNumber_ = 0;
 
 	player_ = std::make_unique<Player>();
-	player_->Initalize(playerModel_);
+	player_->Initalize(WeaponModel_);
 	player_->SetViewProjection(&camera_->GetViewProjection());
 
 	followCamera = std::make_unique<FollowCamera>();
@@ -34,6 +36,7 @@ void GamePlayState::Initialize()
 
 	globalVariables->CreateGroup("Editer");
 	
+#pragma region
 	globalVariables->AddItem("Editer", "BoxCount", boxObjectCount);
 	boxObjectCount = globalVariables->GetIntValue("Editer", "BoxCount");
 	for (int32_t boxit = 0; boxit < boxObjectCount;boxit++) {
@@ -44,7 +47,7 @@ void GamePlayState::Initialize()
 	for (int32_t Pleneit = 0; Pleneit < PlaneObjectCount; Pleneit++) {
 		AddPlane();
 	}
-
+#pragma endregion オブジェクト生成
 }
 
 void GamePlayState::Update()
@@ -134,18 +137,17 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 
 #endif
 
+#pragma region
 	player_->Update();
-
 
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
-
 	}
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
-
 	}
-
+#pragma endregion 更新処理
+#pragma region
 	collisionManager->AddBoxCollider(player_.get());
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		collisionManager->AddBoxCollider((*ObjectIt));
@@ -155,6 +157,7 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 	}
 	collisionManager->CheckAllCollisions();
 	collisionManager->ClearCollider();
+#pragma endregion コリジョンマネージャーに登録
 }
 
 void GamePlayState::Draw()
@@ -166,11 +169,14 @@ void GamePlayState::Draw()
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Draw(viewProjction);
 	}
-#ifdef _DEBUG
 	if (IsDebugCamera == true) {
-		player_->Draw(viewProjction);
+		for (Model* model : playerModel_) {
+			model->Draw(player_->GetWorldTransform(), viewProjction);
+		}
 	}
-#endif
+
+		player_->Draw(viewProjction);
+
 
 
 	//3Dモデル描画ここまで	

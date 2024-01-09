@@ -207,6 +207,7 @@
     <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
+    <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -389,6 +390,7 @@
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\Character.h" />
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
+    <ClInclude Include="Game\Object\Weapon\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

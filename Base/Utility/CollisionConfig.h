@@ -12,6 +12,8 @@ const uint32_t kCollitionAttributeMoveFloor = 0b1 << 3;
 const uint32_t kCollitionAttributeGoal = 0b1 <<4;
 //箱
 const uint32_t kCollitionAttributeBox = 0b1 << 5;
+//武器
+const uint32_t kCollitionAttributeWeapon = 0b1 << 6;
 
 
 enum ColliderType {
