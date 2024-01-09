@@ -25,6 +25,7 @@
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
 #include "Game/Object/Player/Player.h"
+#include "Game/Object/Camera/FollowCamera.h"
 
 class GamePlayState :public GameState
 {
@@ -47,11 +48,13 @@ private:
 	std::unique_ptr<CollisionManager> collisionManager;
 
 	ViewProjection viewProjction;
-
+	bool IsDebugCamera = false;
 
 	WorldTransform world_;
 
 	std::unique_ptr<Player>player_;
+	std::unique_ptr<FollowCamera>followCamera;
+
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;

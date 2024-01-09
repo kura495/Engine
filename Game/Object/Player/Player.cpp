@@ -4,11 +4,13 @@ void Player::Initalize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
+	world_.transform_.translate.y = 1.0f;
+	world_.UpdateMatrix();
 	input = Input::GetInstance();
 
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
-	BoxCollider::SetSize({0.5f,0.5f,0.5f});
+	BoxCollider::SetSize({0.5f,1.0f,0.5f});
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 
@@ -65,10 +67,6 @@ void Player::OnCollision(const Collider* collider)
 		}
 	}
 	else if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
-#ifdef _DEBUG
-		ImGui::Begin("BoxHit");
-		ImGui::End();
-#endif
 		Vector3 colliderPos = collider->GetCenter();
 
 		if (tlanslatePre.x > colliderPos.x + collider->GetSize().x) {

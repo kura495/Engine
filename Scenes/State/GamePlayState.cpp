@@ -23,6 +23,12 @@ void GamePlayState::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Initalize(playerModel_);
 	player_->SetViewProjection(&camera_->GetViewProjection());
+
+	followCamera = std::make_unique<FollowCamera>();
+	followCamera->Initalize();
+	followCamera->SetTarget(&player_->GetWorldTransform());
+
+	player_->SetViewProjection(&followCamera->GetViewProjection());
 	
 	globalVariables = GlobalVariables::GetInstance();
 
@@ -43,14 +49,33 @@ void GamePlayState::Initialize()
 
 void GamePlayState::Update()
 {
+	followCamera->Update();
+	viewProjction = followCamera->GetViewProjection();
 //デバッグカメラ
 #ifdef _DEBUG
+	ImGui::Begin("Camera");
+	if (ImGui::RadioButton("GameCamera", IsDebugCamera == false)) {
+		IsDebugCamera = false;
+
+	}
+	if (ImGui::RadioButton("DebugCamera", IsDebugCamera == true)) {
+		IsDebugCamera = true;
+	
+	}
+	if (IsDebugCamera == false) {
+		viewProjction = followCamera->GetViewProjection();
+	}
+	else if (IsDebugCamera == true) {
+		camera_->Update();
+		viewProjction = camera_->GetViewProjection();
+	}
 if (input->TriggerKey(DIK_LALT)) {
 		camera_->DebugCamera(true);
 }
 else {
 	camera_->DebugCamera(false);
 }
+	ImGui::End();
 #endif // _DEBUG
 //ImGui
 #ifdef _DEBUG
@@ -91,16 +116,16 @@ static ImGuiWindowFlags gizmoWindowFlags = 0;
 ImGuiIO& io = ImGui::GetIO();
 ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
 Matrix4x4 IdentityMat = CreateIdentity4x4();
-ImGuizmo::DrawGrid(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
+ImGuizmo::DrawGrid(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 	if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
-	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
+	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
 	break;
 	}
 }
 for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 	if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
-	ImGuizmo::Manipulate(&camera_->GetViewProjection().matView.m[0][0], &camera_->GetViewProjection().matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
+	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
 	break;
 	}
 }
@@ -108,8 +133,7 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 #endif
 
 	player_->Update();
-	camera_->Update();
-	viewProjction = camera_->GetViewProjection();
+
 
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
@@ -135,12 +159,12 @@ void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-		(*ObjectIt)->Draw(camera_->GetViewProjection());
+		(*ObjectIt)->Draw(viewProjction);
 	}
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-		(*ObjectIt)->Draw(camera_->GetViewProjection());
+		(*ObjectIt)->Draw(viewProjction);
 	}
-	player_->Draw(camera_->GetViewProjection());
+	player_->Draw(viewProjction);
 
 	//3Dモデル描画ここまで	
 	

@@ -23,6 +23,11 @@ public:
 		viewProjection_ = viewProjection;
 	}
 #pragma endregion
+#pragma region
+	const WorldTransform& GetWorldTransform() {
+		return world_;
+	}
+#pragma endregion
 
 private:
 	Input* input = nullptr;
