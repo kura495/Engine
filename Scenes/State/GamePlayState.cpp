@@ -15,6 +15,7 @@ void GamePlayState::Initialize()
 	// 
 	//3Dオブジェクト生成
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
+	goalModel_.push_back( Model::CreateModelFromObj("resources/Goal/", "Goal.obj"));
 	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
 
 	enemyModel_.push_back( Model::CreateModelFromObj("resources/Enemy/", "Enemy.obj"));
@@ -51,7 +52,7 @@ void GamePlayState::Initialize()
 #pragma endregion オブジェクト生成
 
 	goal_ = std::make_unique<Goal>();
-	goal_->Initialize(boxModel_);
+	goal_->Initialize(goalModel_);
 }
 
 void GamePlayState::Update()

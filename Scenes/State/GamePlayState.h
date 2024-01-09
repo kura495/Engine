@@ -80,6 +80,7 @@ private:
 	int boxSelectNumber_;
 	int planeSelectNumber_;
 
+	std::vector<Model*> goalModel_;
 	std::unique_ptr<Goal>goal_;
 
 };
