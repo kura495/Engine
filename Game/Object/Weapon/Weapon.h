@@ -19,10 +19,19 @@ public:
 
 	void SetMoveQua(const Quaternion qua) { moveQua = qua; }
 
+#pragma region Setter
+	void SetViewProjection(const ViewProjection* viewProjection) {
+		viewProjection_ = viewProjection;
+	}
+#pragma endregion
 private:
 	std::vector<Model*> models_;
 	WorldTransform world_;
 
 	Quaternion firstPos;
 	Quaternion moveQua;
+
+	//カメラのビュープロジェクション
+	const ViewProjection* viewProjection_ = nullptr;
+	void addCameraRot();
 };

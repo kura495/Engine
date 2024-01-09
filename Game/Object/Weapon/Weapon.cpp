@@ -26,6 +26,10 @@ void Weapon::Initalize(std::vector<Model*> models)
 void Weapon::Update()
 {
 	world_.UpdateMatrix();
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
+	//移動ベクトルをカメラの角度だけ回転
+	world_.constMap->matWorld = Multiply(world_.matWorld_,rotateMatrix);
+
 	BoxCollider::Update();
 }
 
@@ -60,4 +64,9 @@ void Weapon::OnCollision(const Collider* collider)
 void Weapon::SetParent(const WorldTransform& parent)
 {
 	world_.parent_ = &parent;
+}
+
+void Weapon::addCameraRot()
+{
+
 }

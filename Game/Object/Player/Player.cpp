@@ -17,6 +17,7 @@ void Player::Initalize(std::vector<Model*> models)
 	weapon_ = std::make_unique<Weapon>();
 	weapon_->Initalize(models);
 	weapon_->SetParent(world_);
+
 }
 
 void Player::Update()

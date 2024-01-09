@@ -22,6 +22,7 @@ public:
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
+		weapon_->SetViewProjection(viewProjection_);
 	}
 #pragma endregion
 #pragma region
@@ -56,5 +57,3 @@ private:
 	std::unique_ptr<Weapon>weapon_;
 
 };
-
-
