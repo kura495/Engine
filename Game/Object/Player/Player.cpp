@@ -214,7 +214,6 @@ void Player::AttackInitalize()
 
 void Player::AttackUpdate()
 {
-	weapon_->SetPos(sub);
 	if (weapon_->GetIsAttackOver()) {
 		behaviorRequest_ = Behavior::kRoot;
 	}
