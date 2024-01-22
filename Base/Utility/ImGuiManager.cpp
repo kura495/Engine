@@ -1,5 +1,6 @@
 #include"ImGuiManager.h"
 
+
 ImGuiManager* ImGuiManager::GetInstance()
 {
 	static ImGuiManager instance;
@@ -25,9 +26,11 @@ void ImGuiManager::BeginFrame()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
-	ImGuizmo::IsOver();
-	ImGuizmo::IsUsing();
-	ImGuizmo::Enable(true);
+}
+
+void ImGuiManager::GizmoUpdate()
+{
+	
 }
 
 void ImGuiManager::EndFrame()

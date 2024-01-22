@@ -74,6 +74,12 @@ public:
 	/// <returns></returns>
 	bool pushMouse(uint32_t Mousebutton);
 
+	/// <summary>
+	/// ゲームパッドを取得
+	/// </summary>
+	bool GetJoystickState(XINPUT_STATE& joy);
+	bool GetJoystickState();
+
 	MousePosition GetMousePosition() {
 		return m_Position;
 	}
@@ -84,10 +90,7 @@ private:
 	Input(const Input& obj) = delete;
 	Input& operator=(const Input& obj) = delete;
 
-	/// <summary>
-	/// ゲームパッドを取得
-	/// </summary>
-	bool GetJoystickState();
+
 	/// <summary>
 	/// マウスの位置をVector2にする
 	/// </summary>

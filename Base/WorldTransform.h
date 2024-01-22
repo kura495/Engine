@@ -3,6 +3,7 @@
 #include "MatrixCalc.h"
 #include "DirectXCommon.h"
 #include "Base/Math/VectorCalc.h"
+#include "Transform.h"
 
 struct ConstBufferDataWorldTransform {
 	Matrix4x4 matWorld; // ローカル → ワールド変換行列
@@ -12,14 +13,13 @@ struct WorldTransform {
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_ = nullptr;
 	// マッピング済みアドレス
 	ConstBufferDataWorldTransform* constMap = nullptr;
-	// ローカルスケール
-	Vector3 scale_ = { 1, 1, 1 };
-	// X,Y,Z軸回りのローカル回転角
-	Vector3 rotation_ = {0.0f,0.0f,0.0f};
 
-	Quaternion quaternion = { 0,0,0,1.0f };
-	// ローカル座標
-	Vector3 translation_ = { 0, 0, 0 };
+	TransformQua transform_ = {
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f,1.0f},
+		{0.0f,0.0f,0.0f}
+	};
+
 	// ローカル → ワールド変換行列
 	Matrix4x4 matWorld_;
 	// 親となるワールド変換へのポインタ

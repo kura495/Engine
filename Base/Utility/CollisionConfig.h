@@ -10,8 +10,12 @@ const uint32_t kCollitionAttributeFloor = 0b1 << 2;
 const uint32_t kCollitionAttributeMoveFloor = 0b1 << 3;
 //ゴール
 const uint32_t kCollitionAttributeGoal = 0b1 <<4;
+//箱
+const uint32_t kCollitionAttributeBox = 0b1 << 5;
 //武器
-const uint32_t kCollitionAttributeWeapon = 0b1 << 5;
+const uint32_t kCollitionAttributeWeapon = 0b1 << 6;
+//SearchPoint
+const uint32_t kCollitionAttributeSearchPoint = 0b1 << 7;
 
 
 enum ColliderType {

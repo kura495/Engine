@@ -13,9 +13,11 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	std::memcpy(vertexData, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
 
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-
 	
 	materialData->uvTransform = CreateIdentity4x4();
+
+	materialData->enableLighting = lightFlag;
+	materialData->color = color_;
 }
 
 void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
@@ -37,8 +39,7 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
 	directX_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
-	materialData->enableLighting = lightFlag;
-	materialData->color = color_;
+
 }
 
 void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, uint32_t TextureHundle)
@@ -60,8 +61,6 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
 	directX_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
-	materialData->enableLighting = lightFlag;
-	materialData->color = color_;
 }
 
 Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::string& filename)

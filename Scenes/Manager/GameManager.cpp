@@ -60,6 +60,7 @@ void GameManager::Gameloop()
 			imGuiManager->BeginFrame();
 			directX->PreView();
 			input->Update();
+			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
 			renderer_->Draw(PipelineType::Standerd);
 			state[currentSceneNum_]->Draw();
