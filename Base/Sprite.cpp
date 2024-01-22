@@ -44,6 +44,50 @@ void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const
 
 }
 
+void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
+{
+	directX_ = DirectXCommon::GetInstance();
+	textureManager_ = TextureManager::GetInstance();
+
+	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * 4);
+	materialResource = directX_->CreateBufferResource(sizeof(Material));
+
+	MakeVertexBufferView();
+	indexResource = directX_->CreateBufferResource(sizeof(uint32_t) * 6);
+	MakeIndexBufferView();
+
+	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+
+	//左下
+	vertexData[0].position = { anchorPoint.x - textureSize.x, anchorPoint.y + textureSize.y,0.0f,1.0f };
+	vertexData[0].texcoord = { 0.0f,1.0f };
+	//左上
+	vertexData[1].position = { anchorPoint.x - textureSize.x, anchorPoint.y - textureSize.y,0.0f,1.0f };
+	vertexData[1].texcoord = { 0.0f,0.0f };
+	//右下
+	vertexData[2].position = { anchorPoint.x + textureSize.x, anchorPoint.y + textureSize.y,0.0f,1.0f };
+	vertexData[2].texcoord = { 1.0f,1.0f };
+	//右上
+	vertexData[3].position = { anchorPoint.x + textureSize.x, anchorPoint.y - textureSize.y,0.0f,1.0f };
+	vertexData[3].texcoord = { 1.0f,0.0f };
+
+	//インデックスリソースにデータを書き込む
+	indexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
+
+	//三角形1枚目
+	indexData[0] = 0;
+	indexData[1] = 1;
+	indexData[2] = 2;
+	//三角形2枚目
+	indexData[3] = 1;
+	indexData[4] = 3;
+	indexData[5] = 2;
+
+	viewProjection_.Initialize();
+	viewProjection_.constMap->view = CreateIdentity4x4();
+	viewProjection_.constMap->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
+}
+
 void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
 {
 
@@ -75,6 +119,11 @@ void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
 	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(TextureHandle));
 
 	directX_->GetcommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+}
+
+void Sprite::SetColor(const Vector4& color)
+{
+	color_ = color;
 }
 
 void Sprite::MakeVertexBufferView()

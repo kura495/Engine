@@ -1,12 +1,15 @@
 #pragma once
 #include "WinApp.h"
 #include "DirectXCommon.h"
+#include "ImGuizmo.h"
+
 class ImGuiManager
 {
 public:
 	static ImGuiManager* GetInstance();
 	void Initialize(WinApp* winapp,DirectXCommon*directXcommon);
 	void BeginFrame();
+	void GizmoUpdate();
 	void EndFrame();
 private:
 	ImGuiManager() = default;

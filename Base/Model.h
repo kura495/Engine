@@ -26,13 +26,16 @@ public:
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
+
+	ModelData GetModelData() const { return modelData_; }
+
 private:
 
 	DirectXCommon* directX_ = nullptr;
 	TextureManager* textureManager_ = nullptr;
 	Light* light_ = nullptr;
 	//どのライトを使うか
-	int32_t lightFlag = Lighting::harfLambert;
+	int32_t lightFlag = Lighting::NotDo;
 
 	ModelData modelData_;
 	//頂点リソース

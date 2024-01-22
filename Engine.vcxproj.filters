@@ -71,6 +71,9 @@
     <Filter Include="Engine\Base\Camera">
       <UniqueIdentifier>{83eb9341-d07b-4046-8525-96393a50cc9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imGuizmo">
+      <UniqueIdentifier>{bc7ba27f-1740-4601-8aaf-f9012648c7ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -200,6 +203,14 @@
     <ClCompile Include="Base\DirectXCommon.cpp">
       <Filter>Engine\Base</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
+    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
+    <ClCompile Include="Game\Object\Player\Player.cpp" />
+    <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
+    <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\SearchPoint\SearchPoint.cpp" />
+    <ClCompile Include="Game\Object\Goal\Goal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -376,6 +387,16 @@
     <ClInclude Include="Base\DirectXCommon.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Box\BoxObject.h" />
+    <ClInclude Include="Game\Object\IObject.h" />
+    <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
+    <ClInclude Include="Game\Object\Player\Player.h" />
+    <ClInclude Include="Game\Object\Character.h" />
+    <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
+    <ClInclude Include="Game\Object\Weapon\Weapon.h" />
+    <ClInclude Include="Game\Object\Enemy\Enemy.h" />
+    <ClInclude Include="Game\Object\Enemy\SearchPoint\SearchPoint.h" />
+    <ClInclude Include="Game\Object\Goal\Goal.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

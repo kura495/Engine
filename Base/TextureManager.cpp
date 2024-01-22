@@ -37,8 +37,10 @@ uint32_t TextureManager::LoadTexture(const std::string& filePath)
 
 	textures_.at(index).IsUsed = true;
 
+	std::string fullpath = filePath;
+
 	//Textureを読んで転送する
-	DirectX::ScratchImage mipImages = ImageFileOpen(filePath);
+	DirectX::ScratchImage mipImages = ImageFileOpen(fullpath);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	textures_.at(index).textureResource = CreateTextureResource(directX_->GetDevice(), metadata);
 	intermediateResource_[index] = UploadTextureData(textures_.at(index).textureResource, mipImages);

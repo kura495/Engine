@@ -47,10 +47,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(ExternalIncludePath)</ExternalIncludePath>
     <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
+    <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
     <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgTriplet>x64-windows</VcpkgTriplet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -134,6 +138,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\ViewProjection.cpp" />
     <ClCompile Include="Base\WinApp.cpp" />
     <ClCompile Include="Base\WorldTransform.cpp" />
+    <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -141,7 +146,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\SearchPoint\SearchPoint.cpp" />
+    <ClCompile Include="Game\Object\Goal\Goal.cpp" />
+    <ClCompile Include="Game\Object\Player\Player.cpp" />
+    <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="Scenes\State\GameClearState.cpp" />
     <ClCompile Include="Scenes\State\GamePlayState.cpp" />
@@ -193,6 +205,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\ViewProjection.h" />
     <ClInclude Include="Base\WinApp.h" />
     <ClInclude Include="Base\WorldTransform.h" />
+    <ClInclude Include="Game\Object\Box\BoxObject.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
@@ -201,6 +214,15 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
+    <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
+    <ClInclude Include="Game\Object\Character.h" />
+    <ClInclude Include="Game\Object\Enemy\Enemy.h" />
+    <ClInclude Include="Game\Object\Enemy\SearchPoint\SearchPoint.h" />
+    <ClInclude Include="Game\Object\Goal\Goal.h" />
+    <ClInclude Include="Game\Object\IObject.h" />
+    <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
+    <ClInclude Include="Game\Object\Player\Player.h" />
+    <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Scenes\Manager\GameManager.h" />
     <ClInclude Include="Scenes\State\GameClearState.h" />
     <ClInclude Include="Scenes\State\GamePlayState.h" />

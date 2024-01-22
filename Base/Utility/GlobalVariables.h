@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Math_Structs.h"
+#include "Transform.h"
 #include "ImGuiManager.h"
 #include "externals/nlohmann/json.hpp"
 #include <variant>
@@ -9,7 +10,7 @@
 
 struct Item {
 	//項目の値
-	std::variant<int32_t, float, Vector3> value;
+	std::variant<int32_t, float, Vector3,Matrix4x4, TransformQua> value;
 };
 struct Group {
 	std::map<std::string, Item> items;
@@ -30,6 +31,8 @@ public:
 	void AddItem(const std::string& groupName, const std::string& key, float value);
 	//アイテムの追加(Vector3)(アイテムが追加済みなら何もしない)
 	void AddItem(const std::string& groupName, const std::string& key, const Vector3& value);
+	void AddItem(const std::string& groupName, const std::string& key, const Matrix4x4& value);
+	void AddItem(const std::string& groupName, const std::string& key, const TransformQua& value);
 	//アイテムの追加(bool)(アイテムが追加済みなら何もしない)
 	//void AddItem(const std::string& groupName, const std::string& key, const bool& value);
 #pragma endregion AddItem
@@ -38,8 +41,11 @@ public:
 	int32_t GetIntValue(const std::string& groupName, const std::string& key)const;
 	float GetfloatValue(const std::string& groupName, const std::string& key)const;
 	Vector3 GetVector3Value(const std::string& groupName, const std::string& key)const;
+	TransformQua GetTransformQuaValue(const std::string& groupName, const std::string& key)const;
 	//bool GetboolValue(const std::string& groupName, const std::string& key)const;
 #pragma endregion Getter
+	void Updateint32_tItem(const std::string& groupName, const std::string& key, const int32_t& value);
+	void UpdateTransformQuaItem(const std::string& groupName, const std::string& key, const TransformQua& value);
 
 	//ファイルにデータを保存
 	void SaveFile(const std::string& groupName);
@@ -58,6 +64,10 @@ private:
 	void SetValue(const std::string& groupName, const std:: string& key, float value);
 	//値のセット(Vector3)
 	void SetValue(const std::string& groupName, const std:: string& key, const Vector3& value);
+	//値のセット(Vector3)
+	void SetValue(const std::string& groupName, const std:: string& key, const Matrix4x4& value);
+	//値のセット(TransformQua)
+	void SetValue(const std::string& groupName, const std:: string& key, const TransformQua& value);
 	//値のセット(bool)
 	//void SetValue(const std::string& groupName, const std:: string& key, const bool& value);
 #pragma endregion SetValue

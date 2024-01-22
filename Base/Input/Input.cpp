@@ -114,13 +114,23 @@ bool Input::pushMouse(uint32_t Mousebutton)
 	return false;
 }
 
-Vector2 Input::PositionMouse() {
-	return { (float)mouse_.lX,(float)mouse_.lY };
-}
+bool Input::GetJoystickState(XINPUT_STATE& joy) {
+	DWORD dwResult = XInputGetState(0, &joy);
+	Vector3 move = { (float)joy.Gamepad.sThumbLX, 0.0f, (float)joy.Gamepad.sThumbLY };
 
-float Input::ScrollMouse()
-{
-	return (float)mouse_.lZ;
+	if (Length(move) < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+	{
+		joy.Gamepad.sThumbLX = 0;
+		joy.Gamepad.sThumbLY = 0;
+	}
+	move = { (float)joy.Gamepad.sThumbRX, 0.0f, (float)joy.Gamepad.sThumbRY };
+	if (Length(move) < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+	{
+		joy.Gamepad.sThumbRX = 0;
+		joy.Gamepad.sThumbRY = 0;
+	}
+	return dwResult == ERROR_SUCCESS;
+
 }
 
 bool Input::GetJoystickState()
@@ -142,3 +152,14 @@ bool Input::GetJoystickState()
 	return dwResult == ERROR_SUCCESS;
 
 }
+
+Vector2 Input::PositionMouse() {
+	return { (float)mouse_.lX,(float)mouse_.lY };
+}
+
+float Input::ScrollMouse()
+{
+	return (float)mouse_.lZ;
+}
+
+

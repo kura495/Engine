@@ -9,7 +9,7 @@ public:
 
 	virtual ~Collider(){};
 	//衝突時に呼ばれる関数
-	virtual void OnCollision(uint32_t collisionAttribute) = 0;
+	virtual void OnCollision(const Collider* collider) = 0;
 	float GetRadius() { return Radius_; }
 
 	uint32_t GetcollitionAttribute() const { return collisionAttribute_; }
@@ -32,10 +32,31 @@ public:
 
 	int GetId() { return Id_; }
 
+	///worldの親を設定
+	void SetWorld(WorldTransform* Parent) { center_ = Parent; }
+
+	Vector3 GetCenter() const {
+		return
+		{ center_->transform_.translate.x,center_->transform_.translate.y,center_->transform_.translate.z };
+	}
+
+
+	void SetSize(Vector3 size) { size_ = size; }
+	Vector3 GetSize() const { return size_; }
+
 protected:
 
 	void SetId(int Type) { Id_ = Type; }
+	/// <summary>
+	/// 原点
+	/// </summary>
+	WorldTransform* center_;
 	
+	/// <summary>
+/// x,y,zそれぞれの幅
+/// </summary>
+	Vector3 size_;
+
 private:
 
 	uint32_t Id_ = 0xffffffff;

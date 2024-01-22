@@ -12,7 +12,7 @@ class Camera
 public:
 	void Initialize();
 	void Update();
-	const ViewProjection& GetViewProjection() { viewProj.UpdateMatrix();return viewProj; }
+	ViewProjection& GetViewProjection() { viewProj.UpdateMatrix();return viewProj; }
 
 #ifdef _DEBUG
 	void DebugCamera(bool Flag) {

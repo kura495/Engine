@@ -32,7 +32,6 @@ void CollisionManager::CheckAllCollisions() {
 		}
 	}
 }
-
 //void CollisionManager::CheckCollisionCircle(Collider * colliderA, Collider * colliderB) {
 //	// 判定対象AとBの座標
 //	Vector3 posA = { 1.0f,1.0f,1.0f }, posB = {1.0f, 1.0f,1.0f};
@@ -67,19 +66,16 @@ void CollisionManager::CheckAllCollisions() {
 //		}
 //	}
 //}
-
-
 //void CollisionManager::CheckCollitionOBBox(OBBoxCollider* colliderA, OBBoxCollider* colliderB)
 //{
 //	
 //}
-
 void CollisionManager::CheckCollisionBox(BoxCollider * colliderA, BoxCollider * colliderB)
 {
 	// 判定対象AとBの座標
 	AABB posA, posB;
-	posA = colliderA->GetSize();
-	posB = colliderB->GetSize();
+	posA = colliderA->GetAABB();
+	posB = colliderB->GetAABB();
 
 	// コライダーのフィルターの値でビット演算
 	if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
@@ -92,17 +88,17 @@ void CollisionManager::CheckCollisionBox(BoxCollider * colliderA, BoxCollider * 
 		) {
 		if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0) {
 			// コライダーAの衝突時コールバック
-			colliderA->OnCollision(colliderB->GetcollitionAttribute());
+			colliderA->OnCollision(colliderB);
 		}
 		else if ((colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
 			// コライダーBの衝突時コールバック
-			colliderB->OnCollision(colliderA->GetcollitionAttribute());
+			colliderB->OnCollision(colliderA);
 		}
 		else {
 			// コライダーAの衝突時コールバック
-			colliderA->OnCollision(colliderB->GetcollitionAttribute());
+			colliderA->OnCollision(colliderB);
 			// コライダーBの衝突時コールバック
-			colliderB->OnCollision(colliderA->GetcollitionAttribute());
+			colliderB->OnCollision(colliderA);
 		}
 	}
 
