@@ -108,7 +108,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base\Audio\Audio.cpp" />
-    <ClCompile Include="Base\Camera\Camera.cpp" />
+    <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="Base\DirectXCommon.cpp" />
     <ClCompile Include="Base\Input\Input.cpp" />
     <ClCompile Include="Base\Light.cpp" />
@@ -162,6 +162,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   <ItemGroup>
     <ClInclude Include="Base\Audio\Audio.h" />
     <ClInclude Include="Base\Camera\Camera.h" />
+    <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="Base\DirectXCommon.h" />
     <ClInclude Include="Base\Input\Input.h" />
     <ClInclude Include="Base\Light.h" />

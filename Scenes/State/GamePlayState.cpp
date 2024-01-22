@@ -3,8 +3,8 @@
 void GamePlayState::Initialize()
 {
 	//基本機能生成
-	camera_ = new Camera();
-	camera_->Initialize();
+	debugCamera_ = std::make_unique<DebugCamera>();
+	debugCamera_->Initialize();
 	input = Input::GetInstance();
 	audio = Audio::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
@@ -26,10 +26,9 @@ void GamePlayState::Initialize()
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(WeaponModel_);
-	player_->SetViewProjection(&camera_->GetViewProjection());
 
 	followCamera = std::make_unique<FollowCamera>();
-	followCamera->Initalize();
+	followCamera->Initialize();
 	followCamera->SetTarget(&player_->GetWorldTransform());
 
 	player_->SetViewProjection(&followCamera->GetViewProjection());
@@ -74,17 +73,12 @@ void GamePlayState::Update()
 		viewProjction = followCamera->GetViewProjection();
 	}
 	else if (IsDebugCamera == true) {
-		camera_->Update();
-		viewProjction = camera_->GetViewProjection();
+		debugCamera_->Update();
+		viewProjction = debugCamera_->GetViewProjection();
 	}
 	ImGui::SliderFloat3("Rotate",&viewProjction.rotation_.x,-100,100);
 	ImGui::SliderFloat3("Translate",&viewProjction.translation_.x,-100,100);
-if (input->TriggerKey(DIK_LALT)) {
-		camera_->DebugCamera(true);
-}
-else {
-	camera_->DebugCamera(false);
-}
+
 	ImGui::End();
 #endif // _DEBUG
 //ImGui

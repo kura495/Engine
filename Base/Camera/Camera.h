@@ -1,36 +1,16 @@
 ﻿#pragma once
-#include "MatrixCalc.h"
-#include "VectorCalc.h"
-#include "Transform.h"
 #include "ViewProjection.h"
-#include "Math_Structs.h"
-#include "ImGuiManager.h"
-#include "Input.h"
 
 class Camera
 {
 public:
-	void Initialize();
-	void Update();
-	ViewProjection& GetViewProjection() { viewProj.UpdateMatrix();return viewProj; }
+	virtual void Initialize() = 0;
+	virtual void Update() = 0;
+	ViewProjection& GetViewProjection() { return viewProj; }
 
-#ifdef _DEBUG
-	void DebugCamera(bool Flag) {
-		DebucCameraFlag = Flag;
-}
-#endif // DEBUG
-
-private:
-	Input* input = nullptr;
-	//FOV
-	float FOV = 45.0f;
+protected:
 
 	ViewProjection viewProj;
-	
-#ifdef _DEBUG
-	bool DebucCameraFlag = false;
-	void DebugCameraMove();
-#endif // DEBUG
 
 };
 

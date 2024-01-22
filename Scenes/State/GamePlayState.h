@@ -15,7 +15,7 @@
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
-#include "Base/Camera/Camera.h"
+#include "Base/Camera/DebugCamera/DebugCamera.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Math_Structs.h"
@@ -40,8 +40,8 @@ public:
 private:
 	//基本機能ズ
 	MyEngine* myEngine = nullptr;
-	Camera* camera_ = nullptr;
 	TextureManager* textureManager_ = nullptr;	
+	std::unique_ptr<DebugCamera>debugCamera_;
 	Input* input = nullptr;
 	Audio* audio=nullptr;
 	Light* light_ = nullptr;
@@ -53,7 +53,6 @@ private:
 	bool IsDebugCamera = false;
 
 	WorldTransform world_;
-
 	std::unique_ptr<Player>player_;
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
