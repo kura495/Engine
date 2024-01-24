@@ -1,5 +1,6 @@
 #include"ImGuiManager.h"
 
+static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 
 ImGuiManager* ImGuiManager::GetInstance()
 {
@@ -24,14 +25,9 @@ void ImGuiManager::BeginFrame()
 {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
-	ImGuiIO& io = ImGui::GetIO();
-
-	// Read keyboard modifiers inputs
-	io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
-	io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
-	io.KeyAlt = (GetKeyState(VK_MENU) & 0x8000) != 0;
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
+
 }
 
 void ImGuiManager::GizmoUpdate()
@@ -41,5 +37,7 @@ void ImGuiManager::GizmoUpdate()
 
 void ImGuiManager::EndFrame()
 {
+
 	ImGui::Render();
 }
+

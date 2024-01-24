@@ -209,6 +209,7 @@
     <ClCompile Include="Game\Object\Enemy\SearchPoint\SearchPoint.cpp" />
     <ClCompile Include="Game\Object\Goal\Goal.cpp" />
     <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
+    <ClCompile Include="externals\imgui\ImGuizmo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -396,6 +397,7 @@
     <ClInclude Include="Game\Object\Enemy\SearchPoint\SearchPoint.h" />
     <ClInclude Include="Game\Object\Goal\Goal.h" />
     <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />
+    <ClInclude Include="externals\imgui\ImGuizmo.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

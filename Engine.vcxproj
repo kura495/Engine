@@ -56,6 +56,9 @@
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgTriplet>x64-windows</VcpkgTriplet>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -138,6 +141,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\ViewProjection.cpp" />
     <ClCompile Include="Base\WinApp.cpp" />
     <ClCompile Include="Base\WorldTransform.cpp" />
+    <ClCompile Include="externals\imgui\ImGuizmo.cpp" />
     <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
@@ -206,6 +210,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\ViewProjection.h" />
     <ClInclude Include="Base\WinApp.h" />
     <ClInclude Include="Base\WorldTransform.h" />
+    <ClInclude Include="externals\imgui\ImGuizmo.h" />
     <ClInclude Include="Game\Object\Box\BoxObject.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />

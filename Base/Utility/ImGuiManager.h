@@ -1,7 +1,7 @@
 #pragma once
 #include "WinApp.h"
 #include "DirectXCommon.h"
-#include "ImGuizmo.h"
+
 
 class ImGuiManager
 {
@@ -11,9 +11,12 @@ public:
 	void BeginFrame();
 	void GizmoUpdate();
 	void EndFrame();
+	//void EditTransform(Matrix4x4* matrix, bool editTransformDecomposition);
 private:
 	ImGuiManager() = default;
 	~ImGuiManager() = default;
 	ImGuiManager(const ImGuiManager& obj) = delete;
 	ImGuiManager& operator=(const ImGuiManager& obj) = delete;
+
+
 };

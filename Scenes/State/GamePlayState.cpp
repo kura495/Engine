@@ -83,15 +83,26 @@ ImGui::End();
 #endif
 //ImGuizmo
 #ifdef _DEBUG
-static ImGuiWindowFlags gizmoWindowFlags = 0;
+Matrix4x4 GizmoMoveMatrix = CreateIdentity4x4();
 ImGuiIO& io = ImGui::GetIO();
 ImGui::Text("X: %f Y: %f", io.MousePos.x, io.MousePos.y);
 ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
 Matrix4x4 IdentityMat = CreateIdentity4x4();
 ImGuizmo::DrawGrid(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
+	
 	if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
-	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
+	GizmoMoveMatrix = (*ObjectIt)->GetWorld().matWorld_;
+	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::SCALE, ImGuizmo::WORLD,&GizmoMoveMatrix.m[0][0]);
+
+	float scale[3], rotate[3], translate[3];
+	ImGuizmo::DecomposeMatrixToComponents(&GizmoMoveMatrix.m[0][0],translate,rotate,scale);
+	(*ObjectIt)->GetWorld().transform_.scale.x = scale[0];
+	(*ObjectIt)->GetWorld().transform_.scale.y = scale[1];
+	(*ObjectIt)->GetWorld().transform_.scale.z = scale[2];
+	(*ObjectIt)->GetWorld().transform_.translate.x = translate[0];
+	(*ObjectIt)->GetWorld().transform_.translate.y = translate[1];
+	(*ObjectIt)->GetWorld().transform_.translate.z = translate[2];
 	break;
 	}
 }

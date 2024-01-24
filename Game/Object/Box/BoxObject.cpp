@@ -34,6 +34,7 @@ void BoxObject::ImGui()
 	ImGui::DragFloat3("Scale",&world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate",&world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate",&world_.transform_.translate.x);
+	world_.UpdateMatrix();
 	ImGui::End();
 	std::string Number = std::to_string(GetNumber());
 
