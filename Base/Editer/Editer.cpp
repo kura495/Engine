@@ -53,7 +53,6 @@ void Editer::GuizmoOption()
 	ImGui::End();
 
 	ImGui::Begin("Object");
-
 	ImGui::DragFloat3("Scale", &world_[ObjectCount]->transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_[ObjectCount]->transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_[ObjectCount]->transform_.translate.x);
