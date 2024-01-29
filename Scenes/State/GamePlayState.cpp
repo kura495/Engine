@@ -93,7 +93,7 @@ for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != 
 	
 	if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
 	GizmoMoveMatrix = (*ObjectIt)->GetWorld().matWorld_;
-	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::SCALE, ImGuizmo::WORLD,&GizmoMoveMatrix.m[0][0]);
+	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&GizmoMoveMatrix.m[0][0]);
 
 	float scale[3], rotate[3], translate[3];
 	ImGuizmo::DecomposeMatrixToComponents(&GizmoMoveMatrix.m[0][0],translate,rotate,scale);
@@ -115,7 +115,6 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 
 #endif
 
-
 #pragma region
 
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
@@ -124,7 +123,7 @@ for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
 	}
-
+#pragma endregion Update
 
 }
 

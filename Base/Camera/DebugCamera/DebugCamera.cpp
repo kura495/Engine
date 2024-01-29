@@ -3,6 +3,8 @@
 void DebugCamera::Initialize()
 {
 	viewProj.Initialize();
+	viewProj.translation_ = {0.0f,2.0f,-25.0f};
+	viewProj.UpdateMatrix();
 }
 
 void DebugCamera::Update()
@@ -45,4 +47,19 @@ void DebugCamera::Update()
 	}
 #pragma endregion 移動
 	viewProj.UpdateMatrix();
+	ImGui();
+}
+
+void DebugCamera::ImGui()
+{
+#ifdef _DEBUG
+	ImGui::Begin("Camera");
+	ImGui::DragFloat3("Rotate",&viewProj.rotation_.x);
+	ImGui::DragFloat3("Translate",&viewProj.translation_.x);
+	if (ImGui::Button("Reset")) {
+		viewProj.translation_ = { 0.0f,0.0f,0.0f };
+		viewProj.UpdateMatrix();
+	}
+	ImGui::End();
+#endif
 }

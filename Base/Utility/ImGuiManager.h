@@ -11,7 +11,7 @@ public:
 	void BeginFrame();
 	void GizmoUpdate();
 	void EndFrame();
-	//void EditTransform(Matrix4x4* matrix, bool editTransformDecomposition);
+	void EditTransform(Matrix4x4* cameraView,Matrix4x4* cameraProjection,Matrix4x4* matrix);
 private:
 	ImGuiManager() = default;
 	~ImGuiManager() = default;
