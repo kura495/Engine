@@ -1,9 +1,13 @@
 #pragma once
+
+#include "ImGuiManager.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
 class Editer {
 public:
+	static Editer* GetInstance();
+
 	void Initalize();
 	void Update();
 	void Draw();
@@ -17,6 +21,11 @@ public:
 	}
 #pragma endregion 
 private:
+	Editer() = default;
+	~Editer() = default;
+	Editer(const Editer& obj) = delete;
+	Editer& operator=(const Editer& obj) = delete;
+
 	void GuizmoOption();
 	void Manipulator();
 
