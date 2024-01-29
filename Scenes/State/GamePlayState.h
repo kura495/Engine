@@ -21,6 +21,7 @@
 #include "Math_Structs.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 #include "Base/Utility/CollisionManager.h"
+#include "Base/Editer/Editer.h"
 
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"

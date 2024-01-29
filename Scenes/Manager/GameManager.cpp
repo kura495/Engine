@@ -33,6 +33,9 @@ void GameManager::Initialize()
 	//Light
 	light = Light::GetInstance();
 	light->Initialize();
+	//Editer
+	editer = Editer::GetInstance();
+	editer->Initalize();
 	//グローバル変数読み込み
 	GlobalVariables::GetInstance()->LoadFiles();
 	//State
@@ -59,11 +62,13 @@ void GameManager::Gameloop()
 			}
 			imGuiManager->BeginFrame();
 			directX->PreView();
+			editer->Update();
 			input->Update();
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
 			renderer_->Draw(PipelineType::Standerd);
 			state[currentSceneNum_]->Draw();
+			editer->Draw();
 			imGuiManager->EndFrame();
 			directX->PostView();
 		}

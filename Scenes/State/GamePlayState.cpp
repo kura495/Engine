@@ -5,6 +5,8 @@ void GamePlayState::Initialize()
 	//基本機能生成
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
+	Editer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
+
 	input = Input::GetInstance();
 	audio = Audio::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
@@ -71,48 +73,8 @@ if (ImGui::BeginMenuBar()) {
 		ImGui::EndMenu();
 	}
 	ImGui::EndMenuBar();
-
-	ImGui::InputInt("BoxSelect", &boxSelectNumber_);
-	ImGui::InputInt("PlaneSelect", &planeSelectNumber_);
-	if (ImGui::Button("Delete")) {
-		DeleteObject();
-	}
-	ControllObject();
 }
 ImGui::End();
-#endif
-//ImGuizmo
-#ifdef _DEBUG
-Matrix4x4 GizmoMoveMatrix = CreateIdentity4x4();
-ImGuiIO& io = ImGui::GetIO();
-ImGui::Text("X: %f Y: %f", io.MousePos.x, io.MousePos.y);
-ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-Matrix4x4 IdentityMat = CreateIdentity4x4();
-ImGuizmo::DrawGrid(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
-//for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-//	
-	//if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
-	//GizmoMoveMatrix = (*ObjectIt)->GetWorld().matWorld_;
-	//ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&GizmoMoveMatrix.m[0][0]);
-
-//float scale[3], rotate[3], translate[3];
-	//ImGuizmo::DecomposeMatrixToComponents(&GizmoMoveMatrix.m[0][0],translate,rotate,scale);
-	//(*ObjectIt)->GetWorld().transform_.scale.x = scale[0];
-	//(*ObjectIt)->GetWorld().transform_.scale.y = scale[1];
-	//(*ObjectIt)->GetWorld().transform_.scale.z = scale[2];
-	//(*ObjectIt)->GetWorld().transform_.translate.x = translate[0];
-	//(*ObjectIt)->GetWorld().transform_.translate.y = translate[1];
-	//(*ObjectIt)->GetWorld().transform_.translate.z = translate[2];
-	//break;
-	//}
-//}
-//for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-//	if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
-//	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
-//	break;
-//	}
-//}
-
 #endif
 
 #pragma region
@@ -189,21 +151,6 @@ void GamePlayState::DeleteObject()
 	//		break;
 	//	}
 	//}
-}
-void GamePlayState::ControllObject()
-{
-	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-		if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
-			(*ObjectIt)->ImGui();
-			break;
-		}
-	}
-	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-		if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
-			(*ObjectIt)->ImGui();
-			break;
-		}
-	}
 }
 
 

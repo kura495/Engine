@@ -1,11 +1,14 @@
 #pragma once
 #include <vector>
 #include "Model.h"
+#include "Editer/Editer.h"
 
 class IObject
 {
 public:
-	IObject(){}
+	IObject(){
+		Editer::GetInstance()->SetWorld(&world_);
+	}
 	~IObject(){}
 
 	virtual void Initalize(std::vector<Model*> models) = 0;

@@ -2,6 +2,8 @@
 
 void BoxObject::Initalize(std::vector<Model*> models)
 {
+
+
 	models_ = models;
 	world_.Initialize();
 
@@ -18,6 +20,10 @@ void BoxObject::Update()
 	BoxCollider::SetSize({
 	world_.transform_.scale.x,world_.transform_.scale.y,world_.transform_.scale.z});
 	BoxCollider::Update();
+
+	std::string Number = std::to_string(GetNumber());
+	std::string Name = "Box" + Number;
+	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform_);
 }
 
 void BoxObject::Draw(const ViewProjection& viewProj)
@@ -36,10 +42,8 @@ void BoxObject::ImGui()
 	ImGui::DragFloat3("Translate",&world_.transform_.translate.x);
 	world_.UpdateMatrix();
 	ImGui::End();
-	std::string Number = std::to_string(GetNumber());
 
-	std::string Name = "Box" + Number;
-	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name,world_.transform_);
+
 }
 
 void BoxObject::OnCollision(const Collider* collider)

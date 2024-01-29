@@ -29,7 +29,9 @@ private:
 	void GuizmoOption();
 	void Manipulator();
 
-	uint32_t ObjectCount = 0;
+	int ObjectCount = 0;
 	std::vector<WorldTransform*> world_;
 	const ViewProjection* viewProjection_ = nullptr;
+
+	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };
