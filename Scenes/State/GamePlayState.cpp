@@ -55,6 +55,14 @@ void GamePlayState::Initialize()
 
 	goal_ = std::make_unique<Goal>();
 	goal_->Initialize(goalModel_);
+
+	FadeInFlag = true;
+	FadeParam = 1.0f;
+	textureHundle = textureManager_->LoadTexture("resources/BlackTexture.png");
+	texture_world_.Initialize();
+
+	texture = std::make_unique<Sprite>();
+	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 }
 
 void GamePlayState::Update()
@@ -105,6 +113,18 @@ if (ImGui::BeginMenuBar()) {
 }
 ImGui::End();
 #endif
+
+if (FadeInFlag) {
+	if (FadeParam > 0.0f) {
+		FadeParam -= 0.01f;
+
+	}
+	if (FadeParam < 0.0f) {
+		FadeInFlag = false;
+	}
+	texture->SetColor({ 1.0f,1.0f,1.0f,FadeParam });
+}
+
 
 if (player_->GetIsGoal()) {
 	StateNo = 2;
@@ -161,6 +181,8 @@ void GamePlayState::Draw()
 	goal_->Draw(viewProjction);
 
 	player_->Draw(viewProjction);
+
+	texture->Draw(texture_world_, textureHundle);
 
 	//3Dモデル描画ここまで	
 	

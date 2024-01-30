@@ -83,4 +83,10 @@ private:
 
 	std::vector<Model*> goalModel_;
 	std::unique_ptr<Goal>goal_;
+
+	std::unique_ptr<Sprite>texture;
+	uint32_t textureHundle;
+	WorldTransform texture_world_;
+	bool FadeInFlag = true;
+	float FadeParam = 1.0f;
 };
