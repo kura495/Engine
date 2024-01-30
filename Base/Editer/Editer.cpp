@@ -13,12 +13,18 @@ void Editer::Initalize()
 
 void Editer::Update()
 {
+	if (viewProjection_ == nullptr) {
+		return;
+	}
 	GuizmoOption();
 }
 
 void Editer::Draw()
 {
 	if (world_.empty()) {
+		return;
+	}
+	if (viewProjection_ == nullptr) {
 		return;
 	}
 	Manipulator();

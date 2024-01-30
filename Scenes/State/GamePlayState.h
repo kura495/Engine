@@ -41,10 +41,10 @@ public:
 private:
 	//基本機能ズ
 	MyEngine* myEngine = nullptr;
-	TextureManager* textureManager_ = nullptr;	
-	std::unique_ptr<DebugCamera>debugCamera_ = nullptr;
+	DebugCamera* debugcamera_ = nullptr;
+	TextureManager* textureManager_ = nullptr;
 	Input* input = nullptr;
-	Audio* audio=nullptr;
+	Audio* audio = nullptr;
 	Light* light_ = nullptr;
 	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
@@ -53,14 +53,20 @@ private:
 	ViewProjection viewProjction;
 	bool IsDebugCamera = false;
 
+	WorldTransform world_;
 
+	std::unique_ptr<Player>player_;
+	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
 
+	void AddEnemy(Vector3 Pos);
 
-
+	std::vector<Model*> enemyModel_;
+	std::list<Enemy*> enemy_;
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
+	std::vector<Model*> WeaponModel_;
 	void ControllObject();
 	void DeleteObject();
 
@@ -75,4 +81,6 @@ private:
 	int boxSelectNumber_;
 	int planeSelectNumber_;
 
+	std::vector<Model*> goalModel_;
+	std::unique_ptr<Goal>goal_;
 };
