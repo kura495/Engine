@@ -12,6 +12,10 @@ public:
 	void Update();
 	void Draw();
 
+	void IsAble(bool Flag) {
+		IsAbleFlag = Flag;
+	}
+
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
@@ -32,6 +36,8 @@ private:
 	int ObjectCount = 0;
 	std::vector<WorldTransform*> world_;
 	const ViewProjection* viewProjection_ = nullptr;
+
+	bool IsAbleFlag = false;
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };

@@ -4,6 +4,7 @@
 #include "Base/TextureManager.h"
 #include "Base/Sprite.h"
 #include "Base/WorldTransform.h"
+#include "Base/Editer/Editer.h"
 
 class GameTitleState :public GameState
 {

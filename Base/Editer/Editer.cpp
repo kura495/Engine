@@ -13,6 +13,9 @@ void Editer::Initalize()
 
 void Editer::Update()
 {
+	if (IsAbleFlag == false) {
+		return;
+	}
 	if (viewProjection_ == nullptr) {
 		return;
 	}
@@ -21,6 +24,9 @@ void Editer::Update()
 
 void Editer::Draw()
 {
+	if (IsAbleFlag == false) {
+		return;
+	}
 	if (world_.empty()) {
 		return;
 	}
@@ -32,10 +38,6 @@ void Editer::Draw()
 
 void Editer::GuizmoOption()
 {
-	if (viewProjection_ == nullptr) {
-		return;
-	}
-
 #ifdef _DEBUG
 	ImGui::Begin("Editer");
 	ImGui::InputInt("ObjectNumber", &ObjectCount);
