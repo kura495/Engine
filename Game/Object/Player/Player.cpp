@@ -10,7 +10,7 @@ void Player::Initialize(std::vector<Model*> models)
 
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
-	BoxCollider::SetSize({0.5f,1.0f,0.5f});
+	BoxCollider::SetSize({1.0f,1.0f,1.0f});
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 

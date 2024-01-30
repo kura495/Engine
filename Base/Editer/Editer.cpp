@@ -33,8 +33,9 @@ void Editer::Draw()
 	if (viewProjection_ == nullptr) {
 		return;
 	}
-
-	Manipulator();
+	if (IsManipulatorFlag) {
+		Manipulator();
+	}
 	if (IsGridFlag) {
 		Grid();
 	}
@@ -62,7 +63,7 @@ void Editer::GuizmoOption()
 	ImGui::SameLine();
 	if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
 		mCurrentGizmoOperation = ImGuizmo::SCALE;
-
+	ImGui::Checkbox("Manipulator", &IsManipulatorFlag);
 	ImGui::Checkbox("DrawGrid", &IsGridFlag);
 	ImGui::End();
 

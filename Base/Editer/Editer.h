@@ -39,7 +39,9 @@ private:
 	const ViewProjection* viewProjection_ = nullptr;
 
 	bool IsEnableFlag = false;
+	bool IsManipulatorFlag = true;
 	bool IsGridFlag = true;
+
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };

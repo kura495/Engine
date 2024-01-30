@@ -9,6 +9,8 @@ void DebugCamera::Initialize()
 
 void DebugCamera::Update()
 {
+	ImGui();
+	if (Input::GetInstance()->TriggerKey(DIK_LALT)) {
 #pragma region rotation
 	const float rotSpeed = 0.05f;
 	if (Input::GetInstance()->TriggerKey(DIK_UP)) {
@@ -46,8 +48,9 @@ void DebugCamera::Update()
 		viewProj.translation_.z += translateSpeed;
 	}
 #pragma endregion 移動
+	}
 	viewProj.UpdateMatrix();
-	ImGui();
+
 }
 
 void DebugCamera::ImGui()
