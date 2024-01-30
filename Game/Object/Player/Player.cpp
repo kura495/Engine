@@ -111,7 +111,6 @@ void Player::OnCollision(const Collider* collider)
 		ImGui::Begin("BoxHit");
 		ImGui::End();
 #endif
-
 		Vector3 colliderPos = collider->GetCenter();
 
 #pragma region
