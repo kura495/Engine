@@ -110,6 +110,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base\AnimationSystem\Animation.cpp" />
     <ClCompile Include="Base\Audio\Audio.cpp" />
     <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="Base\DirectXCommon.cpp" />
@@ -165,6 +166,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Scenes\State\GameTitleState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base\AnimationSystem\Animation.h" />
     <ClInclude Include="Base\Audio\Audio.h" />
     <ClInclude Include="Base\Camera\Camera.h" />
     <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />

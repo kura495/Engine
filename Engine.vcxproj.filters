@@ -211,6 +211,7 @@
     <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="externals\imgui\ImGuizmo.cpp" />
     <ClCompile Include="Base\Editer\Editer.cpp" />
+    <ClCompile Include="Base\AnimationSystem\Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -400,6 +401,7 @@
     <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="externals\imgui\ImGuizmo.h" />
     <ClInclude Include="Base\Editer\Editer.h" />
+    <ClInclude Include="Base\AnimationSystem\Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
