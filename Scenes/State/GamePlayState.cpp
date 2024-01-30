@@ -11,7 +11,7 @@ void GamePlayState::Initialize()
 	light_ = Light::GetInstance();
 
 	Editer::GetInstance()->SetViewProjection(&viewProjction);
-	Editer::GetInstance()->IsAble(true);
+	Editer::GetInstance()->IsEnable(true);
 
 	DirectX_ = DirectXCommon::GetInstance();
 	collisionManager = std::make_unique<CollisionManager>();

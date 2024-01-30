@@ -13,7 +13,7 @@ void Editer::Initalize()
 
 void Editer::Update()
 {
-	if (IsAbleFlag == false) {
+	if (IsEnableFlag == false) {
 		return;
 	}
 	if (viewProjection_ == nullptr) {
@@ -24,7 +24,7 @@ void Editer::Update()
 
 void Editer::Draw()
 {
-	if (IsAbleFlag == false) {
+	if (IsEnableFlag == false) {
 		return;
 	}
 	if (world_.empty()) {
@@ -33,7 +33,11 @@ void Editer::Draw()
 	if (viewProjection_ == nullptr) {
 		return;
 	}
+
 	Manipulator();
+	if (IsGridFlag) {
+		Grid();
+	}
 }
 
 void Editer::GuizmoOption()
@@ -58,6 +62,8 @@ void Editer::GuizmoOption()
 	ImGui::SameLine();
 	if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
 		mCurrentGizmoOperation = ImGuizmo::SCALE;
+
+	ImGui::Checkbox("DrawGrid", &IsGridFlag);
 	ImGui::End();
 
 	ImGui::Begin("Object");
@@ -69,8 +75,6 @@ void Editer::GuizmoOption()
 
 	ImGuiIO& io = ImGui::GetIO();
 	ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-	Matrix4x4 IdentityMat = CreateIdentity4x4();
-	ImGuizmo::DrawGrid(&viewProjection_->matView.m[0][0], &viewProjection_->matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 
 #endif
 }
@@ -86,4 +90,10 @@ void Editer::Manipulator()
 	world_[ObjectCount]->transform_.scale = scale;
 	world_[ObjectCount]->transform_.translate = translate;
 #endif
+}
+
+void Editer::Grid()
+{
+	Matrix4x4 IdentityMat = CreateIdentity4x4();
+	ImGuizmo::DrawGrid(&viewProjection_->matView.m[0][0], &viewProjection_->matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 }

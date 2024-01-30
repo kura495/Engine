@@ -12,8 +12,8 @@ public:
 	void Update();
 	void Draw();
 
-	void IsAble(bool Flag) {
-		IsAbleFlag = Flag;
+	void IsEnable(bool Flag) {
+		IsEnableFlag = Flag;
 	}
 
 #pragma region Setter
@@ -32,12 +32,14 @@ private:
 
 	void GuizmoOption();
 	void Manipulator();
+	void Grid();
 
 	int ObjectCount = 0;
 	std::vector<WorldTransform*> world_;
 	const ViewProjection* viewProjection_ = nullptr;
 
-	bool IsAbleFlag = false;
+	bool IsEnableFlag = false;
+	bool IsGridFlag = true;
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };

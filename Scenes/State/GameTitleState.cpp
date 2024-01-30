@@ -2,7 +2,7 @@
 
 void GameTitleState::Initialize()
 {
-	Editer::GetInstance()->IsAble(false);
+	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 
