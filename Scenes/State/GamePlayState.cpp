@@ -52,7 +52,7 @@ void GamePlayState::Update()
 
 //ImGui
 #ifdef _DEBUG
-ImGui::Begin("Object",nullptr,ImGuiWindowFlags_MenuBar);
+ImGui::Begin("CreateObject",nullptr,ImGuiWindowFlags_MenuBar);
 if (ImGui::BeginMenuBar()) {
 	if (ImGui::BeginMenu("Box")) {
 			
