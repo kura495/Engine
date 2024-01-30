@@ -14,6 +14,7 @@
 #include"Input.h"
 #include"GlobalVariables.h"
 #include "Base/Renderer/Renderer.h"
+#include "Base/Editer/Editer.h"
 
 class GameManager
 {
@@ -42,6 +43,8 @@ private:
 	Audio* audio = nullptr;
 
 	Light* light = nullptr;
+
+	Editer* editer = nullptr;
 
 	MSG msg{};
 	//State

@@ -1,7 +1,7 @@
 #include "FollowCamera.h"
 
-void FollowCamera::Initalize() {
-	viewProjection_.Initialize();
+void FollowCamera::Initialize() {
+	viewProj.Initialize();
 	workInter.interParameter_ = 1.0f;
 }
 
@@ -18,7 +18,7 @@ void FollowCamera::Update() {
 
 		Vector3 offset = OffsetCalc();
 		//オフセット分と追従座標の補間分ずらす
-		viewProjection_.translation_ = workInter.interTarget_ + offset;
+		viewProj.translation_ = workInter.interTarget_ + offset;
 	}
 
 	//スティックでのカメラ回転
@@ -38,9 +38,9 @@ void FollowCamera::Update() {
 
 		parameter_t = 1.0f;
 	}
-	viewProjection_.rotation_.y = LerpShortAngle(viewProjection_.rotation_.y, rotate_.x, parameter_t);
-	viewProjection_.rotation_.x = LerpShortAngle(viewProjection_.rotation_.x, rotate_.y, parameter_t);
-	viewProjection_.UpdateMatrix();
+	viewProj.rotation_.y = LerpShortAngle(viewProj.rotation_.y, rotate_.x, parameter_t);
+	viewProj.rotation_.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);
+	viewProj.UpdateMatrix();
 }
 
 void FollowCamera::SetTarget(const WorldTransform* target)
@@ -55,20 +55,20 @@ void FollowCamera::Reset()
 	if (target_) {
 		//追従座標・角度の初期化
 		workInter.interTarget_ = target_->transform_.translate;
-		viewProjection_.rotation_.y = target_->transform_.quaternion.y;
+		viewProj.rotation_.y = target_->transform_.quaternion.y;
 	}
-	workInter.targetAngleY_ = viewProjection_.rotation_.y;
+	workInter.targetAngleY_ = viewProj.rotation_.y;
 
 	//追従大賞からのオフセット
 	Vector3 offset = OffsetCalc();
-	viewProjection_.translation_ = workInter.interTarget_ + offset;
+	viewProj.translation_ = workInter.interTarget_ + offset;
 }
 
 Vector3 FollowCamera::OffsetCalc()
 {
 	Vector3 offset = { 0.0f, 2.0f, 0.0f };
 	//回転行列の合成
-	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_.rotation_);
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProj.rotation_);
 
 	// オフセットをカメラの回転に合わせて回転
 	offset = TransformNormal(offset, rotateMatrix);

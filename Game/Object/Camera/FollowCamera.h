@@ -1,6 +1,6 @@
 #pragma once
+#include "Base/Camera/Camera.h"
 #include "Base/Input/Input.h"
-#include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "MatrixCalc.h"
 #include "VectorCalc.h"
@@ -16,18 +16,15 @@ struct WorkInterpolation {
 	float interParameter_;
 };
 
-class FollowCamera
+class FollowCamera : public Camera
 {
 public:
-	void Initalize();
-	void Update();
+	void Initialize()override;
+	void Update()override;
 
 	void SetTarget(const WorldTransform* target);
-	const ViewProjection& GetViewProjection() { return viewProjection_; }
 
 private:
-	//ビュープロジェクション
-	ViewProjection viewProjection_;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド

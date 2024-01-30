@@ -3,8 +3,10 @@
 void GamePlayState::Initialize()
 {
 	//基本機能生成
-	camera_ = new Camera();
-	camera_->Initialize();
+	debugCamera_ = std::make_unique<DebugCamera>();
+	debugCamera_->Initialize();
+	Editer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
+
 	input = Input::GetInstance();
 	audio = Audio::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
@@ -15,24 +17,14 @@ void GamePlayState::Initialize()
 	// 
 	//3Dオブジェクト生成
 	boxModel_.push_back( Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
-	goalModel_.push_back( Model::CreateModelFromObj("resources/Goal/", "Goal.obj"));
 	planeModel_.push_back( Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
 
-	enemyModel_.push_back( Model::CreateModelFromObj("resources/Enemy/", "Enemy.obj"));
-	playerModel_.push_back( Model::CreateModelFromObj("resources/Player/", "Player.obj"));
-	WeaponModel_.push_back( Model::CreateModelFromObj("resources/Weapon/", "Weapon.obj"));
 	boxSelectNumber_ = 0;
 	planeSelectNumber_ = 0;
 
-	player_ = std::make_unique<Player>();
-	player_->Initialize(WeaponModel_);
-	player_->SetViewProjection(&camera_->GetViewProjection());
 
 	followCamera = std::make_unique<FollowCamera>();
-	followCamera->Initalize();
-	followCamera->SetTarget(&player_->GetWorldTransform());
-
-	player_->SetViewProjection(&followCamera->GetViewProjection());
+	followCamera->Initialize();
 	
 	globalVariables = GlobalVariables::GetInstance();
 
@@ -50,46 +42,17 @@ void GamePlayState::Initialize()
 		AddPlane();
 	}
 #pragma endregion オブジェクト生成
-
-	goal_ = std::make_unique<Goal>();
-	goal_->Initialize(goalModel_);
 }
 
 void GamePlayState::Update()
 {
-	followCamera->Update();
-	viewProjction = followCamera->GetViewProjection();
-//デバッグカメラ
-#ifdef _DEBUG
-	ImGui::Begin("Camera");
-	if (ImGui::RadioButton("GameCamera", IsDebugCamera == false)) {
-		IsDebugCamera = false;
+	//デバッグカメラ
+	debugCamera_->Update();
+	viewProjction = debugCamera_->GetViewProjection();
 
-	}
-	if (ImGui::RadioButton("DebugCamera", IsDebugCamera == true)) {
-		IsDebugCamera = true;
-	
-	}
-	if (IsDebugCamera == false) {
-		viewProjction = followCamera->GetViewProjection();
-	}
-	else if (IsDebugCamera == true) {
-		camera_->Update();
-		viewProjction = camera_->GetViewProjection();
-	}
-	ImGui::SliderFloat3("Rotate",&viewProjction.rotation_.x,-100,100);
-	ImGui::SliderFloat3("Translate",&viewProjction.translation_.x,-100,100);
-if (input->TriggerKey(DIK_LALT)) {
-		camera_->DebugCamera(true);
-}
-else {
-	camera_->DebugCamera(false);
-}
-	ImGui::End();
-#endif // _DEBUG
 //ImGui
 #ifdef _DEBUG
-ImGui::Begin("Object",nullptr,ImGuiWindowFlags_MenuBar);
+ImGui::Begin("CreateObject",nullptr,ImGuiWindowFlags_MenuBar);
 if (ImGui::BeginMenuBar()) {
 	if (ImGui::BeginMenu("Box")) {
 			
@@ -110,97 +73,32 @@ if (ImGui::BeginMenuBar()) {
 		ImGui::EndMenu();
 	}
 	ImGui::EndMenuBar();
-
-	ImGui::InputInt("BoxSelect", &boxSelectNumber_);
-	ImGui::InputInt("PlaneSelect", &planeSelectNumber_);
-	if (ImGui::Button("Delete")) {
-		DeleteObject();
-	}
-	ControllObject();
 }
 ImGui::End();
 #endif
-//ImGuizmo
-#ifdef _DEBUG
-static ImGuiWindowFlags gizmoWindowFlags = 0;
-ImGuiIO& io = ImGui::GetIO();
-ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-Matrix4x4 IdentityMat = CreateIdentity4x4();
-ImGuizmo::DrawGrid(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
-for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-	if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
-	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
-	break;
-	}
-}
-for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-	if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
-	ImGuizmo::Manipulate(&viewProjction.matView.m[0][0], &viewProjction.matProjection.m[0][0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD,&(*ObjectIt)->GetWorld().matWorld_.m[0][0]);
-	break;
-	}
-}
-
-#endif
-
-	if (player_->GetIsGoal()) {
-		StateNo = 2;
-	}
 
 #pragma region
-	player_->Update();
 
-	for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
-		(*ObjectIt)->Update();
-	}
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
 	}
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
 	}
-	goal_->Update();
+#pragma endregion Update
 
-#pragma endregion 更新処理
-#pragma region
-	collisionManager->AddBoxCollider(player_.get());
-	collisionManager->AddBoxCollider(player_->GetWeapon());
-	for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
-		collisionManager->AddBoxCollider((*ObjectIt));
-		collisionManager->AddBoxCollider((*ObjectIt)->GetSearchPoint());
-	}
-	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-		collisionManager->AddBoxCollider((*ObjectIt));
-	}
-	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-		collisionManager->AddBoxCollider((*ObjectIt));
-	}
-	collisionManager->AddBoxCollider(goal_.get());
-	collisionManager->CheckAllCollisions();
-	collisionManager->ClearCollider();
-#pragma endregion コリジョンマネージャーに登録
 }
 
 void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
-	for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
-		(*ObjectIt)->Draw(viewProjction);
-	}
+
 	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Draw(viewProjction);
 	}
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Draw(viewProjction);
 	}
-	if (IsDebugCamera == true) {
-		for (Model* model : playerModel_) {
-			model->Draw(player_->GetWorldTransform(), viewProjction);
-		}
-	}
-	goal_->Draw(viewProjction);
-
-	player_->Draw(viewProjction);
-
 
 	//3Dモデル描画ここまで	
 	
@@ -253,31 +151,6 @@ void GamePlayState::DeleteObject()
 	//		break;
 	//	}
 	//}
-}
-void GamePlayState::AddEnemy(Vector3 Pos)
-{
-	Enemy* enemy = new Enemy();
-	enemy->Initialize(enemyModel_);
-
-	enemy->SetPos(Pos);
-
-	enemy_.push_back(enemy);
-
-}
-void GamePlayState::ControllObject()
-{
-	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-		if ((uint32_t)boxSelectNumber_ == (*ObjectIt)->GetNumber()) {
-			(*ObjectIt)->ImGui();
-			break;
-		}
-	}
-	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-		if ((uint32_t)planeSelectNumber_ == (*ObjectIt)->GetNumber()) {
-			(*ObjectIt)->ImGui();
-			break;
-		}
-	}
 }
 
 

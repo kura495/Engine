@@ -17,7 +17,7 @@ public:
 	void Update()override;
 	void Draw(const ViewProjection& viewProj)override;
 
-	void ImGui()override;
+	void ImGui();
 
 	void OnCollision(const Collider* collider)override;
 };
