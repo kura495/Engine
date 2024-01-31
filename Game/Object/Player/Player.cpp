@@ -5,7 +5,7 @@ void Player::Initialize(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	world_.transform_.scale.y = 2.0f;
-	world_.transform_.translate.y = 2.0f;
+	world_.transform_.translate.y = 1.0f;
 	world_.UpdateMatrix();
 	input = Input::GetInstance();
 
