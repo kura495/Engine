@@ -1,5 +1,6 @@
 #include"ImGuiManager.h"
 
+static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 
 ImGuiManager* ImGuiManager::GetInstance()
 {
@@ -26,6 +27,7 @@ void ImGuiManager::BeginFrame()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
+
 }
 
 void ImGuiManager::GizmoUpdate()
@@ -35,5 +37,7 @@ void ImGuiManager::GizmoUpdate()
 
 void ImGuiManager::EndFrame()
 {
+
 	ImGui::Render();
 }
+

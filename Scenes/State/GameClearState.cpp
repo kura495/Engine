@@ -2,6 +2,7 @@
 
 void GameClearState::Initialize()
 {
+	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	textureHundle = textureManager_->LoadTexture("resources/Clear.png");

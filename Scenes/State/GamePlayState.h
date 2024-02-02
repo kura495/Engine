@@ -15,12 +15,13 @@
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
-#include "Base/Camera/Camera.h"
+#include "Base/Camera/DebugCamera/DebugCamera.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Math_Structs.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 #include "Base/Utility/CollisionManager.h"
+#include "Base/Editer/Editer.h"
 
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
@@ -40,10 +41,10 @@ public:
 private:
 	//基本機能ズ
 	MyEngine* myEngine = nullptr;
-	Camera* camera_ = nullptr;
-	TextureManager* textureManager_ = nullptr;	
+	DebugCamera* debugcamera_ = nullptr;
+	TextureManager* textureManager_ = nullptr;
 	Input* input = nullptr;
-	Audio* audio=nullptr;
+	Audio* audio = nullptr;
 	Light* light_ = nullptr;
 	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
@@ -83,4 +84,9 @@ private:
 	std::vector<Model*> goalModel_;
 	std::unique_ptr<Goal>goal_;
 
+	std::unique_ptr<Sprite>texture;
+	uint32_t textureHundle;
+	WorldTransform texture_world_;
+	bool FadeInFlag = true;
+	float FadeParam = 1.0f;
 };

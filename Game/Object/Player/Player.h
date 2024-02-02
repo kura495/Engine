@@ -30,8 +30,8 @@ public:
 		viewProjection_ = viewProjection;
 		weapon_->SetViewProjection(viewProjection_);
 	}
-#pragma endregion Getter
-#pragma region
+#pragma endregion 
+#pragma region Getter
 	const WorldTransform& GetWorldTransform() {
 		return world_;
 	}
