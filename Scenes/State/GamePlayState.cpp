@@ -37,6 +37,12 @@ void GamePlayState::Update()
 		}
 		ImGui::TreePop();
 	}
+	if (ImGui::TreeNode("Light")) {
+		ImGui::SliderFloat4("LightColor", &light_->GetLightData().color.x, 0, 1, "%.3f");
+		ImGui::SliderFloat3("Lightpotision", &light_->GetLightData().direction.x, -10, 10, "%.3f");
+		ImGui::SliderFloat("Lightpotision", &light_->GetLightData().intensity, -10, 10, "%.3f");
+		ImGui::TreePop();
+	}
 	if (ImGui::TreeNode("Object")) {
 		ImGui::DragFloat3("translate",&world_.transform_.translate.x);
 		ImGui::TreePop();

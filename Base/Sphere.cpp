@@ -77,18 +77,18 @@ void Sphere::Initialize()
 			indexData[Indexstart + 5] = Vertexstart + 2;
 		}
 	}
+
+	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	//ライティングをする
+	materialData->color = color_;
+	materialData->enableLighting = Lighting::phong;
+	materialData->uvTransform = CreateIdentity4x4();
+	materialData->shiniess = 10.0f;
 }
 
 void Sphere::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& TextureHandle)
 {
 	
-	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-
-	//ライティングをする
-	materialData->color = color_;
-	materialData->enableLighting = lightFlag;
-	materialData->uvTransform = CreateIdentity4x4();
-
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//頂点

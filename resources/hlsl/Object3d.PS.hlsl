@@ -4,6 +4,7 @@ struct Material {
 	float32_t4 color;//元の色
 	int32_t enableLighting;//ライトのフラグ
 	float32_t4x4 uvTransform;//uvのSRT
+    float32_t shininess;//光沢度
 };
 struct DirectionalLight {
 	float32_t4 color;//ライトの色
@@ -29,7 +30,11 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	float4 transformedUV=mul(float32_t4(input.texcoord,0.0f,1.0f),gMaterial.uvTransform);
 	float32_t4 textureColor = gTexture.Sample(gSampler,transformedUV.xy);
     float32_t3 toEye = normalize(gCamera.worldPosition - input.worldPosition);
-    
+    //float32_t3 halfVector = normalize(-gDirectionalLight.direction + toEye);
+    float32_t3 reflectLight = reflect(gDirectionalLight.direction, normalize(input.normal));
+    float RdotE = dot(reflectLight,toEye);
+    //float NdotH = dot(normalize(input.normal), halfVector);
+    float specularPow = pow(saturate(RdotE), gMaterial.shininess);
     
     if (textureColor.a == 0.0){
         discard;
@@ -48,11 +53,20 @@ PixelShaderOutput main(VertexShaderOutput input) {
                 output.color.rgb = gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
                 output.color.a = gMaterial.color.a * textureColor.a;
             }
-        //else if (gMaterial.enableLighting == Lambert)
-        //{
-        //    float cos = saturate(dot(normalize(input.normal), -gDirectionalLight.direction));
-        //    output.color = gMaterial.color * textureColor * gDirectionalLight.color * cos * gDirectionalLight.intensity;
-        //}
+            if (gMaterial.enableLighting == phong)
+            {
+            float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction);
+            float cos = pow(NdotL * 0.5f + 0.5f, 2.0f);
+                //拡散反射
+                float32_t3 diffuse = gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
+                //鏡面反射
+                float32_t3 specular = gDirectionalLight.color.rgb * gDirectionalLight.intensity * specularPow * float32_t3(1.0f,1.0f,1.0f);
+                //拡散反射＋鏡面反射
+                output.color.rgb = diffuse + specular;
+                //アルファ
+                output.color.a = gMaterial.color.a * textureColor.a;
+            }
+
           
         }
         else
