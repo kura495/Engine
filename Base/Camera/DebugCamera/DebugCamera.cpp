@@ -3,13 +3,12 @@
 void DebugCamera::Initialize()
 {
 	viewProj.Initialize();
-	viewProj.translation_ = {0.0f,2.0f,-25.0f};
+	viewProj.translation_ = {0.0f,0.0f,-10.0f};
 	viewProj.UpdateMatrix();
 }
 
 void DebugCamera::Update()
 {
-	ImGui();
 	if (Input::GetInstance()->TriggerKey(DIK_LALT)) {
 #pragma region rotation
 	const float rotSpeed = 0.05f;
@@ -51,18 +50,4 @@ void DebugCamera::Update()
 	}
 	viewProj.UpdateMatrix();
 
-}
-
-void DebugCamera::ImGui()
-{
-#ifdef _DEBUG
-	ImGui::Begin("Camera");
-	ImGui::DragFloat3("Rotate",&viewProj.rotation_.x);
-	ImGui::DragFloat3("Translate",&viewProj.translation_.x);
-	if (ImGui::Button("Reset")) {
-		viewProj.translation_ = { 0.0f,0.0f,0.0f };
-		viewProj.UpdateMatrix();
-	}
-	ImGui::End();
-#endif
 }

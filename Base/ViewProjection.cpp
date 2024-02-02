@@ -8,11 +8,13 @@ void ViewProjection::Initialize(){
 }
 
 void ViewProjection::CreateConstBuffer(){
-	constBuff_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
+	constBuff_VS = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferDataViewProjection));
+	constBuff_PS = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ConstBufferCameraPos));
 }
 
 void ViewProjection::Map(){
-	constBuff_.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap));
+	constBuff_VS.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap_VS));
+	constBuff_PS.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap_PS));
 }
 
 void ViewProjection::UpdateMatrix(){
@@ -22,8 +24,9 @@ void ViewProjection::UpdateMatrix(){
 }
 
 void ViewProjection::TransferMatrix(){
-	constMap->view = matView;
-	constMap->projection = matProjection;
+	constMap_VS->view = matView;
+	constMap_VS->projection = matProjection;
+	constMap_PS->worldPosition = translation_;
 }
 
 void ViewProjection::UpdateViewMatrix(){

@@ -39,8 +39,8 @@ void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const
 	indexData[5] = 2;
 
 	viewProjection_.Initialize();
-	viewProjection_.constMap->view = CreateIdentity4x4();
-	viewProjection_.constMap->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
+	viewProjection_.constMap_VS->view = CreateIdentity4x4();
+	viewProjection_.constMap_VS->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
 
 }
 
@@ -84,8 +84,8 @@ void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 	indexData[5] = 2;
 
 	viewProjection_.Initialize();
-	viewProjection_.constMap->view = CreateIdentity4x4();
-	viewProjection_.constMap->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
+	viewProjection_.constMap_VS->view = CreateIdentity4x4();
+	viewProjection_.constMap_VS->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
 }
 
 void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
@@ -112,7 +112,8 @@ void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
 	//WorldTransform
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_.Get()->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection_.constBuff_->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection_.constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, viewProjection_.constBuff_PS->GetGPUVirtualAddress());
 	//色とuvTransform
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource.Get()->GetGPUVirtualAddress());
 	//テクスチャ
