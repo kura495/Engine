@@ -48,10 +48,10 @@ PixelShaderOutput main(VertexShaderOutput input) {
         { //Lightingする場合
             if (gMaterial.enableLighting == harfLambert)
             {
-                float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction);
-                float cos = pow(NdotL * 0.5f + 0.5f, 2.0f);
-                output.color.rgb = gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
-                output.color.a = gMaterial.color.a * textureColor.a;
+                //float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction);
+                //float cos = pow(NdotL * 0.5f + 0.5f, 2.0f);
+                //output.color.rgb = gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
+                //output.color.a = gMaterial.color.a * textureColor.a;
             }
             if (gMaterial.enableLighting == phong)
             {
@@ -71,7 +71,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
         }
         else
         { //Lightingしない場合
-            output.color = gMaterial.color * textureColor;
+            //output.color = gMaterial.color * textureColor;
         }
 	
     if (output.color.a == 0.0)

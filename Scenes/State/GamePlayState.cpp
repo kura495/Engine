@@ -38,9 +38,9 @@ void GamePlayState::Update()
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Light")) {
-		ImGui::SliderFloat4("LightColor", &light_->GetLightData().color.x, 0, 1, "%.3f");
-		ImGui::SliderFloat3("Lightpotision", &light_->GetLightData().direction.x, -10, 10, "%.3f");
-		ImGui::SliderFloat("Lightpotision", &light_->GetLightData().intensity, -10, 10, "%.3f");
+		ImGui::SliderFloat4("Color", &light_->GetLightData().color.x, 0, 1, "%.3f");
+		ImGui::SliderFloat3("direction", &light_->GetLightData().direction.x, -1, 1, "%.3f");
+		ImGui::SliderFloat("Intensity", &light_->GetLightData().intensity, -10, 10, "%.3f");
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Object")) {
