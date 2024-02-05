@@ -8,6 +8,7 @@ enum Lighting {
 		NotDo = false,
 		harfLambert = 1,
 		Lambert = 2,
+		phong = 3,
 	};
 
 class Light
@@ -21,9 +22,10 @@ class Light
 public:
 	static Light* GetInstance();
 	void Initialize();
-	void ImGui(const char* Title);
+	void Update();
 	ID3D12Resource* GetDirectionalLight()const {
 		return directionalLightResource.Get(); }
+	DirectionalLight& GetLightData() { return LightData; }
 private:
 	Light() = default;
 	~Light() = default;
@@ -34,5 +36,6 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>directionalLightResource = nullptr;
 	DirectionalLight* directionalLightData = nullptr;
+	DirectionalLight LightData;
 };
 

@@ -12,21 +12,26 @@ struct ConstBufferDataViewProjection {
 	Matrix4x4 projection; // ビュー → プロジェクション変換行列
 	Vector3 cameraPos;    // カメラ座標（ワールド座標）
 };
+struct ConstBufferCameraPos {
+	Vector3 worldPosition;
+};
 
 /// <summary>
 /// ビュープロジェクション変換データ
 /// </summary>
 struct ViewProjection {
 	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_VS;
+	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_PS;
 	// マッピング済みアドレス
-	ConstBufferDataViewProjection* constMap = nullptr;
+	ConstBufferDataViewProjection* constMap_VS = nullptr;
+	ConstBufferCameraPos* constMap_PS = nullptr;
 
 #pragma region ビュー行列の設定
 	// X,Y,Z軸回りのローカル回転角
 	Vector3 rotation_ = { 0, 0, 0 };
 	// ローカル座標
-	Vector3 translation_ = { 0, 0, -25 };
+	Vector3 translation_ = { 0.0f, 0.0f, -5.0f };
 #pragma endregion
 
 #pragma region 射影行列の設定

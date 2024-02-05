@@ -18,14 +18,15 @@ public:
 	void Initialize();
 	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t& TextureHandle);
 
+#pragma region
+	void SetShiniess(float value) { materialData->shiniess = value; }
+#pragma endregion Setter
 private:
 	DirectXCommon* directX_ = nullptr;
 	TextureManager* textureManager_ = nullptr;
 	Light* light_ = nullptr;
 	//分割数
 	const int kSubdivision = 16;
-	//どのライトを使うか
-	int32_t lightFlag = Lighting::NotDo;
 	//頂点リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource = nullptr;
 	//頂点データ
