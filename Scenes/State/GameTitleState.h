@@ -23,8 +23,8 @@ private:
 
 	float t = 0.0f;
 	float addParameter = 0.01f;
-	Vector3 Stert = {0.0f,10.0f,0.0f};
-	Vector3 End = {0.0f,-10.0f,0.0f};
+	Vector3 Stert = { 0.0f,10.0f,0.0f };
+	Vector3 End = { 0.0f,-10.0f,0.0f };
 
 	std::unique_ptr<Sprite>texture2;
 	uint32_t textureHundle2;

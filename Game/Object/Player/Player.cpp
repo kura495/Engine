@@ -101,20 +101,12 @@ void Player::ImGui()
 void Player::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute() == kCollitionAttributeFloor) {
-#ifdef _DEBUG
-		ImGui::Begin("FloorHit");
-		ImGui::End();
-#endif
 		if (collider->GetCenter().y > world_.transform_.translate.y) {
 			world_.transform_.translate.y = collider->GetCenter().y;
 			world_.UpdateMatrix();
 		}
 	}
 	else if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
-#ifdef _DEBUG
-		ImGui::Begin("BoxHit");
-		ImGui::End();
-#endif
 		Vector3 colliderPos = collider->GetCenter();
 
 #pragma region

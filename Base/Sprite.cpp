@@ -41,6 +41,7 @@ void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const
 	viewProjection_.Initialize();
 	viewProjection_.constMap_VS->view = CreateIdentity4x4();
 	viewProjection_.constMap_VS->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
+	
 
 }
 

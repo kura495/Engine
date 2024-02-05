@@ -4,7 +4,6 @@ void ViewProjection::Initialize(){
 	CreateConstBuffer();
 	Map();
 	UpdateMatrix();
-	TransferMatrix();
 }
 
 void ViewProjection::CreateConstBuffer(){

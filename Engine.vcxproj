@@ -214,6 +214,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\ViewProjection.h" />
     <ClInclude Include="Base\WinApp.h" />
     <ClInclude Include="Base\WorldTransform.h" />
+    <ClInclude Include="Base\ParticleSystem\Emitter\Emitter.h" />
     <ClInclude Include="externals\imgui\ImGuizmo.h" />
     <ClInclude Include="Game\Object\Box\BoxObject.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />

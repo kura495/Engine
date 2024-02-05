@@ -402,6 +402,7 @@
     <ClInclude Include="externals\imgui\ImGuizmo.h" />
     <ClInclude Include="Base\Editer\Editer.h" />
     <ClInclude Include="Base\AnimationSystem\Animation.h" />
+    <ClInclude Include="Base\ParticleSystem\Emitter\Emitter.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

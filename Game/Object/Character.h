@@ -12,8 +12,6 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw(const ViewProjection& viewProj) = 0;
 
-	virtual void ImGui() = 0;
-
 protected:
 
 	std::vector<Model*> models_;

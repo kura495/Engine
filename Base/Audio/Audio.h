@@ -6,7 +6,7 @@
 #include <x3daudio.h>
 #include <cassert>
 #include <fstream>
-#include <map>
+#include <array>
 
 struct ChunkHeader {
 	char id[4];//チャンクID
@@ -27,15 +27,23 @@ struct SoundData {
 	BYTE* pBuffer;
 	//バッファのサイズ
 	unsigned int bufferSize;
+	// 名前
+	std::string name;
+	// 使っているかどうか
+	bool IsUsed = false;
 };
 class Audio {
 public:
 	static Audio* GetInstance();
 	void Initialize();
-	
+
 	void Release();
-	uint32_t LoadAudio(const char* filename);
-	void Play(int AudioInDex, float AudioVolume, int pan);
+	uint32_t LoadAudio(const std::string& filePath, bool LoopFlag);
+	void Play(uint32_t AudioIndex, float AudioVolume, int pan);
+	void Play(uint32_t AudioIndex, float AudioVolume);
+	void Stop(uint32_t AudioIndex, bool PlayBegin, bool LoopFlag);
+	void ExitLoop(uint32_t AudioIndex);
+	void Reset(uint32_t AudioIndex, bool LoopFlag);
 	void SoundUnload(uint32_t Index);
 private:
 	Audio() = default;
@@ -45,7 +53,7 @@ private:
 
 	float left = 0;
 	float right = 0;
-	static const int kMaxAudio = 8;
+	static const int kMaxAudio = 64;
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<IXAudio2> XAudioInterface = nullptr;
 	IXAudio2MasteringVoice* pMasteringVoice = nullptr;
@@ -54,12 +62,12 @@ private:
 	bool IsusedAudioIndex[kMaxAudio];
 	//生音声データ
 	//再生中にぶっ飛ばすとバグるぜ！！！
-	std::map<uint32_t, SoundData> soundData_;
+	std::array<SoundData, kMaxAudio> soundData_;
 
 	float outputMatrix[8];
 
-	SoundData SoundLoadWave(const char* filename);
-	
+	SoundData SoundLoadWave(const std::string& filePath);
+
 	void Log(const std::string& message);
 };
 

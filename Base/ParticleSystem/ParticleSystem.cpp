@@ -32,9 +32,8 @@ void ParticleSystem::Initalize(const std::string filePath)
 	Testemitter.count = 5;
 	Testemitter.frequency = 0.1f;
 	Testemitter.frequencyTime = 0.0f;
-	Testemitter.transform.scale		= { 1.0f,1.0f,1.0f };
-	Testemitter.transform.rotate	= { 0.0f,0.0f,0.0f };
-	Testemitter.transform.translate = { 0.0f,0.0f,0.0f };
+	Testemitter.world_.transform_.scale	= { 1.0f,1.0f,1.0f };
+	Testemitter.world_.transform_.translate = { 0.0f,0.0f,0.0f };
 
 	TestField.acceleration = {15.0f,0.0f,0.0f};
 	TestField.area.min = {-1.0f,-1.0f,-1.0f};
@@ -44,6 +43,14 @@ void ParticleSystem::Initalize(const std::string filePath)
 
 void ParticleSystem::Update(const ViewProjection& viewProjection)
 {
+
+#ifdef _DEBUG
+	ImGui::Begin("Particle");
+	if (ImGui::Button("Add")) {
+		AddParticle(Testemitter);
+	}
+	ImGui::End();
+#endif
 
 	Testemitter.frequencyTime += kDeltaTime;
 	if (Testemitter.frequency <= Testemitter.frequencyTime) {
@@ -55,8 +62,6 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 
 		Testemitter.frequencyTime -= Testemitter.frequency;
 	}
-
-
 
 	numInstance = 0;
 	Matrix4x4 billboardMatrix = viewProjection.CameraMatrix;
@@ -138,7 +143,7 @@ std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& r
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.transform.translate));
+		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.world_.transform_.translate));
 	}
 	return Emitparticles;
 }
