@@ -76,7 +76,7 @@ void GamePlayState::Update()
 	followCamera->Update();
 	viewProjction = followCamera->GetViewProjection();
 	//デバッグカメラ
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("Camera");
 	if (ImGui::RadioButton("GameCamera", IsDebugCamera == false)) {
 		IsDebugCamera = false;
@@ -92,7 +92,7 @@ void GamePlayState::Update()
 	}
 	ImGui::End();
 #endif // _DEBUG
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("CreateObject", nullptr, ImGuiWindowFlags_MenuBar);
 	if (ImGui::BeginMenuBar()) {
 		if (ImGui::BeginMenu("Box")) {
@@ -165,7 +165,7 @@ void GamePlayState::Update()
 	collisionManager->ClearCollider();
 #pragma endregion コリジョンマネージャーに登録
 	particle->Update(viewProjction);
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("Sound");
 	ImGui::SliderFloat("Volume",&audioVolume,0,1);
 	ImGui::SliderInt("Pan",&pan,1,-1);

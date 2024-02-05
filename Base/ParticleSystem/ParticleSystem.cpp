@@ -44,7 +44,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 void ParticleSystem::Update(const ViewProjection& viewProjection)
 {
 
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("Particle");
 	if (ImGui::Button("Add")) {
 		AddParticle(Testemitter);

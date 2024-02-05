@@ -24,7 +24,7 @@ void Player::Initialize(std::vector<Model*> models)
 void Player::Update()
 {
 	tlanslatePre = world_.transform_.translate;
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui();
 #endif
 	//パッドの状態をゲット
@@ -82,7 +82,7 @@ void Player::Draw(const ViewProjection& viewProj)
 
 void Player::ImGui()
 {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);

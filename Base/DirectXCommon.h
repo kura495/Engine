@@ -88,7 +88,7 @@ private:
 	D3D12_VIEWPORT viewport{};
 
 	D3D12_RECT scissorRect{};
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	Microsoft::WRL::ComPtr<ID3D12Debug1>debugController = nullptr;
 #endif
 

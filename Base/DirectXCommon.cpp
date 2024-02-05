@@ -8,7 +8,7 @@ DirectXCommon* DirectXCommon::GetInstance()
 void DirectXCommon::Initialize(WinApp* winApp)
 {
 	winApp_ = winApp;
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		//デバッグレイヤ―を有効化
 		debugController->EnableDebugLayer();
@@ -22,7 +22,7 @@ void DirectXCommon::Initialize(WinApp* winApp)
 	MakeDXGIFactory();
 
 	MakeD3D12Device();
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ID3D12InfoQueue* infoQueue = nullptr;
 	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
 		//やばいエラー
@@ -136,7 +136,7 @@ void DirectXCommon::PostView()
 void DirectXCommon::Release()
 {
 	CloseHandle(fenceEvent);
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	debugController->Release();
 #endif
 	CloseWindow(winApp_->GetHWND());
