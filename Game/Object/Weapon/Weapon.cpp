@@ -61,11 +61,7 @@ void Weapon::OnCollision(const Collider* collider)
 	}
 
 	if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
-#ifdef USE_IMGUI
-		ImGui::Begin("Avdvdsfdsfdsfdsfsdf");
 
-		ImGui::End();
-#endif
 	}
 }
 
