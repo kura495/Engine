@@ -51,9 +51,9 @@ void Editer::GuizmoOption()
 	}
 	if (ImGui::IsKeyPressed(ImGuiKey_T))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-	if (ImGui::IsKeyPressed(ImGuiKey_E))
+	if (ImGui::IsKeyPressed(ImGuiKey_R))
 		mCurrentGizmoOperation = ImGuizmo::ROTATE;
-	if (ImGui::IsKeyPressed(ImGuiKey_R)) // r Key
+	if (ImGui::IsKeyPressed(ImGuiKey_G)) // r Key
 		mCurrentGizmoOperation = ImGuizmo::SCALE;
 	if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
