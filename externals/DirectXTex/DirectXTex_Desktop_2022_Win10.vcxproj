@@ -96,7 +96,7 @@
     <ClCompile>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
@@ -123,7 +123,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|X64'">
     <ClCompile>
       <WarningLevel>EnableAllWarnings</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>MinSpace</Optimization>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
@@ -151,7 +151,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demo|X64'">
     <ClCompile>
       <WarningLevel>EnableAllWarnings</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>MinSpace</Optimization>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
@@ -179,7 +179,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|X64'">
     <ClCompile>
       <WarningLevel>EnableAllWarnings</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>MinSpace</Optimization>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>

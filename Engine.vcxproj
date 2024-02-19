@@ -88,13 +88,17 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\assimp\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalOptions>/ignore:4049 /ignore:4048 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\assimp\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxcompiler.dll"
@@ -115,6 +119,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MinSpace</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -123,7 +128,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalOptions>/ignore:4049 /ignore:4048 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\assimp\lib\Release</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxcompiler.dll"
@@ -143,6 +149,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,7 +159,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalOptions>/ignore:4049 /ignore:4048 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\assimp\lib\Release</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxcompiler.dll"
