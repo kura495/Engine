@@ -44,14 +44,6 @@ void ParticleSystem::Initalize(const std::string filePath)
 void ParticleSystem::Update(const ViewProjection& viewProjection)
 {
 
-#ifdef USE_IMGUI
-	ImGui::Begin("Particle");
-	if (ImGui::Button("Add")) {
-		AddParticle(Testemitter);
-	}
-	ImGui::End();
-#endif
-
 	Testemitter.frequencyTime += kDeltaTime;
 	if (Testemitter.frequency <= Testemitter.frequencyTime) {
 		//ランダム生成用
