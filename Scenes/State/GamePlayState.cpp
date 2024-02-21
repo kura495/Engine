@@ -17,13 +17,15 @@ void GamePlayState::Initialize()
 	collisionManager = std::make_unique<CollisionManager>();
 	// 
 	//3Dオブジェクト生成
-	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube/", "Cube.obj"));
-	goalModel_.push_back(Model::CreateModelFromObj("resources/Goal/", "Goal.obj"));
-	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane/", "Plane.obj"));
+	int Tex = textureManager_->LoadTexture("resources/Cube/Cube.png");
+	Tex = Tex;
+	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
+	goalModel_.push_back(Model::CreateModelFromObj("resources/Goal", "Goal.obj"));
+	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
 
-	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy/", "Enemy.obj"));
-	playerModel_.push_back(Model::CreateModelFromObj("resources/Player/", "Player.obj"));
-	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon/", "Weapon.obj"));
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Enemy.obj"));
+	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
+	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 	boxSelectNumber_ = 0;
 	planeSelectNumber_ = 0;
 
