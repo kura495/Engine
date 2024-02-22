@@ -57,4 +57,7 @@ private:
 	
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
+	Node ReadNode(aiNode* node);
+
+	WorldTransform world;
 };

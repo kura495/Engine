@@ -8,7 +8,8 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
 
 	modelData_ = LoadModelFile(directoryPath,filename);
-	//バッファリソースはLoadObjFileの中で作ってるよ
+
+	//バッファリソースはLoadModelFileの中で作ってるよ
 	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	std::memcpy(vertexData, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
 
@@ -22,6 +23,7 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 
 void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
 {
+	//transform.constMap->matWorld = Multiply(transform.constMap->matWorld, modelData_.rootNode.localMatrix);
 
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -119,6 +121,7 @@ ModelData Model::LoadModelFile(const std::string& directoryPath, const std::stri
 			modelData.TextureIndex = textureManager_->LoadTexture(modelData.material.textureFilePath);
 		}
 	}
+	modelData.rootNode = ReadNode(scene->mRootNode);
 
 	return modelData;
 }
@@ -143,4 +146,23 @@ MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, c
 	}
 
 	return material;
+}
+
+Node Model::ReadNode(aiNode* node)
+{
+	Node result;
+	aiMatrix4x4 aiLocalMatrix = node->mTransformation;
+	aiLocalMatrix.Transpose();
+	for (int Xit = 0; Xit < 4; Xit++) {
+		for (int Yit = 0; Yit < 4; Yit++) {
+			result.localMatrix.m[Xit][Yit] = aiLocalMatrix[Xit][Yit];
+		}
+	}
+	result.name = node->mName.C_Str();
+	result.children.resize(node->mNumChildren);
+	for (uint32_t childIndex = 0; childIndex < node->mNumChildren; ++childIndex) {
+		result.children[childIndex] = ReadNode(node->mChildren[childIndex]);
+	}
+
+	return result;
 }

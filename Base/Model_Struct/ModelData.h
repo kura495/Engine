@@ -3,8 +3,15 @@
 #include "Material.h"
 #include <vector>
 
+struct Node {
+	Matrix4x4 localMatrix;
+	std::string name;
+	std::vector<Node>children;
+};
+
 struct ModelData {
 	std::vector<VertexData> vertices;
 	MaterialData material;
-	int TextureIndex;
+	Node rootNode;
+	int TextureIndex = 0;
 };

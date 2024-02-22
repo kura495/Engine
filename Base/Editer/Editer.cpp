@@ -46,6 +46,9 @@ void Editer::GuizmoOption()
 #ifdef USE_IMGUI
 	ImGui::Begin("Editer");
 	ImGui::InputInt("ObjectNumber", &ObjectCount);
+	if (ObjectCount < 0) {
+		ObjectCount = 0;
+	}
 	if (ObjectCount >= (int)world_.size()) {
 		ObjectCount = (int)world_.size() - 1;
 	}
