@@ -22,7 +22,10 @@ void GamePlayState::Initialize()
 	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
 	goalModel_.push_back(Model::CreateModelFromObj("resources/Goal", "Goal.obj"));
 	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
-
+	glTFplaneModel_.push_back(Model::CreateModelFromObj("resources/glTFPlane", "Plane.gltf"));
+	PlaneObject* plane = new PlaneObject;
+	plane->Initalize(glTFplaneModel_);
+	glTFplaneObject_.push_back(plane);
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Enemy.obj"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
@@ -146,6 +149,9 @@ void GamePlayState::Update()
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
 	}
+	for (std::list<PlaneObject*>::iterator ObjectIt = glTFplaneObject_.begin(); ObjectIt != glTFplaneObject_.end(); ObjectIt++) {
+		(*ObjectIt)->Update();
+	}
 
 	goal_->Update();
 #pragma endregion Update
@@ -194,6 +200,9 @@ void GamePlayState::Draw()
 		(*ObjectIt)->Draw(viewProjction);
 	}
 	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
+		(*ObjectIt)->Draw(viewProjction);
+	}
+	for (std::list<PlaneObject*>::iterator ObjectIt = glTFplaneObject_.begin(); ObjectIt != glTFplaneObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Draw(viewProjction);
 	}
 

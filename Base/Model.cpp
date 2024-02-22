@@ -7,7 +7,7 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	light_ = Light::GetInstance();
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
 
-	modelData_ = LoadObjFile(directoryPath,filename);
+	modelData_ = LoadModelFile(directoryPath,filename);
 	//バッファリソースはLoadObjFileの中で作ってるよ
 	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	std::memcpy(vertexData, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
@@ -72,7 +72,7 @@ Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::st
 	return model;
 }
 
-ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename)
+ModelData Model::LoadModelFile(const std::string& directoryPath, const std::string& filename)
 {
 	ModelData modelData;
 	Assimp::Importer importer;
