@@ -51,5 +51,10 @@ public:
 		result = sqrt(Dot({x,y,z},{x,y,z}));
 		return result;
 	}
+	static inline float Length(const Vector3& v1) {
+		float result{};
+		result = sqrt(Dot({ v1.x,v1.y,v1.z},{ v1.x,v1.y,v1.z}));
+		return result;
+	}
 };
 

@@ -177,6 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Light\Light.cpp" />
     <ClCompile Include="Base\Manager\PSOManager.cpp" />
     <ClCompile Include="Base\Math\Calc.cpp" />
+    <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
     <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
     <ClCompile Include="Base\Object\Mesh\Mesh.cpp" />
