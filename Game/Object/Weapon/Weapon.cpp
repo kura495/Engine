@@ -37,7 +37,7 @@ void Weapon::Draw(const ViewProjection& viewProj)
 
 void Weapon::ImGui()
 {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("Weapon");
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
@@ -53,7 +53,7 @@ void Weapon::ImGui()
 void Weapon::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute() == kCollitionAttributeEnemy) {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 		ImGui::Begin("A");
 
 		ImGui::End();
@@ -61,11 +61,7 @@ void Weapon::OnCollision(const Collider* collider)
 	}
 
 	if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
-#ifdef _DEBUG
-		ImGui::Begin("Avdvdsfdsfdsfdsfsdf");
 
-		ImGui::End();
-#endif
 	}
 }
 

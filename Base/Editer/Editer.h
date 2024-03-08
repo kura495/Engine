@@ -1,8 +1,8 @@
 #pragma once
 
 #include "ImGuiManager.h"
-#include "ViewProjection.h"
-#include "WorldTransform.h"
+#include "ViewProj/ViewProjection.h"
+#include "WorldTransform/WorldTransform.h"
 
 class Editer {
 public:
@@ -15,6 +15,7 @@ public:
 	void IsEnable(bool Flag) {
 		IsEnableFlag = Flag;
 	}
+
 
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {

@@ -43,17 +43,20 @@ void Editer::Draw()
 
 void Editer::GuizmoOption()
 {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("Editer");
 	ImGui::InputInt("ObjectNumber", &ObjectCount);
+	if (ObjectCount < 0) {
+		ObjectCount = 0;
+	}
 	if (ObjectCount >= (int)world_.size()) {
 		ObjectCount = (int)world_.size() - 1;
 	}
 	if (ImGui::IsKeyPressed(ImGuiKey_T))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-	if (ImGui::IsKeyPressed(ImGuiKey_E))
+	if (ImGui::IsKeyPressed(ImGuiKey_R))
 		mCurrentGizmoOperation = ImGuizmo::ROTATE;
-	if (ImGui::IsKeyPressed(ImGuiKey_R)) // r Key
+	if (ImGui::IsKeyPressed(ImGuiKey_G))
 		mCurrentGizmoOperation = ImGuizmo::SCALE;
 	if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
@@ -82,7 +85,7 @@ void Editer::GuizmoOption()
 
 void Editer::Manipulator()
 {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	Matrix4x4 GizmoMoveMatrix = world_[ObjectCount]->matWorld_;
 	ImGuizmo::Manipulate(&viewProjection_->matView.m[0][0], &viewProjection_->matProjection.m[0][0], mCurrentGizmoOperation, ImGuizmo::WORLD, &GizmoMoveMatrix.m[0][0]);
 	

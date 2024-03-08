@@ -14,7 +14,7 @@ void GlobalVariables::CreateGroup(const std::string& groupName)
 void GlobalVariables::Update()
 {
 	//メニューバーを作る
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	if (!ImGui::Begin("GlobalVariables", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
 		return;

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "ViewProjection.h"
+#include "ViewProj/ViewProjection.h"
 
 class Camera
 {

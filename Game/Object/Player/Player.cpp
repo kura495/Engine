@@ -24,7 +24,7 @@ void Player::Initialize(std::vector<Model*> models)
 void Player::Update()
 {
 	tlanslatePre = world_.transform_.translate;
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui();
 #endif
 	//パッドの状態をゲット
@@ -82,7 +82,7 @@ void Player::Draw(const ViewProjection& viewProj)
 
 void Player::ImGui()
 {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
@@ -101,20 +101,12 @@ void Player::ImGui()
 void Player::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute() == kCollitionAttributeFloor) {
-#ifdef _DEBUG
-		ImGui::Begin("FloorHit");
-		ImGui::End();
-#endif
 		if (collider->GetCenter().y > world_.transform_.translate.y) {
 			world_.transform_.translate.y = collider->GetCenter().y;
 			world_.UpdateMatrix();
 		}
 	}
 	else if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
-#ifdef _DEBUG
-		ImGui::Begin("BoxHit");
-		ImGui::End();
-#endif
 		Vector3 colliderPos = collider->GetCenter();
 
 #pragma region

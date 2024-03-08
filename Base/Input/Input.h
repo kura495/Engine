@@ -5,7 +5,7 @@
 #pragma comment(lib,"dxguid.lib")
 
 #include <wrl.h>
-#include "WinApp.h"
+#include "Common/WinApp/WinApp.h"
 #include <array>
 
 #include <XInput.h>

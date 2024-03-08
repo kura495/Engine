@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "Base/Math/Struct/Vector3.h"
-#include "Base/WorldTransform.h"
+#include "Math/Struct/Vector3.h"
+#include "WorldTransform/WorldTransform.h"
 #include "Collider.h"
 
 struct AABB {

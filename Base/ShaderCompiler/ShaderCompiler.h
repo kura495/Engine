@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base/DirectXCommon.h"
+#include "Common/DirectX/DirectXCommon.h"
 
 class ShaderCompiler
 {

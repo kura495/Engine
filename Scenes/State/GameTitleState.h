@@ -1,10 +1,10 @@
 #pragma once
 #include"IgameState.h"
-#include "Base/Input/Input.h"
-#include "Base/TextureManager.h"
-#include "Base/Sprite.h"
-#include "Base/WorldTransform.h"
-#include "Base/Editer/Editer.h"
+#include "Input/Input.h"
+#include "Texture/TextureManager.h"
+#include "Sprite/Sprite.h"
+#include "WorldTransform/WorldTransform.h"
+#include "Editer/Editer.h"
 #include "VectorCalc.h"
 
 class GameTitleState :public GameState
@@ -23,8 +23,8 @@ private:
 
 	float t = 0.0f;
 	float addParameter = 0.01f;
-	Vector3 Stert = {0.0f,10.0f,0.0f};
-	Vector3 End = {0.0f,-10.0f,0.0f};
+	Vector3 Stert = { 0.0f,10.0f,0.0f };
+	Vector3 End = { 0.0f,-10.0f,0.0f };
 
 	std::unique_ptr<Sprite>texture2;
 	uint32_t textureHundle2;

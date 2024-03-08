@@ -23,7 +23,7 @@ void SearchPoint::Draw()
 void SearchPoint::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute() == kCollitionAttributePlayer) {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 		ImGui::Begin("SearchPointHitPlayer");
 
 		ImGui::End();

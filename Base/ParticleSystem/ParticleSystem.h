@@ -2,17 +2,18 @@
 #include <random>
 #include <numbers>
 
-#include "DirectXCommon.h"
-#include "TextureManager.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "Common/DirectX/DirectXCommon.h"
+#include "Texture/TextureManager.h"
+#include "WorldTransform/WorldTransform.h"
+#include "ViewProj/ViewProjection.h"
 #include "Math/MatrixCalc.h"
 #include "ModelData.h"
-#include "Base/Light.h"
+#include "Light/Light.h"
 #include "Transform.h"
 #include "Utility/ImGuiManager.h"
-#include "Base/Utility/BoxCollider.h"
+#include "Utility/BoxCollider.h"
 #include "PipeLine/ParticlePipeLine.h"
+#include "Emitter/Emitter.h"
 
 struct Particle {
 	Matrix4x4 matWorld;
@@ -26,12 +27,12 @@ struct ParticleForGPU {
 	Matrix4x4 matWorld;
 	Vector4 color;
 };
-struct Emitter {
-	Transform transform;//エミッタのTransform
-	uint32_t count;		//発生数
-	float frequency;	//発生頻度
-	float frequencyTime;//頻度用時刻
-};
+//struct Emitter {
+//	Transform transform;//エミッタのTransform
+//	uint32_t count;		//発生数
+//	float frequency;	//発生頻度
+//	float frequencyTime;//頻度用時刻
+//};
 struct AccelerationField {
 	Vector3 acceleration;//加速度
 	AABB area;			 //範囲

@@ -49,14 +49,14 @@ void Enemy::ImGui()
 void Enemy::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute() == kCollitionAttributePlayer) {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 		ImGui::Begin("EnemyHitPlayer");
 
 		ImGui::End();
 #endif
 	}	
 	if (collider->GetcollitionAttribute() == kCollitionAttributeWeapon) {
-#ifdef _DEBUG
+#ifdef USE_IMGUI
 		ImGui::Begin("EnemyHitWeapon");
 
 		ImGui::End();

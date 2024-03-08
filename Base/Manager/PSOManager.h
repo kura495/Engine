@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include "Base/DirectXCommon.h"
+#include "Common/DirectX/DirectXCommon.h"
 
 #include "PipelineState/Standard/Standard.h"
 
