@@ -23,8 +23,6 @@
 #include "Base/Utility/CollisionManager.h"
 #include "Base/Editer/Editer.h"
 
-#include "Game/Object/Box/BoxObject.h"
-#include "Game/Object/Plane/PlaneObject.h"
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"
 #include "Game/Object/Enemy/Enemy.h"
@@ -64,22 +62,12 @@ private:
 	std::vector<Model*> enemyModel_;
 	std::list<Enemy*> enemy_;
 
-	std::vector<Model*> boxModel_;
-	std::vector<Model*> planeModel_;
+
 	std::vector<Model*> glTFplaneModel_;
 	std::vector<Model*> WeaponModel_;
 	void ControllObject();
 	void DeleteObject();
 
-	void AddBox();
-	int32_t boxObjectCount;
-	int32_t PlaneObjectCount;
-
-	void AddPlane();
-
-	std::list<BoxObject*> boxObject_;
-	std::list<PlaneObject*> planeObject_;
-	std::list<PlaneObject*> glTFplaneObject_;
 	int boxSelectNumber_;
 	int planeSelectNumber_;
 

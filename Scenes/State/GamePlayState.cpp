@@ -19,9 +19,7 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 	int Tex = textureManager_->LoadTexture("resources/Cube/Cube.png");
 	Tex = Tex;
-	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
 	goalModel_.push_back(Model::CreateModelFromObj("resources/Goal", "Goal.obj"));
-	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
 	glTFplaneModel_.push_back(Model::CreateModelFromObj("resources/glTFPlane", "Plane.gltf"));
 	PlaneObject* plane = new PlaneObject;
 	plane->Initalize(glTFplaneModel_);
@@ -46,16 +44,7 @@ void GamePlayState::Initialize()
 	globalVariables->CreateGroup("Editer");
 
 #pragma region
-	globalVariables->AddItem("Editer", "BoxCount", boxObjectCount);
-	boxObjectCount = globalVariables->GetIntValue("Editer", "BoxCount");
-	for (int32_t boxit = 0; boxit < boxObjectCount; boxit++) {
-		AddBox();
-	}
-	globalVariables->AddItem("Editer", "PlaneCount", PlaneObjectCount);
-	PlaneObjectCount = globalVariables->GetIntValue("Editer", "PlaneCount");
-	for (int32_t Pleneit = 0; Pleneit < PlaneObjectCount; Pleneit++) {
-		AddPlane();
-	}
+	
 #pragma endregion オブジェクト生成
 
 	goal_ = std::make_unique<Goal>();
@@ -97,31 +86,7 @@ void GamePlayState::Update()
 	}
 	ImGui::End();
 #endif // _DEBUG
-#ifdef USE_IMGUI
-	ImGui::Begin("CreateObject", nullptr, ImGuiWindowFlags_MenuBar);
-	if (ImGui::BeginMenuBar()) {
-		if (ImGui::BeginMenu("Box")) {
 
-			if (ImGui::Button("Add Box")) {
-				AddBox();
-				boxObjectCount++;
-				globalVariables->Updateint32_tItem("Editer", "BoxCount", boxObjectCount);
-			}
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Plane")) {
-
-			if (ImGui::Button("Add Plane")) {
-				AddPlane();
-				PlaneObjectCount++;
-				globalVariables->Updateint32_tItem("Editer", "PlaneCount", PlaneObjectCount);
-			}
-			ImGui::EndMenu();
-		}
-		ImGui::EndMenuBar();
-	}
-	ImGui::End();
-#endif	//ImGui
 
 	if (FadeInFlag) {
 		if (FadeParam > 0.0f) {
@@ -236,34 +201,6 @@ void GamePlayState::Draw()
 	//描画ここまで
 }
 
-void GamePlayState::AddBox()
-{
-	BoxObject* box = new BoxObject;
-	box->Initalize(boxModel_);
-
-	std::string Number = std::to_string(box->GetNumber());
-
-	std::string Name = "Box" + Number;
-	globalVariables->AddItem("Editer", Name, box->GetWorld().transform_);
-
-	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
-
-	boxObject_.push_back(box);
-}
-void GamePlayState::AddPlane()
-{
-	PlaneObject* plane = new PlaneObject;
-	plane->Initalize(planeModel_);
-
-	std::string Number = std::to_string(plane->GetNumber());
-
-	std::string Name = "Plane" + Number;
-	globalVariables->AddItem("Editer", Name, plane->GetWorld().transform_);
-
-	plane->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
-
-	planeObject_.push_back(plane);
-}
 void GamePlayState::DeleteObject()
 {
 

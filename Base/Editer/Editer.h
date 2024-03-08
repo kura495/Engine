@@ -3,6 +3,8 @@
 #include "ImGuiManager.h"
 #include "ViewProj/ViewProjection.h"
 #include "WorldTransform/WorldTransform.h"
+#include "Game/Object/Box/BoxObject.h"
+#include "Game/Object/Plane/PlaneObject.h"
 
 class Editer {
 public:
@@ -31,9 +33,15 @@ private:
 	Editer(const Editer& obj) = delete;
 	Editer& operator=(const Editer& obj) = delete;
 
+	GlobalVariables* globalVariables = nullptr;
+
 	void GuizmoOption();
 	void Manipulator();
 	void Grid();
+	void ImGuimenu();
+
+	void AddBox();
+	void AddPlane();
 
 	int ObjectCount = 0;
 	std::vector<WorldTransform*> world_;
@@ -43,6 +51,10 @@ private:
 	bool IsManipulatorFlag = true;
 	bool IsGridFlag = true;
 
+	int32_t boxObjectCount;
+	int32_t PlaneObjectCount;
+	std::vector<Model*> boxModel_;
+	std::vector<Model*> planeModel_;
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };
