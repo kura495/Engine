@@ -118,13 +118,13 @@ bool Input::GetJoystickState(XINPUT_STATE& joy) {
 	DWORD dwResult = XInputGetState(0, &joy);
 	Vector3 move = { (float)joy.Gamepad.sThumbLX, 0.0f, (float)joy.Gamepad.sThumbLY };
 
-	if (Length(move) < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+	if (move.Length() < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 	{
 		joy.Gamepad.sThumbLX = 0;
 		joy.Gamepad.sThumbLY = 0;
 	}
 	move = { (float)joy.Gamepad.sThumbRX, 0.0f, (float)joy.Gamepad.sThumbRY };
-	if (Length(move) < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+	if (move.Length() < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
 	{
 		joy.Gamepad.sThumbRX = 0;
 		joy.Gamepad.sThumbRY = 0;
@@ -138,13 +138,13 @@ bool Input::GetJoystickState()
 	DWORD dwResult = XInputGetState(0,&joyState);
 	Vector3 move = { (float)joyState.Gamepad.sThumbLX, 0.0f, (float)joyState.Gamepad.sThumbLY};
 
-	if (Length(move) < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+	if (move.Length() < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 	{
 		joyState.Gamepad.sThumbLX = 0;
 		joyState.Gamepad.sThumbLY = 0;
 	}
 	move = { (float)joyState.Gamepad.sThumbRX, 0.0f, (float)joyState.Gamepad.sThumbRY };
-	if (Length(move) < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+	if (move.Length() < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
 	{
 		joyState.Gamepad.sThumbRX = 0;
 		joyState.Gamepad.sThumbRY = 0;

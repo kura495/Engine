@@ -201,7 +201,7 @@ void Player::PlayerRoring()
 	sub = Normalize(sub);
 
 	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, sub));
-	float dot = Dot({ 0.0f,0.0f,1.0f }, sub);
+	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
 
 	//行きたい方向のQuaternionの作成
 	moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));

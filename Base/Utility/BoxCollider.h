@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Math/Struct/Vector3.h"
+#include "Math/Vector/Vector3.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Collider.h"
 

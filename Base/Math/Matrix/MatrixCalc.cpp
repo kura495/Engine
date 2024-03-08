@@ -184,7 +184,7 @@ Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs)
 {
 	Quaternion result;
 	Vector3 cross = Cross({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
-	float dot = Dot({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
+	float dot = Vector3::Dot({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
 	result.x = cross.x + rhs.w * lhs.x + lhs.w * rhs.x;
 	result.y = cross.y + rhs.w * lhs.y + lhs.w * rhs.y;
 	result.z = cross.z + rhs.w * lhs.z + lhs.w * rhs.z;
@@ -454,8 +454,8 @@ Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to)
 		}
 	}
 
-	float costhata = Dot(from,to);
-	float sinthata = Length(cross);
+	float costhata = Vector3::Dot(from,to);
+	float sinthata = cross.Length();
 	result.m[0][0] = (n.x * n.x) * (1 - costhata) + costhata;
 	result.m[0][1] = (n.x * n.y) * (1 - costhata) + n.z * sinthata;
 	result.m[0][2] = (n.x * n.z) * (1 - costhata) - n.y * sinthata;

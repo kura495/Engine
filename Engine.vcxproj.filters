@@ -112,10 +112,10 @@
     <ClCompile Include="Base\Input\Input.cpp">
       <Filter>Engine\Base\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Math\MatrixCalc.cpp">
+    <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp">
       <Filter>Engine\Base\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Math\VectorCalc.cpp">
+    <ClCompile Include="Base\Math\Vector\VectorCalc.cpp">
       <Filter>Engine\Base\Math</Filter>
     </ClCompile>
     <ClCompile Include="Base\Audio\Audio.cpp">
@@ -271,19 +271,19 @@
     <ClInclude Include="Base\Input\Input.h">
       <Filter>Engine\Base\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Math\Struct\Matrix3x3.h">
+    <ClInclude Include="Base\Math\Matrix\Matrix3x3.h">
       <Filter>Engine\Base\Math\Struct</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Math\Struct\Matrix4x4.h">
+    <ClInclude Include="Base\Math\Matrix\Matrix4x4.h">
       <Filter>Engine\Base\Math\Struct</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Math\Struct\Vector2.h">
+    <ClInclude Include="Base\Math\Vector\Vector2.h">
       <Filter>Engine\Base\Math\Struct</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Math\Struct\Vector3.h">
+    <ClInclude Include="Base\Math\Vector\Vector3.h">
       <Filter>Engine\Base\Math\Struct</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Math\Struct\Vector4.h">
+    <ClInclude Include="Base\Math\Vector\Vector4.h">
       <Filter>Engine\Base\Math\Struct</Filter>
     </ClInclude>
     <ClInclude Include="Base\Math\Calc.h">
@@ -292,10 +292,10 @@
     <ClInclude Include="Base\Math\Math_Structs.h">
       <Filter>Engine\Base\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Math\MatrixCalc.h">
+    <ClInclude Include="Base\Math\Matrix\MatrixCalc.h">
       <Filter>Engine\Base\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Math\VectorCalc.h">
+    <ClInclude Include="Base\Math\Vector\VectorCalc.h">
       <Filter>Engine\Base\Math</Filter>
     </ClInclude>
     <ClInclude Include="Base\Utility\BoxCollider.h">

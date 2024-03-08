@@ -1,8 +1,11 @@
 #pragma once
-struct Vector3 final{
+#include<cmath>
+class Vector3 final{
+public:
 	float x;
 	float y;
 	float z;
+public:
 	Vector3 operator +(Vector3 other) {
 		Vector3 me;
 		me.x = this->x + other.x;
@@ -36,6 +39,17 @@ struct Vector3 final{
 		me.y = this->y * other;
 		me.z = this->z * other;
 		return me;
+	}
+public:
+	static inline float Dot(const Vector3& v1, const Vector3& v2) {
+		float result = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+		return result;
+	}
+	//ベクトルを
+	inline float Length() {
+		float result{};
+		result = sqrt(Dot({x,y,z},{x,y,z}));
+		return result;
 	}
 };
 

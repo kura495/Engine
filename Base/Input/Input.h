@@ -9,7 +9,7 @@
 #include <array>
 
 #include <XInput.h>
-#include "Base/Math/VectorCalc.h"
+#include "Math/Vector/VectorCalc.h"
 
 #define MOUSE_BOTTON0	0
 #define MOUSE_BOTTON1	1

@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "Math_Structs.h"
-#include "MatrixCalc.h"
+#include "Math/Matrix/MatrixCalc.h"
 #include "Common/DirectX/DirectXCommon.h"
-#include "Base/Math/VectorCalc.h"
+#include "Math/Vector/VectorCalc.h"
 #include "Transform.h"
 
 struct ConstBufferDataWorldTransform {

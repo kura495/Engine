@@ -1,6 +1,4 @@
 #pragma once
-#include "VectorCalc.h"
-#include "MatrixCalc.h"
 #include <numbers>
 
 namespace Animation {

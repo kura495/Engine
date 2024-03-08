@@ -1,6 +1,6 @@
 #pragma once
 #include "Math_Structs.h"
-#include "VectorCalc.h"
+#include "Math/Vector/VectorCalc.h"
 #include <numbers>
 #include <cmath>
 

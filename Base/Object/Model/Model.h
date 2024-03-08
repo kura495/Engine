@@ -7,7 +7,7 @@
 #include "Light/Light.h"
 #include "ImGuiManager.h"
 #include "GlobalVariables.h"
-#include "MatrixCalc.h"
+#include "Math/Matrix/MatrixCalc.h"
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
 #include <d3d12.h>
@@ -31,7 +31,7 @@ public:
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
 
-	ModelData GetModelData() const { return modelData_; }
+	const ModelData& GetModelData() { return modelData_; }
 
 private:
 
@@ -58,6 +58,4 @@ private:
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 	Node ReadNode(aiNode* node);
-
-	WorldTransform world_;
 };

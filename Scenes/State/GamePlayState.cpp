@@ -9,7 +9,6 @@ void GamePlayState::Initialize()
 	audio = Audio::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
-
 	Editer::GetInstance()->SetViewProjection(&viewProjction);
 	Editer::GetInstance()->IsEnable(true);
 

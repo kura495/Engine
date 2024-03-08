@@ -2,8 +2,8 @@
 #include "Base/Camera/Camera.h"
 #include "Base/Input/Input.h"
 #include "WorldTransform/WorldTransform.h"
-#include "MatrixCalc.h"
-#include "VectorCalc.h"
+#include "Math/Matrix/MatrixCalc.h"
+#include "Math/Vector/VectorCalc.h"
 #include "Calc.h"
 
 //カメラ補間用ワーク

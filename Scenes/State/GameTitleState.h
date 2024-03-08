@@ -5,7 +5,7 @@
 #include "Sprite/Sprite.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Editer/Editer.h"
-#include "VectorCalc.h"
+#include "Math/Vector/VectorCalc.h"
 
 class GameTitleState :public GameState
 {

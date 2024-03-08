@@ -6,7 +6,7 @@
 #include "Texture/TextureManager.h"
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
-#include "Math/MatrixCalc.h"
+#include "Math/Matrix/MatrixCalc.h"
 #include "ModelData.h"
 #include "Light/Light.h"
 #include "Transform.h"
