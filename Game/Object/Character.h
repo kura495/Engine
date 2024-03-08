@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Model.h"
+#include "Object/Model/Model.h"
 
 
 class Character

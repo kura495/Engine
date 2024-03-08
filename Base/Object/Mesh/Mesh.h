@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "DirectXCommon.h"
-#include "TextureManager.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "Common/DirectX/DirectXCommon.h"
+#include "Texture/TextureManager.h"
+#include "WorldTransform/WorldTransform.h"
+#include "ViewProj/ViewProjection.h"
 #include "Transform.h"
 #include "VertexData.h"
 #include "Material.h"

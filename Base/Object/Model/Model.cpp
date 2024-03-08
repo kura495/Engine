@@ -19,6 +19,7 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 
 	materialData->enableLighting = lightFlag;
 	materialData->color = color_;
+
 }
 
 void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)

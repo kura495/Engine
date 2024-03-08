@@ -3,13 +3,13 @@
 #include "Transform.h"
 #include "VertexData.h"
 #include "ModelData.h"
-#include "TextureManager.h"
-#include "Light.h"
+#include "Texture/TextureManager.h"
+#include "Light/Light.h"
 #include "ImGuiManager.h"
 #include "GlobalVariables.h"
 #include "MatrixCalc.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "WorldTransform/WorldTransform.h"
+#include "ViewProj/ViewProjection.h"
 #include <d3d12.h>
 #include <string>
 #include <cassert>
@@ -59,5 +59,5 @@ private:
 
 	Node ReadNode(aiNode* node);
 
-	WorldTransform world;
+	WorldTransform world_;
 };

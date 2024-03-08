@@ -2,16 +2,16 @@
 #include <random>
 #include <numbers>
 
-#include "DirectXCommon.h"
-#include "TextureManager.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "Common/DirectX/DirectXCommon.h"
+#include "Texture/TextureManager.h"
+#include "WorldTransform/WorldTransform.h"
+#include "ViewProj/ViewProjection.h"
 #include "Math/MatrixCalc.h"
 #include "ModelData.h"
-#include "Base/Light.h"
+#include "Light/Light.h"
 #include "Transform.h"
 #include "Utility/ImGuiManager.h"
-#include "Base/Utility/BoxCollider.h"
+#include "Utility/BoxCollider.h"
 #include "PipeLine/ParticlePipeLine.h"
 #include "Emitter/Emitter.h"
 

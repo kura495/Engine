@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Math_Structs.h"
 #include "CollisionConfig.h"
-#include "Base/WorldTransform.h"
+#include "WorldTransform/WorldTransform.h"
 #include <cstdint>
 
 class Collider {

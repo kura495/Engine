@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Math_Structs.h"
 #include "MatrixCalc.h"
-#include "DirectXCommon.h"
+#include "Common/DirectX/DirectXCommon.h"
 #include "Base/Math/VectorCalc.h"
 #include "Transform.h"
 

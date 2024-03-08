@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 //Base
-#include "WinApp.h"
-#include "DirectXCommon.h"
-#include "TextureManager.h"
+#include "Common/WinApp/WinApp.h"
+#include "Common/DirectX/DirectXCommon.h"
+#include "Texture/TextureManager.h"
 //other
 #include <numbers>
 #include <fstream>

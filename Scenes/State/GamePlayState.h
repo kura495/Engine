@@ -1,23 +1,23 @@
 ﻿#pragma once
 #include "IgameState.h"
-#include "MyEngine.h"
+#include "Common/Engine/MyEngine.h"
 #include "ModelData.h"
 #include "Audio.h"
 #include "Input.h"
-#include "Mesh.h"
-#include "Sprite.h"
-#include "Light.h"
-#include "Sphere.h"
-#include "TextureManager.h"
-#include "Model.h"
+#include "Object/Mesh/Mesh.h"
+#include "Sprite/Sprite.h"
+#include "Light/Light.h"
+#include "Object/Sphere/Sphere.h"
+#include "Texture/TextureManager.h"
+#include "Object/Model/Model.h"
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
 #include "Base/Camera/DebugCamera/DebugCamera.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "WorldTransform/WorldTransform.h"
+#include "ViewProj/ViewProjection.h"
 #include "Math_Structs.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 #include "Base/Utility/CollisionManager.h"

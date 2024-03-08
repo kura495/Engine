@@ -1,12 +1,12 @@
 ﻿#pragma once
-#include "DirectXCommon.h"
-#include "TextureManager.h"
+#include "Common/DirectX/DirectXCommon.h"
+#include "Texture/TextureManager.h"
 #include "Transform.h"
 #include "VertexData.h"
 #include "Material.h"
 #include "MatrixCalc.h"
-#include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "WorldTransform/WorldTransform.h"
+#include "ViewProj/ViewProjection.h"
 #include <wrl.h>
 
 class Sprite

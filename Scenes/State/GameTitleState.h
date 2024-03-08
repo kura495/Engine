@@ -1,10 +1,10 @@
 #pragma once
 #include"IgameState.h"
-#include "Base/Input/Input.h"
-#include "Base/TextureManager.h"
-#include "Base/Sprite.h"
-#include "Base/WorldTransform.h"
-#include "Base/Editer/Editer.h"
+#include "Input/Input.h"
+#include "Texture/TextureManager.h"
+#include "Sprite/Sprite.h"
+#include "WorldTransform/WorldTransform.h"
+#include "Editer/Editer.h"
 #include "VectorCalc.h"
 
 class GameTitleState :public GameState
