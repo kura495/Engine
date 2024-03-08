@@ -64,6 +64,7 @@ private:
 
 
 	std::vector<Model*> glTFplaneModel_;
+	std::list<PlaneObject*> glTFplaneObject_;
 	std::vector<Model*> WeaponModel_;
 	void ControllObject();
 	void DeleteObject();

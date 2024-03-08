@@ -1,4 +1,5 @@
 #include "Editer.h"
+#include <CollisionManager.h>
 
 Editer* Editer::GetInstance()
 {
@@ -9,6 +10,8 @@ Editer* Editer::GetInstance()
 void Editer::Initalize()
 {
 	ObjectCount = 0;
+	collisionManager = std::make_unique<CollisionManager>();
+
 	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
 	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
 
@@ -34,6 +37,12 @@ void Editer::Update()
 	}
 	GuizmoOption();
 
+	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+		(*ObjectIt)->Update();
+	}
+	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
+		collisionManager->AddBoxCollider((*ObjectIt));
+	}
 
 }
 

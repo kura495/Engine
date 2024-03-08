@@ -17,8 +17,6 @@ void GamePlayState::Initialize()
 	collisionManager = std::make_unique<CollisionManager>();
 	// 
 	//3Dオブジェクト生成
-	int Tex = textureManager_->LoadTexture("resources/Cube/Cube.png");
-	Tex = Tex;
 	goalModel_.push_back(Model::CreateModelFromObj("resources/Goal", "Goal.obj"));
 	glTFplaneModel_.push_back(Model::CreateModelFromObj("resources/glTFPlane", "Plane.gltf"));
 	PlaneObject* plane = new PlaneObject;
@@ -108,12 +106,7 @@ void GamePlayState::Update()
 
 	player_->Update();
 
-	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-		(*ObjectIt)->Update();
-	}
-	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-		(*ObjectIt)->Update();
-	}
+	
 	for (std::list<PlaneObject*>::iterator ObjectIt = glTFplaneObject_.begin(); ObjectIt != glTFplaneObject_.end(); ObjectIt++) {
 		(*ObjectIt)->Update();
 	}
@@ -126,12 +119,6 @@ void GamePlayState::Update()
 	for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
 		collisionManager->AddBoxCollider((*ObjectIt));
 		collisionManager->AddBoxCollider((*ObjectIt)->GetSearchPoint());
-	}
-	for (std::list<PlaneObject*>::iterator ObjectIt = planeObject_.begin(); ObjectIt != planeObject_.end(); ObjectIt++) {
-		collisionManager->AddBoxCollider((*ObjectIt));
-	}
-	for (std::list<BoxObject*>::iterator ObjectIt = boxObject_.begin(); ObjectIt != boxObject_.end(); ObjectIt++) {
-		collisionManager->AddBoxCollider((*ObjectIt));
 	}
 	collisionManager->AddBoxCollider(goal_.get());
 	collisionManager->CheckAllCollisions();

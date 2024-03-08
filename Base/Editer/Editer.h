@@ -34,6 +34,7 @@ private:
 	Editer& operator=(const Editer& obj) = delete;
 
 	GlobalVariables* globalVariables = nullptr;
+	std::unique_ptr<CollisionManager> collisionManager;
 
 	void GuizmoOption();
 	void Manipulator();
@@ -55,6 +56,8 @@ private:
 	int32_t PlaneObjectCount;
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
+
+	std::list<IObject*>object_;
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };
