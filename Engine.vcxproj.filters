@@ -417,6 +417,7 @@
     <None Include="resources\hlsl\Particle.hlsli">
       <Filter>リソース ファイル\hlsl</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\hlsl\Object3d.PS.hlsl">

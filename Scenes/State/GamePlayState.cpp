@@ -134,9 +134,9 @@ void GamePlayState::Update()
 	}
 
 
-	if (player_->GetIsGoal()) {
+	/*if (player_->GetIsGoal()) {
 		StateNo = 2;
-	}
+	}*/
 
 #pragma region
 

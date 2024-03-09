@@ -9,6 +9,7 @@ void GlobalVariables::CreateGroup(const std::string& groupName)
 {
 	//指定名のオブジェクトがなければ追加する
 	datas_[groupName];
+
 }
 
 void GlobalVariables::Update()
@@ -345,11 +346,21 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 		else if (std::holds_alternative<TransformQua>(item.value)) {
 			//float型のjson配列登録をする
 			TransformQua value = std::get<TransformQua>(item.value);
-			root[groupName][itemName] = json::array({ 
+			// convert to json, just by assigning:
+			nlohmann::json json = value;
+			// convert to string
+			std::string json_as_string = json.dump();
+			// string to json
+			nlohmann::json back_json = nlohmann::json::parse(json_as_string);
+
+			// json -> instance
+			root[groupName][itemName] = back_json.get<TransformQua>();
+
+			/*root[groupName][itemName] = json::array({ 
 				value.scale.x,value.scale.y,value.scale.z,
 				value.quaternion.x,value.quaternion.y,value.quaternion.z,value.quaternion.w,
 				value.translate.x,value.translate.y,value.translate.z,
-				});
+				});*/
 		}
 		//ディレクトリのパス
 		std::filesystem::path dir(kDirectoryPath);
@@ -452,7 +463,8 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 			Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
 			SetValue(groupName, itemName, value);
 		}
-		else if (itItem->is_array() && itItem->size() == 10) {
+		//TransformQua
+		else if (itItem->is_array() && itItem->size() == ) {
 			//float型のjson配列登録
 			TransformQua value = { 
 				.scale{ itItem->at(0), itItem->at(1), itItem->at(2)},
