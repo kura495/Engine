@@ -15,7 +15,7 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw(const ViewProjection& viewProj) = 0;
 
-	void SetTransform(TransformQua transFormQua) { world_.transform_ += transFormQua;
+	void SetTransform(TransformQua transFormQua) { world_.transform_ = transFormQua;
 	//world_.transform_+= models_[0]->GetModelData().rootNode.localMatrix.;
 		world_.UpdateMatrix();};
 

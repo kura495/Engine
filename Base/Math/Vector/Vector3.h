@@ -23,12 +23,8 @@ public:
 		me.z = this->z - other.z;
 		return me;
 	}
-	Vector3 operator=(const Vector3& v1) {
-		Vector3 me;
-		me.x = v1.x;
-		me.y = v1.y;
-		me.z = v1.z;
-		return me;
+	const Vector3 operator=(const Vector3& v1) {
+		return { v1.x,v1.y,v1.z };
 	}
 	Vector3 operator+=(Vector3 other) {
 		this->x = this->x + other.x;

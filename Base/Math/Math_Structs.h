@@ -22,11 +22,6 @@ struct Quaternion {
 		return result;
 	}
 	inline Quaternion operator=(const Quaternion q1) {
-		Quaternion result;
-		result.x = q1.x;
-		result.y = q1.y;
-		result.z = q1.z;
-		result.w = q1.w;
-		return result;
+		return {q1.x,q1.y,q1.z,q1.w};
 	}
 };
