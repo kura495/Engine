@@ -2,6 +2,9 @@
 
 void GamePlayState::Initialize()
 {
+	/*TransformQua b = { 1.0f,2.0f,3.0f };
+	Vector3 a = b;*/
+	//a;
 	//基本機能生成
 	debugcamera_ = new DebugCamera();
 	debugcamera_->Initialize();

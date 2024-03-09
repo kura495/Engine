@@ -15,9 +15,12 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw(const ViewProjection& viewProj) = 0;
 
-	void SetTransform(TransformQua transFormQua) { world_.transform_ = transFormQua;
-	//world_.transform_+= models_[0]->GetModelData().rootNode.localMatrix.;
-		world_.UpdateMatrix();};
+	void SetTransform(TransformQua transFormQua) {
+		world_.transform_ = transFormQua;
+		world_.transform_.translate += models_[0]->GetModelData().rootNode.localMatrix.GetTransform();
+		world_.transform_.scale += models_[0]->GetModelData().rootNode.localMatrix.GetScale();
+		world_.UpdateMatrix();
+	};
 
 	uint32_t GetNumber()const { return objectNumber_; };
 

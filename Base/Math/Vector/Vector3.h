@@ -1,7 +1,7 @@
 #pragma once
 #include<cmath>
 #include "externals/nlohmann/json.hpp"
-class Vector3 final{
+class Vector3 final {
 public:
 	float x;
 	float y;
@@ -23,14 +23,15 @@ public:
 		me.z = this->z - other.z;
 		return me;
 	}
-	const Vector3 operator=(const Vector3& v1) {
+	inline Vector3 operator==(const Vector3& v1) const{
 		return { v1.x,v1.y,v1.z };
 	}
-	Vector3 operator+=(Vector3 other) {
-		this->x = this->x + other.x;
-		this->y = this->y + other.y;
-		this->z = this->z + other.z;
-		return { this->x,this->y,this->z };
+	Vector3 operator+=(const Vector3& other) {
+		Vector3 result;
+		result.x = this->x + other.x;
+		result.y = this->y + other.y;
+		result.z = this->z + other.z;
+		return result;
 	}
 	Vector3 operator*(float other) {
 		Vector3 me;

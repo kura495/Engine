@@ -79,6 +79,5 @@ private:
 	//jsonファイルの保存先のパス
 	const std::string kDirectoryPath = "resources/GlobalVariables/";
 
-	
 };
 
