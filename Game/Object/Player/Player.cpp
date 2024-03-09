@@ -200,7 +200,7 @@ void Player::PlayerRoring()
 	//プレイヤーの現在の向き
 	sub = Normalize(sub);
 
-	Vector3 cross = Normalize(Cross({ 0.0f,0.0f,1.0f }, sub));
+	Vector3 cross = Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, sub));
 	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
 
 	//行きたい方向のQuaternionの作成

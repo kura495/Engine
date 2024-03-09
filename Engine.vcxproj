@@ -179,6 +179,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Math\Calc.cpp" />
     <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
+    <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
     <ClCompile Include="Base\Object\Mesh\Mesh.cpp" />
     <ClCompile Include="Base\Object\Model\Model.cpp" />
@@ -239,6 +240,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Math\Matrix\MatrixCalc.h" />
     <ClInclude Include="Base\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="Base\Math\Matrix\Matrix4x4.h" />
+    <ClInclude Include="Base\Math\Quaternion\Quaternion.h" />
     <ClInclude Include="Base\Math\Vector\Vector2.h" />
     <ClInclude Include="Base\Math\Vector\Vector3.h" />
     <ClInclude Include="Base\Math\Vector\Vector4.h" />

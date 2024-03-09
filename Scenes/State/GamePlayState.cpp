@@ -58,6 +58,10 @@ void GamePlayState::Initialize()
 	for (int32_t Pleneit = 0; Pleneit < PlaneObjectCount; Pleneit++) {
 		AddPlane();
 	}
+	std::string Number = std::to_string(plane->GetNumber());
+
+	std::string Name = "Plane" + Number;
+	plane->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 #pragma endregion オブジェクト生成
 
 	goal_ = std::make_unique<Goal>();

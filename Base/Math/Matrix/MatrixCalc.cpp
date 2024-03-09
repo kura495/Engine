@@ -179,136 +179,6 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Qu
 
 	return result;
 }
-
-Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs)
-{
-	Quaternion result;
-	Vector3 cross = Cross({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
-	float dot = Vector3::Dot({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
-	result.x = cross.x + rhs.w * lhs.x + lhs.w * rhs.x;
-	result.y = cross.y + rhs.w * lhs.y + lhs.w * rhs.y;
-	result.z = cross.z + rhs.w * lhs.z + lhs.w * rhs.z;
-	result.w = lhs.w * rhs.w - dot;
-
-	return result;
-}
-Quaternion IdentityQuaternion()
-{
-	return Quaternion({ 0.0f,0.0f,0.0f,1.0f });
-}
-Quaternion Conjugate(const Quaternion& quaternion)
-{
-	return Quaternion({ quaternion.x * -1.0f,quaternion.y * -1.0f ,quaternion.z * -1.0f ,quaternion.w });
-}
-float Norm(const Quaternion& quaternion)
-{
-	return sqrt(quaternion.x * quaternion.x + quaternion.y * quaternion.y + quaternion.z * quaternion.z + quaternion.w * quaternion.w);
-}
-Quaternion Inverse(const Quaternion& quaternion)
-{
-	Quaternion result{};
-	float norm = Norm(quaternion);
-	norm = norm * norm;
-	Quaternion conj = Conjugate(quaternion);
-	if (norm != 0.0f) {
-		result.x = conj.x / norm;
-		result.y = conj.y / norm;
-		result.z = conj.z / norm;
-		result.w = conj.w / norm;
-	}
-	return result;
-}
-Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
-{
-	Quaternion result = IdentityQuaternion();
-
-	float halfAngle = angle / 2.0f;
-	float sin = std::sin(halfAngle);
-
-	result.x = axis.x * sin;
-	result.y = axis.y * sin;
-	result.z = axis.z * sin;
-	result.w = std::cos(halfAngle);
-
-	return result;
-}
-Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion)
-{
-	Quaternion fromVector = { vector.x,vector.y,vector.z,0.0f };
-	Quaternion conj = Conjugate(quaternion);
-	Quaternion rotate = Multiply(quaternion, Multiply(fromVector, conj));
-	Vector3 result;
-	result.x = rotate.x;
-	result.y = rotate.y;
-	result.z = rotate.z;
-
-	return result;
-}
-Quaternion Lerp(const Quaternion& q0, const Quaternion& q1,float t) {
-	Quaternion result;
-	result.x = q1.x - q0.x;
-	result.y = q1.y - q0.y;
-	result.z = q1.z - q0.z;
-	result.w = q1.w - q0.w;
-	result.x = q1.x + t * result.x;
-	result.y = q1.y + t * result.y;
-	result.z = q1.z + t * result.z;
-	result.w = q1.w + t * result.w;
-	return result;
-}
-Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t)
-{
-	Quaternion result;
-	Quaternion Localq0 = Normalize(q0);
-	Quaternion Localq1 = Normalize(q1);
-	//q0とq1の内積
-	float dot = Localq0.x * Localq1.x + Localq0.y * Localq1.y + Localq0.z * Localq1.z + Localq0.w * Localq1.w;
-	if (dot < 0.0f) {
-		//もう片方の回転を利用
-		Localq0 = { -Localq0.x, -Localq0.y, -Localq0.z, -Localq0.w };
-		//内積も反転
-		dot = -dot;
-	}
-	if (dot >= 1.0f - std::numeric_limits<float>::epsilon())
-	{
-		result.x = (1.0f - t) * Localq0.x + t * Localq1.x;
-		result.y = (1.0f - t) * Localq0.y + t * Localq1.y;
-		result.z = (1.0f - t) * Localq0.z + t * Localq1.z;
-		result.w = (1.0f - t) * Localq0.w + t * Localq1.w;
-		return result;
-	}
-	//なす角を求める
-	float theta = std::acos(dot);
-
-	float scale0 = std::sin((1 - t) * theta) / std::sin(theta);
-	float scale1 = std::sin(t * theta) / std::sin(theta);
-	result.x = scale0 * Localq0.x + scale1 * Localq1.x;
-	result.y = scale0 * Localq0.y + scale1 * Localq1.y;
-	result.z = scale0 * Localq0.z + scale1 * Localq1.z;
-	result.w = scale0 * Localq0.w + scale1 * Localq1.w;
-
-	return result;
-}
-//正規化したQuaternionを返す
-Quaternion Normalize(const Quaternion& quaternion)
-{
-	Quaternion result{};
-	float norm = Norm(quaternion);
-	if (norm != 0.0f) {
-		result.x = quaternion.x / norm;
-		result.y = quaternion.y / norm;
-		result.z = quaternion.z / norm;
-		result.w = quaternion.w / norm;
-	}
-	return result;
-}
-//VectorからQuaternionを作る
-//Quaternion MakeFromVector(const Vector3& rotation, const Vector3& up)
-//{
-//	return Quaternion();
-//}
-
-
 float det(const Matrix4x4& m)
 {
 	return float(
@@ -442,8 +312,8 @@ Vector3 GetZAxis(Matrix4x4 matrix)
 Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to)
 {
 	Matrix4x4 result;
-	Vector3 cross = Cross(from, to);
-	Vector3 n = Normalize(Cross(from, to));
+	Vector3 cross = Vector3::Cross(from, to);
+	Vector3 n = Normalize(Vector3::Cross(from, to));
 	// u = -v のとき　つまり反転してしまった時
 	if (from.x == -to.x && from.y == -to.y && from.z == -to.z) {
 		if (from.x != 0.0f || from.y != 0.0f) {

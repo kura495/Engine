@@ -32,12 +32,12 @@ public:
 		};
 		return result;
 	}
-	TransformQua operator==(const TransformQua& t1) {
-		TransformQua result{
-			.scale = t1.scale,
-			.quaternion = t1.quaternion,
-			.translate = t1.translate
-		};
-		return result;
+	TransformQua operator=(const TransformQua& t1) {
+		
+		this->scale = t1.scale;
+		this->quaternion = t1.quaternion;
+		this->translate = t1.translate;
+
+		return *this;
 	}
 };
