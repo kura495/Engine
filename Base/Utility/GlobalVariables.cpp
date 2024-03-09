@@ -464,7 +464,7 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 			SetValue(groupName, itemName, value);
 		}
 		//TransformQua
-		else if (itItem->is_array() && itItem->size() == ) {
+		else if (itItem->is_array() && itItem->size() == 10) {
 			//float型のjson配列登録
 			TransformQua value = { 
 				.scale{ itItem->at(0), itItem->at(1), itItem->at(2)},
