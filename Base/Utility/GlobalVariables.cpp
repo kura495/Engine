@@ -355,12 +355,6 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 
 			// json -> instance
 			root[groupName][itemName] = back_json.get<TransformQua>();
-
-			/*root[groupName][itemName] = json::array({ 
-				value.scale.x,value.scale.y,value.scale.z,
-				value.quaternion.x,value.quaternion.y,value.quaternion.z,value.quaternion.w,
-				value.translate.x,value.translate.y,value.translate.z,
-				});*/
 		}
 		//ディレクトリのパス
 		std::filesystem::path dir(kDirectoryPath);
@@ -464,13 +458,9 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 			SetValue(groupName, itemName, value);
 		}
 		//TransformQua
-		else if (itItem->is_array() && itItem->size() == 10) {
+		else if (itItem->is_object() && itItem->size() == 3) {
 			//float型のjson配列登録
-			TransformQua value = { 
-				.scale{ itItem->at(0), itItem->at(1), itItem->at(2)},
-				.quaternion{itItem->at(3), itItem->at(4), itItem->at(5), itItem->at(6)},
-				.translate{ itItem->at(7), itItem->at(8), itItem->at(9)}
-			};
+			TransformQua value = itItem.value();
 			SetValue(groupName, itemName, value);
 		}
 		else if (itItem->is_array() && itItem->size() == 16) {
@@ -483,7 +473,6 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 			SetValue(groupName, itemName, value);
 		}
 	}
-
 }
 
 
