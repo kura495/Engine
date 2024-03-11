@@ -16,8 +16,8 @@ Quaternion Matrix4x4::GetRotation() {
     float pz = -m[0][0] - m[1][1] + m[2][2] + 1;
     float pw = m[0][0] + m[1][1] + m[2][2] + 1;
 
-    auto selected = 0;
-    auto max = px;
+    int selected = 0;
+    float max = px;
     if (max < py) {
         selected = 1;
         max = py;
@@ -32,8 +32,8 @@ Quaternion Matrix4x4::GetRotation() {
     }
 
     if (selected == 0) {
-        auto x = std::sqrt(px) * 0.5f;
-        auto d = 1 / (4 * x);
+        float x = std::sqrt(px) * 0.5f;
+        float d = 1 / (4 * x);
         return Quaternion(
             x,
             (m[1][0] + m[0][1]) * d,
@@ -42,8 +42,8 @@ Quaternion Matrix4x4::GetRotation() {
         );
     }
     else if (selected == 1) {
-        auto y = std::sqrt(py) * 0.5f;
-        auto d = 1 / (4 * y);
+        float y = std::sqrt(py) * 0.5f;
+        float d = 1 / (4 * y);
         return Quaternion(
             (m[1][0] + m[0][1]) * d,
             y,
@@ -52,8 +52,8 @@ Quaternion Matrix4x4::GetRotation() {
         );
     }
     else if (selected == 2) {
-        auto z = std::sqrt(pz) * 0.5f;
-        auto d = 1 / (4 * z);
+        float z = std::sqrt(pz) * 0.5f;
+        float d = 1 / (4 * z);
         return Quaternion(
             (m[0][2] + m[2][0]) * d,
             (m[2][1] + m[1][2]) * d,
@@ -62,8 +62,8 @@ Quaternion Matrix4x4::GetRotation() {
         );
     }
     else if (selected == 3) {
-        auto w = std::sqrt(pw) * 0.5f;
-        auto d = 1 / (4 * w);
+        float w = std::sqrt(pw) * 0.5f;
+        float d = 1 / (4 * w);
         return Quaternion(
             (m[2][1] - m[1][2]) * d,
             (m[0][2] - m[2][0]) * d,
