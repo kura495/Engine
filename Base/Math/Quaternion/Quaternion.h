@@ -51,4 +51,3 @@ Quaternion Lerp(const Quaternion& q0, const Quaternion& q1, float t);
 Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 //正規化したQuaternionを返す
 Quaternion Normalize(const Quaternion& quaternion);
-//Quaternion MakeFromVector(const Vector3& rotation,/*上方向を定義するベクトル*/ const Vector3& up = {0.0f,1.0f,0.0f});
