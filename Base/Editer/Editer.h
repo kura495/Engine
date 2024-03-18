@@ -4,6 +4,7 @@
 #include "ViewProj/ViewProjection.h"
 #include "WorldTransform/WorldTransform.h"
 
+class IObject;
 class Editer {
 public:
 	static Editer* GetInstance();
@@ -21,10 +22,11 @@ public:
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
 	}
+	void SetObject(IObject* object);
 	void SetWorld(WorldTransform* world) {
 		world_.push_back(world);
 	}
-#pragma endregion 
+#pragma endregion
 private:
 	Editer() = default;
 	~Editer() = default;
@@ -35,7 +37,10 @@ private:
 	void Manipulator();
 	void Grid();
 
+
+
 	int ObjectCount = 0;
+	std::vector<IObject*> object_;
 	std::vector<WorldTransform*> world_;
 	const ViewProjection* viewProjection_ = nullptr;
 
@@ -43,6 +48,7 @@ private:
 	bool IsManipulatorFlag = true;
 	bool IsGridFlag = true;
 
+	std::string buf;
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };

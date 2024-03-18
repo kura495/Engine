@@ -3,11 +3,15 @@
 #include "Object/Model/Model.h"
 #include "Editer/Editer.h"
 
+static uint32_t ObjectNumber = 0;
+
 class IObject
 {
 public:
 	IObject(){
-		Editer::GetInstance()->SetWorld(&world_);
+		Editer::GetInstance()->SetObject(this);
+		objectNumber_ = ObjectNumber;
+		ObjectNumber++;
 	}
 	~IObject(){}
 
@@ -38,4 +42,5 @@ protected:
 	std::vector<Model*> models_;
 	WorldTransform world_;
 	uint32_t objectNumber_ = 0;
+	std::string name;
 };

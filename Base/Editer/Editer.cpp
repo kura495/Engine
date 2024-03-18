@@ -1,4 +1,5 @@
 #include "Editer.h"
+#include "Object/IObject.h"
 
 Editer* Editer::GetInstance()
 {
@@ -41,9 +42,17 @@ void Editer::Draw()
 	}
 }
 
+void Editer::SetObject(IObject* object)
+{
+	object_.push_back(object);
+	SetWorld(&object->GetWorld());
+}
+
 void Editer::GuizmoOption()
 {
 #ifdef USE_IMGUI
+#pragma region
+
 	ImGui::Begin("Editer");
 	ImGui::InputInt("ObjectNumber", &ObjectCount);
 	if (ObjectCount < 0) {
@@ -69,11 +78,17 @@ void Editer::GuizmoOption()
 	ImGui::Checkbox("Manipulator", &IsManipulatorFlag);
 	ImGui::Checkbox("DrawGrid", &IsGridFlag);
 	ImGui::End();
+#pragma endregion
 
 	ImGui::Begin("Object");
 	ImGui::DragFloat3("Scale", &world_[ObjectCount]->transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_[ObjectCount]->transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_[ObjectCount]->transform_.translate.x);
+	//const char* str = 
+	//
+	//if (ImGui::InputText("string",buf.c_str(), 256)) {
+	//	ImGui::Text("InputText");
+	//}
 	world_[ObjectCount]->UpdateMatrix();
 	ImGui::End();
 
