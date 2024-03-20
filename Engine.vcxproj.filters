@@ -214,6 +214,7 @@
     <ClCompile Include="Base\AnimationSystem\Animation.cpp" />
     <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="Base\Object\Manaer\ObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -406,6 +407,7 @@
     <ClInclude Include="Base\AnimationSystem\Animation.h" />
     <ClInclude Include="Base\ParticleSystem\Emitter\Emitter.h" />
     <ClInclude Include="Base\Math\Quaternion\Quaternion.h" />
+    <ClInclude Include="Base\Object\Manaer\ObjectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

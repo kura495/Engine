@@ -37,8 +37,6 @@ private:
 	void Manipulator();
 	void Grid();
 
-
-
 	int ObjectCount = 0;
 	std::vector<IObject*> object_;
 	std::vector<WorldTransform*> world_;
@@ -47,8 +45,6 @@ private:
 	bool IsEnableFlag = false;
 	bool IsManipulatorFlag = true;
 	bool IsGridFlag = true;
-
-	std::string buf;
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };

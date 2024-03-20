@@ -297,7 +297,6 @@ void GlobalVariables::UpdateTransformQuaItem(const std::string& groupName, const
 	group.items[key] = newItem;
 }
 
-
 void GlobalVariables::SaveFile(const std::string& groupName)
 {
 	//グループを検索する

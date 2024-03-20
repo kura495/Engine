@@ -36,6 +36,9 @@ void GameManager::Initialize()
 	//Editer
 	editer = Editer::GetInstance();
 	editer->Initalize();
+	//objectManager
+	objectManager = ObjectManager::GetInstance();
+	objectManager->Initalize();
 	//グローバル変数読み込み
 	GlobalVariables::GetInstance()->LoadFiles();
 	//State
@@ -63,6 +66,7 @@ void GameManager::Gameloop()
 			imGuiManager->BeginFrame();
 			directX->PreView();
 			editer->Update();
+			objectManager->Update();
 			input->Update();
 			light->Update();
 			GlobalVariables::GetInstance()->Update();

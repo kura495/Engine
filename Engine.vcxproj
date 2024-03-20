@@ -181,6 +181,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
     <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
+    <ClCompile Include="Base\Object\Manaer\ObjectManager.cpp" />
     <ClCompile Include="Base\Object\Mesh\Mesh.cpp" />
     <ClCompile Include="Base\Object\Model\Model.cpp" />
     <ClCompile Include="Base\Common\Engine\MyEngine.cpp" />
@@ -245,6 +246,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Math\Vector\Vector3.h" />
     <ClInclude Include="Base\Math\Vector\Vector4.h" />
     <ClInclude Include="Base\Math\Vector\VectorCalc.h" />
+    <ClInclude Include="Base\Object\Manaer\ObjectManager.h" />
     <ClInclude Include="Base\Object\Mesh\Mesh.h" />
     <ClInclude Include="Base\Object\Model\Model.h" />
     <ClInclude Include="Base\Model_Struct\Material.h" />

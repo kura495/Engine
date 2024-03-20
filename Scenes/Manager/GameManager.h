@@ -15,6 +15,7 @@
 #include"GlobalVariables.h"
 #include "Base/Renderer/Renderer.h"
 #include "Base/Editer/Editer.h"
+#include "Base/Object/Manaer/ObjectManager.h"
 
 class GameManager
 {
@@ -45,6 +46,8 @@ private:
 	Light* light = nullptr;
 
 	Editer* editer = nullptr;
+
+	ObjectManager* objectManager = nullptr;
 
 	MSG msg{};
 	//State
