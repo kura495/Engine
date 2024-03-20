@@ -53,7 +53,9 @@ void Editer::GuizmoOption()
 #pragma region
 
 	ImGui::Begin("Editer");
-	ImGui::InputInt("ObjectNumber", &ObjectCount);
+	if(ImGui::InputInt("ObjectNumber", &ObjectCount)) {
+		textrueName = object_[ObjectCount]->Getmodels().at(0)->GetModelData().material.textureFilePath.c_str();
+	}
 	if (ObjectCount < 0) {
 		ObjectCount = 0;
 	}
@@ -83,11 +85,12 @@ void Editer::GuizmoOption()
 	ImGui::DragFloat3("Scale", &object_[ObjectCount]->GetWorld().transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &object_[ObjectCount]->GetWorld().transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &object_[ObjectCount]->GetWorld().transform_.translate.x);
-	//const char* str = 
-	//
-	//if (ImGui::InputText("string",buf.c_str(), 256)) {
-	//	ImGui::Text("InputText");
-	//}
+	
+	ImGui::InputText("string", &textrueName, 256);
+	if (ImGui::Button("Textrue")) {
+		object_[ObjectCount]->Getmodels().at(0)->GetModelData().TextureIndex = TextureManager::GetInstance()->LoadTexture(textrueName);
+	}
+
 	object_[ObjectCount]->GetWorld().UpdateMatrix();
 	ImGui::End();
 

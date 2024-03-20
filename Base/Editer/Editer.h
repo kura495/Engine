@@ -37,6 +37,7 @@ private:
 	int ObjectCount = 0;
 	std::vector<IObject*> object_;
 	const ViewProjection* viewProjection_ = nullptr;
+	std::string textrueName;
 
 	bool IsEnableFlag = false;
 	bool IsManipulatorFlag = true;

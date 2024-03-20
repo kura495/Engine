@@ -37,6 +37,8 @@ public:
 
 	WorldTransform& GetWorld() { return world_; };
 
+	std::vector<Model*> Getmodels() { return models_; }
+
 protected:
 
 	std::vector<Model*> models_;
