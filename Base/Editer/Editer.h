@@ -23,9 +23,6 @@ public:
 		viewProjection_ = viewProjection;
 	}
 	void SetObject(IObject* object);
-	void SetWorld(WorldTransform* world) {
-		world_.push_back(world);
-	}
 #pragma endregion
 private:
 	Editer() = default;
@@ -39,7 +36,6 @@ private:
 
 	int ObjectCount = 0;
 	std::vector<IObject*> object_;
-	std::vector<WorldTransform*> world_;
 	const ViewProjection* viewProjection_ = nullptr;
 
 	bool IsEnableFlag = false;

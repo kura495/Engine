@@ -138,7 +138,6 @@ void GamePlayState::Draw()
 	//3Dモデル描画ここから
 	objectManager->Draw(viewProjction);
 	
-
 	if (IsDebugCamera == true) {
 		for (Model* model : playerModel_) {
 			model->Draw(player_->GetWorldTransform(), viewProjction);

@@ -6,7 +6,7 @@ class Emitter
 public:
 	Emitter() {
 		world_.Initialize();
-		Editer::GetInstance()->SetWorld(&world_);
+		//Editer::GetInstance()->SetWorld(&world_);
 	}
 
 	WorldTransform world_;//エミッタのTransform
