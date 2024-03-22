@@ -1,5 +1,7 @@
 #include"WinApp.h"
 
+std::string WinApp::dropFileName;
+
 WinApp* WinApp::GetInstance()
 {
 	static WinApp instance;
@@ -8,6 +10,8 @@ WinApp* WinApp::GetInstance()
 
 LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	TCHAR filename[100];
+
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
 		return true;
 	}
@@ -15,6 +19,21 @@ LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
+	// ファイルをドロップしたら
+	case WM_CREATE:
+		// ドロップ登録
+		DragAcceptFiles(hwnd, TRUE);
+		break;
+		// ドロップされていたら
+	case WM_DROPFILES:
+
+		// ドロップされたファイル名を取得
+		DragQueryFile((HDROP)wparam, 0, filename, MAX_PATH);
+		WinApp::dropFileName = ConvertString(filename);
+
+		// メモリを解放
+		DragFinish((HDROP)wparam);
+		break;
 	}
 
 	return DefWindowProc(hwnd, msg, wparam, lparam);

@@ -53,15 +53,16 @@ void Editer::GuizmoOption()
 #pragma region
 
 	ImGui::Begin("Editer");
-	if(ImGui::InputInt("ObjectNumber", &ObjectCount)) {
-		textrueName = object_[ObjectCount]->Getmodels().at(0)->GetModelData().material.textureFilePath.c_str();
-	}
-	if (ObjectCount < 0) {
-		ObjectCount = 0;
-	}
-	if (ObjectCount >= (int)object_.size()) {
-		ObjectCount = (int)object_.size() - 1;
-	}
+	if (ImGui::InputInt("ObjectNumber", &ObjectCount)) {
+		if (ObjectCount < 0) {
+			ObjectCount = 0;
+		}
+		if (ObjectCount >= (int)object_.size()) {
+			ObjectCount = (int)object_.size() - 1;
+		}
+		textrueName = object_[ObjectCount]->Getmodels().at(0)->GetModelData().material.textureFilePath;
+	};
+
 	if (ImGui::IsKeyPressed(ImGuiKey_T))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 	if (ImGui::IsKeyPressed(ImGuiKey_R))
@@ -89,6 +90,10 @@ void Editer::GuizmoOption()
 	ImGui::InputText("string", &textrueName, 256);
 	if (ImGui::Button("Textrue")) {
 		object_[ObjectCount]->Getmodels().at(0)->GetModelData().TextureIndex = TextureManager::GetInstance()->LoadTexture(textrueName);
+	}
+	if (!WinApp::dropFileName.empty()) {
+		object_[ObjectCount]->Getmodels().at(0)->GetModelData().TextureIndex = TextureManager::GetInstance()->LoadTexture(WinApp::dropFileName);
+		WinApp::dropFileName.clear();
 	}
 
 	object_[ObjectCount]->GetWorld().UpdateMatrix();

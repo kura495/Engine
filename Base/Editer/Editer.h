@@ -4,6 +4,8 @@
 #include "ViewProj/ViewProjection.h"
 #include "WorldTransform/WorldTransform.h"
 
+#include "Base/Common/WinApp/WinApp.h"
+
 class IObject;
 class Editer {
 public:

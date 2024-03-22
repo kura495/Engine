@@ -8,6 +8,7 @@
 #include "externals/imgui/imgui_impl_win32.h"
 
 
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 class WinApp
 {
@@ -20,13 +21,14 @@ public:
 	HINSTANCE GetHINSTANCE()const { return wc.hInstance; }
 	static const int32_t kClientWidth=1280;//横幅
 	static const int32_t kClientHeight=720;//縦幅
+	static std::string dropFileName;
 private:
 	WinApp() = default;
 	~WinApp() = default;
 	WinApp(const WinApp& obj) = delete;
 	WinApp& operator=(const WinApp& obj) = delete;
 
-	HWND hwnd_=nullptr;
+	HWND hwnd_ = nullptr;
 	WNDCLASS wc{};
 
 };

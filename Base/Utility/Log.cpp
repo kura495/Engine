@@ -34,3 +34,10 @@ std::string ConvertString(const std::wstring& str)
 	WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), result.data(), sizeNeeded, NULL, NULL);
 	return result;
 }
+std::string ConvertString(const wchar_t* in_wstr)
+{
+	size_t convertedChars = 0;
+	char str_c[1024];
+	wcstombs_s(&convertedChars, str_c, sizeof(str_c), in_wstr, _TRUNCATE);
+	return str_c;
+}
