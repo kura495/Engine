@@ -343,7 +343,7 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 				});
 		}
 		else if (std::holds_alternative<TransformQua>(item.value)) {
-			//float型のjson配列登録をする
+			//TransformQua型のjson配列登録をする
 			TransformQua value = std::get<TransformQua>(item.value);
 			// convert to json, just by assigning:
 			nlohmann::json json = value;

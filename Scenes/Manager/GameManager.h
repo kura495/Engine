@@ -21,7 +21,6 @@ class GameManager
 {
 public:
 	enum GameStateNo {
-		TITLE,
 		PLAY,
 		CLEAR,
 		GameStateMax
