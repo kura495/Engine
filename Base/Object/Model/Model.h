@@ -31,7 +31,7 @@ public:
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
 
-	const ModelData& GetModelData() { return modelData_; }
+	ModelData& GetModelData() { return modelData_; }
 
 private:
 

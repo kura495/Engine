@@ -1,5 +1,6 @@
 #pragma once
 #include "Math/Vector/Vector3.h"
+#include "Math/Quaternion/Quaternion.h"
 
 class Matrix4x4 final {
 public:
@@ -7,12 +8,15 @@ public:
 	float m[kMatrixNum][kMatrixNum];
 //関数
 public:
-	static Vector3 GetScale(const Matrix4x4& m1);
 
-	//static Vector3 GetRotation(const Matrix4x4& m1);
+	Vector3 GetScale();
 
-	static inline Vector3 GetTransform(const Matrix4x4& m1){
-		return { m1.m[3][0],m1.m[3][1],m1.m[3][2] };
+	Quaternion GetRotation();
+
+	inline Vector3 GetTransform(){
+		Vector3 result;
+		result = { m[3][0],m[3][1],m[3][2] };
+		return result;
 	}
 
 

@@ -36,14 +36,16 @@ void GameManager::Initialize()
 	//Editer
 	editer = Editer::GetInstance();
 	editer->Initalize();
+	//objectManager
+	objectManager = ObjectManager::GetInstance();
+	objectManager->Initalize();
 	//グローバル変数読み込み
 	GlobalVariables::GetInstance()->LoadFiles();
 	//State
-	state[TITLE] = std::make_unique<GameTitleState>();
 	state[PLAY] = std::make_unique<GamePlayState>();
 	state[CLEAR] = std::make_unique<GameClearState>();
-	state[TITLE]->Initialize();
-	currentSceneNum_ = TITLE;
+	state[PLAY]->Initialize();
+	currentSceneNum_ = PLAY;
 }
 void GameManager::Gameloop()
 {
@@ -63,6 +65,7 @@ void GameManager::Gameloop()
 			imGuiManager->BeginFrame();
 			directX->PreView();
 			editer->Update();
+			objectManager->Update();
 			input->Update();
 			light->Update();
 			GlobalVariables::GetInstance()->Update();

@@ -11,6 +11,7 @@ public:
 	BoxObject() {
 		objectNumber_ = BoxObjectNumber;
 		BoxObjectNumber++;
+		name = "Box";
 	}
 
 	void Initalize(std::vector<Model*> models)override;

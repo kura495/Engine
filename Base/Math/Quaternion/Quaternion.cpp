@@ -3,8 +3,8 @@
 Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs)
 {
 	Quaternion result;
-	Vector3 cross = Cross({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
-	float dot = Dot({ lhs.x,lhs.y,lhs.z },{ rhs.x,rhs.y,rhs.z });
+	Vector3 cross = Vector3::Cross({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
+	float dot = Vector3::Dot({ lhs.x,lhs.y,lhs.z },{ rhs.x,rhs.y,rhs.z });
 	result.x = cross.x + rhs.w * lhs.x + lhs.w * rhs.x;
 	result.y = cross.y + rhs.w * lhs.y + lhs.w * rhs.y;
 	result.z = cross.z + rhs.w * lhs.z + lhs.w * rhs.z;

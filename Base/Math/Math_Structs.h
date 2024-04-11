@@ -4,9 +4,5 @@
 #include "Math/Vector/Vector2.h"
 #include "Math/Vector/Vector3.h"
 #include "Math/Vector/Vector4.h"
-struct Quaternion {
-	float x;
-	float y;
-	float z;
-	float w;
-};
+#include "Math/Quaternion/Quaternion.h"
+#include "externals/nlohmann/json.hpp"

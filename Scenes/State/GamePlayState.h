@@ -22,6 +22,7 @@
 #include "Base/ParticleSystem/ParticleSystem.h"
 #include "Base/Utility/CollisionManager.h"
 #include "Base/Editer/Editer.h"
+#include "Base/Object/Manaer/ObjectManager.h"
 
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
@@ -48,6 +49,7 @@ private:
 	Light* light_ = nullptr;
 	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
+	ObjectManager* objectManager = nullptr;
 	std::unique_ptr<CollisionManager> collisionManager;
 
 	ViewProjection viewProjction;
@@ -71,15 +73,6 @@ private:
 	void ControllObject();
 	void DeleteObject();
 
-	void AddBox();
-	int32_t boxObjectCount;
-	int32_t PlaneObjectCount;
-
-	void AddPlane();
-
-	std::list<BoxObject*> boxObject_;
-	std::list<PlaneObject*> planeObject_;
-	std::list<PlaneObject*> glTFplaneObject_;
 	int boxSelectNumber_;
 	int planeSelectNumber_;
 

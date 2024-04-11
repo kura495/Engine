@@ -179,7 +179,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Math\Calc.cpp" />
     <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
+    <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
+    <ClCompile Include="Base\Object\Manaer\ObjectManager.cpp" />
     <ClCompile Include="Base\Object\Mesh\Mesh.cpp" />
     <ClCompile Include="Base\Object\Model\Model.cpp" />
     <ClCompile Include="Base\Common\Engine\MyEngine.cpp" />
@@ -239,10 +241,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Math\Matrix\MatrixCalc.h" />
     <ClInclude Include="Base\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="Base\Math\Matrix\Matrix4x4.h" />
+    <ClInclude Include="Base\Math\Quaternion\Quaternion.h" />
     <ClInclude Include="Base\Math\Vector\Vector2.h" />
     <ClInclude Include="Base\Math\Vector\Vector3.h" />
     <ClInclude Include="Base\Math\Vector\Vector4.h" />
     <ClInclude Include="Base\Math\Vector\VectorCalc.h" />
+    <ClInclude Include="Base\Object\Manaer\ObjectManager.h" />
     <ClInclude Include="Base\Object\Mesh\Mesh.h" />
     <ClInclude Include="Base\Object\Model\Model.h" />
     <ClInclude Include="Base\Model_Struct\Material.h" />
@@ -308,6 +312,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="resources\hlsl\Object3d.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

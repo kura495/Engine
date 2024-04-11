@@ -11,6 +11,7 @@ public:
 	PlaneObject() {
 		objectNumber_ = PlaneObjectNumber;
 		PlaneObjectNumber++;
+		name = "Plane";
 	}
 
 	void Initalize(std::vector<Model*> models)override;
