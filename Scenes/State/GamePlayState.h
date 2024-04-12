@@ -23,13 +23,7 @@
 #include "Base/Utility/CollisionManager.h"
 #include "Base/Editer/Editer.h"
 #include "Base/Object/Manaer/ObjectManager.h"
-
-#include "Game/Object/Box/BoxObject.h"
-#include "Game/Object/Plane/PlaneObject.h"
-#include "Game/Object/Player/Player.h"
-#include "Game/Object/Camera/FollowCamera.h"
-#include "Game/Object/Enemy/Enemy.h"
-#include "Game/Object/Goal/Goal.h"
+#include "Base/Animation/Animation.h"
 
 class GamePlayState :public GameState
 {
@@ -41,7 +35,6 @@ public:
 
 private:
 	//基本機能ズ
-	MyEngine* myEngine = nullptr;
 	DebugCamera* debugcamera_ = nullptr;
 	TextureManager* textureManager_ = nullptr;
 	Input* input = nullptr;
@@ -55,41 +48,8 @@ private:
 	ViewProjection viewProjction;
 	bool IsDebugCamera = false;
 
+	float animationTime = 0.0f;
 	WorldTransform world_;
-
-	std::unique_ptr<Player>player_;
-	std::vector<Model*> playerModel_;
-	std::unique_ptr<FollowCamera>followCamera;
-
-	void AddEnemy(Vector3 Pos);
-
-	std::vector<Model*> enemyModel_;
-	std::list<Enemy*> enemy_;
-
-	std::vector<Model*> boxModel_;
-	std::vector<Model*> planeModel_;
-	std::vector<Model*> glTFplaneModel_;
-	std::vector<Model*> WeaponModel_;
-	void ControllObject();
-	void DeleteObject();
-
-	int boxSelectNumber_;
-	int planeSelectNumber_;
-
-	std::vector<Model*> goalModel_;
-	std::unique_ptr<Goal>goal_;
-
-	std::unique_ptr<Sprite>texture;
-	uint32_t textureHundle;
-	WorldTransform texture_world_;
-	bool FadeInFlag = true;
-	float FadeParam = 1.0f;
-
-	std::unique_ptr<ParticleSystem> particle;
-
-	uint32_t SoundHundle;
-	float audioVolume = 0.0f;
-	int pan = 0;
-	bool IsPlay = false;
-	bool LoopFlag = true;
+	Model* Cube;
+	Animation* animation;
 };
