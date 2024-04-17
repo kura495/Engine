@@ -5,7 +5,7 @@ void PostProsess::Init()
 	DirectX = DirectXCommon::GetInstance();
 	const Vector4 kRenderTargetClearValue{ 1.0f,0.0f,0.0f,1.0f };// わかりやすい赤に設定
 	auto renderTextureResource = CreateRenderTextureResource(DirectX->GetDevice(), WinApp::kClientWidth,WinApp::kClientHeight,DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,kRenderTargetClearValue);
-	DirectX->GetDevice()->CreateRenderTargetView(renderTextureResource.Get(), &DirectX->GetrtvDesc(), DirectX->GetrtvHandles());
+	//DirectX->GetDevice()->CreateRenderTargetView(renderTextureResource.Get(), &DirectX->GetrtvDesc(), DirectX->GetrtvHandles());
 
 	// SRVを作る
 	D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
