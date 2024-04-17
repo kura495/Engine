@@ -17,6 +17,9 @@ void Editer::Update()
 	if (IsEnableFlag == false) {
 		return;
 	}
+	if (object_.empty()) {
+		return;
+	}
 	if (viewProjection_ == nullptr) {
 		return;
 	}
@@ -51,7 +54,6 @@ void Editer::GuizmoOption()
 {
 #ifdef USE_IMGUI
 #pragma region
-
 	ImGui::Begin("Editer");
 	if (ImGui::InputInt("ObjectNumber", &ObjectCount)) {
 		if (ObjectCount < 0) {
