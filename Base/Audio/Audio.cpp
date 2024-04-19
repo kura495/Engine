@@ -6,6 +6,15 @@ Audio* Audio::GetInstance()
 	return &instance;
 }
 void Audio::Initialize() {
+#pragma region
+	// COMの初期化
+	hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	assert(SUCCEEDED(hr));
+	// Madia Foundationの初期化
+	MFStartup(MF_VERSION, MFSTARTUP_NOSOCKET);
+#pragma endregion Madia Foundation
+
+
 	hr = XAudio2Create(&XAudioInterface, 0, XAUDIO2_DEFAULT_PROCESSOR);
 	assert(SUCCEEDED(hr));
 	hr = XAudioInterface->CreateMasteringVoice(&pMasteringVoice);
@@ -14,42 +23,6 @@ void Audio::Initialize() {
 		pSourceVoice[i] = nullptr;
 		IsusedAudioIndex[i] = false;
 	}
-	DWORD dwChannelMask;
-	pMasteringVoice->GetChannelMask(&dwChannelMask);
-	for (int i = 0; i < 8; i++) outputMatrix[i] = 0;
-	//pan of -1.0 indicates all left speaker, 
-//1.0 is all right speaker, 0.0 is split between left and right
-	switch (dwChannelMask)
-	{
-	case SPEAKER_MONO:
-		outputMatrix[0] = 1.0;
-		break;
-	case SPEAKER_STEREO:
-	case SPEAKER_2POINT1:
-	case SPEAKER_SURROUND:
-		outputMatrix[0] = left;
-		outputMatrix[1] = right;
-		break;
-	case SPEAKER_QUAD:
-		outputMatrix[0] = outputMatrix[2] = left;
-		outputMatrix[1] = outputMatrix[3] = right;
-		break;
-	case SPEAKER_4POINT1:
-		outputMatrix[0] = outputMatrix[3] = left;
-		outputMatrix[1] = outputMatrix[4] = right;
-		break;
-	case SPEAKER_5POINT1:
-	case SPEAKER_7POINT1:
-	case SPEAKER_5POINT1_SURROUND:
-		outputMatrix[0] = outputMatrix[4] = left;
-		outputMatrix[1] = outputMatrix[5] = right;
-		break;
-	case SPEAKER_7POINT1_SURROUND:
-		outputMatrix[0] = outputMatrix[4] = outputMatrix[6] = left;
-		outputMatrix[1] = outputMatrix[5] = outputMatrix[7] = right;
-		break;
-	}
-	// Assuming pVoice sends to pMasteringVoice
 }
 
 uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
@@ -93,6 +66,54 @@ uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
 	buffer.LoopLength = 0;
 
 	buffer.LoopCount = LoopFlag ? XAUDIO2_LOOP_INFINITE : 0;
+
+	pSourceVoice[index]->SubmitSourceBuffer(&buffer);
+
+	return index;
+}
+
+uint32_t Audio::LoadAudioMP3(const std::string& filePath)
+{
+
+#pragma region Index
+	uint32_t index = 0;
+	for (uint32_t index_i = 0; index_i < kMaxAudio; index_i++) {
+		if (soundData_.at(index_i).IsUsed) {
+			if (filePath == soundData_.at(index_i).name) {
+				return index_i;
+			}
+		}
+	}
+
+	for (uint32_t index_i = 0; index_i < kMaxAudio; index_i++) {
+		if (soundData_.at(index_i).IsUsed == false) {
+			index = index_i;
+			break;
+		}
+	}
+	//SoundLoadWaveの戻り値がSoundDataなので、読み込んでから名前と使用済みを記入
+	soundData_[index] = SoundLoadMP3(filePath);
+
+
+	//名前としてファイルのパスを登録
+	soundData_.at(index).name = filePath;
+
+	soundData_.at(index).IsUsed = true;
+#pragma endregion 位置決め
+
+
+	if (FAILED(XAudioInterface->CreateSourceVoice(&pSourceVoice[index], &soundData_[index].wfex))) {
+		SoundUnload(index);
+		assert(false);
+	}
+	XAUDIO2_BUFFER buffer{};
+	buffer.pAudioData = soundData_[index].pBuffer;
+	buffer.Flags = XAUDIO2_END_OF_STREAM;
+	buffer.AudioBytes = soundData_[index].bufferSize;
+	buffer.LoopBegin = 0;
+	buffer.LoopLength = 0;
+
+	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 
 	pSourceVoice[index]->SubmitSourceBuffer(&buffer);
 
@@ -251,6 +272,76 @@ SoundData Audio::SoundLoadWave(const std::string& filePath)
 	soundData.wfex = format.fmt;
 	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	soundData.bufferSize = data.size;
+
+	return soundData;
+}
+
+SoundData Audio::SoundLoadMP3(const std::string& filePath)
+{
+	// SourceLeaderを作る
+	IMFSourceReader* pMFSourceReader{ nullptr };
+	MFCreateSourceReaderFromURL(ConvertMultiBype(filePath), NULL, &pMFSourceReader);
+#pragma region
+	IMFMediaType* pMFMediaType{ nullptr };
+	MFCreateMediaType(&pMFMediaType);
+	// メジャータイプをオーディオにする
+	pMFMediaType->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio);
+	// サブタイプをPCMにする　
+	// PCM = オーディオのフォーマット
+	pMFMediaType->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_PCM);
+	pMFSourceReader->SetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, nullptr, pMFMediaType);
+
+	pMFMediaType->Release();
+	pMFMediaType = nullptr;
+	pMFSourceReader->GetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, &pMFMediaType);
+#pragma endregion MadiaType
+
+	WAVEFORMATEX* waveFormat{ nullptr };
+	MFCreateWaveFormatExFromMFMediaType(pMFMediaType, &waveFormat, nullptr);
+
+
+	BYTE* pMFBuffer{ nullptr };
+	while (true)
+	{
+		IMFSample* pMFSample{ nullptr };
+		DWORD dwStreamFlags{ 0 };
+		pMFSourceReader->ReadSample((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, 0, nullptr, &dwStreamFlags, nullptr, &pMFSample);
+
+		if (dwStreamFlags & MF_SOURCE_READERF_ENDOFSTREAM)
+		{
+			break;
+		}
+
+		IMFMediaBuffer* pMFMediaBuffer{ nullptr };
+		pMFSample->ConvertToContiguousBuffer(&pMFMediaBuffer);
+
+
+		DWORD cbCurrentLength{ 0 };
+		pMFMediaBuffer->Lock(&pMFBuffer, nullptr, &cbCurrentLength);
+
+		mediaData.resize(mediaData.size() + cbCurrentLength);
+		memcpy(mediaData.data() + mediaData.size() - cbCurrentLength, pMFBuffer, cbCurrentLength);
+
+		pMFMediaBuffer->Unlock();
+
+		pMFMediaBuffer->Release();
+		pMFSample->Release();
+	}
+
+
+	// サウンドデータを作成　情報を格納
+	SoundData soundData = {};
+	soundData.wfex = *waveFormat;
+	soundData.pBuffer = pMFBuffer;
+	soundData.bufferSize = sizeof(BYTE) * static_cast<UINT32>(mediaData.size());
+
+	CoTaskMemFree(waveFormat);
+	pMFMediaType->Release();
+	pMFSourceReader->Release();
+	MFShutdown();
+
+	CoUninitialize();
+
 
 	return soundData;
 }
