@@ -59,7 +59,7 @@ uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
 		assert(false);
 	}
 	XAUDIO2_BUFFER buffer{};
-	buffer.pAudioData = soundData_[index].pBuffer;
+	buffer.pAudioData = soundData_[index].mediaData.data();
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
 	buffer.AudioBytes = soundData_[index].bufferSize;
 	buffer.LoopBegin = 0;
@@ -107,7 +107,7 @@ uint32_t Audio::LoadAudioMP3(const std::string& filePath)
 		assert(false);
 	}
 	XAUDIO2_BUFFER buffer{};
-	buffer.pAudioData = soundData_[index].pBuffer;
+	buffer.pAudioData = soundData_[index].mediaData.data();
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
 	buffer.AudioBytes = soundData_[index].bufferSize;
 	buffer.LoopBegin = 0;
@@ -182,7 +182,7 @@ void Audio::ExitLoop(uint32_t AudioIndex)
 
 void Audio::Reset(uint32_t AudioIndex,bool LoopFlag) {
 	XAUDIO2_BUFFER buffer{};
-	buffer.pAudioData = soundData_[AudioIndex].pBuffer;
+	buffer.pAudioData = soundData_[AudioIndex].mediaData.data();
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
 	buffer.AudioBytes = soundData_[AudioIndex].bufferSize;
 	buffer.LoopBegin = 0;
@@ -270,8 +270,7 @@ SoundData Audio::SoundLoadWave(const std::string& filePath)
 	SoundData soundData = {};
 
 	soundData.wfex = format.fmt;
-	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
-	soundData.bufferSize = data.size;
+	soundData.bufferSize = sizeof(BYTE) * static_cast<UINT32>(soundData.mediaData.size());
 
 	return soundData;
 }
@@ -299,7 +298,7 @@ SoundData Audio::SoundLoadMP3(const std::string& filePath)
 	WAVEFORMATEX* waveFormat{ nullptr };
 	MFCreateWaveFormatExFromMFMediaType(pMFMediaType, &waveFormat, nullptr);
 
-
+	SoundData soundData;
 	BYTE* pMFBuffer{ nullptr };
 	while (true)
 	{
@@ -319,8 +318,8 @@ SoundData Audio::SoundLoadMP3(const std::string& filePath)
 		DWORD cbCurrentLength{ 0 };
 		pMFMediaBuffer->Lock(&pMFBuffer, nullptr, &cbCurrentLength);
 
-		mediaData.resize(mediaData.size() + cbCurrentLength);
-		memcpy(mediaData.data() + mediaData.size() - cbCurrentLength, pMFBuffer, cbCurrentLength);
+		soundData.mediaData.resize(soundData.mediaData.size() + cbCurrentLength);
+		memcpy(soundData.mediaData.data() + soundData.mediaData.size() - cbCurrentLength, pMFBuffer, cbCurrentLength);
 
 		pMFMediaBuffer->Unlock();
 
@@ -328,12 +327,9 @@ SoundData Audio::SoundLoadMP3(const std::string& filePath)
 		pMFSample->Release();
 	}
 
-
-	// サウンドデータを作成　情報を格納
-	SoundData soundData = {};
 	soundData.wfex = *waveFormat;
-	soundData.pBuffer = pMFBuffer;
-	soundData.bufferSize = sizeof(BYTE) * static_cast<UINT32>(mediaData.size());
+	soundData.bufferSize = sizeof(BYTE) * static_cast<UINT32>(soundData.mediaData.size());
+
 
 	CoTaskMemFree(waveFormat);
 	pMFMediaType->Release();
@@ -348,9 +344,7 @@ SoundData Audio::SoundLoadMP3(const std::string& filePath)
 
 void Audio::SoundUnload(uint32_t Index)
 {
-	delete[] soundData_[Index].pBuffer;
-	soundData_[Index].pBuffer = 0;
-	soundData_[Index].bufferSize = 0;
+	soundData_[Index].mediaData.clear();
 	soundData_[Index].wfex = {};
 }
 

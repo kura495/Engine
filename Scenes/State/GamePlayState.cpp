@@ -43,10 +43,13 @@ void GamePlayState::Update()
 		world_.transform_.scale = scale;
 		world_.UpdateMatrix();
 
-		audio->Play(audioHundle,1.0f);
+
 		ImGui::Begin("Sound");
-		if (ImGui::Button("Create")) {
-			audioHundle2 = audio->LoadAudioMP3("resources/powerup01.mp3");
+		if (ImGui::Button("Play")) {
+				audio->Play(audioHundle,0.5f);	
+		}
+		if (ImGui::Button("stop")) {
+				audio->Stop(audioHundle,false,false);	
 		}
 		ImGui::End();
 }

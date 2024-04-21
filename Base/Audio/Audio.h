@@ -35,11 +35,13 @@ struct FormatChunk {
 };
 struct SoundData {
 	////波形フォーマット
-	//WAVEFORMATEX wfex;
+	WAVEFORMATEX wfex;
 	////バッファの先頭
 	//BYTE* pBuffer;
 	////バッファのサイズ
-	//unsigned int bufferSize;
+	unsigned int bufferSize;
+	// .data pAudioData
+
  	std::vector<BYTE> mediaData;
 	// 名前
 	std::string name;
