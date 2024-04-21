@@ -22,6 +22,8 @@ void GamePlayState::Initialize()
 	Cube->Initialize("resources/AnimatedCube", "AnimatedCube.gltf");
 	animation = new Animation();
 	*animation = Animation::LoadAnimationFile("resources/AnimatedCube", "AnimatedCube.gltf");
+
+	audioHundle = audio->LoadAudioMP3("resources/powerup01.mp3");
 }
 
 void GamePlayState::Update()
@@ -40,6 +42,16 @@ void GamePlayState::Update()
 		world_.transform_.quaternion += rotation;
 		world_.transform_.scale = scale;
 		world_.UpdateMatrix();
+
+
+		ImGui::Begin("Sound");
+		if (ImGui::Button("Play")) {
+				audio->Play(audioHundle,0.5f);	
+		}
+		if (ImGui::Button("stop")) {
+				audio->Stop(audioHundle,false,false);	
+		}
+		ImGui::End();
 }
 
 void GamePlayState::Draw()

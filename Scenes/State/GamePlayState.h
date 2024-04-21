@@ -52,4 +52,7 @@ private:
 	WorldTransform world_;
 	Model* Cube;
 	Animation* animation;
+
+	uint32_t audioHundle = 0;
+	uint32_t audioHundle2;
 };
