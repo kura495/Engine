@@ -44,7 +44,10 @@ std::string ConvertString(const wchar_t* in_wstr)
 WCHAR* ConvertMultiBype(const std::string& str) {
 	int wideStrSize = MultiByteToWideChar(CP_UTF8,0,str.c_str(),-1,NULL,0);
 	WCHAR* wideStr = new WCHAR[wideStrSize];
-	HRESULT hr = MultiByteToWideChar(CP_UTF8,0,str.c_str(),-1,wideStr,wideStrSize);
+#ifdef _DEBUG
+	HRESULT hr = 
+#endif
+	MultiByteToWideChar(CP_UTF8,0,str.c_str(),-1,wideStr,wideStrSize);
 	assert(SUCCEEDED(hr));
 	return wideStr;
 }
