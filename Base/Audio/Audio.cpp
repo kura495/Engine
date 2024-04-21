@@ -72,7 +72,7 @@ uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
 	return index;
 }
 
-uint32_t Audio::LoadAudioMP3(const std::string& filePath)
+uint32_t Audio::LoadAudioMP3(const std::string& filePath, bool LoopFlag)
 {
 
 #pragma region Index
@@ -113,7 +113,7 @@ uint32_t Audio::LoadAudioMP3(const std::string& filePath)
 	buffer.LoopBegin = 0;
 	buffer.LoopLength = 0;
 
-	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+	buffer.LoopCount = LoopFlag ? XAUDIO2_LOOP_INFINITE : 0;
 
 	pSourceVoice[index]->SubmitSourceBuffer(&buffer);
 

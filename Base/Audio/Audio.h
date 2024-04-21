@@ -55,7 +55,7 @@ public:
 
 	void Release();
 	uint32_t LoadAudio(const std::string& filePath, bool LoopFlag);
-	uint32_t LoadAudioMP3(const std::string& filePath);
+	uint32_t LoadAudioMP3(const std::string& filePath, bool LoopFlag);
 	void Play(uint32_t AudioIndex, float AudioVolume, int pan);
 	void Play(uint32_t AudioIndex, float AudioVolume);
 	void Stop(uint32_t AudioIndex, bool PlayBegin, bool LoopFlag);

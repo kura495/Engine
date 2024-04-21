@@ -11,11 +11,29 @@ void Goal::Initialize(const std::vector<Model*> models)
 	BoxCollider::SetcollitionAttribute(kCollitionAttributeGoal);
 	BoxCollider::SetcollisionMask(~kCollitionAttributeGoal);
 	Collider::SetWorld(&world_);
+
+	animation = new Animation();
+	*animation = Animation::LoadAnimationFile("resources/AnimatedCube", "AnimatedCube.gltf");
+
+	audio = Audio::GetInstance();
+	audioHundle = audio->LoadAudioMP3("resources/powerup01.mp3",false);
 }
 
 void Goal::Update()
 {
+
+	animationTime += 1.0f / 60.0f;
+	animationTime = std::fmod(animationTime, animation->duration);
+
+	NodeAnimation& rootNodeAnimation = animation->nodeAnimations[models_[0]->GetModelData().rootNode.name];
+	Vector3 translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames, animationTime);
+	Quaternion rotation = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames, animationTime);
+	Vector3 scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames, animationTime);
+	world_.transform_.translate += translate;
+	world_.transform_.quaternion += rotation;
+	world_.transform_.scale = scale;
 	world_.UpdateMatrix();
+
 	BoxCollider::Update();
 }
 
@@ -33,6 +51,7 @@ void Goal::ImGui()
 void Goal::OnCollision(const Collider* collider)
 {
 	if (collider->GetcollitionAttribute()) {
+		audio->Play(audioHundle, 0.5f);
 		return;
 	}
 }
