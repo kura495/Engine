@@ -13,7 +13,7 @@ void Goal::Initialize(const std::vector<Model*> models)
 	Collider::SetWorld(&world_);
 
 	animation = new Animation();
-	*animation = Animation::LoadAnimationFile("resources/AnimatedCube", "AnimatedCube.gltf");
+	*animation = Animation::LoadAnimationFile("resources/Goal", "Goal.gltf");
 
 	audio = Audio::GetInstance();
 	audioHundle = audio->LoadAudioMP3("resources/powerup01.mp3",false);
