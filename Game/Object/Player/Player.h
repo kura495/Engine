@@ -83,7 +83,7 @@ private:
 	//カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;
 
-	Vector3 tlanslatePre;
+	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 
 	std::unique_ptr<Weapon>weapon_;
 

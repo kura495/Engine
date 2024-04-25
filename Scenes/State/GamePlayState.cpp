@@ -18,7 +18,6 @@ void GamePlayState::Initialize()
 	collisionManager = std::make_unique<CollisionManager>();
 	// 
 	//3Dオブジェクト生成
-	goalModel_.push_back(Model::CreateModelFromObj("resources/Goal", "Goal.gltf"));
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Enemy.obj"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
@@ -32,10 +31,10 @@ void GamePlayState::Initialize()
 
 	player_->SetViewProjection(&followCamera->GetViewProjection());
 
-	goal_ = std::make_unique<Goal>();
-	goal_->Initialize(goalModel_);
-
-
+	enemys_.push_back(new Enemy);
+	for (Enemy* enemy : enemys_) {
+		enemy->Initialize(enemyModel_);
+	}
 
 }
 
@@ -67,20 +66,10 @@ void GamePlayState::Update()
 		player_->ImGui();
 #pragma endregion 
 
+	for (Enemy* enemy : enemys_) {
+		enemy->Update();
+	}
 
-	goal_->Update();
-
-#pragma region Game
-		collisionManager->AddBoxCollider(player_.get());
-		collisionManager->AddBoxCollider(player_->GetWeapon());
-		for (std::list<Enemy*>::iterator ObjectIt = enemy_.begin(); ObjectIt != enemy_.end(); ObjectIt++) {
-			collisionManager->AddBoxCollider((*ObjectIt));
-			collisionManager->AddBoxCollider((*ObjectIt)->GetSearchPoint());
-		}
-		collisionManager->AddBoxCollider(goal_.get());
-		collisionManager->CheckAllCollisions();
-		collisionManager->ClearCollider();
-#pragma endregion
 }
 
 void GamePlayState::Draw()
@@ -95,7 +84,10 @@ void GamePlayState::Draw()
 			model->Draw(player_->GetWorldTransform(), viewProjction);
 		}
 	}
-	goal_->Draw(viewProjction);
+
+	for (Enemy* enemy : enemys_) {
+		enemy->Draw(viewProjction);
+	}
 
 	player_->Draw(viewProjction);
 #pragma endregion

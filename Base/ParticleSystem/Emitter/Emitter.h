@@ -10,9 +10,9 @@ public:
 	}
 
 	WorldTransform world_;//エミッタのTransform
-	uint32_t count;		//発生数
-	float frequency;	//発生頻度
-	float frequencyTime;//頻度用時刻
+	uint32_t count = 0;		//発生数
+	float frequency = 0;	//発生頻度
+	float frequencyTime = 0;//頻度用時刻
 
 };
 
