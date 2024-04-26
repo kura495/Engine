@@ -18,7 +18,7 @@ void GamePlayState::Initialize()
 	collisionManager = std::make_unique<CollisionManager>();
 	// 
 	//3Dオブジェクト生成
-	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Enemy.obj"));
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/AnimatedCube", "AnimatedCube.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
@@ -34,6 +34,7 @@ void GamePlayState::Initialize()
 	enemys_.push_back(new Enemy);
 	for (Enemy* enemy : enemys_) {
 		enemy->Initialize(enemyModel_);
+		enemy->SetPlayer(player_.get());
 	}
 
 }

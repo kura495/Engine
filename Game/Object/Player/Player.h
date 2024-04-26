@@ -32,7 +32,7 @@ public:
 	}
 #pragma endregion 
 #pragma region Getter
-	const WorldTransform& GetWorldTransform() {
+	WorldTransform& GetWorldTransform() {
 		return world_;
 	}
 	Weapon* GetWeapon() {

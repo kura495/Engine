@@ -22,13 +22,13 @@ void Goal::Initialize(const std::vector<Model*> models)
 void Goal::Update()
 {
 
-	animationTime += 1.0f / 60.0f;
-	animationTime = std::fmod(animationTime, animation->duration);
+	animationTime_ += 1.0f / 60.0f;
+	animationTime_ = std::fmod(animationTime_, animation->duration);
 
 	NodeAnimation& rootNodeAnimation = animation->nodeAnimations[models_[0]->GetModelData().rootNode.name];
-	Vector3 translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames, animationTime);
-	Quaternion rotation = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames, animationTime);
-	Vector3 scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames, animationTime);
+	Vector3 translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames, animationTime_);
+	Quaternion rotation = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames, animationTime_);
+	Vector3 scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames, animationTime_);
 	world_.transform_.translate += translate;
 	world_.transform_.quaternion += rotation;
 	world_.transform_.scale = scale;

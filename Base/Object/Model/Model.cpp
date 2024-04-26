@@ -80,6 +80,7 @@ ModelData Model::LoadModelFile(const std::string& directoryPath, const std::stri
 	Assimp::Importer importer;
 	std::string filePath = directoryPath + "/" + filename;
 	const aiScene* scene = importer.ReadFile(filePath.c_str(),aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
+	// 名前が間違っているかも
 	assert(scene->HasMeshes());//メッシュがないものには対応しない
 
 	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {

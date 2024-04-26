@@ -3,6 +3,7 @@
 #include "Game/Object/Character.h"
 #include "Base/Utility/BoxCollider.h"
 #include "Base/Input/Input.h"
+#include "Base/Animation/Animation.h"
 
 class Player;
 
@@ -22,10 +23,16 @@ public:
 	};
 
 private:
-
-	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
-
 	Player* player_ = nullptr;
+	Animation* animation = nullptr;
+	// 攻撃範囲内ならtrue
+	bool ChackOnAttack();
+	void ChasePlayer();
 
-	bool IsDead = false;
+	const float AttackRange = 3.0f;
+	bool isAttackFlag = true;
+
+	float animationTime_ = 0.0f;
+	const float kAnimeInterval = 60.0f;
+	float animeInterval_ = 0.0f;
 };

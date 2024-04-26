@@ -40,4 +40,6 @@ private:
 	WorkInterpolation workInter;
 	//追従対象からのオフセットを計算する
 	Vector3 OffsetCalc();
+
+	Vector3 offsetPos = { 0.0f, 2.0f, -5.0f };
 };

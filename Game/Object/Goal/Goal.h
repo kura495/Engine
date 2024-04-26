@@ -22,7 +22,7 @@ private:
 	Audio* audio = nullptr;
 	Animation* animation;
 
-	float animationTime = 0.0f;
+	float animationTime_ = 0.0f;
 	uint32_t audioHundle = 0;
 };
 

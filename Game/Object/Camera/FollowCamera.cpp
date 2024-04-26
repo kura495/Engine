@@ -66,7 +66,7 @@ void FollowCamera::Reset()
 
 Vector3 FollowCamera::OffsetCalc()
 {
-	Vector3 offset = { 0.0f, 2.0f, -1.5f };
+	Vector3 offset = offsetPos;
 	//回転行列の合成
 	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProj.rotation_);
 
