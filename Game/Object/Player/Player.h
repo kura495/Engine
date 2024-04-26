@@ -76,9 +76,9 @@ private:
 	//プレイヤーの移動
 	float speed = 0.3f;
 
-	Vector3 jumpForce;
+	Vector3 jumpForce{0.0f};
 	//武器や腕の回転クォータニオン
-	Quaternion moveQuaternion_;
+	Quaternion moveQuaternion_{0.0f};
 
 	//カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;
