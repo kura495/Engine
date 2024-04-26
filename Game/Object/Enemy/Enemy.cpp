@@ -7,7 +7,7 @@ void Enemy::Initialize(std::vector<Model*> models)
 	models[0]->GetModelData().material.textureFilePath;
 	world_.Initialize();
 	animation = new Animation();
-	*animation = Animation::LoadAnimationFile("resources/AnimatedCube", "AnimatedCube.gltf");
+	*animation = Animation::LoadAnimationFile("resources/Monster", "Monster.gltf");
 
 }
 

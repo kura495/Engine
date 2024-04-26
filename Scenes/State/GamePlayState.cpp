@@ -18,7 +18,7 @@ void GamePlayState::Initialize()
 	collisionManager = std::make_unique<CollisionManager>();
 	// 
 	//3Dオブジェクト生成
-	enemyModel_.push_back(Model::CreateModelFromObj("resources/AnimatedCube", "AnimatedCube.gltf"));
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/Monster", "Monster.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
