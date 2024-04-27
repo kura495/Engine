@@ -6,8 +6,10 @@ void Enemy::Initialize(std::vector<Model*> models)
 	models_ = models;
 	models[0]->GetModelData().material.textureFilePath;
 	world_.Initialize();
+	world_.transform_.translate.y += 1.0f;
 	animation = new Animation();
 	*animation = Animation::LoadAnimationFile("resources/Monster", "Monster.gltf");
+	world_.SetTransform(models_[0]);
 
 }
 
