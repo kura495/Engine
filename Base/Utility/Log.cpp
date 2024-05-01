@@ -41,3 +41,13 @@ std::string ConvertString(const wchar_t* in_wstr)
 	wcstombs_s(&convertedChars, str_c, sizeof(str_c), in_wstr, _TRUNCATE);
 	return str_c;
 }
+WCHAR* ConvertMultiBype(const std::string& str) {
+	int wideStrSize = MultiByteToWideChar(CP_UTF8,0,str.c_str(),-1,NULL,0);
+	WCHAR* wideStr = new WCHAR[wideStrSize];
+#ifdef _DEBUG
+	HRESULT hr = 
+#endif
+	MultiByteToWideChar(CP_UTF8,0,str.c_str(),-1,wideStr,wideStrSize);
+	assert(SUCCEEDED(hr));
+	return wideStr;
+}

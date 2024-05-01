@@ -182,7 +182,18 @@ void Player::Move()
 		move.y = 0.0f;
 		//移動
 		world_.transform_.translate = Add(world_.transform_.translate, move);
-
+	}
+	if (input->TriggerKey(DIK_W)) {
+		world_.transform_.translate.z += 0.1f;
+	}
+	if (input->TriggerKey(DIK_S)) {
+		world_.transform_.translate.z -= 0.1f;
+	}
+	if (input->TriggerKey(DIK_A)) {
+		world_.transform_.translate.x -= 0.1f;
+	}
+	if (input->TriggerKey(DIK_D)) {
+		world_.transform_.translate.x += 0.1f;
 	}
 }
 

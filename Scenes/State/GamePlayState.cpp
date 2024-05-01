@@ -12,41 +12,86 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->SetViewProjection(&viewProjction);
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
-	//objectManager->LordFile("Editer");
+	objectManager->LordFile("Editer");
 
 	DirectX_ = DirectXCommon::GetInstance();
+	collisionManager = std::make_unique<CollisionManager>();
+	// 
+	//3Dオブジェクト生成
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/Monster", "Monster.gltf"));
+	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
+	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
-	world_.Initialize();
+	player_ = std::make_unique<Player>();
+	player_->Initialize(WeaponModel_);
 
-	Cube = new Model();
-	Cube->Initialize("resources/AnimatedCube", "AnimatedCube.gltf");
-	animation = new Animation();
-	*animation = Animation::LoadAnimationFile("resources/AnimatedCube", "AnimatedCube.gltf");
+	followCamera = std::make_unique<FollowCamera>();
+	followCamera->Initialize();
+	followCamera->SetTarget(&player_->GetWorldTransform());
+
+	player_->SetViewProjection(&followCamera->GetViewProjection());
+
+	enemys_.push_back(new Enemy);
+	for (Enemy* enemy : enemys_) {
+		enemy->Initialize(enemyModel_);
+		enemy->SetPlayer(player_.get());
+	}
+
 }
 
 void GamePlayState::Update()
 {
-		debugcamera_->Update();
-		viewProjction = debugcamera_->GetViewProjection();
+	debugcamera_->Update();
+	viewProjction = debugcamera_->GetViewProjection();
 
-		animationTime += 1.0f / 60.0f;
-		animationTime = std::fmod(animationTime, animation->duration);
+#pragma region Game
+	followCamera->Update();
+	viewProjction = followCamera->GetViewProjection();
+#ifdef USE_IMGUI
+		ImGui::Begin("Camera");
+		if (ImGui::RadioButton("GameCamera", IsDebugCamera == false)) {
+			IsDebugCamera = false;
 
-		NodeAnimation& rootNodeAnimation = animation->nodeAnimations[Cube->GetModelData().rootNode.name];
-		Vector3 translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames,animationTime);
-		Quaternion rotation = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames,animationTime);
-		Vector3 scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames,animationTime);
-		world_.transform_.translate += translate;
-		world_.transform_.quaternion += rotation;
-		world_.transform_.scale = scale;
-		world_.UpdateMatrix();
+		}
+		if (ImGui::RadioButton("DebugCamera", IsDebugCamera == true)) {
+			IsDebugCamera = true;
+
+		}
+		if (IsDebugCamera == true) {
+			debugcamera_->Update();
+			viewProjction = debugcamera_->GetViewProjection();
+		}
+		ImGui::End();
+#endif // _DEBUG
+		player_->Update();
+		player_->ImGui();
+#pragma endregion 
+
+	for (Enemy* enemy : enemys_) {
+		enemy->Update();
+	}
+
 }
 
 void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
+
+#pragma region Game
+
 	objectManager->Draw(viewProjction);
-	Cube->Draw(world_,viewProjction);
+	if (IsDebugCamera == true) {
+		for (Model* model : playerModel_) {
+			model->Draw(player_->GetWorldTransform(), viewProjction);
+		}
+	}
+
+	for (Enemy* enemy : enemys_) {
+		enemy->Draw(viewProjction);
+	}
+
+	player_->Draw(viewProjction);
+#pragma endregion
 
 	//3Dモデル描画ここまで	
 

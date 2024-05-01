@@ -1,4 +1,5 @@
 ﻿#include "WorldTransform.h"
+#include "Base/Object/Model/Model.h"
 
 void WorldTransform::Initialize()
 {
@@ -43,3 +44,16 @@ Vector3 WorldTransform::GetTranslateFromMatWorld()const
 	worldPos.z = matWorld_.m[3][2];
 	return worldPos;
 }
+
+void WorldTransform::SetTransform(Model* model) {
+	transform_.translate += model->GetModelData().rootNode.localMatrix.GetTransform();
+	if (model->GetModelData().rootNode.localMatrix.GetScale().x != 1.0f &&
+		model->GetModelData().rootNode.localMatrix.GetScale().y != 1.0f &&
+		model->GetModelData().rootNode.localMatrix.GetScale().z != 1.0f
+		) {
+		transform_.scale += model->GetModelData().rootNode.localMatrix.GetScale();
+	}
+
+	transform_.quaternion = Normalize(model->GetModelData().rootNode.localMatrix.GetRotation());
+	UpdateMatrix();
+};

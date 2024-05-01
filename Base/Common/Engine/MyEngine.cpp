@@ -18,6 +18,3 @@ void MyEngine::Initialize()
 	textureManager_ = TextureManager::GetInstance();
 	textureManager_->Initialize(directX_);
 }
-
-
-

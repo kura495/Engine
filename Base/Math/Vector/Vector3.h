@@ -36,6 +36,13 @@ public:
 		me.z = this->z * other;
 		return me;
 	}
+	inline Vector3 operator/(float other) {
+		Vector3 me;
+		me.x = this->x / other;
+		me.y = this->y / other;
+		me.z = this->z / other;
+		return me;
+	}
 public:
 	static inline float Dot(const Vector3& v1, const Vector3& v2) {
 		float result = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);

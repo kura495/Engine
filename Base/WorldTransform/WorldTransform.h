@@ -5,6 +5,7 @@
 #include "Math/Vector/VectorCalc.h"
 #include "Transform.h"
 
+class Model;
 struct ConstBufferDataWorldTransform {
 	Matrix4x4 matWorld; // ローカル → ワールド変換行列
 };
@@ -49,4 +50,6 @@ struct WorldTransform {
 	Vector3 GetTranslateFromMatWorld()const;
 
 	void SetParent(const WorldTransform* parent);
+
+	void SetTransform(Model* model);
 };

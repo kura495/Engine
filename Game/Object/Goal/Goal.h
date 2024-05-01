@@ -2,6 +2,9 @@
 
 #include "Game/Object/Character.h"
 #include "Base/Utility/BoxCollider.h"
+#include "Base/Animation/Animation.h"
+
+#include "Audio.h"
 
 class Goal : public Character, public BoxCollider
 {
@@ -16,8 +19,10 @@ public:
 	void OnCollision(const Collider* collider)override;
 
 private:
+	Audio* audio = nullptr;
+	Animation* animation;
 
-	
-
+	float animationTime_ = 0.0f;
+	uint32_t audioHundle = 0;
 };
 

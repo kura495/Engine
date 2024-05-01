@@ -50,12 +50,12 @@ protected:
 	/// <summary>
 	/// 原点
 	/// </summary>
-	WorldTransform* center_;
+	WorldTransform* center_ = nullptr;
 	
 	/// <summary>
 /// x,y,zそれぞれの幅
 /// </summary>
-	Vector3 size_;
+	Vector3 size_{0};
 
 private:
 
@@ -71,7 +71,7 @@ private:
 	/// </summary>
 	uint32_t collisionMask_ = 0xffffffff;
 
-	float Radius_;
+	float Radius_ = 0.0f;
 
 
 };
