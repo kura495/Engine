@@ -1,5 +1,7 @@
 #include "SRVManager.h"
 
+uint32_t descriptorSizeSRV;
+
 DESCRIPTERHANDLE SRVManager::GetDescriptorHandle(uint32_t descriptorSize)
 {
 	DESCRIPTERHANDLE result;

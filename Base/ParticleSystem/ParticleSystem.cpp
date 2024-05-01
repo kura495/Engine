@@ -175,8 +175,6 @@ void ParticleSystem::CreateResources()
 
 void ParticleSystem::CreateSRV()
 {
-	uint32_t descriptorSizeSRV = directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
 	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
 	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
 	instancingSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
@@ -186,8 +184,8 @@ void ParticleSystem::CreateSRV()
 	instancingSrvDesc.Buffer.NumElements = kNumMaxInstance;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 
-	instancingSRVHandleCPU = GetCPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), descriptorSizeSRV, 100);
-	instancingSRVHandleGPU = GetGPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), descriptorSizeSRV, 100);
+	instancingSRVHandleCPU = GetCPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), SRVManager::descriptorSizeSRV, 100);
+	instancingSRVHandleGPU = GetGPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), SRVManager::descriptorSizeSRV, 100);
 	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, instancingSRVHandleCPU);
 }
 
