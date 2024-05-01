@@ -4,6 +4,9 @@ void ParticleSystem::Initalize(const std::string filePath)
 {
 	textureManager_ = TextureManager::GetInstance();
 	directX_ = DirectXCommon::GetInstance();
+	sRVManager_ = SRVManager::GetInstance();
+
+	textureSrvHandle = sRVManager_->GetDescriptorHandle();
 
 	modelData.vertices.push_back({ .position = { -1.0f,1.0f,0.0f,1.0f },.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
 	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},   .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
@@ -103,7 +106,7 @@ void ParticleSystem::Draw(const ViewProjection& viewProjection)
 	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(3, textureManager_->GetGPUHandle(modelData.TextureIndex));
 	
 	//インスタンシング用WVP
-	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(1, instancingSRVHandleGPU);
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(1, textureSrvHandle.GPU);
 
 	directX_->GetcommandList()->DrawInstanced(6, numInstance, 0, 0);
 }
@@ -184,23 +187,8 @@ void ParticleSystem::CreateSRV()
 	instancingSrvDesc.Buffer.NumElements = kNumMaxInstance;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 
-	instancingSRVHandleCPU = GetCPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), SRVManager::descriptorSizeSRV, 100);
-	instancingSRVHandleGPU = GetGPUDescriptorHandle(directX_->GetsrvDescriptorHeap(), SRVManager::descriptorSizeSRV, 100);
-	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, instancingSRVHandleCPU);
-}
 
-D3D12_CPU_DESCRIPTOR_HANDLE ParticleSystem::GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
-{
-	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	handleCPU.ptr += (descriptorSize * index);
-	return handleCPU;
-}
-
-D3D12_GPU_DESCRIPTOR_HANDLE ParticleSystem::GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index)
-{
-	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
-	handleGPU.ptr += (descriptorSize * index);
-	return handleGPU;
+	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, textureSrvHandle.CPU);
 }
 
 Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate)

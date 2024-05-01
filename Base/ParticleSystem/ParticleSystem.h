@@ -3,6 +3,7 @@
 #include <numbers>
 
 #include "Common/DirectX/DirectXCommon.h"
+#include "Base/Manager/SRV/SRVManager.h"
 #include "Texture/TextureManager.h"
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
@@ -66,8 +67,11 @@ private:
 
 	ModelData modelData;
 
+	DESCRIPTERHANDLE textureSrvHandle;
+
 	DirectXCommon* directX_ = nullptr;
 	TextureManager* textureManager_ = nullptr;
+	SRVManager* sRVManager_ = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>vertexResource = nullptr;
 	VertexData* vertexData = nullptr;
@@ -86,12 +90,6 @@ private:
 	void CreateSRV();
 
 	std::unique_ptr<ParticlePipeLine> Pipeline_;
-
-	D3D12_CPU_DESCRIPTOR_HANDLE instancingSRVHandleCPU;
-	D3D12_GPU_DESCRIPTOR_HANDLE instancingSRVHandleGPU;
-
-	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
 
 	const float kDeltaTime = 1.0f / 60.0f;
 

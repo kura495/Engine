@@ -18,10 +18,8 @@ public:
 	struct Texture {
 		// テクスチャリソース
 		Microsoft::WRL::ComPtr<ID3D12Resource> textureResource;
-		// シェーダリソースビューのハンドル(CPU)
-		CD3DX12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
-		// シェーダリソースビューのハンドル(CPU)
-		CD3DX12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
+		// シェーダリソースビューのハンドル(CPU + GPU)
+		DESCRIPTERHANDLE textureSrvHandle;
 		// 名前
 		std::string name;
 		// 使っているかどうか
@@ -35,7 +33,7 @@ public:
 	/// GPUHandle情報取得
 	/// </summary>
 	/// <param name="textureHandle">テクスチャハンドル</param>
-	const CD3DX12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t textureHandle);
+	const CD3DX12_GPU_DESCRIPTOR_HANDLE  GetGPUHandle(uint32_t textureHandle);
 private:
 	TextureManager() = default;
 	~TextureManager() = default;

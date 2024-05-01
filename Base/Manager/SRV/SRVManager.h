@@ -1,26 +1,29 @@
 #pragma once
 #include "Base/Common/DirectX/DirectXCommon.h"
-
-
+#include "externals/DirectXTex/DirectXTex.h"
 
 struct DESCRIPTERHANDLE {
-	D3D12_CPU_DESCRIPTOR_HANDLE CPU;
-	D3D12_GPU_DESCRIPTOR_HANDLE GPU;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE CPU;
+	CD3DX12_GPU_DESCRIPTOR_HANDLE GPU;
 };
 class SRVManager
 {
 public:
-	SRVManager() {
-		descriptorSizeSRV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	}
 
-	~SRVManager();
+	static SRVManager* GetInstance();
 
-	DESCRIPTERHANDLE GetDescriptorHandle(uint32_t descriptorSize);
-	static uint32_t descriptorSizeSRV;
+	DESCRIPTERHANDLE GetDescriptorHandle();
+	uint32_t descriptorSizeSRV;
 private:
-	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(uint32_t descriptorSize);
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(uint32_t descriptorSize);
+	SRVManager() { 
+		descriptorSizeSRV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV); 
+	}
+	~SRVManager() = default;
+	SRVManager(const SRVManager& obj) = delete;
+	SRVManager& operator=(const SRVManager& obj) = delete;
+
+	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle();
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle();
 
 	uint32_t SRVValue = 1;
 };
