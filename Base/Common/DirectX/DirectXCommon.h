@@ -47,8 +47,9 @@ public:
 	D3D12_RENDER_TARGET_VIEW_DESC GetrtvDesc()const { return rtvDesc; }
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
 		GetsrvDescriptorHeap()const { return srvDescriptorHeap.Get(); }
-	D3D12_CPU_DESCRIPTOR_HANDLE
-		GetrtvHandles()const { return rtvHandles[2]; }
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		GetrtvDescriptorHeap()const { return rtvDescriptorHeap.Get(); }
+	//D3D12_CPU_DESCRIPTOR_HANDLE GetrtvHandles()const { return rtvHandles[2]; }
 
 
 #pragma endregion	
@@ -58,7 +59,6 @@ public:
 		CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 	Microsoft::WRL::ComPtr<ID3D12Resource>
 		CreateDepthStencilTextureResource(int32_t width, int32_t height);
-	Microsoft::WRL::ComPtr<ID3D12Resource>CreateRenderTextureResource(Microsoft::WRL::ComPtr<ID3D12Device>device,uint32_t width,uint32_t height,DXGI_FORMAT format,const Vector4& clearColor);
 #pragma endregion
 
 private:
@@ -86,7 +86,7 @@ private:
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>swapChainResources[2] = { nullptr };
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[3];
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
 	Microsoft::WRL::ComPtr<ID3D12Fence>fence = nullptr;
 	uint64_t fenceValue = 0;
 	HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);

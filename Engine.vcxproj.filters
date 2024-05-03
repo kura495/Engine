@@ -216,6 +216,7 @@
     <ClCompile Include="Base\Animation\Animation.cpp" />
     <ClCompile Include="Base\PostProsess\PostProsess.cpp" />
     <ClCompile Include="Base\Manager\SRV\SRVManager.cpp" />
+    <ClCompile Include="Base\Manager\RTV\RTVManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -411,6 +412,7 @@
     <ClInclude Include="Base\Animation\Animation.h" />
     <ClInclude Include="Base\PostProsess\PostProsess.h" />
     <ClInclude Include="Base\Manager\SRV\SRVManager.h" />
+    <ClInclude Include="Base\Manager\RTV\RTVManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

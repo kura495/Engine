@@ -176,6 +176,7 @@ DirectXCommon::CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT nu
 	assert(SUCCEEDED(hr));
 	return descriptorHeap;
 }
+
 Microsoft::WRL::ComPtr<ID3D12Resource>
 DirectXCommon::CreateDepthStencilTextureResource(int32_t width, int32_t height)
 {
@@ -282,7 +283,6 @@ void DirectXCommon::MakeCommandList()
 void DirectXCommon::MakeSwapChain()
 {
 	//スワップチェーンを作成
-
 	swapChainDesc.Width = WinApp::kClientWidth;
 	swapChainDesc.Height = WinApp::kClientHeight;
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -321,8 +321,6 @@ void DirectXCommon::MakeDescriptorHeap()
 	//二つ目
 	rtvHandles[1].ptr = rtvHandles[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	device->CreateRenderTargetView(swapChainResources[1].Get(), &rtvDesc, rtvHandles[1]);
-	// PostProsessで使う用
-	rtvHandles[2].ptr = rtvHandles[1].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	//DSVDescriptorHeap
 	depthStencilResource = CreateDepthStencilTextureResource(WinApp::kClientWidth, WinApp::kClientHeight);

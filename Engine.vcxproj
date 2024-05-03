@@ -177,6 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Input\Input.cpp" />
     <ClCompile Include="Base\Light\Light.cpp" />
     <ClCompile Include="Base\Manager\PSO\PSOManager.cpp" />
+    <ClCompile Include="Base\Manager\RTV\RTVManager.cpp" />
     <ClCompile Include="Base\Manager\SRV\SRVManager.cpp" />
     <ClCompile Include="Base\Math\Calc.cpp" />
     <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
@@ -239,6 +240,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Input\Input.h" />
     <ClInclude Include="Base\Light\Light.h" />
     <ClInclude Include="Base\Manager\PSO\PSOManager.h" />
+    <ClInclude Include="Base\Manager\RTV\RTVManager.h" />
     <ClInclude Include="Base\Manager\SRV\SRVManager.h" />
     <ClInclude Include="Base\Math\Calc.h" />
     <ClInclude Include="Base\Math\Math_Structs.h" />
