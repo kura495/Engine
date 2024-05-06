@@ -49,7 +49,7 @@ public:
 		GetsrvDescriptorHeap()const { return srvDescriptorHeap.Get(); }
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
 		GetrtvDescriptorHeap()const { return rtvDescriptorHeap.Get(); }
-	//D3D12_CPU_DESCRIPTOR_HANDLE GetrtvHandles()const { return rtvHandles[2]; }
+	D3D12_CPU_DESCRIPTOR_HANDLE GetrtvHandles()const { return rtvHandles[1]; }
 
 
 #pragma endregion	
@@ -119,5 +119,8 @@ private:
 	//記録時間(FPS固定用)
 	//逆行しないタイマー
 	std::chrono::steady_clock::time_point reference_;
-
+	//RTVハンドルの先頭
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle;
+	//RTVのサイズ
+	uint32_t descriptorSizeRTV;
 };

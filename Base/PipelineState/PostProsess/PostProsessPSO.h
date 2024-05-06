@@ -2,7 +2,7 @@
 #include "Base/PipelineState/IPipelineStateObject.h"
 #include "Base/Manager/PSO/PSOManager.h"
 
-class Standard : public IPipelineStateObject
+class PostProsessPSO : public IPipelineStateObject
 {
 public:
 

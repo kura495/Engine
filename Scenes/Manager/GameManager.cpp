@@ -46,6 +46,10 @@ void GameManager::Initialize()
 	state[CLEAR] = std::make_unique<GameClearState>();
 	state[PLAY]->Initialize();
 	currentSceneNum_ = PLAY;
+
+	postProsess = new PostProsess();
+	postProsess->Init();
+	postProsess->Create();
 }
 void GameManager::Gameloop()
 {
@@ -63,7 +67,7 @@ void GameManager::Gameloop()
 				state[currentSceneNum_]->Initialize();
 			}
 			imGuiManager->BeginFrame();
-			directX->PreView();
+			postProsess->PreDraw();
 			editer->Update();
 			objectManager->Update();
 			input->Update();
@@ -74,6 +78,11 @@ void GameManager::Gameloop()
 			editer->Draw();
 			state[currentSceneNum_]->Draw();
 			imGuiManager->EndFrame();
+			directX->PreView();
+			postProsess->PreCopy();
+			renderer_->Draw(PipelineType::PostProsessPSO);
+			postProsess->Draw();
+			postProsess->PostCopy();
 			directX->PostView();
 		}
 	}
