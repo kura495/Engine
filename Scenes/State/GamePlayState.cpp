@@ -36,7 +36,8 @@ void GamePlayState::Initialize()
 		enemy->Initialize(enemyModel_);
 		enemy->SetPlayer(player_.get());
 	}
-
+	particle = new ParticleSystem();
+	particle->Initalize("resources/circle.png");
 }
 
 void GamePlayState::Update()
@@ -70,7 +71,7 @@ void GamePlayState::Update()
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
 	}
-
+	particle->Update(viewProjction);
 }
 
 void GamePlayState::Draw()
@@ -101,7 +102,8 @@ void GamePlayState::Draw()
 	//Sprite描画ここまで
 
 	//パーティクル描画ここから
-
+	particle->PreDraw();
+	particle->Draw(viewProjction);
 	//パーティクル描画ここまで
 
 	//描画ここまで
