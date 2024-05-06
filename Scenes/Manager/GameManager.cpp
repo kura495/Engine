@@ -81,6 +81,7 @@ void GameManager::Gameloop()
 			directX->PreView();
 			postProsess->PreCopy();
 			renderer_->Draw(PipelineType::PostProsessPSO);
+			postProsess->Update();
 			postProsess->Draw();
 			postProsess->PostCopy();
 			directX->PostView();

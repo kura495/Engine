@@ -2,6 +2,7 @@
 
 #include "Common/DirectX/DirectXCommon.h"
 #include "Base/Manager/SRV/SRVManager.h"
+#include "Game/Object/Player/Player.h"
 #include "externals/DirectXTex/DirectXTex.h"
 
 using namespace Microsoft::WRL;
@@ -12,6 +13,7 @@ public:
 	void Init();
 	void Draw();
 	void Create();
+	void Update();
 	void PreDraw();
 	void PreCopy();
 	void PostCopy();
@@ -44,5 +46,8 @@ private:
 	D3D12_RECT scissorRect{};
 	//
 	D3D12_RESOURCE_BARRIER barrier{};
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = nullptr;
+	Vector3* materialData = nullptr;
 };
 

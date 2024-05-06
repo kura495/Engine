@@ -24,6 +24,7 @@ public:
 
 	void Move();
 	void PlayerRoring();
+	static bool playerMoveValue;
 
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
@@ -88,4 +89,5 @@ private:
 	std::unique_ptr<Weapon>weapon_;
 
 	float attack = 0.0f;
+
 };

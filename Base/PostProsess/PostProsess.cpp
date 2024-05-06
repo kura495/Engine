@@ -9,9 +9,15 @@ void PostProsess::Init()
 
 void PostProsess::Draw()
 {
+
+
 	DirectX->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//テクスチャ
 	DirectX->GetcommandList()->SetGraphicsRootDescriptorTable(0, SRVhandle.GPU);
+	//色
+	DirectX->GetcommandList()->SetGraphicsRootConstantBufferView(1, materialResource.Get()->GetGPUVirtualAddress());
+
+
 	DirectX->GetcommandList()->DrawInstanced(3, 1, 0, 0);
 }
 
@@ -24,6 +30,26 @@ void PostProsess::Create()
 	CreateScissor();
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, SRVhandle.CPU);
 
+	materialResource = DirectX->CreateBufferResource(sizeof(Vector3));
+	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+
+	materialData->x = 1.0f;
+	materialData->y = 1.0f;
+	materialData->z = 1.0f;
+}
+
+void PostProsess::Update()
+{
+	if (Player::playerMoveValue) {
+		materialData->x = std::min<float>(materialData->x + 0.01f, 0.9f);
+		materialData->y = std::min<float>(materialData->y + 0.01f, 0.9f);
+		materialData->z = std::min<float>(materialData->z + 0.01f, 0.9f);
+	}
+	else {
+		materialData->x = std::max<float>(materialData->x - 0.01f,0.1f);
+		materialData->y = std::max<float>(materialData->y - 0.01f, 0.1f);
+		materialData->z = std::max<float>(materialData->z - 0.01f, 0.1f);
+	}
 }
 
 void PostProsess::PreDraw()

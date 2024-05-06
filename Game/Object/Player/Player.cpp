@@ -1,5 +1,7 @@
 #include "Player.h"
 
+bool Player::playerMoveValue;
+
 void Player::Initialize(std::vector<Model*> models)
 {
 	models_ = models;
@@ -182,19 +184,29 @@ void Player::Move()
 		move.y = 0.0f;
 		//移動
 		world_.transform_.translate = Add(world_.transform_.translate, move);
+		playerMoveValue = true;
+		return;
+	}
+	else {
+		playerMoveValue = false;
 	}
 	if (input->TriggerKey(DIK_W)) {
 		world_.transform_.translate.z += 0.1f;
+		playerMoveValue = true;
 	}
 	if (input->TriggerKey(DIK_S)) {
 		world_.transform_.translate.z -= 0.1f;
+		playerMoveValue = true;
 	}
 	if (input->TriggerKey(DIK_A)) {
 		world_.transform_.translate.x -= 0.1f;
+		playerMoveValue = true;
 	}
 	if (input->TriggerKey(DIK_D)) {
 		world_.transform_.translate.x += 0.1f;
+		playerMoveValue = true;
 	}
+
 }
 
 void Player::PlayerRoring()
