@@ -57,8 +57,6 @@ private:
 
 	WorldTransform world_;
 
-	ParticleSystem* particle;
-
 	std::unique_ptr<Player>player_;
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
