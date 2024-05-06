@@ -36,8 +36,10 @@ void GamePlayState::Initialize()
 		enemy->Initialize(enemyModel_);
 		enemy->SetPlayer(player_.get());
 	}
+
 	particle = new ParticleSystem();
 	particle->Initalize("resources/circle.png");
+
 }
 
 void GamePlayState::Update()
@@ -92,6 +94,7 @@ void GamePlayState::Draw()
 	}
 
 	player_->Draw(viewProjction);
+
 #pragma endregion
 
 	//3Dモデル描画ここまで	

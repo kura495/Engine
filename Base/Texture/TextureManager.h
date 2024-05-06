@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Common/DirectX/DirectXCommon.h"
 #include "externals/DirectXTex/DirectXTex.h"
+#include "Base/Manager/SRV/SRVManager.h"
+
 #include <wrl.h>
 #include <array>
 
@@ -16,10 +18,8 @@ public:
 	struct Texture {
 		// テクスチャリソース
 		Microsoft::WRL::ComPtr<ID3D12Resource> textureResource;
-		// シェーダリソースビューのハンドル(CPU)
-		CD3DX12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
-		// シェーダリソースビューのハンドル(CPU)
-		CD3DX12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
+		// シェーダリソースビューのハンドル(CPU + GPU)
+		DESCRIPTERHANDLE textureSrvHandle;
 		// 名前
 		std::string name;
 		// 使っているかどうか
@@ -33,7 +33,7 @@ public:
 	/// GPUHandle情報取得
 	/// </summary>
 	/// <param name="textureHandle">テクスチャハンドル</param>
-	const CD3DX12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t textureHandle);
+	const CD3DX12_GPU_DESCRIPTOR_HANDLE  GetGPUHandle(uint32_t textureHandle);
 private:
 	TextureManager() = default;
 	~TextureManager() = default;
@@ -46,6 +46,7 @@ private:
 	
 	bool IsusedTextureIndex[kMaxTexture];
 	DirectXCommon* directX_ = nullptr;
+	SRVManager* sRVManager_ = nullptr;
 	// テクスチャコンテナ
 	std::array<Texture, kMaxTexture> textures_;
 	//中間リソース
@@ -56,9 +57,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages);
 
 #pragma region descriptorHeap
-	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
-	uint32_t descriptorSizeSRV;
+
 	uint32_t descriptorSizeRTV;
 	uint32_t descriptorSizeDSV;
 #pragma endregion デスクリプタ

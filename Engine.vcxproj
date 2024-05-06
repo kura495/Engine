@@ -176,7 +176,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Editer\Editer.cpp" />
     <ClCompile Include="Base\Input\Input.cpp" />
     <ClCompile Include="Base\Light\Light.cpp" />
-    <ClCompile Include="Base\Manager\PSOManager.cpp" />
+    <ClCompile Include="Base\Manager\PSO\PSOManager.cpp" />
+    <ClCompile Include="Base\Manager\RTV\RTVManager.cpp" />
+    <ClCompile Include="Base\Manager\SRV\SRVManager.cpp" />
     <ClCompile Include="Base\Math\Calc.cpp" />
     <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
@@ -188,7 +190,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Common\Engine\MyEngine.cpp" />
     <ClCompile Include="Base\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.cpp" />
+    <ClCompile Include="Base\PipelineState\PostProsess\PostProsessPSO.cpp" />
     <ClCompile Include="Base\PipelineState\Standard\Standard.cpp" />
+    <ClCompile Include="Base\PostProsess\PostProsess.cpp" />
     <ClCompile Include="Base\Renderer\Renderer.cpp" />
     <ClCompile Include="Base\ShaderCompiler\ShaderCompiler.cpp" />
     <ClCompile Include="Base\Object\Sphere\Sphere.cpp" />
@@ -236,7 +240,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Editer\Editer.h" />
     <ClInclude Include="Base\Input\Input.h" />
     <ClInclude Include="Base\Light\Light.h" />
-    <ClInclude Include="Base\Manager\PSOManager.h" />
+    <ClInclude Include="Base\Manager\PSO\PSOManager.h" />
+    <ClInclude Include="Base\Manager\RTV\RTVManager.h" />
+    <ClInclude Include="Base\Manager\SRV\SRVManager.h" />
     <ClInclude Include="Base\Math\Calc.h" />
     <ClInclude Include="Base\Math\Math_Structs.h" />
     <ClInclude Include="Base\Math\Matrix\MatrixCalc.h" />
@@ -259,7 +265,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.h" />
     <ClInclude Include="Base\PipelineState\IPipelineStateObject.h" />
     <ClInclude Include="Base\PipelineState\PipeLineTags.h" />
+    <ClInclude Include="Base\PipelineState\PostProsess\PostProsessPSO.h" />
     <ClInclude Include="Base\PipelineState\Standard\Standard.h" />
+    <ClInclude Include="Base\PostProsess\PostProsess.h" />
     <ClInclude Include="Base\Renderer\Renderer.h" />
     <ClInclude Include="Base\ShaderCompiler\ShaderCompiler.h" />
     <ClInclude Include="Base\Object\Sphere\Sphere.h" />

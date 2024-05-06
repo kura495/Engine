@@ -5,6 +5,7 @@
 #include "Common/DirectX/DirectXCommon.h"
 
 #include "PipelineState/Standard/Standard.h"
+#include "PipelineState/PostProsess/PostProsessPSO.h"
 
 class PSOManager
 {

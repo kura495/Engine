@@ -2,4 +2,5 @@
 
 enum class PipelineType {
 	Standerd,
+	PostProsessPSO,
 };

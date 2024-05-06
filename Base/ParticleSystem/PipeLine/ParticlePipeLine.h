@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base/PipelineState/IPipelineStateObject.h"
-#include "Base/Manager/PSOManager.h"
+#include "Base/Manager/PSO/PSOManager.h"
 
 class ParticlePipeLine : public IPipelineStateObject
 {

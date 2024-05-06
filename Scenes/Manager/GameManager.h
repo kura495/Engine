@@ -16,6 +16,7 @@
 #include "Base/Renderer/Renderer.h"
 #include "Base/Editer/Editer.h"
 #include "Base/Object/Manaer/ObjectManager.h"
+#include "Base/PostProsess/PostProsess.h"
 
 class GameManager
 {
@@ -52,6 +53,8 @@ private:
 	//State
 	std::unique_ptr<GameState>state[GameStateMax];
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
+	//ポストプロセス
+	PostProsess* postProsess = nullptr;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

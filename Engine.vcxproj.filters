@@ -194,7 +194,7 @@
     <ClCompile Include="Base\ShaderCompiler\ShaderCompiler.cpp">
       <Filter>Engine\Base\ShaderCompiler</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Manager\PSOManager.cpp">
+    <ClCompile Include="Base\Manager\PSO\PSOManager.cpp">
       <Filter>Engine\Base\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Base\Common\DirectX\DirectXCommon.cpp">
@@ -214,6 +214,10 @@
     <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Base\Object\Manaer\ObjectManager.cpp" />
     <ClCompile Include="Base\Animation\Animation.cpp" />
+    <ClCompile Include="Base\PostProsess\PostProsess.cpp" />
+    <ClCompile Include="Base\Manager\SRV\SRVManager.cpp" />
+    <ClCompile Include="Base\Manager\RTV\RTVManager.cpp" />
+    <ClCompile Include="Base\PipelineState\PostProsess\PostProsessPSO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -366,7 +370,7 @@
     <ClInclude Include="Base\ShaderCompiler\ShaderCompiler.h">
       <Filter>Engine\Base\ShaderCompiler</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Manager\PSOManager.h">
+    <ClInclude Include="Base\Manager\PSO\PSOManager.h">
       <Filter>Engine\Base\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\Manager\GameManager.h">
@@ -407,6 +411,10 @@
     <ClInclude Include="Base\Object\Manaer\ObjectManager.h" />
     <ClInclude Include="Base\Animation\KeyFrame\Struct\KeyFrame_Struct.h" />
     <ClInclude Include="Base\Animation\Animation.h" />
+    <ClInclude Include="Base\PostProsess\PostProsess.h" />
+    <ClInclude Include="Base\Manager\SRV\SRVManager.h" />
+    <ClInclude Include="Base\Manager\RTV\RTVManager.h" />
+    <ClInclude Include="Base\PipelineState\PostProsess\PostProsessPSO.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

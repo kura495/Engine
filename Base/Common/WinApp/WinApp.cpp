@@ -1,6 +1,8 @@
 #include"WinApp.h"
 
 std::string WinApp::dropFileName;
+const int32_t WinApp::kClientWidth;//横幅
+const int32_t WinApp::kClientHeight;//縦幅
 
 WinApp* WinApp::GetInstance()
 {
@@ -52,7 +54,7 @@ void WinApp::Initialize(){
 
 	hwnd_ = CreateWindow(
 		wc.lpszClassName,
-		L"LE2A_08_クラモト_アツシ",
+		L"LE3A_07_クラモト_アツシ",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

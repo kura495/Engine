@@ -36,7 +36,7 @@ public:
 	void PostView();
 
 	void Release();
-#pragma region Getter	
+#pragma region Getter関数
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
 	ID3D12GraphicsCommandList* GetcommandList()const { return commandList.Get(); }
@@ -47,13 +47,19 @@ public:
 	D3D12_RENDER_TARGET_VIEW_DESC GetrtvDesc()const { return rtvDesc; }
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
 		GetsrvDescriptorHeap()const { return srvDescriptorHeap.Get(); }
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		GetrtvDescriptorHeap()const { return rtvDescriptorHeap.Get(); }
+	D3D12_CPU_DESCRIPTOR_HANDLE GetrtvHandles()const { return rtvHandles[1]; }
+
 
 #pragma endregion	
+
+#pragma region Create関数
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
 		CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 	Microsoft::WRL::ComPtr<ID3D12Resource>
 		CreateDepthStencilTextureResource(int32_t width, int32_t height);
-
+#pragma endregion
 
 private:
 	DirectXCommon() = default;
@@ -113,5 +119,8 @@ private:
 	//記録時間(FPS固定用)
 	//逆行しないタイマー
 	std::chrono::steady_clock::time_point reference_;
-
+	//RTVハンドルの先頭
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle;
+	//RTVのサイズ
+	uint32_t descriptorSizeRTV;
 };
