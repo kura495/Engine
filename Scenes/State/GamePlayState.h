@@ -69,5 +69,5 @@ private:
 	std::vector<Model*> glTFplaneModel_;
 	std::vector<Model*> WeaponModel_;
 
-	ParticleSystem* particle;
+	//ParticleSystem* particle;
 };
