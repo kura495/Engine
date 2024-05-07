@@ -29,7 +29,7 @@ public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
 	void Update(Skeleton& skeleton);
 	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection);
-	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection,uint32_t TextureHundle);
+
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
@@ -51,6 +51,14 @@ private:
 	VertexData* vertexData = nullptr;
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
+
+	//Indexリソース
+	Microsoft::WRL::ComPtr<ID3D12Resource> indexResource = nullptr;
+	//Indexデータ
+	uint32_t* mappedIndex = nullptr;
+	//Indexバッファビュー
+	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
+
 	//マテリアルリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = nullptr;
 	//マテリアルデータ

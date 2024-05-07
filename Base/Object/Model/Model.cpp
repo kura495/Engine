@@ -5,7 +5,6 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
-	materialResource = directX_->CreateBufferResource(sizeof(Material));
 
 	modelData_ = LoadModelFile(directoryPath,filename);
 
@@ -13,6 +12,15 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	std::memcpy(vertexData, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
 
+	indexResource = directX_->CreateBufferResource(sizeof(uint32_t) * modelData_.indices.size());
+	indexBufferView.BufferLocation = indexResource->GetGPUVirtualAddress();
+	indexBufferView.SizeInBytes = sizeof(uint32_t) * (uint32_t)modelData_.indices.size();
+	indexBufferView.Format = DXGI_FORMAT_R32_UINT;
+
+	indexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&mappedIndex));
+	std::memcpy(mappedIndex,modelData_.indices.data(),sizeof(uint32_t) * modelData_.indices.size());
+
+	materialResource = directX_->CreateBufferResource(sizeof(Material));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	
 	materialData->uvTransform = CreateIdentity4x4();
@@ -44,6 +52,8 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//頂点
 	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
+	//IndexBuffer
+	directX_->GetcommandList()->IASetIndexBuffer(&indexBufferView);
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
@@ -56,30 +66,9 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	//Light
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
-	directX_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
+	//directX_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
+	directX_->GetcommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
-}
-
-void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, uint32_t TextureHundle)
-{
-
-	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	//頂点
-	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
-	//matWorld
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
-	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, viewProjection.constBuff_PS->GetGPUVirtualAddress());
-	//色とuvTransform
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
-	//テクスチャ
-	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(TextureHundle));
-	//Light
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
-
-	directX_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 }
 
 Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::string& filename)
@@ -102,24 +91,26 @@ ModelData Model::LoadModelFile(const std::string& directoryPath, const std::stri
 		aiMesh* mesh = scene->mMeshes[meshIndex];
 		assert(mesh->HasNormals());//法線がないMeshは今回は非対応
 		assert(mesh->HasTextureCoords(0));//TexcoordがないMeshは今回は非対応
+		//Index描画をするためにサイズを確保
+		modelData.vertices.resize(mesh->mNumVertices);
 		//ここからMeshの中身(Face)の解析を行っていく
-		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
+		for (uint32_t VertexIndex = 0; VertexIndex < mesh->mNumVertices;++VertexIndex) {
+			aiVector3D& position = mesh->mVertices[VertexIndex];
+			aiVector3D& normal = mesh->mNormals[VertexIndex];
+			aiVector3D& texcoord = mesh->mTextureCoords[0][VertexIndex];
+			//右手系->左手系に変換
+			modelData.vertices[VertexIndex].position = { -position.x,position.y,position.z,1.0f };
+			modelData.vertices[VertexIndex].normal = { -normal.x,normal.y,normal.z };
+			modelData.vertices[VertexIndex] = { texcoord.x,texcoord.y };
+		}
+		//Indexの解析
+		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex){
 			aiFace& face = mesh->mFaces[faceIndex];
-			assert(face.mNumIndices == 3);//三角形のみサポート
-			//ここからFaceの中身(Vertex)の解析を行っていく
-			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
+			assert(face.mNumIndices == 3);
+
+			for (uint32_t element = 0; element < face.mNumIndices; ++element){
 				uint32_t vertexIndex = face.mIndices[element];
-				aiVector3D& position = mesh->mVertices[vertexIndex];
-				aiVector3D& normal = mesh->mNormals[vertexIndex];
-				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
-				VertexData vertex;
-				vertex.position = { position.x,position.y,position.z,1.0f };
-				vertex.normal = { normal.x,normal.y,normal.z };
-				vertex.texcoord = { texcoord.x,texcoord.y };
-				//aiProcess_MakeLeftHandedはz*=-1で、右手->左手に変換するので手動で対処
-				vertex.position.x *= -1.0f;
-				vertex.normal.x *= -1.0f;
-				modelData.vertices.push_back(vertex);
+				modelData.indices.push_back(vertexIndex);
 			}
 		}
 	}
