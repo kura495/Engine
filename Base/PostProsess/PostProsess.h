@@ -49,5 +49,6 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = nullptr;
 	Vector3* materialData = nullptr;
+	Vector4 originalColor;
 };
 

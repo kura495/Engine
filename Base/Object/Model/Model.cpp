@@ -22,6 +22,21 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 
 }
 
+void Model::Update(Skeleton& skeleton)
+{
+	// すべてのjointを更新。親が若いので通常ループで処理可能になっている
+	for (Joint& joint : skeleton.joints) {
+		joint.localMatrix = MakeAffineMatrix(joint.transform.scale, joint.transform.quaternion, joint.transform.translate);
+		// 親がいれば親の行列を掛ける
+		if (joint.parent) { 
+			joint.skeletonSpaceMatrix = Multiply(joint.localMatrix, skeleton.joints[*joint.parent].skeletonSpaceMatrix);
+		}
+		else {
+			joint.skeletonSpaceMatrix = joint.localMatrix;
+		}
+	}
+}
+
 void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
 {
 	//transform.constMap->matWorld = Multiply(transform.constMap->matWorld, modelData_.rootNode.localMatrix);
@@ -152,13 +167,17 @@ MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, c
 Node Model::ReadNode(aiNode* node)
 {
 	Node result;
-	aiMatrix4x4 aiLocalMatrix = node->mTransformation;
-	aiLocalMatrix.Transpose();
-	for (int Xit = 0; Xit < 4; Xit++) {
-		for (int Yit = 0; Yit < 4; Yit++) {
-			result.localMatrix.m[Xit][Yit] = aiLocalMatrix[Xit][Yit];
-		}
-	}
+
+	aiVector3D scale, translate;
+	aiQuaternion rotate;
+	node->mTransformation.Decompose(scale,rotate,translate);
+
+	result.transform.scale = { scale.x,scale.y,scale.z };
+	result.transform.quaternion = { rotate.x,-rotate.y,-rotate.z,rotate.w };
+	result.transform.translate = { -translate.x,translate.y,translate.z };
+
+	result.localMatrix = MakeAffineMatrix(result.transform.scale, result.transform.quaternion, result.transform.translate);
+
 	result.name = node->mName.C_Str();
 	result.children.resize(node->mNumChildren);
 	for (uint32_t childIndex = 0; childIndex < node->mNumChildren; ++childIndex) {
@@ -166,4 +185,50 @@ Node Model::ReadNode(aiNode* node)
 	}
 
 	return result;
+}
+
+Skeleton Model::CreateSkeleton(const Node& rootNode)
+{
+	Skeleton skeleton;
+
+	skeleton.root = CreateJoint(rootNode,{},skeleton.joints);
+
+	//名前とindexのマッピングを行いアクセスしやすくする
+	for (const Joint& joint : skeleton.joints) {
+		skeleton.jointMap.emplace(joint.name,joint.index);
+	}
+
+	return Skeleton();
+}
+
+int32_t Model::CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints)
+{
+	Joint joint;
+	joint.name = node.name;
+	joint.localMatrix = node.localMatrix;
+	joint.skeletonSpaceMatrix = CreateIdentity4x4();
+	joint.transform = node.transform;
+	joint.index = int32_t(joints.size());
+	joint.parent = parent;
+	joints.push_back(joint);
+	for (const Node& child : node.children) {
+		//子Jointを作成し、そのIndexを登録
+		int32_t childIndex = CreateJoint(child,joint.index,joints);
+		joints[joint.index].children.push_back(childIndex);
+	}
+	// 自身のIndexを返す
+	return joint.index;
+}
+
+void Model::ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime)
+{
+	for (Joint& joint : skeleton.joints) {
+		// 対象のJointのAnimationがあれば、値の適用を行う。下記のif文はC++17から可能になった初期化付きif文
+		if (auto it = animation.nodeAnimations.find(joint.name); it != animation.nodeAnimations.end()) {
+			const NodeAnimation& rootNodeAnimation = (*it).second;
+			joint.transform.scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames,animationTime);
+			joint.transform.quaternion = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames,animationTime);
+			joint.transform.translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames,animationTime);
+		}
+	}
 }

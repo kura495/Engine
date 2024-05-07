@@ -10,6 +10,8 @@
 #include "Math/Matrix/MatrixCalc.h"
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
+#include "Animation/Animation.h"
+
 #include <d3d12.h>
 #include <string>
 #include <cassert>
@@ -25,6 +27,7 @@ class Model
 {
 public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
+	void Update(Skeleton& skeleton);
 	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection);
 	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection,uint32_t TextureHundle);
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
@@ -58,4 +61,8 @@ private:
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 	Node ReadNode(aiNode* node);
+	//skeletonAnimation
+	Skeleton CreateSkeleton(const Node&rootNode);
+	int32_t CreateJoint(const Node& node,const std::optional<int32_t>& parent,std::vector<Joint>& joints);
+	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
 };

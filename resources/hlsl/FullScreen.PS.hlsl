@@ -19,7 +19,7 @@ PixelShaderOutput main(VertexShaderOutput input)
     PixelShaderOutput output;
     // Grayscale
     output.color = gTexture.Sample(gSampler, input.texcoord);
-    float32_t value = dot(output.color.rgb, gMaterial.color);
+    float32_t3 value = dot(output.color.rgb, gMaterial.color);
     output.color.rgb = output.color.rgb * value;
     
     return output;
