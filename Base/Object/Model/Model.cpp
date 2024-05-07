@@ -66,7 +66,6 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	//Light
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
-	//directX_->GetcommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 	directX_->GetcommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
 }
@@ -94,21 +93,22 @@ ModelData Model::LoadModelFile(const std::string& directoryPath, const std::stri
 		//Index描画をするためにサイズを確保
 		modelData.vertices.resize(mesh->mNumVertices);
 		//ここからMeshの中身(Face)の解析を行っていく
-		for (uint32_t VertexIndex = 0; VertexIndex < mesh->mNumVertices;++VertexIndex) {
-			aiVector3D& position = mesh->mVertices[VertexIndex];
-			aiVector3D& normal = mesh->mNormals[VertexIndex];
-			aiVector3D& texcoord = mesh->mTextureCoords[0][VertexIndex];
-			//右手系->左手系に変換
-			modelData.vertices[VertexIndex].position = { -position.x,position.y,position.z,1.0f };
-			modelData.vertices[VertexIndex].normal = { -normal.x,normal.y,normal.z };
-			modelData.vertices[VertexIndex] = { texcoord.x,texcoord.y };
-		}
-		//Indexの解析
-		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex){
+		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 			aiFace& face = mesh->mFaces[faceIndex];
-			assert(face.mNumIndices == 3);
-
-			for (uint32_t element = 0; element < face.mNumIndices; ++element){
+			assert(face.mNumIndices == 3);//三角形のみサポート
+			//ここからFaceの中身(Vertex)の解析を行っていく
+			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
+				uint32_t vertexIndex = face.mIndices[element];
+				aiVector3D& position = mesh->mVertices[vertexIndex];
+				aiVector3D& normal = mesh->mNormals[vertexIndex];
+				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
+				//右手系->左手系への変換を忘れずに
+				modelData.vertices[vertexIndex].position = { -position.x,position.y,position.z,1.0f };
+				modelData.vertices[vertexIndex].normal = { -normal.x,normal.y,normal.z };
+				modelData.vertices[vertexIndex].texcoord = { texcoord.x,texcoord.y };
+			}
+			//Indexの解析
+			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
 				uint32_t vertexIndex = face.mIndices[element];
 				modelData.indices.push_back(vertexIndex);
 			}
