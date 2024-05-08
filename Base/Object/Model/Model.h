@@ -41,6 +41,7 @@ private:
 	DirectXCommon* directX_ = nullptr;
 	TextureManager* textureManager_ = nullptr;
 	Light* light_ = nullptr;
+	SRVManager* srvManager_;
 	//どのライトを使うか
 	int32_t lightFlag = Lighting::NotDo;
 

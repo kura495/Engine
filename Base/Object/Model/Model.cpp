@@ -5,6 +5,7 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
+	srvManager_ = SRVManager::GetInstance();
 
 	modelData_ = LoadModelFile(directoryPath,filename);
 
@@ -247,8 +248,13 @@ SkinCluster Model::CreateSkinCluster(const Microsoft::WRL::ComPtr<ID3D12Resource
 {
 	SkinCluster skinCluster;
 
-
-
+	// palette用Resource
+	skinCluster.paletteResource = directX_->CreateBufferResource(sizeof(WellForGPU) * skeleton.joints.size());
+	WellForGPU* mappedPalette = nullptr;
+	skinCluster.paletteResource.Get()->Map(0,nullptr,reinterpret_cast<void**>(mappedPalette));
+	// spanを使ってアクセス
+	skinCluster.mappedPaette = { mappedPalette, skeleton.joints.size() };
+	skinCluster.paletteSRVHandle = srvManager_->GetDescriptorHandle();
 
 
 	return skinCluster;
