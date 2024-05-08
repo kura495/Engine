@@ -113,6 +113,25 @@ ModelData Model::LoadModelFile(const std::string& directoryPath, const std::stri
 				modelData.indices.push_back(vertexIndex);
 			}
 		}
+		// ここからBoneのデータを取得
+		for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex) {
+			aiBone* bone = mesh->mBones[boneIndex];
+			std::string jointName = bone->mName.C_Str();
+			JointWeightData& jointWeightData = modelData.skinClusterData[jointName];
+
+			aiMatrix4x4 bindPoseMatirxAssimp = bone->mOffsetMatrix.Inverse();
+			aiVector3D scale, translate;
+			aiQuaternion rotate;
+			bindPoseMatirxAssimp.Decompose(scale,rotate,translate);
+			//1 左手系のBindPoseMatrixを作る
+			Matrix4x4 bindPoseMatrix = MakeAffineMatrix({ scale.x,scale.y,scale.z }, { rotate.x,-rotate.y,-rotate.z,rotate.w }, { -translate.x,translate.y,translate.z });
+			//InverseBindPoseMatrixを作る
+			jointWeightData.inverseBindPoseMatrix = Inverse(bindPoseMatrix);
+			// Weight情報を取り出す
+			for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; ++weightIndex) {
+				jointWeightData.vertexWeights.push_back({bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId});
+			}
+		}
 	}
 	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 	vertexBufferView.BufferLocation = vertexResource.Get()->GetGPUVirtualAddress();
@@ -222,4 +241,15 @@ void Model::ApplyAnimation(Skeleton& skeleton, const Animation& animation, float
 			joint.transform.translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames,animationTime);
 		}
 	}
+}
+
+SkinCluster Model::CreateSkinCluster(const Microsoft::WRL::ComPtr<ID3D12Resource>& device, const Skeleton& skeleton, const ModelData& modelData, const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize)
+{
+	SkinCluster skinCluster;
+
+
+
+
+
+	return skinCluster;
 }

@@ -73,4 +73,5 @@ private:
 	Skeleton CreateSkeleton(const Node&rootNode);
 	int32_t CreateJoint(const Node& node,const std::optional<int32_t>& parent,std::vector<Joint>& joints);
 	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
+	SkinCluster CreateSkinCluster(const Microsoft::WRL::ComPtr<ID3D12Resource>& device, const Skeleton& skeleton, const ModelData& modelData, const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize);
 };
