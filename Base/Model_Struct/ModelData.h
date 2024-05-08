@@ -2,6 +2,7 @@
 #include "VertexData.h"
 #include "Material.h"
 #include "Transform.h"
+#include "Base/Common/DirectX/DirectXCommon.h"
 #include <vector>
 
 struct Node {
