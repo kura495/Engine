@@ -262,7 +262,7 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 	// palette用Resource
 	skinCluster.paletteResource = directX_->CreateBufferResource(sizeof(WellForGPU) * skeleton.joints.size());
 	WellForGPU* mappedPalette = nullptr;
-	skinCluster.paletteResource.Get()->Map(0,nullptr,reinterpret_cast<void**>(mappedPalette));
+	skinCluster.paletteResource.Get()->Map(0,nullptr,reinterpret_cast<void**>(&mappedPalette));
 	// spanを使ってアクセス
 	skinCluster.mappedPaette = { mappedPalette, skeleton.joints.size() };
 	skinCluster.paletteSRVHandle = srvManager_->GetDescriptorHandle();

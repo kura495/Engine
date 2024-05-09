@@ -3,7 +3,7 @@
 
 struct Material
 {
-    float32_t3 color; //Œ³‚ÌF
+    float32_t3 color; //å…ƒã®è‰²
 };
 struct PixelShaderOutput
 {
@@ -19,8 +19,8 @@ PixelShaderOutput main(VertexShaderOutput input)
     PixelShaderOutput output;
     // Grayscale
     output.color = gTexture.Sample(gSampler, input.texcoord);
-    float32_t3 value = dot(output.color.rgb, gMaterial.color);
-    output.color.rgb = value;
+    //float32_t3 value = dot(output.color.rgb, gMaterial.color);
+    //output.color.rgb = value;
     
     return output;
 }
