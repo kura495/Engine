@@ -31,20 +31,25 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 
 }
 
-void Model::Update(SkinCluster& skinCluster,Skeleton& skeleton)
+void Model::SkeletonUpdate(Skeleton& skeleton)
 {
 	// すべてのjointを更新。親が若いので通常ループで処理可能になっている
 	for (Joint& joint : skeleton.joints) {
 		joint.localMatrix = MakeAffineMatrix(joint.transform.scale, joint.transform.quaternion, joint.transform.translate);
 		// 親がいれば親の行列を掛ける
-		if (joint.parent) { 
+		if (joint.parent) {
 			joint.skeletonSpaceMatrix = Multiply(joint.localMatrix, skeleton.joints[*joint.parent].skeletonSpaceMatrix);
 		}
 		else {
 			joint.skeletonSpaceMatrix = joint.localMatrix;
 		}
 	}
+}
+
+void Model::SkinClusterUpdate(SkinCluster& skinCluster,Skeleton& skeleton)
+{
 	// SkinClusterの更新
+
 	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); ++jointIndex) {
 		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());
 		skinCluster.mappedPaette[jointIndex].skeletonSpaceMatrix = Multiply(skinCluster.inverseBindPoseMatrices[jointIndex] , skeleton.joints[jointIndex].skeletonSpaceMatrix);
@@ -258,10 +263,12 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 	skinCluster.paletteResource = directX_->CreateBufferResource(sizeof(WellForGPU) * skeleton.joints.size());
 	WellForGPU* mappedPalette = nullptr;
 	skinCluster.paletteResource.Get()->Map(0,nullptr,reinterpret_cast<void**>(mappedPalette));
-#pragma region palette用のSRV
 	// spanを使ってアクセス
 	skinCluster.mappedPaette = { mappedPalette, skeleton.joints.size() };
 	skinCluster.paletteSRVHandle = srvManager_->GetDescriptorHandle();
+	skinCluster.paletteSRVHandle.CPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	skinCluster.paletteSRVHandle.GPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+#pragma region palette用のSRV
 	// palette用のSRVを作成。StructeredBufferでアクセスできるようにする
 	D3D12_SHADER_RESOURCE_VIEW_DESC paletteSrvDesc{};
 	paletteSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
@@ -313,6 +320,7 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 					currentInfluence.weights[index] = vertexWeight.weight;
 					// jointのIndexを代入
 					currentInfluence.jointIndices[index] = (*it).second;
+					break;
 				}
 			}
 		}

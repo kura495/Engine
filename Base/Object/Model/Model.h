@@ -28,8 +28,8 @@ class Model
 {
 public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
-	void Update();
-	void Update(SkinCluster& skinCluster, Skeleton& skeleton);
+	void SkeletonUpdate(Skeleton& skeleton);
+	void SkinClusterUpdate(SkinCluster& skinCluster, Skeleton& skeleton);
 	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);

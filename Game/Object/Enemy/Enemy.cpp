@@ -38,7 +38,8 @@ void Enemy::Update()
 
 	models_[0]->ApplyAnimation(skeleton, animation, animationTime_);
 
-	models_[0]->Update(skinCluster,skeleton);
+	models_[0]->SkeletonUpdate(skeleton);
+	models_[0]->SkinClusterUpdate(skinCluster,skeleton);
 
 
 	/*if (isAttackFlag) {
