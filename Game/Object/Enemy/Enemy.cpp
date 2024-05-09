@@ -7,29 +7,42 @@ void Enemy::Initialize(std::vector<Model*> models)
 	models[0]->GetModelData().material.textureFilePath;
 	world_.Initialize();
 	world_.transform_.translate.y += 1.0f;
-	animation = new Animation();
-	*animation = Animation::LoadAnimationFile("resources/Monster", "Monster.gltf");
+
+	animation = Animation::LoadAnimationFile("resources/simpleSkin", "simpleSkin.gltf");
+	skeleton = models_[0]->CreateSkeleton(models_[0]->GetModelData().rootNode);
+	skinCluster = models_[0]->CreateSkinCluster(skeleton, models_[0]->GetModelData());
+
 	world_.SetTransform(models_[0]);
 
 }
 
 void Enemy::Update()
 {
-	animeInterval_ += 1.0f;
+	//animeInterval_ += 1.0f;
 
-	if (isAttackFlag == false) {
-		if (ChackOnAttack() && animeInterval_ > kAnimeInterval) {
-			isAttackFlag = true;
-		}
-		else {
-			ChasePlayer();
-		}
+	//if (isAttackFlag == false) {
+	//	if (ChackOnAttack() && animeInterval_ > kAnimeInterval) {
+	//		isAttackFlag = true;
+	//	}
+	//	else {
+	//		ChasePlayer();
+	//	}
 
-	}
+	//}
+	
 	// アニメーション全体の再生が終わったら
 
-	if (isAttackFlag) {
-		animationTime_ += 1.0f / 60.0f;
+
+
+	animationTime_ += 1.0f / 60.0f;
+
+	models_[0]->ApplyAnimation(skeleton, animation, animationTime_);
+
+	models_[0]->Update(skinCluster,skeleton);
+
+
+	/*if (isAttackFlag) {
+
 		if (animationTime_ > animation->duration) {
 			isAttackFlag = false;
 			animeInterval_ = 0.0f;
@@ -43,7 +56,7 @@ void Enemy::Update()
 		world_.transform_.translate += translate;
 		world_.transform_.quaternion += rotation;
 		world_.transform_.scale = scale;
-	}
+	}*/
 	world_.UpdateMatrix();
 }
 

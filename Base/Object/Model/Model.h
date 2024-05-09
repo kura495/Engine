@@ -11,6 +11,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
 #include "Animation/Animation.h"
+#include "Base/Math/Matrix/MatrixCalc.h"
 
 #include <d3d12.h>
 #include <string>
@@ -27,12 +28,18 @@ class Model
 {
 public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
-	void Update(Skeleton& skeleton);
+	void Update();
+	void Update(SkinCluster& skinCluster, Skeleton& skeleton);
 	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
+	//skeletonAnimation
+	Skeleton CreateSkeleton(const Node& rootNode);
+	int32_t CreateJoint(const Node& node,const std::optional<int32_t>& parent,std::vector<Joint>& joints);
+	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
+	SkinCluster CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData);
 
 	ModelData& GetModelData() { return modelData_; }
 
@@ -70,9 +77,5 @@ private:
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 	Node ReadNode(aiNode* node);
-	//skeletonAnimation
-	Skeleton CreateSkeleton(const Node&rootNode);
-	int32_t CreateJoint(const Node& node,const std::optional<int32_t>& parent,std::vector<Joint>& joints);
-	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
-	SkinCluster CreateSkinCluster(const Microsoft::WRL::ComPtr<ID3D12Resource>& device, const Skeleton& skeleton, const ModelData& modelData, const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize);
+
 };

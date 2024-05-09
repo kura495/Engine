@@ -24,7 +24,7 @@ public:
 
 private:
 	Player* player_ = nullptr;
-	Animation* animation = nullptr;
+	Animation animation;
 	// 攻撃範囲内ならtrue
 	bool ChackOnAttack();
 	void ChasePlayer();
@@ -35,4 +35,8 @@ private:
 	float animationTime_ = 0.0f;
 	const float kAnimeInterval = 60.0f;
 	float animeInterval_ = 0.0f;
+
+	//SkinAnime
+	Skeleton skeleton;
+	SkinCluster skinCluster;
 };

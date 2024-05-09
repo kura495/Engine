@@ -18,7 +18,7 @@ void GamePlayState::Initialize()
 	collisionManager = std::make_unique<CollisionManager>();
 	// 
 	//3Dオブジェクト生成
-	enemyModel_.push_back(Model::CreateModelFromObj("resources/Monster", "Monster.gltf"));
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/simpleSkin", "simpleSkin.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
@@ -89,11 +89,12 @@ void GamePlayState::Draw()
 		}
 	}
 
+	player_->Draw(viewProjction);
+
 	for (Enemy* enemy : enemys_) {
 		enemy->Draw(viewProjction);
 	}
 
-	player_->Draw(viewProjction);
 
 #pragma endregion
 

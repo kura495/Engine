@@ -2,7 +2,7 @@
 #include "VertexData.h"
 #include "Material.h"
 #include "Transform.h"
-#include "Base/Common/DirectX/DirectXCommon.h"
+#include "Base/Manager/SRV/SRVManager.h"
 #include <vector>
 
 struct Node {

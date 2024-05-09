@@ -25,6 +25,7 @@ Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion);
 
 float det(const Matrix4x4& m);
 Matrix4x4 Inverse(const Matrix4x4& m);
+Matrix4x4 Transpose(const Matrix4x4& m);
 //透視投影行列
 Matrix4x4 MakePerspectiveFovMatrix(float FovY, float aspectRatio, float nearClip, float farClip);
 //ビューポート変換行列

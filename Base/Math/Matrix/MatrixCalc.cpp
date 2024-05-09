@@ -249,6 +249,22 @@ Matrix4x4 Inverse(const Matrix4x4& m)
 		- m.m[0][2] * m.m[1][1] * m.m[2][0] - m.m[0][1] * m.m[1][0] * m.m[2][2] - m.m[0][0] * m.m[1][2] * m.m[2][1]) / resultDet;
 	return result;
 }
+
+Matrix4x4 Transpose(const Matrix4x4& m)
+{
+	Matrix4x4 tmpm;
+	for (int l = 0; l < 4; l++)
+	{
+		for (int c = 0; c < 4; c++)
+		{
+			tmpm.m[l][c] = m.m[c][l];
+		}
+	}
+	return tmpm;
+}
+
+
+
 Matrix4x4 MakePerspectiveFovMatrix(float FovY, float aspectRatio, float nearClip, float farClip)
 {
 	FovY = FovY * ((float)std::numbers::pi / 180);
