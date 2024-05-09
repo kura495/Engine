@@ -218,6 +218,7 @@
     <ClCompile Include="Base\Manager\SRV\SRVManager.cpp" />
     <ClCompile Include="Base\Manager\RTV\RTVManager.cpp" />
     <ClCompile Include="Base\PipelineState\PostProsess\PostProsessPSO.cpp" />
+    <ClCompile Include="Base\PipelineState\Skinning\Skinning.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -415,6 +416,7 @@
     <ClInclude Include="Base\Manager\SRV\SRVManager.h" />
     <ClInclude Include="Base\Manager\RTV\RTVManager.h" />
     <ClInclude Include="Base\PipelineState\PostProsess\PostProsessPSO.h" />
+    <ClInclude Include="Base\PipelineState\Skinning\Skinning.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
@@ -452,5 +454,6 @@
     <FxCompile Include="resources\hlsl\Particle.VS.hlsl">
       <Filter>リソース ファイル\hlsl</Filter>
     </FxCompile>
+    <FxCompile Include="resources\hlsl\SkinningObject3d.VS.hlsl" />
   </ItemGroup>
 </Project>

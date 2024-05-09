@@ -39,7 +39,8 @@ void GamePlayState::Initialize()
 
 	//particle = new ParticleSystem();
 	//particle->Initalize("resources/circle.png");
-
+		//Renderer
+	renderer_ = Renderer::GetInstance();
 }
 
 void GamePlayState::Update()
@@ -90,6 +91,8 @@ void GamePlayState::Draw()
 	}
 
 	player_->Draw(viewProjction);
+
+	renderer_->Draw(PipelineType::Skinning);
 
 	for (Enemy* enemy : enemys_) {
 		enemy->Draw(viewProjction);

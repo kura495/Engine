@@ -3,4 +3,5 @@
 enum class PipelineType {
 	Standerd,
 	PostProsessPSO,
+	Skinning
 };

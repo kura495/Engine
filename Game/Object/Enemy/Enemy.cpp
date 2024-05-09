@@ -64,7 +64,7 @@ void Enemy::Update()
 void Enemy::Draw(const ViewProjection& viewProj)
 {
 	for (Model* model : models_) {
-		model->Draw(world_, viewProj);
+		model->SkinDraw(world_, viewProj, skinCluster);
 	}
 }
 

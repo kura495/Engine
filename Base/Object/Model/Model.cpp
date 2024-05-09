@@ -60,7 +60,6 @@ void Model::SkinClusterUpdate(SkinCluster& skinCluster,Skeleton& skeleton)
 
 void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
 {
-	//transform.constMap->matWorld = Multiply(transform.constMap->matWorld, modelData_.rootNode.localMatrix);
 
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//頂点
@@ -76,6 +75,36 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//テクスチャ
 	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
+
+	//Light
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
+
+	directX_->GetcommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
+
+}
+void Model::SkinDraw(const WorldTransform& transform, const ViewProjection& viewProjection, const SkinCluster& skinCluster)
+{
+	D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
+		vertexBufferView,
+		skinCluster.influenceBufferView
+	};
+
+	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//頂点
+	directX_->GetcommandList()->IASetVertexBuffers(0, 2, vbvs);
+	//IndexBuffer
+	directX_->GetcommandList()->IASetIndexBuffer(&indexBufferView);
+	//matWorld
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
+	//ViewProjection
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	//色とuvTransform
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	//テクスチャ
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
+	//StructuredBuffer
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(6, skinCluster.paletteSRVHandle.GPU);
 	//Light
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 

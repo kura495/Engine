@@ -24,6 +24,7 @@
 #include "Base/Editer/Editer.h"
 #include "Base/Object/Manaer/ObjectManager.h"
 #include "Base/Animation/Animation.h"
+#include "Base/Renderer/Renderer.h"
 
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
@@ -51,6 +52,7 @@ private:
 	GlobalVariables* globalVariables = nullptr;
 	ObjectManager* objectManager = nullptr;
 	std::unique_ptr<CollisionManager> collisionManager;
+	Renderer* renderer_ = nullptr;
 
 	ViewProjection viewProjction;
 	bool IsDebugCamera = false;

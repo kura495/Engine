@@ -17,7 +17,7 @@ void GameManager::Initialize()
 	//DirectX
 	directX = DirectXCommon::GetInstance();
 	//Renderer
-	renderer_ = std::make_unique<Renderer>();
+	renderer_ = Renderer::GetInstance();
 	renderer_->Initalize();
 	//Audio
 	audio = Audio::GetInstance();

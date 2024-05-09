@@ -30,18 +30,18 @@ ConstantBuffer<ViewProjectionMatrix> gViewProjectionMatrix : register(b1);
 
 Skinned Skinning(VertexShaderInput input){
 	Skinned skinned;
-	//ˆÊ’u‚Ì•ÏŠ·
-	skinned.position = mul(input.position[input.index.x].skeletonSpaceMatrix) * input.weight.x;
-	skinned.position += mul(input.position[input.index.y].skeletonSpaceMatrix) * input.weight.y;
-	skinned.position += mul(input.position[input.index.z].skeletonSpaceMatrix) * input.weight.z;
-	skinned.position += mul(input.position[input.index.w].skeletonSpaceMatrix) * input.weight.w;
-	skinned.position.w = 1.0f;// ŠmÀ‚É1‚ğ“ü‚ê‚é
-	//–@ü‚Ì•ÏŠ·
+	//ä½ç½®ã®å¤‰æ›
+    skinned.position = mul(input.position, gMatrixPalette[input.index.x].skeletonSpaceMatrix) * input.weight.x;
+    skinned.position += mul(input.position, gMatrixPalette[input.index.y].skeletonSpaceMatrix) * input.weight.y;
+    skinned.position += mul(input.position, gMatrixPalette[input.index.z].skeletonSpaceMatrix) * input.weight.z;
+    skinned.position += mul(input.position, gMatrixPalette[input.index.w].skeletonSpaceMatrix) * input.weight.w;
+	skinned.position.w = 1.0f;// ç¢ºå®Ÿã«1ã‚’å…¥ã‚Œã‚‹
+	//æ³•ç·šã®å¤‰æ›
 	skinned.normal = mul(input.normal, (float32_t3x3) gMatrixPalette[input.index.x].skeletonSpaceInverseTransposeMatrix) * input.weight.x;
 	skinned.normal += mul(input.normal, (float32_t3x3) gMatrixPalette[input.index.y].skeletonSpaceInverseTransposeMatrix) * input.weight.y;
 	skinned.normal += mul(input.normal, (float32_t3x3) gMatrixPalette[input.index.z].skeletonSpaceInverseTransposeMatrix) * input.weight.z;
 	skinned.normal += mul(input.normal, (float32_t3x3) gMatrixPalette[input.index.w].skeletonSpaceInverseTransposeMatrix) * input.weight.w;
-	skinned.normal = normalize(skinned.normal);// ³‹K‰»‚·‚é
+	skinned.normal = normalize(skinned.normal);// æ­£è¦åŒ–ã™ã‚‹
 	
 	return skinned;
 }
@@ -55,6 +55,6 @@ VertexShaderOutput main(VertexShaderInput input) {
 	output.position = mul(skinned.position, mul(gTransformationMatrix.matWorld, WorldViewProjectionMatrix));
 	output.worldPosition = mul(skinned.position, gTransformationMatrix.matWorld).xyz;
 	output.texcoord = input.texcoord;
-	output.normal = normalize(mul(skinned.normal, (float32_t3x3) WorldViewProjectionMatrix.WorldInverseTranspose));
+    output.normal = normalize(mul(skinned.normal, (float32_t3x3) gTransformationMatrix.WorldInverseTranspose));
 	return output;
 }

@@ -31,6 +31,7 @@ public:
 	void SkeletonUpdate(Skeleton& skeleton);
 	void SkinClusterUpdate(SkinCluster& skinCluster, Skeleton& skeleton);
 	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection);
+	void SkinDraw(const WorldTransform& transform,const ViewProjection& viewProjection,const SkinCluster& skinCluster);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
