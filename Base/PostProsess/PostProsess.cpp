@@ -10,7 +10,6 @@ void PostProsess::Init()
 void PostProsess::Draw()
 {
 
-
 	DirectX->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//テクスチャ
 	DirectX->GetcommandList()->SetGraphicsRootDescriptorTable(0, SRVhandle.GPU);

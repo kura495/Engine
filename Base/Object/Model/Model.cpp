@@ -216,7 +216,7 @@ Skeleton Model::CreateSkeleton(const Node& rootNode)
 		skeleton.jointMap.emplace(joint.name,joint.index);
 	}
 
-	return Skeleton();
+	return skeleton;
 }
 
 int32_t Model::CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints)
@@ -254,11 +254,11 @@ void Model::ApplyAnimation(Skeleton& skeleton, const Animation& animation, float
 SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData)
 {
 	SkinCluster skinCluster;
-#pragma region palette用のSRV
 	// palette用Resource
 	skinCluster.paletteResource = directX_->CreateBufferResource(sizeof(WellForGPU) * skeleton.joints.size());
 	WellForGPU* mappedPalette = nullptr;
 	skinCluster.paletteResource.Get()->Map(0,nullptr,reinterpret_cast<void**>(mappedPalette));
+#pragma region palette用のSRV
 	// spanを使ってアクセス
 	skinCluster.mappedPaette = { mappedPalette, skeleton.joints.size() };
 	skinCluster.paletteSRVHandle = srvManager_->GetDescriptorHandle();
