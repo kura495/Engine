@@ -148,10 +148,7 @@ ModelData Model::LoadModelFile(const std::string& directoryPath, const std::stri
 				modelData.vertices[vertexIndex].position = { -position.x,position.y,position.z,1.0f };
 				modelData.vertices[vertexIndex].normal = { -normal.x,normal.y,normal.z };
 				modelData.vertices[vertexIndex].texcoord = { texcoord.x,texcoord.y };
-			}
-			//Indexの解析
-			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
-				uint32_t vertexIndex = face.mIndices[element];
+				//Indexの解析
 				modelData.indices.push_back(vertexIndex);
 			}
 		}
@@ -360,10 +357,12 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 
 std::vector<Model*> Model::SkeletonDebugInit(Skeleton& skeleton, std::vector<WorldTransform>& worlds)
 {
+	std::vector<Model*> models;
 	worlds.resize(skeleton.joints.size());
 	for (int it = 0; it < skeleton.joints.size(); it++) {
 
 	}
+	return models;
 }
 
 void Model::SkeletonDebugUpdate(Skeleton& skeleton, const Animation& animation, float animationTime, std::vector<WorldTransform>& worlds)

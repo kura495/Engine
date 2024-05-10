@@ -47,7 +47,7 @@ float Norm(const Quaternion& quaternion);
 Quaternion Inverse(const Quaternion& quaternion);
 //任意軸回転を表すQuaternionの生成
 Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
-Quaternion Lerp(const Quaternion& q0, const Quaternion& q1, float t);
+//Quaternion Lerp(const Quaternion& q0, const Quaternion& q1, float t);
 Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 //正規化したQuaternionを返す
 Quaternion Normalize(const Quaternion& quaternion);

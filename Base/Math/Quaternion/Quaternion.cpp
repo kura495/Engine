@@ -92,6 +92,13 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 		//内積も反転
 		dot = -dot;
 	}
+	if (dot >= 1.0f - std::numeric_limits<float>::epsilon()) {
+		result.x = (1.0f - t) * Localq0.x + t * Localq1.x;
+		result.y = (1.0f - t) * Localq0.y + t * Localq1.y;
+		result.z = (1.0f - t) * Localq0.z + t * Localq1.z;
+		result.w = (1.0f - t) * Localq0.w + t * Localq1.w;
+		return result;
+	}
 	//なす角を求める
 	float theta = std::acos(dot);
 
