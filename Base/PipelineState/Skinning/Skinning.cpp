@@ -87,7 +87,6 @@ void Skinning::CreateRootSignature()
 
 void Skinning::CreateInputLayOut()
 {
-	D3D12_INPUT_ELEMENT_DESC inputElementarrayDescs[5]{};
 	//頂点レイアウト
 	inputElementarrayDescs[0].SemanticName = "POSITION";
 	inputElementarrayDescs[0].SemanticIndex = 0;

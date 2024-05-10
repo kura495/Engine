@@ -14,6 +14,6 @@ public:
 	void CreatePipelineStateObject() override;
 
 private:
-
+	D3D12_INPUT_ELEMENT_DESC inputElementarrayDescs[5]{};
 };
 #pragma once

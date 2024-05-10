@@ -248,6 +248,7 @@ void DirectXCommon::MakeD3D12Device()
 			break;
 		}
 	}
+
 	//デバイスの生成ができないので起動できない
 	assert(device != nullptr);
 	//初期化完了のログを出す
