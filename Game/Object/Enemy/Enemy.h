@@ -14,8 +14,6 @@ public:
 	void Update()override;
 	void Draw(const ViewProjection& viewProj)override;
 
-	void ImGui();
-
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
 		world_.transform_.translate = pos;
@@ -29,7 +27,7 @@ private:
 	bool ChackOnAttack();
 	void ChasePlayer();
 
-	const float AttackRange = 3.0f;
+	const float AttackRange = 2.0f;
 	bool isAttackFlag = true;
 
 	float animationTime_ = 0.0f;
