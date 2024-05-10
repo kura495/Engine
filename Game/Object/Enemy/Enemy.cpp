@@ -8,7 +8,7 @@ void Enemy::Initialize(std::vector<Model*> models)
 	world_.Initialize();
 	//world_.transform_.translate.y += 1.0f;
 
-	animation = Animation::LoadAnimationFile("resources/simpleSkin", "simpleSkin.gltf");
+	animation = Animation::LoadAnimationFile("resources/human", "sneakwalk.gltf");
 	skeleton = models_[0]->CreateSkeleton(models_[0]->GetModelData().rootNode);
 	skinCluster = models_[0]->CreateSkinCluster(skeleton, models_[0]->GetModelData());
 

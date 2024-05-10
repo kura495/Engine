@@ -190,6 +190,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Common\Engine\MyEngine.cpp" />
     <ClCompile Include="Base\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.cpp" />
+    <ClCompile Include="Base\PipelineState\DrawLine\DrawLine.cpp" />
     <ClCompile Include="Base\PipelineState\PostProsess\PostProsessPSO.cpp" />
     <ClCompile Include="Base\PipelineState\Skinning\Skinning.cpp" />
     <ClCompile Include="Base\PipelineState\Standard\Standard.cpp" />
@@ -264,6 +265,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Common\Engine\MyEngine.h" />
     <ClInclude Include="Base\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.h" />
+    <ClInclude Include="Base\PipelineState\DrawLine\DrawLine.h" />
     <ClInclude Include="Base\PipelineState\IPipelineStateObject.h" />
     <ClInclude Include="Base\PipelineState\PipeLineTags.h" />
     <ClInclude Include="Base\PipelineState\PostProsess\PostProsessPSO.h" />
