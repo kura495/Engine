@@ -42,6 +42,9 @@ public:
 	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
 	SkinCluster CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData);
 
+	std::vector<Model*> SkeletonDebugInit(Skeleton& skeleton, std::vector<WorldTransform>& worlds);
+	void SkeletonDebugUpdate(Skeleton& skeleton, const Animation& animation, float animationTime, std::vector<WorldTransform>& worlds);
+
 	ModelData& GetModelData() { return modelData_; }
 
 private:
