@@ -25,6 +25,7 @@
 #include "Base/Object/Manaer/ObjectManager.h"
 #include "Base/Animation/Animation.h"
 #include "Base/Renderer/Renderer.h"
+#include "Base/Object/Line/Line.h"
 
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
@@ -72,4 +73,8 @@ private:
 	std::vector<Model*> WeaponModel_;
 
 	//ParticleSystem* particle;
+	Line* line = nullptr;
+	Line* line2 = nullptr;
+	WorldTransform world_Line;
+	WorldTransform world_Line2;
 };

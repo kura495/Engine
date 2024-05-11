@@ -7,6 +7,7 @@
 #include "PipelineState/Standard/Standard.h"
 #include "PipelineState/PostProsess/PostProsessPSO.h"
 #include "PipelineState/Skinning/Skinning.h"
+#include "PipelineState/DrawLine/DrawLinePSO.h"
 
 class PSOManager
 {

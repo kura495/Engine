@@ -6,3 +6,7 @@ struct VertexData final {
 	Vector2 texcoord;
 	Vector3 normal;
 };
+//struct VertexLineData final {
+//	Vector4 position;
+//	//Vector4 end;
+//};

@@ -354,26 +354,3 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 
 	return skinCluster;
 }
-
-std::vector<Model*> Model::SkeletonDebugInit(Skeleton& skeleton, std::vector<WorldTransform>& worlds)
-{
-	std::vector<Model*> models;
-	worlds.resize(skeleton.joints.size());
-	for (int it = 0; it < skeleton.joints.size(); it++) {
-
-	}
-	return models;
-}
-
-void Model::SkeletonDebugUpdate(Skeleton& skeleton, const Animation& animation, float animationTime, std::vector<WorldTransform>& worlds)
-{
-	for (Joint& joint : skeleton.joints) {
-		// 対象のJointのAnimationがあれば、値の適用を行う。下記のif文はC++17から可能になった初期化付きif文
-		if (auto it = animation.nodeAnimations.find(joint.name); it != animation.nodeAnimations.end()) {
-			const NodeAnimation& rootNodeAnimation = (*it).second;
-			worlds[joint.index].transform_.scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames, animationTime);
-			worlds[joint.index].transform_.quaternion = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames, animationTime);
-			worlds[joint.index].transform_.translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames, animationTime);
-		}
-	}
-}

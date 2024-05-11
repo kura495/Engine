@@ -184,13 +184,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
     <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
+    <ClCompile Include="Base\Object\Line\Line.cpp" />
     <ClCompile Include="Base\Object\Manaer\ObjectManager.cpp" />
     <ClCompile Include="Base\Object\Mesh\Mesh.cpp" />
     <ClCompile Include="Base\Object\Model\Model.cpp" />
     <ClCompile Include="Base\Common\Engine\MyEngine.cpp" />
     <ClCompile Include="Base\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.cpp" />
-    <ClCompile Include="Base\PipelineState\DrawLine\DrawLine.cpp" />
+    <ClCompile Include="Base\PipelineState\DrawLine\DrawLinePSO.cpp" />
     <ClCompile Include="Base\PipelineState\PostProsess\PostProsessPSO.cpp" />
     <ClCompile Include="Base\PipelineState\Skinning\Skinning.cpp" />
     <ClCompile Include="Base\PipelineState\Standard\Standard.cpp" />
@@ -255,6 +256,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Math\Vector\Vector3.h" />
     <ClInclude Include="Base\Math\Vector\Vector4.h" />
     <ClInclude Include="Base\Math\Vector\VectorCalc.h" />
+    <ClInclude Include="Base\Object\Line\Line.h" />
     <ClInclude Include="Base\Object\Manaer\ObjectManager.h" />
     <ClInclude Include="Base\Object\Mesh\Mesh.h" />
     <ClInclude Include="Base\Object\Model\Model.h" />
@@ -265,7 +267,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Common\Engine\MyEngine.h" />
     <ClInclude Include="Base\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.h" />
-    <ClInclude Include="Base\PipelineState\DrawLine\DrawLine.h" />
+    <ClInclude Include="Base\PipelineState\DrawLine\DrawLinePSO.h" />
     <ClInclude Include="Base\PipelineState\IPipelineStateObject.h" />
     <ClInclude Include="Base\PipelineState\PipeLineTags.h" />
     <ClInclude Include="Base\PipelineState\PostProsess\PostProsessPSO.h" />
@@ -325,6 +327,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="resources\hlsl\Line.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="resources\hlsl\Object3d.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -337,6 +344,22 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="resources\hlsl\Line.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="resources\hlsl\Line.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="resources\hlsl\Object3d.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

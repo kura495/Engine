@@ -17,7 +17,10 @@ ShaderCompiler* shaderCompiler = ShaderCompiler::GetInstance();
 	postProsessPSO->Initalize();
 	std::unique_ptr<Skinning> skinning = std::make_unique<Skinning>();
 	skinning->Initalize();
+	std::unique_ptr<DrawLinePSO> drawLinePSO = std::make_unique<DrawLinePSO>();
+	drawLinePSO->Initalize();
 	AddPipeline(standard->GetPSO(),PipelineType::Standerd);
 	AddPipeline(postProsessPSO->GetPSO(),PipelineType::PostProsessPSO);
 	AddPipeline(skinning->GetPSO(),PipelineType::Skinning);
+	AddPipeline(drawLinePSO->GetPSO(),PipelineType::DrawLine);
 }
