@@ -22,6 +22,7 @@ public:
 
 private:
 	Player* player_ = nullptr;
+	Animation* animationSystem = nullptr;
 	Animation animation;
 	// 攻撃範囲内ならtrue
 	bool ChackOnAttack();

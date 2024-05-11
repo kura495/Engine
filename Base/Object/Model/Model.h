@@ -28,19 +28,12 @@ class Model
 {
 public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
-	void SkeletonUpdate(Skeleton& skeleton);
-	void SkinClusterUpdate(SkinCluster& skinCluster, Skeleton& skeleton);
 	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection);
 	void SkinDraw(const WorldTransform& transform,const ViewProjection& viewProjection,const SkinCluster& skinCluster);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
-	//skeletonAnimation
-	Skeleton CreateSkeleton(const Node& rootNode);
-	int32_t CreateJoint(const Node& node,const std::optional<int32_t>& parent,std::vector<Joint>& joints);
-	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
-	SkinCluster CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData);
 
 	ModelData& GetModelData() { return modelData_; }
 

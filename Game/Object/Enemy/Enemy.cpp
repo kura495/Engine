@@ -7,16 +7,18 @@ void Enemy::Initialize(std::vector<Model*> models)
 	models[0]->GetModelData().material.textureFilePath;
 	world_.Initialize();
 	//world_.transform_.translate.y += 1.0f;
+	animationSystem = new Animation();
+	animationSystem->Init();
 
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
-	skeleton = models_[0]->CreateSkeleton(models_[0]->GetModelData().rootNode);
-	skinCluster = models_[0]->CreateSkinCluster(skeleton, models_[0]->GetModelData());
+	skeleton = animationSystem->CreateSkeleton(models_[0]->GetModelData().rootNode);
+	skinCluster = animationSystem->CreateSkinCluster(skeleton, models_[0]->GetModelData());
 
 	//world_.SetTransform(models_[0]);
-	models_[0]->ApplyAnimation(skeleton, animation, animationTime_);
+	animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
 
-	models_[0]->SkeletonUpdate(skeleton);
-	models_[0]->SkinClusterUpdate(skinCluster, skeleton);
+	animationSystem->SkeletonUpdate(skeleton);
+	animationSystem->SkinClusterUpdate(skinCluster, skeleton);
 }
 
 void Enemy::Update()
@@ -34,10 +36,10 @@ void Enemy::Update()
 
 		animationTime_ = std::fmod(animationTime_, animation.duration);
 	
-		models_[0]->ApplyAnimation(skeleton, animation, animationTime_);
+		animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
 
-		models_[0]->SkeletonUpdate(skeleton);
-		models_[0]->SkinClusterUpdate(skinCluster,skeleton);
+		animationSystem->SkeletonUpdate(skeleton);
+		animationSystem->SkinClusterUpdate(skinCluster,skeleton);
 	}
 
 
