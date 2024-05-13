@@ -25,6 +25,8 @@ public:
 	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
 	SkinCluster CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData);
 
+	void SkeletonDraw();
+
 	float duration; // アニメーション全体の尺(単位は秒)
 	// NodeAnimationの集合　Node名で検索できるようにする
 	std::map<std::string, NodeAnimation> nodeAnimations;
