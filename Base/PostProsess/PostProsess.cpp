@@ -32,22 +32,17 @@ void PostProsess::Create()
 	materialResource = DirectX->CreateBufferResource(sizeof(Vector3));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 
-	materialData->x = 1.0f;
-	materialData->y = 1.0f;
-	materialData->z = 1.0f;
+	materialData->x = 0.0f;
 }
 
 void PostProsess::Update()
 {
 	if (Player::playerMoveValue) {
-		materialData->x = std::min<float>(materialData->x + 0.01f, 0.9f);
-		materialData->y = std::min<float>(materialData->y + 0.01f, 0.9f);
-		materialData->z = std::min<float>(materialData->z + 0.01f, 0.9f);
+		materialData->x = std::min<float>(materialData->x + 0.01f, 0.7f);
 	}
 	else {
-		materialData->x = std::max<float>(materialData->x - 0.01f,0.02125f);
-		materialData->y = std::max<float>(materialData->y - 0.01f, 0.07154f);
-		materialData->z = std::max<float>(materialData->z - 0.01f, 0.00721f);
+		materialData->x = std::max<float>(materialData->x - 0.01f,0.0f);
+
 	}
 }
 

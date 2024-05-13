@@ -17,10 +17,16 @@ ConstantBuffer<Material> gMaterial : register(b0);
 PixelShaderOutput main(VertexShaderOutput input)
 {
     PixelShaderOutput output;
-    // Grayscale
     output.color = gTexture.Sample(gSampler, input.texcoord);
-    //float32_t3 value = dot(output.color.rgb, gMaterial.color);
-    //output.color.rgb = value;
+    // Vignette
+    // 周囲を０に、中心になるほど明るくなるように計算で調整
+    float32_t2 correct = input.texcoord * (1.0f - input.texcoord.yx);
+    // correctだけで計算すると中心の最大値が0.0625で暗すぎるのでScaleで調整。この例では16倍している
+    float vinette = correct.x * correct.y * 16.0f;
+    // とりあえず0.8乗でそれっぽくしてみた
+    vinette = saturate(pow(vinette, gMaterial.color.r));
+    //係数として乗算
+    output.color.rgb *= vinette;
     
     return output;
 }
