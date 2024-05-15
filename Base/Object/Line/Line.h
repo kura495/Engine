@@ -16,11 +16,11 @@ public:
 	~Line() = default;
 
 	void Init();
-	void Update(Vector4 stert);
+	void UpdateVertexData(std::vector<Vector4>& vertices);
 	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection);
 
+	void SetVertexData(std::vector<Vector4>& vertices);
 	void CreateBuffer();
-	void UpdateVertexData(std::vector<Vector4>& vertices);
 
 private:
 	DirectXCommon* directX_ = nullptr;

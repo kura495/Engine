@@ -14,11 +14,21 @@ void Enemy::Initialize(std::vector<Model*> models)
 	skeleton = animationSystem->CreateSkeleton(models_[0]->GetModelData().rootNode);
 	skinCluster = animationSystem->CreateSkinCluster(skeleton, models_[0]->GetModelData());
 
-	//world_.SetTransform(models_[0]);
+	animationTime_ += 1.0f / 60.0f;
+
 	animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
 
 	animationSystem->SkeletonUpdate(skeleton);
 	animationSystem->SkinClusterUpdate(skinCluster, skeleton);
+	
+	animationSystem->CreateBoneLineVertices(skeleton, skeleton.root, point);
+	
+	Lineworld_.Initialize();
+	line = new Line();
+	line->Init();
+	line->SetVertexData(point);
+	line->CreateBuffer();
+	UpdateLine();
 }
 
 void Enemy::Update()
@@ -40,17 +50,30 @@ void Enemy::Update()
 
 		animationSystem->SkeletonUpdate(skeleton);
 		animationSystem->SkinClusterUpdate(skinCluster,skeleton);
+
+		UpdateLine();
 	}
-
-
+	
 	world_.UpdateMatrix();
 }
 
 void Enemy::Draw(const ViewProjection& viewProj)
 {
-	for (Model* model : models_) {
-		model->SkinDraw(world_, viewProj, skinCluster);
+	viewProj;
+	ImGui::Begin("EnemyDraw");
+	ImGui::Checkbox("ModelDraw", &chackBoxflag);
+	ImGui::End();
+	if (chackBoxflag) {
+		for (Model* model : models_) {
+			model->SkinDraw(world_, viewProj, skinCluster);
+		}
 	}
+
+}
+
+void Enemy::DabugDraw(const ViewProjection& viewProj)
+{
+	line->Draw(world_, viewProj);
 }
 
 bool Enemy::ChackOnAttack()
@@ -71,4 +94,19 @@ void Enemy::ChasePlayer()
 		return;
 	}
 	world_.transform_.translate += PtoEdistance / 60.0f;
+}
+
+void Enemy::UpdateLine()
+{
+	point.clear();
+	const Joint& parentJoint = skeleton.joints[skeleton.root];
+	for (int32_t childIndex : parentJoint.children)
+	{
+		const Joint& childJoint = skeleton.joints[childIndex];
+		point.push_back({ parentJoint.skeletonSpaceMatrix.m[3][0],parentJoint.skeletonSpaceMatrix.m[3][1],parentJoint.skeletonSpaceMatrix.m[3][2],1.0f });
+		point.push_back({ childJoint.skeletonSpaceMatrix.m[3][0],childJoint.skeletonSpaceMatrix.m[3][1],childJoint.skeletonSpaceMatrix.m[3][2],1.0f });
+		animationSystem->CreateBoneLineVertices(skeleton, childIndex, point);
+	}
+
+	line->UpdateVertexData(point);
 }

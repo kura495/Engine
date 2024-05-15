@@ -134,7 +134,9 @@ int32_t Animation::CreateJoint(const Node& node, const std::optional<int32_t>& p
 	joint.name = node.name;
 	joint.localMatrix = node.localMatrix;
 	joint.skeletonSpaceMatrix = CreateIdentity4x4();
-	joint.transform = node.transform;
+	joint.transform.scale = node.transform.scale;
+	joint.transform.quaternion = node.transform.quaternion;
+	joint.transform.translate = node.transform.translate;
 	joint.index = int32_t(joints.size());
 	joint.parent = parent;
 	joints.push_back(joint);

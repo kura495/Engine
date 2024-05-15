@@ -72,9 +72,4 @@ private:
 	std::vector<Model*> glTFplaneModel_;
 	std::vector<Model*> WeaponModel_;
 
-	//ParticleSystem* particle;
-	Line* line = nullptr;
-	Line* line2 = nullptr;
-	WorldTransform world_Line;
-	WorldTransform world_Line2;
 };

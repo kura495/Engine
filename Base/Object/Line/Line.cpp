@@ -9,12 +9,15 @@ void Line::Init(){
 
 }
 
-void Line::Update(Vector4 stert){
-	VertexData vertex;
-	vertex.position = stert;
-	vertex.normal = { 0.0f,0.0f };
-	vertex.texcoord = { 0.0f,0.0f };
-	debugVertices_.push_back(vertex);
+void Line::SetVertexData(std::vector<Vector4>& vertices){
+	for (int it = 0; it < vertices.size();it++) {
+		VertexData vertex;
+		vertex.position = vertices[it];
+		vertex.normal = { 0.0f,0.0f };
+		vertex.texcoord = { 0.0f,0.0f };
+		debugVertices_.push_back(vertex);
+	}
+
 
 }
 
@@ -35,15 +38,15 @@ void Line::Draw(const WorldTransform& transform, const ViewProjection& viewProje
 	//Light
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
-	directX_->GetcommandList()->DrawInstanced(debugVertices_.size(), 1,0,0);
+	directX_->GetcommandList()->DrawInstanced(UINT(debugVertices_.size()), 1,0,0);
 }
 
 void Line::CreateBuffer()
 {
-	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * debugVertices_.size());
+	vertexResource = directX_->CreateBufferResource(sizeof(Vector4) * debugVertices_.size());
 	vertexBufferView.BufferLocation = vertexResource.Get()->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeof(VertexData) * debugVertices_.size();
-	vertexBufferView.StrideInBytes = sizeof(VertexData);
+	vertexBufferView.SizeInBytes = sizeof(Vector4) * (uint32_t)debugVertices_.size();
+	vertexBufferView.StrideInBytes = sizeof(Vector4);
 	Vector4* vertexData{};
 	vertexResource->Map(0 , nullptr, reinterpret_cast<void**>(&vertexData));
 	std::memcpy(vertexData, debugVertices_.data(), sizeof(Vector4) * debugVertices_.size());

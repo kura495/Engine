@@ -37,17 +37,9 @@ void GamePlayState::Initialize()
 		enemy->SetPlayer(player_.get());
 	}
 
-	//particle = new ParticleSystem();
-	//particle->Initalize("resources/circle.png");
-		//Renderer
+	//Renderer
 	renderer_ = Renderer::GetInstance();
 
-	line = new Line();
-	line2 = new Line();
-	line->Init();
-	line2->Init();
-	world_Line.Initialize();
-	world_Line2.Initialize();
 }
 
 void GamePlayState::Update()
@@ -82,9 +74,6 @@ void GamePlayState::Update()
 		enemy->Update();
 	}
 	//particle->Update(viewProjction);
-
-	line->Update({0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f,1.0f});
-	line2->Update({10.0f,10.0f,1.0f,1.0f},{100.0f,100.0f,100.0f,1.0f});
 }
 
 void GamePlayState::Draw()
@@ -110,8 +99,9 @@ void GamePlayState::Draw()
 
 	renderer_->Draw(PipelineType::DrawLine);
 
-	line->Draw(world_Line, viewProjction);
-	line2->Draw(world_Line2, viewProjction);
+	for (Enemy* enemy : enemys_) {
+		enemy->DabugDraw(viewProjction);
+	}
 
 #pragma endregion
 
