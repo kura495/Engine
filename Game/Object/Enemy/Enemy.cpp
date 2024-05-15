@@ -59,7 +59,6 @@ void Enemy::Update()
 
 void Enemy::Draw(const ViewProjection& viewProj)
 {
-	viewProj;
 	ImGui::Begin("EnemyDraw");
 	ImGui::Checkbox("ModelDraw", &chackBoxflag);
 	ImGui::End();
@@ -73,6 +72,7 @@ void Enemy::Draw(const ViewProjection& viewProj)
 
 void Enemy::DabugDraw(const ViewProjection& viewProj)
 {
+
 	line->Draw(world_, viewProj);
 }
 

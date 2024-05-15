@@ -53,9 +53,9 @@ void Line::CreateBuffer()
 
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	materialData->color.x = 1.0f;
-	materialData->color.y = 1.0f;
-	materialData->color.z = 1.0f;
+	materialData->color.x = 0.0f;
+	materialData->color.y = 0.0f;
+	materialData->color.z = 0.0f;
 	materialData->color.w = 1.0f;
 }
 
