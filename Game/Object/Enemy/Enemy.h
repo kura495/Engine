@@ -38,4 +38,6 @@ private:
 	//SkinAnime
 	Skeleton skeleton;
 	SkinCluster skinCluster;
+
+
 };

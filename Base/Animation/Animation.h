@@ -28,7 +28,7 @@ public:
 	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
 	SkinCluster CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData);
 
-	//void SkeletonDraw(Skeleton &skeleton,const WorldTransform world,const ViewProjection& viewProj);
+	void CreateBoneLineVertices(const Skeleton& skeleton, int32_t parentIndex, std::vector<Vector4>& vertices);
 
 	float duration; // アニメーション全体の尺(単位は秒)
 	// NodeAnimationの集合　Node名で検索できるようにする
@@ -36,4 +36,6 @@ public:
 private:
 	DirectXCommon* directX_ = nullptr;
 	SRVManager* srvManager_;
+
+	std::vector<Line*> SkeletonLine;
 };

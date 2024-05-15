@@ -7,33 +7,14 @@ void Line::Init(){
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
 
-	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * 2);
-	vertexBufferView.BufferLocation = vertexResource.Get()->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeof(VertexData) * 2;
-	vertexBufferView.StrideInBytes = sizeof(VertexData);
-	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-
-	vertexData[0].position.x = 10.0f;
-	vertexData[0].position.y = 10.0f;
-	vertexData[0].position.z = 10.0f;
-	vertexData[0].position.w = 1.0f;
-
-	vertexData[1].position.x = 100.0f;
-	vertexData[1].position.y = 100.0f;
-	vertexData[1].position.z = 100.0f;
-	vertexData[1].position.w = 1.0f;
-
-	materialResource = directX_->CreateBufferResource(sizeof(Material));
-	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	materialData->color.x = 1.0f;
-	materialData->color.y = 1.0f;
-	materialData->color.z = 1.0f;
-	materialData->color.w = 1.0f;
 }
 
-void Line::Update(Vector4 stert,Vector4 end){
-	vertexData[0].position = stert;
-	vertexData[1].position = end;
+void Line::Update(Vector4 stert){
+	VertexData vertex;
+	vertex.position = stert;
+	vertex.normal = { 0.0f,0.0f };
+	vertex.texcoord = { 0.0f,0.0f };
+	debugVertices_.push_back(vertex);
 
 }
 
@@ -54,5 +35,30 @@ void Line::Draw(const WorldTransform& transform, const ViewProjection& viewProje
 	//Light
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
-	directX_->GetcommandList()->DrawInstanced(2, 1, 0, 0);
+	directX_->GetcommandList()->DrawInstanced(debugVertices_.size(), 1,0,0);
+}
+
+void Line::CreateBuffer()
+{
+	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * debugVertices_.size());
+	vertexBufferView.BufferLocation = vertexResource.Get()->GetGPUVirtualAddress();
+	vertexBufferView.SizeInBytes = sizeof(VertexData) * debugVertices_.size();
+	vertexBufferView.StrideInBytes = sizeof(VertexData);
+	Vector4* vertexData{};
+	vertexResource->Map(0 , nullptr, reinterpret_cast<void**>(&vertexData));
+	std::memcpy(vertexData, debugVertices_.data(), sizeof(Vector4) * debugVertices_.size());
+
+	materialResource = directX_->CreateBufferResource(sizeof(Material));
+	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	materialData->color.x = 1.0f;
+	materialData->color.y = 1.0f;
+	materialData->color.z = 1.0f;
+	materialData->color.w = 1.0f;
+}
+
+void Line::UpdateVertexData(std::vector<Vector4>& vertices)
+{
+	Vector4* vertexData{};
+	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	std::memcpy(vertexData, vertices.data(), sizeof(Vector4) * vertices.size());
 }

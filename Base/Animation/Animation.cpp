@@ -120,8 +120,6 @@ Skeleton Animation::CreateSkeleton(const Node& rootNode)
 
 	skeleton.root = CreateJoint(rootNode, {}, skeleton.joints);
 
-	skeleton.debugLine.resize(skeleton.joints.size() - 1);
-
 	//名前とindexのマッピングを行いアクセスしやすくする
 	for (const Joint& joint : skeleton.joints) {
 		skeleton.jointMap.emplace(joint.name, joint.index);
@@ -235,7 +233,14 @@ SkinCluster Animation::CreateSkinCluster(const Skeleton& skeleton, const ModelDa
 	return skinCluster;
 }
 
-//void Animation::SkeletonDraw(Skeleton &skeleton, const WorldTransform world, const ViewProjection &viewProj)
-//{
-//
-//}
+void Animation::CreateBoneLineVertices(const Skeleton& skeleton, int32_t parentIndex, std::vector<Vector4>& vertices)
+{
+	const Joint& parentJoint = skeleton.joints[parentIndex];
+	for (int32_t childIndex : parentJoint.children)
+	{
+		const Joint& childJoint = skeleton.joints[childIndex];
+		vertices.push_back({ parentJoint.skeletonSpaceMatrix.m[3][0],parentJoint.skeletonSpaceMatrix.m[3][1],parentJoint.skeletonSpaceMatrix.m[3][2],1.0f });
+		vertices.push_back({ childJoint.skeletonSpaceMatrix.m[3][0],childJoint.skeletonSpaceMatrix.m[3][1],childJoint.skeletonSpaceMatrix.m[3][2],1.0f });
+		CreateBoneLineVertices(skeleton, childIndex, vertices);
+	}
+}
