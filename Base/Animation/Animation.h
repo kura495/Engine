@@ -8,6 +8,9 @@
 #include "Base/Math/Vector/VectorCalc.h"
 #include "ModelData.h"
 #include "Base/Math/Matrix/MatrixCalc.h"
+#include "Base/WorldTransform/WorldTransform.h"
+#include "Base/ViewProj/ViewProjection.h"
+
 
 // アニメーション構造体
 class Animation {
@@ -25,7 +28,7 @@ public:
 	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
 	SkinCluster CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData);
 
-	void SkeletonDraw();
+	//void SkeletonDraw(Skeleton &skeleton,const WorldTransform world,const ViewProjection& viewProj);
 
 	float duration; // アニメーション全体の尺(単位は秒)
 	// NodeAnimationの集合　Node名で検索できるようにする

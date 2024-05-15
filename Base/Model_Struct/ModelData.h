@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Base/Manager/SRV/SRVManager.h"
 #include <vector>
+#include "Base/Object/Line/Line.h"
 
 struct Node {
 	TransformQua transform;
@@ -24,8 +25,9 @@ struct Joint {
 
 struct Skeleton {
 	int32_t root;							// RootJointのIndex
-	std::map<std::string, int32_t> jointMap;//Joint名とIndexとの辞書
-	std::vector<Joint> joints;				//所属しているJoint
+	std::map<std::string, int32_t> jointMap;// Joint名とIndexとの辞書
+	std::vector<Joint> joints;				// 所属しているJoint
+	std::vector<Line*> debugLine;			// デバッグ用の線を引く
 };
 
 struct VertexWeightData {

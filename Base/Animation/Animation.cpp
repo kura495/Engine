@@ -120,6 +120,8 @@ Skeleton Animation::CreateSkeleton(const Node& rootNode)
 
 	skeleton.root = CreateJoint(rootNode, {}, skeleton.joints);
 
+	skeleton.debugLine.resize(skeleton.joints.size() - 1);
+
 	//名前とindexのマッピングを行いアクセスしやすくする
 	for (const Joint& joint : skeleton.joints) {
 		skeleton.jointMap.emplace(joint.name, joint.index);
@@ -232,3 +234,8 @@ SkinCluster Animation::CreateSkinCluster(const Skeleton& skeleton, const ModelDa
 
 	return skinCluster;
 }
+
+//void Animation::SkeletonDraw(Skeleton &skeleton, const WorldTransform world, const ViewProjection &viewProj)
+//{
+//
+//}
