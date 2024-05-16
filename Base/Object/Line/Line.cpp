@@ -9,8 +9,8 @@ void Line::Init(){
 
 	Matrix4x4 matA = CreateIdentity4x4();
 	Matrix4x4 matB = CreateIdentity4x4();
-
-	matB += matB;
+	
+	matB = matB + matB;
 
 	matA *= matB;
 

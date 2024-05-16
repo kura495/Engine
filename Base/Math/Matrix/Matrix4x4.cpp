@@ -76,3 +76,16 @@ Quaternion Matrix4x4::GetRotation() {
     }
     return IdentityQuaternion();
 }
+
+Matrix4x4 Matrix4x4::Transpose()
+{
+    Matrix4x4 tmpm;
+    for (int l = 0; l < 4; l++)
+    {
+        for (int c = 0; c < 4; c++)
+        {
+            tmpm.m[l][c] = m[c][l];
+        }
+    }
+    return tmpm;
+}

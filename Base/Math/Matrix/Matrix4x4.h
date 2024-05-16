@@ -2,6 +2,7 @@
 #include "Math/Vector/Vector3.h"
 #include "Math/Quaternion/Quaternion.h"
 
+
 class Matrix4x4 final {
 public:
 	static const int kMatrixNum = 4;
@@ -9,10 +10,8 @@ public:
 //関数
 public:
 	/*オペレーター*/
-
 	/*add*/
-	Matrix4x4 operator+(const Matrix4x4& input) {
-
+	Matrix4x4 operator+(const Matrix4x4 &input){
 		for (int i = 0; i < kMatrixNum; i++) {
 			for (int j = 0; j < kMatrixNum; j++) {
 				this->m[i][j] = this->m[i][j] + input.m[i][j];
@@ -20,17 +19,14 @@ public:
 		}
 		return *this;
 	}
-	Matrix4x4 operator+=(const Matrix4x4& input) {
+	Matrix4x4 operator+=(const Matrix4x4 &input) {
 
-		for (int i = 0; i < kMatrixNum; i++) {
-			for (int j = 0; j < kMatrixNum; j++) {
-				this->m[i][j] = this->m[i][j] + input.m[i][j];
-			}
-		}
+		*this = *this + input;
+
 		return *this;
 	}
 	/*subtract*/
-	Matrix4x4 operator-(const Matrix4x4& input) {
+	Matrix4x4 operator-(const Matrix4x4 &input) {
 
 		for (int i = 0; i < kMatrixNum; i++) {
 			for (int j = 0; j < kMatrixNum; j++) {
@@ -39,17 +35,14 @@ public:
 		}
 		return *this;
 	}
-	Matrix4x4 operator-=(const Matrix4x4& input) {
+	Matrix4x4 operator-=(const Matrix4x4 &input) {
 
-		for (int i = 0; i < kMatrixNum; i++) {
-			for (int j = 0; j < kMatrixNum; j++) {
-				this->m[i][j] = this->m[i][j] - input.m[i][j];
-			}
-		}
+		*this = *this - input;
+
 		return *this;
 	}
 	/*Multiply*/
-	Matrix4x4 operator*(const Matrix4x4& input) {
+	Matrix4x4 operator*(const Matrix4x4 &input) {
 		Matrix4x4 result;
 		for (int i = 0; i < kMatrixNum; i++) {
 			for (int j = 0; j < kMatrixNum; j++) {
@@ -60,34 +53,33 @@ public:
 		return result;
 	}
 	Matrix4x4 operator*=(const Matrix4x4 &input) {
-		
+
 		*this = *this * input;
 
 		return *this;
 	}
 
+	//行列からScaleの値を抜き出す
+	//return : Vector3
 	Vector3 GetScale();
 
+	//行列からRotateの値を抜き出す
+	//return : Quaternion
 	Quaternion GetRotation();
 
+	//行列からTranslateの値を抜き出す
+	//return : Vector3
 	inline Vector3 GetTransform(){
 		Vector3 result;
 		result = { m[3][0],m[3][1],m[3][2] };
 		return result;
 	}
 
-	Matrix4x4 Transpose()
-    {
-        Matrix4x4 tmpm;
-        for (int l = 0; l < 4; l++)
-        {
-            for (int c = 0; c < 4; c++)
-            {
-                tmpm.m[l][c] = m[c][l];
-            }
-        }
-        return tmpm;
-    }
+	//行列を反転 転置行列をつくる
+	//return : Matrix4x4
+	Matrix4x4 Transpose();
+
+	static float det
 
 	/*Matrix4x4 Inverse()
 	{

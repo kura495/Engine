@@ -10,7 +10,7 @@ void Enemy::Initialize(std::vector<Model*> models)
 	animationSystem = new Animation();
 	animationSystem->Init();
 
-	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
+	animation = Animation::LoadAnimationFile("resources/human", "human.gltf");
 	skeleton = animationSystem->CreateSkeleton(models_[0]->GetModelData().rootNode);
 	skinCluster = animationSystem->CreateSkinCluster(skeleton, models_[0]->GetModelData());
 
