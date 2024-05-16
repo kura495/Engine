@@ -8,6 +8,63 @@ public:
 	float m[kMatrixNum][kMatrixNum];
 //関数
 public:
+	/*オペレーター*/
+
+	/*add*/
+	Matrix4x4 operator+(const Matrix4x4& input) {
+
+		for (int i = 0; i < kMatrixNum; i++) {
+			for (int j = 0; j < kMatrixNum; j++) {
+				this->m[i][j] = this->m[i][j] + input.m[i][j];
+			}
+		}
+		return *this;
+	}
+	Matrix4x4 operator+=(const Matrix4x4& input) {
+
+		for (int i = 0; i < kMatrixNum; i++) {
+			for (int j = 0; j < kMatrixNum; j++) {
+				this->m[i][j] = this->m[i][j] + input.m[i][j];
+			}
+		}
+		return *this;
+	}
+	/*subtract*/
+	Matrix4x4 operator-(const Matrix4x4& input) {
+
+		for (int i = 0; i < kMatrixNum; i++) {
+			for (int j = 0; j < kMatrixNum; j++) {
+				this->m[i][j] = this->m[i][j] - input.m[i][j];
+			}
+		}
+		return *this;
+	}
+	Matrix4x4 operator-=(const Matrix4x4& input) {
+
+		for (int i = 0; i < kMatrixNum; i++) {
+			for (int j = 0; j < kMatrixNum; j++) {
+				this->m[i][j] = this->m[i][j] - input.m[i][j];
+			}
+		}
+		return *this;
+	}
+	/*Multiply*/
+	Matrix4x4 operator*(const Matrix4x4& input) {
+		Matrix4x4 result;
+		for (int i = 0; i < kMatrixNum; i++) {
+			for (int j = 0; j < kMatrixNum; j++) {
+				result.m[i][j] = this->m[i][0] * input.m[0][j] + this->m[i][1] * input.m[1][j] + this->m[i][2] * input.m[2][j] + this->m[i][3] * input.m[3][j];
+			}
+		}
+
+		return result;
+	}
+	Matrix4x4 operator*=(const Matrix4x4 &input) {
+		
+		*this = *this * input;
+
+		return *this;
+	}
 
 	Vector3 GetScale();
 

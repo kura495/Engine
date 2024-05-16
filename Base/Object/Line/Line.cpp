@@ -7,6 +7,20 @@ void Line::Init(){
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
 
+	Matrix4x4 matA = CreateIdentity4x4();
+	Matrix4x4 matB = CreateIdentity4x4();
+
+	matB += matB;
+
+	matA *= matB;
+
+	Matrix4x4 matC = CreateIdentity4x4();
+	Matrix4x4 matD = CreateIdentity4x4();
+
+	matC += matD;
+
+	matC = Multiply(matC , matD);
+
 }
 
 void Line::SetVertexData(std::vector<Vector4>& vertices){
