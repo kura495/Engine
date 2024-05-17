@@ -82,7 +82,7 @@ void Sphere::Initialize()
 	//ライティングをする
 	materialData->color = color_;
 	materialData->enableLighting = Lighting::phong;
-	materialData->uvTransform = CreateIdentity4x4();
+	materialData->uvTransform = Matrix4x4::CreateIdentity();
 	materialData->shiniess = 10.0f;
 }
 

@@ -9,14 +9,23 @@ public:
 	//jsonにマクロを利用して構造体を登録
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector3, x, y, z)
 public:
-	friend inline Vector3 operator+(const Vector3& v1, const Vector3& v2) {
-		Vector3 me;
-		me.x = v1.x + v2.x;
-		me.y = v1.y + v2.y;
-		me.z = v1.z + v2.z;
-		return me;
+
+	/*オペレーター*/
+	/*add*/
+	Vector3 operator+(const Vector3& input) {
+		this->x = this->x + input.x;
+		this->y = this->y + input.y;
+		this->z = this->z + input.z;
+		return *this;
 	}
-	Vector3 operator-(Vector3 other) {
+	Vector3 operator+=(const Vector3& input) {
+		
+		*this = *this + input;
+
+		return *this;
+	}
+	/*subtruct*/
+	Vector3 operator-(const Vector3& other) {
 		Vector3 me;
 		me.x = this->x - other.x;
 		me.y = this->y - other.y;
@@ -25,9 +34,6 @@ public:
 	}
 	inline Vector3 operator==(const Vector3& v1) const{
 		return { v1.x,v1.y,v1.z };
-	}
-	inline Vector3 operator+=(const Vector3& other){
-		return *this = *this + other;
 	}
 	Vector3 operator*(float other) {
 		Vector3 me;

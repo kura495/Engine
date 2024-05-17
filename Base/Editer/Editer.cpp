@@ -122,6 +122,6 @@ void Editer::Manipulator()
 
 void Editer::Grid()
 {
-	Matrix4x4 IdentityMat = CreateIdentity4x4();
+	Matrix4x4 IdentityMat = Matrix4x4::CreateIdentity();
 	ImGuizmo::DrawGrid(&viewProjection_->matView.m[0][0], &viewProjection_->matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 }

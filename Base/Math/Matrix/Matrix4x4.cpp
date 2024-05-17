@@ -1,4 +1,26 @@
-#include "Matrix4x4.h"
+﻿#include "Matrix4x4.h"
+
+Matrix4x4 Matrix4x4::CreateIdentity()
+{
+    Matrix4x4 result = {
+    1.0f, 0.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 0.0f, 1.0f,
+    };
+    return result;
+}
+
+Matrix4x4 Matrix4x4::Multiply(const Matrix4x4& input1, const Matrix4x4& input2)
+{
+    Matrix4x4 result;
+    for (int i = 0; i < kMatrixNum; i++) {
+        for (int j = 0; j < kMatrixNum; j++) {
+            result.m[i][j] = input1.m[i][0] * input2.m[0][j] + input1.m[i][1] * input2.m[1][j] + input1.m[i][2] * input2.m[2][j] + input1.m[i][3] * input2.m[3][j];
+        }
+    }
+    return result;
+}
 
 Vector3 Matrix4x4::GetScale() {
 	Vector3 result;
@@ -31,9 +53,6 @@ Quaternion Matrix4x4::GetRotation() {
         max = pw;
     }
 
-//Vector3 Matrix4x4::GetRotation(const Matrix4x4& m1) {
-//	return { 0,0,0 };
-//}
     if (selected == 0) {
         float x = std::sqrt(px) * 0.5f;
         float d = 1 / (4 * x);
@@ -77,6 +96,18 @@ Quaternion Matrix4x4::GetRotation() {
     return IdentityQuaternion();
 }
 
+Matrix4x4 Matrix4x4::Transpose(const Matrix4x4& input)
+{
+    Matrix4x4 tmpm;
+    for (int l = 0; l < 4; l++)
+    {
+        for (int c = 0; c < 4; c++)
+        {
+            tmpm.m[l][c] = input.m[c][l];
+        }
+    }
+    return tmpm;
+}
 Matrix4x4 Matrix4x4::Transpose()
 {
     Matrix4x4 tmpm;
@@ -84,8 +115,152 @@ Matrix4x4 Matrix4x4::Transpose()
     {
         for (int c = 0; c < 4; c++)
         {
-            tmpm.m[l][c] = m[c][l];
+            tmpm.m[l][c] = this->m[c][l];
         }
     }
     return tmpm;
+}
+
+float Matrix4x4::det(const Matrix4x4& input)
+{
+    float result;
+    result = input.m[0][0] * input.m[1][1] * input.m[2][2] * input.m[3][3]
+        + input.m[0][0] * input.m[1][2] * input.m[2][3] * input.m[3][1]
+        + input.m[0][0] * input.m[1][3] * input.m[2][1] * input.m[3][2]  //3行目
+        - input.m[0][0] * input.m[1][3] * input.m[2][2] * input.m[3][1]
+        - input.m[0][0] * input.m[1][2] * input.m[2][1] * input.m[3][3]
+        - input.m[0][0] * input.m[1][1] * input.m[2][3] * input.m[3][2]  //6行目
+        - input.m[0][1] * input.m[1][0] * input.m[2][2] * input.m[3][3]
+        - input.m[0][2] * input.m[1][0] * input.m[2][3] * input.m[3][1]
+        - input.m[0][3] * input.m[1][0] * input.m[2][1] * input.m[3][2]  //9行目
+        + input.m[0][3] * input.m[1][0] * input.m[2][2] * input.m[3][1]
+        + input.m[0][2] * input.m[1][0] * input.m[2][1] * input.m[3][3]
+        + input.m[0][1] * input.m[1][0] * input.m[2][3] * input.m[3][2]  //12行目
+        + input.m[0][1] * input.m[1][2] * input.m[2][0] * input.m[3][3]
+        + input.m[0][2] * input.m[1][3] * input.m[2][0] * input.m[3][1]
+        + input.m[0][3] * input.m[1][1] * input.m[2][0] * input.m[3][2]  //15行目
+        - input.m[0][3] * input.m[1][2] * input.m[2][0] * input.m[3][1]
+        - input.m[0][2] * input.m[1][1] * input.m[2][0] * input.m[3][3]
+        - input.m[0][1] * input.m[1][3] * input.m[2][0] * input.m[3][2]  //18行目
+        - input.m[0][1] * input.m[1][2] * input.m[2][3] * input.m[3][0]
+        - input.m[0][2] * input.m[1][3] * input.m[2][1] * input.m[3][0]
+        - input.m[0][3] * input.m[1][1] * input.m[2][2] * input.m[3][0]  //21行目
+        + input.m[0][3] * input.m[1][2] * input.m[2][1] * input.m[3][0]
+        + input.m[0][2] * input.m[1][1] * input.m[2][3] * input.m[3][0]
+        + input.m[0][1] * input.m[1][3] * input.m[2][2] * input.m[3][0]; //24行目
+
+        return result;
+}
+float Matrix4x4::det()
+{
+    float result;
+    result = this->m[0][0] * this->m[1][1] * this->m[2][2] * this->m[3][3]
+        + this->m[0][0] * this->m[1][2] * this->m[2][3] * this->m[3][1]
+        + this->m[0][0] * this->m[1][3] * this->m[2][1] * this->m[3][2]  //3行目
+        - this->m[0][0] * this->m[1][3] * this->m[2][2] * this->m[3][1]
+        - this->m[0][0] * this->m[1][2] * this->m[2][1] * this->m[3][3]
+        - this->m[0][0] * this->m[1][1] * this->m[2][3] * this->m[3][2]  //6行目
+        - this->m[0][1] * this->m[1][0] * this->m[2][2] * this->m[3][3]
+        - this->m[0][2] * this->m[1][0] * this->m[2][3] * this->m[3][1]
+        - this->m[0][3] * this->m[1][0] * this->m[2][1] * this->m[3][2]  //9行目
+        + this->m[0][3] * this->m[1][0] * this->m[2][2] * this->m[3][1]
+        + this->m[0][2] * this->m[1][0] * this->m[2][1] * this->m[3][3]
+        + this->m[0][1] * this->m[1][0] * this->m[2][3] * this->m[3][2]  //12行目
+        + this->m[0][1] * this->m[1][2] * this->m[2][0] * this->m[3][3]
+        + this->m[0][2] * this->m[1][3] * this->m[2][0] * this->m[3][1]
+        + this->m[0][3] * this->m[1][1] * this->m[2][0] * this->m[3][2]  //15行目
+        - this->m[0][3] * this->m[1][2] * this->m[2][0] * this->m[3][1]
+        - this->m[0][2] * this->m[1][1] * this->m[2][0] * this->m[3][3]
+        - this->m[0][1] * this->m[1][3] * this->m[2][0] * this->m[3][2]  //18行目
+        - this->m[0][1] * this->m[1][2] * this->m[2][3] * this->m[3][0]
+        - this->m[0][2] * this->m[1][3] * this->m[2][1] * this->m[3][0]
+        - this->m[0][3] * this->m[1][1] * this->m[2][2] * this->m[3][0]  //21行目
+        + this->m[0][3] * this->m[1][2] * this->m[2][1] * this->m[3][0]
+        + this->m[0][2] * this->m[1][1] * this->m[2][3] * this->m[3][0]
+        + this->m[0][1] * this->m[1][3] * this->m[2][2] * this->m[3][0]; //24行目
+
+    return result;
+}
+
+Matrix4x4 Matrix4x4::Inverse(const Matrix4x4& input)
+{
+    Matrix4x4 result;
+    float resultDet = Matrix4x4::det(input);
+    result.m[0][0] = (input.m[1][1] * input.m[2][2] * input.m[3][3] + input.m[1][2] * input.m[2][3] * input.m[3][1] + input.m[1][3] * input.m[2][1] * input.m[3][2]
+        - input.m[1][3] * input.m[2][2] * input.m[3][1] - input.m[1][2] * input.m[2][1] * input.m[3][3] - input.m[1][1] * input.m[2][3] * input.m[3][2]) / resultDet;
+    result.m[0][1] = (-input.m[0][1] * input.m[2][2] * input.m[3][3] - input.m[0][2] * input.m[2][3] * input.m[3][1] - input.m[0][3] * input.m[2][1] * input.m[3][2]
+        + input.m[0][3] * input.m[2][2] * input.m[3][1] + input.m[0][2] * input.m[2][1] * input.m[3][3] + input.m[0][1] * input.m[2][3] * input.m[3][2]) / resultDet;
+    result.m[0][2] = (input.m[0][1] * input.m[1][2] * input.m[3][3] + input.m[0][2] * input.m[1][3] * input.m[3][1] + input.m[0][3] * input.m[1][1] * input.m[3][2]
+        - input.m[0][3] * input.m[1][2] * input.m[3][1] - input.m[0][2] * input.m[1][1] * input.m[3][3] - input.m[0][1] * input.m[1][3] * input.m[3][2]) / resultDet;
+    result.m[0][3] = (-input.m[0][1] * input.m[1][2] * input.m[2][3] - input.m[0][2] * input.m[1][3] * input.m[2][1] - input.m[0][3] * input.m[1][1] * input.m[2][2]
+        + input.m[0][3] * input.m[1][2] * input.m[2][1] + input.m[0][2] * input.m[1][1] * input.m[2][3] + input.m[0][1] * input.m[1][3] * input.m[2][2]) / resultDet;
+
+    result.m[1][0] = (-input.m[1][0] * input.m[2][2] * input.m[3][3] - input.m[1][2] * input.m[2][3] * input.m[3][0] - input.m[1][3] * input.m[2][0] * input.m[3][2]
+        + input.m[1][3] * input.m[2][2] * input.m[3][0] + input.m[1][2] * input.m[2][0] * input.m[3][3] + input.m[1][0] * input.m[2][3] * input.m[3][2]) / resultDet;
+    result.m[1][1] = (input.m[0][0] * input.m[2][2] * input.m[3][3] + input.m[0][2] * input.m[2][3] * input.m[3][0] + input.m[0][3] * input.m[2][0] * input.m[3][2]
+        - input.m[0][3] * input.m[2][2] * input.m[3][0] - input.m[0][2] * input.m[2][0] * input.m[3][3] - input.m[0][0] * input.m[2][3] * input.m[3][2]) / resultDet;
+    result.m[1][2] = (-input.m[0][0] * input.m[1][2] * input.m[3][3] - input.m[0][2] * input.m[1][3] * input.m[3][0] - input.m[0][3] * input.m[1][0] * input.m[3][2]
+        + input.m[0][3] * input.m[1][2] * input.m[3][0] + input.m[0][2] * input.m[1][0] * input.m[3][3] + input.m[0][0] * input.m[1][3] * input.m[3][2]) / resultDet;
+    result.m[1][3] = (input.m[0][0] * input.m[1][2] * input.m[2][3] + input.m[0][2] * input.m[1][3] * input.m[2][0] + input.m[0][3] * input.m[1][0] * input.m[2][2]
+        - input.m[0][3] * input.m[1][2] * input.m[2][0] - input.m[0][2] * input.m[1][0] * input.m[2][3] - input.m[0][0] * input.m[1][3] * input.m[2][2]) / resultDet;
+
+    result.m[2][0] = (input.m[1][0] * input.m[2][1] * input.m[3][3] + input.m[1][1] * input.m[2][3] * input.m[3][0] + input.m[1][3] * input.m[2][0] * input.m[3][1]
+        - input.m[1][3] * input.m[2][1] * input.m[3][0] - input.m[1][1] * input.m[2][0] * input.m[3][3] - input.m[1][0] * input.m[2][3] * input.m[3][1]) / resultDet;
+    result.m[2][1] = (-input.m[0][0] * input.m[2][1] * input.m[3][3] - input.m[0][1] * input.m[2][3] * input.m[3][0] - input.m[0][3] * input.m[2][0] * input.m[3][1]
+        + input.m[0][3] * input.m[2][1] * input.m[3][0] + input.m[0][1] * input.m[2][0] * input.m[3][3] + input.m[0][0] * input.m[2][3] * input.m[3][1]) / resultDet;
+    result.m[2][2] = (input.m[0][0] * input.m[1][1] * input.m[3][3] + input.m[0][1] * input.m[1][3] * input.m[3][0] + input.m[0][3] * input.m[1][0] * input.m[3][1]
+        - input.m[0][3] * input.m[1][1] * input.m[3][0] - input.m[0][1] * input.m[1][0] * input.m[3][3] - input.m[0][0] * input.m[1][3] * input.m[3][1]) / resultDet;
+    result.m[2][3] = (-input.m[0][0] * input.m[1][1] * input.m[2][3] - input.m[0][1] * input.m[1][3] * input.m[2][0] - input.m[0][3] * input.m[1][0] * input.m[2][1]
+        + input.m[0][3] * input.m[1][1] * input.m[2][0] + input.m[0][1] * input.m[1][0] * input.m[2][3] + input.m[0][0] * input.m[1][3] * input.m[2][1]) / resultDet;
+
+    result.m[3][0] = (-input.m[1][0] * input.m[2][1] * input.m[3][2] - input.m[1][1] * input.m[2][2] * input.m[3][0] - input.m[1][2] * input.m[2][0] * input.m[3][1]
+        + input.m[1][2] * input.m[2][1] * input.m[3][0] + input.m[1][1] * input.m[2][0] * input.m[3][2] + input.m[1][0] * input.m[2][2] * input.m[3][1]) / resultDet;
+    result.m[3][1] = (input.m[0][0] * input.m[2][1] * input.m[3][2] + input.m[0][1] * input.m[2][2] * input.m[3][0] + input.m[0][2] * input.m[2][0] * input.m[3][1]
+        - input.m[0][2] * input.m[2][1] * input.m[3][0] - input.m[0][1] * input.m[2][0] * input.m[3][2] - input.m[0][0] * input.m[2][2] * input.m[3][1]) / resultDet;
+    result.m[3][2] = (-input.m[0][0] * input.m[1][1] * input.m[3][2] - input.m[0][1] * input.m[1][2] * input.m[3][0] - input.m[0][2] * input.m[1][0] * input.m[3][1]
+        + input.m[0][2] * input.m[1][1] * input.m[3][0] + input.m[0][1] * input.m[1][0] * input.m[3][2] + input.m[0][0] * input.m[1][2] * input.m[3][1]) / resultDet;
+    result.m[3][3] = (input.m[0][0] * input.m[1][1] * input.m[2][2] + input.m[0][1] * input.m[1][2] * input.m[2][0] + input.m[0][2] * input.m[1][0] * input.m[2][1]
+        - input.m[0][2] * input.m[1][1] * input.m[2][0] - input.m[0][1] * input.m[1][0] * input.m[2][2] - input.m[0][0] * input.m[1][2] * input.m[2][1]) / resultDet;
+    return result;
+}
+Matrix4x4 Matrix4x4::Inverse()
+{
+    Matrix4x4 result;
+    float resultDet = Matrix4x4::det(*this);
+    result.m[0][0] = (this->m[1][1] * this->m[2][2] * this->m[3][3] + this->m[1][2] * this->m[2][3] * this->m[3][1] + this->m[1][3] * this->m[2][1] * this->m[3][2]
+        - this->m[1][3] * this->m[2][2] * this->m[3][1] - this->m[1][2] * this->m[2][1] * this->m[3][3] - this->m[1][1] * this->m[2][3] * this->m[3][2]) / resultDet;
+    result.m[0][1] = (-this->m[0][1] * this->m[2][2] * this->m[3][3] - this->m[0][2] * this->m[2][3] * this->m[3][1] - this->m[0][3] * this->m[2][1] * this->m[3][2]
+        + this->m[0][3] * this->m[2][2] * this->m[3][1] + this->m[0][2] * this->m[2][1] * this->m[3][3] + this->m[0][1] * this->m[2][3] * this->m[3][2]) / resultDet;
+    result.m[0][2] = (this->m[0][1] * this->m[1][2] * this->m[3][3] + this->m[0][2] * this->m[1][3] * this->m[3][1] + this->m[0][3] * this->m[1][1] * this->m[3][2]
+        - this->m[0][3] * this->m[1][2] * this->m[3][1] - this->m[0][2] * this->m[1][1] * this->m[3][3] - this->m[0][1] * this->m[1][3] * this->m[3][2]) / resultDet;
+    result.m[0][3] = (-this->m[0][1] * this->m[1][2] * this->m[2][3] - this->m[0][2] * this->m[1][3] * this->m[2][1] - this->m[0][3] * this->m[1][1] * this->m[2][2]
+        + this->m[0][3] * this->m[1][2] * this->m[2][1] + this->m[0][2] * this->m[1][1] * this->m[2][3] + this->m[0][1] * this->m[1][3] * this->m[2][2]) / resultDet;
+
+    result.m[1][0] = (-this->m[1][0] * this->m[2][2] * this->m[3][3] - this->m[1][2] * this->m[2][3] * this->m[3][0] - this->m[1][3] * this->m[2][0] * this->m[3][2]
+        + this->m[1][3] * this->m[2][2] * this->m[3][0] + this->m[1][2] * this->m[2][0] * this->m[3][3] + this->m[1][0] * this->m[2][3] * this->m[3][2]) / resultDet;
+    result.m[1][1] = (this->m[0][0] * this->m[2][2] * this->m[3][3] + this->m[0][2] * this->m[2][3] * this->m[3][0] + this->m[0][3] * this->m[2][0] * this->m[3][2]
+        - this->m[0][3] * this->m[2][2] * this->m[3][0] - this->m[0][2] * this->m[2][0] * this->m[3][3] - this->m[0][0] * this->m[2][3] * this->m[3][2]) / resultDet;
+    result.m[1][2] = (-this->m[0][0] * this->m[1][2] * this->m[3][3] - this->m[0][2] * this->m[1][3] * this->m[3][0] - this->m[0][3] * this->m[1][0] * this->m[3][2]
+        + this->m[0][3] * this->m[1][2] * this->m[3][0] + this->m[0][2] * this->m[1][0] * this->m[3][3] + this->m[0][0] * this->m[1][3] * this->m[3][2]) / resultDet;
+    result.m[1][3] = (this->m[0][0] * this->m[1][2] * this->m[2][3] + this->m[0][2] * this->m[1][3] * this->m[2][0] + this->m[0][3] * this->m[1][0] * this->m[2][2]
+        - this->m[0][3] * this->m[1][2] * this->m[2][0] - this->m[0][2] * this->m[1][0] * this->m[2][3] - this->m[0][0] * this->m[1][3] * this->m[2][2]) / resultDet;
+
+    result.m[2][0] = (this->m[1][0] * this->m[2][1] * this->m[3][3] + this->m[1][1] * this->m[2][3] * this->m[3][0] + this->m[1][3] * this->m[2][0] * this->m[3][1]
+        - this->m[1][3] * this->m[2][1] * this->m[3][0] - this->m[1][1] * this->m[2][0] * this->m[3][3] - this->m[1][0] * this->m[2][3] * this->m[3][1]) / resultDet;
+    result.m[2][1] = (-this->m[0][0] * this->m[2][1] * this->m[3][3] - this->m[0][1] * this->m[2][3] * this->m[3][0] - this->m[0][3] * this->m[2][0] * this->m[3][1]
+        + this->m[0][3] * this->m[2][1] * this->m[3][0] + this->m[0][1] * this->m[2][0] * this->m[3][3] + this->m[0][0] * this->m[2][3] * this->m[3][1]) / resultDet;
+    result.m[2][2] = (this->m[0][0] * this->m[1][1] * this->m[3][3] + this->m[0][1] * this->m[1][3] * this->m[3][0] + this->m[0][3] * this->m[1][0] * this->m[3][1]
+        - this->m[0][3] * this->m[1][1] * this->m[3][0] - this->m[0][1] * this->m[1][0] * this->m[3][3] - this->m[0][0] * this->m[1][3] * this->m[3][1]) / resultDet;
+    result.m[2][3] = (-this->m[0][0] * this->m[1][1] * this->m[2][3] - this->m[0][1] * this->m[1][3] * this->m[2][0] - this->m[0][3] * this->m[1][0] * this->m[2][1]
+        + this->m[0][3] * this->m[1][1] * this->m[2][0] + this->m[0][1] * this->m[1][0] * this->m[2][3] + this->m[0][0] * this->m[1][3] * this->m[2][1]) / resultDet;
+
+    result.m[3][0] = (-this->m[1][0] * this->m[2][1] * this->m[3][2] - this->m[1][1] * this->m[2][2] * this->m[3][0] - this->m[1][2] * this->m[2][0] * this->m[3][1]
+        + this->m[1][2] * this->m[2][1] * this->m[3][0] + this->m[1][1] * this->m[2][0] * this->m[3][2] + this->m[1][0] * this->m[2][2] * this->m[3][1]) / resultDet;
+    result.m[3][1] = (this->m[0][0] * this->m[2][1] * this->m[3][2] + this->m[0][1] * this->m[2][2] * this->m[3][0] + this->m[0][2] * this->m[2][0] * this->m[3][1]
+        - this->m[0][2] * this->m[2][1] * this->m[3][0] - this->m[0][1] * this->m[2][0] * this->m[3][2] - this->m[0][0] * this->m[2][2] * this->m[3][1]) / resultDet;
+    result.m[3][2] = (-this->m[0][0] * this->m[1][1] * this->m[3][2] - this->m[0][1] * this->m[1][2] * this->m[3][0] - this->m[0][2] * this->m[1][0] * this->m[3][1]
+        + this->m[0][2] * this->m[1][1] * this->m[3][0] + this->m[0][1] * this->m[1][0] * this->m[3][2] + this->m[0][0] * this->m[1][2] * this->m[3][1]) / resultDet;
+    result.m[3][3] = (this->m[0][0] * this->m[1][1] * this->m[2][2] + this->m[0][1] * this->m[1][2] * this->m[2][0] + this->m[0][2] * this->m[1][0] * this->m[2][1]
+        - this->m[0][2] * this->m[1][1] * this->m[2][0] - this->m[0][1] * this->m[1][0] * this->m[2][2] - this->m[0][0] * this->m[1][2] * this->m[2][1]) / resultDet;
+    return result;
 }

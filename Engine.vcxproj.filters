@@ -221,6 +221,7 @@
     <ClCompile Include="Base\PipelineState\Skinning\Skinning.cpp" />
     <ClCompile Include="Base\PipelineState\DrawLine\DrawLinePSO.cpp" />
     <ClCompile Include="Base\Object\Line\Line.cpp" />
+    <ClCompile Include="Base\Math\Vector\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">

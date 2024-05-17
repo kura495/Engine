@@ -94,7 +94,7 @@ void Animation::SkeletonUpdate(Skeleton& skeleton)
 		joint.localMatrix = MakeAffineMatrix(joint.transform.scale, joint.transform.quaternion, joint.transform.translate);
 		// 親がいれば親の行列を掛ける
 		if (joint.parent) {
-			joint.skeletonSpaceMatrix = Multiply(joint.localMatrix, skeleton.joints[*joint.parent].skeletonSpaceMatrix);
+			joint.skeletonSpaceMatrix = Matrix4x4::Multiply(joint.localMatrix, skeleton.joints[*joint.parent].skeletonSpaceMatrix);
 		}
 		else {
 			joint.skeletonSpaceMatrix = joint.localMatrix;
@@ -108,8 +108,8 @@ void Animation::SkinClusterUpdate(SkinCluster& skinCluster, Skeleton& skeleton)
 
 	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); ++jointIndex) {
 		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());
-		skinCluster.mappedPaette[jointIndex].skeletonSpaceMatrix = Multiply(skinCluster.inverseBindPoseMatrices[jointIndex], skeleton.joints[jointIndex].skeletonSpaceMatrix);
-		skinCluster.mappedPaette[jointIndex].skeletonSpaceInverseTransposeMatrix = Transpose((Inverse(skinCluster.mappedPaette[jointIndex].skeletonSpaceMatrix)));
+		skinCluster.mappedPaette[jointIndex].skeletonSpaceMatrix = Matrix4x4::Multiply(skinCluster.inverseBindPoseMatrices[jointIndex], skeleton.joints[jointIndex].skeletonSpaceMatrix);
+		skinCluster.mappedPaette[jointIndex].skeletonSpaceInverseTransposeMatrix = Matrix4x4::Transpose((Matrix4x4::Inverse(skinCluster.mappedPaette[jointIndex].skeletonSpaceMatrix)));
 	}
 
 }
@@ -133,7 +133,7 @@ int32_t Animation::CreateJoint(const Node& node, const std::optional<int32_t>& p
 	Joint joint;
 	joint.name = node.name;
 	joint.localMatrix = node.localMatrix;
-	joint.skeletonSpaceMatrix = CreateIdentity4x4();
+	joint.skeletonSpaceMatrix = Matrix4x4::CreateIdentity();
 	joint.transform.scale = node.transform.scale;
 	joint.transform.quaternion = node.transform.quaternion;
 	joint.transform.translate = node.transform.translate;
@@ -202,7 +202,7 @@ SkinCluster Animation::CreateSkinCluster(const Skeleton& skeleton, const ModelDa
 
 	// InverseBindPoseMatrixを格納する場所を作成して、単位行列で埋める
 	skinCluster.inverseBindPoseMatrices.resize(skeleton.joints.size());
-	std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), CreateIdentity4x4);
+	std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), Matrix4x4::CreateIdentity);
 
 	// modelDataを解析してInfluenceを埋める
 	// Modelの中のSkinClusterの情報を解析

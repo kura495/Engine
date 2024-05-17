@@ -24,7 +24,7 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	
-	materialData->uvTransform = CreateIdentity4x4();
+	materialData->uvTransform = Matrix4x4::CreateIdentity();
 
 	materialData->enableLighting = lightFlag;
 	materialData->color = color_;
@@ -138,7 +138,7 @@ ModelData Model::LoadModelFile(const std::string& directoryPath, const std::stri
 			//1 左手系のBindPoseMatrixを作る
 			Matrix4x4 bindPoseMatrix = MakeAffineMatrix({ scale.x,scale.y,scale.z }, { rotate.x,-rotate.y,-rotate.z,rotate.w }, { -translate.x,translate.y,translate.z });
 			//InverseBindPoseMatrixを作る
-			jointWeightData.inverseBindPoseMatrix = Inverse(bindPoseMatrix);
+			jointWeightData.inverseBindPoseMatrix = Matrix4x4::Inverse(bindPoseMatrix);
 			// Weight情報を取り出す
 			for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; ++weightIndex) {
 				jointWeightData.vertexWeights.push_back({bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId});

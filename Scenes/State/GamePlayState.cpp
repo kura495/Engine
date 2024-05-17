@@ -2,6 +2,19 @@
 
 void GamePlayState::Initialize()
 {
+	// DEBUG : 消すように！！
+	Vector3 VectorA(1, 1, 1);
+	Vector3 VectorB(1, 1, 1);
+
+	VectorA = VectorA + VectorB;
+	
+	Vector3 VectorC(1, 1, 1);
+	Vector3 VectorD(1, 1, 1);
+
+	VectorC = VectorD;
+
+
+
 	//基本機能生成
 	debugcamera_ = new DebugCamera();
 	debugcamera_->Initialize();

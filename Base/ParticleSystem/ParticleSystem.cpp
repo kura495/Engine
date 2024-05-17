@@ -27,7 +27,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 
 	materialData->enableLighting = false;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
-	materialData->uvTransform = CreateIdentity4x4();
+	materialData->uvTransform = Matrix4x4::CreateIdentity();
 
 	Pipeline_ = std::make_unique<ParticlePipeLine>();
 	Pipeline_->Initalize();
@@ -82,7 +82,7 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 		(*particleIt).matWorld = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, Vector3{ 0.0f,0.0f,0.0f }, (*particleIt).transform.translate);
 
 		if (numInstance < kNumMaxInstance) {
-			instancinsData[numInstance].matWorld = Multiply((*particleIt).matWorld, billboardMatrix);
+			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
 			instancinsData[numInstance].color = (*particleIt).color;
 			++numInstance;
 		}

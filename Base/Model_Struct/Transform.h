@@ -17,18 +17,18 @@ public:
 	//jsonにマクロを利用して構造体を登録
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(TransformQua,scale,quaternion,translate)
 public:
-	friend inline TransformQua operator+(const TransformQua& t1, const TransformQua& t2) {
+	TransformQua operator+(const TransformQua& t2) {
 		TransformQua result{};
-		result.scale = t1.scale + t2.scale;
-		result.quaternion = t1.quaternion + t2.quaternion;
-		result.translate = t1.translate + t2.translate;
+		result.scale = scale + t2.scale;
+		result.quaternion = quaternion + t2.quaternion;
+		result.translate = translate + t2.translate;
 		return result;
 	}
-	friend inline TransformQua operator+=(const TransformQua& t1, const TransformQua& t2) {
+	TransformQua operator+=(const TransformQua& t2) {
 		TransformQua result{
-			.scale = t1.scale + t2.scale,
-			.quaternion = t1.quaternion + t2.quaternion,
-			.translate = t1.translate + t2.translate
+			.scale = scale + t2.scale,
+			.quaternion = quaternion + t2.quaternion,
+			.translate = translate + t2.translate
 		};
 		return result;
 	}

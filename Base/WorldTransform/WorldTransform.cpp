@@ -3,7 +3,7 @@
 
 void WorldTransform::Initialize()
 {
-	matWorld_ = CreateIdentity4x4();
+	matWorld_ = Matrix4x4::CreateIdentity();
 	CreateConstBuffer();
 	Map();
 	TransferMatrix();
@@ -22,7 +22,7 @@ void WorldTransform::Map()
 void WorldTransform::TransferMatrix()
 {
 	constMap->matWorld = matWorld_;
-	constMap->WorldInverseTranspose = Transpose(Inverse(matWorld_));
+	constMap->WorldInverseTranspose = Matrix4x4::Transpose(Matrix4x4::Inverse(matWorld_)); 
 }
 
 void WorldTransform::UpdateMatrix()
@@ -31,7 +31,7 @@ void WorldTransform::UpdateMatrix()
 	matWorld_ = AffineMatrix;
 	//親があれば親のワールド行列を掛ける
 	if (parent_) {
-		matWorld_ = Multiply(matWorld_, parent_->matWorld_);
+		matWorld_ = Matrix4x4::Multiply(matWorld_, parent_->matWorld_);
 	}
 
 	TransferMatrix();

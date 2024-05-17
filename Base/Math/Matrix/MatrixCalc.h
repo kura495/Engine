@@ -4,27 +4,20 @@
 #include <numbers>
 #include <cmath>
 
-Matrix4x4 CreateIdentity4x4();
-Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2);
-Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
 Matrix4x4 MakeScaleMatrix(const Vector3& scale);
 Matrix4x4 MakeRotateXMatrix(float radian);
 Matrix4x4 MakeRotateYMatrix(float radian);
 Matrix4x4 MakeRotateZMatrix(float radian);
 Matrix4x4 MakeRotateMatrix(Vector3 rotation);
 Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion);
-Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Quaternion& quaternion, const Vector3& translate);
 Matrix4x4 MakeTranslateMatrix(const Vector3& translate);
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate,const Vector3& translate);
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
 
 //ベクトルをQuaternionで回転させた結果のベクトルを求める
 Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
 //Quaternionから回転行列を求める
 Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion);
-
-float det(const Matrix4x4& m);
-Matrix4x4 Inverse(const Matrix4x4& m);
-Matrix4x4 Transpose(const Matrix4x4& m);
 //透視投影行列
 Matrix4x4 MakePerspectiveFovMatrix(float FovY, float aspectRatio, float nearClip, float farClip);
 //ビューポート変換行列

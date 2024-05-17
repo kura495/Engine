@@ -29,8 +29,8 @@ void ViewProjection::TransferMatrix(){
 }
 
 void ViewProjection::UpdateViewMatrix(){
-	CameraMatrix = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, rotation_, translation_);
-	matView = Inverse(CameraMatrix);
+	CameraMatrix = MakeAffineMatrix(Vector3{ 1.0f,1.0f,1.0f }, rotation_, translation_);
+	matView = Matrix4x4::Inverse(CameraMatrix);
 }
 
 void ViewProjection::UpdateProjectionMatrix(){

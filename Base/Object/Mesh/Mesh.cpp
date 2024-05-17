@@ -21,15 +21,15 @@ void Mesh::Initialize()
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	materialData->color = color_;
 	materialData->enableLighting = false;
-	materialData->uvTransform = CreateIdentity4x4();
+	materialData->uvTransform = Matrix4x4::CreateIdentity();
 }
 
 void Mesh::Draw(const WorldTransform& transform, const ViewProjection& viewProjection, const uint32_t textureHandle)
 {
 	
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTranformTriAngle.scale);
-	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTranformTriAngle.rotate.z));
-	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTranformTriAngle.translate));
+	uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTranformTriAngle.rotate.z));
+	uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTranformTriAngle.translate));
 	materialData->uvTransform = uvTransformMatrix;
 	
 	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);

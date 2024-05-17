@@ -9,9 +9,11 @@ public:
 	float m[kMatrixNum][kMatrixNum];
 //関数
 public:
+	
+#pragma region Oparator
 	/*オペレーター*/
 	/*add*/
-	Matrix4x4 operator+(const Matrix4x4 &input){
+	Matrix4x4 operator+(const Matrix4x4& input){
 		for (int i = 0; i < kMatrixNum; i++) {
 			for (int j = 0; j < kMatrixNum; j++) {
 				this->m[i][j] = this->m[i][j] + input.m[i][j];
@@ -19,14 +21,14 @@ public:
 		}
 		return *this;
 	}
-	Matrix4x4 operator+=(const Matrix4x4 &input) {
+	Matrix4x4 operator+=(const Matrix4x4& input) {
 
 		*this = *this + input;
 
 		return *this;
 	}
 	/*subtract*/
-	Matrix4x4 operator-(const Matrix4x4 &input) {
+	Matrix4x4 operator-(const Matrix4x4& input) {
 
 		for (int i = 0; i < kMatrixNum; i++) {
 			for (int j = 0; j < kMatrixNum; j++) {
@@ -35,14 +37,14 @@ public:
 		}
 		return *this;
 	}
-	Matrix4x4 operator-=(const Matrix4x4 &input) {
+	Matrix4x4 operator-=(const Matrix4x4& input) {
 
 		*this = *this - input;
 
 		return *this;
 	}
 	/*Multiply*/
-	Matrix4x4 operator*(const Matrix4x4 &input) {
+	Matrix4x4 operator*(const Matrix4x4& input) {
 		Matrix4x4 result;
 		for (int i = 0; i < kMatrixNum; i++) {
 			for (int j = 0; j < kMatrixNum; j++) {
@@ -52,13 +54,18 @@ public:
 
 		return result;
 	}
-	Matrix4x4 operator*=(const Matrix4x4 &input) {
+	Matrix4x4 operator*=(const Matrix4x4& input) {
 
 		*this = *this * input;
 
 		return *this;
 	}
+#pragma endregion 
+	//[0][0],[1][1],[2][2],[3][3]に1を代入、それ以外に0を代入した行列を作成
+	//return : Matrix4x4
+	static Matrix4x4 CreateIdentity();
 
+	static Matrix4x4 Multiply(const Matrix4x4& input1, const Matrix4x4& input2);
 	//行列からScaleの値を抜き出す
 	//return : Vector3
 	Vector3 GetScale();
@@ -77,49 +84,21 @@ public:
 
 	//行列を反転 転置行列をつくる
 	//return : Matrix4x4
+	static Matrix4x4 Transpose(const Matrix4x4& m);
+	//行列を反転 転置行列をつくる
+	//return : Matrix4x4
 	Matrix4x4 Transpose();
+	//行列式の計算
+	//return : float
+	static float det(const Matrix4x4& m);
+	//行列式の計算
+	//return : float
+	float det();
+	//逆行列の計算
+	//return : Matrix4x4
+	static Matrix4x4 Inverse(const Matrix4x4& m);
+	//逆行列の計算
+	//return : Matrix4x4
+	Matrix4x4 Inverse();
 
-	static float det
-
-	/*Matrix4x4 Inverse()
-	{
-		Matrix4x4 result;
-		float resultDet = det(*this);
-		result.m[0][0] = ((*this).m[1][1] * (*this).m[2][2] * (*this).m[3][3] + (*this).m[1][2] * (*this).m[2][3] * (*this).m[3][1] + (*this).m[1][3] * (*this).m[2][1] * (*this).m[3][2]
-			- (*this).m[1][3] * (*this).m[2][2] * (*this).m[3][1] - (*this).m[1][2] * (*this).m[2][1] * (*this).m[3][3] - (*this).m[1][1] * (*this).m[2][3] * (*this).m[3][2]) / resultDet;
-		result.m[0][1] = (-(*this).m[0][1] * (*this).m[2][2] * (*this).m[3][3] - (*this).m[0][2] * (*this).m[2][3] * (*this).m[3][1] - (*this).m[0][3] * (*this).m[2][1] * (*this).m[3][2]
-			+ (*this).m[0][3] * (*this).m[2][2] * (*this).m[3][1] + (*this).m[0][2] * (*this).m[2][1] * (*this).m[3][3] + (*this).m[0][1] * (*this).m[2][3] * (*this).m[3][2]) / resultDet;
-		result.m[0][2] = ((*this).m[0][1] * (*this).m[1][2] * (*this).m[3][3] + (*this).m[0][2] * (*this).m[1][3] * (*this).m[3][1] + (*this).m[0][3] * (*this).m[1][1] * (*this).m[3][2]
-			- (*this).m[0][3] * (*this).m[1][2] * (*this).m[3][1] - (*this).m[0][2] * (*this).m[1][1] * (*this).m[3][3] - (*this).m[0][1] * (*this).m[1][3] * (*this).m[3][2]) / resultDet;
-		result.m[0][3] = (-(*this).m[0][1] * (*this).m[1][2] * (*this).m[2][3] - (*this).m[0][2] * (*this).m[1][3] * (*this).m[2][1] - (*this).m[0][3] * (*this).m[1][1] * (*this).m[2][2]
-			+ (*this).m[0][3] * (*this).m[1][2] * (*this).m[2][1] + (*this).m[0][2] * (*this).m[1][1] * (*this).m[2][3] + (*this).m[0][1] * (*this).m[1][3] * (*this).m[2][2]) / resultDet;
-
-		result.m[1][0] = (-(*this).m[1][0] * (*this).m[2][2] * (*this).m[3][3] - (*this).m[1][2] * (*this).m[2][3] * (*this).m[3][0] - (*this).m[1][3] * (*this).m[2][0] * (*this).m[3][2]
-			+ (*this).m[1][3] * (*this).m[2][2] * (*this).m[3][0] + (*this).m[1][2] * (*this).m[2][0] * (*this).m[3][3] + (*this).m[1][0] * (*this).m[2][3] * (*this).m[3][2]) / resultDet;
-		result.m[1][1] = ((*this).m[0][0] * (*this).m[2][2] * (*this).m[3][3] + (*this).m[0][2] * (*this).m[2][3] * (*this).m[3][0] + (*this).m[0][3] * (*this).m[2][0] * (*this).m[3][2]
-			- (*this).m[0][3] * (*this).m[2][2] * (*this).m[3][0] - (*this).m[0][2] * (*this).m[2][0] * (*this).m[3][3] - (*this).m[0][0] * (*this).m[2][3] * (*this).m[3][2]) / resultDet;
-		result.m[1][2] = (-(*this).m[0][0] * (*this).m[1][2] * (*this).m[3][3] - (*this).m[0][2] * (*this).m[1][3] * (*this).m[3][0] - (*this).m[0][3] * (*this).m[1][0] * (*this).m[3][2]
-			+ (*this).m[0][3] * (*this).m[1][2] * (*this).m[3][0] + (*this).m[0][2] * (*this).m[1][0] * (*this).m[3][3] + (*this).m[0][0] * (*this).m[1][3] * (*this).m[3][2]) / resultDet;
-		result.m[1][3] = ((*this).m[0][0] * (*this).m[1][2] * (*this).m[2][3] + (*this).m[0][2] * (*this).m[1][3] * (*this).m[2][0] + (*this).m[0][3] * (*this).m[1][0] * (*this).m[2][2]
-			- (*this).m[0][3] * (*this).m[1][2] * (*this).m[2][0] - (*this).m[0][2] * (*this).m[1][0] * (*this).m[2][3] - (*this).m[0][0] * (*this).m[1][3] * (*this).m[2][2]) / resultDet;
-
-		result.m[2][0] = ((*this).m[1][0] * (*this).m[2][1] * (*this).m[3][3] + (*this).m[1][1] * (*this).m[2][3] * (*this).m[3][0] + (*this).m[1][3] * (*this).m[2][0] * (*this).m[3][1]
-			- (*this).m[1][3] * (*this).m[2][1] * (*this).m[3][0] - (*this).m[1][1] * (*this).m[2][0] * (*this).m[3][3] - (*this).m[1][0] * (*this).m[2][3] * (*this).m[3][1]) / resultDet;
-		result.m[2][1] = (-(*this).m[0][0] * (*this).m[2][1] * (*this).m[3][3] - (*this).m[0][1] * (*this).m[2][3] * (*this).m[3][0] - (*this).m[0][3] * (*this).m[2][0] * (*this).m[3][1]
-			+ (*this).m[0][3] * (*this).m[2][1] * (*this).m[3][0] + (*this).m[0][1] * (*this).m[2][0] * (*this).m[3][3] + (*this).m[0][0] * (*this).m[2][3] * (*this).m[3][1]) / resultDet;
-		result.m[2][2] = ((*this).m[0][0] * (*this).m[1][1] * (*this).m[3][3] + (*this).m[0][1] * (*this).m[1][3] * (*this).m[3][0] + (*this).m[0][3] * (*this).m[1][0] * (*this).m[3][1]
-			- (*this).m[0][3] * (*this).m[1][1] * (*this).m[3][0] - (*this).m[0][1] * (*this).m[1][0] * (*this).m[3][3] - (*this).m[0][0] * (*this).m[1][3] * (*this).m[3][1]) / resultDet;
-		result.m[2][3] = (-(*this).m[0][0] * (*this).m[1][1] * (*this).m[2][3] - (*this).m[0][1] * (*this).m[1][3] * (*this).m[2][0] - (*this).m[0][3] * (*this).m[1][0] * (*this).m[2][1]
-			+ (*this).m[0][3] * (*this).m[1][1] * (*this).m[2][0] + (*this).m[0][1] * (*this).m[1][0] * (*this).m[2][3] + (*this).m[0][0] * (*this).m[1][3] * (*this).m[2][1]) / resultDet;
-
-		result.m[3][0] = (-(*this).m[1][0] * (*this).m[2][1] * (*this).m[3][2] - (*this).m[1][1] * (*this).m[2][2] * (*this).m[3][0] - (*this).m[1][2] * (*this).m[2][0] * (*this).m[3][1]
-			+ (*this).m[1][2] * (*this).m[2][1] * (*this).m[3][0] + (*this).m[1][1] * (*this).m[2][0] * (*this).m[3][2] + (*this).m[1][0] * (*this).m[2][2] * (*this).m[3][1]) / resultDet;
-		result.m[3][1] = ((*this).m[0][0] * (*this).m[2][1] * (*this).m[3][2] + (*this).m[0][1] * (*this).m[2][2] * (*this).m[3][0] + (*this).m[0][2] * (*this).m[2][0] * (*this).m[3][1]
-			- (*this).m[0][2] * (*this).m[2][1] * (*this).m[3][0] - (*this).m[0][1] * (*this).m[2][0] * (*this).m[3][2] - (*this).m[0][0] * (*this).m[2][2] * (*this).m[3][1]) / resultDet;
-		result.m[3][2] = (-(*this).m[0][0] * (*this).m[1][1] * (*this).m[3][2] - (*this).m[0][1] * (*this).m[1][2] * (*this).m[3][0] - (*this).m[0][2] * (*this).m[1][0] * (*this).m[3][1]
-			+ (*this).m[0][2] * (*this).m[1][1] * (*this).m[3][0] + (*this).m[0][1] * (*this).m[1][0] * (*this).m[3][2] + (*this).m[0][0] * (*this).m[1][2] * (*this).m[3][1]) / resultDet;
-		result.m[3][3] = ((*this).m[0][0] * (*this).m[1][1] * (*this).m[2][2] + (*this).m[0][1] * (*this).m[1][2] * (*this).m[2][0] + (*this).m[0][2] * (*this).m[1][0] * (*this).m[2][1]
-			- (*this).m[0][2] * (*this).m[1][1] * (*this).m[2][0] - (*this).m[0][1] * (*this).m[1][0] * (*this).m[2][2] - (*this).m[0][0] * (*this).m[1][2] * (*this).m[2][1]) / resultDet;
-		return result;
-	}*/
 };
