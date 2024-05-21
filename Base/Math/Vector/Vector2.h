@@ -70,7 +70,7 @@ struct Vector2 final {
 
 		return *this;
 	}
-	Vector2 operator*=(const Vector2& input) {
+	Vector2 operator*=(const float& input) {
 
 		*this = *this * input;
 
@@ -118,3 +118,37 @@ struct Vector2 final {
 //}
 //
 //#pragma endregion 
+/*withfloat*/
+	/*add*/
+//Vector2 operator+(const float& input) {
+//
+//	return *this;
+//}
+//Vector2 operator+=(const float& input) {
+//
+//	*this = *this + input;
+//
+//	return *this;
+//}
+///*subtract*/
+//Vector2 operator-(const float& input) {
+//
+//	return *this;
+//}
+//Vector2 operator-=(const float& input) {
+//
+//	*this = *this - input;
+//
+//	return *this;
+//}
+///*Multiply*/
+//Vector2 operator*(const float& input) {
+//
+//	return *this;
+//}
+//Vector2 operator*=(const float& input) {
+//
+//	*this = *this * input;
+//
+//	return *this;
+//}
