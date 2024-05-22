@@ -4,7 +4,7 @@ struct Vector2 final {
 	float y;
 
 #pragma region Oparator
-	/*オペレーター*/
+	/*繧ｪ繝壹Ξ繝ｼ繧ｿ繝ｼ*/
 	/*add*/
 	Vector2 operator+(const Vector2& input) {
 		this->x = this->x + input.x;
@@ -44,44 +44,44 @@ struct Vector2 final {
 	}
 	/*withfloat*/
 	/*add*/
-	Vector2 operator+(const float& input) {
+	//Vector2 operator+(const float& input) {
 
-		return *this;
-	}
-	Vector2 operator+=(const float& input) {
+	//	return *this;
+	//}
+	//Vector2 operator+=(const float& input) {
 
-		*this = *this + input;
+	//	*this = *this + input;
 
-		return *this;
-	}
-	/*subtract*/
-	Vector2 operator-(const float& input) {
+	//	return *this;
+	//}
+	///*subtract*/
+	//Vector2 operator-(const float& input) {
 
-		return *this;
-	}
-	Vector2 operator-=(const float& input) {
+	//	return *this;
+	//}
+	//Vector2 operator-=(const float& input) {
 
-		*this = *this - input;
+	//	*this = *this - input;
 
-		return *this;
-	}
-	/*Multiply*/
-	Vector2 operator*(const float& input) {
+	//	return *this;
+	//}
+	///*Multiply*/
+	//Vector2 operator*(const float& input) {
 
-		return *this;
-	}
-	Vector2 operator*=(const float& input) {
+	//	return *this;
+	//}
+	//Vector2 operator*=(const float& input) {
 
-		*this = *this * input;
+	//	*this = *this * input;
 
-		return *this;
-	}
+	//	return *this;
+	//}
 #pragma endregion 
 };
 
-// TODO : コピー用
+// TODO : 繧ｳ繝斐�ｼ逕ｨ
 //#pragma region Oparator
-///*オペレーター*/
+///*繧ｪ繝壹Ξ繝ｼ繧ｿ繝ｼ*/
 ///*add*/
 //Vector2 operator+(const Vector2& input) {
 //
