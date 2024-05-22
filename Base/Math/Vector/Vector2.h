@@ -7,8 +7,10 @@ struct Vector2 final {
 	/*オペレーター*/
 	/*add*/
 	Vector2 operator+(const Vector2& input) {
+
 		this->x = this->x + input.x;
 		this->y = this->y + input.y;
+
 		return *this;
 	}
 	Vector2 operator+=(const Vector2& input) {
@@ -19,8 +21,10 @@ struct Vector2 final {
 	}
 	/*subtract*/
 	Vector2 operator-(const Vector2& input) {
+
 		this->x = this->x - input.x;
 		this->y = this->y - input.y;
+
 		return *this;
 	}
 	Vector2 operator-=(const Vector2& input) {
@@ -31,6 +35,7 @@ struct Vector2 final {
 	}
 	/*Multiply*/
 	Vector2 operator*(const Vector2& input) {
+
 		this->x = this->x * input.x;
 		this->y = this->y * input.y;
 
@@ -44,38 +49,47 @@ struct Vector2 final {
 	}
 	/*withfloat*/
 	/*add*/
-	//Vector2 operator+(const float& input) {
+	Vector2 operator+(const float& input) {
 
-	//	return *this;
-	//}
-	//Vector2 operator+=(const float& input) {
+		this->x = this->x + input;
+		this->y = this->y + input;
 
-	//	*this = *this + input;
+		return *this;
+	}
+	Vector2 operator+=(const float& input) {
 
-	//	return *this;
-	//}
-	///*subtract*/
-	//Vector2 operator-(const float& input) {
+		*this = *this + input;
 
-	//	return *this;
-	//}
-	//Vector2 operator-=(const float& input) {
+		return *this;
+	}
+	/*subtract*/
+	Vector2 operator-(const float& input) {
 
-	//	*this = *this - input;
+		this->x = this->x - input;
+		this->y = this->y - input;
 
-	//	return *this;
-	//}
-	///*Multiply*/
-	//Vector2 operator*(const float& input) {
+		return *this;
+	}
+	Vector2 operator-=(const float& input) {
 
-	//	return *this;
-	//}
-	//Vector2 operator*=(const float& input) {
+		*this = *this - input;
 
-	//	*this = *this * input;
+		return *this;
+	}
+	/*Multiply*/
+	Vector2 operator*(const float& input) {
 
-	//	return *this;
-	//}
+		this->x = this->x * input;
+		this->y = this->y * input;
+
+		return *this;
+	}
+	Vector2 operator*=(const float& input) {
+
+		*this = *this * input;
+
+		return *this;
+	}
 #pragma endregion 
 };
 
