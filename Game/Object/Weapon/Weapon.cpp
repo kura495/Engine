@@ -7,7 +7,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 	world_.transform_.translate.x = 0.7f;
 	world_.transform_.translate.z = 1.0f;
 
-	Vector3 cross = Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
+	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
 	firstPos = MakeRotateAxisAngleQuaternion(cross, std::acos(-0.8f));
 	world_.transform_.quaternion = firstPos;
 
@@ -87,7 +87,7 @@ void Weapon::RootUpdate()
 
 void Weapon::AttackInit()
 {
-	Vector3 cross = Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
+	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
 	attackFirstQua = MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
@@ -107,7 +107,7 @@ void Weapon::AttackUpdate()
 {
 	AttackQuaParam_t += 0.05f;
 
-	world_.transform_.quaternion = Slerp(attackFirstQua, attackEndQua,AttackQuaParam_t);
+	world_.transform_.quaternion = Quaternion::Slerp(attackFirstQua, attackEndQua,AttackQuaParam_t);
 
 	if (AttackQuaParam_t >=1.0f) {
 		IsAttackOver = true;

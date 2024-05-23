@@ -158,7 +158,7 @@ Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to)
 {
 	Matrix4x4 result;
 	Vector3 cross = Vector3::Cross(from, to);
-	Vector3 n = Normalize(Vector3::Cross(from, to));
+	Vector3 n = Vector3::Normalize(Vector3::Cross(from, to));
 	// u = -v のとき　つまり反転してしまった時
 	if (from.x == -to.x && from.y == -to.y && from.z == -to.z) {
 		if (from.x != 0.0f || from.y != 0.0f) {

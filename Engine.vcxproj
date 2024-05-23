@@ -183,6 +183,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
     <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="Base\Math\Vector\Vector2.cpp" />
     <ClCompile Include="Base\Math\Vector\Vector3.cpp" />
     <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
     <ClCompile Include="Base\Object\Line\Line.cpp" />

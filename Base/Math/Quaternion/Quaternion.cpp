@@ -1,47 +1,26 @@
 #include "Quaternion.h"
 
-Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs)
-{
-	Quaternion result;
-	Vector3 cross = Vector3::Cross({ lhs.x,lhs.y,lhs.z }, { rhs.x,rhs.y,rhs.z });
-	float dot = Vector3::Dot({ lhs.x,lhs.y,lhs.z },{ rhs.x,rhs.y,rhs.z });
-	result.x = cross.x + rhs.w * lhs.x + lhs.w * rhs.x;
-	result.y = cross.y + rhs.w * lhs.y + lhs.w * rhs.y;
-	result.z = cross.z + rhs.w * lhs.z + lhs.w * rhs.z;
-	result.w = lhs.w * rhs.w - dot;
-
-	return result;
-}
-
-Quaternion IdentityQuaternion()
+Quaternion Quaternion::IdentityQuaternion()
 {
 	return Quaternion({0.0f,0.0f,0.0f,1.0f});
 }
-
-Quaternion Conjugate(const Quaternion& quaternion)
+Quaternion Quaternion::Conjugate(const Quaternion& quaternion)
 {
 	return Quaternion({ quaternion.x*-1.0f,quaternion.y * -1.0f ,quaternion.z * -1.0f ,quaternion.w});
 }
-
-float Norm(const Quaternion& quaternion)
+Quaternion Quaternion::Conjugate()
+{
+	return Quaternion({ this->x * -1.0f,this->y * -1.0f ,this->z * -1.0f ,this->w });
+}
+float Quaternion::Norm(const Quaternion& quaternion)
 {
 	return sqrt(quaternion.x * quaternion.x + quaternion.y * quaternion.y + quaternion.z * quaternion.z + quaternion.w * quaternion.w);
 }
-
-Quaternion Normalize(const Quaternion& quaternion)
+float Quaternion::Norm()
 {
-	Quaternion result{};
-	float norm = Norm(quaternion);
-	if (norm != 0.0f) {
-		result.x = quaternion.x / norm;
-		result.y = quaternion.y / norm;
-		result.z = quaternion.z / norm;
-		result.w = quaternion.w / norm;
-	}
-	return result;
+	return sqrt(this->x * this->x + this->y * this->y + this->z * this->z + this->w * this->w);
 }
-
-Quaternion Inverse(const Quaternion& quaternion)
+Quaternion Quaternion::Inverse(const Quaternion& quaternion)
 {
 	Quaternion result;
 	float norm = Norm(quaternion);
@@ -55,31 +34,47 @@ Quaternion Inverse(const Quaternion& quaternion)
 	}
 	return result;
 }
-
-Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
+Quaternion Quaternion::Inverse()
 {
 	Quaternion result;
-	result.x = axis.x * std::sin(angle/2);
-	result.y = axis.y * std::sin(angle/2);
-	result.z = axis.z * std::sin(angle / 2);
-	result.w = std::cos(angle/2);
+	float norm = this->Norm();
+	norm = norm * norm;
+	Quaternion conj = this->Conjugate();
+	if (norm != 0.0f) {
+		result.x = conj.x / norm;
+		result.y = conj.y / norm;
+		result.z = conj.z / norm;
+		result.w = conj.w / norm;
+	}
 	return result;
 }
-
-Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion)
+Quaternion Quaternion::Normalize(const Quaternion& quaternion)
 {
-	Quaternion fromVector = {vector.x,vector.y,vector.z,0.0f};
-	Quaternion conj = Conjugate(quaternion);
-	Quaternion rotate = Multiply(quaternion, Multiply(fromVector, conj));
-	Vector3 result;
-	result.x = rotate.x;
-	result.y = rotate.y;
-	result.z = rotate.z;
-
+	Quaternion result{};
+	float norm = Norm(quaternion);
+	if (norm != 0.0f) {
+		result.x = quaternion.x / norm;
+		result.y = quaternion.y / norm;
+		result.z = quaternion.z / norm;
+		result.w = quaternion.w / norm;
+	}
+	return result;
+}
+Quaternion Quaternion::Normalize()
+{
+	Quaternion result{};
+	float norm = this->Norm();
+	if (norm != 0.0f) {
+		result.x = this->x / norm;
+		result.y = this->y / norm;
+		result.z = this->z / norm;
+		result.w = this->w / norm;
+	}
 	return result;
 }
 
-Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t)
+
+Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 {
 	Quaternion result;
 	Quaternion Localq0 = q0;
@@ -108,6 +103,29 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 	result.y = scale0 * Localq0.y + scale1 * Localq1.y;
 	result.z = scale0 * Localq0.z + scale1 * Localq1.z;
 	result.w = scale0 * Localq0.w + scale1 * Localq1.w;
+
+	return result;
+}
+
+Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
+{
+	Quaternion result;
+	result.x = axis.x * std::sin(angle/2);
+	result.y = axis.y * std::sin(angle/2);
+	result.z = axis.z * std::sin(angle / 2);
+	result.w = std::cos(angle/2);
+	return result;
+}
+
+Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion)
+{
+	Quaternion fromVector = {vector.x,vector.y,vector.z,0.0f};
+	Quaternion conj = Quaternion::Conjugate(quaternion);
+	Quaternion rotate = quaternion * fromVector * conj;
+	Vector3 result;
+	result.x = rotate.x;
+	result.y = rotate.y;
+	result.z = rotate.z;
 
 	return result;
 }

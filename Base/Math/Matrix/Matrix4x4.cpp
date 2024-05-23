@@ -93,7 +93,7 @@ Quaternion Matrix4x4::GetRotation() {
             w
         );
     }
-    return IdentityQuaternion();
+    return Quaternion::IdentityQuaternion();
 }
 
 Matrix4x4 Matrix4x4::Transpose(const Matrix4x4& input)

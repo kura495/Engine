@@ -3,15 +3,15 @@
 void GamePlayState::Initialize()
 {
 	// DEBUG : 消すように！！
-	Vector2 VectorA(2, 2);
-	float FloatA = 2.0f;
+	Vector3 VectorA(2, 2, 2);
+	Vector3 VectorB(1, 2, 3);
 
-	VectorA = VectorA * FloatA;
+	VectorA = VectorA - VectorB;
 	
-	Vector2 VectorC(2, 2);
+	/*Vector3 VectorC(2, 2, 2);
 	float FloatB = 2.0f;
 
-	VectorC *= FloatB;
+	VectorC *= FloatB;*/
 
 	//基本機能生成
 	debugcamera_ = new DebugCamera();

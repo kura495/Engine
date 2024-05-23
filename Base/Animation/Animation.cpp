@@ -60,7 +60,7 @@ Vector3 Animation::CalculateValue(const std::vector<KeyFrameVector3>& keyframes,
 		if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
 			// 範囲内を補間する
 			float t = (time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time);
-			return VectorLerp(keyframes[index].value,keyframes[nextIndex].value,t);
+			return Vector3::VectorLerp(keyframes[index].value,keyframes[nextIndex].value,t);
 		}
 	}
 
@@ -80,7 +80,7 @@ Quaternion Animation::CalculateValue(const std::vector<KeyFrameQuaternion>& keyf
 		if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
 			// 範囲内を補間する
 			float t = (time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time);
-			return Slerp(keyframes[index].value, keyframes[nextIndex].value, t);
+			return Quaternion::Slerp(keyframes[index].value, keyframes[nextIndex].value, t);
 		}
 	}
 

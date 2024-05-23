@@ -29,7 +29,7 @@ public:
 			world_.transform_.scale += models_[0]->GetModelData().rootNode.localMatrix.GetScale();
 		}
 		
-		world_.transform_.quaternion = Normalize(models_[0]->GetModelData().rootNode.localMatrix.GetRotation());
+		world_.transform_.quaternion = Quaternion::Normalize(models_[0]->GetModelData().rootNode.localMatrix.GetRotation());
 		world_.UpdateMatrix();
 	};
 

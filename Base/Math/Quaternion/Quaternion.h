@@ -9,45 +9,72 @@ public:
 	//jsonにマクロを利用して構造体を登録
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Quaternion, x, y, z, w)
 public:
-	friend inline Quaternion operator+(const Quaternion q1, const Quaternion q2) {
-		Quaternion result;
-		result.x = q1.x + q2.x;
-		result.y = q1.y + q2.y;
-		result.z = q1.z + q2.z;
-		result.w = q1.w + q2.z;
-		return result;
+#pragma region Oparator
+	Quaternion operator+(const Quaternion input)const {
+		 return Quaternion(this->x + input.x, this->y + input.y, this->z + input.z, this->w + input.w);
 	}
-	Quaternion operator+=(const Quaternion q1) {
-		this->x = q1.x;
-		this->y = q1.y;
-		this->z = q1.z;
-		this->w = q1.w;
+	Quaternion operator+=(const Quaternion input) {
+		*this = *this + input;
 		return *this;
 	}
-	inline Quaternion operator==(const Quaternion q1) const {
+	Quaternion operator-(const Quaternion input)const {
+		 return Quaternion(this->x - input.x, this->y - input.y, this->z - input.z, this->w - input.w);
+	}
+	Quaternion operator-=(const Quaternion input) {
+		*this = *this - input;
+		return *this;
+	}
+	Quaternion operator*(const Quaternion input)const {
 		Quaternion result;
-		result.x = q1.x;
-		result.y = q1.y;
-		result.z = q1.z;
-		result.w = q1.w;
+		Vector3 cross = Vector3::Cross({ this->x,this->y,this->z }, { input.x,input.y,input.z });
+		float dot = Vector3::Dot({ this->x,this->y,this->z }, { input.x,input.y,input.z });
+		result.x = cross.x + input.w * this->x + this->w * input.x;
+		result.y = cross.y + input.w * this->y + this->w * input.y;
+		result.z = cross.z + input.w * this->z + this->w * input.z;
+		result.w = this->w * input.w - dot;
+
 		return result;
 	}
+	Quaternion operator*=(const Quaternion input) {
+		*this = *this * input;
+		return *this;
+	}
+#pragma endregion
 public:
+	//単位Quaternionを作る
+	//return Quaternion
+	static Quaternion IdentityQuaternion();
+	//共役Quaternionを返す
+	//return Quaternion
+	static Quaternion Conjugate(const Quaternion& quaternion);
+	//共役Quaternionを返す
+	//return Quaternion
+	Quaternion Conjugate();
+	//Quaternionのnormを返す
+	//return float
+	static float Norm(const Quaternion& quaternion);
+	//Quaternionのnormを返す
+	//return float
+	float Norm();
+	//逆Quaternionを返す
+	//return Quaternion
+	static Quaternion Inverse(const Quaternion& quaternion);
+	//逆Quaternionを返す
+	//return Quaternion
+	Quaternion Inverse();
+	//正規化したQuaternionを返す
+	//return Quaternion
+	static Quaternion Normalize(const Quaternion& quaternion);
+	//正規化したQuaternionを返す
+	//return Quaternion
+	Quaternion Normalize();
+	//球面線形補間
+	//return Quaternion
+	static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 
 };
-//Quaternionの積
-Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs);
-//単位Quaternionを返す
-Quaternion IdentityQuaternion();
-//共役Quaternionを返す
-Quaternion Conjugate(const Quaternion& quaternion);
-//Quaternionのnormを返す
-float Norm(const Quaternion& quaternion);
-//逆Quaternionを返す
-Quaternion Inverse(const Quaternion& quaternion);
+
+
 //任意軸回転を表すQuaternionの生成
 Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
-//Quaternion Lerp(const Quaternion& q0, const Quaternion& q1, float t);
-Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
-//正規化したQuaternionを返す
-Quaternion Normalize(const Quaternion& quaternion);
+

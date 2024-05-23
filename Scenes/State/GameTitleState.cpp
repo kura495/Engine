@@ -52,7 +52,7 @@ void GameTitleState::Update()
 	else if (t > 1.0f) {
 		addParameter *= -1;
 	}
-	texture_world_.transform_.translate = VectorLerp(Stert, End, t);
+	texture_world_.transform_.translate = Vector3::VectorLerp(Stert, End, t);
 
 	texture_world_.UpdateMatrix();
 }

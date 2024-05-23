@@ -91,8 +91,8 @@ void Player::ImGui()
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
 	if (ImGui::Button("Reset")) {
 		world_.transform_.translate = { 0.0f,2.0f,0.0f };
-		world_.transform_.quaternion = IdentityQuaternion();
-		moveQuaternion_ = IdentityQuaternion();
+		world_.transform_.quaternion = Quaternion::IdentityQuaternion();
+		moveQuaternion_ = Quaternion::IdentityQuaternion();
 
 	}
 	ImGui::End();
@@ -172,7 +172,7 @@ void Player::Move()
 		(float)joyState.Gamepad.sThumbLX / SHRT_MAX, 0.0f,
 		(float)joyState.Gamepad.sThumbLY / SHRT_MAX };
 		//正規化をして斜めの移動量を正しくする
-		move = Normalize(move);
+		move = move.Normalize();
 		move.x = move.x * speed;
 		move.y = move.y * speed;
 		move.z = move.z * speed;
@@ -183,7 +183,7 @@ void Player::Move()
 		move = TransformNormal(move, rotateMatrix);
 		move.y = 0.0f;
 		//移動
-		world_.transform_.translate = Add(world_.transform_.translate, move);
+		world_.transform_.translate = world_.transform_.translate + move;
 		playerMoveValue = true;
 		return;
 	}
@@ -221,9 +221,9 @@ void Player::PlayerRoring()
 	sub = lookPoint - world_.transform_.translate;
 
 	//プレイヤーの現在の向き
-	sub = Normalize(sub);
+	sub = sub.Normalize();
 
-	Vector3 cross = Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, sub));
+	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, sub));
 	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
 
 	//行きたい方向のQuaternionの作成

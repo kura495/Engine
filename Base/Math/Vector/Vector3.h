@@ -10,67 +10,86 @@ public:
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector3, x, y, z)
 public:
 
+#pragma region Oparator
 	/*オペレーター*/
 	/*add*/
-	Vector3 operator+(const Vector3& input) {
-		this->x = this->x + input.x;
-		this->y = this->y + input.y;
-		this->z = this->z + input.z;
-		return *this;
+	Vector3 operator+(const Vector3& input)const {
+		return Vector3(this->x + input.x, this->y + input.y, this->z + input.z);
 	}
 	Vector3 operator+=(const Vector3& input) {
-		
 		*this = *this + input;
-
 		return *this;
 	}
-	/*subtruct*/
-	Vector3 operator-(const Vector3& other) {
-		Vector3 me;
-		me.x = this->x - other.x;
-		me.y = this->y - other.y;
-		me.z = this->z - other.z;
-		return me;
+	/*subtract*/
+	Vector3 operator-(const Vector3& input)const {
+		return Vector3(this->x - input.x, this->y - input.y, this->z - input.z);
 	}
-	inline Vector3 operator==(const Vector3& v1) const{
-		return { v1.x,v1.y,v1.z };
+	Vector3 operator-=(const Vector3& input) {
+		*this = *this - input;
+		return *this;
 	}
-	Vector3 operator*(float other) {
-		Vector3 me;
-		me.x = this->x * other;
-		me.y = this->y * other;
-		me.z = this->z * other;
-		return me;
+	/*Multiply*/
+	Vector3 operator*(const Vector3& input)const {
+		return Vector3(this->x * input.x, this->y * input.y, this->z * input.z);
 	}
-	inline Vector3 operator/(float other) {
-		Vector3 me;
-		me.x = this->x / other;
-		me.y = this->y / other;
-		me.z = this->z / other;
-		return me;
+	Vector3 operator*=(const Vector3& input) {
+		*this = *this * input;
+		return *this;
 	}
+	/*withfloat*/
+	/*add*/
+	Vector3 operator+(const float& input)const {
+		return Vector3(this->x + input, this->y + input, this->z + input);
+	}
+	Vector3 operator+=(const float& input) {
+		*this = *this + input;
+		return *this;
+	}
+	/*subtract*/
+	Vector3 operator-(const float& input)const {
+		return Vector3(this->x - input, this->y - input, this->z - input);
+	}
+	Vector3 operator-=(const float& input) {
+		*this = *this - input;
+		return *this;
+	}
+	/*Multiply*/
+	Vector3 operator*(const float& input)const {
+		return Vector3(this->x * input, this->y * input, this->z * input);
+	}
+	Vector3 operator*=(const float& input) {
+		*this = *this * input;
+		return *this;
+	}
+	Vector3 operator/(const float& input)const {
+		return Vector3(this->x / input, this->y / input, this->z / input);
+	}
+	Vector3 operator/=(const float& input) {
+		*this = *this / input;
+		return *this;
+	}
+#pragma endregion 
 public:
-	static inline float Dot(const Vector3& v1, const Vector3& v2) {
-		float result = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
-		return result;
-	}
-	//ベクトルを
-	inline float Length() {
-		float result{};
-		result = sqrt(Dot({x,y,z},{x,y,z}));
-		return result;
-	}
-	static inline float Length(const Vector3& v1) {
-		float result{};
-		result = sqrt(Dot({ v1.x,v1.y,v1.z},{ v1.x,v1.y,v1.z}));
-		return result;
-	}
-	static inline Vector3 Cross(const Vector3& v1, const Vector3& v2) {
-		Vector3 result;
-		result.x = (v1.y * v2.z) - (v1.z * v2.y);
-		result.y = (v1.z * v2.x) - (v1.x * v2.z);
-		result.z = (v1.x * v2.y) - (v1.y * v2.x);
-		return result;
-	};
+	//ベクトルの内積
+	//return float
+	static float Dot(const Vector3& input1, const Vector3& input2);
+	//ベクトルの外積
+	//return Vector3
+	static Vector3 Cross(const Vector3& input1, const Vector3& input2);
+	//ベクトルの長さを求める式
+	//return float
+	static float Length(const Vector3& input);
+	//ベクトルの長さを求める式
+	//return float
+	float Length();
+	//正規化
+	//return Vector3
+	static Vector3 Normalize(const Vector3& input);
+	//正規化
+	//return Vector3
+	Vector3 Normalize();
+	//線形補間
+	//return Vector3
+	static Vector3 VectorLerp(const Vector3& v1, const Vector3& v2, float t);
 };
 

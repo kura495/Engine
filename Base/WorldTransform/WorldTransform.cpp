@@ -55,6 +55,6 @@ void WorldTransform::SetTransform(Model* model) {
 		transform_.scale += model->GetModelData().rootNode.localMatrix.GetScale();
 	}
 
-	transform_.quaternion = Normalize(model->GetModelData().rootNode.localMatrix.GetRotation());
+	transform_.quaternion = Quaternion::Normalize(model->GetModelData().rootNode.localMatrix.GetRotation());
 	UpdateMatrix();
 };

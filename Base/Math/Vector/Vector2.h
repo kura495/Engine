@@ -1,4 +1,5 @@
 #pragma once
+#include<cmath>
 struct Vector2 final {
 	float x;
 	float y;
@@ -6,12 +7,8 @@ struct Vector2 final {
 #pragma region Oparator
 	/*オペレーター*/
 	/*add*/
-	Vector2 operator+(const Vector2& input) {
-
-		this->x = this->x + input.x;
-		this->y = this->y + input.y;
-
-		return *this;
+	Vector2 operator+(const Vector2& input)const {
+		return Vector2(this->x + input.x, this->y + input.y);
 	}
 	Vector2 operator+=(const Vector2& input) {
 
@@ -20,26 +17,16 @@ struct Vector2 final {
 		return *this;
 	}
 	/*subtract*/
-	Vector2 operator-(const Vector2& input) {
-
-		this->x = this->x - input.x;
-		this->y = this->y - input.y;
-
-		return *this;
+	Vector2 operator-(const Vector2& input)const {
+		return Vector2(this->x - input.x, this->y - input.y);
 	}
 	Vector2 operator-=(const Vector2& input) {
-
 		*this = *this - input;
-
 		return *this;
 	}
 	/*Multiply*/
-	Vector2 operator*(const Vector2& input) {
-
-		this->x = this->x * input.x;
-		this->y = this->y * input.y;
-
-		return *this;
+	Vector2 operator*(const Vector2& input)const {
+		return Vector2(this->x * input.x, this->y * input.y);
 	}
 	Vector2 operator*=(const Vector2& input) {
 
@@ -49,12 +36,8 @@ struct Vector2 final {
 	}
 	/*withfloat*/
 	/*add*/
-	Vector2 operator+(const float& input) {
-
-		this->x = this->x + input;
-		this->y = this->y + input;
-
-		return *this;
+	Vector2 operator+(const float& input)const {
+		return Vector2(this->x + input, this->y + input);
 	}
 	Vector2 operator+=(const float& input) {
 
@@ -63,12 +46,8 @@ struct Vector2 final {
 		return *this;
 	}
 	/*subtract*/
-	Vector2 operator-(const float& input) {
-
-		this->x = this->x - input;
-		this->y = this->y - input;
-
-		return *this;
+	Vector2 operator-(const float& input)const {
+		return Vector2(this->x - input, this->y - input);
 	}
 	Vector2 operator-=(const float& input) {
 
@@ -77,12 +56,8 @@ struct Vector2 final {
 		return *this;
 	}
 	/*Multiply*/
-	Vector2 operator*(const float& input) {
-
-		this->x = this->x * input;
-		this->y = this->y * input;
-
-		return *this;
+	Vector2 operator*(const float& input)const {
+		return Vector2(this->x * input, this->y * input);
 	}
 	Vector2 operator*=(const float& input) {
 
@@ -91,78 +66,9 @@ struct Vector2 final {
 		return *this;
 	}
 #pragma endregion 
-};
 
-// TODO : コピー用
-//#pragma region Oparator
-///*オペレーター*/
-///*add*/
-//Vector2 operator+(const Vector2& input) {
-//
-//	return *this;
-//}
-//Vector2 operator+=(const Vector2& input) {
-//
-//	*this = *this + input;
-//
-//	return *this;
-//}
-///*subtract*/
-//Vector2 operator-(const Vector2& input) {
-//
-//	return *this;
-//}
-//Vector2 operator-=(const Vector2& input) {
-//
-//	*this = *this - input;
-//
-//	return *this;
-//}
-///*Multiply*/
-//Vector2 operator*(const Vector2& input) {
-//	Vector2 result;
-//
-//	return result;
-//}
-//Vector2 operator*=(const Vector2& input) {
-//
-//	*this = *this * input;
-//
-//	return *this;
-//}
-//
-//#pragma endregion 
-/*withfloat*/
-	/*add*/
-//Vector2 operator+(const float& input) {
-//
-//	return *this;
-//}
-//Vector2 operator+=(const float& input) {
-//
-//	*this = *this + input;
-//
-//	return *this;
-//}
-///*subtract*/
-//Vector2 operator-(const float& input) {
-//
-//	return *this;
-//}
-//Vector2 operator-=(const float& input) {
-//
-//	*this = *this - input;
-//
-//	return *this;
-//}
-///*Multiply*/
-//Vector2 operator*(const float& input) {
-//
-//	return *this;
-//}
-//Vector2 operator*=(const float& input) {
-//
-//	*this = *this * input;
-//
-//	return *this;
-//}
+public:
+	//線形補間
+	//return Vector2
+	static Vector2 VectorLerp(const Vector2& v1, const Vector2& v2, float t);
+};
