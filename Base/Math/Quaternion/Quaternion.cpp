@@ -72,8 +72,6 @@ Quaternion Quaternion::Normalize()
 	}
 	return result;
 }
-
-
 Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 {
 	Quaternion result;
