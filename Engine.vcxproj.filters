@@ -223,6 +223,7 @@
     <ClCompile Include="Base\Object\Line\Line.cpp" />
     <ClCompile Include="Base\Math\Vector\Vector3.cpp" />
     <ClCompile Include="Base\Math\Vector\Vector2.cpp" />
+    <ClCompile Include="Base\Renderer\Model\ModelRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -423,6 +424,7 @@
     <ClInclude Include="Base\PipelineState\Skinning\Skinning.h" />
     <ClInclude Include="Base\PipelineState\DrawLine\DrawLinePSO.h" />
     <ClInclude Include="Base\Object\Line\Line.h" />
+    <ClInclude Include="Base\Renderer\Model\ModelRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

@@ -198,6 +198,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\PipelineState\Skinning\Skinning.cpp" />
     <ClCompile Include="Base\PipelineState\Standard\Standard.cpp" />
     <ClCompile Include="Base\PostProsess\PostProsess.cpp" />
+    <ClCompile Include="Base\Renderer\Model\ModelRenderer.cpp" />
     <ClCompile Include="Base\Renderer\Renderer.cpp" />
     <ClCompile Include="Base\ShaderCompiler\ShaderCompiler.cpp" />
     <ClCompile Include="Base\Object\Sphere\Sphere.cpp" />
@@ -276,6 +277,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\PipelineState\Skinning\Skinning.h" />
     <ClInclude Include="Base\PipelineState\Standard\Standard.h" />
     <ClInclude Include="Base\PostProsess\PostProsess.h" />
+    <ClInclude Include="Base\Renderer\Model\ModelRenderer.h" />
     <ClInclude Include="Base\Renderer\Renderer.h" />
     <ClInclude Include="Base\ShaderCompiler\ShaderCompiler.h" />
     <ClInclude Include="Base\Object\Sphere\Sphere.h" />

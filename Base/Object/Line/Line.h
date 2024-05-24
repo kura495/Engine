@@ -24,8 +24,6 @@ public:
 
 private:
 	DirectXCommon* directX_ = nullptr;
-	TextureManager* textureManager_ = nullptr;
-	Light* light_ = nullptr;
 	SRVManager* srvManager_ = nullptr;
 
 	//頂点リソース
