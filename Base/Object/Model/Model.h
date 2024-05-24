@@ -28,8 +28,11 @@ class Model
 {
 public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
-	void Draw(const WorldTransform& transform,const ViewProjection& viewProjection);
-	void SkinDraw(const WorldTransform& transform,const ViewProjection& viewProjection,const SkinCluster& skinCluster);
+	void Draw(const WorldTransform& transform);
+	void SkinDraw(const WorldTransform& transform,const SkinCluster& skinCluster);
+
+	void RendererDraw(WorldTransform& transform);
+	void RendererSkinDraw(WorldTransform& transform, SkinCluster& skinCluster);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);

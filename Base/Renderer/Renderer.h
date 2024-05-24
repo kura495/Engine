@@ -15,6 +15,11 @@ struct DrawSkinningData {
 	WorldTransform* world_;
 	SkinCluster* skinCluster;
 };
+struct DrawLineData {
+	Line* lineData;
+	WorldTransform* world_;
+};
+
 class Renderer
 {
 public:
@@ -23,8 +28,13 @@ public:
 	//void Update();
 	void Draw();
 
-	void AddModelData(const Model* model,WorldTransform* world);
-	void AddModelSkinningData(const Model* model,WorldTransform* world,const SkinCluster* skinCluster);
+	static void AddModelData(Model& model,WorldTransform& world);
+	static void AddModelSkinningData(Model& model,WorldTransform& world,SkinCluster& skinCluster);
+	static void AddLineData(Line& line,WorldTransform& world);
+
+	 void ChangePipeline(PipelineType Type);
+
+	static ViewProjection viewProjection;
 private:
 	Renderer() = default;
 	~Renderer() = default;
@@ -34,6 +44,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>commandList = nullptr;
 	std::unique_ptr<PSOManager> PSOManager_ = nullptr;
 
-	std::vector<DrawModelData> drawModelData_;
-	std::vector<DrawModelData> drawModelSkinningData_;
+	static std::vector<DrawModelData> drawModelData_;
+	static std::vector<DrawSkinningData> drawModelSkinningData_;
+	static std::vector<DrawLineData> drawLineData_;
 };

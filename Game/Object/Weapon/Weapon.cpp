@@ -28,10 +28,10 @@ void Weapon::Update()
 	BoxCollider::Update();
 }
 
-void Weapon::Draw(const ViewProjection& viewProj)
+void Weapon::Draw()
 {
 	for (Model* model : models_) {
-		model->Draw(world_, viewProj);
+		model->RendererDraw(world_);
 	}
 }
 

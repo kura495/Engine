@@ -1,5 +1,5 @@
 #include "Line.h"
-
+#include "Renderer/Renderer.h"
 
 void Line::Init(){
 	directX_ = DirectXCommon::GetInstance();
@@ -16,7 +16,7 @@ void Line::SetVertexData(std::vector<Vector4>& vertices){
 	}
 }
 
-void Line::Draw(const WorldTransform& transform, const ViewProjection& viewProjection){
+void Line::Draw(const WorldTransform& transform){
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 	//頂点
 	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
@@ -25,10 +25,15 @@ void Line::Draw(const WorldTransform& transform, const ViewProjection& viewProje
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(2, viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(2, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
 
 	directX_->GetcommandList()->DrawInstanced(UINT(debugVertices_.size()), 1,0,0);
+}
+
+void Line::RendererDraw(WorldTransform& transform)
+{
+	Renderer::AddLineData(*this,transform);
 }
 
 void Line::CreateBuffer()

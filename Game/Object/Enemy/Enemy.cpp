@@ -57,23 +57,23 @@ void Enemy::Update()
 	world_.UpdateMatrix();
 }
 
-void Enemy::Draw(const ViewProjection& viewProj)
+void Enemy::Draw()
 {
 	ImGui::Begin("EnemyDraw");
 	ImGui::Checkbox("ModelDraw", &chackBoxflag);
 	ImGui::End();
 	if (chackBoxflag) {
 		for (Model* model : models_) {
-			model->SkinDraw(world_, viewProj, skinCluster);
+			model->RendererSkinDraw(world_,skinCluster);
 		}
 	}
 
 }
 
-void Enemy::DabugDraw(const ViewProjection& viewProj)
+void Enemy::DabugDraw()
 {
 
-	line->Draw(world_, viewProj);
+	line->RendererDraw(world_);
 }
 
 bool Enemy::ChackOnAttack()

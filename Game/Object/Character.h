@@ -10,7 +10,7 @@ public:
 
 	virtual void Initialize(std::vector<Model*> models) = 0;
 	virtual void Update() = 0;
-	virtual void Draw(const ViewProjection& viewProj) = 0;
+	virtual void Draw() = 0;
 
 protected:
 

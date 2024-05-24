@@ -17,7 +17,8 @@ public:
 
 	void Init();
 	void UpdateVertexData(std::vector<Vector4>& vertices);
-	void Draw(const WorldTransform& transform, const ViewProjection& viewProjection);
+	void Draw(const WorldTransform& transform);
+	void RendererDraw(WorldTransform& transform);
 
 	void SetVertexData(std::vector<Vector4>& vertices);
 	void CreateBuffer();

@@ -11,7 +11,7 @@ public:
 
 	void Initalize();
 	void Update();
-	void Draw(const ViewProjection& viewProj);
+	void Draw();
 
 	void LordFile(std::string fileName);
 

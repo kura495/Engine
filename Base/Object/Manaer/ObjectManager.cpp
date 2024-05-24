@@ -44,10 +44,10 @@ void ObjectManager::Update()
 
 }
 
-void ObjectManager::Draw(const ViewProjection& viewProj)
+void ObjectManager::Draw()
 {
 	for (std::list<IObject*>::iterator ObjectIt = object_.begin(); ObjectIt != object_.end(); ObjectIt++) {
-		(*ObjectIt)->Draw(viewProj);
+		(*ObjectIt)->Draw();
 	}
 }
 

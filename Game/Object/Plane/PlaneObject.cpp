@@ -21,10 +21,10 @@ void PlaneObject::Update()
 	BoxCollider::Update();
 }
 
-void PlaneObject::Draw(const ViewProjection& viewProj)
+void PlaneObject::Draw()
 {
 	for (Model* model : models_) {
-		model->Draw(world_, viewProj);
+		model->Draw(world_);
 	}
 }
 

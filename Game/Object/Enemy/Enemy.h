@@ -12,8 +12,8 @@ class Enemy : public Character
 public:
 	void Initialize(std::vector<Model*> models)override;
 	void Update()override;
-	void Draw(const ViewProjection& viewProj)override;
-	void DabugDraw(const ViewProjection& viewProj);
+	void Draw()override;
+	void DabugDraw();
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {

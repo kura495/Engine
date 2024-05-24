@@ -1,5 +1,5 @@
 ﻿#include "Model.h"
-
+#include "Renderer/Renderer.h"
 void Model::Initialize(const std::string& directoryPath, const std::string& filename)
 {
 	directX_ = DirectXCommon::GetInstance();
@@ -31,7 +31,7 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 
 }
 
-void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProjection)
+void Model::Draw(const WorldTransform& transform)
 {
 
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -42,8 +42,8 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
 	//色とuvTransform
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//テクスチャ
@@ -55,7 +55,7 @@ void Model::Draw(const WorldTransform& transform, const ViewProjection& viewProj
 	directX_->GetcommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
 }
-void Model::SkinDraw(const WorldTransform& transform, const ViewProjection& viewProjection, const SkinCluster& skinCluster)
+void Model::SkinDraw(const WorldTransform& transform, const SkinCluster& skinCluster)
 {
 	D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
 		vertexBufferView,
@@ -70,8 +70,8 @@ void Model::SkinDraw(const WorldTransform& transform, const ViewProjection& view
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
 	//色とuvTransform
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//テクスチャ
@@ -83,6 +83,16 @@ void Model::SkinDraw(const WorldTransform& transform, const ViewProjection& view
 
 	directX_->GetcommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
+}
+
+void Model::RendererDraw(WorldTransform& transform)
+{
+	Renderer::AddModelData(*this,transform);
+}
+
+void Model::RendererSkinDraw(WorldTransform& transform, SkinCluster& skinCluster)
+{
+	Renderer::AddModelSkinningData(*this, transform, skinCluster);
 }
 
 Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::string& filename)

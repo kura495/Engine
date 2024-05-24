@@ -37,10 +37,10 @@ void Goal::Update()
 	BoxCollider::Update();
 }
 
-void Goal::Draw(const ViewProjection& viewProjection)
+void Goal::Draw()
 {
 	for (Model* model : models_) {
-		model->Draw(world_, viewProjection);
+		model->Draw(world_);
 	}
 }
 

@@ -57,10 +57,12 @@ void GamePlayState::Update()
 {
 	debugcamera_->Update();
 	viewProjction = debugcamera_->GetViewProjection();
+	Renderer::viewProjection = debugcamera_->GetViewProjection();
 
 #pragma region Game
 	followCamera->Update();
 	viewProjction = followCamera->GetViewProjection();
+	Renderer::viewProjection = followCamera->GetViewProjection();
 #ifdef USE_IMGUI
 		ImGui::Begin("Camera");
 		if (ImGui::RadioButton("GameCamera", IsDebugCamera == false)) {
@@ -93,26 +95,25 @@ void GamePlayState::Draw()
 
 #pragma region Game
 
-	objectManager->Draw(viewProjction);
+	objectManager->Draw();
 	if (IsDebugCamera == true) {
 		for (Model* model : playerModel_) {
-			model->Draw(player_->GetWorldTransform(), viewProjction);
+			renderer_->AddModelData(*model,player_->GetWorldTransform());
 		}
 	}
 
-	player_->Draw(viewProjction);
+	player_->Draw();
 
-	renderer_->Draw(PipelineType::Skinning);
-
-	for (Enemy* enemy : enemys_) {
-		enemy->Draw(viewProjction);
-	}
-
-	renderer_->Draw(PipelineType::DrawLine);
 
 	for (Enemy* enemy : enemys_) {
-		enemy->DabugDraw(viewProjction);
+		enemy->Draw();
 	}
+
+	for (Enemy* enemy : enemys_) {
+		enemy->DabugDraw();
+	}
+
+	renderer_->Draw();
 
 #pragma endregion
 

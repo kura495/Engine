@@ -26,10 +26,10 @@ void BoxObject::Update()
 	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform_);
 }
 
-void BoxObject::Draw(const ViewProjection& viewProj)
+void BoxObject::Draw()
 {
 	for (Model* model : models_) {
-		model->Draw(world_, viewProj);
+		model->Draw(world_);
 	}
 }
 

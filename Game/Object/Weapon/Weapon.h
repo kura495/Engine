@@ -10,7 +10,7 @@ class Weapon:public BoxCollider
 public:
 	void Initalize(std::vector<Model*> models);
 	void Update();
-	void Draw(const ViewProjection& viewProj);
+	void Draw();
 
 	void ImGui();
 

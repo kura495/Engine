@@ -77,9 +77,9 @@ void Player::Update()
 	joyStatePre = joyState;
 }
 
-void Player::Draw(const ViewProjection& viewProj)
+void Player::Draw()
 {
-	weapon_->Draw(viewProj);
+	weapon_->Draw();
 }
 
 void Player::ImGui()

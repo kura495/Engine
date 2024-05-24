@@ -16,7 +16,7 @@ public:
 
 	void Initalize(std::vector<Model*> models)override;
 	void Update()override;
-	void Draw(const ViewProjection& viewProj)override;
+	void Draw()override;
 
 	void ImGui();
 

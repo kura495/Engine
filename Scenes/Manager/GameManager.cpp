@@ -74,13 +74,13 @@ void GameManager::Gameloop()
 			light->Update();
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
-			renderer_->Draw(PipelineType::Standerd);
+			renderer_->ChangePipeline(PipelineType::Standerd);
 			editer->Draw();
 			state[currentSceneNum_]->Draw();
 			imGuiManager->EndFrame();
 			directX->PreView();
 			postProsess->PreCopy();
-			renderer_->Draw(PipelineType::PostProsessPSO);
+			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			postProsess->Update();
 			postProsess->Draw();
 			postProsess->PostCopy();
