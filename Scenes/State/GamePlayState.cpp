@@ -104,7 +104,6 @@ void GamePlayState::Draw()
 
 	player_->Draw();
 
-
 	for (Enemy* enemy : enemys_) {
 		enemy->Draw();
 	}
