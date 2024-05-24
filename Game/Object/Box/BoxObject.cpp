@@ -29,7 +29,7 @@ void BoxObject::Update()
 void BoxObject::Draw()
 {
 	for (Model* model : models_) {
-		model->Draw(world_);
+		model->RendererDraw(world_);
 	}
 }
 

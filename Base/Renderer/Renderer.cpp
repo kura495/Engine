@@ -19,6 +19,7 @@ void Renderer::Initalize()
 
 void Renderer::Draw()
 {
+	//標準描画
 	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(PipelineType::Standerd).Get());
 	commandList->SetPipelineState(PSOManager_->GetPipelineState(PipelineType::Standerd).Get());
 
@@ -29,6 +30,7 @@ void Renderer::Draw()
 	//中身を消す
 	drawModelData_.clear();
 
+	//Skinning
 	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(PipelineType::Skinning).Get());
 	commandList->SetPipelineState(PSOManager_->GetPipelineState(PipelineType::Skinning).Get());
 
@@ -39,22 +41,16 @@ void Renderer::Draw()
 	//中身を消す
 	drawModelSkinningData_.clear();
 
+	//ライン描画
 	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(PipelineType::DrawLine).Get());
 	commandList->SetPipelineState(PSOManager_->GetPipelineState(PipelineType::DrawLine).Get());
 
-	///描画
 	///描画
 	for (DrawLineData model : drawLineData_) {
 		model.lineData->Draw(*model.world_);
 	}
 	//中身を消す
 	drawLineData_.clear();
-
-	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(PipelineType::PostProsessPSO).Get());
-	commandList->SetPipelineState(PSOManager_->GetPipelineState(PipelineType::PostProsessPSO).Get());
-
-	///描画
-
 }
 
 void Renderer::AddModelData( Model& model, WorldTransform& world)

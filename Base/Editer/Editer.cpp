@@ -111,7 +111,7 @@ void Editer::Manipulator()
 {
 #ifdef USE_IMGUI
 	Matrix4x4 GizmoMoveMatrix = object_[ObjectCount]->GetWorld().matWorld_;
-	ImGuizmo::Manipulate(&viewProjection_->matView.m[0][0], &viewProjection_->matProjection.m[0][0], mCurrentGizmoOperation, ImGuizmo::WORLD, &GizmoMoveMatrix.m[0][0]);
+	ImGuizmo::Manipulate(&Renderer::viewProjection.matView.m[0][0], &Renderer::viewProjection.matProjection.m[0][0], mCurrentGizmoOperation, ImGuizmo::WORLD, &GizmoMoveMatrix.m[0][0]);
 	
 	Vector3 scale, rotate, translate;
 	ImGuizmo::DecomposeMatrixToComponents(&GizmoMoveMatrix.m[0][0], &translate.x, &rotate.x, &scale.x);
@@ -123,5 +123,5 @@ void Editer::Manipulator()
 void Editer::Grid()
 {
 	Matrix4x4 IdentityMat = Matrix4x4::CreateIdentity();
-	ImGuizmo::DrawGrid(&viewProjection_->matView.m[0][0], &viewProjection_->matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
+	ImGuizmo::DrawGrid(&Renderer::viewProjection.matView.m[0][0], &Renderer::viewProjection.matProjection.m[0][0], &IdentityMat.m[0][0], 100.f);
 }

@@ -74,9 +74,9 @@ void GameManager::Gameloop()
 			light->Update();
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
-			renderer_->ChangePipeline(PipelineType::Standerd);
 			editer->Draw();
 			state[currentSceneNum_]->Draw();
+			renderer_->Draw();
 			imGuiManager->EndFrame();
 			directX->PreView();
 			postProsess->PreCopy();

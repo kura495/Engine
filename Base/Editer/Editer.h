@@ -5,7 +5,7 @@
 #include "WorldTransform/WorldTransform.h"
 
 #include "Base/Common/WinApp/WinApp.h"
-
+#include "Renderer/Renderer.h"
 class IObject;
 class Editer {
 public:

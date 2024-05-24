@@ -2,16 +2,6 @@
 
 void GamePlayState::Initialize()
 {
-	// DEBUG : 消すように！！
-	Vector3 VectorA(2, 2, 2);
-	Vector3 VectorB(1, 2, 3);
-
-	VectorA = VectorA - VectorB;
-	
-	/*Vector3 VectorC(2, 2, 2);
-	float FloatB = 2.0f;
-
-	VectorC *= FloatB;*/
 
 	//基本機能生成
 	debugcamera_ = new DebugCamera();
@@ -20,7 +10,7 @@ void GamePlayState::Initialize()
 	audio = Audio::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
-	Editer::GetInstance()->SetViewProjection(&viewProjction);
+	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
 	objectManager->LordFile("Editer");
@@ -56,12 +46,10 @@ void GamePlayState::Initialize()
 void GamePlayState::Update()
 {
 	debugcamera_->Update();
-	viewProjction = debugcamera_->GetViewProjection();
 	Renderer::viewProjection = debugcamera_->GetViewProjection();
 
 #pragma region Game
 	followCamera->Update();
-	viewProjction = followCamera->GetViewProjection();
 	Renderer::viewProjection = followCamera->GetViewProjection();
 #ifdef USE_IMGUI
 		ImGui::Begin("Camera");
@@ -75,7 +63,7 @@ void GamePlayState::Update()
 		}
 		if (IsDebugCamera == true) {
 			debugcamera_->Update();
-			viewProjction = debugcamera_->GetViewProjection();
+			Renderer::viewProjection = debugcamera_->GetViewProjection();
 		}
 		ImGui::End();
 #endif // _DEBUG
@@ -112,12 +100,9 @@ void GamePlayState::Draw()
 		enemy->DabugDraw();
 	}
 
-	renderer_->Draw();
-
 #pragma endregion
 
 	//3Dモデル描画ここまで	
-
 
 	//Sprite描画ここから
 
