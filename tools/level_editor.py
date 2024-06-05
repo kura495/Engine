@@ -108,29 +108,10 @@ class MYADDON_OT_export_scene(bpy.types.Operator,bpy_extras.io_utils.ExportHelpe
                 #シーン直下のオブジェクトをルートノード(深さ0)とし、再帰関数で走査
                 self.parse_scene_recursive(file, object, 0)
 
-                """# オブジェクトのタイプと名前を出力
-                self.write_and_print(file,object.type + "-" + object.name)
-                # トランスフォーム情報を出力
-                trans, rot, scale = object.matrix_local.decompose()
-                # QuaertanionからEulerに変換
-                rot = rot.to_euler()
-                # ラジアンから弧度法へ
-                rot.x = math.degrees(rot.x)
-                rot.y = math.degrees(rot.y)
-                rot.z = math.degrees(rot.z)
-                self.write_and_print("Trans(%f,%f,%f)"%(trans.x,trans.y,trans.z) )
-                self.write_and_print("Rot(%f,%f,%f)"%(rot.x,rot.y,rot.z))
-                self.write_and_print("Scale(%f,%f,%f)"%(scale.x,scale.y,scale.z))
-                # 区切りを入れる
-                self.write_and_print("\n")"""
-
     def execute(self,context):
         print("シーン情報をExportします")
         self.export_json()
         # シーン内の全オブジェクトについて
-
-
-        self.export()
 
         self.report({'INFO'},"シーン情報をExportしました")
         print("シーン情報をExportしました")

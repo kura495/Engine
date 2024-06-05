@@ -75,7 +75,7 @@ void ObjectManager::LordFile(std::string fileName)
 void ObjectManager::LordBlenderScene(std::string fileName)
 {
 	//連結してフルパスを得る
-	const std::string fullpath = /*kDefaultBaseDirectory + */ fileName /* + kExrension*/;
+	const std::string fullpath = /*kDefaultBaseDirectory + */ fileName + kExrension;
 
 	//ファイルストリーム
 	std::ifstream file;
@@ -118,9 +118,9 @@ void ObjectManager::LordBlenderScene(std::string fileName)
 			ObjTransform.translate.z = (float)transform["translation"][1];
 			//回転角
 			Vector3 Euler;
-			Euler.x = -(float)transform["translation"][0];
-			Euler.y = -(float)transform["translation"][2];
-			Euler.z = -(float)transform["translation"][1];
+			Euler.x = -(float)transform["rotation"][0];
+			Euler.y = -(float)transform["rotation"][2];
+			Euler.z = -(float)transform["rotation"][1];
 			ObjTransform.quaternion = Quaternion::EulerToQuaterion(Euler);
 			//スケーリング
 			ObjTransform.scale.x = (float)transform["scaling"][0];
