@@ -20,9 +20,7 @@ void Renderer::Initalize()
 void Renderer::Draw()
 {
 	//標準描画
-	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(PipelineType::Standerd).Get());
-	commandList->SetPipelineState(PSOManager_->GetPipelineState(PipelineType::Standerd).Get());
-
+	ChangePipeline(PipelineType::Standerd);
 	///描画
 	for (DrawModelData model : drawModelData_) {
 		model.modelData->Draw(*model.world_);
@@ -31,9 +29,7 @@ void Renderer::Draw()
 	drawModelData_.clear();
 
 	//Skinning
-	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(PipelineType::Skinning).Get());
-	commandList->SetPipelineState(PSOManager_->GetPipelineState(PipelineType::Skinning).Get());
-
+	ChangePipeline(PipelineType::Skinning);
 	///描画
 	for (DrawSkinningData model : drawModelSkinningData_) {
 		model.modelData->SkinDraw(*model.world_,*model.skinCluster);
@@ -42,9 +38,7 @@ void Renderer::Draw()
 	drawModelSkinningData_.clear();
 
 	//ライン描画
-	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(PipelineType::DrawLine).Get());
-	commandList->SetPipelineState(PSOManager_->GetPipelineState(PipelineType::DrawLine).Get());
-
+	ChangePipeline(PipelineType::DrawLine);
 	///描画
 	for (DrawLineData model : drawLineData_) {
 		model.lineData->Draw(*model.world_);
