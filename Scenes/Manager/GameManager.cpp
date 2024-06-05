@@ -47,12 +47,11 @@ void GameManager::Initialize()
 	state[PLAY]->Initialize();
 	currentSceneNum_ = PLAY;
 
-	postProsess = new PostProsess();
-	postProsess->Init();
-	postProsess->Create();
+	renderTextrue = new PostProsess();
+	renderTextrue->Init();
+	renderTextrue->Create();
 }
-void GameManager::Gameloop()
-{
+void GameManager::Gameloop(){
 	while (msg.message != WM_QUIT) {
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
@@ -62,36 +61,39 @@ void GameManager::Gameloop()
 			prevSceneNum_ = currentSceneNum_;
 			currentSceneNum_ = state[currentSceneNum_]->GetSceneNum();
 
-			if (prevSceneNum_ != currentSceneNum_)
-			{
+			if (prevSceneNum_ != currentSceneNum_) {
 				state[currentSceneNum_]->Initialize();
 			}
 			imGuiManager->BeginFrame();
-			postProsess->PreDraw();
+		#pragma region Update
 			editer->Update();
 			objectManager->Update();
 			input->Update();
 			light->Update();
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
+			renderTextrue->Update();
+#pragma endregion
+		#pragma region Draw
+			//renderTextureに色々書き込んでいく
+			renderTextrue->PreDraw();
 			editer->Draw();
 			state[currentSceneNum_]->Draw();
 			renderer_->Draw();
 			imGuiManager->EndFrame();
-			postProsess->Update();
+#pragma endregion
 			directX->PreView();
-			postProsess->PreCopy();
 			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			postProsess->Draw();
-			postProsess->PostCopy();
+			// TODO : ここに書き込んでいく
+			renderTextrue->PreCopy();
+			renderTextrue->Draw();
+			renderTextrue->PostCopy();
 			directX->PostView();
 		}
 	}
-
 }
 
-void GameManager::Release()
-{
+void GameManager::Release(){
 	directX->Release();
 
 	ImGui_ImplDX12_Shutdown();

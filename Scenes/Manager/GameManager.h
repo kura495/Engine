@@ -54,7 +54,7 @@ private:
 	std::unique_ptr<GameState>state[GameStateMax];
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
-	PostProsess* postProsess = nullptr;
+	PostProsess* renderTextrue = nullptr;
 
 	int currentSceneNum_;
 	int prevSceneNum_;
