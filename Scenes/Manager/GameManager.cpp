@@ -83,9 +83,10 @@ void GameManager::Gameloop(){
 			imGuiManager->EndFrame();
 #pragma endregion
 			directX->PreView();
-			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			// TODO : ここに書き込んでいく
+			//renderTargetを変更
 			renderTextrue->PreCopy();
+			// TODO : ここにPipelineとDrawを書き込んでいく
+			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			renderTextrue->Draw();
 			renderTextrue->PostCopy();
 			directX->PostView();
