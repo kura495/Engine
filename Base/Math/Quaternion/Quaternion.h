@@ -71,7 +71,9 @@ public:
 	//球面線形補間
 	//return Quaternion
 	static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
-
+	//オイラー角をクォータニオン
+	//return Quaternion
+	static Quaternion EulerToQuaterion(Vector3 input);
 };
 
 

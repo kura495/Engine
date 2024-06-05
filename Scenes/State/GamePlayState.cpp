@@ -13,7 +13,8 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
-	objectManager->LordFile("Editer");
+	//objectManager->LordFile("Editer");
+	objectManager->LordBlenderScene("tools/test.scene");
 
 	DirectX_ = DirectXCommon::GetInstance();
 	collisionManager = std::make_unique<CollisionManager>();

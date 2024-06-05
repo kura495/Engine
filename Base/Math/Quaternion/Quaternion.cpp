@@ -105,6 +105,17 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
 	return result;
 }
 
+Quaternion Quaternion::EulerToQuaterion(Vector3 input)
+{
+	Quaternion result{};
+	result.x = cos(input.x / 2) * sin(input.y / 2) * sin(input.z / 2) + sin(input.x / 2) * cos(input.y / 2) * cos(input.z / 2);
+	result.y = -sin(input.x / 2) * cos(input.y / 2) * sin(input.z / 2) + cos(input.x / 2) * sin(input.y / 2) * cos(input.z / 2);
+	result.z = cos(input.x / 2) * cos(input.y / 2) * sin(input.z / 2) - sin(input.x / 2) * sin(input.y / 2) * cos(input.z / 2);
+	result.w = sin(input.x / 2) * sin(input.y / 2) * sin(input.z / 2) + cos(input.x / 2) * cos(input.y / 2) * cos(input.z / 2);
+
+	return result;
+}
+
 Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
 {
 	Quaternion result;

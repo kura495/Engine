@@ -14,6 +14,7 @@ public:
 	void Draw();
 
 	void LordFile(std::string fileName);
+	void LordBlenderScene(std::string fileName);
 
 private:
 	ObjectManager() = default;
@@ -26,5 +27,8 @@ private:
 	int32_t PlaneObjectCount;
 	GlobalVariables* globalVariables;
 	void AddBox();
+	std::vector<Model*> boxModel_;
 	void AddPlane();
+	std::vector<Model*> planeModel_;
+	std::string kExrension = ".json";
 };

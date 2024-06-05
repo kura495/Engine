@@ -9,6 +9,10 @@ ObjectManager* ObjectManager::GetInstance()
 void ObjectManager::Initalize()
 {
 	globalVariables = GlobalVariables::GetInstance();
+
+	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
+
+	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
 }
 
 void ObjectManager::Update()
@@ -68,10 +72,73 @@ void ObjectManager::LordFile(std::string fileName)
 #pragma endregion オブジェクト生成
 }
 
+void ObjectManager::LordBlenderScene(std::string fileName)
+{
+	//連結してフルパスを得る
+	const std::string fullpath = /*kDefaultBaseDirectory + */ fileName /* + kExrension*/;
+
+	//ファイルストリーム
+	std::ifstream file;
+
+	//ファイルを開く
+	file.open(fullpath);
+	//ファイルオープン失敗をチェック
+	if (file.fail()) {
+		assert(0);
+	}
+	//JSON文字列を解凍
+	nlohmann::json deserialized;
+	//解凍
+	file >> deserialized;
+	//正しいレベルデータファイルかチェック
+	assert(deserialized.is_object());
+	assert(deserialized.contains("name"));
+	assert(deserialized["name"].is_string());
+	// "name"を文字列として取得
+	std::string name = deserialized["name"].get<std::string>();
+	// 正しいレベルデータファイルかチェック
+	assert(name.compare("scene") == 0);
+	// "objects"の全オブジェクトを走査
+	for (nlohmann::json& object : deserialized["objects"]) {
+		assert(object.contains("type"));
+		
+		//種類を取得
+		std::string type = object["type"].get<std::string>();
+
+		if (type.compare("MESH") == 0) {
+			//BOXobject
+			BoxObject* box = new BoxObject;
+			box->Initalize(boxModel_);
+			TransformQua ObjTransform;
+			//トランスフォームのパラメータ読み込み
+			nlohmann::json& transform = object["transform"];
+			//平行移動
+			ObjTransform.translate.x = (float)transform["translation"][0];
+			ObjTransform.translate.y = (float)transform["translation"][2];
+			ObjTransform.translate.z = (float)transform["translation"][1];
+			//回転角
+			Vector3 Euler;
+			Euler.x = -(float)transform["translation"][0];
+			Euler.y = -(float)transform["translation"][2];
+			Euler.z = -(float)transform["translation"][1];
+			ObjTransform.quaternion = Quaternion::EulerToQuaterion(Euler);
+			//スケーリング
+			ObjTransform.scale.x = (float)transform["scaling"][0];
+			ObjTransform.scale.y = (float)transform["scaling"][2];
+			ObjTransform.scale.z = (float)transform["scaling"][1];
+
+			//オブジェクトのトランスフォームを設定
+			box->SetTransform(ObjTransform);
+
+			object_.push_back(box);
+		}
+	}
+
+
+}
+
 void ObjectManager::AddBox()
 {
-	std::vector<Model*> boxModel_;
-	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
 	BoxObject* box = new BoxObject;
 	box->Initalize(boxModel_);
 
@@ -87,8 +154,6 @@ void ObjectManager::AddBox()
 
 void ObjectManager::AddPlane()
 {
-	std::vector<Model*>planeModel_;
-	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
 	PlaneObject* plane = new PlaneObject;
 	plane->Initalize(planeModel_);
 
