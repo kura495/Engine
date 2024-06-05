@@ -8,6 +8,7 @@ PSOManager* PSOManager::GetInstance()
 
 void PSOManager::Initalize()
 {
+	//　TODO : ここでやるべきではないのでInitをどこかへ移動したい
 	ShaderCompiler* shaderCompiler = ShaderCompiler::GetInstance();
 	shaderCompiler->Initalize();
 
