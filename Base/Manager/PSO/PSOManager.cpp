@@ -11,17 +11,17 @@ void PSOManager::Initalize()
 	ShaderCompiler* shaderCompiler = ShaderCompiler::GetInstance();
 	shaderCompiler->Initalize();
 
-	std::unique_ptr<Standard> standard = std::make_unique<Standard>();
-	standard->Initalize();
-	std::unique_ptr<Skinning> skinning = std::make_unique<Skinning>();
-	skinning->Initalize();
-	std::unique_ptr<DrawLinePSO> drawLinePSO = std::make_unique<DrawLinePSO>();
-	drawLinePSO->Initalize();
-	std::unique_ptr<PostProsessPSO> postProsessPSO = std::make_unique<PostProsessPSO>();
-	postProsessPSO->Initalize();
+	Standard standard;
+	standard.Initalize();
+	Skinning skinning;
+	skinning.Initalize();
+	DrawLinePSO drawLinePSO;
+	drawLinePSO.Initalize();
+	PostProsessPSO postProsessPSO;
+	postProsessPSO.Initalize();
 
-	AddPipeline(standard->GetPSO(),PipelineType::Standerd);
-	AddPipeline(skinning->GetPSO(),PipelineType::Skinning);
-	AddPipeline(drawLinePSO->GetPSO(),PipelineType::DrawLine);
-	AddPipeline(postProsessPSO->GetPSO(),PipelineType::PostProsessPSO);
+	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
+	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
+	AddPipeline(drawLinePSO.GetPSO(),PipelineType::DrawLine);
+	AddPipeline(postProsessPSO.GetPSO(),PipelineType::PostProsessPSO);
 }
