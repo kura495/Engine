@@ -78,10 +78,10 @@ void GameManager::Gameloop()
 			state[currentSceneNum_]->Draw();
 			renderer_->Draw();
 			imGuiManager->EndFrame();
+			postProsess->Update();
 			directX->PreView();
 			postProsess->PreCopy();
 			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			postProsess->Update();
 			postProsess->Draw();
 			postProsess->PostCopy();
 			directX->PostView();

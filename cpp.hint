@@ -1,4 +1,0 @@
-// ヒント ファイルは、Visual Studio IDE が Visual C++ 識別子を解釈するのに役立ちます
-// 関数およびマクロの名前などです。
-// 詳細については次を参照してください https://go.microsoft.com/fwlink/?linkid=865984
-#define NLOHMANN_DEFINE_TYPE_INTRUSIVE(Type, __VA_ARGS__) friend void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) { NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(NLOHMANN_JSON_TO, __VA_ARGS__)) } friend void from_json(const nlohmann::json& nlohmann_json_j, Type& nlohmann_json_t) { NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(NLOHMANN_JSON_FROM, __VA_ARGS__)) }

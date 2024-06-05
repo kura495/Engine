@@ -59,6 +59,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
+#ifdef USE_IMGUI
 	ImGui::Begin("EnemyDraw");
 	ImGui::Checkbox("ModelDraw", &chackBoxflag);
 	ImGui::End();
@@ -67,12 +68,11 @@ void Enemy::Draw()
 			model->RendererSkinDraw(world_,skinCluster);
 		}
 	}
-
+#endif
 }
 
 void Enemy::DabugDraw()
 {
-
 	line->RendererDraw(world_);
 }
 

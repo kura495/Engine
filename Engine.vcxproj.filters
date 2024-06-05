@@ -438,7 +438,6 @@
     <None Include="resources\hlsl\Particle.hlsli">
       <Filter>リソース ファイル\hlsl</Filter>
     </None>
-    <None Include="cpp.hint" />
     <None Include="resources\hlsl\Line.hlsli" />
   </ItemGroup>
   <ItemGroup>
