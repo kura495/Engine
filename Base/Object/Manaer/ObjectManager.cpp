@@ -125,10 +125,7 @@ void ObjectManager::AddBox(ObjectData input)
 	box->Initalize(boxModel_);
 
 	box->SetTransform(input.object.transform);
-	//TODO : コライダーがあるかどうか判別するようにしたい
-	//if (input.object.colloder == ) {
-
-	//}
+	
 	box->SetSize(input.object.colloder.size);
 	box->SetCenter(input.object.colloder.center);
 
