@@ -108,10 +108,13 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
 Quaternion Quaternion::EulerToQuaterion(Vector3 input)
 {
 	Quaternion result{};
-	result.x = cos(input.x / 2) * sin(input.y / 2) * sin(input.z / 2) + sin(input.x / 2) * cos(input.y / 2) * cos(input.z / 2);
-	result.y = -sin(input.x / 2) * cos(input.y / 2) * sin(input.z / 2) + cos(input.x / 2) * sin(input.y / 2) * cos(input.z / 2);
-	result.z = cos(input.x / 2) * cos(input.y / 2) * sin(input.z / 2) - sin(input.x / 2) * sin(input.y / 2) * cos(input.z / 2);
-	result.w = sin(input.x / 2) * sin(input.y / 2) * sin(input.z / 2) + cos(input.x / 2) * cos(input.y / 2) * cos(input.z / 2);
+	float divisionX = input.x / 2.0f;
+	float divisionY = input.y / 2.0f;
+	float divisionZ = input.z / 2.0f;
+	result.x = cos(divisionX) * sin(divisionY) * sin(divisionZ) + sin(divisionX) * cos(divisionY) * cos(divisionZ);
+	result.y = -sin(divisionX) * cos(divisionY) * sin(divisionZ) + cos(divisionX) * sin(divisionY) * cos(divisionZ);
+	result.z = cos(divisionX) * cos(divisionY) * sin(divisionZ) - sin(divisionX) * sin(divisionY) * cos(divisionZ);
+	result.w = sin(divisionX) * sin(divisionY) * sin(divisionZ) + cos(divisionX) * cos(divisionY) * cos(divisionZ);
 
 	return result;
 }

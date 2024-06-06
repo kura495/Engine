@@ -2,6 +2,19 @@
 #include "Object/IObject.h"
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
+struct Colloder {
+	Vector3 center;/*当たり判定の中心 {0,0,0}でオブジェクトの中心*/
+	Vector3 size;/*当たり判定のサイズ*/
+};
+struct Object {
+
+	TransformQua transform;/*オブジェクトの位置情報*/
+	Colloder colloder;/*当たり判定のデータ*/
+};
+struct ObjectData {
+	Object object;
+	Object childlen;
+};
 
 class ObjectManager
 {
@@ -27,6 +40,8 @@ private:
 	int32_t PlaneObjectCount;
 	GlobalVariables* globalVariables;
 	void AddBox();
+	void AddBox(ObjectData input);
+	void LoadjsonObject(nlohmann::json& object);
 	std::vector<Model*> boxModel_;
 	void AddPlane();
 	std::vector<Model*> planeModel_;

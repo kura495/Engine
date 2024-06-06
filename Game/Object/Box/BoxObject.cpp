@@ -9,7 +9,7 @@ void BoxObject::Initalize(std::vector<Model*> models)
 
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
-	BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
+	//BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
 	SetcollitionAttribute(kCollitionAttributeBox);
 	SetcollisionMask(~kCollitionAttributeBox);
 }
@@ -17,8 +17,8 @@ void BoxObject::Initalize(std::vector<Model*> models)
 void BoxObject::Update()
 {
 	world_.UpdateMatrix();
-	BoxCollider::SetSize({
-	world_.transform_.scale.x,world_.transform_.scale.y,world_.transform_.scale.z});
+	////Scene読み込みとの兼ね合いでコメントアウト
+	//BoxCollider::SetSize({world_.transform_.scale.x,world_.transform_.scale.y,world_.transform_.scale.z});
 	BoxCollider::Update();
 
 	std::string Number = std::to_string(GetNumber());

@@ -11,7 +11,7 @@ public:
 	//衝突時に呼ばれる関数
 	virtual void OnCollision(const Collider* collider) = 0;
 	float GetRadius() { return Radius_; }
-
+	
 	uint32_t GetcollitionAttribute() const { return collisionAttribute_; }
 	/// <summary>
 	/// 衝突属性
@@ -39,6 +39,9 @@ public:
 		return
 		{ center_->transform_.translate.x,center_->transform_.translate.y,center_->transform_.translate.z };
 	}
+	void SetCenter(Vector3 input) {
+		centerPoint = input;
+	}
 
 
 	void SetSize(Vector3 size) { size_ = size; }
@@ -51,7 +54,7 @@ protected:
 	/// 原点
 	/// </summary>
 	WorldTransform* center_ = nullptr;
-	
+	Vector3 centerPoint;
 	/// <summary>
 /// x,y,zそれぞれの幅
 /// </summary>

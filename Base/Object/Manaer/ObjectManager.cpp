@@ -100,41 +100,8 @@ void ObjectManager::LordBlenderScene(std::string fileName)
 	assert(name.compare("scene") == 0);
 	// "objects"の全オブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"]) {
-		assert(object.contains("type"));
-		
-		//種類を取得
-		std::string type = object["type"].get<std::string>();
-
-		if (type.compare("MESH") == 0) {
-			//BOXobject
-			BoxObject* box = new BoxObject;
-			box->Initalize(boxModel_);
-			TransformQua ObjTransform;
-			//トランスフォームのパラメータ読み込み
-			nlohmann::json& transform = object["transform"];
-			//平行移動
-			ObjTransform.translate.x = (float)transform["translation"][0];
-			ObjTransform.translate.y = (float)transform["translation"][2];
-			ObjTransform.translate.z = (float)transform["translation"][1];
-			//回転角
-			Vector3 Euler;
-			Euler.x = -(float)transform["rotation"][0];
-			Euler.y = -(float)transform["rotation"][2];
-			Euler.z = -(float)transform["rotation"][1];
-			ObjTransform.quaternion = Quaternion::EulerToQuaterion(Euler);
-			//スケーリング
-			ObjTransform.scale.x = (float)transform["scaling"][0];
-			ObjTransform.scale.y = (float)transform["scaling"][2];
-			ObjTransform.scale.z = (float)transform["scaling"][1];
-
-			//オブジェクトのトランスフォームを設定
-			box->SetTransform(ObjTransform);
-
-			object_.push_back(box);
-		}
+		LoadjsonObject(object);
 	}
-
-
 }
 
 void ObjectManager::AddBox()
@@ -150,6 +117,77 @@ void ObjectManager::AddBox()
 	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 
 	object_.push_back(box);
+}
+
+void ObjectManager::AddBox(ObjectData input)
+{
+	BoxObject* box = new BoxObject;
+	box->Initalize(boxModel_);
+
+	box->SetTransform(input.object.transform);
+	//TODO : コライダーがあるかどうか判別するようにしたい
+	//if (input.object.colloder == ) {
+
+	//}
+	box->SetSize(input.object.colloder.size);
+	box->SetCenter(input.object.colloder.center);
+
+	object_.push_back(box);
+}
+
+void ObjectManager::LoadjsonObject(nlohmann::json& object)
+{
+	assert(object.contains("type"));
+
+	std::string type = object["type"].get<std::string>();
+
+	if (type.compare("MESH") != 0) {
+		return;
+	}
+
+#pragma region Transform
+
+	//トランスフォームのパラメータ読み込み
+	ObjectData ObjTransform;
+	nlohmann::json& transform = object["transform"];
+	//平行移動
+	ObjTransform.object.transform.translate.x = (float)transform["translation"][0];
+	ObjTransform.object.transform.translate.y = (float)transform["translation"][2];
+	ObjTransform.object.transform.translate.z = (float)transform["translation"][1];
+	//回転角
+	Vector3 Euler;
+	Euler.x = -(float)transform["rotation"][0];
+	Euler.y = -(float)transform["rotation"][2];
+	Euler.z = -(float)transform["rotation"][1];
+	//TODO :　正しい姿勢にはなっていないので変更をする
+	ObjTransform.object.transform.quaternion = Quaternion::EulerToQuaterion(Euler);
+	//スケーリング
+	ObjTransform.object.transform.scale.x = (float)transform["scaling"][0];
+	ObjTransform.object.transform.scale.y = (float)transform["scaling"][2];
+	ObjTransform.object.transform.scale.z = (float)transform["scaling"][1];
+
+#pragma endregion 
+
+	if (object.contains("collider")) {
+		nlohmann::json& Collidertransform = object["collider"];
+		//中心を変える
+		ObjTransform.object.colloder.center.x = (float)Collidertransform["center"][0];
+		ObjTransform.object.colloder.center.y = (float)Collidertransform["center"][2];
+		ObjTransform.object.colloder.center.z = (float)Collidertransform["center"][1];
+		//サイズを変える
+		ObjTransform.object.colloder.size.x = (float)Collidertransform["size"][0];
+		ObjTransform.object.colloder.size.y = (float)Collidertransform["size"][2];
+		ObjTransform.object.colloder.size.z = (float)Collidertransform["size"][1];
+	}
+
+	//オブジェクトのトランスフォームを設定
+	AddBox(ObjTransform);
+
+	// TODO : 読み込むことが出来ない
+	if (object.contains("children")) {
+		nlohmann::json& children = object["children"];
+		LoadjsonObject(children);
+	}
 }
 
 void ObjectManager::AddPlane()
