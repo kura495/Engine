@@ -183,11 +183,11 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	//オブジェクトのトランスフォームを設定
 	AddBox(ObjTransform);
 
-	// TODO : 読み込むことが出来ない
-	if (object.contains("children")) {
+	// TODO : 読み込むことが出来ないのでいったんコメントアウト
+	/*if (object.contains("children")) {
 		nlohmann::json& children = object["children"];
 		LoadjsonObject(children);
-	}
+	}*/
 }
 
 void ObjectManager::AddPlane()
