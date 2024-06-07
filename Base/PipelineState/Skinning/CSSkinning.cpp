@@ -33,6 +33,7 @@ void CSSkinning::CreateRootSignature()
 	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;//DescriptorTableを使う
 	rootParameters[1].DescriptorTable.pDescriptorRanges = Vertex;//Tableの中身の配列を指定
 	rootParameters[1].DescriptorTable.NumDescriptorRanges = _countof(Vertex);
+
 	//StructuredBuffer用で使う
 	//Influences
 	D3D12_DESCRIPTOR_RANGE Influences[1] = {};
