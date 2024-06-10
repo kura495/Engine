@@ -17,8 +17,10 @@ void Renderer::Initalize()
 	PSOManager_->Initalize();
 
 	sprite = std::make_unique<Sprite>();
-	sprite->Initialize({0.0f,0.0f},{0.0f,120.0f},{120.0f,0.0f},{120.0f,120.0f});
+	sprite->Initialize({0.0f,0.0f},{128,128});
 	UIworld_.Initialize();
+	UIworld_.transform_.translate = {640,360};
+	UIworld_.UpdateMatrix();
 	TextureManager* tex = nullptr;
 	tex = TextureManager::GetInstance();
 	TextureHundle = tex->LoadTexture("resources/uvChecker.png");
@@ -32,7 +34,7 @@ void Renderer::Draw()
 	for (DrawModelData model : drawModelData_) {
 		model.modelData->Draw(*model.world_);
 	}
-	sprite->Draw(UIworld_, TextureHundle);
+	//sprite->Draw(UIworld_, TextureHundle);
 	//中身を消す
 	drawModelData_.clear();
 

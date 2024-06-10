@@ -49,10 +49,10 @@ void GameManager::Initialize()
 
 	renderTextrue = new PostProsess();
 	renderTextrue->Init();
-	renderTextrue->Create();
+	renderTextrue->Create(1);
 	renderTextrue2 = new PostProsess();
 	renderTextrue2->Init();
-	renderTextrue2->Create();
+	renderTextrue2->Create(2);
 }
 void GameManager::Gameloop(){
 	while (msg.message != WM_QUIT) {
@@ -91,6 +91,7 @@ void GameManager::Gameloop(){
 			// TODO : ここにPipelineとDrawを書き込んでいく
 			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			renderTextrue->Draw();
+			renderer_->PostProsessDraw();
 			renderTextrue->PostCopy();
 			
 			directX->PreView();

@@ -49,6 +49,7 @@ public:
 		GetsrvDescriptorHeap()const { return srvDescriptorHeap.Get(); }
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
 		GetrtvDescriptorHeap()const { return rtvDescriptorHeap.Get(); }
+	//０番目はスワップチェーン用
 	D3D12_CPU_DESCRIPTOR_HANDLE GetrtvHandles()const { return rtvHandles[1]; }
 
 
@@ -86,7 +87,7 @@ private:
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>swapChainResources[2] = { nullptr };
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[3];
 	Microsoft::WRL::ComPtr<ID3D12Fence>fence = nullptr;
 	uint64_t fenceValue = 0;
 	HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);

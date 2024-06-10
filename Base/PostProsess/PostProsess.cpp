@@ -20,9 +20,9 @@ void PostProsess::Draw()
 	DirectX->GetcommandList()->DrawInstanced(3, 1, 0, 0);
 }
 
-void PostProsess::Create()
+void PostProsess::Create(int Index)
 {
-	CreateRTV();
+	CreateRTV(Index);
 	CreateSRV();
 	CreateDepth();
 	CreateViewport();
@@ -119,7 +119,7 @@ ComPtr<ID3D12Resource> PostProsess::CreateRenderTextureResource(ComPtr<ID3D12Dev
 	return Resource;
 }
 
-void PostProsess::CreateRTV()
+void PostProsess::CreateRTV(int Index)
 {
 	//RTVを作る
 	const Vector4 kRenderTargetClearValue{ 1.0f,0.0f,0.0f,1.0f };
@@ -128,8 +128,11 @@ void PostProsess::CreateRTV()
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	uint32_t descriptorSizeRTV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	rtvHandle.ptr = DirectX->GetrtvHandles().ptr;
+	for (int i = 0; i < Index; i++) {
+		rtvHandle.ptr += descriptorSizeRTV;
+	}
 
-	rtvHandle.ptr = DirectX->GetrtvHandles().ptr + descriptorSizeRTV;
 	DirectX->GetDevice()->CreateRenderTargetView(renderTextureResource.Get(), &rtvDesc, rtvHandle);
 }
 

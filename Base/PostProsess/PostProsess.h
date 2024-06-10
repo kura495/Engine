@@ -12,7 +12,7 @@ class PostProsess
 public:
 	void Init();
 	void Draw();
-	void Create();
+	void Create(int Index);
 	void Update();
 	void PreDraw();
 	void PreCopy();
@@ -20,7 +20,7 @@ public:
 private:
 	ComPtr<ID3D12Resource> CreateRenderTextureResource(ComPtr<ID3D12Device> device, uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& clearColor);
 
-	void CreateRTV();
+	void CreateRTV(int Index);
 	void CreateSRV();
 	void CreateDepth();
 	void CreateViewport();
