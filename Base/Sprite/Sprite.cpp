@@ -3,6 +3,7 @@ void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const
 {
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
+	light_ = Light::GetInstance();
 
 	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * 4);
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
@@ -49,6 +50,7 @@ void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 {
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
+	light_ = Light::GetInstance();
 
 	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * 4);
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
@@ -98,10 +100,10 @@ void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
 	//ライティングをしない
 	materialData->enableLighting = false;
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
-	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTranform.scale);
-	uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTranform.rotate.z));
-	uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTranform.translate));
-	materialData->uvTransform = uvTransformMatrix;
+	//Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTranform.scale);
+	//uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTranform.rotate.z));
+	//uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTranform.translate));
+	//materialData->uvTransform = uvTransformMatrix;
 
 
 
@@ -119,6 +121,9 @@ void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource.Get()->GetGPUVirtualAddress());
 	//テクスチャ
 	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(TextureHandle));
+
+	//Light
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
 	directX_->GetcommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }

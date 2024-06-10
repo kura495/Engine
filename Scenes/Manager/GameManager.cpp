@@ -50,6 +50,9 @@ void GameManager::Initialize()
 	renderTextrue = new PostProsess();
 	renderTextrue->Init();
 	renderTextrue->Create();
+	renderTextrue2 = new PostProsess();
+	renderTextrue2->Init();
+	renderTextrue2->Create();
 }
 void GameManager::Gameloop(){
 	while (msg.message != WM_QUIT) {
@@ -77,18 +80,28 @@ void GameManager::Gameloop(){
 		#pragma region Draw
 			//renderTextureに色々書き込んでいく
 			renderTextrue->PreDraw();
-			editer->Draw();
+
 			state[currentSceneNum_]->Draw();
 			renderer_->Draw();
-			imGuiManager->EndFrame();
 #pragma endregion
-			directX->PreView();
+			renderTextrue2->PreDraw();
 			//renderTargetを変更
 			renderTextrue->PreCopy();
 			// TODO : ここにPipelineとDrawを書き込んでいく
 			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			renderTextrue->Draw();
 			renderTextrue->PostCopy();
+			
+			directX->PreView();
+			//renderTargetを変更
+			renderTextrue2->PreCopy();
+			// TODO : ここにPipelineとDrawを書き込んでいく
+			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderTextrue2->Draw();
+			renderTextrue2->PostCopy();
+
+			editer->Draw();
+			imGuiManager->EndFrame();
 			directX->PostView();
 		}
 	}

@@ -15,6 +15,13 @@ void Renderer::Initalize()
 	commandList = DirectXCommon::GetInstance()->GetcommandList();
 	PSOManager_ = std::make_unique<PSOManager>();
 	PSOManager_->Initalize();
+
+	sprite = std::make_unique<Sprite>();
+	sprite->Initialize({0.0f,0.0f},{0.0f,120.0f},{120.0f,0.0f},{120.0f,120.0f});
+	UIworld_.Initialize();
+	TextureManager* tex = nullptr;
+	tex = TextureManager::GetInstance();
+	TextureHundle = tex->LoadTexture("resources/uvChecker.png");
 }
 
 void Renderer::Draw()
@@ -25,6 +32,7 @@ void Renderer::Draw()
 	for (DrawModelData model : drawModelData_) {
 		model.modelData->Draw(*model.world_);
 	}
+	sprite->Draw(UIworld_, TextureHundle);
 	//中身を消す
 	drawModelData_.clear();
 
@@ -45,6 +53,14 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawLineData_.clear();
+}
+
+void Renderer::PostProsessDraw()
+{
+	//UI描画
+	ChangePipeline(PipelineType::Standerd);
+	///描画
+	sprite->Draw(UIworld_, TextureHundle);
 }
 
 void Renderer::AddModelData( Model& model, WorldTransform& world)

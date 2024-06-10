@@ -55,6 +55,7 @@ private:
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
 	PostProsess* renderTextrue = nullptr;
+	PostProsess* renderTextrue2 = nullptr;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

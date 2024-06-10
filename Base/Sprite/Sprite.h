@@ -8,6 +8,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
 #include <wrl.h>
+#include "Light/Light.h"
 
 class Sprite
 {
@@ -45,4 +46,5 @@ private:
 	void MakeVertexBufferView();
 	void MakeIndexBufferView();
 
+	Light* light_ = nullptr;
 };
