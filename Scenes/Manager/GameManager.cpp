@@ -84,9 +84,10 @@ void GameManager::Gameloop(){
 			state[currentSceneNum_]->Draw();
 			renderer_->Draw();
 #pragma endregion
-			renderTextrue->PreCopy();
 			//renderTargetを変更
 			renderTextrue2->PreDraw();
+			//レンダーターゲットから画像に変更
+			renderTextrue->PreCopy();
 			// TODO : ここにPipelineとDrawを書き込んでいく
 			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			renderTextrue->Draw();
