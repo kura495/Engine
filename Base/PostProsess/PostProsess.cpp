@@ -37,11 +37,11 @@ void PostProsess::Create(int Index)
 
 void PostProsess::Update()
 {
-	if (Player::playerMoveValue) {
-		materialData->x = std::min<float>(materialData->x + 0.01f, 0.7f);
+	if (Player::PushOptionButtern) {
+		materialData->x = 1.0f;
 	}
 	else {
-		materialData->x = std::max<float>(materialData->x - 0.01f,0.0f);
+		materialData->x = 0.0f;
 
 	}
 }

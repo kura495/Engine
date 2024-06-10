@@ -1,6 +1,7 @@
 #include "Player.h"
 
 bool Player::playerMoveValue;
+bool Player::PushOptionButtern;
 
 void Player::Initialize(std::vector<Model*> models)
 {
@@ -67,6 +68,16 @@ void Player::Update()
 	}
 
 	world_.transform_.quaternion = moveQuaternion_;
+
+	if (input->pushPad(XINPUT_GAMEPAD_START) || input->pushKey(DIK_ESCAPE)) {
+		if (PushOptionButtern) {
+			PushOptionButtern = false;
+		}
+		else {
+			PushOptionButtern = true;
+		}
+	}
+
 
 	BoxCollider::Update();
 	world_.UpdateMatrix();

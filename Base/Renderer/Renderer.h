@@ -8,6 +8,7 @@
 #include "Base/Texture/TextureManager.h"
 #include "Base/Sprite/Sprite.h"
 #include "Base/WorldTransform/WorldTransform.h"
+
 struct DrawModelData {
 	Model* modelData;
 	WorldTransform* world_;

@@ -25,6 +25,7 @@ public:
 	void Move();
 	void PlayerRoring();
 	static bool playerMoveValue;
+	static bool PushOptionButtern;
 
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
@@ -86,7 +87,7 @@ private:
 
 	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 
-	std::unique_ptr<Weapon>weapon_;
+	std::unique_ptr<Weapon> weapon_;
 
 	float attack = 0.0f;
 

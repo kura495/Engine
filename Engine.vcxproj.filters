@@ -439,6 +439,7 @@
       <Filter>リソース ファイル\hlsl</Filter>
     </None>
     <None Include="resources\hlsl\Line.hlsli" />
+    <None Include="resources\hlsl\FullScreen.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\hlsl\Object3d.PS.hlsl">
@@ -465,5 +466,7 @@
     <FxCompile Include="resources\hlsl\SkinningObject3d.VS.hlsl" />
     <FxCompile Include="resources\hlsl\Line.PS.hlsl" />
     <FxCompile Include="resources\hlsl\Line.VS.hlsl" />
+    <FxCompile Include="resources\hlsl\FullScreen.PS.hlsl" />
+    <FxCompile Include="resources\hlsl\FullScreen.VS.hlsl" />
   </ItemGroup>
 </Project>

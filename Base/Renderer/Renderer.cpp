@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Game/Object/Player/Player.h"
 
 ViewProjection Renderer::viewProjection;
 std::vector<DrawModelData> Renderer::drawModelData_;
@@ -19,6 +20,7 @@ void Renderer::Initalize()
 	sprite = std::make_unique<Sprite>();
 	sprite->Initialize({0.0f,0.0f},{128,128});
 	UIworld_.Initialize();
+	//
 	UIworld_.transform_.translate = {640,360};
 	UIworld_.UpdateMatrix();
 	TextureManager* tex = nullptr;
@@ -59,10 +61,12 @@ void Renderer::Draw()
 
 void Renderer::PostProsessDraw()
 {
-	//UI描画
-	ChangePipeline(PipelineType::Standerd);
-	///描画
-	sprite->Draw(UIworld_, TextureHundle);
+	if (Player::PushOptionButtern) {
+		//UI描画
+		ChangePipeline(PipelineType::Standerd);
+		///描画
+		sprite->Draw(UIworld_, TextureHundle);
+	}
 }
 
 void Renderer::AddModelData( Model& model, WorldTransform& world)
