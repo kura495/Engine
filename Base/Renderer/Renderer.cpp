@@ -20,6 +20,7 @@ void Renderer::Initalize()
 	sprite = std::make_unique<Sprite>();
 	sprite->Initialize({0.0f,0.0f},{128,128});
 	UIworld_.Initialize();
+	UIworld_2.Initialize();
 	//
 	UIworld_.transform_.translate = {640,360};
 	UIworld_.UpdateMatrix();
@@ -36,7 +37,7 @@ void Renderer::Draw()
 	for (DrawModelData model : drawModelData_) {
 		model.modelData->Draw(*model.world_);
 	}
-	//sprite->Draw(UIworld_, TextureHundle);
+	sprite->Draw(UIworld_2, TextureHundle);
 	//中身を消す
 	drawModelData_.clear();
 
