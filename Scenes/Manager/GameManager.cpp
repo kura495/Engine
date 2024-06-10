@@ -101,7 +101,6 @@ void GameManager::Gameloop(){
 			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			renderTextrue2->Draw();
 			renderTextrue2->PostCopy();
-
 			editer->Draw();
 			imGuiManager->EndFrame();
 			directX->PostView();
