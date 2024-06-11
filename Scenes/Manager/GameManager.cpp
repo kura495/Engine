@@ -76,6 +76,8 @@ void GameManager::Gameloop(){
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
 			renderTextrue->Update();
+			//TODO : ↓つけるとブラーがかかるよ
+			//renderTextrue2->Update();
 #pragma endregion
 		#pragma region Draw
 			//renderTextureに色々書き込んでいく
