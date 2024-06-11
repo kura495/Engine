@@ -20,9 +20,12 @@ void PSOManager::Initalize()
 	drawLinePSO.Initalize();
 	PostProsessPSO postProsessPSO;
 	postProsessPSO.Initalize();
+	GaussianFilter gaussianFilter;
+	gaussianFilter.Initalize();
 
 	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
 	AddPipeline(drawLinePSO.GetPSO(),PipelineType::DrawLine);
 	AddPipeline(postProsessPSO.GetPSO(),PipelineType::PostProsessPSO);
+	AddPipeline(gaussianFilter.GetPSO(),PipelineType::GaussianFilter);
 }

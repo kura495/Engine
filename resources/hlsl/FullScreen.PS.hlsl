@@ -39,9 +39,9 @@ PixelShaderOutput main(VertexShaderOutput input)
         output.color.rgb = float32_t3(0.0f,0.0f,0.0f);
         output.color.a = 1.0f;
         
-        for (int32_t x = 0; x < 3; ++x)
+        for (uint32_t x = 0; x < 3; ++x)
         {
-            for (int32_t y = 0; y < 3; ++y)
+            for (uint32_t y = 0; y < 3; ++y)
             {
                 float32_t2 texcoord = input.texcoord + kIndex3x3[x][y] * uvStepSize;
                 float32_t3 fetchColor = gTexture.Sample(gSampler,texcoord).rgb;

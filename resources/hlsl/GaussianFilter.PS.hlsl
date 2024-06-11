@@ -15,12 +15,14 @@ static const float32_t2 kIndex3x3[3][3] =
     { { -1.0f, 1.0f }, { 0.0f, 1.0f }, { 1.0f, 1.0f } },
 };
 
-static const float32_t kKernel3x3[3][3] =
+static const float32_t PI = 3.1459265f;
+float gauss(float x, float y, float sigma)
 {
-    { 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f },
-    { 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f },
-    { 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f },
-};
+    float exponent = -(x * x + y * y) * rcp(2.0f * sigma * sigma);
+    float denominator = 2.0f * PI * sigma * sigma;
+    
+    return exp(exponent) * rcp(denominator);
+}
 
 Texture2D<float32_t4> gTexture : register(t0);
 SamplerState gSampler : register(s0);
@@ -33,6 +35,18 @@ PixelShaderOutput main(VertexShaderOutput input)
     
     if (gMaterial.color.r == 1.0f)
     {
+        float32_t weight = 0.0f;
+        float32_t Kernel3x3[3][3];
+        
+        for (int32_t Ix = 0; Ix < 3; ++Ix)
+        {
+            for (int32_t Iy = 0; Iy < 3; ++Iy)
+            {
+                Kernel3x3[Ix][Iy] = gauss(kIndex3x3[Ix][Iy].x, kIndex3x3[Ix][Iy].y, 2.0f);
+                weight += Kernel3x3[Ix][Iy];
+            }
+        }
+        
         uint32_t width, height;
         gTexture.GetDimensions(width, height);
         float32_t2 uvStepSize = float32_t2(rcp(width), rcp(height));
@@ -45,11 +59,11 @@ PixelShaderOutput main(VertexShaderOutput input)
             {
                 float32_t2 texcoord = input.texcoord + kIndex3x3[x][y] * uvStepSize;
                 float32_t3 fetchColor = gTexture.Sample(gSampler, texcoord).rgb;
-                output.color.rgb += fetchColor * kKernel3x3[x][y];
-            }
+                output.color.rgb += fetchColor * Kernel3x3[x][y];
 
+            }
         }
-        
+        output.color.rgb *= rcp(weight);
     }
     
     return output;

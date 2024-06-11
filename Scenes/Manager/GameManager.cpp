@@ -91,7 +91,7 @@ void GameManager::Gameloop(){
 			//レンダーターゲットから画像に変更
 			renderTextrue->PreCopy();
 			// TODO : ここにPipelineとDrawを書き込んでいく
-			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderer_->ChangePipeline(PipelineType::GaussianFilter);
 			renderTextrue->Draw();
 			renderer_->PostProsessDraw();
 			renderTextrue->PostCopy();

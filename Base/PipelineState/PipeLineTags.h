@@ -2,7 +2,8 @@
 
 enum class PipelineType {
 	Standerd,
-	PostProsessPSO,
 	Skinning,
-	DrawLine
+	DrawLine,
+	PostProsessPSO,
+	GaussianFilter,
 };
