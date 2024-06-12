@@ -21,11 +21,12 @@ void GamePlayState::Initialize()
 	// 
 	//3Dオブジェクト生成
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/human", "human.gltf"));
-	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "Player.obj"));
+	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));
+	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(WeaponModel_);
+	player_->Initialize(playerModel_);
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
@@ -85,11 +86,6 @@ void GamePlayState::Draw()
 #pragma region Game
 
 	objectManager->Draw();
-	if (IsDebugCamera == true) {
-		for (Model* model : playerModel_) {
-			renderer_->AddModelData(*model,player_->GetWorldTransform());
-		}
-	}
 
 	player_->Draw();
 

@@ -4,6 +4,7 @@
 #include "Game/Object/Weapon/Weapon.h"
 #include "Base/Utility/BoxCollider.h"
 #include "Base/Input/Input.h"
+#include "Base/Animation/Animation.h"
 
 enum class Behavior {
 	kRoot,
@@ -23,6 +24,7 @@ public:
 	void OnCollision(const Collider* collider)override;
 
 	void Move();
+	void AnimationUpdate();
 	void PlayerRoring();
 	static bool playerMoveValue;
 	static bool PushOptionButtern;
@@ -91,4 +93,9 @@ private:
 
 	float attack = 0.0f;
 
+	Animation* animationSystem = nullptr;
+	Animation animation;
+	Skeleton skeleton;
+	SkinCluster skinCluster;
+	float animationTime_ = 0.0f;
 };

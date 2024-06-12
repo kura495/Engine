@@ -7,10 +7,9 @@ void Player::Initialize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
-	world_.transform_.scale.y = 2.0f;
-	//world_.transform_.translate.y = 1.0f;
-	world_.UpdateMatrix();
 	input = Input::GetInstance();
+
+	moveQuaternion_ = Quaternion::IdentityQuaternion();
 
 	BoxCollider::Initialize();
 	Collider::SetWorld(&world_);
@@ -21,6 +20,22 @@ void Player::Initialize(std::vector<Model*> models)
 	weapon_ = std::make_unique<Weapon>();
 	weapon_->Initalize(models);
 	weapon_->SetParent(world_);
+
+#pragma region 
+	animationSystem = new Animation();
+	animationSystem->Init();
+
+	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
+	skeleton = animationSystem->CreateSkeleton(models_[0]->GetModelData().rootNode);
+	skinCluster = animationSystem->CreateSkinCluster(skeleton, models_[0]->GetModelData());
+
+	animationTime_ += 1.0f / 60.0f;
+
+	animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
+
+	animationSystem->SkeletonUpdate(skeleton);
+	animationSystem->SkinClusterUpdate(skinCluster, skeleton);
+#pragma endregion Anime
 
 }
 
@@ -34,7 +49,7 @@ void Player::Update()
 	input->GetJoystickState(joyState);
 
 	Move();
-	PlayerRoring();
+
 
 	if (behaviorRequest_) {
 		//ふるまいの変更
@@ -90,6 +105,7 @@ void Player::Update()
 
 void Player::Draw()
 {
+	models_[0]->RendererSkinDraw(world_, skinCluster);
 	weapon_->Draw();
 }
 
@@ -196,6 +212,27 @@ void Player::Move()
 		//移動
 		world_.transform_.translate = world_.transform_.translate + move;
 		playerMoveValue = true;
+
+		//PlayerRoring();
+		//移動ベクトルをカメラの角度だけ回転
+		//lookPoint = TransformNormal(move, rotateMatrix);
+		//ロックオン座標
+		lookPoint = move + world_.transform_.translate;
+		lookPoint.y = 0;
+		//追従対象からロックオン対象へのベクトル
+		sub = lookPoint - world_.transform_.translate;
+
+		//プレイヤーの現在の向き
+		sub = sub.Normalize();
+
+		Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, sub));
+		float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
+
+		//行きたい方向のQuaternionの作成
+		moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+
+		AnimationUpdate();
+
 		return;
 	}
 	else {
@@ -218,6 +255,18 @@ void Player::Move()
 		playerMoveValue = true;
 	}
 
+}
+
+void Player::AnimationUpdate()
+{
+	animationTime_ += 1.0f / 60.0f;
+
+	animationTime_ = std::fmod(animationTime_, animation.duration);
+
+	animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
+
+	animationSystem->SkeletonUpdate(skeleton);
+	animationSystem->SkinClusterUpdate(skinCluster, skeleton);
 }
 
 void Player::PlayerRoring()

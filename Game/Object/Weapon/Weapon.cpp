@@ -30,9 +30,7 @@ void Weapon::Update()
 
 void Weapon::Draw()
 {
-	for (Model* model : models_) {
-		model->RendererDraw(world_);
-	}
+	models_[1]->RendererDraw(world_);
 }
 
 void Weapon::ImGui()
