@@ -43,7 +43,7 @@ private:
 
 	bool IsEnableFlag = false;
 	bool IsManipulatorFlag = true;
-	bool IsGridFlag = true;
+	bool IsGridFlag = false;
 
 	ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 };

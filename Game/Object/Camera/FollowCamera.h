@@ -30,7 +30,7 @@ private:
 	// ゲームパッド
 	XINPUT_STATE joyState;
 
-	Vector2 rotate_ = { 0.0f,0.0f };
+	Vector3 rotate_ = { 0.0f,0.0f,0.0f };
 
 	float parameter_t = 0.0f;
 	float GrapParameter_t = 0.0f;

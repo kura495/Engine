@@ -18,7 +18,7 @@ void GamePlayState::Initialize()
 
 	DirectX_ = DirectXCommon::GetInstance();
 	collisionManager = std::make_unique<CollisionManager>();
-	// 
+	//
 	//3Dオブジェクト生成
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/human", "human.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));

@@ -28,6 +28,9 @@ void FollowCamera::Update() {
 
 		rotate_.y -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * kRadian;
 		rotate_.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * kRadian;
+
+
+		//カメラの上下移動を制御
 		if (rotate_.y > 1.0f) {
 			rotate_.y = 1.0f;
 		}
@@ -35,11 +38,14 @@ void FollowCamera::Update() {
 			rotate_.y = -1.0f;
 		}
 
-
 		parameter_t = 1.0f;
-	}
-	viewProj.rotation_.y = LerpShortAngle(viewProj.rotation_.y, rotate_.x, parameter_t);
-	viewProj.rotation_.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);
+	}		
+	Vector3 EulerRot;
+	EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, parameter_t);
+	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.x, parameter_t);
+	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);
+
+	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 	viewProj.UpdateMatrix();
 }
 

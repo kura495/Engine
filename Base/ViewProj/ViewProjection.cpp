@@ -29,6 +29,7 @@ void ViewProjection::TransferMatrix(){
 }
 
 void ViewProjection::UpdateViewMatrix(){
+	rotation_ = rotation_.Normalize();
 	CameraMatrix = MakeAffineMatrix(Vector3{ 1.0f,1.0f,1.0f }, rotation_, translation_);
 	matView = Matrix4x4::Inverse(CameraMatrix);
 }

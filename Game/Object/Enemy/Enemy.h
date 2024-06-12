@@ -45,5 +45,5 @@ private:
 	std::vector<Vector4> point;
 	void UpdateLine();
 
-	bool chackBoxflag = false;
+	bool chackBoxflag = true;
 };
