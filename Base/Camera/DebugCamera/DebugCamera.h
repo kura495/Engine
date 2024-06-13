@@ -2,6 +2,7 @@
 
 #include "Base/Input/Input.h"
 #include "Base/Camera/Camera.h"
+#include "Calc.h"
 
 class DebugCamera : public Camera {
 public:
@@ -9,5 +10,5 @@ public:
 	void Update()override;
 
 private:
-
+	Vector3 rotate_ = { 0.0f };
 };

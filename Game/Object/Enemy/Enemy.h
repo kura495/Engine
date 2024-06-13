@@ -15,6 +15,8 @@ public:
 	void Draw()override;
 	void DabugDraw();
 
+	//void OnCollision(const Collider* collider)override;
+
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
 		world_.transform_.translate = pos;
@@ -23,8 +25,7 @@ public:
 
 private:
 	Player* player_ = nullptr;
-	Animation* animationSystem = nullptr;
-	Animation animation;
+	Animation* animation = nullptr;
 	// 攻撃範囲内ならtrue
 	bool ChackOnAttack();
 	void ChasePlayer();
@@ -32,18 +33,8 @@ private:
 	const float AttackRange = 2.0f;
 	bool isAttackFlag = true;
 
-	float animationTime_ = 0.0f;
 	const float kAnimeInterval = 60.0f;
 	float animeInterval_ = 0.0f;
-
-	//SkinAnime
-	Skeleton skeleton;
-	SkinCluster skinCluster;
-
-	WorldTransform Lineworld_;
-	Line* line;
-	std::vector<Vector4> point;
-	void UpdateLine();
 
 	bool chackBoxflag = true;
 };

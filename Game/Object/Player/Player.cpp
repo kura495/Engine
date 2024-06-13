@@ -21,20 +21,12 @@ void Player::Initialize(std::vector<Model*> models)
 	weapon_->Initalize(models);
 	weapon_->SetParent(world_);
 
-#pragma region 
-	animationSystem = new Animation();
-	animationSystem->Init();
-
+#pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
-	skeleton = animationSystem->CreateSkeleton(models_[0]->GetModelData().rootNode);
-	skinCluster = animationSystem->CreateSkinCluster(skeleton, models_[0]->GetModelData());
+	animation->Init();
+	animation->AnimeInit(*models_[0]);
 
-	animationTime_ += 1.0f / 60.0f;
-
-	animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
-
-	animationSystem->SkeletonUpdate(skeleton);
-	animationSystem->SkinClusterUpdate(skinCluster, skeleton);
+	
 #pragma endregion Anime
 
 }
@@ -105,7 +97,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	models_[0]->RendererSkinDraw(world_, skinCluster);
+	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
 	weapon_->Draw();
 }
 
@@ -212,8 +204,6 @@ void Player::Move()
 		//移動
 		world_.transform_.translate = world_.transform_.translate + move;
 		playerMoveValue = true;
-
-		//PlayerRoring();
 		//移動ベクトルをカメラの角度だけ回転
 		//lookPoint = TransformNormal(move, rotateMatrix);
 		//ロックオン座標
@@ -231,7 +221,7 @@ void Player::Move()
 		//行きたい方向のQuaternionの作成
 		moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
-		AnimationUpdate();
+		animation->PlayAnimation();
 
 		return;
 	}
@@ -255,18 +245,6 @@ void Player::Move()
 		playerMoveValue = true;
 	}
 
-}
-
-void Player::AnimationUpdate()
-{
-	animationTime_ += 1.0f / 60.0f;
-
-	animationTime_ = std::fmod(animationTime_, animation.duration);
-
-	animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
-
-	animationSystem->SkeletonUpdate(skeleton);
-	animationSystem->SkinClusterUpdate(skinCluster, skeleton);
 }
 
 void Player::PlayerRoring()

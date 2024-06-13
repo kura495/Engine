@@ -12,19 +12,25 @@ void DebugCamera::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_LALT)) {
 #pragma region rotation
 	const float rotSpeed = 0.05f;
+
 	if (Input::GetInstance()->TriggerKey(DIK_UP)) {
-		viewProj.rotation_.x += rotSpeed;
+		rotate_.x -= rotSpeed;
 	}
 	else if (Input::GetInstance()->TriggerKey(DIK_DOWN)) {
-		viewProj.rotation_.x -= rotSpeed;
+		rotate_.x += rotSpeed;
 	}
 	if (Input::GetInstance()->TriggerKey(DIK_LEFT)) {
-		viewProj.rotation_.y -= rotSpeed;
+		rotate_.y -= rotSpeed;
 	}
 	else if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
-		viewProj.rotation_.y += rotSpeed;
+		rotate_.y += rotSpeed;
 	}
+	Vector3 EulerRot;
+	EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, 1.0f);
+	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.y, 1.0f);
+	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.x, 1.0f);
 
+	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 #pragma endregion 回転
 #pragma region translation_
 	const float translateSpeed = 0.5f;

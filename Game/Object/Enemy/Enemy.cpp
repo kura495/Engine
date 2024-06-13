@@ -6,29 +6,14 @@ void Enemy::Initialize(std::vector<Model*> models)
 	models_ = models;
 	models[0]->GetModelData().material.textureFilePath;
 	world_.Initialize();
-	//world_.transform_.translate.y += 1.0f;
-	animationSystem = new Animation();
-	animationSystem->Init();
 
+#pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "human.gltf");
-	skeleton = animationSystem->CreateSkeleton(models_[0]->GetModelData().rootNode);
-	skinCluster = animationSystem->CreateSkinCluster(skeleton, models_[0]->GetModelData());
+	animation->Init();
+	animation->AnimeInit(*models_[0]);
 
-	animationTime_ += 1.0f / 60.0f;
+#pragma endregion Animation
 
-	animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
-
-	animationSystem->SkeletonUpdate(skeleton);
-	animationSystem->SkinClusterUpdate(skinCluster, skeleton);
-	
-	animationSystem->CreateBoneLineVertices(skeleton, skeleton.root, point);
-	
-	Lineworld_.Initialize();
-	line = new Line();
-	line->Init();
-	line->SetVertexData(point);
-	line->CreateBuffer();
-	UpdateLine();
 }
 
 void Enemy::Update()
@@ -42,16 +27,7 @@ void Enemy::Update()
 		//範囲外なら歩く
 		ChasePlayer();
 
-		animationTime_ += 1.0f / 60.0f;
-
-		animationTime_ = std::fmod(animationTime_, animation.duration);
-	
-		animationSystem->ApplyAnimation(skeleton, animation, animationTime_);
-
-		animationSystem->SkeletonUpdate(skeleton);
-		animationSystem->SkinClusterUpdate(skinCluster,skeleton);
-
-		UpdateLine();
+		animation->PlayAnimation();
 	}
 	
 	world_.UpdateMatrix();
@@ -65,7 +41,7 @@ void Enemy::Draw()
 	ImGui::End();
 	if (chackBoxflag) {
 		for (Model* model : models_) {
-			model->RendererSkinDraw(world_,skinCluster);
+			model->RendererSkinDraw(world_,animation->GetSkinCluster());
 		}
 	}
 #endif
@@ -73,7 +49,7 @@ void Enemy::Draw()
 
 void Enemy::DabugDraw()
 {
-	line->RendererDraw(world_);
+	//line->RendererDraw(world_);
 }
 
 bool Enemy::ChackOnAttack()
@@ -94,19 +70,4 @@ void Enemy::ChasePlayer()
 		return;
 	}
 	world_.transform_.translate += PtoEdistance / 60.0f;
-}
-
-void Enemy::UpdateLine()
-{
-	point.clear();
-	const Joint& parentJoint = skeleton.joints[skeleton.root];
-	for (int32_t childIndex : parentJoint.children)
-	{
-		const Joint& childJoint = skeleton.joints[childIndex];
-		point.push_back({ parentJoint.skeletonSpaceMatrix.m[3][0],parentJoint.skeletonSpaceMatrix.m[3][1],parentJoint.skeletonSpaceMatrix.m[3][2],1.0f });
-		point.push_back({ childJoint.skeletonSpaceMatrix.m[3][0],childJoint.skeletonSpaceMatrix.m[3][1],childJoint.skeletonSpaceMatrix.m[3][2],1.0f });
-		animationSystem->CreateBoneLineVertices(skeleton, childIndex, point);
-	}
-
-	line->UpdateVertexData(point);
 }

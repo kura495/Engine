@@ -5,9 +5,23 @@ void Animation::Init(){
 	srvManager_ = SRVManager::GetInstance();
 }
 
-Animation Animation::LoadAnimationFile(const std::string& directrypath, const std::string& filename)
+void Animation::AnimeInit(Model& model)
 {
-	Animation animation;// 今回作るアニメーション
+	CreateSkeleton(model.GetModelData().rootNode);
+	CreateSkinCluster(model.GetModelData());
+	animationTime_ += 1.0f / 60.0f;
+
+	ApplyAnimation(animationTime_);
+
+	SkeletonUpdate();
+	SkinClusterUpdate();
+
+	CreateBoneLineVertices(skeleton.root, point);
+}
+
+Animation* Animation::LoadAnimationFile(const std::string& directrypath, const std::string& filename)
+{
+	Animation* animation = new Animation();// 今回作るアニメーション
 	Assimp::Importer importer;
 	std::string filePath = directrypath + "/" + filename;
 	const aiScene* scene = importer.ReadFile(filePath.c_str(),0);
@@ -15,11 +29,11 @@ Animation Animation::LoadAnimationFile(const std::string& directrypath, const st
 	aiAnimation* animationAssimp = scene->mAnimations[0];//この状態だと最初のアニメーションだけ読み込む
 	// mTicksPerSecond = 周波数
 	// mDuration = 周波数における長さ
-	animation.duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);// 時間を秒に変換　
+	animation->duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);// 時間を秒に変換　
 	// NodeAnimationを解析
 	for (uint32_t channelIndex = 0; channelIndex < animationAssimp->mNumChannels; ++channelIndex) {
 		aiNodeAnim* nodeAnimationAssimp = animationAssimp->mChannels[channelIndex];
-		NodeAnimation& nodeAnimation = animation.nodeAnimations[nodeAnimationAssimp->mNodeName.C_Str()];
+		NodeAnimation& nodeAnimation = animation->nodeAnimations[nodeAnimationAssimp->mNodeName.C_Str()];
 		// translate
 		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumPositionKeys; ++keyIndex) {
 			aiVectorKey& keyAssimp = nodeAnimationAssimp->mPositionKeys[keyIndex];
@@ -44,6 +58,7 @@ Animation Animation::LoadAnimationFile(const std::string& directrypath, const st
 			nodeAnimation.scale.keyFrames.push_back(keyFrame);
 		}
 	}
+
 	return animation;
 }
 
@@ -87,7 +102,26 @@ Quaternion Animation::CalculateValue(const std::vector<KeyFrameQuaternion>& keyf
 	return (*keyframes.rbegin()).value;
 }
 
-void Animation::SkeletonUpdate(Skeleton& skeleton)
+void Animation::PlayAnimation()
+{
+	animationTime_ += 1.0f / 60.0f;
+
+	animationTime_ = std::fmod(animationTime_, duration);
+
+	ApplyAnimation(animationTime_);
+
+	SkeletonUpdate();
+	SkinClusterUpdate();
+
+	//UpdateLine();
+}
+
+void Animation::DebugDraw()
+{
+	SkeletonLine.RendererDraw(world_);
+}
+
+void Animation::SkeletonUpdate()
 {
 	// すべてのjointを更新。親が若いので通常ループで処理可能になっている
 	for (Joint& joint : skeleton.joints) {
@@ -102,7 +136,7 @@ void Animation::SkeletonUpdate(Skeleton& skeleton)
 	}
 }
 
-void Animation::SkinClusterUpdate(SkinCluster& skinCluster, Skeleton& skeleton)
+void Animation::SkinClusterUpdate()
 {
 	// SkinClusterの更新
 
@@ -114,10 +148,8 @@ void Animation::SkinClusterUpdate(SkinCluster& skinCluster, Skeleton& skeleton)
 
 }
 
-Skeleton Animation::CreateSkeleton(const Node& rootNode)
+void Animation::CreateSkeleton(const Node& rootNode)
 {
-	Skeleton skeleton;
-
 	skeleton.root = CreateJoint(rootNode, {}, skeleton.joints);
 
 	//名前とindexのマッピングを行いアクセスしやすくする
@@ -125,7 +157,10 @@ Skeleton Animation::CreateSkeleton(const Node& rootNode)
 		skeleton.jointMap.emplace(joint.name, joint.index);
 	}
 
-	return skeleton;
+	//SkeletonLine.Init();
+	//SkeletonLine.SetVertexData(point);
+	//SkeletonLine.CreateBuffer();
+	//UpdateLine();
 }
 
 int32_t Animation::CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints)
@@ -149,11 +184,11 @@ int32_t Animation::CreateJoint(const Node& node, const std::optional<int32_t>& p
 	return joint.index;
 }
 
-void Animation::ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime)
+void Animation::ApplyAnimation(float animationTime)
 {
 	for (Joint& joint : skeleton.joints) {
 		// 対象のJointのAnimationがあれば、値の適用を行う。下記のif文はC++17から可能になった初期化付きif文
-		if (auto it = animation.nodeAnimations.find(joint.name); it != animation.nodeAnimations.end()) {
+		if (auto it = nodeAnimations.find(joint.name); it != nodeAnimations.end()) {
 			const NodeAnimation& rootNodeAnimation = (*it).second;
 			joint.transform.scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames, animationTime);
 			joint.transform.quaternion = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames, animationTime);
@@ -162,9 +197,8 @@ void Animation::ApplyAnimation(Skeleton& skeleton, const Animation& animation, f
 	}
 }
 
-SkinCluster Animation::CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData)
+void Animation::CreateSkinCluster(const ModelData& modelData)
 {
-	SkinCluster skinCluster;
 	// palette用Resource
 	skinCluster.paletteResource = directX_->CreateBufferResource(sizeof(WellForGPU) * skeleton.joints.size());
 	WellForGPU* mappedPalette = nullptr;
@@ -205,7 +239,7 @@ SkinCluster Animation::CreateSkinCluster(const Skeleton& skeleton, const ModelDa
 	std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), Matrix4x4::CreateIdentity);
 
 	// modelDataを解析してInfluenceを埋める
-	// Modelの中のSkinClusterの情報を解析
+	// Modelの中のskinClusterの情報を解析
 	for (const auto& jointWeight : modelData.skinClusterData) {
 		// jointWeight.firstはjoint名なので、skeletonに対象となるjointが含まれているか調べる
 		auto it = skeleton.jointMap.find(jointWeight.first);
@@ -231,11 +265,9 @@ SkinCluster Animation::CreateSkinCluster(const Skeleton& skeleton, const ModelDa
 			}
 		}
 	}
-
-	return skinCluster;
 }
 
-void Animation::CreateBoneLineVertices(const Skeleton& skeleton, int32_t parentIndex, std::vector<Vector4>& vertices)
+void Animation::CreateBoneLineVertices(int32_t parentIndex, std::vector<Vector4>& vertices)
 {
 	const Joint& parentJoint = skeleton.joints[parentIndex];
 	for (int32_t childIndex : parentJoint.children)
@@ -243,6 +275,21 @@ void Animation::CreateBoneLineVertices(const Skeleton& skeleton, int32_t parentI
 		const Joint& childJoint = skeleton.joints[childIndex];
 		vertices.push_back({ parentJoint.skeletonSpaceMatrix.m[3][0],parentJoint.skeletonSpaceMatrix.m[3][1],parentJoint.skeletonSpaceMatrix.m[3][2],1.0f });
 		vertices.push_back({ childJoint.skeletonSpaceMatrix.m[3][0],childJoint.skeletonSpaceMatrix.m[3][1],childJoint.skeletonSpaceMatrix.m[3][2],1.0f });
-		CreateBoneLineVertices(skeleton, childIndex, vertices);
+		CreateBoneLineVertices(childIndex, vertices);
 	}
+}
+
+void Animation::UpdateLine()
+{
+		point.clear();
+		const Joint& parentJoint = skeleton.joints[skeleton.root];
+		for (int32_t childIndex : parentJoint.children)
+		{
+			const Joint& childJoint = skeleton.joints[childIndex];
+			point.push_back({ parentJoint.skeletonSpaceMatrix.m[3][0],parentJoint.skeletonSpaceMatrix.m[3][1],parentJoint.skeletonSpaceMatrix.m[3][2],1.0f });
+			point.push_back({ childJoint.skeletonSpaceMatrix.m[3][0],childJoint.skeletonSpaceMatrix.m[3][1],childJoint.skeletonSpaceMatrix.m[3][2],1.0f });
+			CreateBoneLineVertices(childIndex, point);
+		}
+
+		SkeletonLine.UpdateVertexData(point);
 }
