@@ -99,6 +99,7 @@ void Player::Draw()
 {
 	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
 	weapon_->Draw();
+	animation->DebugDraw(world_);
 }
 
 void Player::ImGui()

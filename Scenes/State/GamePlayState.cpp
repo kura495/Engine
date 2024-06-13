@@ -97,10 +97,6 @@ void GamePlayState::Draw()
 		enemy->Draw();
 	}
 
-	for (Enemy* enemy : enemys_) {
-		enemy->DabugDraw();
-	}
-
 #pragma endregion
 
 	//3Dモデル描画ここまで	

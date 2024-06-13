@@ -13,7 +13,6 @@ public:
 	void Initialize(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
-	void DabugDraw();
 
 	//void OnCollision(const Collider* collider)override;
 

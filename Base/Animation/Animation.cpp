@@ -9,14 +9,19 @@ void Animation::AnimeInit(Model& model)
 {
 	CreateSkeleton(model.GetModelData().rootNode);
 	CreateSkinCluster(model.GetModelData());
-	animationTime_ += 1.0f / 60.0f;
 
 	ApplyAnimation(animationTime_);
 
 	SkeletonUpdate();
 	SkinClusterUpdate();
-
+	
+#pragma region
 	CreateBoneLineVertices(skeleton.root, point);
+	SkeletonLine.Init();
+	SkeletonLine.SetVertexData(point);
+	SkeletonLine.CreateBuffer();
+	UpdateLine();
+#pragma endregion Line
 }
 
 Animation* Animation::LoadAnimationFile(const std::string& directrypath, const std::string& filename)
@@ -113,12 +118,12 @@ void Animation::PlayAnimation()
 	SkeletonUpdate();
 	SkinClusterUpdate();
 
-	//UpdateLine();
+	UpdateLine();
 }
 
-void Animation::DebugDraw()
+void Animation::DebugDraw(WorldTransform& world)
 {
-	SkeletonLine.RendererDraw(world_);
+	SkeletonLine.RendererDraw(world);
 }
 
 void Animation::SkeletonUpdate()
@@ -156,11 +161,6 @@ void Animation::CreateSkeleton(const Node& rootNode)
 	for (const Joint& joint : skeleton.joints) {
 		skeleton.jointMap.emplace(joint.name, joint.index);
 	}
-
-	//SkeletonLine.Init();
-	//SkeletonLine.SetVertexData(point);
-	//SkeletonLine.CreateBuffer();
-	//UpdateLine();
 }
 
 int32_t Animation::CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints)

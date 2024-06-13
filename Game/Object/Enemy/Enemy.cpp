@@ -44,12 +44,8 @@ void Enemy::Draw()
 			model->RendererSkinDraw(world_,animation->GetSkinCluster());
 		}
 	}
+	animation->DebugDraw(world_);
 #endif
-}
-
-void Enemy::DabugDraw()
-{
-	//line->RendererDraw(world_);
 }
 
 bool Enemy::ChackOnAttack()

@@ -24,20 +24,13 @@ public:
 
 	void PlayAnimation();
 
-	void DebugDraw();
+	void DebugDraw(WorldTransform& world);
 
 	SkinCluster& GetSkinCluster() {
 		return skinCluster;
 	};
 
-	void SkeletonUpdate();
-	void SkinClusterUpdate();
-	void CreateSkeleton(const Node& rootNode);
-	int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
-	void ApplyAnimation(float animationTime);
-	void CreateSkinCluster(const ModelData& modelData);
 
-	void CreateBoneLineVertices(int32_t parentIndex, std::vector<Vector4>& vertices);
 
 	float duration; // アニメーション全体の尺(単位は秒)
 	// NodeAnimationの集合　Node名で検索できるようにする
@@ -46,12 +39,19 @@ private:
 	DirectXCommon* directX_ = nullptr;
 	SRVManager* srvManager_;
 
-	float animationTime_ = 0.0f;
+	void SkeletonUpdate();
+	void SkinClusterUpdate();
+	void CreateSkeleton(const Node& rootNode);
+	int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
+	void ApplyAnimation(float animationTime);
+	void CreateSkinCluster(const ModelData& modelData);
+	void CreateBoneLineVertices(int32_t parentIndex, std::vector<Vector4>& vertices);
+
+	float animationTime_ = 1.0f / 60.0f;
 
 	void UpdateLine();
 	Line SkeletonLine;
 	std::vector<Vector4> point;
-	WorldTransform world_;
 	Skeleton skeleton;
 	SkinCluster skinCluster;
 };
