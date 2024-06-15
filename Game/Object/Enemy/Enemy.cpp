@@ -39,13 +39,14 @@ void Enemy::Draw()
 	ImGui::Begin("EnemyDraw");
 	ImGui::Checkbox("ModelDraw", &chackBoxflag);
 	ImGui::End();
+
+#endif
 	if (chackBoxflag) {
 		for (Model* model : models_) {
 			model->RendererSkinDraw(world_,animation->GetSkinCluster());
 		}
 	}
 	animation->DebugDraw(world_);
-#endif
 }
 
 bool Enemy::ChackOnAttack()
