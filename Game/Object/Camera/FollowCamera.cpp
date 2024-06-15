@@ -7,20 +7,6 @@ void FollowCamera::Initialize() {
 
 void FollowCamera::Update() {
 
-	if (target_) {
-		Vector3 pos = target_->transform_.translate;
-		//もしペアレントを結んでいるなら
-		if (target_->parent_) {
-			pos = target_->transform_.translate + target_->parent_->transform_.translate;
-		}
-		//追従座標の補間
-		workInter.interTarget_ = Vector3::VectorLerp(workInter.interTarget_, pos, workInter.interParameter_);
-
-		Vector3 offset = OffsetCalc();
-		//オフセット分と追従座標の補間分ずらす
-		viewProj.translation_ = workInter.interTarget_ + offset;
-	}
-
 	//スティックでのカメラ回転
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
@@ -46,6 +32,21 @@ void FollowCamera::Update() {
 	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);
 
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
+
+	if (target_) {
+		Vector3 pos = target_->transform_.translate;
+		//もしペアレントを結んでいるなら
+		if (target_->parent_) {
+			pos = target_->transform_.translate + target_->parent_->transform_.translate;
+		}
+		//追従座標の補間
+		//workInter.interTarget_ = Vector3::VectorLerp(workInter.interTarget_, pos, workInter.interParameter_);
+
+		Vector3 offset = OffsetCalc();
+		//オフセット分と追従座標の補間分ずらす
+		viewProj.translation_ = pos + offset;
+	}
+
 	viewProj.UpdateMatrix();
 }
 

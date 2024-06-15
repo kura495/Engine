@@ -13,7 +13,7 @@ struct WorkInterpolation {
 	//追従対象のY軸
 	float targetAngleY_ = 0.0f;
 	//カメラ補間の媒介変数
-	float interParameter_ = 0.0f;
+	float interParameter_ = 1.0f;
 };
 
 class FollowCamera : public Camera
