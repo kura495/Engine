@@ -121,6 +121,23 @@ void Animation::PlayAnimation()
 	UpdateLine();
 }
 
+SkinCluster Animation::AnimationLerp(Animation* animeA, Animation* animeB, float t)
+{
+	if (animeA->GetSkeleton().joints != animeB->GetSkeleton().joints) {
+		return;
+	}
+	Skeleton Lerpskeleton;
+	for (Joint& joint : Lerpskeleton.joints) {
+		// 対象のJointのAnimationがあれば、値の適用を行う。下記のif文はC++17から可能になった初期化付きif文
+		if (auto it = nodeAnimations.find(joint.name); it != nodeAnimations.end()) {
+			const NodeAnimation& rootNodeAnimation = (*it).second;
+			joint.transform.scale = ;
+			joint.transform.quaternion = ;
+			joint.transform.translate = ;
+		}
+	}
+}
+
 void Animation::DebugDraw(WorldTransform& world)
 {
 	SkeletonLine.RendererDraw(world);
