@@ -42,7 +42,7 @@ Vector3 Vector3::Normalize() {
 	}
 	return result;
 }
-Vector3 Vector3::VectorLerp(const Vector3& v1, const Vector3& v2, float t) {
+Vector3 Vector3::Lerp(const Vector3& v1, const Vector3& v2, float t) {
 	Vector3 result;
 	if (t < 0) {
 		t = (float)std::min(0, 1);

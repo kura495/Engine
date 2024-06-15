@@ -21,7 +21,7 @@ public:
 	static Animation* LoadAnimationFile(const std::string& directrypath,const std::string& filename);
 	static Vector3 CalculateValue(const std::vector<KeyFrameVector3>& keyframes,float time);
 	static Quaternion CalculateValue(const std::vector<KeyFrameQuaternion>& keyframes,float time);
-	SkinCluster AnimationLerp(Animation* animeA, Animation* animeB, float t);
+	void AnimationLerp(Animation* animeA, Animation* animeB, float t);
 
 	void PlayAnimation();
 
@@ -34,6 +34,10 @@ public:
 	Skeleton& GetSkeleton() {
 		return skeleton;
 	};
+	void SetSkeleton(Skeleton& inputSkeleton,float Duration) {
+		skeleton = inputSkeleton;
+		duration = Duration;
+	}
 
 	float duration; // アニメーション全体の尺(単位は秒)
 	// NodeAnimationの集合　Node名で検索できるようにする

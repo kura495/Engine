@@ -26,7 +26,14 @@ void Player::Initialize(std::vector<Model*> models)
 	animation->Init();
 	animation->AnimeInit(*models_[0]);
 
-	
+	animation2 = Animation::LoadAnimationFile("resources/human", "sneakWalk.gltf");
+	animation2->Init();
+	animation2->AnimeInit(*models_[0]);
+
+	animation3 = new Animation();
+	animation3->Init();
+	animation3->AnimeInit(*models_[0]);
+	animation3->SetSkeleton(animation->GetSkeleton(),animation->duration);
 #pragma endregion Anime
 
 }
@@ -41,7 +48,8 @@ void Player::Update()
 	input->GetJoystickState(joyState);
 
 	Move();
-
+	animation3->AnimationLerp(animation2, animation, animeT);
+	animation3->PlayAnimation();
 
 	if (behaviorRequest_) {
 		//ふるまいの変更
@@ -97,9 +105,9 @@ void Player::Update()
 
 void Player::Draw()
 {
-	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animation3->GetSkinCluster());
 	weapon_->Draw();
-	animation->DebugDraw(world_);
+	animation3->DebugDraw(world_);
 }
 
 void Player::ImGui()
@@ -223,11 +231,17 @@ void Player::Move()
 		moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
 		animation->PlayAnimation();
+		animation2->PlayAnimation();
+
+		animeT = (std::min)(animeT + 0.01f, 1.0f);
+
+
 
 		return;
 	}
 	else {
 		playerMoveValue = false;
+		animeT = (std::max)(animeT - 0.01f, 0.0f);
 	}
 	if (input->TriggerKey(DIK_W)) {
 		world_.transform_.translate.z += 0.1f;

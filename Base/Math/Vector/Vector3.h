@@ -90,6 +90,6 @@ public:
 	Vector3 Normalize();
 	//線形補間
 	//return Vector3
-	static Vector3 VectorLerp(const Vector3& v1, const Vector3& v2, float t);
+	static Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
 };
 

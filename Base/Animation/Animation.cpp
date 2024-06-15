@@ -80,7 +80,7 @@ Vector3 Animation::CalculateValue(const std::vector<KeyFrameVector3>& keyframes,
 		if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
 			// 範囲内を補間する
 			float t = (time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time);
-			return Vector3::VectorLerp(keyframes[index].value,keyframes[nextIndex].value,t);
+			return Vector3::Lerp(keyframes[index].value,keyframes[nextIndex].value,t);
 		}
 	}
 
@@ -121,20 +121,14 @@ void Animation::PlayAnimation()
 	UpdateLine();
 }
 
-SkinCluster Animation::AnimationLerp(Animation* animeA, Animation* animeB, float t)
+void Animation::AnimationLerp(Animation* animeA, Animation* animeB, float t)
 {
-	if (animeA->GetSkeleton().joints != animeB->GetSkeleton().joints) {
-		return;
-	}
-	Skeleton Lerpskeleton;
-	for (Joint& joint : Lerpskeleton.joints) {
-		// 対象のJointのAnimationがあれば、値の適用を行う。下記のif文はC++17から可能になった初期化付きif文
-		if (auto it = nodeAnimations.find(joint.name); it != nodeAnimations.end()) {
-			const NodeAnimation& rootNodeAnimation = (*it).second;
-			joint.transform.scale = ;
-			joint.transform.quaternion = ;
-			joint.transform.translate = ;
-		}
+	for (Joint& joint : skeleton.joints) {
+		//対象のJointのAnimationがあれば、値の適用を行う。下記のif文はC++17から可能になった初期化付きif文
+		//const NodeAnimation& rootNodeAnimation = (*it).second;
+		joint.transform.scale = Vector3::Lerp(animeA->GetSkeleton().joints[joint.index].transform.scale, animeB->GetSkeleton().joints[joint.index].transform.scale,t);
+		joint.transform.quaternion = Quaternion::Slerp(animeA->GetSkeleton().joints[joint.index].transform.quaternion, animeB->GetSkeleton().joints[joint.index].transform.quaternion, t);
+		joint.transform.translate = Vector3::Lerp(animeA->GetSkeleton().joints[joint.index].transform.translate, animeB->GetSkeleton().joints[joint.index].transform.translate, t);
 	}
 }
 
