@@ -3,7 +3,7 @@
 float Lerp(float a,float b, float t) {
 	float result;
 
-	result = a + b * t;
+	result = ((1 - t) * a) + ( b * t);
 
 	return result;
 }
