@@ -82,6 +82,8 @@ void GamePlayState::Update()
 	for (Enemy* enemy : enemys_) {
 		collisionManager->AddBoxCollider(enemy);
 	}
+	collisionManager->CheckAllCollisions();
+	collisionManager->ClearCollider();
 }
 
 void GamePlayState::Draw()

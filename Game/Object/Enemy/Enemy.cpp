@@ -7,6 +7,10 @@ void Enemy::Initialize(std::vector<Model*> models)
 	models[0]->GetModelData().material.textureFilePath;
 	world_.Initialize();
 
+	BoxCollider::Initialize();
+	Collider::SetWorld(&world_);
+	BoxCollider::SetSize({1.0f,1.0f,1.0f});
+
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "human.gltf");
 	animation->Init();
@@ -21,7 +25,7 @@ void Enemy::Update()
 
 	if (ChackOnAttack()) {
 		//範囲内なら何もしない
-		return;
+		
 	}
 	else {
 		//範囲外なら歩く
@@ -29,7 +33,7 @@ void Enemy::Update()
 
 		animation->PlayAnimation();
 	}
-	
+	BoxCollider::Update();
 	world_.UpdateMatrix();
 }
 
@@ -47,6 +51,11 @@ void Enemy::Draw()
 		}
 	}
 	animation->DebugDraw(world_);
+}
+
+void Enemy::OnCollision(const Collider* collider)
+{
+	collider;
 }
 
 bool Enemy::ChackOnAttack()
