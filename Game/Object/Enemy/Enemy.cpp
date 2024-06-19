@@ -4,7 +4,6 @@
 void Enemy::Initialize(std::vector<Model*> models)
 {
 	models_ = models;
-	models[0]->GetModelData().material.textureFilePath;
 	world_.Initialize();
 
 	BoxCollider::Initialize();
