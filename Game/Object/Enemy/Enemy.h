@@ -7,14 +7,14 @@
 
 class Player;
 
-class Enemy : public Character
+class Enemy : public Character,public BoxCollider
 {
 public:
 	void Initialize(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
 
-	//void OnCollision(const Collider* collider)override;
+	void OnCollision(const Collider* collider)override;
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {

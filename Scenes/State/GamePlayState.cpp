@@ -79,8 +79,9 @@ void GamePlayState::Update()
 	//particle->Update(viewProjction);
 	collisionManager->AddBoxCollider(player_->GetWeapon());
 	collisionManager->AddBoxCollider(player_.get());
-	//for (Enemy* enemy : enemys_) {
-	//collisionManager->AddBoxCollider(enemy);
+	for (Enemy* enemy : enemys_) {
+		collisionManager->AddBoxCollider(enemy);
+	}
 }
 
 void GamePlayState::Draw()
