@@ -2,8 +2,6 @@
 
 void BoxCollider::Initialize()
 {
-
-	Collider::SetId(ColliderType::Box);
 }
 
 void BoxCollider::Update()

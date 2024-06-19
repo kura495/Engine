@@ -2,7 +2,6 @@
 
 void OBBoxCollider::Initalize()
 {
-	Collider::SetId(ColliderType::OBBox);
 }
 
 void OBBoxCollider::SetOrientations(Matrix4x4 Matrix)

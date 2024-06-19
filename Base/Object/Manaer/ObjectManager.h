@@ -2,14 +2,14 @@
 #include "Object/IObject.h"
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
-struct Colloder {
+struct ColloderData {
 	Vector3 center;/*当たり判定の中心 {0,0,0}でオブジェクトの中心*/
 	Vector3 size;/*当たり判定のサイズ*/
 };
 struct Object {
 
 	TransformQua transform;/*オブジェクトの位置情報*/
-	Colloder colloder;/*当たり判定のデータ*/
+	ColloderData colloder;/*当たり判定のデータ*/
 };
 struct ObjectData {
 	Object object;

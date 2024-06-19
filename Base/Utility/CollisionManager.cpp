@@ -73,7 +73,7 @@ void CollisionManager::CheckAllCollisions() {
 void CollisionManager::CheckCollisionBox(BoxCollider * colliderA, BoxCollider * colliderB)
 {
 	// 判定対象AとBの座標
-	AABB posA, posB;
+	AABBData posA, posB;
 	posA = colliderA->GetAABB();
 	posB = colliderB->GetAABB();
 

@@ -7,6 +7,14 @@
 class Collider {
 public:
 
+	enum Shape {
+		None,//セットされていない
+		Box,
+		OBB,
+		Capsule,
+		Sphere,
+		Circle
+	};
 	virtual ~Collider(){};
 	//衝突時に呼ばれる関数
 	virtual void OnCollision(const Collider* collider) = 0;
@@ -30,8 +38,6 @@ public:
 		collisionMask_ = collisionMask;
 	}
 
-	int GetId() { return Id_; }
-
 	///worldの親を設定
 	void SetWorld(WorldTransform* Parent) { center_ = Parent; }
 
@@ -46,10 +52,10 @@ public:
 
 	void SetSize(Vector3 size) { size_ = size; }
 	Vector3 GetSize() const { return size_; }
+	//TODO ： 自身の形状(Shape)を返す関数を作る
+	virtual Shape GetShape() = 0;
 
 protected:
-
-	void SetId(int Type) { Id_ = Type; }
 	/// <summary>
 	/// 原点
 	/// </summary>
@@ -61,9 +67,6 @@ protected:
 	Vector3 size_{0};
 
 private:
-
-	uint32_t Id_ = 0xffffffff;
-
 
 	/// <summary>
 	/// 衝突属性(自分)

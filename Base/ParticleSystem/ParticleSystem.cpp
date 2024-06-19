@@ -143,7 +143,7 @@ std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& r
 	return Emitparticles;
 }
 
-bool ParticleSystem::IsCollision(const AABB& aabb, const Vector3& point)
+bool ParticleSystem::IsCollision(const AABBData& aabb, const Vector3& point)
 {
 	if (aabb.min.x < point.x && point.x < aabb.max.x &&
 		aabb.min.y < point.y && point.y < aabb.max.y &&

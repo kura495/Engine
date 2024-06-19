@@ -10,7 +10,7 @@ void FollowCamera::Update() {
 	//スティックでのカメラ回転
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
-		const float kRadian = 0.02f;
+		const float kRadian = 0.04f;
 
 		rotate_.y -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * kRadian;
 		rotate_.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * kRadian;

@@ -5,6 +5,7 @@
 #include "Utility/CollisionConfig.h"
 #include <list>
 
+
 class CollisionManager {
 public:
 	void AddCollider(Collider* collider) { colliders_.push_back(collider); }

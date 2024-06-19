@@ -36,7 +36,7 @@ struct ParticleForGPU {
 //};
 struct AccelerationField {
 	Vector3 acceleration;//加速度
-	AABB area;			 //範囲
+	AABBData area;			 //範囲
 };
 
 class ParticleSystem
@@ -57,7 +57,7 @@ public:
 
 	std::list<Particle> Emit(const Emitter& emitter, std::mt19937& randomEngine);
 
-	bool IsCollision(const AABB& aabb, const Vector3& point);
+	bool IsCollision(const AABBData& aabb, const Vector3& point);
 
 private:
 	//インスタンスの数

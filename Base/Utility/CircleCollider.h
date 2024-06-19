@@ -6,6 +6,10 @@ public:
 	CircleCollider();
 	~CircleCollider();
 
+	Shape GetShape() override {
+		return Shape::Circle;
+	};
+
 private:
 
 };

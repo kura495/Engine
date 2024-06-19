@@ -4,7 +4,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "Collider.h"
 
-struct AABB {
+struct AABBData {
 	Vector3 min;//一番小さいポイント
 	Vector3 max;//一番大きいポイント
 };
@@ -16,7 +16,11 @@ public:
 	void Initialize();
 	void Update();
 
-	AABB GetAABB() const { return aabb_; }
+	AABBData GetAABB() const { return aabb_; }
+
+	Shape GetShape() override {
+		return Shape::Box;
+	};
 
 private:
 
@@ -24,5 +28,5 @@ private:
 	/// <summary>
 	/// 箱の大きさ
 	/// </summary>
-	AABB aabb_ = {};
+	AABBData aabb_ = {};
 };
