@@ -26,7 +26,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 	std::mt19937 randomEngine(seedGenerator());
 
 	materialData->enableLighting = false;
-	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
+	materialData->color = { 0.0f,0.0f,0.0f,1.0f };
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
 
 	Pipeline_ = std::make_unique<ParticlePipeLine>();
@@ -44,7 +44,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 	
 }
 
-void ParticleSystem::Update(const ViewProjection& viewProjection)
+void ParticleSystem::Update()
 {
 
 	Testemitter.frequencyTime += kDeltaTime;
@@ -59,7 +59,7 @@ void ParticleSystem::Update(const ViewProjection& viewProjection)
 	}
 
 	numInstance = 0;
-	Matrix4x4 billboardMatrix = viewProjection.CameraMatrix;
+	Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;

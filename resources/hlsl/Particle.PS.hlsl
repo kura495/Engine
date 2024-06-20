@@ -2,9 +2,9 @@
 
 struct Material
 {
-    float32_t4 color; //元の色
-    int32_t enableLighting; //ライトのフラグ
-    float32_t4x4 uvTransform; //uvのSRT
+    float32_t4 color; //蜈�縺ｮ濶ｲ
+    int32_t enableLighting; //繝ｩ繧､繝医�ｮ繝輔Λ繧ｰ
+    float32_t4x4 uvTransform; //uv縺ｮSRT
 };
 
 ConstantBuffer<Material> gMaterial : register(b0);
