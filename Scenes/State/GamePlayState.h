@@ -55,7 +55,6 @@ private:
 	std::unique_ptr<CollisionManager> collisionManager;
 	Renderer* renderer_ = nullptr;
 
-	ViewProjection viewProjction;
 	bool IsDebugCamera = false;
 
 	WorldTransform world_;
@@ -72,4 +71,5 @@ private:
 	std::vector<Model*> glTFplaneModel_;
 	std::vector<Model*> WeaponModel_;
 
+	//ParticleSystem* particle;
 };
