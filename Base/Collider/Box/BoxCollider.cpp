@@ -2,6 +2,7 @@
 
 void BoxCollider::Initialize()
 {
+
 }
 
 void BoxCollider::Update()

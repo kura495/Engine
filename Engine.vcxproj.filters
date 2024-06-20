@@ -124,16 +124,16 @@
     <ClCompile Include="Base\Math\Calc.cpp">
       <Filter>Engine\Base\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Utility\BoxCollider.cpp">
+    <ClCompile Include="Base\Collider\Box\BoxCollider.cpp">
       <Filter>Engine\Base\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Utility\CircleCollider.cpp">
+    <ClCompile Include="Base\Collider\Circle\CircleCollider.cpp">
       <Filter>Engine\Base\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Utility\OBBoxCollider.cpp">
+    <ClCompile Include="Base\Collider\OBB\OBBoxCollider.cpp">
       <Filter>Engine\Base\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Utility\CollisionManager.cpp">
+    <ClCompile Include="Base\Collider\Manager\CollisionManager.cpp">
       <Filter>Engine\Base\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Base\Utility\GlobalVariables.cpp">
@@ -264,7 +264,7 @@
     <ClInclude Include="Base\Model_Struct\VertexData.h">
       <Filter>Engine\Base\Model_Struct</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Utility\CollisionManager.h">
+    <ClInclude Include="Base\Collider\Manager\CollisionManager.h">
       <Filter>Engine\Base\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Base\Utility\GlobalVariables.h">
@@ -312,19 +312,19 @@
     <ClInclude Include="Base\Math\Vector\VectorCalc.h">
       <Filter>Engine\Base\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Utility\BoxCollider.h">
+    <ClInclude Include="Base\Collider\Box\BoxCollider.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Utility\CircleCollider.h">
+    <ClInclude Include="Base\Collider\Circle\CircleCollider.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Utility\Collider.h">
+    <ClInclude Include="Base\Collider\Collider.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Utility\CollisionConfig.h">
+    <ClInclude Include="Base\Collider\CollisionConfig.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Utility\OBBoxCollider.h">
+    <ClInclude Include="Base\Collider\OBB\OBBoxCollider.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Base\Light\Light.h">

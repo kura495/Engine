@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game/Object/Character.h"
-#include "Base/Utility/BoxCollider.h"
+#include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Animation/Animation.h"
 
 #include "Audio.h"
@@ -16,7 +16,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const Collider* collider)override;
+	void OnCollision(const ICollider* collider)override;
 
 private:
 	Audio* audio = nullptr;

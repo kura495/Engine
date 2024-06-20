@@ -77,10 +77,10 @@ void GamePlayState::Update()
 		enemy->Update();
 	}
 	//particle->Update(viewProjction);
-	collisionManager->AddBoxCollider(player_->GetWeapon());
-	collisionManager->AddBoxCollider(player_.get());
+	collisionManager->AddCollider(player_->GetWeapon());
+	collisionManager->AddCollider(player_.get());
 	for (Enemy* enemy : enemys_) {
-		collisionManager->AddBoxCollider(enemy);
+		collisionManager->AddCollider(enemy);
 	}
 	collisionManager->CheckAllCollisions();
 	collisionManager->ClearCollider();

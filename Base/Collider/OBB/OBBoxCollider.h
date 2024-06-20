@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.h"
+#include "Base/Collider/Collider.h"
 
 struct OBBData {
 	Vector3 center;//中心点の座標
@@ -8,7 +8,7 @@ struct OBBData {
 	Vector3 size;//中心から面までの距離
 };
 
-class OBBoxCollider : public Collider
+class OBBoxCollider : public ICollider
 {
 public:
 	void Initalize();

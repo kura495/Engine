@@ -14,7 +14,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 	world_.UpdateMatrix();
 
 	BoxCollider::Initialize();
-	Collider::SetWorld(&world_);
+	ICollider::SetWorld(&world_);
 	BoxCollider::SetSize({ 0.0f,0.0f,0.0f });
 	SetcollitionAttribute(kCollitionAttributeWeapon);
 	BoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
@@ -48,7 +48,7 @@ void Weapon::ImGui()
 #endif
 }
 
-void Weapon::OnCollision(const Collider* collider)
+void Weapon::OnCollision(const ICollider* collider)
 {
 	if (collider->GetcollitionAttribute() == kCollitionAttributeEnemy) {
 #ifdef USE_IMGUI

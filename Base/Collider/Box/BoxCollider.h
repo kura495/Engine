@@ -2,14 +2,14 @@
 
 #include "Math/Vector/Vector3.h"
 #include "WorldTransform/WorldTransform.h"
-#include "Collider.h"
+#include "Base/Collider/Collider.h"
 
 struct AABBData {
 	Vector3 min;//一番小さいポイント
 	Vector3 max;//一番大きいポイント
 };
 
-class BoxCollider : public Collider
+class BoxCollider : public ICollider
 {
 public:
 

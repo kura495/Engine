@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game/Object/Character.h"
-#include "Base/Utility/BoxCollider.h"
+#include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Input/Input.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 
@@ -14,7 +14,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const Collider* collider);
+	void OnCollision(const ICollider* collider);
 
 	void SetParent(const WorldTransform& parent);
 

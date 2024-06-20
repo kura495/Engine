@@ -10,7 +10,7 @@ void Goal::Initialize(const std::vector<Model*> models)
 	BoxCollider::SetSize({1.0f,1.0f,1.0f});
 	BoxCollider::SetcollitionAttribute(kCollitionAttributeGoal);
 	BoxCollider::SetcollisionMask(~kCollitionAttributeGoal);
-	Collider::SetWorld(&world_);
+	ICollider::SetWorld(&world_);
 
 	animation = new Animation();
 	animation = Animation::LoadAnimationFile("resources/Goal", "Goal.gltf");
@@ -48,7 +48,7 @@ void Goal::ImGui()
 {
 }
 
-void Goal::OnCollision(const Collider* collider)
+void Goal::OnCollision(const ICollider* collider)
 {
 	if (collider->GetcollitionAttribute()) {
 		audio->Play(audioHundle, 0.5f);

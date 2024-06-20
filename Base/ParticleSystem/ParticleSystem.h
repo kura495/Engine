@@ -12,7 +12,7 @@
 #include "Light/Light.h"
 #include "Transform.h"
 #include "Utility/ImGuiManager.h"
-#include "Utility/BoxCollider.h"
+#include "Base/Collider/Box/BoxCollider.h"
 #include "PipeLine/ParticlePipeLine.h"
 #include "Emitter/Emitter.h"
 

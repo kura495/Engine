@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game/Object/Character.h"
-#include "Base/Utility/BoxCollider.h"
+#include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Input/Input.h"
 #include "Base/Animation/Animation.h"
 
@@ -14,7 +14,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void OnCollision(const Collider* collider)override;
+	void OnCollision(const ICollider* collider)override;
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {

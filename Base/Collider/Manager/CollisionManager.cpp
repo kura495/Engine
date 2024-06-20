@@ -1,34 +1,23 @@
 #include "CollisionManager.h"
 
 
+void CollisionManager::Init()
+{
+
+}
+
 void CollisionManager::CheckAllCollisions() {
-	// リスト内のペアを総当たり
-	//std::list<Collider*>::iterator itrA = colliders_.begin();
-	//for (; itrA != colliders_.end(); ++itrA) {
-	//	// イテレータAからコライダーを取得
-	//	Collider* colliderA = *itrA;
-	//	// イテレータBはイテレータAの次の要素から回す(重複を避ける)
-	//	std::list<Collider*>::iterator itrB = itrA;
-	//	itrB++;
-	//	for (; itrB != colliders_.end(); ++itrB) {
-	//		Collider* colliderB = *itrB;
-	//		//円と円
-	//		/*if (colliderA->GetId() == ColliderType::Circle && colliderB->GetId() == ColliderType::Circle) {
-	//			CheckCollisionCircle(colliderA, colliderB);
-	//		}*/
-	//		//AABBとAABB
-	//	}
-	//}
-	std::list<BoxCollider*>::iterator BoxitrA = BoxColliders_.begin();
-	for (; BoxitrA != BoxColliders_.end(); ++BoxitrA) {
+
+	std::list<ICollider*>::iterator BoxitrA = Colliders_.begin();
+	for (; BoxitrA != Colliders_.end(); ++BoxitrA) {
 		// イテレータAからコライダーを取得
-		BoxCollider* colliderA = *BoxitrA;
+		ICollider* colliderA = *BoxitrA;
 		// イテレータBはイテレータAの次の要素から回す(重複を避ける)
-		std::list<BoxCollider*>::iterator BoxitrB = BoxitrA;
+		std::list<ICollider*>::iterator BoxitrB = BoxitrA;
 		BoxitrB++;
-		for (; BoxitrB != BoxColliders_.end(); ++BoxitrB) {
-			BoxCollider* colliderB = *BoxitrB;
-			CheckCollisionBox(colliderA, colliderB);
+		for (; BoxitrB != Colliders_.end(); ++BoxitrB) {
+			ICollider* colliderB = *BoxitrB;
+			CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));
 		}
 	}
 }
@@ -70,7 +59,7 @@ void CollisionManager::CheckAllCollisions() {
 //{
 //	
 //}
-void CollisionManager::CheckCollisionBox(BoxCollider * colliderA, BoxCollider * colliderB)
+void CollisionManager::CheckCollision(BoxCollider * colliderA, BoxCollider * colliderB)
 {
 	// 判定対象AとBの座標
 	AABBData posA, posB;

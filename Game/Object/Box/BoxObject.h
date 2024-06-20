@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Object/IObject.h"
-#include "Utility/BoxCollider.h"
+#include "Base/Collider/Box/BoxCollider.h"
 
 static uint32_t BoxObjectNumber = 0;
 
@@ -20,7 +20,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const Collider* collider)override;
+	void OnCollision(const ICollider* collider)override;
 
 	void SetPos(Vector3 pos) {
 		world_.transform_.translate = pos;

@@ -7,7 +7,7 @@ void Enemy::Initialize(std::vector<Model*> models)
 	world_.Initialize();
 
 	BoxCollider::Initialize();
-	Collider::SetWorld(&world_);
+	ICollider::SetWorld(&world_);
 	BoxCollider::SetSize({1.0f,1.0f,1.0f});
 
 #pragma region
@@ -52,7 +52,7 @@ void Enemy::Draw()
 	animation->DebugDraw(world_);
 }
 
-void Enemy::OnCollision(const Collider* collider)
+void Enemy::OnCollision(const ICollider* collider)
 {
 	collider;
 }

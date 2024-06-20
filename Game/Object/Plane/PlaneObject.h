@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Object/IObject.h"
-#include "Utility/BoxCollider.h"
+#include "Base/Collider/Box/BoxCollider.h"
 
 static uint32_t PlaneObjectNumber = 0;
 
@@ -20,6 +20,6 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const Collider* collider)override;
+	void OnCollision(const ICollider* collider)override;
 };
 

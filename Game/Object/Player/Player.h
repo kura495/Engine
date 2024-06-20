@@ -2,7 +2,7 @@
 
 #include "Game/Object/Character.h"
 #include "Game/Object/Weapon/Weapon.h"
-#include "Base/Utility/BoxCollider.h"
+#include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Input/Input.h"
 #include "Base/Animation/Animation.h"
 
@@ -21,7 +21,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const Collider* collider)override;
+	void OnCollision(const ICollider* collider)override;
 
 	void Move();
 	void PlayerRoring();

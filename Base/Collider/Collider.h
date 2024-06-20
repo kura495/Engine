@@ -4,7 +4,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include <cstdint>
 
-class Collider {
+class ICollider {
 public:
 
 	enum Shape {
@@ -15,10 +15,9 @@ public:
 		Sphere,
 		Circle
 	};
-	virtual ~Collider(){};
+	virtual ~ICollider(){};
 	//衝突時に呼ばれる関数
-	virtual void OnCollision(const Collider* collider) = 0;
-	float GetRadius() { return Radius_; }
+	virtual void OnCollision(const ICollider* collider) = 0;
 	
 	uint32_t GetcollitionAttribute() const { return collisionAttribute_; }
 	/// <summary>
@@ -76,8 +75,5 @@ private:
 	/// 衝突マスク(相手)
 	/// </summary>
 	uint32_t collisionMask_ = 0xffffffff;
-
-	float Radius_ = 0.0f;
-
 
 };
