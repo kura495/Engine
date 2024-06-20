@@ -1,9 +1,11 @@
 #include "CollisionManager.h"
 
-
 void CollisionManager::Init()
 {
-
+	checkCollisions_[ICollider::Shape::Box][ICollider::Shape::Box] = [this](ICollider* colliderA, ICollider* colliderB)
+		{
+			return CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));
+		};
 }
 
 void CollisionManager::CheckAllCollisions() {
@@ -17,7 +19,7 @@ void CollisionManager::CheckAllCollisions() {
 		BoxitrB++;
 		for (; BoxitrB != Colliders_.end(); ++BoxitrB) {
 			ICollider* colliderB = *BoxitrB;
-			CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));
+			checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB);
 		}
 	}
 }

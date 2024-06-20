@@ -18,6 +18,7 @@ void GamePlayState::Initialize()
 
 	DirectX_ = DirectXCommon::GetInstance();
 	collisionManager = std::make_unique<CollisionManager>();
+	collisionManager->Init();
 	//
 	//3Dオブジェクト生成
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/human", "human.gltf"));
@@ -77,6 +78,7 @@ void GamePlayState::Update()
 		enemy->Update();
 	}
 	//particle->Update(viewProjction);
+	//TODO : WeaponにフィルターをenemyとPlayerでよみとってないからあたる
 	collisionManager->AddCollider(player_->GetWeapon());
 	collisionManager->AddCollider(player_.get());
 	for (Enemy* enemy : enemys_) {

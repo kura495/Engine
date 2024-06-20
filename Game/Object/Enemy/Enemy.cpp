@@ -55,6 +55,9 @@ void Enemy::Draw()
 void Enemy::OnCollision(const ICollider* collider)
 {
 	collider;
+	ImGui::Begin("Collider");
+	ImGui::Text("EnemyHit");
+	ImGui::End();
 }
 
 bool Enemy::ChackOnAttack()

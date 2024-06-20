@@ -13,7 +13,8 @@ public:
 		OBB,
 		Capsule,
 		Sphere,
-		Circle
+		Circle,
+		MaxValue
 	};
 	virtual ~ICollider(){};
 	//衝突時に呼ばれる関数

@@ -130,6 +130,10 @@ void Player::ImGui()
 
 void Player::OnCollision(const ICollider* ICollider)
 {
+	ImGui::Begin("Collider");
+	ImGui::Text("PlayerHit");
+	ImGui::End();
+
 	if (ICollider->GetcollitionAttribute() == kCollitionAttributeFloor) {
 		if (ICollider->GetCenter().y > world_.transform_.translate.y) {
 			world_.transform_.translate.y = ICollider->GetCenter().y;
