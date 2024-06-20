@@ -82,13 +82,12 @@ void GamePlayState::Update()
 	}
 	//particle->Update();
 	//TODO : WeaponにフィルターをenemyとPlayerでよみとってないからあたる
-	collisionManager->AddCollider(player_->GetWeapon());
+	//collisionManager->AddCollider(player_->GetWeapon());
 	collisionManager->AddCollider(player_.get());
 	for (Enemy* enemy : enemys_) {
 		collisionManager->AddCollider(enemy);
 	}
-	collisionManager->CheckAllCollisions();
-	collisionManager->ClearCollider();
+	collisionManager->Update();
 }
 
 void GamePlayState::Draw()

@@ -318,7 +318,7 @@
     <ClInclude Include="Base\Collider\Circle\CircleCollider.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Collider\Collider.h">
+    <ClInclude Include="Base\Collider\ICollider.h">
       <Filter>Engine\Base\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Base\Collider\CollisionConfig.h">

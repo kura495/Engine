@@ -17,6 +17,8 @@ public:
 		MaxValue
 	};
 	virtual ~ICollider(){};
+
+	virtual void Update() = 0;
 	//衝突時に呼ばれる関数
 	virtual void OnCollision(const ICollider* collider) = 0;
 	

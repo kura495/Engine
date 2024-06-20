@@ -290,7 +290,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Texture\TextureManager.h" />
     <ClInclude Include="Base\Collider\Box\BoxCollider.h" />
     <ClInclude Include="Base\Collider\Circle\CircleCollider.h" />
-    <ClInclude Include="Base\Collider\Collider.h" />
+    <ClInclude Include="Base\Collider\ICollider.h" />
     <ClInclude Include="Base\Collider\CollisionConfig.h" />
     <ClInclude Include="Base\Collider\Manager\CollisionManager.h" />
     <ClInclude Include="Base\Utility\GlobalVariables.h" />

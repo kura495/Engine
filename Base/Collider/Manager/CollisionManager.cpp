@@ -8,6 +8,16 @@ void CollisionManager::Init()
 		};
 }
 
+void CollisionManager::Update()
+{
+	for (ICollider* collider : Colliders_) {
+		collider->Update();
+	}
+
+	CheckAllCollisions();
+	ClearCollider();
+}
+
 void CollisionManager::CheckAllCollisions() {
 
 	std::list<ICollider*>::iterator BoxitrA = Colliders_.begin();

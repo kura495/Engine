@@ -2,7 +2,7 @@
 
 #include "Math/Vector/Vector3.h"
 #include "WorldTransform/WorldTransform.h"
-#include "Base/Collider/Collider.h"
+#include "Base/Collider/ICollider.h"
 
 struct AABBData {
 	Vector3 min;//一番小さいポイント
@@ -14,7 +14,7 @@ class BoxCollider : public ICollider
 public:
 
 	void Initialize();
-	void Update();
+	void Update()override;
 
 	AABBData GetAABB() const { return aabb_; }
 

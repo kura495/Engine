@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base/Collider/Collider.h"
+#include "Base/Collider/ICollider.h"
 
 struct OBBData {
 	Vector3 center;//中心点の座標
@@ -12,6 +12,7 @@ class OBBoxCollider : public ICollider
 {
 public:
 	void Initalize();
+	void Update()override;
 
 	void SetSize(Vector3 size) {obb_.size = size;}
 	void SetCenter(Vector3 CenterPoint) { obb_.center = CenterPoint; }

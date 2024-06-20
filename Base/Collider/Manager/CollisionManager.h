@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Base/Collider/Collider.h"
+#include "Base/Collider/ICollider.h"
 #include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Collider/OBB/OBBoxCollider.h"
 #include "Base/Collider/CollisionConfig.h"
@@ -10,6 +10,7 @@ class CollisionManager {
 public:
 
 	void Init();
+	void Update();
 	//TODO : ShapeでどのColliderかわかるようにするので、listを一つにする
 	void AddCollider(ICollider* collider) { Colliders_.push_back(collider); }
 	void ClearCollider() {
