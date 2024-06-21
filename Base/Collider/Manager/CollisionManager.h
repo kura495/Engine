@@ -5,13 +5,13 @@
 #include "Base/Collider/CollisionConfig.h"
 #include <list>
 
-
 class CollisionManager {
 public:
 
 	void Init();
 	void Update();
-	//TODO : ShapeでどのColliderかわかるようにするので、listを一つにする
+	void Draw();
+
 	void AddCollider(ICollider* collider) { Colliders_.push_back(collider); }
 	void ClearCollider() {
 		Colliders_.clear();

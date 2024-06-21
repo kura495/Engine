@@ -3,6 +3,7 @@
 #include "Math/Vector/Vector3.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Base/Collider/ICollider.h"
+#include "Base/Collider/ColliderModel/Box/BoxColliderModel.h"
 
 struct AABBData {
 	Vector3 min;//一番小さいポイント
@@ -14,7 +15,8 @@ class BoxCollider : public ICollider
 public:
 
 	void Initialize();
-	void Update()override;
+	void CollisionUpdate()override;
+	void CollisionDraw()override;
 
 	AABBData GetAABB() const { return aabb_; }
 
@@ -24,7 +26,7 @@ public:
 
 private:
 
-
+	std::unique_ptr<BoxColliderModel> model_;
 	/// <summary>
 	/// 箱の大きさ
 	/// </summary>

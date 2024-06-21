@@ -13,8 +13,8 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 	world_.UpdateMatrix();
 
-	BoxCollider::Initialize();
 	ICollider::SetWorld(&world_);
+	BoxCollider::Initialize();
 	BoxCollider::SetSize({ 0.0f,0.0f,0.0f });
 	SetcollitionAttribute(kCollitionAttributeWeapon);
 	BoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
@@ -25,7 +25,6 @@ void Weapon::Initalize(std::vector<Model*> models)
 void Weapon::Update()
 {
 	world_.UpdateMatrix();
-	BoxCollider::Update();
 }
 
 void Weapon::Draw()

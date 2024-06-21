@@ -6,8 +6,8 @@ void Enemy::Initialize(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 
-	BoxCollider::Initialize();
 	ICollider::SetWorld(&world_);
+	BoxCollider::Initialize();
 	BoxCollider::SetSize({1.0f,1.0f,1.0f});
 
 #pragma region
@@ -32,7 +32,6 @@ void Enemy::Update()
 
 		animation->PlayAnimation();
 	}
-	BoxCollider::Update();
 	world_.UpdateMatrix();
 }
 

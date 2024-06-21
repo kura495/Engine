@@ -27,10 +27,13 @@ void FollowCamera::Update() {
 		parameter_t = 1.0f;
 	}		
 	Vector3 EulerRot;
-	EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, parameter_t);
+	//TODO : LerpShortAngleを使うと一定角度で急にワープする
+	/*EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, parameter_t);
 	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.x, parameter_t);
-	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);
-
+	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);*/
+	EulerRot.z = rotate_.z;
+	EulerRot.y = rotate_.x;
+	EulerRot.x = rotate_.y;
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {

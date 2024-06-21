@@ -226,6 +226,7 @@
     <ClCompile Include="Base\Renderer\Model\ModelRenderer.cpp" />
     <ClCompile Include="Base\PipelineState\Vignetting\Vignetting.cpp" />
     <ClCompile Include="Base\PipelineState\GaussianFilter\GaussianFilter.cpp" />
+    <ClCompile Include="Base\Collider\ColliderModel\Box\BoxColliderModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -429,6 +430,7 @@
     <ClInclude Include="Base\Renderer\Model\ModelRenderer.h" />
     <ClInclude Include="Base\PipelineState\Vignetting\Vignetting.h" />
     <ClInclude Include="Base\PipelineState\GaussianFilter\GaussianFilter.h" />
+    <ClInclude Include="Base\Collider\ColliderModel\Box\BoxColliderModel.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

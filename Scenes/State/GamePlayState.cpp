@@ -74,7 +74,6 @@ void GamePlayState::Update()
 		ImGui::End();
 #endif // _DEBUG
 		player_->Update();
-		player_->ImGui();
 #pragma endregion 
 
 	for (Enemy* enemy : enemys_) {
@@ -106,6 +105,7 @@ void GamePlayState::Draw()
 
 #pragma endregion
 
+	collisionManager->Draw();
 	//3Dモデル描画ここまで	
 
 	//Sprite描画ここから

@@ -6,6 +6,9 @@ public:
 	CircleCollider();
 	~CircleCollider();
 
+	void CollisionUpdate()override;
+	void CollisionDraw()override;
+
 	Shape GetShape() override {
 		return Shape::Circle;
 	};

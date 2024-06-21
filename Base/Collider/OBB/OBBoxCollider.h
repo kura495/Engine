@@ -12,7 +12,8 @@ class OBBoxCollider : public ICollider
 {
 public:
 	void Initalize();
-	void Update()override;
+	void CollisionUpdate()override;
+	void CollisionDraw()override;
 
 	void SetSize(Vector3 size) {obb_.size = size;}
 	void SetCenter(Vector3 CenterPoint) { obb_.center = CenterPoint; }

@@ -6,16 +6,28 @@ void CollisionManager::Init()
 		{
 			return CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));
 		};
+
 }
 
 void CollisionManager::Update()
 {
 	for (ICollider* collider : Colliders_) {
-		collider->Update();
+		collider->CollisionUpdate();
+	}
+	//TODO : ClearColliderの関係で仮置き
+	for (ICollider* collider : Colliders_) {
+		collider->CollisionDraw();
 	}
 
 	CheckAllCollisions();
 	ClearCollider();
+}
+
+void CollisionManager::Draw()
+{
+	//for (ICollider* collider : Colliders_) {
+	//	collider->CollisionDraw();
+	//}
 }
 
 void CollisionManager::CheckAllCollisions() {

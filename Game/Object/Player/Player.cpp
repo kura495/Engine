@@ -10,10 +10,10 @@ void Player::Initialize(std::vector<Model*> models)
 	input = Input::GetInstance();
 
 	moveQuaternion_ = Quaternion::IdentityQuaternion();
-
-	BoxCollider::Initialize();
+	//TODO : InitよりSetWorldを先にしないとWorldがNull
 	ICollider::SetWorld(&world_);
-	BoxCollider::SetSize({1.0f,1.0f,1.0f});
+	BoxCollider::Initialize();
+	BoxCollider::SetSize({0.5f,1.0f,0.5f});
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 
@@ -93,8 +93,6 @@ void Player::Update()
 		}
 	}
 
-
-	BoxCollider::Update();
 	world_.UpdateMatrix();
 
 	weapon_->Update();
