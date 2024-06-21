@@ -14,6 +14,8 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	void ImGui();
+
 	void OnCollision(const ICollider* collider)override;
 
 	void SetPlayer(Player* player) { player_ = player; };

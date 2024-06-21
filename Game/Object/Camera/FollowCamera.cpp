@@ -10,18 +10,18 @@ void FollowCamera::Update() {
 	//スティックでのカメラ回転
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
-		const float kRadian = 0.04f;
+		const float kRadian = 0.03f;
 
-		rotate_.y -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * kRadian;
-		rotate_.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * kRadian;
+		rotate_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * kRadian;
+		rotate_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * kRadian;
 
 
 		//カメラの上下移動を制御
-		if (rotate_.y > 1.0f) {
-			rotate_.y = 1.0f;
+		if (rotate_.x > 1.0f) {
+			rotate_.x = 1.0f;
 		}
-		else if (rotate_.y < -1.0f) {
-			rotate_.y = -1.0f;
+		else if (rotate_.x < -1.0f) {
+			rotate_.x = -1.0f;
 		}
 
 		parameter_t = 1.0f;
@@ -32,8 +32,8 @@ void FollowCamera::Update() {
 	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.x, parameter_t);
 	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);*/
 	EulerRot.z = rotate_.z;
-	EulerRot.y = rotate_.x;
-	EulerRot.x = rotate_.y;
+	EulerRot.y = rotate_.y;
+	EulerRot.x = rotate_.x;
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {

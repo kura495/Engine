@@ -21,16 +21,16 @@ void Enemy::Initialize(std::vector<Model*> models)
 
 void Enemy::Update()
 {
-
+	ImGui();
 	if (ChackOnAttack()) {
 		//範囲内なら何もしない
 		
 	}
 	else {
 		//範囲外なら歩く
-		ChasePlayer();
+		//ChasePlayer();
 
-		animation->PlayAnimation();
+		//animation->PlayAnimation();
 	}
 	world_.UpdateMatrix();
 }
@@ -49,6 +49,17 @@ void Enemy::Draw()
 		}
 	}
 	animation->DebugDraw(world_);
+}
+
+void Enemy::ImGui()
+{
+#ifdef USE_IMGUI
+	ImGui::Begin("Enemy");
+	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
+	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
+	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
+	ImGui::End();
+#endif
 }
 
 void Enemy::OnCollision(const ICollider* collider)
