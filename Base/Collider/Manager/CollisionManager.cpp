@@ -14,20 +14,16 @@ void CollisionManager::Update()
 	for (ICollider* collider : Colliders_) {
 		collider->CollisionUpdate();
 	}
-	//TODO : ClearColliderの関係で仮置き
-	for (ICollider* collider : Colliders_) {
-		collider->CollisionDraw();
-	}
 
 	CheckAllCollisions();
-	ClearCollider();
 }
 
 void CollisionManager::Draw()
 {
-	//for (ICollider* collider : Colliders_) {
-	//	collider->CollisionDraw();
-	//}
+	//TODO : ワイヤーフレーム描画にする
+	for (ICollider* collider : Colliders_) {
+		collider->CollisionDraw();
+	}
 }
 
 void CollisionManager::CheckAllCollisions() {

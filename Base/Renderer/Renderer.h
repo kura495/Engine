@@ -36,6 +36,7 @@ public:
 	static void AddModelData(Model& model,WorldTransform& world);
 	static void AddModelSkinningData(Model& model,WorldTransform& world,SkinCluster& skinCluster);
 	static void AddLineData(Line& line,WorldTransform& world);
+	static void AddWireFlameData(Model& model, WorldTransform& world);
 
 	 void ChangePipeline(PipelineType Type);
 
@@ -52,6 +53,7 @@ private:
 	static std::vector<DrawModelData> drawModelData_;
 	static std::vector<DrawSkinningData> drawModelSkinningData_;
 	static std::vector<DrawLineData> drawLineData_;
+	static std::vector<DrawModelData> drawWireFlameData_;
 	//TODO : ポストエフェクトの後に描画できるかテスト
 	std::unique_ptr<Sprite> sprite;
 	WorldTransform UIworld_;

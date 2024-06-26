@@ -22,10 +22,14 @@ void PSOManager::Initalize()
 	postProsessPSO.Initalize();
 	GaussianFilter gaussianFilter;
 	gaussianFilter.Initalize();
+	WireFlame wireFlame;
+	wireFlame.Initalize();
 
 	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
 	AddPipeline(drawLinePSO.GetPSO(),PipelineType::DrawLine);
+	AddPipeline(wireFlame.GetPSO(),PipelineType::WireFlame);
 	AddPipeline(postProsessPSO.GetPSO(),PipelineType::PostProsessPSO);
 	AddPipeline(gaussianFilter.GetPSO(),PipelineType::GaussianFilter);
+
 }

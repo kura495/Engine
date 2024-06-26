@@ -4,6 +4,7 @@ enum class PipelineType {
 	Standerd,
 	Skinning,
 	DrawLine,
+	WireFlame,
 	PostProsessPSO,
 	GaussianFilter,
 };

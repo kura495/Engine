@@ -13,5 +13,5 @@ void BoxColliderModel::Update()
 
 void BoxColliderModel::Draw()
 {
-	model->RendererDraw(world_);
+	model->WireFrameDraw(world_);
 }

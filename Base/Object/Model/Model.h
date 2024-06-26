@@ -31,8 +31,10 @@ public:
 	void Draw(const WorldTransform& transform);
 	void SkinDraw(const WorldTransform& transform,const SkinCluster& skinCluster);
 
+
 	void RendererDraw(WorldTransform& transform);
 	void RendererSkinDraw(WorldTransform& transform, SkinCluster& skinCluster);
+	void WireFrameDraw(WorldTransform& transform);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);

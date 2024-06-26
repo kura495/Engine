@@ -5,6 +5,8 @@ ViewProjection Renderer::viewProjection;
 std::vector<DrawModelData> Renderer::drawModelData_;
 std::vector<DrawSkinningData> Renderer::drawModelSkinningData_;
 std::vector<DrawLineData> Renderer::drawLineData_;
+std::vector<DrawModelData> Renderer::drawWireFlameData_;
+;
 Renderer* Renderer::GetInstance()
 {
 	static Renderer instance;
@@ -58,6 +60,14 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawLineData_.clear();
+	//ワイヤーフレーム描画
+	ChangePipeline(PipelineType::WireFlame);
+	///描画
+	for (DrawModelData model : drawWireFlameData_) {
+		model.modelData->Draw(*model.world_);
+	}
+	//中身を消す
+	drawWireFlameData_.clear();
 }
 
 void Renderer::PostProsessDraw()
@@ -93,6 +103,14 @@ void Renderer::AddLineData(Line& line, WorldTransform& world)
 	result.lineData = &line;
 	result.world_ = &world;
 	drawLineData_.push_back(result);
+}
+
+void Renderer::AddWireFlameData(Model& model, WorldTransform& world)
+{
+	DrawModelData result;
+	result.modelData = &model;
+	result.world_ = &world;
+	drawWireFlameData_.push_back(result);
 }
 
 void Renderer::ChangePipeline(PipelineType Type)

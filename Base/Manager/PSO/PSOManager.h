@@ -9,6 +9,7 @@
 #include "PipelineState/Skinning/Skinning.h"
 #include "PipelineState/DrawLine/DrawLinePSO.h"
 #include "PipelineState/GaussianFilter/GaussianFilter.h"
+#include "PipelineState/WireFlame/WireFlame.h"
 
 class PSOManager
 {
@@ -16,8 +17,6 @@ public:
 	static PSOManager* GetInstance();
 	
 	void Initalize();
-	//void Update();
-	//void Draw();
 
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> GetRootSignature(PipelineType Type) { return Pipeline_[Type].rootSignature.Get(); }
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> GetPipelineState(PipelineType Type) { return Pipeline_[Type].graphicsPipelineState.Get(); }

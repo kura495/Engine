@@ -28,9 +28,9 @@ void Enemy::Update()
 	}
 	else {
 		//範囲外なら歩く
-		//ChasePlayer();
+		ChasePlayer();
 
-		//animation->PlayAnimation();
+		animation->PlayAnimation();
 	}
 	world_.UpdateMatrix();
 }

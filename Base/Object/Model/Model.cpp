@@ -85,6 +85,8 @@ void Model::SkinDraw(const WorldTransform& transform, const SkinCluster& skinClu
 
 }
 
+
+
 void Model::RendererDraw(WorldTransform& transform)
 {
 	Renderer::AddModelData(*this,transform);
@@ -93,6 +95,11 @@ void Model::RendererDraw(WorldTransform& transform)
 void Model::RendererSkinDraw(WorldTransform& transform, SkinCluster& skinCluster)
 {
 	Renderer::AddModelSkinningData(*this, transform, skinCluster);
+}
+
+void Model::WireFrameDraw(WorldTransform& transform)
+{
+	Renderer::AddWireFlameData(*this,transform);
 }
 
 Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::string& filename)
