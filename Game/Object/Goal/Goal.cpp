@@ -6,8 +6,8 @@ void Goal::Initialize(const std::vector<Model*> models)
 	world_.Initialize();
 	world_.transform_.translate = { -22.0f,1.0f,16.0f };
 	world_.UpdateMatrix();
-	ICollider::SetWorld(&world_);
-	BoxCollider::Initialize();
+
+	BoxCollider::Initialize(&world_);
 	BoxCollider::SetSize({1.0f,1.0f,1.0f});
 	BoxCollider::SetcollitionAttribute(kCollitionAttributeGoal);
 	BoxCollider::SetcollisionMask(~kCollitionAttributeGoal);

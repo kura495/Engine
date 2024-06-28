@@ -5,8 +5,7 @@ void PlaneObject::Initalize(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 
-	ICollider::SetWorld(&world_);
-	BoxCollider::Initialize();
+	BoxCollider::Initialize(&world_);
 	BoxCollider::SetSize({ 5.0f,0.0f,5.0f });
 	SetcollitionAttribute(kCollitionAttributeFloor);
 	SetcollisionMask(~kCollitionAttributeFloor);
