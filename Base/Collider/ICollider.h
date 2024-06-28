@@ -55,7 +55,7 @@ public:
 
 	void SetSize(Vector3 size) { size_ = size; }
 	Vector3 GetSize() const { return size_; }
-	//TODO ： 自身の形状(Shape)を返す関数を作る
+
 	virtual Shape GetShape() = 0;
 
 protected:
@@ -65,8 +65,8 @@ protected:
 	WorldTransform* center_ = nullptr;
 	Vector3 centerPoint;
 	/// <summary>
-/// x,y,zそれぞれの幅
-/// </summary>
+	/// x,y,zそれぞれの幅
+	/// </summary>
 	Vector3 size_{0};
 
 private:

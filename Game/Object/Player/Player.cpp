@@ -10,7 +10,6 @@ void Player::Initialize(std::vector<Model*> models)
 	input = Input::GetInstance();
 
 	moveQuaternion_ = Quaternion::IdentityQuaternion();
-	//TODO : InitよりSetWorldを先にしないとWorldがNull
 
 	OBBoxCollider::Init(&world_);
 	OBBoxCollider::SetSize({0.5f,1.0f,0.5f});

@@ -1,7 +1,8 @@
 ﻿#include "BoxCollider.h"
 
-void BoxCollider::Initialize()
+void BoxCollider::Initialize(WorldTransform* Parent)
 {
+	ICollider::SetWorld(Parent);
 	model_ = std::make_unique<BoxColliderModel>();
 	model_->Init();
 	model_->SetTranslate(center_->transform_.translate);
