@@ -57,6 +57,12 @@ void Enemy::ImGui()
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
+	if (ImGui::Button("CollisionOn")) {
+		OBBoxCollider::IsUsing = true;
+	}
+	if (ImGui::Button("CollisionOff")) {
+		OBBoxCollider::IsUsing = false;
+	}
 	ImGui::End();
 #endif
 }

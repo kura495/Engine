@@ -57,7 +57,8 @@ public:
 	Vector3 GetSize() const { return size_; }
 
 	virtual Shape GetShape() = 0;
-
+	//
+	bool IsUsing = true;
 protected:
 	/// <summary>
 	/// 原点
@@ -79,5 +80,7 @@ private:
 	/// 衝突マスク(相手)
 	/// </summary>
 	uint32_t collisionMask_ = 0xffffffff;
+
+
 
 };

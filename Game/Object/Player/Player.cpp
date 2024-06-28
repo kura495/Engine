@@ -13,6 +13,7 @@ void Player::Initialize(std::vector<Model*> models)
 
 	OBBoxCollider::Init(&world_);
 	OBBoxCollider::SetSize({0.5f,1.0f,0.5f});
+
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 
@@ -118,7 +119,12 @@ void Player::ImGui()
 		world_.transform_.translate = { 0.0f,2.0f,0.0f };
 		world_.transform_.quaternion = Quaternion::IdentityQuaternion();
 		moveQuaternion_ = Quaternion::IdentityQuaternion();
-
+	}
+	if (ImGui::Button("CollisionOn")) {
+		OBBoxCollider::IsUsing = true;
+	}
+	if (ImGui::Button("CollisionOff")) {
+		OBBoxCollider::IsUsing = false;
 	}
 	ImGui::End();
 #endif

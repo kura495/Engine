@@ -29,20 +29,29 @@ void CollisionManager::CheckAllCollisions() {
 
 	std::list<ICollider*>::iterator BoxitrA = Colliders_.begin();
 	for (; BoxitrA != Colliders_.end(); ++BoxitrA) {
+
 		// イテレータAからコライダーを取得
 		ICollider* colliderA = *BoxitrA;
+		// colliderAを使うかどうか
+		if (colliderA->IsUsing == false) {
+			continue;
+		}
+
 		// イテレータBはイテレータAの次の要素から回す(重複を避ける)
 		std::list<ICollider*>::iterator BoxitrB = BoxitrA;
 		BoxitrB++;
 		for (; BoxitrB != Colliders_.end(); ++BoxitrB) {
 			ICollider* colliderB = *BoxitrB;
 
-			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
-				// フィルタを見る
-				if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
+			// colliderBを使うかどうか
+			if (colliderB->IsUsing == false) {
+				continue;
+			}
+			// フィルタを見る
+			if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
 					continue;
-				}
-
+			}
+			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
 				//当たった時の処理呼び出し
 				colliderA->OnCollision(colliderB);
 				colliderB->OnCollision(colliderA);
