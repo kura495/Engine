@@ -1,7 +1,8 @@
 #include "OBBoxCollider.h"
 
-void OBBoxCollider::Initialize()
+void OBBoxCollider::Init(WorldTransform* Parent)
 {
+	ICollider::SetWorld(Parent);
 	model_ = std::make_unique<OBBColliderModel>();
 	model_->Init();
 	model_->SetWorld(size_, center_->transform_.quaternion, center_->transform_.translate);

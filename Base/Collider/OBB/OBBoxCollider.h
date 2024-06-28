@@ -12,7 +12,7 @@ struct OBBData {
 class OBBoxCollider : public ICollider
 {
 public:
-	void Initialize();
+	void Init(WorldTransform* Parent);
 	void CollisionUpdate()override;
 	void CollisionDraw()override;
 

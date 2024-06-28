@@ -51,6 +51,8 @@ void GamePlayState::Initialize()
 	for (Enemy* enemy : enemys_) {
 		collisionManager->AddCollider(enemy);
 	}
+	//TODO : WeaponにフィルターをenemyとPlayerでよみとってないからあたる
+	//collisionManager->AddCollider(player_->GetWeapon());
 }
 
 void GamePlayState::Update()
@@ -84,8 +86,7 @@ void GamePlayState::Update()
 		enemy->Update();
 	}
 	//particle->Update();
-	//TODO : WeaponにフィルターをenemyとPlayerでよみとってないからあたる
-	//collisionManager->AddCollider(player_->GetWeapon());
+
 
 	collisionManager->Update();
 }
