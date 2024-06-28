@@ -12,8 +12,8 @@ void Player::Initialize(std::vector<Model*> models)
 	moveQuaternion_ = Quaternion::IdentityQuaternion();
 	//TODO : InitよりSetWorldを先にしないとWorldがNull
 	ICollider::SetWorld(&world_);
-	OBBoxCollider::Initalize();
-	OBBoxCollider::SetSize({0.5f,1.0f,0.5f});
+	OBBoxCollider::Initialize();
+	OBBoxCollider::SetSize({10.5f,1.0f,0.5f});
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 

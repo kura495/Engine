@@ -38,12 +38,12 @@ void CollisionManager::CheckAllCollisions() {
 		for (; BoxitrB != Colliders_.end(); ++BoxitrB) {
 			ICollider* colliderB = *BoxitrB;
 
-			// フィルタを見る
-			if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
-				continue;
-			}
-
 			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
+				// フィルタを見る
+				if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
+					continue;
+				}
+
 				//当たった時の処理呼び出し
 				colliderA->OnCollision(colliderB);
 				colliderB->OnCollision(colliderA);

@@ -7,7 +7,7 @@ void Enemy::Initialize(std::vector<Model*> models)
 	world_.Initialize();
 
 	ICollider::SetWorld(&world_);
-	OBBoxCollider::Initalize();
+	OBBoxCollider::Initialize();
 	OBBoxCollider::SetSize({1.0f,1.0f,1.0f});
 
 #pragma region
