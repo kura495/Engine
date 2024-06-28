@@ -5,7 +5,7 @@
 struct OBBData {
 	Vector3 center;//中心点の座標
 	Vector3 orientations[3];//XYZの各座標軸の傾きを表す方向ベクトル
-	Vector3 size;//中心から面までの距離
+	float size[3];//各軸方向の長さ
 };
 
 class OBBoxCollider : public ICollider
@@ -15,18 +15,22 @@ public:
 	void CollisionUpdate()override;
 	void CollisionDraw()override;
 
-	void SetSize(Vector3 size) {obb_.size = size;}
-	void SetCenter(Vector3 CenterPoint) { obb_.center = CenterPoint; }
 	void SetOrientations(Matrix4x4 Matrix);
+
+	Vector3 GetDirect(int elem) {
+		return obb_.orientations[elem];
+	};// 指定軸番号の方向ベクトルを取得
+	float GetLen(int elem) {
+		return obb_.size[elem];
+	};   // 指定軸方向の長さを取得
+	Vector3 GetPos() {
+		return obb_.center;
+	};// 位置を取得
 
 	Shape GetShape() override {
 		return Shape::OBB;
 	};
 
-private:
-
+protected:
 	OBBData obb_;
-
-
-
 };

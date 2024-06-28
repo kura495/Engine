@@ -25,10 +25,13 @@ private:
 	std::list<ICollider*> Colliders_;
 	
 	// 関数ポインタの型
-	using CollisionFunction = std::function<void(ICollider*, ICollider*)>;
+	using CollisionFunction = std::function<bool(ICollider*, ICollider*)>;
 	CollisionFunction checkCollisions_[ICollider::Shape::MaxValue][ICollider::Shape::MaxValue];	// Shape::Countの値がサイズだよ！
 	//判定用関数
 	//void CheckCollisionCircle(Collider* colliderA, Collider* colliderB);
-	void CheckCollision(BoxCollider* colliderA, BoxCollider* colliderB);
+	bool CheckCollision(BoxCollider* colliderA, BoxCollider* colliderB);
+	bool CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* colliderB);
 	//void CheckCollitionOBBox(OBBoxCollider* colliderA, OBBoxCollider* colliderB);
+
+	float LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3* e2, Vector3* e3 = 0);
 };

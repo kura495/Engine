@@ -2,12 +2,13 @@
 
 #include "Game/Object/Character.h"
 #include "Base/Collider/Box/BoxCollider.h"
+#include "Base/Collider/OBB/OBBoxCollider.h"
 #include "Base/Input/Input.h"
 #include "Base/Animation/Animation.h"
 
 class Player;
 
-class Enemy : public Character,public BoxCollider
+class Enemy : public Character,public OBBoxCollider
 {
 public:
 	void Initialize(std::vector<Model*> models)override;

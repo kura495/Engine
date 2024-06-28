@@ -12,8 +12,8 @@ void Player::Initialize(std::vector<Model*> models)
 	moveQuaternion_ = Quaternion::IdentityQuaternion();
 	//TODO : InitよりSetWorldを先にしないとWorldがNull
 	ICollider::SetWorld(&world_);
-	BoxCollider::Initialize();
-	BoxCollider::SetSize({0.5f,1.0f,0.5f});
+	OBBoxCollider::Initalize();
+	OBBoxCollider::SetSize({0.5f,1.0f,0.5f});
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
 
@@ -114,7 +114,7 @@ void Player::ImGui()
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
-	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
+	ImGui::DragFloat3("Translate", &world_.transform_.translate.x,0.1f);
 	if (ImGui::Button("Reset")) {
 		world_.transform_.translate = { 0.0f,2.0f,0.0f };
 		world_.transform_.quaternion = Quaternion::IdentityQuaternion();

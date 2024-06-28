@@ -3,9 +3,9 @@
 void CollisionManager::Init()
 {
 	checkCollisions_[ICollider::Shape::Box][ICollider::Shape::Box] = [this](ICollider* colliderA, ICollider* colliderB)
-		{
-			return CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));
-		};
+		{return CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));};
+	checkCollisions_[ICollider::Shape::OBB][ICollider::Shape::OBB] = [this](ICollider* colliderA, ICollider* colliderB)
+		{return CheckCollision(dynamic_cast<OBBoxCollider*>(colliderA), dynamic_cast<OBBoxCollider*>(colliderB));};
 
 }
 
@@ -21,9 +21,9 @@ void CollisionManager::Update()
 void CollisionManager::Draw()
 {
 	//TODO : ワイヤーフレーム描画にする
-	for (ICollider* collider : Colliders_) {
+	/*for (ICollider* collider : Colliders_) {
 		collider->CollisionDraw();
-	}
+	}*/
 }
 
 void CollisionManager::CheckAllCollisions() {
@@ -37,7 +37,17 @@ void CollisionManager::CheckAllCollisions() {
 		BoxitrB++;
 		for (; BoxitrB != Colliders_.end(); ++BoxitrB) {
 			ICollider* colliderB = *BoxitrB;
-			checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB);
+
+			// フィルタを見る
+			if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
+				continue;
+			}
+
+			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
+				//当たった時の処理呼び出し
+				colliderA->OnCollision(colliderB);
+				colliderB->OnCollision(colliderA);
+			}
 		}
 	}
 }
@@ -79,36 +89,151 @@ void CollisionManager::CheckAllCollisions() {
 //{
 //	
 //}
-void CollisionManager::CheckCollision(BoxCollider * colliderA, BoxCollider * colliderB)
+bool CollisionManager::CheckCollision(BoxCollider * colliderA, BoxCollider * colliderB)
 {
 	// 判定対象AとBの座標
 	AABBData posA, posB;
 	posA = colliderA->GetAABB();
 	posB = colliderB->GetAABB();
 
-	// コライダーのフィルターの値でビット演算
-	if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
-		return;
-	}
-
 	if ((posA.min.x <= posB.max.x && posA.max.x >= posB.min.x) && //x軸
 		(posA.min.y <= posB.max.y && posA.max.y >= posB.min.y) && //y軸
 		(posA.min.z <= posB.max.z && posA.max.z >= posB.min.z)    //z軸
 		) {
-		if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0) {
-			// コライダーAの衝突時コールバック
-			colliderA->OnCollision(colliderB);
-		}
-		else if ((colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
-			// コライダーBの衝突時コールバック
-			colliderB->OnCollision(colliderA);
-		}
-		else {
-			// コライダーAの衝突時コールバック
-			colliderA->OnCollision(colliderB);
-			// コライダーBの衝突時コールバック
-			colliderB->OnCollision(colliderA);
-		}
+		return true;
 	}
+	return false;
+}
 
+bool CollisionManager::CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* colliderB)
+{
+	// 方向ベクトルと方向ベクトルの長さ
+	Vector3 NAe1 = colliderA->GetDirect(0), Ae1 = NAe1 * colliderA->GetLen(0);
+	Vector3 NAe2 = colliderA->GetDirect(1), Ae2 = NAe2 * colliderA->GetLen(1);
+	Vector3 NAe3 = colliderA->GetDirect(2), Ae3 = NAe3 * colliderA->GetLen(2);
+	Vector3 NBe1 = colliderB->GetDirect(0), Be1 = NBe1 * colliderB->GetLen(0);
+	Vector3 NBe2 = colliderB->GetDirect(1), Be2 = NBe2 * colliderB->GetLen(1);
+	Vector3 NBe3 = colliderB->GetDirect(2), Be3 = NBe3 * colliderB->GetLen(2);
+	// 中心の位置
+	Vector3 Interval = colliderA->GetPos() - colliderB->GetPos();
+	float rA;
+	float rB;
+	float L;
+	// 分離軸 : Ae1
+	rA = Ae1.Length();
+	rB = LenSegOnSeparateAxis(&NAe1, &Be1, &Be2, &Be3);
+	L = fabs(Vector3::Dot(Interval, NAe1));
+	if (L > rA + rB) return false; // 衝突していない
+	// 分離軸 : Ae2
+	rA = Ae2.Length();
+	rB = LenSegOnSeparateAxis(&NAe2, &Be1, &Be2, &Be3);
+	L = fabs(Vector3::Dot(Interval, NAe2));
+	if (L > rA + rB) return false; // 衝突していない
+	// 分離軸 : Ae3
+	rA = Ae3.Length();
+	rB = LenSegOnSeparateAxis(&NAe3, &Be1, &Be2, &Be3);
+	L = fabs(Vector3::Dot(Interval, NAe3));
+	if (L > rA + rB) return false; // 衝突していない
+	// 分離軸 : Be1
+	rA = LenSegOnSeparateAxis(&NBe1, &Ae1, &Ae2, &Ae3);
+	rB = Be1.Length();
+	L = fabs(Vector3::Dot(Interval, NBe1));
+	if (L > rA + rB) return false;
+	// 分離軸 : Be2
+	rA = LenSegOnSeparateAxis(&NBe2, &Ae1, &Ae2, &Ae3);
+	rB = Be2.Length();
+	L = fabs(Vector3::Dot(Interval, NBe2));
+	if (L > rA + rB) return false;
+	// 分離軸 : Be3
+	rA = LenSegOnSeparateAxis(&NBe3, &Ae1, &Ae2, &Ae3);
+	rB = Be3.Length();
+	L = fabs(Vector3::Dot(Interval, NBe3));
+	if (L > rA + rB) return false;
+
+	// 分離軸 : C11
+	Vector3 Cross;
+	Cross = Vector3::Cross(NAe1, NBe1);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae2, &Ae3);
+	rB = LenSegOnSeparateAxis(&Cross, &Be2, &Be3);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C12
+	Cross = Vector3::Cross(NAe1, NBe2);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae2, &Ae3);
+	rB = LenSegOnSeparateAxis(&Cross, &Be1, &Be3);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C13
+	Cross = Vector3::Cross(NAe1, NBe3);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae2, &Ae3);
+	rB = LenSegOnSeparateAxis(&Cross, &Be1, &Be2);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C21
+	Cross = Vector3::Cross(NAe2, NBe1);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae1, &Ae3);
+	rB = LenSegOnSeparateAxis(&Cross, &Be2, &Be3);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C22
+	Cross = Vector3::Cross(NAe2, NBe2);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae1, &Ae3);
+	rB = LenSegOnSeparateAxis(&Cross, &Be1, &Be3);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C23
+	Cross = Vector3::Cross(NAe2, NBe3);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae1, &Ae3);
+	rB = LenSegOnSeparateAxis(&Cross, &Be1, &Be2);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C31
+	Cross = Vector3::Cross(NAe3, NBe1);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae1, &Ae2);
+	rB = LenSegOnSeparateAxis(&Cross, &Be2, &Be3);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C32
+	Cross = Vector3::Cross(NAe3, NBe2);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae1, &Ae2);
+	rB = LenSegOnSeparateAxis(&Cross, &Be1, &Be3);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離軸 : C33
+	Cross = Vector3::Cross(NAe3, NBe3);
+	rA = LenSegOnSeparateAxis(&Cross, &Ae1, &Ae2);
+	rB = LenSegOnSeparateAxis(&Cross, &Be1, &Be2);
+	L = fabs(Vector3::Dot(Interval, Cross));
+	if (L > rA + rB)
+		return false;
+
+	// 分離平面が存在しないので「衝突している」
+	return true;
+}
+
+// 分離軸に投影された軸成分から投影線分長を算出
+float CollisionManager::LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3* e2, Vector3* e3)
+{
+	// 3つの内積の絶対値の和で投影線分長を計算
+	// 分離軸Sepは標準化されていること
+	FLOAT r1 = fabs(Vector3::Dot(*Sep, *e1));
+	FLOAT r2 = fabs(Vector3::Dot(*Sep, *e2));
+	FLOAT r3 = e3 ? (fabs(Vector3::Dot(*Sep, *e3))) : 0;
+	return r1 + r2 + r3;
 }

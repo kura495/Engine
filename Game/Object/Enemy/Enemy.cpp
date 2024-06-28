@@ -7,8 +7,8 @@ void Enemy::Initialize(std::vector<Model*> models)
 	world_.Initialize();
 
 	ICollider::SetWorld(&world_);
-	BoxCollider::Initialize();
-	BoxCollider::SetSize({1.0f,1.0f,1.0f});
+	OBBoxCollider::Initalize();
+	OBBoxCollider::SetSize({1.0f,1.0f,1.0f});
 
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "human.gltf");
@@ -28,7 +28,7 @@ void Enemy::Update()
 	}
 	else {
 		//範囲外なら歩く
-		ChasePlayer();
+		//ChasePlayer();
 
 		animation->PlayAnimation();
 	}

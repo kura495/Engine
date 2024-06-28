@@ -3,6 +3,7 @@
 #include "Game/Object/Character.h"
 #include "Game/Object/Weapon/Weapon.h"
 #include "Base/Collider/Box/BoxCollider.h"
+#include "Base/Collider/OBB/OBBoxCollider.h"
 #include "Base/Input/Input.h"
 #include "Base/Animation/Animation.h"
 
@@ -11,7 +12,7 @@ enum class Behavior {
 	kAttack,
 };
 
-class Player : public Character	, public BoxCollider
+class Player : public Character	, public OBBoxCollider
 {
 public:
 
