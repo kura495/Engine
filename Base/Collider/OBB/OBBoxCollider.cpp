@@ -2,6 +2,9 @@
 
 void OBBoxCollider::Initialize()
 {
+	model_ = std::make_unique<OBBColliderModel>();
+	model_->Init();
+	model_->SetWorld(size_, center_->transform_.quaternion, center_->transform_.translate);
 }
 
 void OBBoxCollider::CollisionUpdate()
@@ -11,10 +14,13 @@ void OBBoxCollider::CollisionUpdate()
 	obb_.size[1] = size_.y;
 	obb_.size[2] = size_.z;
 	SetOrientations(MakeRotateMatrix(center_->transform_.quaternion));
+	model_->SetWorld(size_, center_->transform_.quaternion,center_->transform_.translate);
+	model_->Update();
 }
 
 void OBBoxCollider::CollisionDraw()
 {
+	model_->Draw();
 }
 
 void OBBoxCollider::SetOrientations(Matrix4x4 Matrix)

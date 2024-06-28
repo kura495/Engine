@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Base/Collider/ICollider.h"
+#include "Base/Collider/ColliderModel/OBB/OBBColliderModel.h"
 
 struct OBBData {
 	Vector3 center;//中心点の座標
@@ -31,6 +32,9 @@ public:
 		return Shape::OBB;
 	};
 
-protected:
+private:
+
+	std::unique_ptr<OBBColliderModel> model_;
+
 	OBBData obb_;
 };

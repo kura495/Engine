@@ -20,10 +20,9 @@ void CollisionManager::Update()
 
 void CollisionManager::Draw()
 {
-	//TODO : ワイヤーフレーム描画にする
-	/*for (ICollider* collider : Colliders_) {
+	for (ICollider* collider : Colliders_) {
 		collider->CollisionDraw();
-	}*/
+	}
 }
 
 void CollisionManager::CheckAllCollisions() {

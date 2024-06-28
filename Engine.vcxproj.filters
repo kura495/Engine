@@ -228,6 +228,7 @@
     <ClCompile Include="Base\PipelineState\GaussianFilter\GaussianFilter.cpp" />
     <ClCompile Include="Base\Collider\ColliderModel\Box\BoxColliderModel.cpp" />
     <ClCompile Include="Base\PipelineState\WireFlame\WireFlame.cpp" />
+    <ClCompile Include="Base\Collider\ColliderModel\OBB\OBBColliderModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -433,6 +434,7 @@
     <ClInclude Include="Base\PipelineState\GaussianFilter\GaussianFilter.h" />
     <ClInclude Include="Base\Collider\ColliderModel\Box\BoxColliderModel.h" />
     <ClInclude Include="Base\PipelineState\WireFlame\WireFlame.h" />
+    <ClInclude Include="Base\Collider\ColliderModel\OBB\OBBColliderModel.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
