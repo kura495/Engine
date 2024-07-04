@@ -175,6 +175,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="Base\Collider\ColliderModel\Box\BoxColliderModel.cpp" />
     <ClCompile Include="Base\Collider\ColliderModel\OBB\OBBColliderModel.cpp" />
+    <ClCompile Include="Base\Collider\ContactRecord\ContactRecord.cpp" />
     <ClCompile Include="Base\Common\DirectX\DirectXCommon.cpp" />
     <ClCompile Include="Base\Editer\Editer.cpp" />
     <ClCompile Include="Base\Input\Input.cpp" />
@@ -250,6 +251,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="Base\Collider\ColliderModel\Box\BoxColliderModel.h" />
     <ClInclude Include="Base\Collider\ColliderModel\OBB\OBBColliderModel.h" />
+    <ClInclude Include="Base\Collider\ContactRecord\ContactRecord.h" />
     <ClInclude Include="Base\Common\DirectX\DirectXCommon.h" />
     <ClInclude Include="Base\Editer\Editer.h" />
     <ClInclude Include="Base\Input\Input.h" />

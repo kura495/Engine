@@ -4,6 +4,8 @@
 #include "WorldTransform/WorldTransform.h"
 #include <cstdint>
 
+static uint32_t CollisionNumber = 0;
+
 class ICollider {
 public:
 
@@ -15,6 +17,10 @@ public:
 		Sphere,
 		Circle,
 		MaxValue
+	};
+	ICollider() {
+		id = CollisionNumber;
+		CollisionNumber++;
 	};
 	virtual ~ICollider(){};
 
@@ -81,6 +87,6 @@ private:
 	/// </summary>
 	uint32_t collisionMask_ = 0xffffffff;
 
-
+	uint32_t id;
 
 };
