@@ -8,4 +8,5 @@ void PPFilter::Update()
 	else {
 		materialData->x = 0.0f;	
 	}
+
 }

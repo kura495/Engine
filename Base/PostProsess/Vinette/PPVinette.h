@@ -7,4 +7,5 @@ public:
 	void Update()override;
 
 private:
+	bool CheckBox = true;
 };

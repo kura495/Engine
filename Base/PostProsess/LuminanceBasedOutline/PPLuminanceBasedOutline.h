@@ -8,4 +8,5 @@ public:
 	void Update()override;
 
 private:
+	bool CheckBox = false;
 };

@@ -8,7 +8,7 @@ void PPGrayScale::Update()
 	else {
 		materialData->x = 0.0f;
 	}
-	ImGui::Begin("GrayScale");
-	ImGui::Checkbox("flag", &CheckBox);
+	ImGui::Begin("PostProsess");
+	ImGui::Checkbox("GrayScale", &CheckBox);
 	ImGui::End();
 }

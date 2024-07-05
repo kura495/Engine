@@ -30,7 +30,6 @@ static const float32_t kPrewittVerticalKernel[3][3] =
 float32_t Luminance(float32_t3 v)
 {
     return dot(v, float32_t3(0.2125f,0.7154f,0.0721f));
-
 }
 
 Texture2D<float32_t4> gTexture : register(t0);
@@ -39,7 +38,15 @@ ConstantBuffer<Material> gMaterial : register(b0);
 
 PixelShaderOutput main(VertexShaderOutput input)
 {
-    uint32_t width, height;
+    PixelShaderOutput output;
+
+    if (gMaterial.color.r == 0.0f)
+    {
+        output.color = gTexture.Sample(gSampler, input.texcoord);
+        return output;
+    }
+    
+        uint32_t width, height;
     gTexture.GetDimensions(width, height);
     float32_t2 uvStepSize = float32_t2(rcp(width), rcp(height));
     
@@ -58,7 +65,7 @@ PixelShaderOutput main(VertexShaderOutput input)
     }      
     float32_t weight = length(difference);
     weight = saturate(weight * 6.0f);
-    PixelShaderOutput output;
+
     output.color.rgb = (1.0f - weight) * gTexture.Sample(gSampler,input.texcoord).rgb;
     output.color.a = 1.0f;
     
