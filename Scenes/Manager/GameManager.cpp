@@ -46,13 +46,16 @@ void GameManager::Initialize()
 	state[CLEAR] = std::make_unique<GameClearState>();
 	state[PLAY]->Initialize();
 	currentSceneNum_ = PLAY;
-
+	//TODO : ちゃんとユニポとかにする
 	renderTextrue = new PPFilter();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
-	renderTextrue2 = new PPNormal();
+	renderTextrue2 = new PPGrayScale();
 	renderTextrue2->Init();
 	renderTextrue2->Create(2);
+	renderTextrue3 = new PPNormal();
+	renderTextrue3->Init();
+	renderTextrue3->Create(3);
 }
 void GameManager::Gameloop(){
 	while (msg.message != WM_QUIT) {
@@ -76,8 +79,8 @@ void GameManager::Gameloop(){
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
 			renderTextrue->Update();
-			//TODO : ↓つけるとブラーがかかるよ
 			renderTextrue2->Update();
+			renderTextrue3->Update();
 #pragma endregion
 		#pragma region Draw
 			//renderTextureに色々書き込んでいく
@@ -94,14 +97,24 @@ void GameManager::Gameloop(){
 			renderer_->ChangePipeline(PipelineType::GaussianFilter);
 			renderTextrue->Draw();
 			renderer_->PostProsessDraw();
+			//画像からレンダーターゲット
 			renderTextrue->PostCopy();
-			
+
+			renderTextrue3->PreDraw();
+			renderTextrue2->PreCopy();
+			renderer_->ChangePipeline(PipelineType::GrayScale);
+			renderTextrue2->Draw();
+			//renderer_->PostProsessDraw();
+			renderTextrue2->PostCopy();
+
 			directX->PreView();
 			//renderTargetを変更
-			renderTextrue2->PreCopy();
-			renderer_->ChangePipeline(PipelineType::GaussianFilter);
-			renderTextrue2->Draw();
-			renderTextrue2->PostCopy();
+			renderTextrue3->PreCopy();
+			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderTextrue3->Draw();
+			renderTextrue3->PostCopy();
+
+
 			editer->Draw();
 			imGuiManager->EndFrame();
 			directX->PostView();

@@ -18,6 +18,7 @@
 #include "Base/Object/Manaer/ObjectManager.h"
 #include "Base/PostProsess/PostProsess.h"
 #include "Base/PostProsess/Filter/Filter.h"
+#include "Base/PostProsess/GrayScale/PPGrayScale.h"
 #include "Base/PostProsess/Normal/Normal.h"
 
 class GameManager
@@ -57,7 +58,8 @@ private:
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
 	PPFilter* renderTextrue = nullptr;
-	PPNormal* renderTextrue2 = nullptr;
+	PPGrayScale* renderTextrue2 = nullptr;
+	PPNormal* renderTextrue3 = nullptr;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

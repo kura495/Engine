@@ -24,6 +24,8 @@ void PSOManager::Initalize()
 	gaussianFilter.Initalize();
 	WireFlame wireFlame;
 	wireFlame.Initalize();
+	GrayScale grayScale;
+	grayScale.Initalize();
 
 	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
@@ -31,5 +33,6 @@ void PSOManager::Initalize()
 	AddPipeline(wireFlame.GetPSO(),PipelineType::WireFlame);
 	AddPipeline(postProsessPSO.GetPSO(),PipelineType::PostProsessPSO);
 	AddPipeline(gaussianFilter.GetPSO(),PipelineType::GaussianFilter);
+	AddPipeline(grayScale.GetPSO(),PipelineType::GrayScale);
 
 }

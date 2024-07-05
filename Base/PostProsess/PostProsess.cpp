@@ -132,7 +132,7 @@ void PostProsess::CreateRTV(int Index)
 	for (int i = 0; i < Index; i++) {
 		rtvHandle.ptr += descriptorSizeRTV;
 	}
-
+	//DirectXCommon::MakeDescriptorHeapの//rtvディスクリプタヒープの作成のNumDescriptorsを変える
 	DirectX->GetDevice()->CreateRenderTargetView(renderTextureResource.Get(), &rtvDesc, rtvHandle);
 }
 
