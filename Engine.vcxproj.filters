@@ -235,6 +235,8 @@
     <ClCompile Include="Base\PipelineState\GrayScale\GrayScale.cpp" />
     <ClCompile Include="Base\PostProsess\GrayScale\PPGrayScale.cpp" />
     <ClCompile Include="Base\PostProsess\Vinette\PPVinette.cpp" />
+    <ClCompile Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp" />
+    <ClCompile Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -447,6 +449,8 @@
     <ClInclude Include="Base\PipelineState\GrayScale\GrayScale.h" />
     <ClInclude Include="Base\PostProsess\GrayScale\PPGrayScale.h" />
     <ClInclude Include="Base\PostProsess\Vinette\PPVinette.h" />
+    <ClInclude Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.h" />
+    <ClInclude Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

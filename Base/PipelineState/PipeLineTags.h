@@ -8,5 +8,6 @@ enum class PipelineType {
 	PostProsessPSO,
 	GaussianFilter,
 	GrayScale,
-	Vinette
+	Vinette,
+	LuminanceBasedOutline
 };

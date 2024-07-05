@@ -12,6 +12,7 @@
 #include "PipelineState/GaussianFilter/GaussianFilter.h"
 #include "PipelineState/GrayScale/GrayScale.h"
 #include "PipelineState/Vignetting/Vignetting.h"
+#include "PipelineState/LuminanceBasedOutline/LuminanceBasedOutline.h"
 
 class PSOManager
 {
