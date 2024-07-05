@@ -19,6 +19,7 @@
 #include "Base/PostProsess/PostProsess.h"
 #include "Base/PostProsess/Filter/Filter.h"
 #include "Base/PostProsess/GrayScale/PPGrayScale.h"
+#include "Base/PostProsess/Vinette/PPVinette.h"
 #include "Base/PostProsess/Normal/Normal.h"
 
 class GameManager
@@ -59,7 +60,8 @@ private:
 	//ポストプロセス
 	PPFilter* renderTextrue = nullptr;
 	PPGrayScale* renderTextrue2 = nullptr;
-	PPNormal* renderTextrue3 = nullptr;
+	PPVinette* renderTextrue3 = nullptr;
+	PPNormal* renderTextrue4 = nullptr;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

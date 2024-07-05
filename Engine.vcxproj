@@ -209,6 +209,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\PostProsess\GrayScale\PPGrayScale.cpp" />
     <ClCompile Include="Base\PostProsess\Normal\Normal.cpp" />
     <ClCompile Include="Base\PostProsess\PostProsess.cpp" />
+    <ClCompile Include="Base\PostProsess\Vinette\PPVinette.cpp" />
     <ClCompile Include="Base\Renderer\Model\ModelRenderer.cpp" />
     <ClCompile Include="Base\Renderer\Renderer.cpp" />
     <ClCompile Include="Base\ShaderCompiler\ShaderCompiler.cpp" />
@@ -298,6 +299,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\PostProsess\GrayScale\PPGrayScale.h" />
     <ClInclude Include="Base\PostProsess\Normal\Normal.h" />
     <ClInclude Include="Base\PostProsess\PostProsess.h" />
+    <ClInclude Include="Base\PostProsess\Vinette\PPVinette.h" />
     <ClInclude Include="Base\Renderer\Model\ModelRenderer.h" />
     <ClInclude Include="Base\Renderer\Renderer.h" />
     <ClInclude Include="Base\ShaderCompiler\ShaderCompiler.h" />

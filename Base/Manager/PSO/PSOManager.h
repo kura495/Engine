@@ -11,6 +11,7 @@
 #include "PipelineState/WireFlame/WireFlame.h"
 #include "PipelineState/GaussianFilter/GaussianFilter.h"
 #include "PipelineState/GrayScale/GrayScale.h"
+#include "PipelineState/Vignetting/Vignetting.h"
 
 class PSOManager
 {

@@ -297,7 +297,7 @@ void DirectXCommon::MakeSwapChain()
 void DirectXCommon::MakeDescriptorHeap()
 {
 	//rtvディスクリプタヒープの作成
-	rtvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 5, false);
+	rtvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 10, false);
 	//srvディスクリプタ―ヒープの作成
 //srv用のディスクリプタ数は128。srvはshader内で触るものなので、ShaderVisibleはtrue
 	srvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);

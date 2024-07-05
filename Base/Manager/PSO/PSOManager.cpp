@@ -26,6 +26,8 @@ void PSOManager::Initalize()
 	wireFlame.Initalize();
 	GrayScale grayScale;
 	grayScale.Initalize();
+	Vignetting vinette;
+	vinette.Initalize();
 
 	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
@@ -34,5 +36,6 @@ void PSOManager::Initalize()
 	AddPipeline(postProsessPSO.GetPSO(),PipelineType::PostProsessPSO);
 	AddPipeline(gaussianFilter.GetPSO(),PipelineType::GaussianFilter);
 	AddPipeline(grayScale.GetPSO(),PipelineType::GrayScale);
+	AddPipeline(vinette.GetPSO(),PipelineType::Vinette);
 
 }

@@ -7,5 +7,6 @@ enum class PipelineType {
 	WireFlame,
 	PostProsessPSO,
 	GaussianFilter,
-	GrayScale
+	GrayScale,
+	Vinette
 };

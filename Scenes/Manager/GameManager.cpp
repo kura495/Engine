@@ -53,9 +53,12 @@ void GameManager::Initialize()
 	renderTextrue2 = new PPGrayScale();
 	renderTextrue2->Init();
 	renderTextrue2->Create(2);
-	renderTextrue3 = new PPNormal();
+	renderTextrue3 = new PPVinette();
 	renderTextrue3->Init();
 	renderTextrue3->Create(3);
+	renderTextrue4 = new PPNormal();
+	renderTextrue4->Init();
+	renderTextrue4->Create(4);
 }
 void GameManager::Gameloop(){
 	while (msg.message != WM_QUIT) {
@@ -81,6 +84,7 @@ void GameManager::Gameloop(){
 			renderTextrue->Update();
 			renderTextrue2->Update();
 			renderTextrue3->Update();
+			renderTextrue4->Update();
 #pragma endregion
 		#pragma region Draw
 			//renderTextureに色々書き込んでいく
@@ -107,13 +111,19 @@ void GameManager::Gameloop(){
 			//renderer_->PostProsessDraw();
 			renderTextrue2->PostCopy();
 
-			directX->PreView();
-			//renderTargetを変更
+			renderTextrue4->PreDraw();
 			renderTextrue3->PreCopy();
-			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderer_->ChangePipeline(PipelineType::Vinette);
 			renderTextrue3->Draw();
+			//renderer_->PostProsessDraw();
 			renderTextrue3->PostCopy();
 
+			directX->PreView();
+			//renderTargetを変更
+			renderTextrue4->PreCopy();
+			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderTextrue4->Draw();
+			renderTextrue4->PostCopy();
 
 			editer->Draw();
 			imGuiManager->EndFrame();

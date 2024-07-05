@@ -2,13 +2,13 @@
 
 void PPGrayScale::Update()
 {
-	if (Player::PushOptionButtern) {
+	if (CheckBox) {
 		materialData->x = 1.0f;
 	}
 	else {
 		materialData->x = 0.0f;
 	}
-	ImGui::Begin("PPGrayScale");
-	ImGui::DragFloat("g",&materialData->y);
+	ImGui::Begin("GrayScale");
+	ImGui::Checkbox("flag", &CheckBox);
 	ImGui::End();
 }
