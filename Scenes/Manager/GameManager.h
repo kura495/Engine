@@ -17,6 +17,7 @@
 #include "Base/Editer/Editer.h"
 #include "Base/Object/Manaer/ObjectManager.h"
 #include "Base/PostProsess/PostProsess.h"
+#include "Base/PostProsess/Filter/Filter.h"
 
 class GameManager
 {

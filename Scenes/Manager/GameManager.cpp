@@ -47,7 +47,7 @@ void GameManager::Initialize()
 	state[PLAY]->Initialize();
 	currentSceneNum_ = PLAY;
 
-	renderTextrue = new PostProsess();
+	renderTextrue = new PPFilter();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
 	renderTextrue2 = new PostProsess();

@@ -13,10 +13,14 @@ public:
 	void Init();
 	void Draw();
 	void Create(int Index);
-	void Update();
+	virtual void Update() = 0;
 	void PreDraw();
 	void PreCopy();
 	void PostCopy();
+
+protected:
+	Vector3* materialData = nullptr;
+
 private:
 	ComPtr<ID3D12Resource> CreateRenderTextureResource(ComPtr<ID3D12Device> device, uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& clearColor);
 
@@ -48,7 +52,7 @@ private:
 	D3D12_RESOURCE_BARRIER barrier{};
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = nullptr;
-	Vector3* materialData = nullptr;
+
 	Vector4 originalColor;
 };
 
