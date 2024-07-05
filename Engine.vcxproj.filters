@@ -486,5 +486,7 @@
     <FxCompile Include="resources\hlsl\FullScreen.VS.hlsl" />
     <FxCompile Include="resources\hlsl\GaussianFilter.VS.hlsl" />
     <FxCompile Include="resources\hlsl\GaussianFilter.PS.hlsl" />
+    <FxCompile Include="resources\hlsl\GrayScale.PS.hlsl" />
+    <FxCompile Include="resources\hlsl\GrayScale.VS.hlsl" />
   </ItemGroup>
 </Project>

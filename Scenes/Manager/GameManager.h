@@ -18,6 +18,7 @@
 #include "Base/Object/Manaer/ObjectManager.h"
 #include "Base/PostProsess/PostProsess.h"
 #include "Base/PostProsess/Filter/Filter.h"
+#include "Base/PostProsess/Normal/Normal.h"
 
 class GameManager
 {
@@ -55,8 +56,8 @@ private:
 	std::unique_ptr<GameState>state[GameStateMax];
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
-	PostProsess* renderTextrue = nullptr;
-	PostProsess* renderTextrue2 = nullptr;
+	PPFilter* renderTextrue = nullptr;
+	PPNormal* renderTextrue2 = nullptr;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

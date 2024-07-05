@@ -50,7 +50,7 @@ void GameManager::Initialize()
 	renderTextrue = new PPFilter();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
-	renderTextrue2 = new PostProsess();
+	renderTextrue2 = new PPNormal();
 	renderTextrue2->Init();
 	renderTextrue2->Create(2);
 }
@@ -77,7 +77,7 @@ void GameManager::Gameloop(){
 			state[currentSceneNum_]->Update();
 			renderTextrue->Update();
 			//TODO : ↓つけるとブラーがかかるよ
-			//renderTextrue2->Update();
+			renderTextrue2->Update();
 #pragma endregion
 		#pragma region Draw
 			//renderTextureに色々書き込んでいく

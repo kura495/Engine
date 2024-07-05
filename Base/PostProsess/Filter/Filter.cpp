@@ -1,7 +1,5 @@
 #include "Filter.h"
 
-
-
 void PPFilter::Update()
 {
 	if (Player::PushOptionButtern) {

@@ -4,9 +4,6 @@
 class PPFilter : public PostProsess
 {
 public:
-	PPFilter();
-	~PPFilter();
-
 	void Update()override;
 
 private:
