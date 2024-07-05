@@ -99,7 +99,7 @@ void GameManager::Gameloop(){
 			directX->PreView();
 			//renderTargetを変更
 			renderTextrue2->PreCopy();
-			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderer_->ChangePipeline(PipelineType::GaussianFilter);
 			renderTextrue2->Draw();
 			renderTextrue2->PostCopy();
 			editer->Draw();

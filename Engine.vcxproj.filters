@@ -232,6 +232,7 @@
     <ClCompile Include="Base\Collider\ContactRecord\ContactRecord.cpp" />
     <ClCompile Include="Base\PostProsess\Filter\Filter.cpp" />
     <ClCompile Include="Base\PostProsess\Normal\Normal.cpp" />
+    <ClCompile Include="Base\PipelineState\GrayScale\GrayScale.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -441,6 +442,7 @@
     <ClInclude Include="Base\Collider\ContactRecord\ContactRecord.h" />
     <ClInclude Include="Base\PostProsess\Filter\Filter.h" />
     <ClInclude Include="Base\PostProsess\Normal\Normal.h" />
+    <ClInclude Include="Base\PipelineState\GrayScale\GrayScale.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
