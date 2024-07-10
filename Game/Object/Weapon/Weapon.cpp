@@ -13,10 +13,10 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 	world_.UpdateMatrix();
 
-	BoxCollider::Initialize(&world_);
-	BoxCollider::SetSize({ 0.0f,0.0f,0.0f });
+	OBBoxCollider::Init(&world_);
+	OBBoxCollider::SetSize({ 0.0f,0.0f,0.0f });
 	SetcollitionAttribute(kCollitionAttributeWeapon);
-	BoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
+	OBBoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
 
 
 }
@@ -38,7 +38,7 @@ void Weapon::ImGui()
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
-	Vector3 Cen = BoxCollider::GetSize();
+	Vector3 Cen = OBBoxCollider::GetSize();
 	ImGui::DragFloat3("Size", &Cen.x);
 	
 
@@ -73,7 +73,7 @@ void Weapon::RootInit()
 	world_.transform_.quaternion = firstPos;
 	world_.UpdateMatrix();
 
-	BoxCollider::SetSize({ 0.0f,0.0f,0.0f });
+	OBBoxCollider::SetSize({ 0.0f,0.0f,0.0f });
 }
 
 void Weapon::RootUpdate()
@@ -87,7 +87,7 @@ void Weapon::AttackInit()
 	attackFirstQua = MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
-	BoxCollider::SetSize({ 0.5f,0.5f,0.5f });
+	OBBoxCollider::SetSize({ 0.5f,0.5f,0.5f });
 
 	world_.transform_.quaternion = attackFirstQua;
 	world_.transform_.translate.x = 0.5f;
@@ -107,6 +107,7 @@ void Weapon::AttackUpdate()
 
 	if (AttackQuaParam_t >=1.0f) {
 		IsAttackOver = true;
+
 	}
 }
 
