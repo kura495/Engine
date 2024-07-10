@@ -148,20 +148,19 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	ObjectData ObjTransform;
 	nlohmann::json& transform = object["transform"];
 	//平行移動
-	ObjTransform.object.transform.translate.x = (float)transform["translation"][0];
-	ObjTransform.object.transform.translate.y = (float)transform["translation"][2];
-	ObjTransform.object.transform.translate.z = (float)transform["translation"][1];
+	ObjTransform.object.transform.translate.x = static_cast<float>(transform["translation"][0]);
+	ObjTransform.object.transform.translate.y = static_cast<float>(transform["translation"][1]);
+	ObjTransform.object.transform.translate.z = static_cast<float>(transform["translation"][2]);
 	//回転角
-	Vector3 Euler;
-	Euler.x = -(float)transform["rotation"][0];
-	Euler.y = -(float)transform["rotation"][2];
-	Euler.z = -(float)transform["rotation"][1];
-	//TODO :　正しい姿勢にはなっていないので変更をする
-	ObjTransform.object.transform.quaternion = Quaternion::EulerToQuaterion(Euler);
+	Vector3 rotate;
+	rotate.x = static_cast<float>(transform["rotation"][0]);
+	rotate.y = static_cast<float>(transform["rotation"][1]);
+	rotate.z = static_cast<float>(transform["rotation"][2]);
+	ObjTransform.object.transform.quaternion = Quaternion::EulerToQuaterion(rotate);
 	//スケーリング
-	ObjTransform.object.transform.scale.x = (float)transform["scaling"][0];
-	ObjTransform.object.transform.scale.y = (float)transform["scaling"][2];
-	ObjTransform.object.transform.scale.z = (float)transform["scaling"][1];
+	ObjTransform.object.transform.scale.x = static_cast<float>(transform["scaling"][0]);
+	ObjTransform.object.transform.scale.y = static_cast<float>(transform["scaling"][1]);
+	ObjTransform.object.transform.scale.z = static_cast<float>(transform["scaling"][2]);
 
 #pragma endregion 
 
@@ -178,7 +177,17 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	}
 
 	//オブジェクトのトランスフォームを設定
-	AddBox(ObjTransform);
+	std::string name = object["file_name"].get<std::string>();
+
+	if (name.compare("Cube") == 0) {
+		AddBox(ObjTransform);
+	}
+
+	if (name.compare("Enemy") == 0) {
+
+	}
+
+
 
 	// TODO : 読み込むことが出来ないのでいったんコメントアウト
 	/*if (object.contains("children")) {

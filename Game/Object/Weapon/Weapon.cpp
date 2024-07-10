@@ -87,7 +87,7 @@ void Weapon::AttackInit()
 	attackFirstQua = MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
-	OBBoxCollider::SetSize({ 0.5f,0.5f,0.5f });
+	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
 
 	world_.transform_.quaternion = attackFirstQua;
 	world_.transform_.translate.x = 0.5f;

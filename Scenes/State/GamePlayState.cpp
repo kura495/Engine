@@ -52,7 +52,7 @@ void GamePlayState::Initialize()
 		collisionManager->AddCollider(enemy);
 	}
 	//TODO : WeaponにフィルターをenemyとPlayerでよみとってないからあたる
-	//collisionManager->AddCollider(player_->GetWeapon());
+	collisionManager->AddCollider(player_->GetWeapon());
 }
 
 void GamePlayState::Update()
