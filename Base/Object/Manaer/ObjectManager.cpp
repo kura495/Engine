@@ -156,6 +156,7 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	rotate.x = static_cast<float>(transform["rotation"][0]);
 	rotate.y = static_cast<float>(transform["rotation"][1]);
 	rotate.z = static_cast<float>(transform["rotation"][2]);
+	rotate *= (float)std::numbers::pi / 180.0f;
 	ObjTransform.object.transform.quaternion = Quaternion::EulerToQuaterion(rotate);
 	//スケーリング
 	ObjTransform.object.transform.scale.x = static_cast<float>(transform["scaling"][0]);

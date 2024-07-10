@@ -108,17 +108,42 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
 Quaternion Quaternion::EulerToQuaterion(Vector3 input)
 {
 	Quaternion result{};
-	float Roll = input.x * 0.5f;
-	float pitch = input.y * 0.5f;
-	float yaw = input.z * 0.5f;
-	/*result.x = cos(divisionX) * sin(divisionY) * sin(divisionZ) + sin(divisionX) * cos(divisionY) * cos(divisionZ);
-	result.y = -sin(divisionX) * cos(divisionY) * sin(divisionZ) + cos(divisionX) * sin(divisionY) * cos(divisionZ);
-	result.z = cos(divisionX) * cos(divisionY) * sin(divisionZ) - sin(divisionX) * sin(divisionY) * cos(divisionZ);
-	result.w = sin(divisionX) * sin(divisionY) * sin(divisionZ) + cos(divisionX) * cos(divisionY) * cos(divisionZ);*/
-	result.x = sinf(Roll) * cosf(pitch) * cosf(yaw) - cosf(Roll) * sinf(pitch) * sinf(yaw);
-	result.y = cosf(Roll) * sinf(pitch) * cosf(yaw) + sinf(Roll) * cosf(pitch) * sinf(yaw);
-	result.z = cosf(Roll) * cosf(pitch) * sinf(yaw) - sinf(Roll) * sinf(pitch) * cosf(yaw);
-	result.w = cosf(Roll) * cosf(pitch) * cosf(yaw) + sinf(Roll) * sinf(pitch) * sinf(yaw);
+	float roll  = input.x;
+	float pitch = input.y;
+	float yaw   = input.z;
+
+	float cy = cosf(yaw * 0.5f);
+	float sy = sinf(yaw * 0.5f);
+	float cp = cosf(pitch * 0.5f);
+	float sp = sinf(pitch * 0.5f);
+	float cr = cosf(roll * 0.5f);
+	float sr = sinf(roll * 0.5f);
+
+	result.w = cr * cp * cy + sr * sp * sy;
+	result.x = sr * cp * cy - cr * sp * sy;
+	result.y = cr * sp * cy + sr * cp * sy;
+	result.z = cr * cp * sy - sr * sp * cy;
+	//__m128 result = DirectX::XMQuaternionRotationRollPitchYawFromVector({ input.x, input.y, input.z });
+
+	//// float[4]型の配列を定義
+	//float arr[4];
+
+	//// __m128型からfloat[4]型にデータをコピー
+	//_mm_storeu_ps(arr, result);
+	//Quaternion quaternion{};
+	//quaternion.x = arr[0];
+	//quaternion.y = arr[1];
+	//quaternion.z = arr[2];
+	//quaternion.w = arr[3];
+	//quaternion.Normalize();
+	//result.x =  cosf(Roll) * sinf(pitch) * sinf(yaw) + sinf(Roll) * cosf(pitch) * cosf(yaw);
+	//result.y = -sinf(Roll) * cosf(pitch) * sinf(yaw) + cosf(Roll) * sinf(pitch) * cosf(yaw);
+	//result.z =  cosf(Roll) * cosf(pitch) * sinf(yaw) - sinf(Roll) * sinf(pitch) * cosf(yaw);
+	//result.w =  sinf(Roll) * sinf(pitch) * sinf(yaw) + cosf(Roll) * cosf(pitch) * cosf(yaw);
+	//result.x = sinf(Roll) * cosf(pitch) * cosf(yaw) - cosf(Roll) * sinf(pitch) * sinf(yaw);
+	//result.y = cosf(Roll) * sinf(pitch) * cosf(yaw) + sinf(Roll) * cosf(pitch) * sinf(yaw);
+	//result.z = cosf(Roll) * cosf(pitch) * sinf(yaw) - sinf(Roll) * sinf(pitch) * cosf(yaw);
+	//result.w = cosf(Roll) * cosf(pitch) * cosf(yaw) + sinf(Roll) * sinf(pitch) * sinf(yaw);
 	//DirectX::XMQuaternionRotationRollPitchYawFromVector
 	//		sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw,
 	//		cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw,

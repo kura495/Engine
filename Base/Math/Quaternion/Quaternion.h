@@ -1,5 +1,8 @@
 #pragma once
 #include "Math/Vector/Vector3.h"
+#include "DirectXMath.h"
+#include <numbers>
+
 class Quaternion final {
 public:
 	float x;

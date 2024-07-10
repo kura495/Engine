@@ -26,9 +26,9 @@ void DebugCamera::Update()
 		rotate_.y += rotSpeed;
 	}
 	Vector3 EulerRot;
-	EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, 1.0f);
-	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.y, 1.0f);
 	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.x, 1.0f);
+	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.y, 1.0f);
+	EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, 1.0f);
 
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 #pragma endregion 回転
