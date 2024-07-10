@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Game/Object/Character.h"
-#include "Base/Collider/Box/BoxCollider.h"
+#include "Base/Collider/OBB/OBBoxCollider.h"
 #include "Base/Input/Input.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 
-class Weapon:public BoxCollider
+class Weapon:public OBBoxCollider
 {
 public:
 	void Initalize(std::vector<Model*> models);
@@ -27,7 +27,7 @@ public:
 	void DrawParticle();
 
 	void SetSize(Vector3 pos) {
-		BoxCollider::SetSize({ pos.x + world_.transform_.translate.x,1.0f,pos.z + +world_.transform_.translate.z});
+		OBBoxCollider::SetSize({ pos.x + world_.transform_.translate.x,1.0f,pos.z + +world_.transform_.translate.z});
 	}
 	void SetPos(Vector3 vec) {
 		world_.transform_.translate = vec;
