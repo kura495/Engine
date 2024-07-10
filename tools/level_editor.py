@@ -134,14 +134,14 @@ class MYADDON_OT_export_scene(bpy.types.Operator,bpy_extras.io_utils.ExportHelpe
         self.write_and_print(file,indent + object.type)
         trans,rot,scale = object.matrix_local.decompose()
         # 回転をQuternionからEuler(3軸での回転角)に変換
-        rot = rot.to_euler()
+        rot = rot.to_Quternion()
         #ラジアンから弧度法に変換
-        rot.x = math.degrees(rot.x)
-        rot.y = math.degrees(rot.y)
-        rot.z = math.degrees(rot.z)
+        #rot.x = math.degrees(rot.x)
+        #rot.y = math.degrees(rot.y)
+        #rot.z = math.degrees(rot.z)
         #トランスフォーム情報を開示
         self.write_and_print(file,indent +  "T %f %f %f" % (trans.x,trans.y, trans.z))
-        self.write_and_print(file,indent +  "R %f %f %f" %(rot.x,rot.y,rot.z))
+        self.write_and_print(file,indent +  "R %f %f %f %f" %(rot.x,rot.y,rot.z,rot.w))
         self.write_and_print(file,indent +  "S %f %f %f" %(scale.x,scale.y,scale.z))
         self.write_and_print(file, '')
         #カスタムプロパティ'file_name
@@ -182,9 +182,9 @@ class MYADDON_OT_export_scene(bpy.types.Operator,bpy_extras.io_utils.ExportHelpe
         rot.z = math.degrees(rot.z)
         #トランスフォーム情報をディクショナリに登録
         transform = dict()
-        transform["translation"] = (trans.x,trans.y,trans.z)
-        transform["rotation"] = (rot.x,rot.y,rot.z)
-        transform["scaling"] = (scale.x,scale.y,scale.z)
+        transform["translation"] = (-trans.x,trans.z,trans.y)
+        transform["rotation"] = (rot.x,-rot.z,-rot.y)
+        transform["scaling"] = (scale.x,scale.z,scale.y)
         #まとめて1個分のjsonオブジェクトに登録
         json_object["transform"] = transform
 
