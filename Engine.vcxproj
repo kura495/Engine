@@ -190,6 +190,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Math\Vector\Vector2.cpp" />
     <ClCompile Include="Base\Math\Vector\Vector3.cpp" />
     <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
+    <ClCompile Include="Base\Object\IObject.cpp" />
     <ClCompile Include="Base\Object\Line\Line.cpp" />
     <ClCompile Include="Base\Object\Manaer\ObjectManager.cpp" />
     <ClCompile Include="Base\Object\Mesh\Mesh.cpp" />

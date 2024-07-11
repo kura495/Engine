@@ -237,6 +237,7 @@
     <ClCompile Include="Base\PostProsess\Vinette\PPVinette.cpp" />
     <ClCompile Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp" />
     <ClCompile Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp" />
+    <ClCompile Include="Base\Object\IObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">

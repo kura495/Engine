@@ -107,34 +107,21 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
 
 Quaternion Quaternion::EulerToQuaterion(Vector3 input)
 {
-	Quaternion result;
-	float roll  = input.x * 0.5f;
-	float pitch = input.y * 0.5f;
-	float yaw   = input.z * 0.5f;
-	float cosRoll  = cosf(roll);
-	float cosPitch = cosf(pitch);
-	float cosYaw   = cosf(yaw);
-	float sinRoll  = sinf(roll);
-	float sinPitch = sinf(pitch);
-	float sinYaw   = sinf(yaw);
-	//XYZの回転順
-	result = {
-	 cosRoll * sinPitch * sinYaw + sinRoll * cosPitch * cosYaw,
-	-sinRoll * cosPitch * sinYaw + cosRoll * sinPitch * cosYaw,
-	 cosRoll * cosPitch * sinYaw + sinRoll * sinPitch * cosYaw,
-	-sinRoll * sinPitch * sinYaw + cosRoll * cosPitch * cosYaw };
-	//XZYの回転順
-	//result = {
-	//-cosRoll * sinPitch * sinYaw + sinRoll * cosPitch * cosYaw,
-	// cosRoll * sinPitch * cosYaw - sinRoll * cosPitch * sinYaw,
-	// sinRoll* sinPitch * cosYaw + cosRoll * cosPitch * sinYaw,
-	// sinRoll* sinPitch * sinYaw + cosRoll * cosPitch * cosYaw };
-	//result = {
-	// cosRoll * sinPitch * sinYaw + sinRoll * cosPitch * cosYaw,
-	// cosRoll * cosPitch * sinYaw + sinRoll * sinPitch * cosYaw,	
-	// -sinRoll * cosPitch * sinYaw + cosRoll * sinPitch * cosYaw,
-	//-sinRoll * sinPitch * sinYaw + cosRoll * cosPitch * cosYaw };
 
+	__m128 result4 = DirectX::XMQuaternionRotationRollPitchYawFromVector({ input.x, input.y, input.z });
+
+	// float[4]型の配列を定義
+	float arr[4];
+
+	// __m128型からfloat[4]型にデータをコピー
+	_mm_storeu_ps(arr, result4);
+
+	Quaternion result;
+	result.x = arr[0];
+	result.y = arr[1];
+	result.z = arr[2];
+	result.w = arr[3];
+	
 	return result;
 }
 

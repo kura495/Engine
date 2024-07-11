@@ -35,15 +35,19 @@ private:
 	ObjectManager(const ObjectManager& obj) = delete;
 	ObjectManager& operator=(const ObjectManager& obj) = delete;
 
+	void LoadjsonObject(nlohmann::json& object);
+	void AddBox();
+	void AddBox(ObjectData input);
+	void AddPlane();
+	void AddEnemy(ObjectData input);
+	void addModel(ObjectData input, std::string path);
+
 	std::list<IObject*> object_;
 	int32_t boxObjectCount;
 	int32_t PlaneObjectCount;
 	GlobalVariables* globalVariables;
-	void AddBox();
-	void AddBox(ObjectData input);
-	void LoadjsonObject(nlohmann::json& object);
+
 	std::vector<Model*> boxModel_;
-	void AddPlane();
 	std::vector<Model*> planeModel_;
 	std::string kExrension = ".json";
 };

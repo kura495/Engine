@@ -104,34 +104,6 @@ void ObjectManager::LordBlenderScene(std::string fileName)
 	}
 }
 
-void ObjectManager::AddBox()
-{
-	BoxObject* box = new BoxObject;
-	box->Initalize(boxModel_);
-
-	std::string Number = std::to_string(box->GetNumber());
-
-	std::string Name = "Box" + Number;
-	globalVariables->AddItem("Editer", Name, box->GetWorld().transform_);
-
-	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
-
-	object_.push_back(box);
-}
-
-void ObjectManager::AddBox(ObjectData input)
-{
-	BoxObject* box = new BoxObject;
-	box->Initalize(boxModel_);
-
-	box->SetTransform(input.object.transform);
-	
-	box->SetSize(input.object.colloder.size);
-	box->SetCenter(input.object.colloder.center);
-
-	object_.push_back(box);
-}
-
 void ObjectManager::LoadjsonObject(nlohmann::json& object)
 {
 	assert(object.contains("type"));
@@ -152,12 +124,10 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	ObjTransform.object.transform.translate.y = static_cast<float>(transform["translation"][2]);
 	ObjTransform.object.transform.translate.z = static_cast<float>(transform["translation"][1]);
 	//回転角
-	Vector3 rotate;
-	rotate.x = -(float)(transform["rotation"][0]);
-	rotate.y = -(float)(transform["rotation"][2]);
-	rotate.z = -(float)(transform["rotation"][1]);
-	//rotate *= (float)std::numbers::pi / 180.0f;
-	ObjTransform.object.transform.quaternion = Quaternion::EulerToQuaterion(rotate);
+	ObjTransform.object.transform.quaternion.x = -(float)(transform["rotation"][0]);
+	ObjTransform.object.transform.quaternion.y = -(float)(transform["rotation"][2]);
+	ObjTransform.object.transform.quaternion.z = -(float)(transform["rotation"][1]);
+	ObjTransform.object.transform.quaternion.w = (float)(transform["rotation"][3]);
 	//スケーリング
 	ObjTransform.object.transform.scale.x = static_cast<float>(transform["scaling"][0]);
 	ObjTransform.object.transform.scale.y = static_cast<float>(transform["scaling"][2]);
@@ -184,17 +154,39 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 		AddBox(ObjTransform);
 	}
 
-	if (name.compare("Enemy") == 0) {
-
-	}
-
-
-
 	// TODO : 読み込むことが出来ないのでいったんコメントアウト
 	/*if (object.contains("children")) {
 		nlohmann::json& children = object["children"];
 		LoadjsonObject(children);
 	}*/
+}
+
+void ObjectManager::AddBox()
+{
+	BoxObject* box = new BoxObject;
+	box->Initalize(boxModel_);
+
+	std::string Number = std::to_string(box->GetNumber());
+
+	std::string Name = "Box" + Number;
+	globalVariables->AddItem("Editer", Name, box->GetWorld().transform_);
+
+	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
+
+	object_.push_back(box);
+}
+
+void ObjectManager::AddBox(ObjectData input)
+{
+	BoxObject* box = new BoxObject;
+	box->Initalize(boxModel_);
+
+	box->SetTransform(input.object.transform);
+
+	box->SetSize(input.object.colloder.size);
+	box->SetCenter(input.object.colloder.center);
+
+	object_.push_back(box);
 }
 
 void ObjectManager::AddPlane()
@@ -210,4 +202,26 @@ void ObjectManager::AddPlane()
 	plane->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 
 	object_.push_back(plane);
+}
+
+void ObjectManager::AddEnemy(ObjectData input)
+{
+
+}
+
+void ObjectManager::addModel(ObjectData input, std::string path)
+{
+	IObject* Object = new IObject();
+	std::vector<Model*> models;
+	models = { Model::CreateModelFromObj(path) };
+	Object->Initalize();
+
+	std::string Number = std::to_string(Object->GetNumber());
+
+	std::string Name = "Objrct" + Number;
+	globalVariables->AddItem("Editer", Name, Object->GetWorld().transform_);
+
+	Object->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
+
+	object_.push_back(Object);
 }

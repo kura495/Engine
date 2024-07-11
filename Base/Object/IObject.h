@@ -15,9 +15,9 @@ public:
 	}
 	~IObject(){}
 
-	virtual void Initalize(std::vector<Model*> models) = 0;
-	virtual void Update() = 0;
-	virtual void Draw() = 0;
+	virtual void Initalize(std::vector<Model*> models);
+	virtual void Update();
+	virtual void Draw();
 
 	void SetTransform(TransformQua transFormQua) {
 		world_.transform_ = transFormQua;
