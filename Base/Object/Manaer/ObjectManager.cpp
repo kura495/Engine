@@ -149,19 +149,19 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	nlohmann::json& transform = object["transform"];
 	//平行移動
 	ObjTransform.object.transform.translate.x = static_cast<float>(transform["translation"][0]);
-	ObjTransform.object.transform.translate.y = static_cast<float>(transform["translation"][1]);
-	ObjTransform.object.transform.translate.z = static_cast<float>(transform["translation"][2]);
+	ObjTransform.object.transform.translate.y = static_cast<float>(transform["translation"][2]);
+	ObjTransform.object.transform.translate.z = static_cast<float>(transform["translation"][1]);
 	//回転角
 	Vector3 rotate;
-	rotate.x = static_cast<float>(transform["rotation"][0]);
-	rotate.y = static_cast<float>(transform["rotation"][1]);
-	rotate.z = static_cast<float>(transform["rotation"][2]);
-	rotate *= (float)std::numbers::pi / 180.0f;
+	rotate.x = -(float)(transform["rotation"][0]);
+	rotate.y = -(float)(transform["rotation"][2]);
+	rotate.z = -(float)(transform["rotation"][1]);
+	//rotate *= (float)std::numbers::pi / 180.0f;
 	ObjTransform.object.transform.quaternion = Quaternion::EulerToQuaterion(rotate);
 	//スケーリング
 	ObjTransform.object.transform.scale.x = static_cast<float>(transform["scaling"][0]);
-	ObjTransform.object.transform.scale.y = static_cast<float>(transform["scaling"][1]);
-	ObjTransform.object.transform.scale.z = static_cast<float>(transform["scaling"][2]);
+	ObjTransform.object.transform.scale.y = static_cast<float>(transform["scaling"][2]);
+	ObjTransform.object.transform.scale.z = static_cast<float>(transform["scaling"][1]);
 
 #pragma endregion 
 

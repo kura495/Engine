@@ -89,7 +89,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const
 	Matrix4x4 Scaleresult = MakeScaleMatrix(scale);
 	Matrix4x4 Rotateresult = MakeRotateMatrix(rotate);
 	Matrix4x4 Transformresult = MakeTranslateMatrix(translate);
-	Matrix4x4 result = Matrix4x4::Multiply(Scaleresult, Matrix4x4::Multiply(Rotateresult, Transformresult));
+	Matrix4x4 result = Matrix4x4::Multiply(Matrix4x4::Multiply(Scaleresult, Rotateresult), Transformresult);
 
 	return result;
 }
