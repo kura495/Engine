@@ -1,6 +1,6 @@
 #include "PlaneObject.h"
 
-void PlaneObject::Initalize(std::vector<Model*> models)
+void PlaneObject::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();

@@ -1,6 +1,6 @@
 #include "BoxObject.h"
 
-void BoxObject::Initalize(std::vector<Model*> models)
+void BoxObject::Init(std::vector<Model*> models)
 {
 
 

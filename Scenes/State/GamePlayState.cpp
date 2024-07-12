@@ -27,7 +27,7 @@ void GamePlayState::Initialize()
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(playerModel_);
+	player_->Init(playerModel_);
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();

@@ -14,7 +14,7 @@ public:
 		name = "Plane";
 	}
 
-	void Initalize(std::vector<Model*> models)override;
+	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
 

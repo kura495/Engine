@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game/Object/Character.h"
+#include "Base/Object/IObject.h"
 #include "Game/Object/Weapon/Weapon.h"
 #include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Collider/OBB/OBBoxCollider.h"
@@ -12,11 +12,11 @@ enum class Behavior {
 	kAttack,
 };
 
-class Player : public Character	, public OBBoxCollider
+class Player : public IObject, public OBBoxCollider
 {
 public:
 
-	void Initialize(std::vector<Model*> models)override;
+	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
 

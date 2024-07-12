@@ -164,7 +164,7 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 void ObjectManager::AddBox()
 {
 	BoxObject* box = new BoxObject;
-	box->Initalize(boxModel_);
+	box->Init(boxModel_);
 
 	std::string Number = std::to_string(box->GetNumber());
 
@@ -179,7 +179,7 @@ void ObjectManager::AddBox()
 void ObjectManager::AddBox(ObjectData input)
 {
 	BoxObject* box = new BoxObject;
-	box->Initalize(boxModel_);
+	box->Init(boxModel_);
 
 	box->SetTransform(input.object.transform);
 
@@ -192,7 +192,7 @@ void ObjectManager::AddBox(ObjectData input)
 void ObjectManager::AddPlane()
 {
 	PlaneObject* plane = new PlaneObject;
-	plane->Initalize(planeModel_);
+	plane->Init(planeModel_);
 
 	std::string Number = std::to_string(plane->GetNumber());
 
@@ -204,24 +204,7 @@ void ObjectManager::AddPlane()
 	object_.push_back(plane);
 }
 
-void ObjectManager::AddEnemy(ObjectData input)
-{
-
-}
-
-void ObjectManager::addModel(ObjectData input, std::string path)
-{
-	IObject* Object = new IObject();
-	std::vector<Model*> models;
-	models = { Model::CreateModelFromObj(path) };
-	Object->Initalize();
-
-	std::string Number = std::to_string(Object->GetNumber());
-
-	std::string Name = "Objrct" + Number;
-	globalVariables->AddItem("Editer", Name, Object->GetWorld().transform_);
-
-	Object->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
-
-	object_.push_back(Object);
-}
+//void ObjectManager::AddEnemy(ObjectData input)
+//{
+//
+//}

@@ -1,6 +1,6 @@
 #include "IObject.h"
 
-void IObject::Initalize(std::vector<Model*> models)
+void IObject::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();

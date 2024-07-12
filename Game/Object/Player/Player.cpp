@@ -3,7 +3,7 @@
 bool Player::playerMoveValue;
 bool Player::PushOptionButtern;
 
-void Player::Initialize(std::vector<Model*> models)
+void Player::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
