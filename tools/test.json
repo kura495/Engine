@@ -2,29 +2,6 @@
     "name": "scene",
     "objects": [
         {
-            "type": "MESH",
-            "name": "Cube",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.5342968702316284,
-                    0.08417081087827682,
-                    0.21131503582000732,
-                    0.814117968082428
-                ],
-                "scaling": [
-                    3.910755157470703,
-                    1.0,
-                    1.849319577217102
-                ]
-            },
-            "file_name": "Cube"
-        },
-        {
             "type": "LIGHT",
             "name": "Light",
             "transform": {
@@ -67,6 +44,29 @@
                     1.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.7071067690849304,
+                    0.0,
+                    0.0,
+                    0.7071067690849304
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Cube"
         }
     ]
 }
