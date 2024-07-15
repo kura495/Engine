@@ -13,6 +13,8 @@ void ObjectManager::Initalize()
 	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
 
 	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
+	
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/NormalEnemy", "NormalEnemy.obj"));
 }
 
 void ObjectManager::Update()
@@ -153,6 +155,9 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	if (name.compare("Cube") == 0) {
 		AddBox(ObjTransform);
 	}
+	if (name.compare("Enemy") == 0) {
+		AddEnemy(ObjTransform);
+	}
 
 	// TODO : 読み込むことが出来ないのでいったんコメントアウト
 	/*if (object.contains("children")) {
@@ -204,7 +209,12 @@ void ObjectManager::AddPlane()
 	object_.push_back(plane);
 }
 
-//void ObjectManager::AddEnemy(ObjectData input)
-//{
-//
-//}
+void ObjectManager::AddEnemy(ObjectData input)
+{
+	IObject* Enemy = new IObject;
+	Enemy->Init(enemyModel_);
+
+	Enemy->SetTransform(input.object.transform);
+
+	object_.push_back(Enemy);
+}

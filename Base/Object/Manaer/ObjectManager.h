@@ -49,5 +49,6 @@ private:
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
+	std::vector<Model*> enemyModel_;
 	std::string kExrension = ".json";
 };
