@@ -14,11 +14,13 @@ void OBBoxCollider::CollisionUpdate()
 	Quaternion qua;
 	if (center_->parent_) {
 		Pos = center_->transform_.translate + center_->parent_->GetTranslateFromMatWorld();
-		//qua = center_->transform_.quaternion * center_->parent_->transform_.quaternion;
+		qua = center_->transform_.quaternion * center_->parent_->transform_.quaternion;
+		qua.Normalize();
 	}
 	else {
 		Pos = center_->transform_.translate;
-		//qua = center_->transform_.quaternion;
+		qua = center_->transform_.quaternion;
+		qua.Normalize();
 	}
 	obb_.center = Pos;
 	obb_.size[0] = size_.x;
