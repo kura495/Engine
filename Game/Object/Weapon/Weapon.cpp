@@ -14,7 +14,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 	world_.UpdateMatrix();
 
 	OBBoxCollider::Init(&world_);
-	OBBoxCollider::SetSize({ 0.0f,0.0f,0.0f });
+	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
 	SetcollitionAttribute(kCollitionAttributeWeapon);
 	OBBoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
 
@@ -73,7 +73,7 @@ void Weapon::RootInit()
 	world_.transform_.quaternion = firstPos;
 	world_.UpdateMatrix();
 
-	OBBoxCollider::SetSize({ 0.0f,0.0f,0.0f });
+	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
 }
 
 void Weapon::RootUpdate()

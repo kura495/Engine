@@ -14,7 +14,7 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
 	//objectManager->LordFile("Editer");
-	objectManager->LordBlenderScene("tools/levelEditor");
+	//objectManager->LordBlenderScene("tools/levelEditor");
 
 	DirectX_ = DirectXCommon::GetInstance();
 	collisionManager = std::make_unique<CollisionManager>();
