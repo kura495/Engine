@@ -15,26 +15,24 @@ void OBBoxCollider::Init(WorldTransform* Parent)
 
 void OBBoxCollider::CollisionUpdate()
 {
-	Vector3 Pos;
-	Quaternion qua;
+	Vector3 Pos = center_->transform_.translate;
 	Vector3 offsetVec = offset;
+	Quaternion qua = center_->transform_.quaternion;
+	SetOrientations(MakeRotateMatrix(center_->transform_.quaternion));
 	if (center_->parent_) {
+		offsetVec = center_->transform_.translate;
 		offsetVec = TransformNormal(offsetVec, MakeRotateMatrix(center_->parent_->transform_.quaternion));
 		//移動
-		Pos = center_->transform_.translate + center_->parent_->GetTranslateFromMatWorld();
-		qua = center_->transform_.quaternion * center_->parent_->transform_.quaternion;
-		qua.Normalize();
-	}
-	else {
-		Pos = center_->transform_.translate;
-		qua = center_->transform_.quaternion;
-		qua.Normalize();
+		SetOrientations(MakeRotateMatrix(center_->parent_->transform_.quaternion * center_->transform_.quaternion));
+		qua = center_->parent_->transform_.quaternion * center_->transform_.quaternion;
+		Pos = center_->parent_->GetTranslateFromMatWorld();
+		//Mat *= MakeRotateMatrix(center_->parent_->transform_.quaternion);
 	}
 	obb_.center = Pos + offsetVec;
 	obb_.size[0] = size_.x;
 	obb_.size[1] = size_.y;
 	obb_.size[2] = size_.z;
-	SetOrientations(MakeRotateMatrix(qua));
+
 	model_->SetWorld(size_, qua, obb_.center);
 	model_->Update();
 }

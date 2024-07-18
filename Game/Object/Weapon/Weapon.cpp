@@ -4,7 +4,6 @@ void Weapon::Initalize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
-	cWorld_.Initialize();
 	world_.transform_.translate.x = 0.7f;
 	world_.transform_.translate.z = 1.0f;
 
@@ -14,8 +13,9 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 	world_.UpdateMatrix();
 
-	OBBoxCollider::Init(&cWorld_);
+	OBBoxCollider::Init(&world_);
 	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
+	OBBoxCollider::OnCollision = [this](ICollider* collider) { return OnCollision(collider);};
 	SetcollitionAttribute(kCollitionAttributeWeapon);
 	OBBoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
 

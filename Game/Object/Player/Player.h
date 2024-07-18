@@ -77,6 +77,8 @@ private:
 
 	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 
+	std::unique_ptr<Weapon> weapon_;
+
 	float attack = 0.0f;
 
 	float animeT = 0.0f;
@@ -85,7 +87,4 @@ private:
 	Animation* animation3;
 
 	OBBoxCollider collider;
-
-	WorldTransform cWorld_;
-	OBBoxCollider attackCollider;
 };

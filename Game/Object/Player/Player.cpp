@@ -13,18 +13,11 @@ void Player::Init(std::vector<Model*> models)
 
 	collider.Init(&world_);
 	collider.SetSize({0.5f,1.0f,0.5f});
+	collider.SetOffset({0.0f,0.5f,0.0f});
 	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 	collider.SetcollitionAttribute(kCollitionAttributePlayer);
 	collider.SetcollisionMask(~kCollitionAttributePlayer);
 	collider.IsUsing = false;
-
-	cWorld_.parent_ = &world_;
-	attackCollider.Init(&cWorld_);
-	attackCollider.SetSize({ 0.5f,1.0f,0.5f });
-	attackCollider.SetOffset({0.0f,0.0f,1.0f});
-	attackCollider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
-	attackCollider.SetcollitionAttribute(kCollitionAttributePlayer);
-	attackCollider.SetcollisionMask(~kCollitionAttributePlayer);
 
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
@@ -41,6 +34,9 @@ void Player::Init(std::vector<Model*> models)
 	animation3->SetSkeleton(animation->GetSkeleton(),animation->duration);
 #pragma endregion Anime
 
+	weapon_ = std::make_unique<Weapon>();
+	weapon_->Initalize(models);
+	weapon_->SetParent(world_);
 }
 
 void Player::Update()
@@ -51,7 +47,6 @@ void Player::Update()
 #endif
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
-
 	Move();
 	animation3->AnimationLerp(animation2, animation, animeT);
 	animation3->PlayAnimation();
@@ -65,9 +60,11 @@ void Player::Update()
 		case Behavior::kRoot:
 		default:
 			RootInitalize();
+			weapon_->RootInit();
 			break;
 		case Behavior::kAttack:
 			AttackInitalize();
+			weapon_->AttackInit();
 			break;
 		}
 
@@ -81,6 +78,7 @@ void Player::Update()
 		break;
 	case Behavior::kAttack:
 		AttackUpdate();
+		weapon_->AttackUpdate();
 		break;
 	}
 
@@ -95,6 +93,8 @@ void Player::Update()
 		}
 	}
 
+	weapon_->Update();
+
 	world_.UpdateMatrix();
 
 	//前フレームのゲームパッドの状態を保存
@@ -104,6 +104,7 @@ void Player::Update()
 void Player::Draw()
 {
 	models_[0]->RendererSkinDraw(world_, animation3->GetSkinCluster());
+	weapon_->Draw();
 	animation3->DebugDraw(world_);
 }
 
@@ -127,6 +128,7 @@ void Player::ImGui()
 	}
 	ImGui::End();
 #endif
+	weapon_->ImGui();
 }
 
 void Player::OnCollision(const ICollider* ICollider)
@@ -303,7 +305,9 @@ void Player::AttackInitalize()
 
 void Player::AttackUpdate()
 {
-
+	if (weapon_->GetIsAttackOver()) {
+		behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 void Player::Gravity()
