@@ -8,7 +8,7 @@
 
 class Player;
 
-class Enemy : public IObject,public OBBoxCollider
+class Enemy : public IObject
 {
 public:
 	void Init(std::vector<Model*> models)override;
@@ -17,7 +17,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const ICollider* collider);
+	void OnCollision(const ICollider* Icollider);
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
@@ -39,4 +39,6 @@ private:
 	float animeInterval_ = 0.0f;
 
 	bool chackBoxflag = true;
+
+	OBBoxCollider collider;
 };

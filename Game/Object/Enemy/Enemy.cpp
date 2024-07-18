@@ -6,9 +6,9 @@ void Enemy::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 
-	OBBoxCollider::Init(&world_);
-	OBBoxCollider::SetSize({1.0f,1.0f,1.0f});
-	OBBoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	collider.Init(&world_);
+	collider.SetSize({1.0f,1.0f,1.0f});
+	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "human.gltf");
 	animation->Init();
@@ -58,18 +58,18 @@ void Enemy::ImGui()
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
 	if (ImGui::Button("CollisionOn")) {
-		OBBoxCollider::IsUsing = true;
+		collider.IsUsing = true;
 	}
 	if (ImGui::Button("CollisionOff")) {
-		OBBoxCollider::IsUsing = false;
+		collider.IsUsing = false;
 	}
 	ImGui::End();
 #endif
 }
 
-void Enemy::OnCollision(const ICollider* collider)
+void Enemy::OnCollision(const ICollider* Icollider)
 {
-	collider;
+	Icollider;
 	ImGui::Begin("Collider");
 	ImGui::Text("EnemyHit");
 	ImGui::End();

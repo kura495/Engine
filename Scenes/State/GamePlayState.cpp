@@ -47,11 +47,6 @@ void GamePlayState::Initialize()
 	particle = new ParticleSystem();
 	particle->Initalize("resources/circle.png");
 
-	collisionManager->AddCollider(player_.get());
-	for (Enemy* enemy : enemys_) {
-		collisionManager->AddCollider(enemy);
-	}
-	//TODO : WeaponにフィルターをenemyとPlayerでよみとってないからあたる
 }
 
 void GamePlayState::Update()

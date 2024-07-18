@@ -1,4 +1,9 @@
 #include "OBBoxCollider.h"
+#include "Collider/Manager/CollisionManager.h"
+OBBoxCollider::OBBoxCollider()
+{
+	CollisionManager::AddCollider(this);
+}
 
 void OBBoxCollider::Init(WorldTransform* Parent)
 {
@@ -22,12 +27,12 @@ void OBBoxCollider::CollisionUpdate()
 		qua = center_->transform_.quaternion;
 		qua.Normalize();
 	}
-	obb_.center = Pos;
+	obb_.center = Pos + offset;
 	obb_.size[0] = size_.x;
 	obb_.size[1] = size_.y;
 	obb_.size[2] = size_.z;
 	SetOrientations(MakeRotateMatrix(qua));
-	model_->SetWorld(size_, qua, Pos);
+	model_->SetWorld(size_, qua, obb_.center);
 	model_->Update();
 }
 

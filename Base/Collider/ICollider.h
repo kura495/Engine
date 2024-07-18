@@ -56,8 +56,8 @@ public:
 		return
 		{ center_->transform_.translate.x,center_->transform_.translate.y,center_->transform_.translate.z };
 	}
-	void SetCenter(Vector3 input) {
-		centerPoint = input;
+	void SetOffset(Vector3 input) {
+		offset = input;
 	}
 
 
@@ -72,7 +72,7 @@ protected:
 	/// 原点
 	/// </summary>
 	WorldTransform* center_ = nullptr;
-	Vector3 centerPoint;
+	Vector3 offset;
 	/// <summary>
 	/// x,y,zそれぞれの幅
 	/// </summary>

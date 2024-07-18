@@ -1,5 +1,7 @@
 #include "CollisionManager.h"
 
+std::list<ICollider*> CollisionManager::Colliders_;
+
 void CollisionManager::Init()
 {
 	checkCollisions_[ICollider::Shape::Box][ICollider::Shape::Box] = [this](ICollider* colliderA, ICollider* colliderB)

@@ -9,16 +9,22 @@ void Player::Init(std::vector<Model*> models)
 	world_.Initialize();
 	input = Input::GetInstance();
 
-	//Attack = new OBBoxCollider();
-
 	moveQuaternion_ = Quaternion::IdentityQuaternion();
 
-	OBBoxCollider::Init(&world_);
-	OBBoxCollider::SetSize({0.5f,1.0f,0.5f});
-	OBBoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	collider.Init(&world_);
+	collider.SetSize({0.5f,1.0f,0.5f});
+	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	collider.SetcollitionAttribute(kCollitionAttributePlayer);
+	collider.SetcollisionMask(~kCollitionAttributePlayer);
+	collider.IsUsing = false;
 
-	SetcollitionAttribute(kCollitionAttributePlayer);
-	SetcollisionMask(~kCollitionAttributePlayer);
+	cWorld_.parent_ = &world_;
+	attackCollider.Init(&cWorld_);
+	attackCollider.SetSize({ 2.5f,1.0f,2.5f });
+	attackCollider.SetOffset({0.0f,0.0f,10.0f});
+	attackCollider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	attackCollider.SetcollitionAttribute(kCollitionAttributePlayer);
+	attackCollider.SetcollisionMask(~kCollitionAttributePlayer);
 
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
@@ -114,10 +120,10 @@ void Player::ImGui()
 		moveQuaternion_ = Quaternion::IdentityQuaternion();
 	}
 	if (ImGui::Button("CollisionOn")) {
-		OBBoxCollider::IsUsing = true;
+		collider.IsUsing = true;
 	}
 	if (ImGui::Button("CollisionOff")) {
-		OBBoxCollider::IsUsing = false;
+		collider.IsUsing = false;
 	}
 	ImGui::End();
 #endif
@@ -139,54 +145,50 @@ void Player::OnCollision(const ICollider* ICollider)
 		Vector3 IColliderPos = ICollider->GetCenter();
 
 #pragma region
-		if (tlanslatePre.y - ICollider::GetSize().y < IColliderPos.y + ICollider->GetSize().y && tlanslatePre.y + ICollider::GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
+		if (tlanslatePre.y - collider.GetSize().y < IColliderPos.y + ICollider->GetSize().y && tlanslatePre.y + collider.GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
 			if (tlanslatePre.x > IColliderPos.x + ICollider->GetSize().x) {
 				//左から右
-				if (world_.transform_.translate.x - ICollider::GetSize().x < IColliderPos.x + ICollider->GetSize().x) {
-					world_.transform_.translate.x = IColliderPos.x + ICollider->GetSize().x + ICollider::GetSize().x;
+				if (world_.transform_.translate.x - collider.GetSize().x < IColliderPos.x + ICollider->GetSize().x) {
+					world_.transform_.translate.x = IColliderPos.x + ICollider->GetSize().x + collider.GetSize().x;
 				}
 			}
 			if (tlanslatePre.x < IColliderPos.x - ICollider->GetSize().x) {
 				//右から左
-				if (world_.transform_.translate.x + ICollider::GetSize().x > IColliderPos.x - ICollider->GetSize().x) {
-				world_.transform_.translate.x = IColliderPos.x - ICollider->GetSize().x - ICollider::GetSize().x;
+				if (world_.transform_.translate.x + collider.GetSize().x > IColliderPos.x - ICollider->GetSize().x) {
+				world_.transform_.translate.x = IColliderPos.x - ICollider->GetSize().x - collider.GetSize().x;
 				}
 			}
 		}
 
 		if (tlanslatePre.y > IColliderPos.y + ICollider->GetSize().y) {
 			//上から下
-			if (world_.transform_.translate.y - ICollider::GetSize().y < IColliderPos.y + ICollider->GetSize().y) {
-				world_.transform_.translate.y = IColliderPos.y + ICollider->GetSize().y + ICollider::GetSize().y;
+			if (world_.transform_.translate.y - collider.GetSize().y < IColliderPos.y + ICollider->GetSize().y) {
+				world_.transform_.translate.y = IColliderPos.y + ICollider->GetSize().y + collider.GetSize().y;
 			}
 		}
 		if (tlanslatePre.y < IColliderPos.y - ICollider->GetSize().y) {
 			//下から上
-			if (world_.transform_.translate.y + ICollider::GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
-				world_.transform_.translate.y = IColliderPos.y - ICollider->GetSize().y - ICollider::GetSize().y;
+			if (world_.transform_.translate.y + collider.GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
+				world_.transform_.translate.y = IColliderPos.y - ICollider->GetSize().y - collider.GetSize().y;
 			}
 		}
-		if (tlanslatePre.y - ICollider::GetSize().y < IColliderPos.y + ICollider->GetSize().y && tlanslatePre.y + ICollider::GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
+		if (tlanslatePre.y - collider.GetSize().y < IColliderPos.y + ICollider->GetSize().y && tlanslatePre.y + collider.GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
 			if (tlanslatePre.z < IColliderPos.z - ICollider->GetSize().z) {
 				//手前から奥
-				if (world_.transform_.translate.z + ICollider::GetSize().z > IColliderPos.z - ICollider->GetSize().z) {
-					world_.transform_.translate.z = IColliderPos.z - ICollider->GetSize().z - ICollider::GetSize().z;
+				if (world_.transform_.translate.z + collider.GetSize().z > IColliderPos.z - ICollider->GetSize().z) {
+					world_.transform_.translate.z = IColliderPos.z - ICollider->GetSize().z - collider.GetSize().z;
 				}
 			}
 			if (tlanslatePre.z > IColliderPos.z + ICollider->GetSize().z) {
 				//奥から手前
-				if (world_.transform_.translate.z - ICollider::GetSize().z < IColliderPos.z + ICollider->GetSize().z) {
-					world_.transform_.translate.z = IColliderPos.z + ICollider->GetSize().z + ICollider::GetSize().z;
+				if (world_.transform_.translate.z - collider.GetSize().z < IColliderPos.z + ICollider->GetSize().z) {
+					world_.transform_.translate.z = IColliderPos.z + ICollider->GetSize().z + collider.GetSize().z;
 				}
 			}
 		}
 #pragma endregion 移動制御	
 
 		world_.UpdateMatrix();
-	}
-
-	if (ICollider->GetcollitionAttribute() == kCollitionAttributeGoal) {
-		IsGoal = true;
 	}
 	return;
 }

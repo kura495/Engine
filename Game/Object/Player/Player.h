@@ -12,7 +12,7 @@ enum class Behavior {
 	kAttack,
 };
 
-class Player : public IObject, public OBBoxCollider
+class Player : public IObject
 {
 public:
 
@@ -38,15 +38,10 @@ public:
 	WorldTransform& GetWorldTransform() {
 		return world_;
 	}
-	bool GetIsGoal() {
-		return IsGoal;
-	}
 #pragma endregion
 
 private:
 	Input* input = nullptr;
-
-	bool IsGoal = false;
 
 	//ふるまい
 	Behavior behavior_ = Behavior::kRoot;
@@ -89,5 +84,8 @@ private:
 	Animation* animation2;
 	Animation* animation3;
 
-	OBBoxCollider* Attack;
+	OBBoxCollider collider;
+
+	WorldTransform cWorld_;
+	OBBoxCollider attackCollider;
 };

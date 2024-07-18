@@ -189,7 +189,7 @@ void ObjectManager::AddBox(ObjectData input)
 	box->SetTransform(input.object.transform);
 
 	box->SetSize(input.object.colloder.size);
-	box->SetCenter(input.object.colloder.center);
+	box->SetOffset(input.object.colloder.center);
 
 	object_.push_back(box);
 }

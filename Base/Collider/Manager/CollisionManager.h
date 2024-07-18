@@ -12,7 +12,7 @@ public:
 	void Update();
 	void Draw();
 
-	void AddCollider(ICollider* collider) { Colliders_.push_back(collider); }
+	static void AddCollider(ICollider* collider) { Colliders_.push_back(collider); }
 	void ClearCollider() {
 		Colliders_.clear();
 	}
@@ -22,7 +22,7 @@ private:
 	/// <summary>
 	///　コライダー登録用
 	/// </summary>
-	std::list<ICollider*> Colliders_;
+	static std::list<ICollider*> Colliders_;
 	
 	// 関数ポインタの型
 	using CollisionFunction = std::function<bool(ICollider*, ICollider*)>;
