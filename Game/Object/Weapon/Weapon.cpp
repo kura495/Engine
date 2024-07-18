@@ -13,11 +13,12 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 	world_.UpdateMatrix();
 
-	OBBoxCollider::Init(&world_);
-	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
-	OBBoxCollider::OnCollision = [this](ICollider* collider) { return OnCollision(collider);};
-	SetcollitionAttribute(kCollitionAttributeWeapon);
-	OBBoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
+	collider.Init(&world_);
+	collider.SetSize({ 0.5f,2.0f,0.5f });
+	collider.OnCollision = [this](ICollider* collider) { return OnCollision(collider);};
+	collider.SetcollitionAttribute(kCollitionAttributeWeapon);
+	collider.SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
+	collider.IsUsing = false;
 
 
 }
@@ -39,17 +40,22 @@ void Weapon::ImGui()
 	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
-	Vector3 Cen = OBBoxCollider::GetSize();
+	Vector3 Cen = collider.GetSize();
 	ImGui::DragFloat3("Size", &Cen.x);
-	
+	if (ImGui::Button("CollisionOn")) {
+		collider.IsUsing = true;
+	}
+	if (ImGui::Button("CollisionOff")) {
+		collider.IsUsing = false;
+	}
 
 	ImGui::End();
 #endif
 }
 
-void Weapon::OnCollision(const ICollider* collider)
+void Weapon::OnCollision(const ICollider* Icollider)
 {
-	if (collider->GetcollitionAttribute() == kCollitionAttributeEnemy) {
+	if (Icollider->GetcollitionAttribute() == kCollitionAttributeEnemy) {
 #ifdef USE_IMGUI
 		ImGui::Begin("A");
 
@@ -57,7 +63,7 @@ void Weapon::OnCollision(const ICollider* collider)
 #endif
 	}
 
-	if (collider->GetcollitionAttribute() == kCollitionAttributeBox) {
+	if (Icollider->GetcollitionAttribute() == kCollitionAttributeBox) {
 
 	}
 }
@@ -74,7 +80,7 @@ void Weapon::RootInit()
 	world_.transform_.quaternion = firstPos;
 	world_.UpdateMatrix();
 
-	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
+	collider.SetSize({ 0.5f,2.0f,0.5f });
 }
 
 void Weapon::RootUpdate()
@@ -88,8 +94,8 @@ void Weapon::AttackInit()
 	attackFirstQua = MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
-	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
-	OBBoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	collider.SetSize({ 0.5f,2.0f,0.5f });
+	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 
 	world_.transform_.quaternion = attackFirstQua;
 	world_.transform_.translate.x = 0.5f;

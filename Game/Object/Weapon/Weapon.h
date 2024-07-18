@@ -6,7 +6,7 @@
 #include "Base/Input/Input.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 
-class Weapon:public OBBoxCollider
+class Weapon
 {
 public:
 	void Initalize(std::vector<Model*> models);
@@ -15,7 +15,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const ICollider* collider);
+	void OnCollision(const ICollider* Icollider);
 
 	void SetParent(const WorldTransform& parent);
 
@@ -28,7 +28,7 @@ public:
 	void DrawParticle();
 
 	void SetSize(Vector3 pos) {
-		OBBoxCollider::SetSize({ pos.x + world_.transform_.translate.x,1.0f,pos.z + +world_.transform_.translate.z});
+		collider.SetSize({ pos.x + world_.transform_.translate.x,1.0f,pos.z + +world_.transform_.translate.z});
 	}
 	void SetPos(Vector3 vec) {
 		world_.transform_.translate = vec;
@@ -56,6 +56,7 @@ private:
 	Quaternion attackEndQua;
 	float AttackQuaParam_t = 0.0f;
 
+	OBBoxCollider collider;
 
 	//カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;

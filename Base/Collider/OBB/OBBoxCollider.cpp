@@ -26,7 +26,6 @@ void OBBoxCollider::CollisionUpdate()
 		SetOrientations(MakeRotateMatrix(center_->parent_->transform_.quaternion * center_->transform_.quaternion));
 		qua = center_->parent_->transform_.quaternion * center_->transform_.quaternion;
 		Pos = center_->parent_->GetTranslateFromMatWorld();
-		//Mat *= MakeRotateMatrix(center_->parent_->transform_.quaternion);
 	}
 	obb_.center = Pos + offsetVec;
 	obb_.size[0] = size_.x;
@@ -39,7 +38,9 @@ void OBBoxCollider::CollisionUpdate()
 
 void OBBoxCollider::CollisionDraw()
 {
-	model_->Draw();
+	if (IsUsing) {
+		model_->Draw();
+	}
 }
 
 void OBBoxCollider::SetOrientations(Matrix4x4 Matrix)
