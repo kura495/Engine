@@ -49,7 +49,6 @@ private:
 	Input* input = nullptr;
 	Audio* audio = nullptr;
 	Light* light_ = nullptr;
-	DirectXCommon* DirectX_ = nullptr;
 	GlobalVariables* globalVariables = nullptr;
 	ObjectManager* objectManager = nullptr;
 	std::unique_ptr<CollisionManager> collisionManager;
