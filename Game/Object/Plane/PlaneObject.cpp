@@ -9,6 +9,7 @@ void PlaneObject::Init(std::vector<Model*> models)
 	BoxCollider::SetSize({ 5.0f,0.0f,5.0f });
 	SetcollitionAttribute(kCollitionAttributeFloor);
 	SetcollisionMask(~kCollitionAttributeFloor);
+	BoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 }
 
 void PlaneObject::Update()

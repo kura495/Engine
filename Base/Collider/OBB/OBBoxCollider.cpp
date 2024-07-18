@@ -26,8 +26,8 @@ void OBBoxCollider::CollisionUpdate()
 	obb_.size[0] = size_.x;
 	obb_.size[1] = size_.y;
 	obb_.size[2] = size_.z;
-	SetOrientations(MakeRotateMatrix(center_->transform_.quaternion));
-	model_->SetWorld(size_, center_->transform_.quaternion, Pos);
+	SetOrientations(MakeRotateMatrix(qua));
+	model_->SetWorld(size_, qua, Pos);
 	model_->Update();
 }
 

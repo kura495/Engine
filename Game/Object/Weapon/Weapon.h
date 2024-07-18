@@ -50,6 +50,7 @@ public:
 private:
 	std::vector<Model*> models_;
 	WorldTransform world_;
+	WorldTransform cWorld_;
 
 	Quaternion firstPos;
 	Quaternion attackFirstQua;

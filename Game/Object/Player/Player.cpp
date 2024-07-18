@@ -9,17 +9,16 @@ void Player::Init(std::vector<Model*> models)
 	world_.Initialize();
 	input = Input::GetInstance();
 
+	//Attack = new OBBoxCollider();
+
 	moveQuaternion_ = Quaternion::IdentityQuaternion();
 
 	OBBoxCollider::Init(&world_);
 	OBBoxCollider::SetSize({0.5f,1.0f,0.5f});
+	OBBoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 
 	SetcollitionAttribute(kCollitionAttributePlayer);
 	SetcollisionMask(~kCollitionAttributePlayer);
-
-	weapon_ = std::make_unique<Weapon>();
-	weapon_->Initalize(models);
-	weapon_->SetParent(world_);
 
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
@@ -60,11 +59,9 @@ void Player::Update()
 		case Behavior::kRoot:
 		default:
 			RootInitalize();
-			weapon_->RootInit();
 			break;
 		case Behavior::kAttack:
 			AttackInitalize();
-			weapon_->AttackInit();
 			break;
 		}
 
@@ -78,7 +75,6 @@ void Player::Update()
 		break;
 	case Behavior::kAttack:
 		AttackUpdate();
-		weapon_->AttackUpdate();
 		break;
 	}
 
@@ -95,8 +91,6 @@ void Player::Update()
 
 	world_.UpdateMatrix();
 
-	weapon_->Update();
-
 	//前フレームのゲームパッドの状態を保存
 	joyStatePre = joyState;
 }
@@ -104,7 +98,6 @@ void Player::Update()
 void Player::Draw()
 {
 	models_[0]->RendererSkinDraw(world_, animation3->GetSkinCluster());
-	weapon_->Draw();
 	animation3->DebugDraw(world_);
 }
 
@@ -128,7 +121,6 @@ void Player::ImGui()
 	}
 	ImGui::End();
 #endif
-	weapon_->ImGui();
 }
 
 void Player::OnCollision(const ICollider* ICollider)
@@ -309,9 +301,7 @@ void Player::AttackInitalize()
 
 void Player::AttackUpdate()
 {
-	if (weapon_->GetIsAttackOver()) {
-		behaviorRequest_ = Behavior::kRoot;
-	}
+
 }
 
 void Player::Gravity()

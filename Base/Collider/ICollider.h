@@ -26,8 +26,10 @@ public:
 
 	virtual void CollisionUpdate() = 0;
 	virtual void CollisionDraw() = 0;
+
+	using HitFunction = std::function<void(ICollider*)>;
+	HitFunction OnCollision;
 	//衝突時に呼ばれる関数
-	virtual void OnCollision(const ICollider* collider) = 0;
 	
 	uint32_t GetcollitionAttribute() const { return collisionAttribute_; }
 	/// <summary>

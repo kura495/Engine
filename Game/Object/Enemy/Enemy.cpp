@@ -1,14 +1,14 @@
 #include "Enemy.h"
 #include "Game/Object/Player/Player.h"
 
-void Enemy::Initialize(std::vector<Model*> models)
+void Enemy::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
 
 	OBBoxCollider::Init(&world_);
 	OBBoxCollider::SetSize({1.0f,1.0f,1.0f});
-
+	OBBoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "human.gltf");
 	animation->Init();

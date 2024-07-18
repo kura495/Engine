@@ -11,7 +11,7 @@ void Goal::Initialize(const std::vector<Model*> models)
 	BoxCollider::SetSize({1.0f,1.0f,1.0f});
 	BoxCollider::SetcollitionAttribute(kCollitionAttributeGoal);
 	BoxCollider::SetcollisionMask(~kCollitionAttributeGoal);
-
+	BoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 	animation = new Animation();
 	animation = Animation::LoadAnimationFile("resources/Goal", "Goal.gltf");
 

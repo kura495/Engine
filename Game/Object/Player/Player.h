@@ -22,7 +22,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const ICollider* collider)override;
+	void OnCollision(const ICollider* collider);
 
 	void Move();
 	void PlayerRoring();
@@ -32,15 +32,11 @@ public:
 #pragma region Setter
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
-		weapon_->SetViewProjection(viewProjection_);
 	}
 #pragma endregion 
 #pragma region Getter
 	WorldTransform& GetWorldTransform() {
 		return world_;
-	}
-	Weapon* GetWeapon() {
-		return weapon_.get();
 	}
 	bool GetIsGoal() {
 		return IsGoal;
@@ -86,12 +82,12 @@ private:
 
 	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 
-	std::unique_ptr<Weapon> weapon_;
-
 	float attack = 0.0f;
 
 	float animeT = 0.0f;
 	Animation* animation;
 	Animation* animation2;
 	Animation* animation3;
+
+	OBBoxCollider* Attack;
 };

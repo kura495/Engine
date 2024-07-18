@@ -4,6 +4,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
+	cWorld_.Initialize();
 	world_.transform_.translate.x = 0.7f;
 	world_.transform_.translate.z = 1.0f;
 
@@ -13,7 +14,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 	world_.UpdateMatrix();
 
-	OBBoxCollider::Init(&world_);
+	OBBoxCollider::Init(&cWorld_);
 	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
 	SetcollitionAttribute(kCollitionAttributeWeapon);
 	OBBoxCollider::SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
@@ -88,6 +89,7 @@ void Weapon::AttackInit()
 
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
 	OBBoxCollider::SetSize({ 0.5f,2.0f,0.5f });
+	OBBoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 
 	world_.transform_.quaternion = attackFirstQua;
 	world_.transform_.translate.x = 0.5f;

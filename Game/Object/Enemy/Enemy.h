@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game/Object/Character.h"
+#include "Base/Object/IObject.h"
 #include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Collider/OBB/OBBoxCollider.h"
 #include "Base/Input/Input.h"
@@ -8,16 +8,16 @@
 
 class Player;
 
-class Enemy : public Character,public OBBoxCollider
+class Enemy : public IObject,public OBBoxCollider
 {
 public:
-	void Initialize(std::vector<Model*> models)override;
+	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
 
 	void ImGui();
 
-	void OnCollision(const ICollider* collider)override;
+	void OnCollision(const ICollider* collider);
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {

@@ -37,7 +37,7 @@ void GamePlayState::Initialize()
 
 	enemys_.push_back(new Enemy);
 	for (Enemy* enemy : enemys_) {
-		enemy->Initialize(enemyModel_);
+		enemy->Init(enemyModel_);
 		enemy->SetPlayer(player_.get());
 	}
 
@@ -52,7 +52,6 @@ void GamePlayState::Initialize()
 		collisionManager->AddCollider(enemy);
 	}
 	//TODO : WeaponにフィルターをenemyとPlayerでよみとってないからあたる
-	collisionManager->AddCollider(player_->GetWeapon());
 }
 
 void GamePlayState::Update()
