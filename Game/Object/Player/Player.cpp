@@ -20,8 +20,8 @@ void Player::Init(std::vector<Model*> models)
 
 	cWorld_.parent_ = &world_;
 	attackCollider.Init(&cWorld_);
-	attackCollider.SetSize({ 2.5f,1.0f,2.5f });
-	attackCollider.SetOffset({0.0f,0.0f,10.0f});
+	attackCollider.SetSize({ 0.5f,1.0f,0.5f });
+	attackCollider.SetOffset({0.0f,0.0f,1.0f});
 	attackCollider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 	attackCollider.SetcollitionAttribute(kCollitionAttributePlayer);
 	attackCollider.SetcollisionMask(~kCollitionAttributePlayer);

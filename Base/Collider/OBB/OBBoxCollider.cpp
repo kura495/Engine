@@ -17,7 +17,10 @@ void OBBoxCollider::CollisionUpdate()
 {
 	Vector3 Pos;
 	Quaternion qua;
+	Vector3 offsetVec = offset;
 	if (center_->parent_) {
+		offsetVec = TransformNormal(offsetVec, MakeRotateMatrix(center_->parent_->transform_.quaternion));
+		//移動
 		Pos = center_->transform_.translate + center_->parent_->GetTranslateFromMatWorld();
 		qua = center_->transform_.quaternion * center_->parent_->transform_.quaternion;
 		qua.Normalize();
@@ -27,7 +30,7 @@ void OBBoxCollider::CollisionUpdate()
 		qua = center_->transform_.quaternion;
 		qua.Normalize();
 	}
-	obb_.center = Pos + offset;
+	obb_.center = Pos + offsetVec;
 	obb_.size[0] = size_.x;
 	obb_.size[1] = size_.y;
 	obb_.size[2] = size_.z;
