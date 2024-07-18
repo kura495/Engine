@@ -45,11 +45,6 @@ public:
 private:
 	//基本機能ズ
 	DebugCamera* debugcamera_ = nullptr;
-	TextureManager* textureManager_ = nullptr;
-	Input* input = nullptr;
-	Audio* audio = nullptr;
-	Light* light_ = nullptr;
-	GlobalVariables* globalVariables = nullptr;
 	ObjectManager* objectManager = nullptr;
 	std::unique_ptr<CollisionManager> collisionManager;
 	Renderer* renderer_ = nullptr;

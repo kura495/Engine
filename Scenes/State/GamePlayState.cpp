@@ -6,10 +6,6 @@ void GamePlayState::Initialize()
 	//基本機能生成
 	debugcamera_ = new DebugCamera();
 	debugcamera_->Initialize();
-	input = Input::GetInstance();
-	audio = Audio::GetInstance();
-	textureManager_ = TextureManager::GetInstance();
-	light_ = Light::GetInstance();
 	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
