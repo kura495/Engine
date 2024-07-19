@@ -17,7 +17,7 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const ICollider* Icollider);
+	void OnCollision(const ICollider* ICollider);
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {

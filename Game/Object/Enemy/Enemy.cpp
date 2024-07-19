@@ -67,11 +67,15 @@ void Enemy::ImGui()
 #endif
 }
 
-void Enemy::OnCollision(const ICollider* Icollider)
+void Enemy::OnCollision(const ICollider* ICollider)
 {
-	Icollider;
-	ImGui::Begin("Collider");
-	ImGui::Text("EnemyHit");
+	ImGui::Begin("EnemyCollider");
+	if (ICollider->GetcollitionAttribute() & ColliderTag::Weapon) {
+		ImGui::Text("WeaponHit");
+	}
+
+
+
 	ImGui::End();
 }
 

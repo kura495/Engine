@@ -15,8 +15,8 @@ void Player::Init(std::vector<Model*> models)
 	collider.SetSize({0.5f,1.0f,0.5f});
 	collider.SetOffset({0.0f,0.5f,0.0f});
 	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
-	collider.SetcollitionAttribute(kCollitionAttributePlayer);
-	collider.SetcollisionMask(~kCollitionAttributePlayer);
+	collider.SetcollitionAttribute(ColliderTag::Player);
+	collider.SetcollisionMask(~ColliderTag::Player);
 	collider.IsUsing = false;
 
 #pragma region
@@ -136,14 +136,22 @@ void Player::OnCollision(const ICollider* ICollider)
 	ImGui::Begin("Collider");
 	ImGui::Text("PlayerHit");
 	ImGui::End();
+	ImGui::Begin("EnemyCollider");
+	if (ICollider->GetcollitionAttribute() & ColliderTag::Weapon) {
+		ImGui::Text("WeaponHit");
+	}
 
-	if (ICollider->GetcollitionAttribute() == kCollitionAttributeFloor) {
+
+
+	ImGui::End();
+
+	if (ICollider->GetcollitionAttribute() & ColliderTag::Floor) {
 		if (ICollider->GetCenter().y > world_.transform_.translate.y) {
 			world_.transform_.translate.y = ICollider->GetCenter().y;
 			world_.UpdateMatrix();
 		}
 	}
-	else if (ICollider->GetcollitionAttribute() == kCollitionAttributeBox) {
+	else if (ICollider->GetcollitionAttribute() & ColliderTag::Box) {
 		Vector3 IColliderPos = ICollider->GetCenter();
 
 #pragma region

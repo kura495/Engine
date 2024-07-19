@@ -16,8 +16,8 @@ void Weapon::Initalize(std::vector<Model*> models)
 	collider.Init(&world_);
 	collider.SetSize({ 0.5f,2.0f,0.5f });
 	collider.OnCollision = [this](ICollider* collider) { return OnCollision(collider);};
-	collider.SetcollitionAttribute(kCollitionAttributeWeapon);
-	collider.SetcollisionMask(~kCollitionAttributePlayer && ~kCollitionAttributeWeapon);
+	collider.SetcollitionAttribute(ColliderTag::Weapon);
+	collider.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
 	collider.IsUsing = false;
 
 
@@ -54,18 +54,14 @@ void Weapon::ImGui()
 }
 
 void Weapon::OnCollision(const ICollider* Icollider)
-{
-	if (Icollider->GetcollitionAttribute() == kCollitionAttributeEnemy) {
+{		
+	ImGui::Begin("WeaponCollider");
+	if (Icollider->GetcollitionAttribute() & ColliderTag::Enemy) {
 #ifdef USE_IMGUI
-		ImGui::Begin("A");
-
-		ImGui::End();
+		ImGui::Text("");
 #endif
 	}
-
-	if (Icollider->GetcollitionAttribute() == kCollitionAttributeBox) {
-
-	}
+	ImGui::End();
 }
 
 void Weapon::SetParent(const WorldTransform& parent)
