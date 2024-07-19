@@ -17,7 +17,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 	collider.SetSize({ 0.5f,2.0f,0.5f });
 	collider.OnCollision = [this](ICollider* collider) { return OnCollision(collider);};
 	collider.SetcollitionAttribute(ColliderTag::Weapon);
-	collider.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
+	collider.SetcollisionMask(~ColliderTag::Player & ~ColliderTag::Weapon);
 	collider.IsUsing = false;
 
 
@@ -56,7 +56,7 @@ void Weapon::ImGui()
 void Weapon::OnCollision(const ICollider* Icollider)
 {		
 	ImGui::Begin("WeaponCollider");
-	if (Icollider->GetcollitionAttribute() & ColliderTag::Enemy) {
+	if (Icollider->GetcollitionAttribute() == ColliderTag::Enemy) {
 #ifdef USE_IMGUI
 		ImGui::Text("");
 #endif
