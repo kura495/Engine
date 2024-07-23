@@ -9,8 +9,8 @@ void Goal::Initialize(const std::vector<Model*> models)
 
 	BoxCollider::Initialize(&world_);
 	BoxCollider::SetSize({1.0f,1.0f,1.0f});
-	BoxCollider::SetcollitionAttribute(kCollitionAttributeGoal);
-	BoxCollider::SetcollisionMask(~kCollitionAttributeGoal);
+	BoxCollider::SetcollitionAttribute(ColliderTag::Goal);
+	BoxCollider::SetcollisionMask(~ColliderTag::Goal);
 	BoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 	animation = new Animation();
 	animation = Animation::LoadAnimationFile("resources/Goal", "Goal.gltf");

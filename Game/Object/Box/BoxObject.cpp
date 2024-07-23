@@ -10,8 +10,8 @@ void BoxObject::Init(std::vector<Model*> models)
 	BoxCollider::Initialize(&world_);
 	//BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
 	BoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
-	SetcollitionAttribute(kCollitionAttributeBox);
-	SetcollisionMask(~kCollitionAttributeBox);
+	SetcollitionAttribute(ColliderTag::Box);
+	SetcollisionMask(~ColliderTag::Box);
 }
 
 void BoxObject::Update()
