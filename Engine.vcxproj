@@ -203,6 +203,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\PipelineState\GrayScale\GrayScale.cpp" />
     <ClCompile Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp" />
     <ClCompile Include="Base\PipelineState\PostProsess\PostProsessPSO.cpp" />
+    <ClCompile Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.cpp" />
     <ClCompile Include="Base\PipelineState\Skinning\Skinning.cpp" />
     <ClCompile Include="Base\PipelineState\Standard\Standard.cpp" />
     <ClCompile Include="Base\PipelineState\Vignetting\Vignetting.cpp" />
@@ -212,6 +213,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp" />
     <ClCompile Include="Base\PostProsess\Normal\Normal.cpp" />
     <ClCompile Include="Base\PostProsess\PostProsess.cpp" />
+    <ClCompile Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
     <ClCompile Include="Base\PostProsess\Vinette\PPVinette.cpp" />
     <ClCompile Include="Base\Renderer\Model\ModelRenderer.cpp" />
     <ClCompile Include="Base\Renderer\Renderer.cpp" />
@@ -295,6 +297,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.h" />
     <ClInclude Include="Base\PipelineState\PipeLineTags.h" />
     <ClInclude Include="Base\PipelineState\PostProsess\PostProsessPSO.h" />
+    <ClInclude Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.h" />
     <ClInclude Include="Base\PipelineState\Skinning\Skinning.h" />
     <ClInclude Include="Base\PipelineState\Standard\Standard.h" />
     <ClInclude Include="Base\PipelineState\Vignetting\Vignetting.h" />
@@ -304,6 +307,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
     <ClInclude Include="Base\PostProsess\Normal\Normal.h" />
     <ClInclude Include="Base\PostProsess\PostProsess.h" />
+    <ClInclude Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
     <ClInclude Include="Base\PostProsess\Vinette\PPVinette.h" />
     <ClInclude Include="Base\Renderer\Model\ModelRenderer.h" />
     <ClInclude Include="Base\Renderer\Renderer.h" />

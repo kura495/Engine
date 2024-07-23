@@ -22,6 +22,7 @@
 #include "Base/PostProsess/Vinette/PPVinette.h"
 #include "Base/PostProsess/Normal/Normal.h"
 #include "Base/PostProsess/LuminanceBasedOutline/PPLuminanceBasedOutline.h"
+#include "Base/PostProsess/RGBtoHSV/PPRGBtoHSV.h"
 
 class GameManager
 {
@@ -63,7 +64,8 @@ private:
 	PPGrayScale* renderTextrue2 = nullptr;
 	PPVinette* renderTextrue3 = nullptr;
 	PPLuminanceBasedOutline* renderTextrue4 = nullptr;
-	PPNormal* renderTextrue5 = nullptr;
+	PPRGBtoHSV* renderTextrue5 = nullptr;
+	PPNormal* renderTextrue6 = nullptr;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

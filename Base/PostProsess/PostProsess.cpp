@@ -16,8 +16,13 @@ void PostProsess::Draw()
 	//色
 	DirectX->GetcommandList()->SetGraphicsRootConstantBufferView(1, materialResource.Get()->GetGPUVirtualAddress());
 
+	addDraw();
 
 	DirectX->GetcommandList()->DrawInstanced(3, 1, 0, 0);
+}
+
+void PostProsess::addDraw()
+{
 }
 
 void PostProsess::Create(int Index)
@@ -32,19 +37,13 @@ void PostProsess::Create(int Index)
 	materialResource = DirectX->CreateBufferResource(sizeof(Vector3));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 
+	CreateBuffer();
+
 	materialData->x = 0.0f;
 }
-//
-//void PostProsess::Update()
-//{
-//	if (Player::PushOptionButtern) {
-//		materialData->x = 1.0f;
-//	}
-//	else {
-//		materialData->x = 0.0f;
-//
-//	}
-//}
+void PostProsess::CreateBuffer()
+{
+}
 
 void PostProsess::PreDraw()
 {

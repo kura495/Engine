@@ -238,6 +238,8 @@
     <ClCompile Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp" />
     <ClCompile Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp" />
     <ClCompile Include="Base\Object\IObject.cpp" />
+    <ClCompile Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.cpp" />
+    <ClCompile Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -452,6 +454,8 @@
     <ClInclude Include="Base\PostProsess\Vinette\PPVinette.h" />
     <ClInclude Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.h" />
     <ClInclude Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
+    <ClInclude Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.h" />
+    <ClInclude Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

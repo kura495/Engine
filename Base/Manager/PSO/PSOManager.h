@@ -13,6 +13,7 @@
 #include "PipelineState/GrayScale/GrayScale.h"
 #include "PipelineState/Vignetting/Vignetting.h"
 #include "PipelineState/LuminanceBasedOutline/LuminanceBasedOutline.h"
+#include "PipelineState/RGBtoHSV/RGBtoHSV.h"
 
 class PSOManager
 {

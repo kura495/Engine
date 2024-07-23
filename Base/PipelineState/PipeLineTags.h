@@ -9,5 +9,6 @@ enum class PipelineType {
 	GaussianFilter,
 	GrayScale,
 	Vinette,
-	LuminanceBasedOutline
+	LuminanceBasedOutline,
+	RGBtoHSV
 };

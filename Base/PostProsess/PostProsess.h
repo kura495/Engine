@@ -12,7 +12,9 @@ class PostProsess
 public:
 	void Init();
 	void Draw();
+	virtual void addDraw();
 	void Create(int Index);
+	virtual void CreateBuffer();
 	virtual void Update() = 0;
 	void PreDraw();
 	void PreCopy();
@@ -21,7 +23,7 @@ public:
 protected:
 	Vector3* materialData = nullptr;
 
-private:
+protected:
 	ComPtr<ID3D12Resource> CreateRenderTextureResource(ComPtr<ID3D12Device> device, uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& clearColor);
 
 	void CreateRTV(int Index);
