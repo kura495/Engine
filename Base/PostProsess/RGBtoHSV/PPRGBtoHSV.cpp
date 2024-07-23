@@ -8,9 +8,9 @@ void PPRGBtoHSV::addDraw()
 void PPRGBtoHSV::Update()
 {
 	ImGui::Begin("HSV");
-	ImGui::DragFloat("hue",&hsvMaterial->hue,0.01f,0.0f,1.0f);
-	ImGui::DragFloat("saturation",&hsvMaterial->saturation, 0.01f, 0.0f, 1.0f);
-	ImGui::DragFloat("value",&hsvMaterial->value, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("hue",&hsvMaterial->hue,0.01f,-1.0f,1.0f);
+	ImGui::DragFloat("saturation",&hsvMaterial->saturation, 0.01f, -1.0f, 1.0f);
+	ImGui::DragFloat("value",&hsvMaterial->value, 0.01f, -1.0f, 1.0f);
 	ImGui::End();
 }
 
