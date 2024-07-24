@@ -15,7 +15,6 @@ void GamePlayState::Initialize()
 	collisionManager->Init();
 	//
 	//3Dオブジェクト生成
-	enemyModel_.push_back(Model::CreateModelFromObj("resources/human", "human.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));

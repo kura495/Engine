@@ -57,9 +57,6 @@ private:
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
 
-	std::vector<Model*> enemyModel_;
-	std::list<Enemy*> enemys_;
-
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> glTFplaneModel_;

@@ -240,6 +240,7 @@
     <ClCompile Include="Base\Object\IObject.cpp" />
     <ClCompile Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.cpp" />
     <ClCompile Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -456,6 +457,7 @@
     <ClInclude Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
     <ClInclude Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.h" />
     <ClInclude Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
+    <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
