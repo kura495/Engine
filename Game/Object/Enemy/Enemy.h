@@ -32,13 +32,10 @@ private:
 	bool ChackOnAttack();
 	void ChasePlayer();
 
+	uint32_t HP_ = 1;
+
 	const float AttackRange = 2.0f;
 	bool isAttackFlag = true;
-
-	const float kAnimeInterval = 60.0f;
-	float animeInterval_ = 0.0f;
-
-	bool chackBoxflag = true;
 
 	OBBoxCollider collider;
 };

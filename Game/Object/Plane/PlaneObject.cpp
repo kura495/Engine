@@ -7,8 +7,8 @@ void PlaneObject::Init(std::vector<Model*> models)
 
 	BoxCollider::Initialize(&world_);
 	BoxCollider::SetSize({ 5.0f,0.0f,5.0f });
-	SetcollitionAttribute(kCollitionAttributeFloor);
-	SetcollisionMask(~kCollitionAttributeFloor);
+	SetcollitionAttribute(ColliderTag::Floor);
+	SetcollisionMask(~ColliderTag::Floor);
 	BoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 }
 

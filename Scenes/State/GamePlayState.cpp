@@ -10,7 +10,7 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
 	//objectManager->LordFile("Editer");
-	objectManager->LordBlenderScene("tools/levelEditor");
+	//objectManager->LordBlenderScene("tools/levelEditor");
 	collisionManager = std::make_unique<CollisionManager>();
 	collisionManager->Init();
 	//

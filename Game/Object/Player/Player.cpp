@@ -138,6 +138,9 @@ void Player::OnCollision(const ICollider* ICollider)
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Weapon) {
 		ImGui::Text("WeaponHit");
 	}
+	if (ICollider->GetcollitionAttribute() == ColliderTag::Enemy) {
+		ImGui::Text("EnemyHit");
+	}
 
 	ImGui::End();
 

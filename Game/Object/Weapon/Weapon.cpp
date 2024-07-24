@@ -75,7 +75,7 @@ void Weapon::RootInit()
 	world_.transform_.translate.z = 1.0f;
 	world_.transform_.quaternion = firstPos;
 	world_.UpdateMatrix();
-
+	collider.IsUsing = false;
 	collider.SetSize({ 0.5f,2.0f,0.5f });
 }
 
@@ -91,7 +91,7 @@ void Weapon::AttackInit()
 
 	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
 	collider.SetSize({ 0.5f,2.0f,0.5f });
-	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	collider.IsUsing = true;
 
 	world_.transform_.quaternion = attackFirstQua;
 	world_.transform_.translate.x = 0.5f;

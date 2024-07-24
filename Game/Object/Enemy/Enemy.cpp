@@ -9,6 +9,8 @@ void Enemy::Init(std::vector<Model*> models)
 	collider.Init(&world_);
 	collider.SetSize({1.0f,1.0f,1.0f});
 	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	collider.SetcollitionAttribute(ColliderTag::Enemy);
+	collider.SetcollisionMask(~ColliderTag::Enemy);
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "human.gltf");
 	animation->Init();
@@ -36,17 +38,10 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-#ifdef USE_IMGUI
-	ImGui::Begin("EnemyDraw");
-	ImGui::Checkbox("ModelDraw", &chackBoxflag);
-	ImGui::End();
-
-#endif
-	if (chackBoxflag) {
-		for (Model* model : models_) {
-			model->RendererSkinDraw(world_,animation->GetSkinCluster());
-		}
+	for (Model* model : models_) {
+		model->RendererSkinDraw(world_,animation->GetSkinCluster());
 	}
+
 	animation->DebugDraw(world_);
 }
 
@@ -63,17 +58,21 @@ void Enemy::ImGui()
 	if (ImGui::Button("CollisionOff")) {
 		collider.IsUsing = false;
 	}
+	ImGui::Text("HP : %d", HP_);
 	ImGui::End();
 #endif
 }
-
+	
 void Enemy::OnCollision(const ICollider* ICollider)
 {
 	ImGui::Begin("EnemyCollider");
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Weapon) {
 		ImGui::Text("WeaponHit");
+		HP_ = 0;
 	}
-
+	if (ICollider->GetcollitionAttribute() == ColliderTag::Player) {
+		ImGui::Text("PlayerHit");
+	}
 
 
 	ImGui::End();
