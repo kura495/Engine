@@ -5,7 +5,7 @@ class Player;
 
 class EnemyManager {
 public:
-	void Init();
+	void Init(Player* player);
 	void Update();
 	void Draw();
 
@@ -14,5 +14,6 @@ private:// 関数
 private:// 変数
 	std::vector<Model*> enemyModel_;
 	std::list<Enemy*> enemys_;
-
+	
+	Player* player_;
 };

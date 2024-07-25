@@ -9,8 +9,7 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
-	//objectManager->LordFile("Editer");
-	//objectManager->LordBlenderScene("tools/levelEditor");
+
 	collisionManager = std::make_unique<CollisionManager>();
 	collisionManager->Init();
 	//
@@ -27,12 +26,6 @@ void GamePlayState::Initialize()
 	followCamera->SetTarget(&player_->GetWorldTransform());
 
 	player_->SetViewProjection(&followCamera->GetViewProjection());
-
-	enemys_.push_back(new Enemy);
-	for (Enemy* enemy : enemys_) {
-		enemy->Init(enemyModel_);
-		enemy->SetPlayer(player_.get());
-	}
 
 	//Renderer
 	renderer_ = Renderer::GetInstance();
@@ -69,9 +62,6 @@ void GamePlayState::Update()
 		player_->Update();
 #pragma endregion 
 
-	for (Enemy* enemy : enemys_) {
-		enemy->Update();
-	}
 	//particle->Update();
 
 
@@ -87,10 +77,6 @@ void GamePlayState::Draw()
 	objectManager->Draw();
 
 	player_->Draw();
-
-	for (Enemy* enemy : enemys_) {
-		enemy->Draw();
-	}
 
 #pragma endregion
 
