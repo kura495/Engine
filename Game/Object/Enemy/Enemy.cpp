@@ -49,9 +49,9 @@ void Enemy::ImGui()
 {
 #ifdef USE_IMGUI
 	ImGui::Begin("Enemy");
-	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
-	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
-	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
+	ImGui::DragFloat3("Scale", &world_.transform.scale.x);
+	ImGui::DragFloat4("Rotate", &world_.transform.quaternion.x);
+	ImGui::DragFloat3("Translate", &world_.transform.translate.x);
 	if (ImGui::Button("CollisionOn")) {
 		collider.IsUsing = true;
 	}
@@ -80,7 +80,7 @@ void Enemy::OnCollision(const ICollider* ICollider)
 
 bool Enemy::ChackOnAttack()
 {
-	Vector3 PtoEdistance = player_->GetWorldTransform().transform_.translate - world_.transform_.translate;
+	Vector3 PtoEdistance = player_->GetWorldTransform().transform.translate - world_.transform.translate;
 	float Distance = PtoEdistance.Length();
 	if (Distance < AttackRange) {
 		return true;
@@ -90,10 +90,10 @@ bool Enemy::ChackOnAttack()
 
 void Enemy::ChasePlayer()
 {
-	Vector3 PtoEdistance = player_->GetWorldTransform().transform_.translate - world_.transform_.translate;
+	Vector3 PtoEdistance = player_->GetWorldTransform().transform.translate - world_.transform.translate;
 	float Distance = PtoEdistance.Length();
 	if (Distance < AttackRange) {
 		return;
 	}
-	world_.transform_.translate += PtoEdistance / 60.0f;
+	world_.transform.translate += PtoEdistance / 60.0f;
 }

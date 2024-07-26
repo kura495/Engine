@@ -174,7 +174,7 @@ void ObjectManager::AddBox()
 	std::string Number = std::to_string(box->GetNumber());
 
 	std::string Name = "Box" + Number;
-	globalVariables->AddItem("Editer", Name, box->GetWorld().transform_);
+	globalVariables->AddItem("Editer", Name, box->GetWorld().transform);
 
 	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 
@@ -202,7 +202,7 @@ void ObjectManager::AddPlane()
 	std::string Number = std::to_string(plane->GetNumber());
 
 	std::string Name = "Plane" + Number;
-	globalVariables->AddItem("Editer", Name, plane->GetWorld().transform_);
+	globalVariables->AddItem("Editer", Name, plane->GetWorld().transform);
 
 	plane->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
 

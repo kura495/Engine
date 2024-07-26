@@ -18,11 +18,11 @@ void BoxObject::Update()
 {
 	world_.UpdateMatrix();
 	////Scene読み込みとの兼ね合いでコメントアウト
-	//BoxCollider::SetSize({world_.transform_.scale.x,world_.transform_.scale.y,world_.transform_.scale.z});
+	//BoxCollider::SetSize({world_.transform.scale.x,world_.transform.scale.y,world_.transform.scale.z});
 
 	std::string Number = std::to_string(GetNumber());
 	std::string Name = "Box" + Number;
-	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform_);
+	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform);
 }
 
 void BoxObject::Draw()
@@ -36,9 +36,9 @@ void BoxObject::ImGui()
 {
 	ImGui::Begin("Box");
 	ImGui::Text("Objectnumber %d", objectNumber_);
-	ImGui::DragFloat3("Scale",&world_.transform_.scale.x);
-	ImGui::DragFloat4("Rotate",&world_.transform_.quaternion.x);
-	ImGui::DragFloat3("Translate",&world_.transform_.translate.x);
+	ImGui::DragFloat3("Scale",&world_.transform.scale.x);
+	ImGui::DragFloat4("Rotate",&world_.transform.quaternion.x);
+	ImGui::DragFloat3("Translate",&world_.transform.translate.x);
 	world_.UpdateMatrix();
 	ImGui::End();
 

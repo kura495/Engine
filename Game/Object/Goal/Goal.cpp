@@ -4,7 +4,7 @@ void Goal::Initialize(const std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
-	world_.transform_.translate = { -22.0f,1.0f,16.0f };
+	world_.transform.translate = { -22.0f,1.0f,16.0f };
 	world_.UpdateMatrix();
 
 	BoxCollider::Initialize(&world_);
@@ -29,9 +29,9 @@ void Goal::Update()
 	Vector3 translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames, animationTime_);
 	Quaternion rotation = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames, animationTime_);
 	Vector3 scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames, animationTime_);
-	world_.transform_.translate += translate;
-	world_.transform_.quaternion += rotation;
-	world_.transform_.scale = scale;
+	world_.transform.translate += translate;
+	world_.transform.quaternion += rotation;
+	world_.transform.scale = scale;
 	world_.UpdateMatrix();
 
 }

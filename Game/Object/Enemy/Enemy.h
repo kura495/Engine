@@ -17,7 +17,7 @@ public:
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
-		world_.transform_.translate = pos;
+		world_.transform.translate = pos;
 		world_.UpdateMatrix();
 	};
 private://関数

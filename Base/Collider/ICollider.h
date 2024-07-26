@@ -61,7 +61,7 @@ public:
 
 	Vector3 GetCenter() const {
 		return
-		{ center_->transform_.translate.x,center_->transform_.translate.y,center_->transform_.translate.z };
+		{ center_->transform.translate.x,center_->transform.translate.y,center_->transform.translate.z };
 	}
 	void SetOffset(Vector3 input) {
 		offset = input;

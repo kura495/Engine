@@ -37,10 +37,10 @@ void FollowCamera::Update() {
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {
-		Vector3 pos = target_->transform_.translate;
+		Vector3 pos = target_->transform.translate;
 		//もしペアレントを結んでいるなら
 		if (target_->parent_) {
-			pos = target_->transform_.translate + target_->parent_->transform_.translate;
+			pos = target_->transform.translate + target_->parent_->transform.translate;
 		}
 		//追従座標の補間
 		//workInter.interTarget_ = Vector3::VectorLerp(workInter.interTarget_, pos, workInter.interParameter_);
@@ -64,8 +64,8 @@ void FollowCamera::Reset()
 	//追従対象がいれば
 	if (target_) {
 		//追従座標・角度の初期化
-		workInter.interTarget_ = target_->transform_.translate;
-		viewProj.rotation_.y = target_->transform_.quaternion.y;
+		workInter.interTarget_ = target_->transform.translate;
+		viewProj.rotation_.y = target_->transform.quaternion.y;
 	}
 	workInter.targetAngleY_ = viewProj.rotation_.y;
 

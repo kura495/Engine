@@ -62,7 +62,7 @@ void Input::Update()
 
 bool Input::pushKey(uint8_t keyNumber)
 {
-	if (key[keyNumber]!=0&& keyPre[keyNumber]==0) {
+	if (key[keyNumber] != 0 && keyPre[keyNumber] == 0){
 		return true;
 	}
 	return false;

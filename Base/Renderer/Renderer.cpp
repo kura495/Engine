@@ -24,7 +24,7 @@ void Renderer::Initalize()
 	UIworld_.Initialize();
 	UIworld_2.Initialize();
 	//
-	UIworld_.transform_.translate = {640,360};
+	UIworld_.transform.translate = {640,360};
 	UIworld_.UpdateMatrix();
 	TextureManager* tex = nullptr;
 	tex = TextureManager::GetInstance();

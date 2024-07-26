@@ -23,7 +23,7 @@ public:
 	void OnCollision(const ICollider* collider);
 
 	void SetPos(Vector3 pos) {
-		world_.transform_.translate = pos;
+		world_.transform.translate = pos;
 	}
 };
 

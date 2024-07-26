@@ -42,16 +42,16 @@ private:
 	Behavior behavior_ = Behavior::kRoot;
 	//次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-
-	void RootInitalize();
+#pragma region 
+	void RootInit();
 	void RootUpdate();
 
-	void AttackInitalize();
+	void AttackInit();
 	void AttackUpdate();
 
-	void Gravity();
-	const float kGravity = 0.98f;
-	bool IsGravity = true;
+	void StepInit();
+	void StepUpdate();
+#pragma endregion BehaviorTree
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
@@ -63,20 +63,13 @@ private:
 	//プレイヤーの移動
 	float speed = 0.1f;
 
-	Vector3 jumpForce{0.0f};
-	//武器や腕の回転クォータニオン
-	Quaternion moveQuaternion_{0.0f};
-
 	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 
 	std::unique_ptr<Weapon> weapon_;
 
 	float attack = 0.0f;
 
-	float animeT = 0.0f;
 	Animation* animation;
-	Animation* animation2;
-	Animation* animation3;
 
 	OBBoxCollider collider;
 };

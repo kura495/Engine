@@ -35,8 +35,8 @@ void ParticleSystem::Initalize(const std::string filePath)
 	Testemitter.count = 5;
 	Testemitter.frequency = 0.1f;
 	Testemitter.frequencyTime = 0.0f;
-	Testemitter.world_.transform_.scale	= { 1.0f,1.0f,1.0f };
-	Testemitter.world_.transform_.translate = { 0.0f,0.0f,0.0f };
+	Testemitter.world_.transform.scale	= { 1.0f,1.0f,1.0f };
+	Testemitter.world_.transform.translate = { 0.0f,0.0f,0.0f };
 
 	TestField.acceleration = {15.0f,0.0f,0.0f};
 	TestField.area.min = {-1.0f,-1.0f,-1.0f};
@@ -138,7 +138,7 @@ std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& r
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.world_.transform_.translate));
+		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.world_.transform.translate));
 	}
 	return Emitparticles;
 }

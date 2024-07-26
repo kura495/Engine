@@ -9,8 +9,6 @@ void Player::Init(std::vector<Model*> models)
 	world_.Initialize();
 	input = Input::GetInstance();
 
-	moveQuaternion_ = Quaternion::IdentityQuaternion();
-
 	collider.Init(&world_);
 	collider.SetSize({0.5f,1.0f,0.5f});
 	collider.SetOffset({0.0f,0.5f,0.0f});
@@ -23,15 +21,6 @@ void Player::Init(std::vector<Model*> models)
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
 	animation->Init();
 	animation->AnimeInit(*models_[0]);
-
-	animation2 = Animation::LoadAnimationFile("resources/human", "sneakWalk.gltf");
-	animation2->Init();
-	animation2->AnimeInit(*models_[0]);
-
-	animation3 = new Animation();
-	animation3->Init();
-	animation3->AnimeInit(*models_[0]);
-	animation3->SetSkeleton(animation->GetSkeleton(),animation->duration);
 #pragma endregion Anime
 
 	weapon_ = std::make_unique<Weapon>();
@@ -41,16 +30,16 @@ void Player::Init(std::vector<Model*> models)
 
 void Player::Update()
 {
-	tlanslatePre = world_.transform_.translate;
+	tlanslatePre = world_.transform.translate;
 #ifdef USE_IMGUI
 	ImGui();
 #endif
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
-	Move();
-	animation3->AnimationLerp(animation2, animation, animeT);
-	animation3->PlayAnimation();
 
+
+	#pragma region
+	//初期化
 	if (behaviorRequest_) {
 		//ふるまいの変更
 		behavior_ = behaviorRequest_.value();
@@ -59,17 +48,21 @@ void Player::Update()
 		{
 		case Behavior::kRoot:
 		default:
-			RootInitalize();
+			RootInit();
 			weapon_->RootInit();
 			break;
 		case Behavior::kAttack:
-			AttackInitalize();
+			AttackInit();
 			weapon_->AttackInit();
+			break;
+		case Behavior::kStep:
+			StepInit();
 			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
 	}
+	//更新
 	switch (behavior_)
 	{
 	case Behavior::kRoot:
@@ -80,10 +73,13 @@ void Player::Update()
 		AttackUpdate();
 		weapon_->AttackUpdate();
 		break;
+	case Behavior::kStep:
+		StepUpdate();
+		break;
 	}
+	#pragma endregion BehaviorTree
 
-	world_.transform_.quaternion = moveQuaternion_;
-
+	//メニュー画面を開く
 	if (input->pushPad(XINPUT_GAMEPAD_START) || input->pushKey(DIK_ESCAPE)) {
 		if (PushOptionButtern) {
 			PushOptionButtern = false;
@@ -103,22 +99,20 @@ void Player::Update()
 
 void Player::Draw()
 {
-	models_[0]->RendererSkinDraw(world_, animation3->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
 	weapon_->Draw();
-	animation3->DebugDraw(world_);
+	animation->DebugDraw(world_);
 }
 
 void Player::ImGui()
 {
-#ifdef USE_IMGUI
 	ImGui::Begin("Player");
-	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
-	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
-	ImGui::DragFloat3("Translate", &world_.transform_.translate.x,0.1f);
+	ImGui::DragFloat3("Scale", &world_.transform.scale.x);
+	ImGui::DragFloat4("Rotate", &world_.transform.quaternion.x);
+	ImGui::DragFloat3("Translate", &world_.transform.translate.x,0.1f);
 	if (ImGui::Button("Reset")) {
-		world_.transform_.translate = { 0.0f,2.0f,0.0f };
-		world_.transform_.quaternion = Quaternion::IdentityQuaternion();
-		moveQuaternion_ = Quaternion::IdentityQuaternion();
+		world_.transform.translate = { 0.0f,2.0f,0.0f };
+		world_.transform.quaternion = Quaternion::IdentityQuaternion();
 	}
 	if (ImGui::Button("CollisionOn")) {
 		collider.IsUsing = true;
@@ -127,7 +121,6 @@ void Player::ImGui()
 		collider.IsUsing = false;
 	}
 	ImGui::End();
-#endif
 	weapon_->ImGui();
 }
 
@@ -145,8 +138,8 @@ void Player::OnCollision(const ICollider* ICollider)
 	ImGui::End();
 
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
-		if (ICollider->GetCenter().y > world_.transform_.translate.y) {
-			world_.transform_.translate.y = ICollider->GetCenter().y;
+		if (ICollider->GetCenter().y > world_.transform.translate.y) {
+			world_.transform.translate.y = ICollider->GetCenter().y;
 			world_.UpdateMatrix();
 		}
 	}
@@ -157,41 +150,41 @@ void Player::OnCollision(const ICollider* ICollider)
 		if (tlanslatePre.y - collider.GetSize().y < IColliderPos.y + ICollider->GetSize().y && tlanslatePre.y + collider.GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
 			if (tlanslatePre.x > IColliderPos.x + ICollider->GetSize().x) {
 				//左から右
-				if (world_.transform_.translate.x - collider.GetSize().x < IColliderPos.x + ICollider->GetSize().x) {
-					world_.transform_.translate.x = IColliderPos.x + ICollider->GetSize().x + collider.GetSize().x;
+				if (world_.transform.translate.x - collider.GetSize().x < IColliderPos.x + ICollider->GetSize().x) {
+					world_.transform.translate.x = IColliderPos.x + ICollider->GetSize().x + collider.GetSize().x;
 				}
 			}
 			if (tlanslatePre.x < IColliderPos.x - ICollider->GetSize().x) {
 				//右から左
-				if (world_.transform_.translate.x + collider.GetSize().x > IColliderPos.x - ICollider->GetSize().x) {
-				world_.transform_.translate.x = IColliderPos.x - ICollider->GetSize().x - collider.GetSize().x;
+				if (world_.transform.translate.x + collider.GetSize().x > IColliderPos.x - ICollider->GetSize().x) {
+				world_.transform.translate.x = IColliderPos.x - ICollider->GetSize().x - collider.GetSize().x;
 				}
 			}
 		}
 
 		if (tlanslatePre.y > IColliderPos.y + ICollider->GetSize().y) {
 			//上から下
-			if (world_.transform_.translate.y - collider.GetSize().y < IColliderPos.y + ICollider->GetSize().y) {
-				world_.transform_.translate.y = IColliderPos.y + ICollider->GetSize().y + collider.GetSize().y;
+			if (world_.transform.translate.y - collider.GetSize().y < IColliderPos.y + ICollider->GetSize().y) {
+				world_.transform.translate.y = IColliderPos.y + ICollider->GetSize().y + collider.GetSize().y;
 			}
 		}
 		if (tlanslatePre.y < IColliderPos.y - ICollider->GetSize().y) {
 			//下から上
-			if (world_.transform_.translate.y + collider.GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
-				world_.transform_.translate.y = IColliderPos.y - ICollider->GetSize().y - collider.GetSize().y;
+			if (world_.transform.translate.y + collider.GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
+				world_.transform.translate.y = IColliderPos.y - ICollider->GetSize().y - collider.GetSize().y;
 			}
 		}
 		if (tlanslatePre.y - collider.GetSize().y < IColliderPos.y + ICollider->GetSize().y && tlanslatePre.y + collider.GetSize().y > IColliderPos.y - ICollider->GetSize().y) {
 			if (tlanslatePre.z < IColliderPos.z - ICollider->GetSize().z) {
 				//手前から奥
-				if (world_.transform_.translate.z + collider.GetSize().z > IColliderPos.z - ICollider->GetSize().z) {
-					world_.transform_.translate.z = IColliderPos.z - ICollider->GetSize().z - collider.GetSize().z;
+				if (world_.transform.translate.z + collider.GetSize().z > IColliderPos.z - ICollider->GetSize().z) {
+					world_.transform.translate.z = IColliderPos.z - ICollider->GetSize().z - collider.GetSize().z;
 				}
 			}
 			if (tlanslatePre.z > IColliderPos.z + ICollider->GetSize().z) {
 				//奥から手前
-				if (world_.transform_.translate.z - collider.GetSize().z < IColliderPos.z + ICollider->GetSize().z) {
-					world_.transform_.translate.z = IColliderPos.z + ICollider->GetSize().z + collider.GetSize().z;
+				if (world_.transform.translate.z - collider.GetSize().z < IColliderPos.z + ICollider->GetSize().z) {
+					world_.transform.translate.z = IColliderPos.z + ICollider->GetSize().z + collider.GetSize().z;
 				}
 			}
 		}
@@ -206,6 +199,8 @@ void Player::Move()
 {
 	//移動量
 	if (joyState.Gamepad.sThumbLX != 0 && joyState.Gamepad.sThumbLY != 0) {
+
+#pragma region
 		move = {
 		(float)joyState.Gamepad.sThumbLX / SHRT_MAX, 0.0f,
 		(float)joyState.Gamepad.sThumbLY / SHRT_MAX };
@@ -221,14 +216,18 @@ void Player::Move()
 		move = TransformNormal(move, rotateMatrix);
 		move.y = 0.0f;
 		//移動
-		world_.transform_.translate = world_.transform_.translate + move;
+		world_.transform.translate = world_.transform.translate + move;
 		playerMoveValue = true;
+#pragma endregion 移動
+
+#pragma region
+
 		//移動ベクトルをカメラの角度だけ回転
 		//ロックオン座標
-		lookPoint = move + world_.transform_.translate;
+		lookPoint = move + world_.transform.translate;
 		lookPoint.y = 0;
 		//追従対象からロックオン対象へのベクトル
-		sub = lookPoint - world_.transform_.translate;
+		sub = lookPoint - world_.transform.translate;
 
 		//プレイヤーの現在の向き
 		sub = sub.Normalize();
@@ -237,68 +236,53 @@ void Player::Move()
 		float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
 
 		//行きたい方向のQuaternionの作成
-		moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+		world_.transform.quaternion = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+
+#pragma endregion プレイヤーの回転
 
 		animation->PlayAnimation();
-		animation2->PlayAnimation();
-
-		animeT = (std::min)(animeT + 0.01f, 1.0f);
 
 		return;
 	}
 	else {
 		playerMoveValue = false;
-		animeT = (std::max)(animeT - 0.01f, 0.0f);
 	}
 
 }
-
-void Player::PlayerRoring()
-{
-	Matrix4x4 rotateMatrix = MakeRotateMatrix(Renderer::viewProjection.rotation_);
-	//移動ベクトルをカメラの角度だけ回転
-	lookPoint = TransformNormal({0.0f,0.0f,1.0f}, rotateMatrix);
-	//ロックオン座標
-	lookPoint = lookPoint + world_.transform_.translate;
-	lookPoint.y = 0;
-	//追従対象からロックオン対象へのベクトル
-	sub = lookPoint - world_.transform_.translate;
-
-	//プレイヤーの現在の向き
-	sub = sub.Normalize();
-
-	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, sub));
-	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
-
-	//行きたい方向のQuaternionの作成
-	moveQuaternion_ = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
-}
-
-void Player::RootInitalize()
+#pragma region
+//kRoot
+void Player::RootInit()
 {
 
 }
-
 void Player::RootUpdate()
 {
+	Move();
+
 	if (joyState.Gamepad.bRightTrigger != 0 && joyStatePre.Gamepad.bRightTrigger == 0) {
 		behaviorRequest_ = Behavior::kAttack;
 	}
-}
 
-void Player::AttackInitalize()
+	if (input->pushPad(XINPUT_GAMEPAD_A)) {
+		behaviorRequest_ = Behavior::kStep;
+	}
+}
+//kAttack
+void Player::AttackInit()
 {
 
 }
-
 void Player::AttackUpdate()
 {
 	if (weapon_->GetIsAttackOver()) {
 		behaviorRequest_ = Behavior::kRoot;
 	}
 }
-
-void Player::Gravity()
+//kStep
+void Player::StepInit()
 {
-	world_.transform_.translate.y -= kGravity;
 }
+void Player::StepUpdate()
+{
+}
+#pragma endregion BeheviorTree
