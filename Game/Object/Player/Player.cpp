@@ -216,7 +216,7 @@ void Player::Move()
 		move.z = move.z * speed;
 		//カメラの正面方向に移動するようにする
 		//回転行列を作る
-		Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
+		Matrix4x4 rotateMatrix = MakeRotateMatrix(Renderer::viewProjection.rotation_);
 		//移動ベクトルをカメラの角度だけ回転
 		move = TransformNormal(move, rotateMatrix);
 		move.y = 0.0f;
@@ -224,7 +224,6 @@ void Player::Move()
 		world_.transform_.translate = world_.transform_.translate + move;
 		playerMoveValue = true;
 		//移動ベクトルをカメラの角度だけ回転
-		//lookPoint = TransformNormal(move, rotateMatrix);
 		//ロックオン座標
 		lookPoint = move + world_.transform_.translate;
 		lookPoint.y = 0;
@@ -245,36 +244,18 @@ void Player::Move()
 
 		animeT = (std::min)(animeT + 0.01f, 1.0f);
 
-
-
 		return;
 	}
 	else {
 		playerMoveValue = false;
 		animeT = (std::max)(animeT - 0.01f, 0.0f);
 	}
-	if (input->TriggerKey(DIK_W)) {
-		world_.transform_.translate.z += 0.1f;
-		playerMoveValue = true;
-	}
-	if (input->TriggerKey(DIK_S)) {
-		world_.transform_.translate.z -= 0.1f;
-		playerMoveValue = true;
-	}
-	if (input->TriggerKey(DIK_A)) {
-		world_.transform_.translate.x -= 0.1f;
-		playerMoveValue = true;
-	}
-	if (input->TriggerKey(DIK_D)) {
-		world_.transform_.translate.x += 0.1f;
-		playerMoveValue = true;
-	}
 
 }
 
 void Player::PlayerRoring()
 {
-	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(Renderer::viewProjection.rotation_);
 	//移動ベクトルをカメラの角度だけ回転
 	lookPoint = TransformNormal({0.0f,0.0f,1.0f}, rotateMatrix);
 	//ロックオン座標

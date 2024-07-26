@@ -29,5 +29,5 @@ void EnemyManager::Spawn()
 	Enemy* enemy = new Enemy;
 	enemy->Init(enemyModel_);
 	enemy->SetPlayer(player_);
-
+	enemys_.push_back(enemy);
 }

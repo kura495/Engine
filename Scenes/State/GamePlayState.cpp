@@ -25,46 +25,26 @@ void GamePlayState::Initialize()
 	followCamera->Initialize();
 	followCamera->SetTarget(&player_->GetWorldTransform());
 
-	player_->SetViewProjection(&followCamera->GetViewProjection());
-
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
 	particle = new ParticleSystem();
 	particle->Initalize("resources/circle.png");
 
+	//enemyManager
+	enemyManager = std::make_unique<EnemyManager>();
+	enemyManager->Init(player_.get());
+
 }
 
 void GamePlayState::Update()
 {
-	debugcamera_->Update();
-	Renderer::viewProjection = debugcamera_->GetViewProjection();
-
-#pragma region Game
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
-#ifdef USE_IMGUI
-		ImGui::Begin("Camera");
-		if (ImGui::RadioButton("GameCamera", IsDebugCamera == false)) {
-			IsDebugCamera = false;
 
-		}
-		if (ImGui::RadioButton("DebugCamera", IsDebugCamera == true)) {
-			IsDebugCamera = true;
-
-		}
-		if (IsDebugCamera == true) {
-			debugcamera_->Update();
-			Renderer::viewProjection = debugcamera_->GetViewProjection();
-		}
-		ImGui::End();
-#endif // _DEBUG
-		player_->Update();
-#pragma endregion 
-
+	player_->Update();
+	enemyManager->Update();
 	//particle->Update();
-
-
 	collisionManager->Update();
 }
 
@@ -77,6 +57,8 @@ void GamePlayState::Draw()
 	objectManager->Draw();
 
 	player_->Draw();
+
+	enemyManager->Draw();
 
 #pragma endregion
 

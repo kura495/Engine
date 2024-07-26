@@ -15,22 +15,22 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void ImGui();
-
-	void OnCollision(const ICollider* ICollider);
-
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
 		world_.transform_.translate = pos;
 		world_.UpdateMatrix();
 	};
+private://関数
 
-private:
-	Player* player_ = nullptr;
-	Animation* animation = nullptr;
+	void ImGui();
+	void OnCollision(const ICollider* ICollider);
 	// 攻撃範囲内ならtrue
 	bool ChackOnAttack();
 	void ChasePlayer();
+
+private://変数
+	Player* player_ = nullptr;
+	Animation* animation = nullptr;
 
 	uint32_t HP_ = 1;
 

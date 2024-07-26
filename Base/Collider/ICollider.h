@@ -27,10 +27,16 @@ public:
 	virtual void CollisionUpdate() = 0;
 	virtual void CollisionDraw() = 0;
 
+	//TODO：共通のImGuiをまとめたものを作りたい
+	/*virtual void ColliderImGui(std::string TabName) {
+	
+	};*/
+
 	using HitFunction = std::function<void(ICollider*)>;
 	HitFunction OnCollision;
 	//衝突時に呼ばれる関数
-	
+	//コライダーの属性とマスク設定
+#pragma region
 	uint32_t GetcollitionAttribute() const { return collisionAttribute_; }
 	/// <summary>
 	/// 衝突属性
@@ -48,6 +54,7 @@ public:
 
 		collisionMask_ = collisionMask;
 	}
+#pragma endregion Attribute
 
 	///worldの親を設定
 	void SetWorld(WorldTransform* Parent) { center_ = Parent; }
@@ -63,10 +70,13 @@ public:
 
 	void SetSize(Vector3 size) { size_ = size; }
 	Vector3 GetSize() const { return size_; }
-
+	//形状の判別
 	virtual Shape GetShape() = 0;
-	//
+
+	//使うかどうかのフラグ
 	bool IsUsing = true;
+	//名前
+	std::string colliderName = "collider";
 protected:
 	/// <summary>
 	/// 原点
@@ -77,6 +87,7 @@ protected:
 	/// x,y,zそれぞれの幅
 	/// </summary>
 	Vector3 size_{0};
+
 
 private:
 
