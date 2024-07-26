@@ -29,6 +29,7 @@ public:
 	void PlayerRoring();
 	static bool playerMoveValue;
 	static bool PushOptionButtern;
+
 #pragma region Getter
 	WorldTransform& GetWorldTransform() {
 		return world_;
@@ -38,17 +39,18 @@ public:
 private:
 	Input* input = nullptr;
 
+#pragma region 
 	//ふるまい
 	Behavior behavior_ = Behavior::kRoot;
 	//次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-#pragma region 
+	//kRoot
 	void RootInit();
 	void RootUpdate();
-
+	//kAttack
 	void AttackInit();
 	void AttackUpdate();
-
+	//kStep
 	void StepInit();
 	void StepUpdate();
 #pragma endregion BehaviorTree

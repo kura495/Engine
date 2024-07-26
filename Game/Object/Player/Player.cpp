@@ -279,10 +279,10 @@ void Player::AttackUpdate()
 	}
 }
 //kStep
-void Player::StepInit()
-{
+void Player::StepInit(){
+	collider.IsUsing = false;
 }
-void Player::StepUpdate()
-{
+void Player::StepUpdate(){
+	
 }
 #pragma endregion BeheviorTree
