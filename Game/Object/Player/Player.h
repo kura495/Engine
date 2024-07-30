@@ -71,7 +71,7 @@ private:
 
 	float attack = 0.0f;
 
-	Animation animation;
+	Animation* animation;
 
 	OBBoxCollider collider;
 
@@ -81,8 +81,9 @@ private:
 	//プレイヤーが後ろ側に回避
 	void BackStep();
 	bool IsEndStep = false;
+	float stepFlame = 0;
 	//移動の量
-	const float kStepValue = 3.0f;
+	const float kStepValue = 1.0f;
 
 
 };

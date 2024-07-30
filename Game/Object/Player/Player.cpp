@@ -18,9 +18,10 @@ void Player::Init(std::vector<Model*> models)
 	collider.IsUsing = false;
 
 #pragma region
+	animation = new Animation();
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
-	animation.Init();
-	animation.AnimeInit(*models_[0]);
+	animation->Init();
+	animation->AnimeInit(*models_[0]);
 #pragma endregion Anime
 
 	weapon_ = std::make_unique<Weapon>();
@@ -101,9 +102,9 @@ void Player::Update()
 
 void Player::Draw()
 {
-	models_[0]->RendererSkinDraw(world_, animation.GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
 	weapon_->Draw();
-	animation.DebugDraw(world_);
+	animation->DebugDraw(world_);
 }
 
 void Player::ImGui()
@@ -242,7 +243,7 @@ void Player::Move()
 
 #pragma endregion プレイヤーの回転
 
-		animation.PlayAnimation();
+		animation->PlayAnimation();
 
 		return;
 	}
@@ -284,6 +285,7 @@ void Player::AttackUpdate()
 void Player::StepInit(){
 	collider.IsUsing = false;
 	IsEndStep = false;
+	stepFlame = 0.0f;
 }
 void Player::StepUpdate(){
 	////動いているかどうかで分岐
@@ -297,6 +299,11 @@ void Player::StepUpdate(){
 	BackStep();
 	//}
 
+	stepFlame++;
+	if (stepFlame > 5.0f) {
+		//終わりを知らせる
+		IsEndStep = true;
+	}
 
 	if (IsEndStep) {
 		//Behaviorを戻す
@@ -314,8 +321,6 @@ void Player::Rolling()
 	StepMoveValue.y = 0.0f;
 	//移動
 	world_.transform.translate += StepMoveValue;
-	//終わりを知らせる
-	IsEndStep = true;
 }
 void Player::BackStep()
 {
@@ -328,7 +333,5 @@ void Player::BackStep()
 	StepMoveValue.y = 0.0f;
 	//移動
 	world_.transform.translate -= StepMoveValue;
-	//終わりを知らせる
-	IsEndStep = true;
 }
 #pragma endregion BeheviorTree
