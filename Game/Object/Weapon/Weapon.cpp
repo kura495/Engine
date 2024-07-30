@@ -55,13 +55,9 @@ void Weapon::ImGui()
 
 void Weapon::OnCollision(const ICollider* Icollider)
 {		
-	ImGui::Begin("WeaponCollider");
 	if (Icollider->GetcollitionAttribute() == ColliderTag::Enemy) {
-#ifdef USE_IMGUI
-		ImGui::Text("");
-#endif
+		collider.IsUsing = false;
 	}
-	ImGui::End();
 }
 
 void Weapon::SetParent(const WorldTransform& parent)

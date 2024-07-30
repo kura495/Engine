@@ -32,7 +32,7 @@ private://変数
 	Player* player_ = nullptr;
 	Animation* animation = nullptr;
 
-	uint32_t HP_ = 1;
+	uint32_t HP_ = 10;
 
 	const float AttackRange = 2.0f;
 	bool isAttackFlag = true;

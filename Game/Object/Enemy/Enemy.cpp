@@ -65,17 +65,11 @@ void Enemy::ImGui()
 	
 void Enemy::OnCollision(const ICollider* ICollider)
 {
-	ImGui::Begin("EnemyCollider");
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Weapon) {
-		ImGui::Text("WeaponHit");
-		HP_ = 0;
+		HP_ -= 1;
 	}
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Player) {
-		ImGui::Text("PlayerHit");
 	}
-
-
-	ImGui::End();
 }
 
 bool Enemy::ChackOnAttack()
