@@ -18,7 +18,7 @@ public:
 	void Init();
 	void AnimeInit(Model& model);
 
-	static Animation* LoadAnimationFile(const std::string& directrypath,const std::string& filename);
+	static Animation LoadAnimationFile(const std::string& directrypath,const std::string& filename);
 	static Vector3 CalculateValue(const std::vector<KeyFrameVector3>& keyframes,float time);
 	static Quaternion CalculateValue(const std::vector<KeyFrameQuaternion>& keyframes,float time);
 	void AnimationLerp(Animation* animeA, Animation* animeB, float t);

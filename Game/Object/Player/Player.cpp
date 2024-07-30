@@ -19,8 +19,8 @@ void Player::Init(std::vector<Model*> models)
 
 #pragma region
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
-	animation->Init();
-	animation->AnimeInit(*models_[0]);
+	animation.Init();
+	animation.AnimeInit(*models_[0]);
 #pragma endregion Anime
 
 	weapon_ = std::make_unique<Weapon>();
@@ -88,10 +88,12 @@ void Player::Update()
 			PushOptionButtern = true;
 		}
 	}
+	
+	world_.UpdateMatrix();
+
 
 	weapon_->Update();
 
-	world_.UpdateMatrix();
 
 	//前フレームのゲームパッドの状態を保存
 	joyStatePre = joyState;
@@ -99,9 +101,9 @@ void Player::Update()
 
 void Player::Draw()
 {
-	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animation.GetSkinCluster());
 	weapon_->Draw();
-	animation->DebugDraw(world_);
+	animation.DebugDraw(world_);
 }
 
 void Player::ImGui()
@@ -240,7 +242,7 @@ void Player::Move()
 
 #pragma endregion プレイヤーの回転
 
-		animation->PlayAnimation();
+		animation.PlayAnimation();
 
 		return;
 	}
@@ -253,7 +255,7 @@ void Player::Move()
 //kRoot
 void Player::RootInit()
 {
-
+	collider.IsUsing = true;
 }
 void Player::RootUpdate()
 {
@@ -281,8 +283,52 @@ void Player::AttackUpdate()
 //kStep
 void Player::StepInit(){
 	collider.IsUsing = false;
+	IsEndStep = false;
 }
 void Player::StepUpdate(){
-	
+	////動いているかどうかで分岐
+	//if (playerMoveValue) {
+	//	//ローリング回避
+	//	Rolling();
+	//}
+	//else {
+	//	//後ろに回避
+	//TODO：いったんはバックステップのみ
+	BackStep();
+	//}
+
+
+	if (IsEndStep) {
+		//Behaviorを戻す
+		behaviorRequest_ = Behavior::kRoot;
+	}
+}
+void Player::Rolling()
+{
+	Vector3 StepMoveValue = { 0.0f,0.0f,kStepValue };
+	//カメラの正面方向に移動するようにする
+	//回転行列を作る
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(world_.transform.quaternion);
+	//移動ベクトルをカメラの角度だけ回転
+	StepMoveValue = TransformNormal(StepMoveValue, rotateMatrix);
+	StepMoveValue.y = 0.0f;
+	//移動
+	world_.transform.translate += StepMoveValue;
+	//終わりを知らせる
+	IsEndStep = true;
+}
+void Player::BackStep()
+{
+	Vector3 StepMoveValue = { 0.0f,0.0f,kStepValue };
+	//カメラの正面方向に移動するようにする
+	//回転行列を作る
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(world_.transform.quaternion);
+	//移動ベクトルをカメラの角度だけ回転
+	StepMoveValue = TransformNormal(StepMoveValue, rotateMatrix);
+	StepMoveValue.y = 0.0f;
+	//移動
+	world_.transform.translate -= StepMoveValue;
+	//終わりを知らせる
+	IsEndStep = true;
 }
 #pragma endregion BeheviorTree

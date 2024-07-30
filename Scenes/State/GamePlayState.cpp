@@ -39,13 +39,14 @@ void GamePlayState::Initialize()
 
 void GamePlayState::Update()
 {
-	followCamera->Update();
-	Renderer::viewProjection = followCamera->GetViewProjection();
 
 	player_->Update();
 	enemyManager->Update();
 	//particle->Update();
 	collisionManager->Update();
+
+	followCamera->Update();
+	Renderer::viewProjection = followCamera->GetViewProjection();
 }
 
 void GamePlayState::Draw()
