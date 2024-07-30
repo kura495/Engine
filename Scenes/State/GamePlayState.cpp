@@ -18,6 +18,9 @@ void GamePlayState::Initialize()
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
+	textureManager_ = TextureManager::GetInstance();
+	textureManager_->LoadTexture("resources/rostock_laage_airport_4k.dds");
+
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
 
