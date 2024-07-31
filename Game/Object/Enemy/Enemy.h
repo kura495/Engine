@@ -22,6 +22,14 @@ public:
 		world_.transform.translate = pos;
 		world_.UpdateMatrix();
 	};
+	Vector3 GetPos() {
+		return world_.transform.translate;
+	}
+
+	bool GetIsAlive() {
+		return IsAlive;
+	}
+
 private://関数
 
 	void ImGui();
@@ -34,6 +42,8 @@ private://関数
 private://変数
 	Player* player_ = nullptr;
 	Animation* animation = nullptr;
+
+	bool IsAlive = true;
 
 	uint32_t HP_ = 10;
 

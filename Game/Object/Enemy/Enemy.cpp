@@ -6,6 +6,8 @@ void Enemy::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 
+#pragma region
+
 	collider.Init(&world_);
 	collider.SetSize({1.0f,1.0f,1.0f});
 	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
@@ -21,6 +23,9 @@ void Enemy::Init(std::vector<Model*> models)
 	attackCollider.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	attackCollider.SetcollisionMask(~ColliderTag::Enemy && ~ColliderTag::EnemyAttack);
 	attackCollider.IsUsing = false;
+
+#pragma endregion Collider
+
 #pragma region
 
 	world_.transform.translate.y += 1.0f;
@@ -73,12 +78,11 @@ void Enemy::PlayAnime()
 		animationTime_ = std::fmod(animationTime_, animation->duration);
 
 		if (attackColliderFlag) {
-			if (animationTime_ >= 1.7f) {
+			if (animationTime_ >= 1.5f) {
 				attackCollider.IsUsing = true;
 				attackColliderFlag = false;
 			}
 		}
-
 
 		NodeAnimation& rootNodeAnimation = animation->nodeAnimations[models_[0]->GetModelData().rootNode.name];
 		Vector3 translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames, animationTime_);

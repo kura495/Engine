@@ -244,6 +244,7 @@
     <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="Base\PipelineState\CubeMap\CubeMap.cpp" />
     <ClCompile Include="Base\PostProsess\CubeMap\PPCubeMap.cpp" />
+    <ClCompile Include="Game\Object\Camera\LockOn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -464,6 +465,7 @@
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Base\PipelineState\CubeMap\CubeMap.h" />
     <ClInclude Include="Base\PostProsess\CubeMap\PPCubeMap.h" />
+    <ClInclude Include="Game\Object\Camera\LockOn.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

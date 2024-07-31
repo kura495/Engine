@@ -40,7 +40,7 @@ void FollowCamera::Update() {
 			pos = target_->transform.translate + target_->parent_->transform.translate;
 		}
 		//追従座標の補間
-		//workInter.interTarget_ = Vector3::VectorLerp(workInter.interTarget_, pos, workInter.interParameter_);
+		workInter.interTarget_ = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_);
 
 		Vector3 offset = OffsetCalc();
 		//オフセット分と追従座標の補間分ずらす
