@@ -5,7 +5,7 @@ void Animation::Init(){
 	srvManager_ = SRVManager::GetInstance();
 }
 
-void Animation::AnimeInit(Model& model)
+void Animation::AnimeInit(Model& model,bool UseDebugLine)
 {
 	CreateSkeleton(model.GetModelData().rootNode);
 	CreateSkinCluster(model.GetModelData());
@@ -14,13 +14,16 @@ void Animation::AnimeInit(Model& model)
 
 	SkeletonUpdate();
 	SkinClusterUpdate();
-	
+	IsDebugLine = UseDebugLine;
 #pragma region
-	CreateBoneLineVertices(skeleton.root, point);
-	SkeletonLine.Init();
-	SkeletonLine.SetVertexData(point);
-	SkeletonLine.CreateBuffer();
-	UpdateLine();
+	if (IsDebugLine) {
+		CreateBoneLineVertices(skeleton.root, point);
+		SkeletonLine.Init();
+		SkeletonLine.SetVertexData(point);
+		SkeletonLine.CreateBuffer();
+		UpdateLine();
+	}
+
 #pragma endregion Line
 }
 
@@ -117,8 +120,10 @@ void Animation::PlayAnimation()
 
 	SkeletonUpdate();
 	SkinClusterUpdate();
-
+	if (IsDebugLine) {
 	UpdateLine();
+
+	}
 }
 
 void Animation::AnimationLerp(Animation* animeA, Animation* animeB, float t)

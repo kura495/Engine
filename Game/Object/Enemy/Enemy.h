@@ -15,6 +15,8 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	void PlayAnime();
+
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
 		world_.transform.translate = pos;
@@ -24,6 +26,7 @@ private://関数
 
 	void ImGui();
 	void OnCollision(const ICollider* ICollider);
+	void AttackOnCollision(const ICollider* ICollider);
 	// 攻撃範囲内ならtrue
 	bool ChackOnAttack();
 	void ChasePlayer();
@@ -35,7 +38,13 @@ private://変数
 	uint32_t HP_ = 10;
 
 	const float AttackRange = 2.0f;
-	bool isAttackFlag = true;
+	bool isAttackFlag = false;
+	bool attackColliderFlag = true;
+	WorldTransform attackWorld_;
 
 	OBBoxCollider collider;
+	OBBoxCollider attackCollider;
+
+	float animationTime_ = 0.0f;
+	float animeInterval_ = 60.0f;
 };

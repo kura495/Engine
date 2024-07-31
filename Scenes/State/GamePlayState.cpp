@@ -16,7 +16,6 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
-	WeaponModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
 	textureManager_ = TextureManager::GetInstance();
 	textureManager_->LoadTexture("resources/rostock_laage_airport_4k.dds");

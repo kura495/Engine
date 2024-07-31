@@ -58,7 +58,6 @@ private:
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> glTFplaneModel_;
-	std::vector<Model*> WeaponModel_;
 
 	std::unique_ptr<EnemyManager> enemyManager;
 

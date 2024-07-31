@@ -64,6 +64,8 @@ private:
 	Vector3 move;
 	//プレイヤーの移動
 	float speed = 0.1f;
+	//HP
+	uint32_t HP_ = 10;
 
 	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 

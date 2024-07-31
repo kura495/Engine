@@ -46,6 +46,11 @@ Vector3 WorldTransform::GetTranslateFromMatWorld()const
 	return worldPos;
 }
 
+void WorldTransform::SetParent(const WorldTransform* parent)
+{
+	parent_ = parent;
+}
+
 void WorldTransform::SetTransform(Model* model) {
 	transform.translate += model->GetModelData().rootNode.localMatrix.GetTransform();
 	if (model->GetModelData().rootNode.localMatrix.GetScale().x != 1.0f &&

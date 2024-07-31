@@ -16,7 +16,7 @@
 class Animation {
 public:
 	void Init();
-	void AnimeInit(Model& model);
+	void AnimeInit(Model& model, bool UseDebugLine);
 
 	static Animation* LoadAnimationFile(const std::string& directrypath,const std::string& filename);
 	static Vector3 CalculateValue(const std::vector<KeyFrameVector3>& keyframes,float time);
@@ -61,4 +61,6 @@ private:
 	std::vector<Vector4> point;
 	Skeleton skeleton;
 	SkinCluster skinCluster;
+
+	bool IsDebugLine = false;
 };

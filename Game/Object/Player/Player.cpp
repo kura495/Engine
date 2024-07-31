@@ -21,7 +21,7 @@ void Player::Init(std::vector<Model*> models)
 	animation = new Animation();
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
 	animation->Init();
-	animation->AnimeInit(*models_[0]);
+	animation->AnimeInit(*models_[0],true);
 #pragma endregion Anime
 
 	weapon_ = std::make_unique<Weapon>();
@@ -123,6 +123,7 @@ void Player::ImGui()
 	if (ImGui::Button("CollisionOff")) {
 		collider.IsUsing = false;
 	}
+	ImGui::Text("%d", HP_);
 	ImGui::End();
 	weapon_->ImGui();
 }
@@ -130,15 +131,9 @@ void Player::ImGui()
 void Player::OnCollision(const ICollider* ICollider)
 {
 
-	ImGui::Begin("PlayerCollider");
-	if (ICollider->GetcollitionAttribute() == ColliderTag::Weapon) {
-		ImGui::Text("WeaponHit");
+	if (ICollider->GetcollitionAttribute() == ColliderTag::EnemyAttack) {
+		HP_ -= 1;
 	}
-	if (ICollider->GetcollitionAttribute() == ColliderTag::Enemy) {
-		ImGui::Text("EnemyHit");
-	}
-
-	ImGui::End();
 
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
 		if (ICollider->GetCenter().y > world_.transform.translate.y) {
