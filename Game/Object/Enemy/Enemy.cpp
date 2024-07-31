@@ -83,7 +83,7 @@ void Enemy::PlayAnime()
 		animationTime_ = std::fmod(animationTime_, animation->duration);
 
 		if (attackColliderFlag) {
-			if (animationTime_ >= 1.5f) {
+			if (animationTime_ >= 2.0f) {
 				attackCollider.IsUsing = true;
 				attackColliderFlag = false;
 			}

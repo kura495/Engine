@@ -15,7 +15,6 @@ void Player::Init(std::vector<Model*> models)
 	collider.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 	collider.SetcollitionAttribute(ColliderTag::Player);
 	collider.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
-	collider.IsUsing = false;
 
 #pragma region
 	animation = new Animation();
@@ -37,6 +36,8 @@ void Player::Update()
 #endif
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
+
+	playerMoveValue = false;
 
 
 	#pragma region
@@ -133,6 +134,7 @@ void Player::OnCollision(const ICollider* ICollider)
 
 	if (ICollider->GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		HP_ -= 1;
+		playerMoveValue = true;
 	}
 
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
@@ -215,7 +217,7 @@ void Player::Move()
 		move.y = 0.0f;
 		//移動
 		world_.transform.translate = world_.transform.translate + move;
-		playerMoveValue = true;
+
 #pragma endregion 移動
 
 #pragma region
@@ -241,9 +243,6 @@ void Player::Move()
 		animation->PlayAnimation();
 
 		return;
-	}
-	else {
-		playerMoveValue = false;
 	}
 
 }

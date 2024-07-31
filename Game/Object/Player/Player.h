@@ -67,6 +67,9 @@ private:
 	//HP
 	uint32_t HP_ = 10;
 
+	const float kDamegeEffectF = 120;
+	float DamegeEffectF = 0;
+
 	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 
 	std::unique_ptr<Weapon> weapon_;
