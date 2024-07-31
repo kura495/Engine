@@ -41,6 +41,11 @@ void Enemy::Init(std::vector<Model*> models)
 
 void Enemy::Update()
 {
+	if (HP_ <= 0) {
+		IsAlive = false;
+	}
+
+
 	ImGui();
 	if (ChackOnAttack() && isAttackFlag == false) {
 		isAttackFlag = true;
@@ -146,5 +151,5 @@ void Enemy::ChasePlayer()
 	if (Distance < AttackRange) {
 		return;
 	}
-	world_.transform.translate += PtoEdistance / 60.0f;
+	world_.transform.translate += PtoEdistance.Normalize() * 2 / 60.0f;
 }

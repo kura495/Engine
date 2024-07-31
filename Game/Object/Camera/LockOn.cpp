@@ -67,7 +67,7 @@ void LockOn::Search(const std::list<Enemy*>& enemies, const ViewProjection& view
 			continue;
 		}
 		//敵のロックオン座標取得
-		Vector3 positionWorld = enemy_->GetPos()
+		Vector3 positionWorld = enemy_->GetPos();
 
 		//ワールド→ビュー座標変換
 		Vector3 positionView = VectorTransform(positionWorld, viewProjection.matView);
@@ -112,7 +112,7 @@ void LockOn::ChangeTarget()
 		//iteratorを回数分進める
 		std::advance(it, iteratornum);
 		if (it != targets.end()) {
-			std::pair<float, const Enemy*>element = *it;
+			std::pair<float,Enemy*>element = *it;
 			target_ = element.second;
 		}
 	}

@@ -5,6 +5,11 @@ OBBoxCollider::OBBoxCollider()
 	CollisionManager::AddCollider(this);
 }
 
+OBBoxCollider::~OBBoxCollider()
+{
+	IsDalete = true;
+}
+
 void OBBoxCollider::Init(WorldTransform* Parent)
 {
 	ICollider::SetWorld(Parent);

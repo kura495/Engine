@@ -21,7 +21,7 @@ private:
 	void ChangeTarget();
 
 	//目標
-	std::list<std::pair<float, const Enemy*>> targets;
+	std::list<std::pair<float,Enemy*>> targets;
 
 	Input* input = nullptr;
 	XINPUT_STATE joyState;

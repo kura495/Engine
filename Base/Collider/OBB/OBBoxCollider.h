@@ -13,6 +13,7 @@ class OBBoxCollider : public ICollider
 {
 public:
 	OBBoxCollider();
+	~OBBoxCollider();
 
 	void Init(WorldTransform* Parent);
 	void CollisionUpdate()override;

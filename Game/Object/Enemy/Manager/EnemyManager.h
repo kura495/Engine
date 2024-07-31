@@ -16,4 +16,9 @@ private:// 変数
 	std::list<Enemy*> enemys_;
 	
 	Player* player_;
+
+	const float KSpawnFlame = 360;
+	float spawnFlame = 0;
+	const int SpawnMax = 3;
+	int spawn = 0;
 };

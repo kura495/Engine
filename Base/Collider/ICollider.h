@@ -9,6 +9,8 @@ static uint32_t CollisionNumber = 0;
 class ICollider {
 public:
 
+	bool IsDalete = false;
+
 	enum Shape {
 		None,//セットされていない
 		Box,

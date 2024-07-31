@@ -54,9 +54,4 @@ private:
 	static std::vector<DrawSkinningData> drawModelSkinningData_;
 	static std::vector<DrawLineData> drawLineData_;
 	static std::vector<DrawModelData> drawWireFlameData_;
-	//TODO : ポストエフェクトの後に描画できるかテスト
-	std::unique_ptr<Sprite> sprite;
-	WorldTransform UIworld_;
-	WorldTransform UIworld_2;
-	int TextureHundle;
 };

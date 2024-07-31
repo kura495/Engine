@@ -12,6 +12,25 @@ void EnemyManager::Init(Player* player)
 
 void EnemyManager::Update()
 {
+	enemys_.remove_if([this](Enemy* enemy)
+		{
+			if (!enemy->GetIsAlive())
+			{
+				delete enemy;
+				return true;
+			}
+			return false;
+	});
+
+	if (spawn < SpawnMax) {
+		spawnFlame++;
+	}
+	if (spawnFlame > KSpawnFlame) {
+		spawn++;
+		Spawn();
+		spawnFlame = 0;
+	}
+
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
 	}

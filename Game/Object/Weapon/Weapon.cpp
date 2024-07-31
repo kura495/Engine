@@ -20,7 +20,6 @@ void Weapon::Initalize(std::vector<Model*> models)
 	collider.SetcollisionMask(~ColliderTag::Player & ~ColliderTag::Weapon);
 	collider.IsUsing = false;
 
-
 }
 
 void Weapon::Update()

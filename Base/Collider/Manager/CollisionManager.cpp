@@ -13,6 +13,15 @@ void CollisionManager::Init()
 
 void CollisionManager::Update()
 {
+	Colliders_.remove_if([this](ICollider* Icollider)
+		{
+			if (Icollider->IsDalete)
+			{
+				return true;
+			}
+			return false;
+		});
+
 	for (ICollider* collider : Colliders_) {
 		collider->CollisionUpdate();
 	}
@@ -22,9 +31,11 @@ void CollisionManager::Update()
 
 void CollisionManager::Draw()
 {
+#ifdef _DEBUG
 	for (ICollider* collider : Colliders_) {
 		collider->CollisionDraw();
 	}
+#endif
 }
 
 void CollisionManager::CheckAllCollisions() {
