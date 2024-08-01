@@ -2,7 +2,6 @@
 
 void GamePlayState::Initialize()
 {
-
 	//基本機能生成
 	debugcamera_ = new DebugCamera();
 	debugcamera_->Initialize();
@@ -16,9 +15,6 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
-
-	textureManager_ = TextureManager::GetInstance();
-	textureManager_->LoadTexture("resources/rostock_laage_airport_4k.dds");
 
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);

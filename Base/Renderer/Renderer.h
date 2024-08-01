@@ -2,12 +2,13 @@
 
 #include "Common/DirectX/DirectXCommon.h"
 #include "Manager/PSO/PSOManager.h"
-#include "PipelineState/Standard/Standard.h"
 
 #include "Base/Object/Model/Model.h"
 #include "Base/Texture/TextureManager.h"
 #include "Base/Sprite/Sprite.h"
 #include "Base/WorldTransform/WorldTransform.h"
+
+#include "Game/Object/SkyBox/SkyBox.h"
 
 struct DrawModelData {
 	Model* modelData;
@@ -22,8 +23,6 @@ struct DrawLineData {
 	Line* lineData;
 	WorldTransform* world_;
 };
-
-
 class Renderer
 {
 public:
@@ -54,4 +53,9 @@ private:
 	static std::vector<DrawSkinningData> drawModelSkinningData_;
 	static std::vector<DrawLineData> drawLineData_;
 	static std::vector<DrawModelData> drawWireFlameData_;
+
+	SkyBox skyBox;
+
+	int Texture;
+	WorldTransform cubeWorld_;
 };

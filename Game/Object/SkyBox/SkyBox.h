@@ -2,10 +2,10 @@
 #include "Common/DirectX/DirectXCommon.h"
 #include "Texture/TextureManager.h"
 #include "WorldTransform/WorldTransform.h"
-#include "Renderer/Renderer.h"
 #include "ViewProj/ViewProjection.h"
 #include "Transform.h"
 #include "VertexData.h"
+#include "Material.h"
 #include <wrl.h>
 #include <numbers>
 
@@ -39,6 +39,4 @@ private:
 	void CreateResource();
 	void MakeVertexBufferView();
 	void MakeIndexBufferView();
-
-
 };

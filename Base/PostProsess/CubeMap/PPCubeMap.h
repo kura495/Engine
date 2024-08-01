@@ -1,18 +1,9 @@
 #pragma once
-#include "Base/PipelineState/IPipelineStateObject.h"
-#include "Base/Manager/PSO/PSOManager.h"
+#include "Base/PostProsess/PostProsess.h"
 
-class PPCubeMap : public IPipelineStateObject
+class PPCubeMap : public PostProsess
 {
 public:
-
-	void ShaderCompile() override;
-	void CreateRootSignature() override;
-	void CreateInputLayOut() override;
-	void CreateBlendState() override;
-	void CreateRasterizarState() override;
-	void CreatePipelineStateObject() override;
-
+	void Update()override;
 private:
-
 };

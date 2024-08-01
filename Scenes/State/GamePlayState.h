@@ -43,7 +43,6 @@ private:
 	//基本機能ズ
 	DebugCamera* debugcamera_ = nullptr;
 	ObjectManager* objectManager = nullptr;
-	TextureManager* textureManager_ = nullptr;
 	std::unique_ptr<CollisionManager> collisionManager;
 	Renderer* renderer_ = nullptr;
 

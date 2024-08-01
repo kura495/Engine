@@ -14,6 +14,7 @@
 #include "PipelineState/Vignetting/Vignetting.h"
 #include "PipelineState/LuminanceBasedOutline/LuminanceBasedOutline.h"
 #include "PipelineState/RGBtoHSV/RGBtoHSV.h"
+#include "PipelineState/CubeMap/CubeMap.h"
 
 class PSOManager
 {

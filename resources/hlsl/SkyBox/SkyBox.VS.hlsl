@@ -24,7 +24,7 @@ VertexShaderOutput main(VertexShaderInput input)
     VertexShaderOutput output;
     float32_t4x4 WorldViewProjectionMatrix = mul(gViewProjectionMatrix.view, gViewProjectionMatrix.projection);
     //zをwと同じ、つまり1にすることで深度が常に1になるので、クリッピングされたりキャラの手前に来ることもない
-    output.position = mul(input.position,, mul(gTransformationMatrix.matWorld, WorldViewProjectionMatrix)).xyww;
+    output.position = mul(input.position, mul(gTransformationMatrix.matWorld, WorldViewProjectionMatrix)).xyww;
     output.texcoord = input.position.xyz;
     
     return output;

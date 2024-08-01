@@ -1,5 +1,5 @@
 #include "SkyBox.h"
-
+#include "Renderer/Renderer.h"
 void SkyBox::Init()
 {
 	directX_ = DirectXCommon::GetInstance();
@@ -14,6 +14,15 @@ void SkyBox::Init()
 	indexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 	MakeIndexBufferView();
 
+	materialResource = directX_->CreateBufferResource(sizeof(Material));
+	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+
+	materialData->uvTransform = Matrix4x4::CreateIdentity();
+
+	materialData->enableLighting = false;
+	materialData->color = {1.0f,1.0f,1.0f,1.0f};
+
+
 	CreateResource();
 }
 
@@ -24,13 +33,14 @@ void SkyBox::Draw(const WorldTransform& transform, const uint32_t& TextureHandle
 	//頂点
 	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
 	directX_->GetcommandList()->IASetIndexBuffer(&indexBufferView);
+	//色とuvTransform
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//WorldTransform
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, transform.constBuff_.Get()->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_.Get()->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(2, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
 	//テクスチャ
-	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(TextureHandle));
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(3, textureManager_->GetGPUHandle(TextureHandle));
 
 
 	directX_->GetcommandList()->DrawIndexedInstanced(36, 1, 0, 0, 0);
@@ -82,7 +92,7 @@ void SkyBox::CreateResource()
 	indexData[16] = 9;
 	indexData[17] = 11;
 
-#pragma endregion 前面
+#pragma endregion 後ろ面
 
 #pragma region
 	vertexData[12].position = { -1.0f,1.0f,-1.0f,1.0f };
@@ -90,14 +100,14 @@ void SkyBox::CreateResource()
 	vertexData[14].position = { -1.0f,-1.0f,-1.0f,1.0f };
 	vertexData[15].position = { 1.0f,-1.0f,-1.0f,1.0f };
 
-	indexData[18] = 12;
-	indexData[19] = 13;
+	indexData[18] = 13;
+	indexData[19] = 12;
 	indexData[20] = 14;
-	indexData[21] = 14;
-	indexData[22] = 13;
+	indexData[21] = 13;
+	indexData[22] = 14;
 	indexData[23] = 15;
 
-#pragma endregion 後ろ面
+#pragma endregion 前面
 
 #pragma region
 	vertexData[16].position = { -1.0f,1.0f,1.0f,1.0f };
@@ -121,11 +131,11 @@ void SkyBox::CreateResource()
 	vertexData[23].position = { 1.0f,-1.0f,-1.0f,1.0f };
 
 	indexData[30] = 20;
-	indexData[31] = 21;
-	indexData[32] = 22;
+	indexData[31] = 22;
+	indexData[32] = 21;
 	indexData[33] = 22;
-	indexData[34] = 21;
-	indexData[35] = 23;
+	indexData[34] = 23;
+	indexData[35] = 21;
 
 #pragma endregion 下面
 }

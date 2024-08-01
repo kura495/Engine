@@ -32,6 +32,8 @@ void PSOManager::Initalize()
 	luminanceBasedOutline.Initalize();
 	RGBtoHSV rGBtoHSV;
 	rGBtoHSV.Initalize();
+	CubeMap cubeMap;
+	cubeMap.Initalize();
 
 	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
@@ -43,5 +45,6 @@ void PSOManager::Initalize()
 	AddPipeline(vinette.GetPSO(),PipelineType::Vinette);
 	AddPipeline(luminanceBasedOutline.GetPSO(),PipelineType::LuminanceBasedOutline);
 	AddPipeline(rGBtoHSV.GetPSO(),PipelineType::RGBtoHSV);
+	AddPipeline(cubeMap.GetPSO(),PipelineType::CubeMap);
 
 }

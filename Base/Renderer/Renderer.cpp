@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include "Game/Object/Player/Player.h"
 
 ViewProjection Renderer::viewProjection;
 std::vector<DrawModelData> Renderer::drawModelData_;
@@ -19,6 +18,11 @@ void Renderer::Initalize()
 	PSOManager_ = std::make_unique<PSOManager>();
 	PSOManager_->Initalize();
 
+	skyBox.Init();
+	Texture = TextureManager::GetInstance()->LoadTexture("resources/rostock_laage_airport_4k.dds");
+	cubeWorld_.Initialize();
+	cubeWorld_.transform.scale *= 100;
+	cubeWorld_.UpdateMatrix();
 }
 
 void Renderer::Draw()
@@ -57,6 +61,10 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawWireFlameData_.clear();
+
+	//CubeMap
+	ChangePipeline(PipelineType::CubeMap);
+	skyBox.Draw(cubeWorld_,Texture);
 }
 
 void Renderer::PostProsessDraw()

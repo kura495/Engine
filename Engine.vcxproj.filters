@@ -241,10 +241,10 @@
     <ClCompile Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.cpp" />
     <ClCompile Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
     <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
-    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="Base\PipelineState\CubeMap\CubeMap.cpp" />
     <ClCompile Include="Base\PostProsess\CubeMap\PPCubeMap.cpp" />
     <ClCompile Include="Game\Object\Camera\LockOn.cpp" />
+    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -462,10 +462,10 @@
     <ClInclude Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.h" />
     <ClInclude Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
-    <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Base\PipelineState\CubeMap\CubeMap.h" />
     <ClInclude Include="Base\PostProsess\CubeMap\PPCubeMap.h" />
     <ClInclude Include="Game\Object\Camera\LockOn.h" />
+    <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

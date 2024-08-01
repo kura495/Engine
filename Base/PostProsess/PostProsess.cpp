@@ -5,6 +5,11 @@ void PostProsess::Init()
 	DirectX = DirectXCommon::GetInstance();
 	sRVManager_ = SRVManager::GetInstance();
 
+	addInit();
+}
+
+void PostProsess::addInit()
+{
 }
 
 void PostProsess::Draw()
