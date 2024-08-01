@@ -26,7 +26,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 	std::mt19937 randomEngine(seedGenerator());
 
 	materialData->enableLighting = false;
-	materialData->color = { 0.0f,0.0f,0.0f,1.0f };
+	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
 
 	Pipeline_ = std::make_unique<ParticlePipeLine>();
