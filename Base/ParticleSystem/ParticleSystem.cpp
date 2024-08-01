@@ -6,14 +6,12 @@ void ParticleSystem::Initalize(const std::string filePath)
 	directX_ = DirectXCommon::GetInstance();
 	sRVManager_ = SRVManager::GetInstance();
 
-
-
 	modelData.vertices.push_back({ .position = { -1.0f,1.0f,0.0f,1.0f },.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
 	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},   .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
 	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
 	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},	 .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
-	modelData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},	 .texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
+	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},	.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
+	modelData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},	.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
 	modelData.material.textureFilePath = filePath;
 	int Texture = textureManager_->LoadTexture(modelData.material.textureFilePath);
 	modelData.TextureIndex = Texture;
@@ -91,6 +89,10 @@ void ParticleSystem::Update()
 		++particleIt;
 	}
 
+#ifdef _DEBUG
+	ImGui();
+#endif
+
 }
 
 void ParticleSystem::Draw(const ViewProjection& viewProjection)
@@ -152,6 +154,13 @@ bool ParticleSystem::IsCollision(const AABBData& aabb, const Vector3& point)
 		return true;
 	}
 	return false;
+}
+
+void ParticleSystem::ImGui()
+{
+	ImGui::Begin("Emitter");
+	ImGui::InputFloat3("translate",&Testemitter.world_.transform.translate.x);
+	ImGui::End();
 }
 
 void ParticleSystem::CreateResources()
