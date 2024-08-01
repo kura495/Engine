@@ -27,6 +27,11 @@ void Renderer::Initalize()
 
 void Renderer::Draw()
 {
+
+	//CubeMap
+	ChangePipeline(PipelineType::CubeMap);
+	skyBox.Draw(cubeWorld_, Texture);
+
 	//標準描画
 	ChangePipeline(PipelineType::Standerd);
 	///描画
@@ -62,9 +67,6 @@ void Renderer::Draw()
 	//中身を消す
 	drawWireFlameData_.clear();
 
-	//CubeMap
-	ChangePipeline(PipelineType::CubeMap);
-	skyBox.Draw(cubeWorld_,Texture);
 }
 
 void Renderer::PostProsessDraw()

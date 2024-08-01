@@ -61,7 +61,7 @@ void Weapon::OnCollision(const ICollider* Icollider)
 
 void Weapon::SetParent(const WorldTransform& parent)
 {
-	world_.parent_ = &parent;
+	world_.SetParent(&parent);
 }
 
 void Weapon::RootInit()

@@ -6,8 +6,6 @@ void EnemyManager::Init(Player* player)
 	player_ = player;
 
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Monster", "Monster.gltf"));
-	//TODO:敵を生成
-	Spawn();
 }
 
 void EnemyManager::Update()
@@ -27,7 +25,7 @@ void EnemyManager::Update()
 	}
 	if (spawnFlame > KSpawnFlame) {
 		spawn++;
-		Spawn();
+		//Spawn();
 		spawnFlame = 0;
 	}
 
