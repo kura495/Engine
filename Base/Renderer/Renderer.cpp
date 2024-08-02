@@ -36,7 +36,7 @@ void Renderer::Draw()
 	ChangePipeline(PipelineType::Standerd);
 	///描画
 	for (DrawModelData model : drawModelData_) {
-		model.modelData->Draw(*model.world_);
+		model.modelData->Draw(*model.world_,Texture);
 	}
 	//中身を消す
 	drawModelData_.clear();
@@ -62,7 +62,7 @@ void Renderer::Draw()
 	ChangePipeline(PipelineType::WireFlame);
 	///描画
 	for (DrawModelData model : drawWireFlameData_) {
-		model.modelData->Draw(*model.world_);
+		model.modelData->WireFlameDraw(*model.world_);
 	}
 	//中身を消す
 	drawWireFlameData_.clear();

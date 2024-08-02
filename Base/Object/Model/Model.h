@@ -28,7 +28,8 @@ class Model
 {
 public:
 	void Initialize(const std::string& directoryPath, const std::string& filename);
-	void Draw(const WorldTransform& transform);
+	void Draw(const WorldTransform& transform, int DDSTexHandle);
+	void WireFlameDraw(const WorldTransform& transform);
 	void SkinDraw(const WorldTransform& transform,const SkinCluster& skinCluster);
 
 
@@ -41,6 +42,7 @@ public:
 	void SetLightMode(Lighting number) { lightFlag = number; };
 
 	ModelData& GetModelData() { return modelData_; }
+	Material* GetMaterial() { return materialData; }
 
 private:
 

@@ -47,7 +47,20 @@ void FollowCamera::Update() {
 		viewProj.translation_ = pos + offset;
 	}
 
+#ifdef _DEBUG
+	ImGui();
+#endif
+
 	viewProj.UpdateMatrix();
+}
+
+void FollowCamera::ImGui()
+{
+#ifdef _DEBUG
+	ImGui::Begin("FollowCamera");
+	ImGui::DragFloat3("Offset",&offsetPos.x);
+	ImGui::End();
+#endif
 }
 
 void FollowCamera::SetTarget(const WorldTransform* target)

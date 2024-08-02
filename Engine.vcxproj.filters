@@ -206,7 +206,6 @@
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
-    <ClCompile Include="Game\Object\Goal\Goal.cpp" />
     <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="externals\imgui\ImGuizmo.cpp" />
     <ClCompile Include="Base\Editer\Editer.cpp" />
@@ -429,7 +428,6 @@
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
-    <ClInclude Include="Game\Object\Goal\Goal.h" />
     <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="externals\imgui\ImGuizmo.h" />
     <ClInclude Include="Base\Editer\Editer.h" />
@@ -504,7 +502,7 @@
     <FxCompile Include="resources\hlsl\Particle.VS.hlsl">
       <Filter>リソース ファイル\hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\SkinningObject3d.VS.hlsl" />
+    <FxCompile Include="resources\hlsl\Skining\SkinningObject3d.VS.hlsl" />
     <FxCompile Include="resources\hlsl\Line.PS.hlsl" />
     <FxCompile Include="resources\hlsl\Line.VS.hlsl" />
     <FxCompile Include="resources\hlsl\FullScreen.PS.hlsl" />
