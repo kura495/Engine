@@ -9,7 +9,7 @@ void Player::Init(std::vector<Model*> models)
 	world_.Initialize();
 	input = Input::GetInstance();
 
-	models_[0]->GetMaterial()->enableLighting = Lighting::harfLambert;
+	models_[0]->GetMaterial()->enableLighting = Lighting::NotDo;
 	
 	collider.Init(&world_);
 	collider.SetSize({0.5f,1.0f,0.5f});
@@ -105,8 +105,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	//models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
-	models_[0]->RendererDraw(world_);
+	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
 	weapon_->Draw();
 	animation->DebugDraw(world_);
 }
