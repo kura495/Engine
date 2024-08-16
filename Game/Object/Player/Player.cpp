@@ -262,7 +262,7 @@ void Player::RootUpdate()
 		behaviorRequest_ = Behavior::kAttack;
 	}
 
-	if (input->GetKeyPrecede(XINPUT_GAMEPAD_A,20)) {
+	if (input->GetPadPrecede(XINPUT_GAMEPAD_A,20)) {
 		behaviorRequest_ = Behavior::kStep;
 	}
 }
@@ -274,7 +274,7 @@ void Player::AttackInit()
 void Player::AttackUpdate()
 {
 	if (weapon_->GetIsAttackOver()) {
-		if (input->GetKeyPrecede(XINPUT_GAMEPAD_A, 20)) {
+		if (input->GetPadPrecede(XINPUT_GAMEPAD_A, 3)) {
 			behaviorRequest_ = Behavior::kStep;
 			return;
 		}

@@ -7,6 +7,9 @@ const int Input::log_save_frame = 120;
 std::array<int, 16> Input::joy_frame;
 XINPUT_STATE Input::joyState;
 
+#define XINPUT_GAMEPAD_LEFT_TRIGER    0x0400
+#define XINPUT_GAMEPAD_RIGHT_TRIGER   0x0800
+
 Input* Input::GetInstance()
 {
 	static Input instance;
@@ -190,7 +193,7 @@ void Input::UpdateJoyState()
 		joy_stack.end());
 }
 
-bool Input::GetKeyPrecede(uint32_t buttonNumber, int delayTime)
+bool Input::GetPadPrecede(uint32_t buttonNumber, int delayTime)
 {
 	auto result =
 		find_if(joy_stack.begin(), joy_stack.end(),
@@ -264,6 +267,12 @@ std::string Input::PadButtonList(uint32_t Number)
 	}	
 	else if (Number & 0x0200) {
 		return "RIGHT_SHOULDER ";
+	}	
+	else if (Number & 0x0400) {
+		return "LEFT_TRIGER";
+	}	
+	else if (Number & 0x0800) {
+		return "RIGHT_TRIGER";
 	}	
 	else if (Number & 0x1000) {
 		return "GAMEPAD_A";

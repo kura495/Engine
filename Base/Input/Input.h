@@ -96,12 +96,12 @@ public:
 	static void UpdateJoyState();
 	
 	/// <summary>
-	/// 
+	/// ゲームパッドの先行入力に対応した
 	/// </summary>
 	/// <param name="buttonNumber">XINPUT_GAMEPAD_</param>
 	/// <param name="delayTime">何フレーム猶予区間をつくるか</param>
 	/// <returns></returns>
-	static bool GetKeyPrecede(uint32_t buttonNumber,int delayTime);
+	static bool GetPadPrecede(uint32_t buttonNumber,int delayTime);
 
 private:
 	Input() = default;
