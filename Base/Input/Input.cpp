@@ -1,8 +1,11 @@
 ﻿#include"Input.h"
 
-#define XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  7849
-#define XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE 8689
-#define XINPUT_GAMEPAD_TRIGGER_THRESHOLD    30
+std::list<ListData> Input::joy_stack;
+std::list<ListData> Input::joy_stacklog;
+const int Input::save_frame = 20;
+const int Input::log_save_frame = 120;
+std::array<int, 16> Input::joy_frame;
+XINPUT_STATE Input::joyState;
 
 Input* Input::GetInstance()
 {
@@ -58,6 +61,10 @@ void Input::Update()
 	joyStatePre = joyState;
 
 	GetJoystickState();
+	UpdateJoyState();
+#ifdef _DEBUG
+	ImGui();
+#endif
 }
 
 bool Input::pushKey(uint8_t keyNumber)
@@ -153,6 +160,53 @@ bool Input::GetJoystickState()
 
 }
 
+void Input::UpdateJoyState()
+{
+	// スタックされた入力情報の、経過フレームを計算
+	for (auto& data : joy_stack) {
+		data.frame++;
+	}
+	//2のi乗して押されていたらスタック
+	for (int i = 0; i < 16; i++) {
+		if (joy_frame[i] == -1) joy_frame[i]++;
+		int a = (int)std::pow(2,i);
+		if (joyState.Gamepad.wButtons & a) {
+			joy_frame[i]++;
+			// 押された瞬間に入力情報をスタック
+			if (joy_frame[i] == 1) {
+				joy_stack.emplace_back(ListData(a));
+				joy_stacklog.emplace_back(ListData(a));
+			}
+		}
+		else if (joy_frame[i] > 0) {
+			joy_frame[i] = -1;
+		}
+	}
+	// 一定フレーム経った入力情報を削除
+	// data.frameがsave_frameを超えたら削除
+	joy_stack.erase(
+		remove_if(joy_stack.begin(), joy_stack.end(),
+			[](ListData data) { return data.frame >= save_frame; }),
+		joy_stack.end());
+}
+
+bool Input::GetKeyPrecede(uint32_t buttonNumber, int delayTime)
+{
+	auto result =
+		find_if(joy_stack.begin(), joy_stack.end(),
+			[buttonNumber, delayTime](ListData data)
+			{
+				return data.code == buttonNumber && data.frame < delayTime;
+			});
+	if (result != joy_stack.end()) {
+		joy_stack.erase(result);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 Vector2 Input::PositionMouse() {
 	return { (float)mouse_.lX,(float)mouse_.lY };
 }
@@ -160,6 +214,70 @@ Vector2 Input::PositionMouse() {
 float Input::ScrollMouse()
 {
 	return (float)mouse_.lZ;
+}
+
+void Input::ImGui()
+{
+	ImGui::Begin("Input");
+	ImGui::Text("ImPut");
+	for (ListData& data : joy_stacklog) {
+			ImGui::Text(PadButtonList(data.code).c_str());
+			data.frame++;
+	}
+	// 一定フレーム経った入力情報を削除
+	// data.frameがsave_frameを超えたら削除
+	joy_stacklog.erase(remove_if(joy_stacklog.begin(), joy_stacklog.end(),
+			[](ListData data) { return data.frame >= log_save_frame; }),
+		joy_stacklog.end());
+
+	ImGui::End();
+}
+
+std::string Input::PadButtonList(uint32_t Number)
+{
+	if (Number & 0x0001) {
+		return "DPAD_UP";
+	}
+	else if (Number & 0x0002) {
+		return "DPAD_DOWN";
+	}	
+	else if (Number & 0x0004) {
+		return "DPAD_LEFT";
+	}	
+	else if (Number & 0x0008) {
+		return "DPAD_RIGHT";
+	}	
+	else if (Number & 0x0010) {
+		return "GAMEPAD_START";
+	}	
+	else if (Number & 0x0020) {
+		return "GAMEPAD_BACK";
+	}	
+	else if (Number & 0x0040) {
+		return "LEFT_THUMB";
+	}	
+	else if (Number & 0x0080) {
+		return "RIGHT_THUMB";
+	}	
+	else if (Number & 0x0100) {
+		return "LEFT_SHOULDER";
+	}	
+	else if (Number & 0x0200) {
+		return "RIGHT_SHOULDER ";
+	}	
+	else if (Number & 0x1000) {
+		return "GAMEPAD_A";
+	}	
+	else if (Number & 0x2000) {
+		return "GAMEPAD_B";
+	}	
+	else if (Number & 0x4000) {
+		return "GAMEPAD_X";
+	}
+	else if (Number & 0x8000) {
+		return "GAMEPAD_Y";
+	}
+	return "";
 }
 
 

@@ -20,6 +20,15 @@
 #define MOUSE_BOTTON6	6
 #define MOUSE_BOTTON7	7
 
+struct ListData {
+	uint32_t code;
+	int frame;
+	ListData(int code) {
+		this->code = code;
+		frame = 0;
+	}
+};
+
 struct MousePosition {
 	Vector2 Pos;
 	float Scroll;
@@ -84,6 +93,16 @@ public:
 		return m_Position;
 	}
 
+	static void UpdateJoyState();
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="buttonNumber">XINPUT_GAMEPAD_</param>
+	/// <param name="delayTime">何フレーム猶予区間をつくるか</param>
+	/// <returns></returns>
+	static bool GetKeyPrecede(uint32_t buttonNumber,int delayTime);
+
 private:
 	Input() = default;
 	~Input() = default;
@@ -99,6 +118,11 @@ private:
 
 	float ScrollMouse();
 
+	//ImGui
+	void ImGui();
+
+	std::string PadButtonList(uint32_t Number);
+
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> divKeyboard = nullptr;
@@ -111,7 +135,15 @@ private:
 	DIMOUSESTATE2 mousePre_;
 	MousePosition m_Position = { {0.0f,0.0f},0.0f };
 	//パッド
-	XINPUT_STATE joyState;
+	static XINPUT_STATE joyState;
+	static std::array<int, 16> joy_frame;
 	XINPUT_STATE joyStatePre;
+
+	//先行入力
+	static std::list<ListData> joy_stack;
+	static std::list<ListData> joy_stacklog;
+	static const int save_frame;
+	static const int log_save_frame;
+
 };
 
