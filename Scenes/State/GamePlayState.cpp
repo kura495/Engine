@@ -23,6 +23,10 @@ void GamePlayState::Initialize()
 	followCamera->Initialize();
 	followCamera->SetTarget(&player_->GetWorldTransform());
 
+	lockOn.Init();
+	followCamera->SetLockOn(&lockOn);
+	player_->SetLockOn(&lockOn);
+
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
@@ -42,6 +46,8 @@ void GamePlayState::Update()
 	enemyManager->Update();
 	particle->Update();
 	collisionManager->Update();
+
+	lockOn.Update(enemyManager->GetList());
 
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();

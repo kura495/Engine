@@ -30,6 +30,7 @@
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"
 #include "Game/Object/Enemy/Manager/EnemyManager.h"
+#include "Game/Object/Camera/LockOn.h"
 
 class GamePlayState :public GameState
 {
@@ -53,6 +54,7 @@ private:
 	std::unique_ptr<Player>player_;
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
+	LockOn lockOn;
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;

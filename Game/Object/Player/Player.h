@@ -7,6 +7,8 @@
 #include "Base/Input/Input.h"
 #include "Base/Animation/Animation.h"
 
+//前方宣言
+class LockOn;
 enum class Behavior {
 	kRoot,
 	kAttack,
@@ -24,6 +26,8 @@ public:
 	void ImGui();
 
 	void OnCollision(const ICollider* collider);
+
+	void SetLockOn(LockOn* lockOn) { this->lockOn_ = lockOn; }
 
 	void Move();
 	void PlayerRoring();
@@ -57,6 +61,9 @@ private:
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
+
+	//ロックオン
+	const LockOn* lockOn_ = nullptr;
 
 	Vector3 lookPoint;
 	Vector3 sub;

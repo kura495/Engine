@@ -25,7 +25,7 @@ void EnemyManager::Update()
 	}
 	if (spawnFlame > KSpawnFlame) {
 		spawn++;
-		//Spawn();
+		Spawn();
 		spawnFlame = 0;
 	}
 

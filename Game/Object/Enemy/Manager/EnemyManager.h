@@ -9,6 +9,8 @@ public:
 	void Update();
 	void Draw();
 
+	std::list<Enemy*> GetList() { return enemys_; };
+
 private:// 関数
 	void Spawn();
 private:// 変数

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Game/Object/Camera/LockOn.h"
 
 bool Player::playerMoveValue;
 bool Player::PushOptionButtern;
@@ -223,13 +224,30 @@ void Player::Move()
 #pragma endregion 移動
 
 #pragma region
+		if (!lockOn_->ExistTarget()) {
+			//移動ベクトルをカメラの角度だけ回転
+			//ロックオン座標
+			lookPoint = move + world_.transform.translate;
+			lookPoint.y = 0;
+			//追従対象からロックオン対象へのベクトル
+			sub = lookPoint - world_.transform.translate;
 
-		//移動ベクトルをカメラの角度だけ回転
+			//プレイヤーの現在の向き
+			sub = sub.Normalize();
+
+			Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, sub));
+			float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
+
+			//行きたい方向のQuaternionの作成
+			world_.transform.quaternion = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+
+		}
+		else if (lockOn_ && lockOn_->ExistTarget()) {
 		//ロックオン座標
-		lookPoint = move + world_.transform.translate;
-		lookPoint.y = 0;
+		Vector3 lockOnPosition = lockOn_->GetTargetPosition();
+		lockOnPosition.y = 0;
 		//追従対象からロックオン対象へのベクトル
-		sub = lookPoint - world_.transform.translate;
+		sub = lockOnPosition - world_.GetTranslateFromMatWorld();
 
 		//プレイヤーの現在の向き
 		sub = sub.Normalize();
@@ -239,6 +257,7 @@ void Player::Move()
 
 		//行きたい方向のQuaternionの作成
 		world_.transform.quaternion = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+		}
 
 #pragma endregion プレイヤーの回転
 
@@ -246,6 +265,7 @@ void Player::Move()
 
 		return;
 	}
+	
 
 }
 #pragma region
