@@ -23,6 +23,10 @@ struct DrawLineData {
 	Line* lineData;
 	WorldTransform* world_;
 };
+struct DrawLineData {
+	Sprite* sprite;
+	WorldTransform* world_;
+};
 class Renderer
 {
 public:
@@ -36,6 +40,7 @@ public:
 	static void AddModelSkinningData(Model& model,WorldTransform& world,SkinCluster& skinCluster);
 	static void AddLineData(Line& line,WorldTransform& world);
 	static void AddWireFlameData(Model& model, WorldTransform& world);
+	static void AddSpriteData(Sprite& model, WorldTransform& world);
 
 	 void ChangePipeline(PipelineType Type);
 
