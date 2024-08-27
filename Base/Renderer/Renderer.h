@@ -23,7 +23,7 @@ struct DrawLineData {
 	Line* lineData;
 	WorldTransform* world_;
 };
-struct DrawLineData {
+struct DrawSpriteData {
 	Sprite* sprite;
 	WorldTransform* world_;
 };
@@ -40,7 +40,7 @@ public:
 	static void AddModelSkinningData(Model& model,WorldTransform& world,SkinCluster& skinCluster);
 	static void AddLineData(Line& line,WorldTransform& world);
 	static void AddWireFlameData(Model& model, WorldTransform& world);
-	static void AddSpriteData(Sprite& model, WorldTransform& world);
+	static void AddSpriteData(Sprite& sprite, WorldTransform& world);
 
 	 void ChangePipeline(PipelineType Type);
 
@@ -58,6 +58,7 @@ private:
 	static std::vector<DrawSkinningData> drawModelSkinningData_;
 	static std::vector<DrawLineData> drawLineData_;
 	static std::vector<DrawModelData> drawWireFlameData_;
+	static std::vector<DrawSpriteData> drawSpriteData_;
 
 	SkyBox skyBox;
 

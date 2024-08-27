@@ -5,6 +5,7 @@ std::vector<DrawModelData> Renderer::drawModelData_;
 std::vector<DrawSkinningData> Renderer::drawModelSkinningData_;
 std::vector<DrawLineData> Renderer::drawLineData_;
 std::vector<DrawModelData> Renderer::drawWireFlameData_;
+std::vector<DrawSpriteData> Renderer::drawSpriteData_;
 ;
 Renderer* Renderer::GetInstance()
 {
@@ -104,6 +105,14 @@ void Renderer::AddWireFlameData(Model& model, WorldTransform& world)
 	result.modelData = &model;
 	result.world_ = &world;
 	drawWireFlameData_.push_back(result);
+}
+
+void Renderer::AddSpriteData(Sprite& sprite, WorldTransform& world)
+{
+	DrawSpriteData result;
+	result.sprite = &sprite;
+	result.world_ = &world;
+	drawSpriteData_.push_back(result);
 }
 
 void Renderer::ChangePipeline(PipelineType Type)
