@@ -34,12 +34,6 @@ public:
 	static bool playerMoveValue;
 	static bool PushOptionButtern;
 
-#pragma region Getter
-	WorldTransform& GetWorldTransform() {
-		return world_;
-	}
-#pragma endregion
-
 private:
 	Input* input = nullptr;
 

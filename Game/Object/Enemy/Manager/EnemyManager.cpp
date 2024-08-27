@@ -25,13 +25,17 @@ void EnemyManager::Update()
 	}
 	if (spawnFlame > KSpawnFlame) {
 		spawn++;
-		Spawn();
+		//Spawn();
 		spawnFlame = 0;
 	}
 
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
 	}
+
+#ifdef _DEBUG
+	ImGui();
+#endif
 }
 
 void EnemyManager::Draw()
@@ -47,4 +51,13 @@ void EnemyManager::Spawn()
 	enemy->Init(enemyModel_);
 	enemy->SetPlayer(player_);
 	enemys_.push_back(enemy);
+}
+
+void EnemyManager::ImGui()
+{
+	ImGui::Begin("EnemyManager");
+	if (ImGui::Button("Spawn")) {
+		Spawn();
+	}
+	ImGui::End();
 }

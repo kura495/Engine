@@ -200,8 +200,6 @@
     <ClCompile Include="Base\Common\DirectX\DirectXCommon.cpp">
       <Filter>Engine\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
-    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
@@ -244,6 +242,8 @@
     <ClCompile Include="Base\PostProsess\CubeMap\PPCubeMap.cpp" />
     <ClCompile Include="Game\Object\Camera\LockOn.cpp" />
     <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
+    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
+    <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -420,9 +420,7 @@
     <ClInclude Include="Base\Common\DirectX\DirectXCommon.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Box\BoxObject.h" />
     <ClInclude Include="Base\Object\IObject.h" />
-    <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\Character.h" />
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
@@ -464,6 +462,8 @@
     <ClInclude Include="Base\PostProsess\CubeMap\PPCubeMap.h" />
     <ClInclude Include="Game\Object\Camera\LockOn.h" />
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
+    <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
+    <ClInclude Include="Game\Object\Box\BoxObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

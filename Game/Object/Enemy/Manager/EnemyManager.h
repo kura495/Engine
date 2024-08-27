@@ -13,6 +13,7 @@ public:
 
 private:// 関数
 	void Spawn();
+	void ImGui();
 private:// 変数
 	std::vector<Model*> enemyModel_;
 	std::list<Enemy*> enemys_;

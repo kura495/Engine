@@ -8,7 +8,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 	world_.transform.translate.z = 1.0f;
 
 	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
-	firstPos = MakeRotateAxisAngleQuaternion(cross, std::acos(-0.8f));
+	firstPos = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(-0.8f));
 	world_.transform.quaternion = firstPos;
 
 	world_.UpdateMatrix();
@@ -82,9 +82,9 @@ void Weapon::RootUpdate()
 void Weapon::AttackInit()
 {
 	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
-	attackFirstQua = MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
+	attackFirstQua = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
-	attackEndQua = MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
+	attackEndQua = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
 	collider.SetSize({ 0.5f,2.0f,0.5f });
 	collider.IsUsing = true;
 

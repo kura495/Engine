@@ -21,7 +21,7 @@ void GamePlayState::Initialize()
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
-	followCamera->SetTarget(&player_->GetWorldTransform());
+	followCamera->SetTarget(&player_->GetWorld());
 
 	lockOn.Init();
 	followCamera->SetLockOn(&lockOn);

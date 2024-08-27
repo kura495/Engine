@@ -35,11 +35,13 @@ void LockOn::Update(const std::list<Enemy*>& enemies)
 		}
 	}
 	else {
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
+		//入力があったらターゲットを検索
+		//TODO:今は無効化
+		/*if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
 			if (!(joyStatePre.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 				Search(enemies, Renderer::viewProjection);
 			}
-		}
+		}*/
 	}
 
 	if (target_) {

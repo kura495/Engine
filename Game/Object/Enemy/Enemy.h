@@ -36,8 +36,10 @@ private://関数
 	void OnCollision(const ICollider* ICollider);
 	void AttackOnCollision(const ICollider* ICollider);
 	// 攻撃範囲内ならtrue
+	void AttackInit();
 	bool ChackOnAttack();
 	void ChasePlayer();
+	void LookPlayer();
 
 private://変数
 	Player* player_ = nullptr;

@@ -230,7 +230,7 @@ void Player::Move()
 			lookPoint = move + world_.transform.translate;
 			lookPoint.y = 0;
 			//追従対象からロックオン対象へのベクトル
-			sub = lookPoint - world_.transform.translate;
+			sub = move;
 
 			//プレイヤーの現在の向き
 			sub = sub.Normalize();
@@ -239,7 +239,7 @@ void Player::Move()
 			float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
 
 			//行きたい方向のQuaternionの作成
-			world_.transform.quaternion = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+			world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
 		}
 		else if (lockOn_ && lockOn_->ExistTarget()) {
@@ -256,7 +256,7 @@ void Player::Move()
 		float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
 
 		//行きたい方向のQuaternionの作成
-		world_.transform.quaternion = MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+		world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 		}
 
 #pragma endregion プレイヤーの回転
@@ -278,7 +278,7 @@ void Player::RootUpdate()
 {
 	Move();
 
-	if (joyState.Gamepad.bRightTrigger != 0 && joyStatePre.Gamepad.bRightTrigger == 0) {
+	if (input->GetPadPrecede(XINPUT_GAMEPAD_RIGHT_SHOULDER, 20)) {
 		behaviorRequest_ = Behavior::kAttack;
 	}
 
