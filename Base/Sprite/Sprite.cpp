@@ -91,7 +91,7 @@ void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 	viewProjection_.constMap_VS->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
 }
 
-void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
+void Sprite::Draw(const WorldTransform& transform)
 {
 
 	//色の書き込み

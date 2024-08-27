@@ -68,6 +68,15 @@ void Renderer::Draw()
 	//中身を消す
 	drawWireFlameData_.clear();
 
+	//スプライト描画
+	ChangePipeline(PipelineType::Sprite);
+	///描画
+	for (DrawSpriteData model : drawSpriteData_) {
+		model.sprite->Draw(*model.world_);
+	}
+	//中身を消す
+	drawWireFlameData_.clear();
+
 }
 
 void Renderer::PostProsessDraw()

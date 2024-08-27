@@ -3,6 +3,7 @@
 enum class PipelineType {
 	Standerd,
 	Skinning,
+	Sprite,
 	DrawLine,
 	WireFlame,
 	PostProsessPSO,
