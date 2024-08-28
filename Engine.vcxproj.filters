@@ -244,6 +244,7 @@
     <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
+    <ClCompile Include="Base\PipelineState\Sprite\SpritePSO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -464,6 +465,7 @@
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
     <ClInclude Include="Game\Object\Box\BoxObject.h" />
+    <ClInclude Include="Base\PipelineState\Sprite\SpritePSO.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

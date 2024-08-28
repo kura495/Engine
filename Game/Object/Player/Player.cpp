@@ -6,6 +6,8 @@ bool Player::PushOptionButtern;
 
 void Player::Init(std::vector<Model*> models)
 {
+	name = "Player";
+
 	models_ = models;
 	world_.Initialize();
 	input = Input::GetInstance();

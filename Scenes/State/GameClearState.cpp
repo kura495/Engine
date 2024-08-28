@@ -5,10 +5,10 @@ void GameClearState::Initialize()
 	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
-	textureHundle = textureManager_->LoadTexture("resources/Clear.png");
 	texture_world_.Initialize();
 	
 	texture = std::make_unique<Sprite>();
+	texture->TextureHandle = textureManager_->LoadTexture("resources/Clear.png");
 	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 
 }
@@ -23,6 +23,6 @@ void GameClearState::Update()
 
 void GameClearState::Draw()
 {
-	texture->Draw(texture_world_, textureHundle);
+	texture->Draw(texture_world_);
 }
 

@@ -111,8 +111,6 @@ void Model::SkinDraw(const WorldTransform& transform, const SkinCluster& skinClu
 
 }
 
-
-
 void Model::RendererDraw(WorldTransform& transform)
 {
 	Renderer::AddModelData(*this,transform);

@@ -64,4 +64,6 @@ private:
 
 	int Texture;
 	WorldTransform cubeWorld_;
+
+	ViewProjection viewproj;
 };

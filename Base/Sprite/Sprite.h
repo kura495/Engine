@@ -10,11 +10,13 @@
 #include <wrl.h>
 #include "Light/Light.h"
 
+
 class Sprite
 {
 public:
 	void Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const Vector2& RightTop, const Vector2& RightBottom);
 	void Initialize(const Vector2& anchorPoint, const Vector2& TextureSize);
+	void RendererDraw(WorldTransform& transform);
 	void Draw(const WorldTransform& transform);
 	void ImGui(const char* Title);
 	void SetColor(const Vector4& color);

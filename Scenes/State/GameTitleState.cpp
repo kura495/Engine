@@ -2,21 +2,20 @@
 
 void GameTitleState::Initialize()
 {
+	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
-	textureHundle = textureManager_->LoadTexture("resources/title.png");
+
 	texture_world_.Initialize();
-
-	textureHundle2 = textureManager_->LoadTexture("resources/BlackTexture.png");
-	texture2_world_.Initialize();
-
 	texture = std::make_unique<Sprite>();
+	texture->TextureHandle = textureManager_->LoadTexture("resources/title.png");
 	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 
 	texture2 = std::make_unique<Sprite>();
 	texture2->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
-
+	texture2->TextureHandle = textureManager_->LoadTexture("resources/BlackTexture.png");
+	texture2_world_.Initialize();
 	time = 0;
 	IsCanPush = false;
 	FadeInFlag = false;
@@ -32,7 +31,7 @@ void GameTitleState::Update()
 	}
 
 	input->GetJoystickState(joyState);
-	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A ) {
+	if (input->GetPadPrecede(XINPUT_GAMEPAD_A,10)) {
 		if (IsCanPush) {
 			FadeInFlag = true;
 		}
@@ -59,6 +58,6 @@ void GameTitleState::Update()
 
 void GameTitleState::Draw()
 {
-	texture->Draw(texture_world_, textureHundle);
-	texture2->Draw(texture2_world_, textureHundle2);
+	texture2->RendererDraw(texture2_world_);
+	texture->RendererDraw(texture_world_);
 }
