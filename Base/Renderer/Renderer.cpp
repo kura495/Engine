@@ -35,7 +35,7 @@ void Renderer::Draw()
 
 	//CubeMap
 	ChangePipeline(PipelineType::CubeMap);
-	skyBox.Draw(cubeWorld_);
+	//skyBox.Draw(cubeWorld_);
 
 	//標準描画
 	ChangePipeline(PipelineType::Standerd);
