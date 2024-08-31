@@ -59,4 +59,6 @@ private://変数
 
 	float animationTime_ = 0.0f;
 	float animeInterval_ = 60.0f;
+
+	Quaternion PreQua;
 };

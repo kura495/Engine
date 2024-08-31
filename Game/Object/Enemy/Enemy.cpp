@@ -98,7 +98,7 @@ void Enemy::PlayAnime()
 
 		Vector3 scale = Animation::CalculateValue(rootNodeAnimation.scale.keyFrames, animationTime_);
 		world_.transform.translate += translate;
-		world_.transform.quaternion = rotation;
+		world_.transform.quaternion = PreQua * rotation;
 		world_.transform.scale = scale;
 	}
 	world_.UpdateMatrix();
@@ -140,7 +140,7 @@ void Enemy::AttackOnCollision(const ICollider* ICollider)
 
 void Enemy::AttackInit()
 {
-	//PreQua = world_.transform.quaternion;
+	PreQua = world_.transform.quaternion;
 }
 
 bool Enemy::ChackOnAttack()
