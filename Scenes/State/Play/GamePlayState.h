@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "IgameState.h"
+#include "Scenes/State/IgameState.h"
 #include "Common/Engine/MyEngine.h"
 #include "ModelData.h"
 #include "Audio.h"
@@ -63,4 +63,6 @@ private:
 	std::unique_ptr<EnemyManager> enemyManager;
 
 	ParticleSystem* particle;
+
+	Input* input;
 };

@@ -28,7 +28,7 @@ void Enemy::Init(std::vector<Model*> models)
 
 #pragma region
 
-	world_.transform.translate.y += 1.0f;
+	world_.transform.translate.y = -1.0f;
 	animation = Animation::LoadAnimationFile("resources/Monster", "Monster.gltf");
 
 	world_.SetTransform(models_[0]);
@@ -44,25 +44,45 @@ void Enemy::Update()
 	if (HP_ <= 0) {
 		IsAlive = false;
 	}
+	//出現の時のアニメーション
+	if (spawnFlame_ > kSpawnFlame_) {
+		world_.transform.translate.y = 1.0f;
+		isSpawn = false;
+	}
+	else if (isSpawn) {
+		if (spawnFlame_ <= 40) {
+			world_.transform.translate.y += 0.1f;
+		}
+		else {
+			world_.transform.translate.y -= 0.1f;
+		}
+		spawnFlame_++;
 
+		world_.UpdateMatrix();
+		return;
+	}
 
 	ImGui();
+	//TODO:BehaviorTreeに変更する！
+	//範囲内なら攻撃
 	if (ChackOnAttack() && isAttackFlag == false) {
 		isAttackFlag = true;
 		attackColliderFlag = true;
-		//範囲内なら攻撃
-		//攻撃の
+		//攻撃の初期化
 		AttackInit();
 	}
 
 	if (isAttackFlag) {
-		PlayAnime();
+
+		PlayAttackAnime();
 	}
 	else {
 		//範囲外なら歩く
 		ChasePlayer();
 		LookPlayer();
 	}
+
+	DamageEffect();
 
 	world_.UpdateMatrix();
 }
@@ -74,7 +94,7 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::PlayAnime()
+void Enemy::PlayAttackAnime()
 {
 	if (isAttackFlag) {
 		animationTime_ += 2.0f / 60.0f;
@@ -84,14 +104,14 @@ void Enemy::PlayAnime()
 			attackCollider.IsUsing = false;
 		}
 		animationTime_ = std::fmod(animationTime_, animation->duration);
-
+		//攻撃の当たり判定
 		if (attackColliderFlag) {
 			if (animationTime_ >= 2.0f) {
 				attackCollider.IsUsing = true;
 				attackColliderFlag = false;
 			}
 		}
-
+		//アニメーション情報を取得
 		NodeAnimation& rootNodeAnimation = animation->nodeAnimations[models_[0]->GetModelData().rootNode.name];
 		Vector3 translate = Animation::CalculateValue(rootNodeAnimation.translate.keyFrames, animationTime_);
 		Quaternion rotation = Animation::CalculateValue(rootNodeAnimation.rotate.keyFrames, animationTime_);
@@ -126,6 +146,9 @@ void Enemy::OnCollision(const ICollider* ICollider)
 {
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Weapon) {
 		HP_ -= 1;
+		isDamege = true;
+		damegeInterval = 0;
+
 	}
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Player) {
 	}
@@ -176,4 +199,23 @@ void Enemy::LookPlayer()
 
 	//行きたい方向のQuaternionの作成
 	world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+}
+
+void Enemy::DamageEffect()
+{
+	//TODO：モデルをポインタで受け取っているため、color_を変えるとすべての敵キャラの色が変わる
+	if (isDamege) {
+		damegeInterval++;
+		if (damegeInterval % 10 == 0) {
+
+			models_[0]->color_ = { 1.0f,0.5f,0.5f,1.0f };
+		}
+		else {
+			models_[0]->color_ = { 1.0f,1.0f,1.0f,1.0f };
+		}
+	}
+	if (damegeInterval > kDamegeInterval) {
+		models_[0]->color_ = { 1.0f,1.0f,1.0f,1.0f };
+		isDamege = false;
+	}
 }

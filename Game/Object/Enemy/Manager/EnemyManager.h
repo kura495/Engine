@@ -11,6 +11,8 @@ public:
 
 	std::list<Enemy*> GetList() { return enemys_; };
 
+	bool GetisClear() { return isClear; };
+
 private:// 関数
 	void Spawn();
 	void ImGui();
@@ -24,4 +26,9 @@ private:// 変数
 	float spawnFlame = 0;
 	const int SpawnMax = 3;
 	int spawn = 0;
+
+	int enemyDeadCount = 0;
+	const int kEnemyDeadCount = 4;
+
+	bool isClear = false;
 };

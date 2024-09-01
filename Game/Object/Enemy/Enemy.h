@@ -15,7 +15,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void PlayAnime();
+
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
@@ -37,9 +37,12 @@ private://関数
 	void AttackOnCollision(const ICollider* ICollider);
 	// 攻撃範囲内ならtrue
 	void AttackInit();
+	void PlayAttackAnime();
 	bool ChackOnAttack();
 	void ChasePlayer();
 	void LookPlayer();
+
+	void DamageEffect();
 
 private://変数
 	Player* player_ = nullptr;
@@ -47,7 +50,7 @@ private://変数
 
 	bool IsAlive = true;
 
-	uint32_t HP_ = 10;
+	uint32_t HP_ = 4;
 
 	const float AttackRange = 2.0f;
 	bool isAttackFlag = false;
@@ -61,4 +64,13 @@ private://変数
 	float animeInterval_ = 60.0f;
 
 	Quaternion PreQua;
+
+	bool isSpawn = true;
+	int spawnFlame_ = 0;
+	const int kSpawnFlame_ = 60;
+
+	bool isDamege = false;
+	int damegeInterval = 0;
+	const int kDamegeInterval = 60;
+
 };

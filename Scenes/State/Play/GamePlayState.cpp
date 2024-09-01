@@ -1,4 +1,4 @@
-#include "Scenes/State/GamePlayState.h"
+#include "Scenes/State/Play/GamePlayState.h"
 
 void GamePlayState::Initialize()
 {
@@ -8,6 +8,8 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
+
+	objectManager->LordBlenderScene("resources/Stage");
 
 	collisionManager = std::make_unique<CollisionManager>();
 	collisionManager->Init();
@@ -37,6 +39,8 @@ void GamePlayState::Initialize()
 	enemyManager = std::make_unique<EnemyManager>();
 	enemyManager->Init(player_.get());
 
+		input = Input::GetInstance();
+
 }
 
 void GamePlayState::Update()
@@ -51,6 +55,10 @@ void GamePlayState::Update()
 
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
+
+	if (enemyManager->GetisClear()) {
+		StateNo = 2;
+	}
 }
 
 void GamePlayState::Draw()

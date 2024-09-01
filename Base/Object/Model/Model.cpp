@@ -113,6 +113,7 @@ void Model::SkinDraw(const WorldTransform& transform, const SkinCluster& skinClu
 
 void Model::RendererDraw(WorldTransform& transform)
 {
+	materialData->color = color_;
 	Renderer::AddModelData(*this,transform);
 }
 

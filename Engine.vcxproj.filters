@@ -100,13 +100,13 @@
     <ClCompile Include="Scenes\Manager\GameManager.cpp">
       <Filter>Scenes\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\State\GameClearState.cpp">
+    <ClCompile Include="Scenes\State\Clear\GameClearState.cpp">
       <Filter>Scenes\State</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\State\GamePlayState.cpp">
+    <ClCompile Include="Scenes\State\Play\GamePlayState.cpp">
       <Filter>Scenes\State</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\State\GameTitleState.cpp">
+    <ClCompile Include="Scenes\State\Title\GameTitleState.cpp">
       <Filter>Scenes\State</Filter>
     </ClCompile>
     <ClCompile Include="Base\Input\Input.cpp">
@@ -403,13 +403,13 @@
     <ClInclude Include="Scenes\Manager\GameManager.h">
       <Filter>Scenes\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\State\GameClearState.h">
+    <ClInclude Include="Scenes\State\Clear\GameClearState.h">
       <Filter>Scenes\State</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\State\GamePlayState.h">
+    <ClInclude Include="Scenes\State\Play\GamePlayState.h">
       <Filter>Scenes\State</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\State\GameTitleState.h">
+    <ClInclude Include="Scenes\State\Title\GameTitleState.h">
       <Filter>Scenes\State</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\State\IgameState.h">

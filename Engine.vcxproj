@@ -254,9 +254,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\Manager\GameManager.cpp" />
-    <ClCompile Include="Scenes\State\GameClearState.cpp" />
-    <ClCompile Include="Scenes\State\GamePlayState.cpp" />
-    <ClCompile Include="Scenes\State\GameTitleState.cpp" />
+    <ClCompile Include="Scenes\State\Clear\GameClearState.cpp" />
+    <ClCompile Include="Scenes\State\Play\GamePlayState.cpp" />
+    <ClCompile Include="Scenes\State\Title\GameTitleState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Animation\Animation.h" />
@@ -358,9 +358,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Scenes\Manager\GameManager.h" />
-    <ClInclude Include="Scenes\State\GameClearState.h" />
-    <ClInclude Include="Scenes\State\GamePlayState.h" />
-    <ClInclude Include="Scenes\State\GameTitleState.h" />
+    <ClInclude Include="Scenes\State\Clear\GameClearState.h" />
+    <ClInclude Include="Scenes\State\Play\GamePlayState.h" />
+    <ClInclude Include="Scenes\State\Title\GameTitleState.h" />
     <ClInclude Include="Scenes\State\IgameState.h" />
   </ItemGroup>
   <ItemGroup>

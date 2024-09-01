@@ -10,22 +10,25 @@ void EnemyManager::Init(Player* player)
 
 void EnemyManager::Update()
 {
+	if (enemyDeadCount > kEnemyDeadCount) {
+		isClear = true;
+	}
+
 	enemys_.remove_if([this](Enemy* enemy)
 		{
 			if (!enemy->GetIsAlive())
 			{
+				enemyDeadCount++;
 				delete enemy;
 				return true;
 			}
 			return false;
 	});
 
-	if (spawn < SpawnMax) {
-		spawnFlame++;
-	}
+	spawnFlame++;
 	if (spawnFlame > KSpawnFlame) {
 		spawn++;
-		//Spawn();
+		Spawn();
 		spawnFlame = 0;
 	}
 
