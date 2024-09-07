@@ -29,6 +29,8 @@ public:
 
 	void SetLockOn(LockOn* lockOn) { this->lockOn_ = lockOn; }
 
+	bool GetisDead() { return isDead; };
+
 	void Move();
 	void PlayerRoring();
 	static bool playerMoveValue;
@@ -67,6 +69,7 @@ private:
 	float speed = 0.1f;
 	//HP
 	uint32_t HP_ = 10;
+	bool isDead = false;
 
 	const float kDamegeEffectF = 120;
 	float DamegeEffectF = 0;

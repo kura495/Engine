@@ -11,6 +11,7 @@ class Player;
 class Enemy : public IObject
 {
 public:
+
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;

@@ -45,6 +45,7 @@ void GameManager::Initialize()
 	state[TITLE] = std::make_unique<GameTitleState>();
 	state[PLAY] = std::make_unique<GamePlayState>();
 	state[CLEAR] = std::make_unique<GameClearState>();
+	state[GAMEOVER] = std::make_unique<GameOverState>();
 	state[TITLE]->Initialize();
 	currentSceneNum_ = 0;
 	//TODO : ちゃんとユニポとかにする

@@ -35,6 +35,11 @@ void Player::Init(std::vector<Model*> models)
 
 void Player::Update()
 {
+	if (HP_ <= 0) {
+		isDead = true;
+	}
+
+
 	tlanslatePre = world_.transform.translate;
 #ifdef USE_IMGUI
 	ImGui();

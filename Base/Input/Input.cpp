@@ -171,18 +171,18 @@ void Input::UpdateJoyState()
 	}
 	//2のi乗して押されていたらスタック
 	for (int i = 0; i < 16; i++) {
-		if (joy_frame[i] == -1) joy_frame[i]++;
-		int a = (int)std::pow(2,i);
-		if (joyState.Gamepad.wButtons & a) {
-			joy_frame[i]++;
+		if (joy_frame[i] == 0) joy_frame[i]++;
+		int buttonNum = (int)std::pow(2,i);
+		if (joyState.Gamepad.wButtons & buttonNum) {
+			joy_frame[i] = 1;
 			// 押された瞬間に入力情報をスタック
 			if (joy_frame[i] == 1) {
-				joy_stack.emplace_back(ListData(a));
-				joy_stacklog.emplace_back(ListData(a));
+				joy_stack.emplace_back(ListData(buttonNum));
+				joy_stacklog.emplace_back(ListData(buttonNum));
 			}
 		}
 		else if (joy_frame[i] > 0) {
-			joy_frame[i] = -1;
+			joy_frame[i] = 0;
 		}
 	}
 	// 一定フレーム経った入力情報を削除
@@ -195,12 +195,13 @@ void Input::UpdateJoyState()
 
 bool Input::GetPadPrecede(uint32_t buttonNumber, int delayTime)
 {
-	auto result =
-		find_if(joy_stack.begin(), joy_stack.end(),
-			[buttonNumber, delayTime](ListData data)
-			{
-				return data.code == buttonNumber && data.frame < delayTime;
-			});
+	//押されたボタンがbuttonNumvberと同じで、
+	//経過フレームがdelayTimeより小さいならtrueを返す
+	auto result = find_if(
+		joy_stack.begin(), joy_stack.end()
+		,[buttonNumber, delayTime](ListData data){
+	return data.code == buttonNumber && data.frame < delayTime;
+	});
 	if (result != joy_stack.end()) {
 		joy_stack.erase(result);
 		return true;

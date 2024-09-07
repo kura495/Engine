@@ -9,6 +9,7 @@
 #include"Scenes/State/Title/GameTitleState.h"
 #include"Scenes/State/Play/GamePlayState.h"
 #include"Scenes/State/Clear/GameClearState.h"
+#include"Scenes/State/GameOver/GameOver.h"
 #include"Scenes/State/IgameState.h"
 #include"Audio.h"
 #include"Input.h"
@@ -32,6 +33,7 @@ public:
 		TITLE,
 		PLAY,
 		CLEAR,
+		GAMEOVER,
 		GameStateMax
 	};
 

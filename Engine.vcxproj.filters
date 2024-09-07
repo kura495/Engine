@@ -245,6 +245,7 @@
     <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
     <ClCompile Include="Base\PipelineState\Sprite\SpritePSO.cpp" />
+    <ClCompile Include="Scenes\State\GameOver\GameOver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -466,6 +467,7 @@
     <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
     <ClInclude Include="Game\Object\Box\BoxObject.h" />
     <ClInclude Include="Base\PipelineState\Sprite\SpritePSO.h" />
+    <ClInclude Include="Scenes\State\GameOver\GameOver.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

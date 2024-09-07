@@ -59,6 +59,9 @@ void GamePlayState::Update()
 	if (enemyManager->GetisClear()) {
 		StateNo = 2;
 	}
+	if (player_->GetisDead()) {
+		StateNo = 3;
+	}
 }
 
 void GamePlayState::Draw()

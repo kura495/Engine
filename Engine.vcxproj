@@ -255,6 +255,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="Scenes\State\Clear\GameClearState.cpp" />
+    <ClCompile Include="Scenes\State\GameOver\GameOver.cpp" />
     <ClCompile Include="Scenes\State\Play\GamePlayState.cpp" />
     <ClCompile Include="Scenes\State\Title\GameTitleState.cpp" />
   </ItemGroup>
@@ -359,6 +360,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Scenes\Manager\GameManager.h" />
     <ClInclude Include="Scenes\State\Clear\GameClearState.h" />
+    <ClInclude Include="Scenes\State\GameOver\GameOver.h" />
     <ClInclude Include="Scenes\State\Play\GamePlayState.h" />
     <ClInclude Include="Scenes\State\Title\GameTitleState.h" />
     <ClInclude Include="Scenes\State\IgameState.h" />
