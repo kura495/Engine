@@ -65,4 +65,5 @@ private:
 	ParticleSystem* particle;
 
 	Input* input;
+
 };
