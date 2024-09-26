@@ -31,7 +31,33 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 
 }
 
-void Model::Draw(const WorldTransform& transform)
+void Model::Draw(const WorldTransform& transform,int DDSTexHandle)
+{
+
+	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//頂点
+	directX_->GetcommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
+	//IndexBuffer
+	directX_->GetcommandList()->IASetIndexBuffer(&indexBufferView);
+	//matWorld
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
+	//ViewProjection
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	//色とuvTransform
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	//テクスチャ
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
+	//テクスチャ
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(6, textureManager_->GetGPUHandle(DDSTexHandle));
+
+	//Light
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
+
+	directX_->GetcommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
+
+}
+void Model::WireFlameDraw(const WorldTransform& transform)
 {
 
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

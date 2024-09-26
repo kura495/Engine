@@ -10,5 +10,6 @@ enum class PipelineType {
 	GrayScale,
 	Vinette,
 	LuminanceBasedOutline,
-	RGBtoHSV
+	RGBtoHSV,
+	CubeMap
 };

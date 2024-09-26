@@ -16,7 +16,7 @@ void PlaneObject::Update()
 {
 	world_.UpdateMatrix();
 
-	BoxCollider::SetSize({world_.transform_.scale.x * 5.0f,0.0f,world_.transform_.scale.z * 5.0f });
+	BoxCollider::SetSize({world_.transform.scale.x * 5.0f,0.0f,world_.transform.scale.z * 5.0f });
 }
 
 void PlaneObject::Draw()
@@ -30,14 +30,14 @@ void PlaneObject::ImGui()
 {
 	ImGui::Begin("PlaneObject");
 	ImGui::Text("Objectnumber %d", objectNumber_);
-	ImGui::DragFloat3("Scale", &world_.transform_.scale.x);
-	ImGui::DragFloat4("Rotate", &world_.transform_.quaternion.x);
-	ImGui::DragFloat3("Translate", &world_.transform_.translate.x);
+	ImGui::DragFloat3("Scale", &world_.transform.scale.x);
+	ImGui::DragFloat4("Rotate", &world_.transform.quaternion.x);
+	ImGui::DragFloat3("Translate", &world_.transform.translate.x);
 	ImGui::End();
 	std::string Number = std::to_string(GetNumber());
 
 	std::string Name = "Plane" + Number;
-	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform_);
+	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform);
 }
 
 void PlaneObject::OnCollision(const ICollider* collider)

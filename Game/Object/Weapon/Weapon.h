@@ -28,10 +28,10 @@ public:
 	void DrawParticle();
 
 	void SetSize(Vector3 pos) {
-		collider.SetSize({ pos.x + world_.transform_.translate.x,1.0f,pos.z + +world_.transform_.translate.z});
+		collider.SetSize({ pos.x + world_.transform.translate.x,1.0f,pos.z + +world_.transform.translate.z});
 	}
 	void SetPos(Vector3 vec) {
-		world_.transform_.translate = vec;
+		world_.transform.translate = vec;
 		world_.UpdateMatrix();
 	}
 

@@ -2,9 +2,9 @@
 
 void WireFlame::ShaderCompile()
 {
-	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Object3D.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/WireFlame/WireFlame.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Object3D.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/WireFlame/WireFlame.PS.hlsl", L"ps_6_0");
 }
 
 void WireFlame::CreateRootSignature()
@@ -30,8 +30,6 @@ void WireFlame::CreateRootSignature()
 	rootParameters[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//VERTEXShaderで使う
 	rootParameters[5].Descriptor.ShaderRegister = 2;//レジスタ番号を1にバインド
 
-	descriptionRootSignature.pParameters = rootParameters;//ルートパラメータ配列へのポインタ
-	descriptionRootSignature.NumParameters = _countof(rootParameters);//配列の長さ
 	//テクスチャで使う
 	//DescriptorRange
 	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
@@ -48,6 +46,10 @@ void WireFlame::CreateRootSignature()
 	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
 	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixelShaderで使う
 	rootParameters[3].Descriptor.ShaderRegister = 1;//レジスタ番号を1にバインド
+
+
+	descriptionRootSignature.pParameters = rootParameters;//ルートパラメータ配列へのポインタ
+	descriptionRootSignature.NumParameters = _countof(rootParameters);//配列の長さ
 
 	//Samplerの設定
 	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};

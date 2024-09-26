@@ -12,9 +12,9 @@ public:
 	void Update();
 	void Draw();
 
-	void SetTranslate(Vector3 translate){ world_.transform_.translate = translate; }
+	void SetTranslate(Vector3 translate){ world_.transform.translate = translate; }
 	void SetScale(Vector3 scale) {
-		world_.transform_.scale = scale;
+		world_.transform.scale = scale;
 	}
 
 private:

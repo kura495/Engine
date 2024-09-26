@@ -21,7 +21,7 @@ class FollowCamera : public Camera
 public:
 	void Initialize()override;
 	void Update()override;
-
+	void ImGui();
 	void SetTarget(const WorldTransform* target);
 
 private:
@@ -40,6 +40,6 @@ private:
 	WorkInterpolation workInter;
 	//追従対象からのオフセットを計算する
 	Vector3 OffsetCalc();
-	//TODO : yを2.0fに戻す
-	Vector3 offsetPos = { 0.0f, 0.0f, -15.0f };
+
+	Vector3 offsetPos = { 0.0f, 2.0f, -15.0f };
 };

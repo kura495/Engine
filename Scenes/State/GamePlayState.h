@@ -27,12 +27,9 @@
 #include "Base/Renderer/Renderer.h"
 #include "Base/Object/Line/Line.h"
 
-#include "Game/Object/Box/BoxObject.h"
-#include "Game/Object/Plane/PlaneObject.h"
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"
-#include "Game/Object/Enemy/Enemy.h"
-#include "Game/Object/Goal/Goal.h"
+#include "Game/Object/Enemy/Manager/EnemyManager.h"
 
 class GamePlayState :public GameState
 {
@@ -57,13 +54,11 @@ private:
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
 
-	std::vector<Model*> enemyModel_;
-	std::list<Enemy*> enemys_;
-
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> glTFplaneModel_;
-	std::vector<Model*> WeaponModel_;
+
+	std::unique_ptr<EnemyManager> enemyManager;
 
 	ParticleSystem* particle;
 };

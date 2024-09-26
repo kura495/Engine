@@ -27,7 +27,7 @@ void WorldTransform::TransferMatrix()
 
 void WorldTransform::UpdateMatrix()
 {
-	Matrix4x4 AffineMatrix = MakeAffineMatrix(transform_.scale, transform_.quaternion, transform_.translate);
+	Matrix4x4 AffineMatrix = MakeAffineMatrix(transform.scale, transform.quaternion, transform.translate);
 	matWorld_ = AffineMatrix;
 	//親があれば親のワールド行列を掛ける
 	if (parent_) {
@@ -46,15 +46,20 @@ Vector3 WorldTransform::GetTranslateFromMatWorld()const
 	return worldPos;
 }
 
+void WorldTransform::SetParent(const WorldTransform* parent)
+{
+	parent_ = parent;
+}
+
 void WorldTransform::SetTransform(Model* model) {
-	transform_.translate += model->GetModelData().rootNode.localMatrix.GetTransform();
+	transform.translate += model->GetModelData().rootNode.localMatrix.GetTransform();
 	if (model->GetModelData().rootNode.localMatrix.GetScale().x != 1.0f &&
 		model->GetModelData().rootNode.localMatrix.GetScale().y != 1.0f &&
 		model->GetModelData().rootNode.localMatrix.GetScale().z != 1.0f
 		) {
-		transform_.scale += model->GetModelData().rootNode.localMatrix.GetScale();
+		transform.scale += model->GetModelData().rootNode.localMatrix.GetScale();
 	}
 
-	transform_.quaternion = Quaternion::Normalize(model->GetModelData().rootNode.localMatrix.GetRotation());
+	transform.quaternion = Quaternion::Normalize(model->GetModelData().rootNode.localMatrix.GetRotation());
 	UpdateMatrix();
 };

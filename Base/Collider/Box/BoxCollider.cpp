@@ -5,7 +5,7 @@ void BoxCollider::Initialize(WorldTransform* Parent)
 	ICollider::SetWorld(Parent);
 	model_ = std::make_unique<BoxColliderModel>();
 	model_->Init();
-	model_->SetTranslate(center_->transform_.translate);
+	model_->SetTranslate(center_->transform.translate);
 	model_->SetScale(size_);
 }
 
@@ -22,7 +22,7 @@ void BoxCollider::CollisionUpdate()
 	aabb_.max.x = center_->GetTranslateFromMatWorld().x + size_.x + offset.x;
 	aabb_.max.y = center_->GetTranslateFromMatWorld().y + size_.y + offset.y;
 	aabb_.max.z = center_->GetTranslateFromMatWorld().z + size_.z + offset.z;
-	model_->SetTranslate(center_->transform_.translate);
+	model_->SetTranslate(center_->transform.translate);
 	model_->SetScale(size_);
 	model_->Update();
 }

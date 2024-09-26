@@ -85,9 +85,9 @@ void Editer::GuizmoOption()
 #pragma endregion
 
 	ImGui::Begin("Object");
-	ImGui::DragFloat3("Scale", &object_[ObjectCount]->GetWorld().transform_.scale.x);
-	ImGui::DragFloat4("Rotate", &object_[ObjectCount]->GetWorld().transform_.quaternion.x);
-	ImGui::DragFloat3("Translate", &object_[ObjectCount]->GetWorld().transform_.translate.x);
+	ImGui::DragFloat3("Scale", &object_[ObjectCount]->GetWorld().transform.scale.x);
+	ImGui::DragFloat4("Rotate", &object_[ObjectCount]->GetWorld().transform.quaternion.x);
+	ImGui::DragFloat3("Translate", &object_[ObjectCount]->GetWorld().transform.translate.x);
 	
 	ImGui::InputText("string", &textrueName, 256);
 	if (ImGui::Button("Textrue")) {
@@ -115,8 +115,8 @@ void Editer::Manipulator()
 	
 	Vector3 scale, rotate, translate;
 	ImGuizmo::DecomposeMatrixToComponents(&GizmoMoveMatrix.m[0][0], &translate.x, &rotate.x, &scale.x);
-	object_[ObjectCount]->GetWorld().transform_.scale = scale;
-	object_[ObjectCount]->GetWorld().transform_.translate = translate;
+	object_[ObjectCount]->GetWorld().transform.scale = scale;
+	object_[ObjectCount]->GetWorld().transform.translate = translate;
 #endif
 }
 

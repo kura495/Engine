@@ -10,6 +10,7 @@
 enum class Behavior {
 	kRoot,
 	kAttack,
+	kStep
 };
 
 class Player : public IObject
@@ -29,11 +30,6 @@ public:
 	static bool playerMoveValue;
 	static bool PushOptionButtern;
 
-#pragma region Setter
-	void SetViewProjection(const ViewProjection* viewProjection) {
-		viewProjection_ = viewProjection;
-	}
-#pragma endregion 
 #pragma region Getter
 	WorldTransform& GetWorldTransform() {
 		return world_;
@@ -43,20 +39,21 @@ public:
 private:
 	Input* input = nullptr;
 
+#pragma region 
 	//ふるまい
 	Behavior behavior_ = Behavior::kRoot;
 	//次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-
-	void RootInitalize();
+	//kRoot
+	void RootInit();
 	void RootUpdate();
-
-	void AttackInitalize();
+	//kAttack
+	void AttackInit();
 	void AttackUpdate();
-
-	void Gravity();
-	const float kGravity = 0.98f;
-	bool IsGravity = true;
+	//kStep
+	void StepInit();
+	void StepUpdate();
+#pragma endregion BehaviorTree
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
@@ -67,13 +64,11 @@ private:
 	Vector3 move;
 	//プレイヤーの移動
 	float speed = 0.1f;
+	//HP
+	uint32_t HP_ = 10;
 
-	Vector3 jumpForce{0.0f};
-	//武器や腕の回転クォータニオン
-	Quaternion moveQuaternion_{0.0f};
-
-	//カメラのビュープロジェクション
-	const ViewProjection* viewProjection_ = nullptr;
+	const float kDamegeEffectF = 120;
+	float DamegeEffectF = 0;
 
 	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
 
@@ -81,10 +76,19 @@ private:
 
 	float attack = 0.0f;
 
-	float animeT = 0.0f;
 	Animation* animation;
-	Animation* animation2;
-	Animation* animation3;
 
 	OBBoxCollider collider;
+
+	//Step関係
+	//プレイヤーが前転をしながら
+	void Rolling();
+	//プレイヤーが後ろ側に回避
+	void BackStep();
+	bool IsEndStep = false;
+	float stepFlame = 0;
+	//移動の量
+	const float kStepValue = 1.0f;
+
+
 };

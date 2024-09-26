@@ -1,7 +1,8 @@
-#define  NoLighting false
-#define  harfLambert 1
-#define  Lambert 2
-#define  phong 3
+#define NoLighting false
+#define harfLambert 1
+#define Lambert 2
+#define phong 3
+#define EnvironmentMap 4
 
 struct VertexShaderOutput {
 	

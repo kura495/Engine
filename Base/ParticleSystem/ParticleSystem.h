@@ -60,6 +60,8 @@ public:
 	bool IsCollision(const AABBData& aabb, const Vector3& point);
 
 private:
+	void ImGui();
+
 	//インスタンスの数
 	static const uint32_t kNumMaxInstance = 100;
 	//生きているインスタンスの数

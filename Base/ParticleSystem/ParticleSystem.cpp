@@ -6,14 +6,12 @@ void ParticleSystem::Initalize(const std::string filePath)
 	directX_ = DirectXCommon::GetInstance();
 	sRVManager_ = SRVManager::GetInstance();
 
-
-
 	modelData.vertices.push_back({ .position = { -1.0f,1.0f,0.0f,1.0f },.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
 	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},   .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
 	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
 	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
-	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},	 .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
-	modelData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},	 .texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
+	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},	.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
+	modelData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},	.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//右下
 	modelData.material.textureFilePath = filePath;
 	int Texture = textureManager_->LoadTexture(modelData.material.textureFilePath);
 	modelData.TextureIndex = Texture;
@@ -26,7 +24,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 	std::mt19937 randomEngine(seedGenerator());
 
 	materialData->enableLighting = false;
-	materialData->color = { 0.0f,0.0f,0.0f,1.0f };
+	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
 
 	Pipeline_ = std::make_unique<ParticlePipeLine>();
@@ -35,8 +33,8 @@ void ParticleSystem::Initalize(const std::string filePath)
 	Testemitter.count = 5;
 	Testemitter.frequency = 0.1f;
 	Testemitter.frequencyTime = 0.0f;
-	Testemitter.world_.transform_.scale	= { 1.0f,1.0f,1.0f };
-	Testemitter.world_.transform_.translate = { 0.0f,0.0f,0.0f };
+	Testemitter.world_.transform.scale	= { 1.0f,1.0f,1.0f };
+	Testemitter.world_.transform.translate = { 0.0f,0.0f,0.0f };
 
 	TestField.acceleration = {15.0f,0.0f,0.0f};
 	TestField.area.min = {-1.0f,-1.0f,-1.0f};
@@ -87,9 +85,12 @@ void ParticleSystem::Update()
 			++numInstance;
 		}
 
-
 		++particleIt;
 	}
+
+#ifdef _DEBUG
+	ImGui();
+#endif
 
 }
 
@@ -138,7 +139,7 @@ std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& r
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.world_.transform_.translate));
+		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.world_.transform.translate));
 	}
 	return Emitparticles;
 }
@@ -152,6 +153,13 @@ bool ParticleSystem::IsCollision(const AABBData& aabb, const Vector3& point)
 		return true;
 	}
 	return false;
+}
+
+void ParticleSystem::ImGui()
+{
+	ImGui::Begin("Emitter");
+	ImGui::InputFloat3("translate",&Testemitter.world_.transform.translate.x);
+	ImGui::End();
 }
 
 void ParticleSystem::CreateResources()

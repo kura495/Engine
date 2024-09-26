@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include "Game/Object/Player/Player.h"
 
 ViewProjection Renderer::viewProjection;
 std::vector<DrawModelData> Renderer::drawModelData_;
@@ -19,27 +18,26 @@ void Renderer::Initalize()
 	PSOManager_ = std::make_unique<PSOManager>();
 	PSOManager_->Initalize();
 
-	sprite = std::make_unique<Sprite>();
-	sprite->Initialize({0.0f,0.0f},{128,128});
-	UIworld_.Initialize();
-	UIworld_2.Initialize();
-	//
-	UIworld_.transform_.translate = {640,360};
-	UIworld_.UpdateMatrix();
-	TextureManager* tex = nullptr;
-	tex = TextureManager::GetInstance();
-	TextureHundle = tex->LoadTexture("resources/uvChecker.png");
+	skyBox.Init();
+	Texture = TextureManager::GetInstance()->LoadTexture("resources/rostock_laage_airport_4k.dds");
+	cubeWorld_.Initialize();
+	cubeWorld_.transform.scale *= 100;
+	cubeWorld_.UpdateMatrix();
 }
 
 void Renderer::Draw()
 {
+
+	//CubeMap
+	ChangePipeline(PipelineType::CubeMap);
+	skyBox.Draw(cubeWorld_, Texture);
+
 	//標準描画
 	ChangePipeline(PipelineType::Standerd);
 	///描画
 	for (DrawModelData model : drawModelData_) {
-		model.modelData->Draw(*model.world_);
+		model.modelData->Draw(*model.world_,Texture);
 	}
-	sprite->Draw(UIworld_2, TextureHundle);
 	//中身を消す
 	drawModelData_.clear();
 
@@ -64,20 +62,15 @@ void Renderer::Draw()
 	ChangePipeline(PipelineType::WireFlame);
 	///描画
 	for (DrawModelData model : drawWireFlameData_) {
-		model.modelData->Draw(*model.world_);
+		model.modelData->WireFlameDraw(*model.world_);
 	}
 	//中身を消す
 	drawWireFlameData_.clear();
+
 }
 
 void Renderer::PostProsessDraw()
 {
-	if (Player::PushOptionButtern) {
-		//UI描画
-		ChangePipeline(PipelineType::Standerd);
-		///描画
-		sprite->Draw(UIworld_, TextureHundle);
-	}
 }
 
 void Renderer::AddModelData( Model& model, WorldTransform& world)

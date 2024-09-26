@@ -28,29 +28,39 @@ void FollowCamera::Update() {
 	}		
 	Vector3 EulerRot;
 	//TODO : LerpShortAngleを使うと一定角度で急にワープする
-	/*EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, parameter_t);
-	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.x, parameter_t);
-	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.y, parameter_t);*/
 	EulerRot.z = rotate_.z;
 	EulerRot.y = rotate_.y;
 	EulerRot.x = rotate_.x;
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {
-		Vector3 pos = target_->transform_.translate;
+		Vector3 pos = target_->transform.translate;
 		//もしペアレントを結んでいるなら
 		if (target_->parent_) {
-			pos = target_->transform_.translate + target_->parent_->transform_.translate;
+			pos = target_->transform.translate + target_->parent_->transform.translate;
 		}
 		//追従座標の補間
-		//workInter.interTarget_ = Vector3::VectorLerp(workInter.interTarget_, pos, workInter.interParameter_);
+		workInter.interTarget_ = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_);
 
 		Vector3 offset = OffsetCalc();
 		//オフセット分と追従座標の補間分ずらす
 		viewProj.translation_ = pos + offset;
 	}
 
+#ifdef _DEBUG
+	ImGui();
+#endif
+
 	viewProj.UpdateMatrix();
+}
+
+void FollowCamera::ImGui()
+{
+#ifdef _DEBUG
+	ImGui::Begin("FollowCamera");
+	ImGui::DragFloat3("Offset",&offsetPos.x);
+	ImGui::End();
+#endif
 }
 
 void FollowCamera::SetTarget(const WorldTransform* target)
@@ -64,8 +74,8 @@ void FollowCamera::Reset()
 	//追従対象がいれば
 	if (target_) {
 		//追従座標・角度の初期化
-		workInter.interTarget_ = target_->transform_.translate;
-		viewProj.rotation_.y = target_->transform_.quaternion.y;
+		workInter.interTarget_ = target_->transform.translate;
+		viewProj.rotation_.y = target_->transform.quaternion.y;
 	}
 	workInter.targetAngleY_ = viewProj.rotation_.y;
 

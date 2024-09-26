@@ -11,6 +11,7 @@ class PostProsess
 {
 public:
 	void Init();
+	virtual void addInit();
 	void Draw();
 	virtual void addDraw();
 	void Create(int Index);

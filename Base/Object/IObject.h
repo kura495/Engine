@@ -20,16 +20,16 @@ public:
 	virtual void Draw();
 
 	void SetTransform(TransformQua transFormQua) {
-		world_.transform_ = transFormQua;
-		world_.transform_.translate += models_[0]->GetModelData().rootNode.localMatrix.GetTransform();
+		world_.transform = transFormQua;
+		world_.transform.translate += models_[0]->GetModelData().rootNode.localMatrix.GetTransform();
 		if (models_[0]->GetModelData().rootNode.localMatrix.GetScale().x != 1.0f &&
 			models_[0]->GetModelData().rootNode.localMatrix.GetScale().y != 1.0f &&
 			models_[0]->GetModelData().rootNode.localMatrix.GetScale().z != 1.0f
 			) {
-			world_.transform_.scale += models_[0]->GetModelData().rootNode.localMatrix.GetScale();
+			world_.transform.scale += models_[0]->GetModelData().rootNode.localMatrix.GetScale();
 		}
 		//TODO : levelEditerとの兼ね合いでいったんコメントアウト
-		//world_.transform_.quaternion = Quaternion::Normalize(models_[0]->GetModelData().rootNode.localMatrix.GetRotation());
+		//world_.transform.quaternion = Quaternion::Normalize(models_[0]->GetModelData().rootNode.localMatrix.GetRotation());
 		world_.UpdateMatrix();
 	};
 

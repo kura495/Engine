@@ -1,12 +1,12 @@
 #pragma once
 #include "Base/Editer/Editer.h"
+#include "Base/Object/IObject.h"
 #include "WorldTransform/WorldTransform.h"
 class Emitter
 {
 public:
 	Emitter() {
 		world_.Initialize();
-		//Editer::GetInstance()->SetWorld(&world_);
 	}
 
 	WorldTransform world_;//エミッタのTransform

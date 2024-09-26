@@ -9,6 +9,7 @@ enum Lighting {
 		harfLambert = 1,
 		Lambert = 2,
 		phong = 3,
+		EnvironmentMap = 4,
 	};
 
 class Light

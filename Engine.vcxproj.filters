@@ -206,7 +206,6 @@
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
-    <ClCompile Include="Game\Object\Goal\Goal.cpp" />
     <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="externals\imgui\ImGuizmo.cpp" />
     <ClCompile Include="Base\Editer\Editer.cpp" />
@@ -240,6 +239,11 @@
     <ClCompile Include="Base\Object\IObject.cpp" />
     <ClCompile Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.cpp" />
     <ClCompile Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
+    <ClCompile Include="Base\PipelineState\CubeMap\CubeMap.cpp" />
+    <ClCompile Include="Base\PostProsess\CubeMap\PPCubeMap.cpp" />
+    <ClCompile Include="Game\Object\Camera\LockOn.cpp" />
+    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -424,7 +428,6 @@
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
-    <ClInclude Include="Game\Object\Goal\Goal.h" />
     <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="externals\imgui\ImGuizmo.h" />
     <ClInclude Include="Base\Editer\Editer.h" />
@@ -456,6 +459,11 @@
     <ClInclude Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
     <ClInclude Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.h" />
     <ClInclude Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
+    <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
+    <ClInclude Include="Base\PipelineState\CubeMap\CubeMap.h" />
+    <ClInclude Include="Base\PostProsess\CubeMap\PPCubeMap.h" />
+    <ClInclude Include="Game\Object\Camera\LockOn.h" />
+    <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
@@ -494,7 +502,7 @@
     <FxCompile Include="resources\hlsl\Particle.VS.hlsl">
       <Filter>リソース ファイル\hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\SkinningObject3d.VS.hlsl" />
+    <FxCompile Include="resources\hlsl\Skining\SkinningObject3d.VS.hlsl" />
     <FxCompile Include="resources\hlsl\Line.PS.hlsl" />
     <FxCompile Include="resources\hlsl\Line.VS.hlsl" />
     <FxCompile Include="resources\hlsl\FullScreen.PS.hlsl" />

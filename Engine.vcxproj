@@ -59,17 +59,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/resources/hlsl;$(ExternalIncludePath)</ExternalIncludePath>
     <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
     <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/resources/hlsl;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/resources/hlsl;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgTriplet>x64-windows</VcpkgTriplet>
@@ -198,6 +198,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\Common\Engine\MyEngine.cpp" />
     <ClCompile Include="Base\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.cpp" />
+    <ClCompile Include="Base\PipelineState\CubeMap\CubeMap.cpp" />
     <ClCompile Include="Base\PipelineState\DrawLine\DrawLinePSO.cpp" />
     <ClCompile Include="Base\PipelineState\GaussianFilter\GaussianFilter.cpp" />
     <ClCompile Include="Base\PipelineState\GrayScale\GrayScale.cpp" />
@@ -208,6 +209,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Base\PipelineState\Standard\Standard.cpp" />
     <ClCompile Include="Base\PipelineState\Vignetting\Vignetting.cpp" />
     <ClCompile Include="Base\PipelineState\WireFlame\WireFlame.cpp" />
+    <ClCompile Include="Base\PostProsess\CubeMap\PPCubeMap.cpp" />
     <ClCompile Include="Base\PostProsess\Filter\Filter.cpp" />
     <ClCompile Include="Base\PostProsess\GrayScale\PPGrayScale.cpp" />
     <ClCompile Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp" />
@@ -242,9 +244,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
+    <ClCompile Include="Game\Object\Camera\LockOn.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
-    <ClCompile Include="Game\Object\Goal\Goal.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
+    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
@@ -290,6 +294,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\Common\Engine\MyEngine.h" />
     <ClInclude Include="Base\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.h" />
+    <ClInclude Include="Base\PipelineState\CubeMap\CubeMap.h" />
     <ClInclude Include="Base\PipelineState\DrawLine\DrawLinePSO.h" />
     <ClInclude Include="Base\PipelineState\GaussianFilter\GaussianFilter.h" />
     <ClInclude Include="Base\PipelineState\GrayScale\GrayScale.h" />
@@ -302,6 +307,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Base\PipelineState\Standard\Standard.h" />
     <ClInclude Include="Base\PipelineState\Vignetting\Vignetting.h" />
     <ClInclude Include="Base\PipelineState\WireFlame\WireFlame.h" />
+    <ClInclude Include="Base\PostProsess\CubeMap\PPCubeMap.h" />
     <ClInclude Include="Base\PostProsess\Filter\Filter.h" />
     <ClInclude Include="Base\PostProsess\GrayScale\PPGrayScale.h" />
     <ClInclude Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
@@ -340,12 +346,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
+    <ClInclude Include="Game\Object\Camera\LockOn.h" />
     <ClInclude Include="Game\Object\Character.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
-    <ClInclude Include="Game\Object\Goal\Goal.h" />
+    <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Base\Object\IObject.h" />
     <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
+    <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Scenes\Manager\GameManager.h" />
     <ClInclude Include="Scenes\State\GameClearState.h" />
@@ -451,7 +459,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\SkinningObject3d.VS.hlsl">
+    <FxCompile Include="resources\hlsl\Skining\SkinningObject3d.VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

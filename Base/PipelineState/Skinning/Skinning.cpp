@@ -2,9 +2,9 @@
 
 void Skinning::ShaderCompile()
 {
-	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/SkinningObject3d.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Skining/SkinningObject3d.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Object3D.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Skining/SkinningObject3d.PS.hlsl", L"ps_6_0");
 }
 
 void Skinning::CreateRootSignature()

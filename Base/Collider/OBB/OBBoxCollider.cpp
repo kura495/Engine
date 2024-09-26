@@ -5,26 +5,31 @@ OBBoxCollider::OBBoxCollider()
 	CollisionManager::AddCollider(this);
 }
 
+OBBoxCollider::~OBBoxCollider()
+{
+	IsDalete = true;
+}
+
 void OBBoxCollider::Init(WorldTransform* Parent)
 {
 	ICollider::SetWorld(Parent);
 	model_ = std::make_unique<OBBColliderModel>();
 	model_->Init();
-	model_->SetWorld(size_, center_->transform_.quaternion, center_->transform_.translate);
+	model_->SetWorld(size_, center_->transform.quaternion, center_->transform.translate);
 }
 
 void OBBoxCollider::CollisionUpdate()
 {
-	Vector3 Pos = center_->transform_.translate;
+	Vector3 Pos = center_->transform.translate;
 	Vector3 offsetVec = offset;
-	Quaternion qua = center_->transform_.quaternion;
-	SetOrientations(MakeRotateMatrix(center_->transform_.quaternion));
+	Quaternion qua = center_->transform.quaternion;
+	SetOrientations(MakeRotateMatrix(center_->transform.quaternion));
 	if (center_->parent_) {
-		offsetVec = center_->transform_.translate;
-		offsetVec = TransformNormal(offsetVec, MakeRotateMatrix(center_->parent_->transform_.quaternion));
+		offsetVec = center_->transform.translate;
+		offsetVec = TransformNormal(offsetVec, MakeRotateMatrix(center_->parent_->transform.quaternion));
 		//移動
-		SetOrientations(MakeRotateMatrix(center_->parent_->transform_.quaternion * center_->transform_.quaternion));
-		qua = center_->parent_->transform_.quaternion * center_->transform_.quaternion;
+		SetOrientations(MakeRotateMatrix(center_->parent_->transform.quaternion * center_->transform.quaternion));
+		qua = center_->parent_->transform.quaternion * center_->transform.quaternion;
 		Pos = center_->parent_->GetTranslateFromMatWorld();
 	}
 	obb_.center = Pos + offsetVec;
