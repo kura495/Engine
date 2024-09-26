@@ -12,11 +12,6 @@ class Enemy : public IObject
 {
 public:
 
-	void Init(std::vector<Model*> models)override;
-	void Update()override;
-	void Draw()override;
-
-
 
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
@@ -31,11 +26,10 @@ public:
 		return IsAlive;
 	}
 
-private://関数
+protected://関数
 
 	void ImGui();
-	void OnCollision(const ICollider* ICollider);
-	void AttackOnCollision(const ICollider* ICollider);
+
 	// 攻撃範囲内ならtrue
 	void AttackInit();
 	void PlayAttackAnime();
@@ -45,21 +39,20 @@ private://関数
 
 	void DamageEffect();
 
-private://変数
-	Player* player_ = nullptr;
+	void OnCollision(const ICollider* ICollider);
+	void AttackOnCollision(const ICollider* ICollider);
+protected:
+
+	OBBoxCollider collider;
+	OBBoxCollider attackCollider;
+
+	WorldTransform attackWorld_;
+
 	Animation* animation = nullptr;
-
-	bool IsAlive = true;
-
-	uint32_t HP_ = 4;
 
 	const float AttackRange = 2.0f;
 	bool isAttackFlag = false;
 	bool attackColliderFlag = true;
-	WorldTransform attackWorld_;
-
-	OBBoxCollider collider;
-	OBBoxCollider attackCollider;
 
 	float animationTime_ = 0.0f;
 	float animeInterval_ = 60.0f;
@@ -73,5 +66,11 @@ private://変数
 	bool isDamege = false;
 	int damegeInterval = 0;
 	const int kDamegeInterval = 60;
+
+	uint32_t HP_ = 4;
+
+	bool IsAlive = true;
+
+	Player* player_ = nullptr;
 
 };

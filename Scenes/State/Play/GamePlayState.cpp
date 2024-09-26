@@ -87,8 +87,9 @@ void GamePlayState::Draw()
 
 	//パーティクル描画ここから
 
-	particle->PreDraw();
-	particle->Draw(Renderer::viewProjection);
+	//particle->PreDraw();
+	//particle->Draw(Renderer::viewProjection);
+
 	//パーティクル描画ここまで
 
 	//描画ここまで

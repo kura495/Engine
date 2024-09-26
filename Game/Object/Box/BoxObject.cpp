@@ -17,7 +17,6 @@ void BoxObject::Init(std::vector<Model*> models)
 void BoxObject::Update()
 {
 	world_.UpdateMatrix();
-	//Scene読み込みとの兼ね合いでコメントアウト
 
 	std::string Number = std::to_string(GetNumber());
 	std::string Name = "Box" + Number;

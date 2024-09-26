@@ -50,7 +50,7 @@ void EnemyManager::Draw()
 
 void EnemyManager::Spawn()
 {
-	Enemy* enemy = new Enemy;
+	Enemy* enemy = new Spider;
 	enemy->Init(enemyModel_);
 	enemy->SetPlayer(player_);
 	enemys_.push_back(enemy);
