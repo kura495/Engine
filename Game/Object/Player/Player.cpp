@@ -21,6 +21,8 @@ void Player::Init(std::vector<Model*> models)
 	collider.SetcollitionAttribute(ColliderTag::Player);
 	collider.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
 
+
+
 #pragma region
 	animation = new Animation();
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
