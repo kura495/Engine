@@ -171,10 +171,10 @@ void Input::UpdateJoyState()
 	}
 	//2のi乗して押されていたらスタック
 	for (int i = 0; i < 16; i++) {
-		if (joy_frame[i] == 0) joy_frame[i]++;
+		if (joy_frame[i] == -1) joy_frame[i]++;
 		int buttonNum = (int)std::pow(2,i);
 		if (joyState.Gamepad.wButtons & buttonNum) {
-			joy_frame[i] = 1;
+			joy_frame[i]++;
 			// 押された瞬間に入力情報をスタック
 			if (joy_frame[i] == 1) {
 				joy_stack.emplace_back(ListData(buttonNum));
@@ -182,7 +182,7 @@ void Input::UpdateJoyState()
 			}
 		}
 		else if (joy_frame[i] > 0) {
-			joy_frame[i] = 0;
+			joy_frame[i] = -1;
 		}
 	}
 	// 一定フレーム経った入力情報を削除
