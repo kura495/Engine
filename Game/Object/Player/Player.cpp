@@ -317,16 +317,15 @@ void Player::StepInit(){
 	stepFlame = 0.0f;
 }
 void Player::StepUpdate(){
-	////動いているかどうかで分岐
-	//if (playerMoveValue) {
-	//	//ローリング回避
-	//	Rolling();
-	//}
-	//else {
-	//	//後ろに回避
-	//TODO：いったんはバックステップのみ
+	//動いているかどうかで分岐
+	if (playerMoveValue) {
+		//ローリング回避
+		Rolling();
+	}
+	else {
+	//後ろに回避
 	BackStep();
-	//}
+	}
 
 	stepFlame++;
 	if (stepFlame > 5.0f) {

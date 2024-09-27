@@ -41,6 +41,7 @@ protected://関数
 
 	void OnCollision(const ICollider* ICollider);
 	void AttackOnCollision(const ICollider* ICollider);
+
 protected:
 
 	OBBoxCollider collider;
@@ -67,7 +68,7 @@ protected:
 	int damegeInterval = 0;
 	const int kDamegeInterval = 60;
 
-	uint32_t HP_ = 4;
+	uint32_t HP_;
 
 	bool IsAlive = true;
 

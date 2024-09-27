@@ -5,29 +5,12 @@ void Spider::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 
-#pragma region
-
-	collider.Init(&world_);
-	collider.SetSize({ 1.0f,1.0f,1.0f });
-	collider.OnCollision = [this](ICollider* colliderB) { OnCollision(colliderB); };
-	collider.SetcollitionAttribute(ColliderTag::Enemy);
-	collider.SetcollisionMask(~ColliderTag::Enemy);
-
-	attackWorld_.Initialize();
-	attackWorld_.SetParent(&world_);
-	attackWorld_.transform.translate = { 0.0f,0.0f,1.7f };
-	attackCollider.Init(&attackWorld_);
-	attackCollider.SetSize({ 1.0f,1.0f,0.7f });
-	attackCollider.OnCollision = [this](ICollider* colliderB) { AttackOnCollision(colliderB); };
-	attackCollider.SetcollitionAttribute(ColliderTag::EnemyAttack);
-	attackCollider.SetcollisionMask(~ColliderTag::Enemy && ~ColliderTag::EnemyAttack);
-	attackCollider.IsUsing = false;
-
-#pragma endregion Collider
-
-#pragma region
+	//Collider
+	InitCollider();
 
 	world_.transform.translate.y = -1.0f;
+#pragma region
+
 	animation = Animation::LoadAnimationFile("resources/Monster", "Monster.gltf");
 
 	world_.SetTransform(models_[0]);
@@ -90,4 +73,25 @@ void Spider::Draw()
 	for (Model* model : models_) {
 		model->RendererDraw(world_);
 	}
+}
+
+void Spider::InitCollider()
+{
+
+	collider.Init(&world_);
+	collider.SetSize({ 1.0f,1.0f,1.0f });
+	collider.OnCollision = [this](ICollider* colliderB) { OnCollision(colliderB); };
+	collider.SetcollitionAttribute(ColliderTag::Enemy);
+	collider.SetcollisionMask(~ColliderTag::Enemy);
+	//攻撃の当たり判定用座標
+	attackWorld_.Initialize();
+	attackWorld_.SetParent(&world_);
+	attackWorld_.transform.translate = { 0.0f,0.0f,1.7f };
+	attackCollider.Init(&attackWorld_);
+	attackCollider.SetSize({ 1.0f,1.0f,0.7f });
+	attackCollider.OnCollision = [this](ICollider* colliderB) { AttackOnCollision(colliderB); };
+	attackCollider.SetcollitionAttribute(ColliderTag::EnemyAttack);
+	attackCollider.SetcollisionMask(~ColliderTag::Enemy && ~ColliderTag::EnemyAttack);
+	attackCollider.IsUsing = false;
+
 }

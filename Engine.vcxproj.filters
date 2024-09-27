@@ -247,6 +247,7 @@
     <ClCompile Include="Base\PipelineState\Sprite\SpritePSO.cpp" />
     <ClCompile Include="Scenes\State\GameOver\GameOver.cpp" />
     <ClCompile Include="Game\Object\Enemy\Spider\Spider.cpp" />
+    <ClCompile Include="Game\Object\Enemy\BossSpider\BossSpider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -470,6 +471,7 @@
     <ClInclude Include="Base\PipelineState\Sprite\SpritePSO.h" />
     <ClInclude Include="Scenes\State\GameOver\GameOver.h" />
     <ClInclude Include="Game\Object\Enemy\Spider\Spider.h" />
+    <ClInclude Include="Game\Object\Enemy\BossSpider\BossSpider.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

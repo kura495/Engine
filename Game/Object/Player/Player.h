@@ -94,5 +94,4 @@ private:
 	//移動の量
 	const float kStepValue = 1.0f;
 
-
 };
