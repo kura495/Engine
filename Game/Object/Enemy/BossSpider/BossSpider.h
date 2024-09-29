@@ -32,5 +32,7 @@ private:
 
 #pragma endregion Behavior
 
+	void LookPlayer();
+
 	std::list<BossBullet*> bossBullet_;
 };

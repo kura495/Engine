@@ -1,4 +1,5 @@
 #include "BossSpider.h"
+#include "Game/Object/Player/Player.h"
 
 void BossSpider::Init(std::vector<Model*> models)
 {
@@ -8,6 +9,7 @@ void BossSpider::Init(std::vector<Model*> models)
 	//Collider
 	InitCollider();
 
+	world_.transform.translate.z = 10.0f;
 	world_.transform.translate.y = 1.0f;
 	world_.UpdateMatrix();
 
@@ -107,7 +109,7 @@ void BossSpider::RootInit()
 
 void BossSpider::RootUpdate()
 {
-
+	LookPlayer();
 }
 
 void BossSpider::AttackInit()
@@ -125,3 +127,18 @@ void BossSpider::AttackUpdate()
 
 }
 #pragma endregion
+
+void BossSpider::LookPlayer()
+{
+	// 自機に向かうベクトル
+	Vector3 targetVel = (player_->GetWorld().transform.translate - world_.transform.translate).Normalize();
+	targetVel.y = 0;
+	//プレイヤーの現在の向き
+	targetVel = targetVel.Normalize();
+
+	Vector3 cross = Vector3::Cross({ 0.0f,0.0f,1.0f }, targetVel).Normalize();
+	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, targetVel);
+
+	//行きたい方向のQuaternionの作成
+	world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+}
