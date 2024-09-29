@@ -1,6 +1,6 @@
 ﻿#include "BoxCollider.h"
 
-void BoxCollider::Initialize(WorldTransform* Parent)
+void BoxCollider::Init(WorldTransform* Parent)
 {
 	ICollider::SetWorld(Parent);
 	model_ = std::make_unique<BoxColliderModel>();

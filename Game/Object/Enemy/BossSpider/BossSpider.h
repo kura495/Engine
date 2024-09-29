@@ -1,5 +1,11 @@
 #pragma once
 #include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossSpider/Bullet/BossBullet.h"
+
+enum class BossSpiderBehavior {
+	kRoot,
+	kAttack
+};
 
 class BossSpider : public Enemy {
 public:
@@ -10,4 +16,21 @@ public:
 
 private:
 	void InitCollider();
+
+	void ImGui();
+#pragma region
+	//ふるまい
+	BossSpiderBehavior behavior_ = BossSpiderBehavior::kRoot;
+	//次のふるまいリクエスト
+	std::optional<BossSpiderBehavior> behaviorRequest_ = std::nullopt;
+
+	void RootInit();
+	void RootUpdate();
+
+	void AttackInit();
+	void AttackUpdate();
+
+#pragma endregion Behavior
+
+	std::list<BossBullet*> bossBullet_;
 };

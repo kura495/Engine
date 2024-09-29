@@ -39,13 +39,16 @@ void GamePlayState::Initialize()
 	enemyManager = std::make_unique<EnemyManager>();
 	enemyManager->Init(player_.get());
 
-		input = Input::GetInstance();
+	input = Input::GetInstance();
 
+	//天球
+	skyDome_ = std::make_unique<SkyDome>();
+	skyDome_->Init();
 }
 
 void GamePlayState::Update()
 {
-
+	skyDome_->Update();
 	player_->Update();
 	enemyManager->Update();
 	particle->Update();
@@ -77,6 +80,8 @@ void GamePlayState::Draw()
 	enemyManager->Draw();
 
 #pragma endregion
+
+	skyDome_->Draw();
 
 	collisionManager->Draw();
 	//3Dモデル描画ここまで	

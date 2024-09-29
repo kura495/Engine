@@ -248,6 +248,8 @@
     <ClCompile Include="Scenes\State\GameOver\GameOver.cpp" />
     <ClCompile Include="Game\Object\Enemy\Spider\Spider.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossSpider\BossSpider.cpp" />
+    <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp" />
+    <ClCompile Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -472,6 +474,8 @@
     <ClInclude Include="Scenes\State\GameOver\GameOver.h" />
     <ClInclude Include="Game\Object\Enemy\Spider\Spider.h" />
     <ClInclude Include="Game\Object\Enemy\BossSpider\BossSpider.h" />
+    <ClInclude Include="Game\Object\SkyDome\SkyDome.h" />
+    <ClInclude Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

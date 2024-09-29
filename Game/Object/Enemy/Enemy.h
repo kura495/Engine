@@ -30,14 +30,6 @@ protected://関数
 
 	void ImGui();
 
-	// 攻撃範囲内ならtrue
-	void AttackInit();
-	void PlayAttackAnime();
-	bool ChackOnAttack();
-	void ChasePlayer();
-	void LookPlayer();
-
-	void DamageEffect();
 
 	void OnCollision(const ICollider* ICollider);
 	void AttackOnCollision(const ICollider* ICollider);

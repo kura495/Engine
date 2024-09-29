@@ -31,6 +31,7 @@
 #include "Game/Object/Camera/FollowCamera.h"
 #include "Game/Object/Enemy/Manager/EnemyManager.h"
 #include "Game/Object/Camera/LockOn.h"
+#include "Game/Object/SkyDome/SkyDome.h"
 
 class GamePlayState :public GameState
 {
@@ -61,6 +62,7 @@ private:
 	std::vector<Model*> glTFplaneModel_;
 
 	std::unique_ptr<EnemyManager> enemyManager;
+	std::unique_ptr<SkyDome> skyDome_;
 
 	ParticleSystem* particle;
 

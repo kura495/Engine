@@ -7,7 +7,7 @@ void BoxObject::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 
-	BoxCollider::Initialize(&world_);
+	BoxCollider::Init(&world_);
 	BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
 	BoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
 	SetcollitionAttribute(ColliderTag::Box);
