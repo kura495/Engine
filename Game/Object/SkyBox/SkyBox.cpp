@@ -26,7 +26,12 @@ void SkyBox::Init()
 	CreateResource();
 }
 
-void SkyBox::Draw(const WorldTransform& transform, const uint32_t& TextureHandle)
+void SkyBox::RendererDraw(const WorldTransform& transform)
+{
+	transform;
+}
+
+void SkyBox::Draw(const WorldTransform& transform)
 {
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 

@@ -5,6 +5,7 @@ std::vector<DrawModelData> Renderer::drawModelData_;
 std::vector<DrawSkinningData> Renderer::drawModelSkinningData_;
 std::vector<DrawLineData> Renderer::drawLineData_;
 std::vector<DrawModelData> Renderer::drawWireFlameData_;
+std::vector<DrawSpriteData> Renderer::drawSpriteData_;
 ;
 Renderer* Renderer::GetInstance()
 {
@@ -18,8 +19,12 @@ void Renderer::Initalize()
 	PSOManager_ = std::make_unique<PSOManager>();
 	PSOManager_->Initalize();
 
+	viewproj.Initialize();
+	viewProjection = viewproj;
+
 	skyBox.Init();
 	Texture = TextureManager::GetInstance()->LoadTexture("resources/rostock_laage_airport_4k.dds");
+	skyBox.TextureHandle = Texture;
 	cubeWorld_.Initialize();
 	cubeWorld_.transform.scale *= 100;
 	cubeWorld_.UpdateMatrix();
@@ -30,7 +35,7 @@ void Renderer::Draw()
 
 	//CubeMap
 	ChangePipeline(PipelineType::CubeMap);
-	skyBox.Draw(cubeWorld_, Texture);
+	//skyBox.Draw(cubeWorld_);
 
 	//標準描画
 	ChangePipeline(PipelineType::Standerd);
@@ -66,6 +71,15 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawWireFlameData_.clear();
+
+	//スプライト描画
+	ChangePipeline(PipelineType::Sprite);
+	///描画
+	for (DrawSpriteData model : drawSpriteData_) {
+		model.sprite->Draw(*model.world_);
+	}
+	//中身を消す
+	drawSpriteData_.clear();
 
 }
 
@@ -104,6 +118,14 @@ void Renderer::AddWireFlameData(Model& model, WorldTransform& world)
 	result.modelData = &model;
 	result.world_ = &world;
 	drawWireFlameData_.push_back(result);
+}
+
+void Renderer::AddSpriteData(Sprite& sprite, WorldTransform& world)
+{
+	DrawSpriteData result;
+	result.sprite = &sprite;
+	result.world_ = &world;
+	drawSpriteData_.push_back(result);
 }
 
 void Renderer::ChangePipeline(PipelineType Type)

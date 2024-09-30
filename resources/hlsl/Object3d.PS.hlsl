@@ -77,10 +77,6 @@ PixelShaderOutput main(VertexShaderOutput input) {
             output.color.rgb += environmentColor.rgb;
         }
     }
-        else
-        { //Lightingしない場合
-            output.color = gMaterial.color * textureColor;
-        }
 	
-        return output;
+    return output;
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include"IgameState.h"
+#include"Scenes/State/IgameState.h"
 #include "Base/Input/Input.h"
 #include "Texture/TextureManager.h"
 #include "Sprite/Sprite.h"
@@ -21,4 +21,7 @@ private:
 
 	Input* input;
 	XINPUT_STATE joyState;
+
+	bool IsCanPush = false;
+	int time = 0;
 };

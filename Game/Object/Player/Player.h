@@ -7,6 +7,8 @@
 #include "Base/Input/Input.h"
 #include "Base/Animation/Animation.h"
 
+//前方宣言
+class LockOn;
 enum class Behavior {
 	kRoot,
 	kAttack,
@@ -25,16 +27,14 @@ public:
 
 	void OnCollision(const ICollider* collider);
 
+	void SetLockOn(LockOn* lockOn) { this->lockOn_ = lockOn; }
+
+	bool GetisDead() { return isDead; };
+
 	void Move();
 	void PlayerRoring();
 	static bool playerMoveValue;
 	static bool PushOptionButtern;
-
-#pragma region Getter
-	WorldTransform& GetWorldTransform() {
-		return world_;
-	}
-#pragma endregion
 
 private:
 	Input* input = nullptr;
@@ -58,6 +58,9 @@ private:
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
 
+	//ロックオン
+	const LockOn* lockOn_ = nullptr;
+
 	Vector3 lookPoint;
 	Vector3 sub;
 
@@ -66,6 +69,7 @@ private:
 	float speed = 0.1f;
 	//HP
 	uint32_t HP_ = 10;
+	bool isDead = false;
 
 	const float kDamegeEffectF = 120;
 	float DamegeEffectF = 0;
@@ -89,6 +93,5 @@ private:
 	float stepFlame = 0;
 	//移動の量
 	const float kStepValue = 1.0f;
-
 
 };

@@ -12,9 +12,9 @@
 class SkyBox {
 public:
 	void Init();
-
-	void Draw(const WorldTransform& transform, const uint32_t& TextureHandle);
-
+	void RendererDraw(const WorldTransform& transform);
+	void Draw(const WorldTransform& transform);
+	uint32_t TextureHandle;
 private:
 
 	DirectXCommon* directX_ = nullptr;

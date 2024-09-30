@@ -77,9 +77,11 @@ public:
 	//オイラー角をクォータニオン
 	//return Quaternion
 	static Quaternion EulerToQuaterion(Vector3 input);
+	
+	//任意軸回転を表すQuaternionの生成
+	static Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
 };
 
 
-//任意軸回転を表すQuaternionの生成
-Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
+
 

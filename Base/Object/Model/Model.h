@@ -44,6 +44,8 @@ public:
 	ModelData& GetModelData() { return modelData_; }
 	Material* GetMaterial() { return materialData; }
 
+	//色
+	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 private:
 
 	DirectXCommon* directX_ = nullptr;
@@ -72,8 +74,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = nullptr;
 	//マテリアルデータ
 	Material* materialData = nullptr;
-	//色
-	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+
 	
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "IgameState.h"
+#include "Scenes/State/IgameState.h"
 #include "Common/Engine/MyEngine.h"
 #include "ModelData.h"
 #include "Audio.h"
@@ -30,6 +30,8 @@
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"
 #include "Game/Object/Enemy/Manager/EnemyManager.h"
+#include "Game/Object/Camera/LockOn.h"
+#include "Game/Object/SkyDome/SkyDome.h"
 
 class GamePlayState :public GameState
 {
@@ -53,12 +55,17 @@ private:
 	std::unique_ptr<Player>player_;
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
+	LockOn lockOn;
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> glTFplaneModel_;
 
 	std::unique_ptr<EnemyManager> enemyManager;
+	std::unique_ptr<SkyDome> skyDome_;
 
 	ParticleSystem* particle;
+
+	Input* input;
+
 };

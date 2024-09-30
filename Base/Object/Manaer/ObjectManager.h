@@ -39,6 +39,7 @@ private:
 	void AddBox();
 	void AddBox(ObjectData input);
 	void AddPlane();
+	void AddPlane(ObjectData input);
 	void AddEnemy(ObjectData input);
 	void addModel(ObjectData input, std::string path);
 

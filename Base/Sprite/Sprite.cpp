@@ -1,4 +1,6 @@
 ﻿#include"Sprite.h"
+#include "Renderer/Renderer.h"
+
 void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const Vector2& RightTop, const Vector2& RightBottom)
 {
 	directX_ = DirectXCommon::GetInstance();
@@ -91,7 +93,11 @@ void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 	viewProjection_.constMap_VS->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
 }
 
-void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
+void Sprite::RendererDraw(WorldTransform& transform) {
+	Renderer::AddSpriteData(*this, transform);
+}
+
+void Sprite::Draw(const WorldTransform& transform)
 {
 
 	//色の書き込み
@@ -100,12 +106,6 @@ void Sprite::Draw(const WorldTransform& transform,const uint32_t TextureHandle)
 	//ライティングをしない
 	materialData->enableLighting = false;
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
-	//Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTranform.scale);
-	//uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTranform.rotate.z));
-	//uvTransformMatrix = Matrix4x4::Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTranform.translate));
-	//materialData->uvTransform = uvTransformMatrix;
-
-
 
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 

@@ -125,7 +125,7 @@ Quaternion Quaternion::EulerToQuaterion(Vector3 input)
 	return result;
 }
 
-Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
+Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
 {
 	Quaternion result;
 	result.x = axis.x * std::sin(angle/2);

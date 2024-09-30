@@ -14,7 +14,7 @@ class BoxCollider : public ICollider
 {
 public:
 
-	void Initialize(WorldTransform* Parent);
+	void Init(WorldTransform* Parent);
 	void CollisionUpdate()override;
 	void CollisionDraw()override;
 

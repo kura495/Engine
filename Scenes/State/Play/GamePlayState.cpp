@@ -1,4 +1,4 @@
-#include "Scenes/State/GamePlayState.h"
+#include "Scenes/State/Play/GamePlayState.h"
 
 void GamePlayState::Initialize()
 {
@@ -8,6 +8,8 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
+
+	objectManager->LordBlenderScene("resources/Stage");
 
 	collisionManager = std::make_unique<CollisionManager>();
 	collisionManager->Init();
@@ -21,7 +23,11 @@ void GamePlayState::Initialize()
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
-	followCamera->SetTarget(&player_->GetWorldTransform());
+	followCamera->SetTarget(&player_->GetWorld());
+
+	lockOn.Init();
+	followCamera->SetLockOn(&lockOn);
+	player_->SetLockOn(&lockOn);
 
 	//Renderer
 	renderer_ = Renderer::GetInstance();
@@ -33,18 +39,32 @@ void GamePlayState::Initialize()
 	enemyManager = std::make_unique<EnemyManager>();
 	enemyManager->Init(player_.get());
 
+	input = Input::GetInstance();
+
+	//天球
+	skyDome_ = std::make_unique<SkyDome>();
+	skyDome_->Init();
 }
 
 void GamePlayState::Update()
 {
-
+	skyDome_->Update();
 	player_->Update();
 	enemyManager->Update();
 	particle->Update();
 	collisionManager->Update();
 
+	lockOn.Update(enemyManager->GetList());
+
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
+
+	if (enemyManager->GetisClear()) {
+		StateNo = 2;
+	}
+	if (player_->GetisDead()) {
+		StateNo = 3;
+	}
 }
 
 void GamePlayState::Draw()
@@ -61,6 +81,8 @@ void GamePlayState::Draw()
 
 #pragma endregion
 
+	skyDome_->Draw();
+
 	collisionManager->Draw();
 	//3Dモデル描画ここまで	
 
@@ -70,8 +92,9 @@ void GamePlayState::Draw()
 
 	//パーティクル描画ここから
 
-	particle->PreDraw();
-	particle->Draw(Renderer::viewProjection);
+	//particle->PreDraw();
+	//particle->Draw(Renderer::viewProjection);
+
 	//パーティクル描画ここまで
 
 	//描画ここまで

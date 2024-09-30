@@ -158,12 +158,10 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	if (name.compare("Enemy") == 0) {
 		AddEnemy(ObjTransform);
 	}
+	if (name.compare("Plane") == 0) {
+		AddPlane(ObjTransform);
+	}
 
-	// TODO : 読み込むことが出来ないのでいったんコメントアウト
-	/*if (object.contains("children")) {
-		nlohmann::json& children = object["children"];
-		LoadjsonObject(children);
-	}*/
 }
 
 void ObjectManager::AddBox()
@@ -205,6 +203,19 @@ void ObjectManager::AddPlane()
 	globalVariables->AddItem("Editer", Name, plane->GetWorld().transform);
 
 	plane->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
+
+	object_.push_back(plane);
+}
+
+void ObjectManager::AddPlane(ObjectData input)
+{
+	PlaneObject* plane = new PlaneObject;
+	plane->Init(planeModel_);
+
+	plane->SetTransform(input.object.transform);
+
+	plane->SetSize(input.object.colloder.size);
+	plane->SetOffset(input.object.colloder.center);
 
 	object_.push_back(plane);
 }
