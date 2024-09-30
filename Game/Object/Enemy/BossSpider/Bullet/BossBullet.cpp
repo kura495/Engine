@@ -3,9 +3,11 @@
 
 void BossBullet::Init(std::vector<Model*> models)
 {
+
+	InitCollider();
+
 	models_ = models;
 	world_.Initialize();
-	InitCollider();
 
 	world_.transform.translate = player_->GetWorld().transform.translate;
 	world_.transform.translate.y = 10.0f;

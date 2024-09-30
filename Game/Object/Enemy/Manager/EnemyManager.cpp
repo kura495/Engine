@@ -33,7 +33,7 @@ void EnemyManager::Update()
 	if (spawnFlame > KSpawnFlame) {
 		spawn++;
 		//TODO：いったんコメントアウト
-		//Spawn();
+		Spawn();
 		spawnFlame = 0;
 	}
 

@@ -10,10 +10,15 @@ void BossSpider::Init(std::vector<Model*> models)
 	InitCollider();
 
 	world_.transform.translate.z = 10.0f;
-	world_.transform.translate.y = 1.0f;
+	world_.transform.translate.y = 3.0f;
+	world_.transform.scale.x = 3.0f;
+	world_.transform.scale.y = 3.0f;
+	world_.transform.scale.z = 3.0f;
+
 	world_.UpdateMatrix();
 
 	HP_ = 10;
+
 }
 
 void BossSpider::Update()
@@ -110,6 +115,12 @@ void BossSpider::RootInit()
 void BossSpider::RootUpdate()
 {
 	LookPlayer();
+
+	if (attackFlame_ > kAttackFlame_) {
+		attackFlame_ = 0;
+		behaviorRequest_ = BossSpiderBehavior::kAttack;
+	}
+	attackFlame_++;
 }
 
 void BossSpider::AttackInit()
@@ -124,7 +135,7 @@ void BossSpider::AttackInit()
 
 void BossSpider::AttackUpdate()
 {
-
+	behaviorRequest_ = BossSpiderBehavior::kRoot;
 }
 #pragma endregion
 

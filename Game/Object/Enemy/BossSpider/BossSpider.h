@@ -35,4 +35,7 @@ private:
 	void LookPlayer();
 
 	std::list<BossBullet*> bossBullet_;
+
+	float attackFlame_;
+	float kAttackFlame_ = 120.0f;
 };
