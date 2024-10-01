@@ -49,18 +49,12 @@ void Boss::LookPlayer(){
 	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, targetVel);
 
 	//行きたい方向のQuaternionの作成
-	world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+		world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 }
 
 #pragma region
 void Boss::BehaviorUpdate()
 {
-	ImGui::Begin("Boss");
-	if (ImGui::Button("Attack")) {
-		behaviorRequest_ = BossBehavior::kAttack;
-		attackbehaviorRequest_ = AttackBehavior::kAttack1;
-	}
-	ImGui::End();
 
 	if (behaviorRequest_) {
 		//ふるまいの変更

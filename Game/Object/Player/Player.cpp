@@ -10,6 +10,7 @@ void Player::Init(std::vector<Model*> models)
 
 	models_ = models;
 	world_.Initialize();
+	world_.transform.translate.z = -1.0f;
 	input = Input::GetInstance();
 
 	models_[0]->GetMaterial()->enableLighting = Lighting::NotDo;

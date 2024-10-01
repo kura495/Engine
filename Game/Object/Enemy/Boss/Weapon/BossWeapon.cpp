@@ -7,9 +7,7 @@ void BossWeapon::Initalize(std::vector<Model*> models)
 
 	models_ = models;
 	world_.Initialize();
-	world_.transform.translate.x = 0.7f;
 	world_.transform.translate.y = 0.5f;
-	world_.transform.translate.z = 1.0f;
 
 	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
 	firstPos = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(-0.8f));
@@ -94,7 +92,7 @@ void BossWeapon::AttackInit()
 	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, { 0.0f,1.0f,0.0f }));
 	attackFirstQua = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(-1.0f));
 
-	attackEndQua = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(0.0f));
+	attackEndQua = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(0.7f));
 	collider.SetSize({ 0.5f,2.0f,0.5f });
 	collider.IsUsing = true;
 

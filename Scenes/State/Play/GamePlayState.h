@@ -33,15 +33,47 @@
 #include "Game/Object/Camera/LockOn.h"
 #include "Game/Object/SkyDome/SkyDome.h"
 
+enum class StageBehavior {
+	kTitle,
+	kPlay,
+	kClear,
+	kOver,
+};
+
 class GamePlayState :public GameState
 {
 public:
 
 	void Initialize();
 	void Update();
+	void BehaviorUpdate();
 	void Draw();
 
 private:
+#pragma region 
+	//ふるまい
+	StageBehavior behavior_ = StageBehavior::kTitle;
+	//次のふるまいリクエスト
+	std::optional<StageBehavior> behaviorRequest_ = std::nullopt;
+#pragma region
+	void TitleInit();
+	void TitleUpdate();
+#pragma endregion Title
+#pragma region
+	void PlayInit();
+	void PlayUpdate();
+#pragma endregion Play
+#pragma region
+	void ClearInit();
+	void ClearUpdate();
+#pragma endregion Clear
+#pragma region
+	void OverInit();
+	void OverUpdate();
+#pragma endregion Over
+
+#pragma endregion Behavior
+
 	//基本機能ズ
 	DebugCamera* debugcamera_ = nullptr;
 	ObjectManager* objectManager = nullptr;
@@ -49,8 +81,6 @@ private:
 	Renderer* renderer_ = nullptr;
 
 	bool IsDebugCamera = false;
-
-	WorldTransform world_;
 
 	std::unique_ptr<Player>player_;
 	std::vector<Model*> playerModel_;

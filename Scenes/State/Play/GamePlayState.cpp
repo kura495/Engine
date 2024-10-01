@@ -50,13 +50,9 @@ void GamePlayState::Initialize()
 
 void GamePlayState::Update()
 {
-	skyDome_->Update();
-	player_->Update();
-	enemyManager->Update();
-	particle->Update();
-	collisionManager->Update();
+	BehaviorUpdate();
 
-	lockOn.Update(enemyManager->GetList());
+	skyDome_->Update();
 
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
@@ -101,3 +97,101 @@ void GamePlayState::Draw()
 
 	//描画ここまで
 }
+#pragma region
+void GamePlayState::BehaviorUpdate()
+{
+#pragma region
+	//初期化
+	if (behaviorRequest_) {
+		//ふるまいの変更
+		behavior_ = behaviorRequest_.value();
+		//各ふるまいごとに初期化
+		switch (behavior_)
+		{
+		case StageBehavior::kTitle:
+		default:
+			TitleInit();
+			break;
+		case StageBehavior::kPlay:
+			PlayInit();
+			break;
+		case StageBehavior::kClear:
+			ClearInit();
+			break;
+		case StageBehavior::kOver:
+			OverInit();
+			break;
+		}
+
+		behaviorRequest_ = std::nullopt;
+	}
+	//更新
+	switch (behavior_)
+	{
+	case StageBehavior::kTitle:
+	default:
+		TitleUpdate();
+		break;
+	case StageBehavior::kPlay:
+		PlayUpdate();
+		break;
+	case StageBehavior::kClear:
+		ClearUpdate();
+		break;
+	case StageBehavior::kOver:
+		OverUpdate();
+		break;
+	}
+#pragma endregion BehaviorTree
+}
+
+#pragma region
+void GamePlayState::TitleInit()
+{
+
+}
+void GamePlayState::TitleUpdate()
+{
+	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
+		behaviorRequest_ = StageBehavior::kPlay;
+	}
+}
+
+#pragma endregion Title
+#pragma region
+void GamePlayState::PlayInit()
+{
+}
+
+void GamePlayState::PlayUpdate()
+{
+	player_->Update();
+	enemyManager->Update();
+	particle->Update();
+	collisionManager->Update();
+
+	lockOn.Update(enemyManager->GetList());
+}
+
+#pragma endregion Play
+#pragma region
+void GamePlayState::ClearInit()
+{
+}
+
+void GamePlayState::ClearUpdate()
+{
+}
+
+#pragma endregion Clear
+#pragma region
+void GamePlayState::OverInit()
+{
+}
+
+void GamePlayState::OverUpdate()
+{
+}
+
+#pragma endregion Over
+#pragma endregion Behavior
