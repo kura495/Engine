@@ -58,6 +58,7 @@ private:
 #pragma region
 	void TitleInit();
 	void TitleUpdate();
+	bool IsTitleFlag = false;
 #pragma endregion Title
 #pragma region
 	void PlayInit();
