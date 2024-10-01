@@ -1,14 +1,16 @@
 #pragma once
-
 #include "Game/Object/Character.h"
 #include "Base/Collider/Box/BoxCollider.h"
 #include "Base/Collider/OBB/OBBoxCollider.h"
 #include "Base/Input/Input.h"
 #include "Base/ParticleSystem/ParticleSystem.h"
 
-class Weapon
+class BossWeapon
 {
 public:
+	BossWeapon();
+	~BossWeapon();
+
 	void Initalize(std::vector<Model*> models);
 	void Update();
 	void UpdateMat(Matrix4x4 matrix);
@@ -29,7 +31,7 @@ public:
 	void DrawParticle();
 
 	void SetSize(Vector3 pos) {
-		collider.SetSize({ pos.x + world_.transform.translate.x,1.0f,pos.z + +world_.transform.translate.z});
+		collider.SetSize({ pos.x + world_.transform.translate.x,1.0f,pos.z + +world_.transform.translate.z });
 	}
 	void SetPos(Vector3 vec) {
 		world_.transform.translate = vec;
@@ -41,7 +43,7 @@ public:
 		viewProjection_ = viewProjection;
 	}
 #pragma endregion
-	
+
 #pragma region Getter
 	bool GetIsAttackOver() const {
 		return IsAttackOver;

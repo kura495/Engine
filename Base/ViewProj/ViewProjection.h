@@ -67,7 +67,7 @@ struct ViewProjection {
 	/// <summary>
 	/// 行列を更新する
 	/// </summary>
-	void UpdateMatrix();
+	void Update();
 	/// <summary>
 	/// 行列を転送する
 	/// </summary>

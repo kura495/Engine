@@ -27,7 +27,7 @@ void Renderer::Initalize()
 	skyBox.TextureHandle = Texture;
 	cubeWorld_.Initialize();
 	cubeWorld_.transform.scale *= 100;
-	cubeWorld_.UpdateMatrix();
+	cubeWorld_.Update();
 }
 
 void Renderer::Draw()

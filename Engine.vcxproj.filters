@@ -250,6 +250,8 @@
     <ClCompile Include="Game\Object\Enemy\BossSpider\BossSpider.cpp" />
     <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -476,6 +478,8 @@
     <ClInclude Include="Game\Object\Enemy\BossSpider\BossSpider.h" />
     <ClInclude Include="Game\Object\SkyDome\SkyDome.h" />
     <ClInclude Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

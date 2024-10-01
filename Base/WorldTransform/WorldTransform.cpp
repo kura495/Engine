@@ -25,9 +25,22 @@ void WorldTransform::TransferMatrix()
 	constMap->WorldInverseTranspose = Matrix4x4::Transpose(Matrix4x4::Inverse(matWorld_)); 
 }
 
-void WorldTransform::UpdateMatrix()
+void WorldTransform::Update()
 {
 	Matrix4x4 AffineMatrix = MakeAffineMatrix(transform.scale, transform.quaternion, transform.translate);
+	matWorld_ = AffineMatrix;
+	//親があれば親のワールド行列を掛ける
+	if (parent_) {
+		matWorld_ = Matrix4x4::Multiply(matWorld_, parent_->matWorld_);
+	}
+
+	TransferMatrix();
+}
+
+void WorldTransform::UpdateMatrix(Matrix4x4 matrix)
+{
+	Matrix4x4 AffineMatrix = matrix;
+	AffineMatrix *= MakeScaleMatrix(transform.scale);
 	matWorld_ = AffineMatrix;
 	//親があれば親のワールド行列を掛ける
 	if (parent_) {
@@ -61,5 +74,5 @@ void WorldTransform::SetTransform(Model* model) {
 	}
 
 	transform.quaternion = Quaternion::Normalize(model->GetModelData().rootNode.localMatrix.GetRotation());
-	UpdateMatrix();
+	Update();
 };

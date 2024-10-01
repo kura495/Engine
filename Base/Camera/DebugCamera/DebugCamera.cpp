@@ -4,7 +4,7 @@ void DebugCamera::Initialize()
 {
 	viewProj.Initialize();
 	viewProj.translation_ = {0.0f,0.0f,-10.0f};
-	viewProj.UpdateMatrix();
+	viewProj.Update();
 }
 
 void DebugCamera::Update()
@@ -54,6 +54,6 @@ void DebugCamera::Update()
 	}
 #pragma endregion 移動
 	}
-	viewProj.UpdateMatrix();
+	viewProj.Update();
 
 }

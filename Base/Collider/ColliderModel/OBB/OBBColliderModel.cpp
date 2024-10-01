@@ -8,7 +8,7 @@ void OBBColliderModel::Init()
 
 void OBBColliderModel::Update()
 {
-	world_.UpdateMatrix();
+	world_.Update();
 }
 
 void OBBColliderModel::Draw()

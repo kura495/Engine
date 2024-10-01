@@ -30,7 +30,7 @@ public:
 		}
 		//TODO : levelEditerとの兼ね合いでいったんコメントアウト
 		//world_.transform.quaternion = Quaternion::Normalize(models_[0]->GetModelData().rootNode.localMatrix.GetRotation());
-		world_.UpdateMatrix();
+		world_.Update();
 	};
 
 	uint32_t GetNumber()const { return objectNumber_; };

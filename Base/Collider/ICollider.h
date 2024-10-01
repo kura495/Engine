@@ -58,13 +58,15 @@ public:
 	}
 #pragma endregion Attribute
 
-	///worldの親を設定
-	void SetWorld(WorldTransform* Parent) { center_ = Parent; }
+	///worldを設定
+	void SetWorld(WorldTransform* world) { center_ = world; }
 
 	Vector3 GetCenter() const {
 		return
 		{ center_->transform.translate.x,center_->transform.translate.y,center_->transform.translate.z };
 	}
+	WorldTransform* GetColliderWorld() { return center_; };
+
 	void SetOffset(Vector3 input) {
 		offset = input;
 	}

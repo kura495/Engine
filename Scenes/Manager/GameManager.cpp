@@ -46,8 +46,8 @@ void GameManager::Initialize()
 	state[PLAY] = std::make_unique<GamePlayState>();
 	state[CLEAR] = std::make_unique<GameClearState>();
 	state[GAMEOVER] = std::make_unique<GameOverState>();
-	state[TITLE]->Initialize();
-	currentSceneNum_ = 0;
+	currentSceneNum_ = 1;
+	state[currentSceneNum_]->Initialize();
 	//TODO : ちゃんとユニポとかにする
 	renderTextrue = new PPFilter();
 	renderTextrue->Init();

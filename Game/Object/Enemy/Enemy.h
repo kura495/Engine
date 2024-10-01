@@ -16,7 +16,7 @@ public:
 	void SetPlayer(Player* player) { player_ = player; };
 	void SetPos(Vector3 pos) {
 		world_.transform.translate = pos;
-		world_.UpdateMatrix();
+		world_.Update();
 	};
 	Vector3 GetPos() {
 		return world_.transform.translate;
@@ -30,16 +30,11 @@ protected://関数
 
 	void ImGui();
 
-
-	void OnCollision(const ICollider* ICollider);
-	void AttackOnCollision(const ICollider* ICollider);
+	virtual void OnCollision(const ICollider* ICollider);
 
 protected:
 
 	OBBoxCollider collider;
-	OBBoxCollider attackCollider;
-
-	WorldTransform attackWorld_;
 
 	Animation* animation = nullptr;
 

@@ -2,6 +2,8 @@
 
 void GameOverState::Initialize()
 {
+	StateNo = GameStateNo::GAMEOVER;
+
 	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();

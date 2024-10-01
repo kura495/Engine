@@ -2,6 +2,8 @@
 
 void GameClearState::Initialize()
 {
+	StateNo = GameStateNo::CLEAR;
+
 	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();

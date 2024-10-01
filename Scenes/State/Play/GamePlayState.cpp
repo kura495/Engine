@@ -2,6 +2,8 @@
 
 void GamePlayState::Initialize()
 {
+	StateNo = GameStateNo::PLAY;
+
 	//基本機能生成
 	debugcamera_ = new DebugCamera();
 	debugcamera_->Initialize();

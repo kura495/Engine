@@ -1,5 +1,12 @@
 #pragma once
 //StatePatternの基底クラス(インターフェイス型)
+enum GameStateNo {
+	TITLE,
+	PLAY,
+	CLEAR,
+	GAMEOVER,
+	GameStateMax
+};
 class GameState
 {
 public:

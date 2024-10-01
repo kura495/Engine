@@ -44,7 +44,8 @@ struct WorldTransform {
 	/// </summary>
 	void TransferMatrix();
 
-	void UpdateMatrix();
+	void Update();
+	void UpdateMatrix(Matrix4x4 matrix);
 	/// <summary>
 	/// matWorldから移動量を抜き取る関数
 	/// </summary>

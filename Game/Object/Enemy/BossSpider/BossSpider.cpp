@@ -15,7 +15,7 @@ void BossSpider::Init(std::vector<Model*> models)
 	world_.transform.scale.y = 3.0f;
 	world_.transform.scale.z = 3.0f;
 
-	world_.UpdateMatrix();
+	world_.Update();
 
 	HP_ = 10;
 
@@ -63,7 +63,7 @@ void BossSpider::Update()
 		bossBullet->Update();
 	}
 
-	world_.UpdateMatrix();
+	world_.Update();
 }
 
 void BossSpider::Draw()
@@ -95,6 +95,13 @@ void BossSpider::InitCollider()
 	attackCollider.SetcollisionMask(~ColliderTag::Enemy && ~ColliderTag::EnemyAttack);
 	attackCollider.IsUsing = false;
 }
+void BossSpider::AttackOnCollision(const ICollider* ICollider)
+{
+	if (ICollider->GetcollitionAttribute() == ColliderTag::Player) {
+		attackCollider.IsUsing = false;
+	}
+}
+
 void BossSpider::ImGui()
 {
 #ifdef _DEBUG

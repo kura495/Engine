@@ -3,7 +3,7 @@
 void ViewProjection::Initialize(){
 	CreateConstBuffer();
 	Map();
-	UpdateMatrix();
+	Update();
 }
 
 void ViewProjection::CreateConstBuffer(){
@@ -16,7 +16,7 @@ void ViewProjection::Map(){
 	constBuff_PS.Get()->Map(0, nullptr, reinterpret_cast<void**>(&constMap_PS));
 }
 
-void ViewProjection::UpdateMatrix(){
+void ViewProjection::Update(){
 	UpdateViewMatrix();
 	UpdateProjectionMatrix();
 	TransferMatrix();

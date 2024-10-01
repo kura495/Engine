@@ -8,7 +8,7 @@ void BoxColliderModel::Init()
 
 void BoxColliderModel::Update()
 {
-	world_.UpdateMatrix();
+	world_.Update();
 }
 
 void BoxColliderModel::Draw()

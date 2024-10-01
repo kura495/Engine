@@ -30,10 +30,4 @@ void Enemy::OnCollision(const ICollider* ICollider)
 	}
 }
 
-void Enemy::AttackOnCollision(const ICollider* ICollider)
-{
-	if (ICollider->GetcollitionAttribute() == ColliderTag::Player) {
-		attackCollider.IsUsing = false;
-	}
-}
 

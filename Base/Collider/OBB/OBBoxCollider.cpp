@@ -10,9 +10,9 @@ OBBoxCollider::~OBBoxCollider()
 	IsDalete = true;
 }
 
-void OBBoxCollider::Init(WorldTransform* Parent)
+void OBBoxCollider::Init(WorldTransform* world)
 {
-	ICollider::SetWorld(Parent);
+	ICollider::SetWorld(world);
 	model_ = std::make_unique<OBBColliderModel>();
 	model_->Init();
 	model_->SetWorld(size_, center_->transform.quaternion, center_->transform.translate);

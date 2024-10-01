@@ -24,7 +24,6 @@ private://関数
 
 	void InitCollider();
 
-
 	// 攻撃範囲内ならtrue
 	void AttackInit();
 	void PlayAttackAnime();
@@ -33,4 +32,9 @@ private://関数
 	void LookPlayer();
 
 	void DamageEffect();
+
+	void AttackOnCollision(const ICollider* ICollider);
+
+	OBBoxCollider attackCollider;
+	WorldTransform attackWorld_;
 };

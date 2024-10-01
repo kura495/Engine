@@ -6,15 +6,18 @@ void EnemyManager::Init(Player* player)
 	player_ = player;
 
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Monster", "Monster.gltf"));
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
-	bossSpider_ = std::make_unique<BossSpider>();
-	bossSpider_->Init(enemyModel_);
-	bossSpider_->SetPlayer(player_);
+	bossEnemy_ = std::make_unique<Boss>();
+	bossEnemy_->Init(enemyModel_);
+	bossEnemy_->SetPlayer(player_);
+
+
 }
 
 void EnemyManager::Update()
 {
-	if (bossSpider_->GetIsAlive() == false) {
+	if (bossEnemy_->GetIsAlive() == false) {
 		isClear = true;
 	}
 
@@ -33,11 +36,11 @@ void EnemyManager::Update()
 	if (spawnFlame > KSpawnFlame) {
 		spawn++;
 		//TODO：いったんコメントアウト
-		Spawn();
+		//Spawn();
 		spawnFlame = 0;
 	}
 
-	bossSpider_->Update();
+	bossEnemy_->Update();
 
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
@@ -50,7 +53,7 @@ void EnemyManager::Update()
 
 void EnemyManager::Draw()
 {
-	bossSpider_->Draw();
+	bossEnemy_->Draw();
 
 	for (Enemy* enemy : enemys_) {
 		enemy->Draw();

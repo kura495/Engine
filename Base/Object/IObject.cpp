@@ -8,7 +8,7 @@ void IObject::Init(std::vector<Model*> models)
 
 void IObject::Update()
 {
-	world_.UpdateMatrix();
+	world_.Update();
 }
 
 void IObject::Draw()

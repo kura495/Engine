@@ -29,13 +29,6 @@
 class GameManager
 {
 public:
-	enum GameStateNo {
-		TITLE,
-		PLAY,
-		CLEAR,
-		GAMEOVER,
-		GameStateMax
-	};
 
 	void Run();
 

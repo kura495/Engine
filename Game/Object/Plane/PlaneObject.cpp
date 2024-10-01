@@ -14,7 +14,7 @@ void PlaneObject::Init(std::vector<Model*> models)
 
 void PlaneObject::Update()
 {
-	world_.UpdateMatrix();
+	world_.Update();
 
 	BoxCollider::SetSize({world_.transform.scale.x * 5.0f,0.0f,world_.transform.scale.z * 5.0f });
 }

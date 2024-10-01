@@ -72,7 +72,7 @@ void FollowCamera::Update() {
 	ImGui();
 #endif
 
-	viewProj.UpdateMatrix();
+	viewProj.Update();
 }
 
 void FollowCamera::ImGui()

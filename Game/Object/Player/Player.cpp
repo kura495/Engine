@@ -21,8 +21,6 @@ void Player::Init(std::vector<Model*> models)
 	collider.SetcollitionAttribute(ColliderTag::Player);
 	collider.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
 
-
-
 #pragma region
 	animation = new Animation();
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
@@ -103,11 +101,11 @@ void Player::Update()
 		}
 	}
 	
-	world_.UpdateMatrix();
-
-
+	world_.Update();
+	
+	//TODO:位置を読み込んでやりたい
+	//weapon_->UpdateMat(animation->GetSkeleton().joints[animation->GetSkeleton().jointMap["LeftArm"]].skeletonSpaceMatrix);
 	weapon_->Update();
-
 
 	//前フレームのゲームパッドの状態を保存
 	joyStatePre = joyState;
@@ -152,7 +150,7 @@ void Player::OnCollision(const ICollider* ICollider)
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
 		if (ICollider->GetCenter().y > world_.transform.translate.y) {
 			world_.transform.translate.y = ICollider->GetCenter().y;
-			world_.UpdateMatrix();
+			world_.Update();
 		}
 	}
 	else if (ICollider->GetcollitionAttribute() == ColliderTag::Box) {
@@ -202,7 +200,7 @@ void Player::OnCollision(const ICollider* ICollider)
 		}
 #pragma endregion 移動制御	
 
-		world_.UpdateMatrix();
+		world_.Update();
 	}
 	return;
 }

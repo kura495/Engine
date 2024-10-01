@@ -15,7 +15,7 @@ public:
 	OBBoxCollider();
 	~OBBoxCollider();
 
-	void Init(WorldTransform* Parent);
+	void Init(WorldTransform* world);
 	void CollisionUpdate()override;
 	void CollisionDraw()override;
 

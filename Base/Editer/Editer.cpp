@@ -98,7 +98,7 @@ void Editer::GuizmoOption()
 		WinApp::dropFileName.clear();
 	}
 
-	object_[ObjectCount]->GetWorld().UpdateMatrix();
+	object_[ObjectCount]->GetWorld().Update();
 	ImGui::End();
 
 	ImGuiIO& io = ImGui::GetIO();

@@ -16,7 +16,7 @@ void BoxObject::Init(std::vector<Model*> models)
 
 void BoxObject::Update()
 {
-	world_.UpdateMatrix();
+	world_.Update();
 
 	std::string Number = std::to_string(GetNumber());
 	std::string Name = "Box" + Number;
@@ -37,7 +37,7 @@ void BoxObject::ImGui()
 	ImGui::DragFloat3("Scale",&world_.transform.scale.x);
 	ImGui::DragFloat4("Rotate",&world_.transform.quaternion.x);
 	ImGui::DragFloat3("Translate",&world_.transform.translate.x);
-	world_.UpdateMatrix();
+	world_.Update();
 	ImGui::End();
 
 
