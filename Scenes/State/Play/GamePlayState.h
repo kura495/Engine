@@ -58,7 +58,8 @@ private:
 #pragma region
 	void TitleInit();
 	void TitleUpdate();
-	bool IsTitleFlag = false;
+	void TitleDraw();
+	bool IsTitleToGameFlag = false;
 #pragma endregion Title
 #pragma region
 	void PlayInit();

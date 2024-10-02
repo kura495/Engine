@@ -27,7 +27,16 @@ public:
 	void ImGui();
 	void SetTarget(const WorldTransform* target);
 	void SetLockOn(LockOn* lockOn) { this->lockOn_ = lockOn; }
+
+	bool PlaySceneInit(const WorldTransform* target);
+	void PlaySceneReset();
 private:
+	bool resetFlag_ = false;
+	float lerpT = 0.0f;
+	Vector3 resetTransform;
+	Quaternion resetRotate;
+
+	Vector3 EulerRot;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド

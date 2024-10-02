@@ -25,7 +25,7 @@ void GamePlayState::Initialize()
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
-	followCamera->SetTarget(&player_->GetWorld());
+
 
 	lockOn.Init();
 	followCamera->SetLockOn(&lockOn);
@@ -79,23 +79,14 @@ void GamePlayState::Draw()
 
 #pragma endregion
 
+	if (behavior_ == StageBehavior::kPlay) {
+
+	}
+
 	skyDome_->Draw();
 
 	collisionManager->Draw();
-	//3Dモデル描画ここまで	
 
-	//Sprite描画ここから
-
-	//Sprite描画ここまで
-
-	//パーティクル描画ここから
-
-	//particle->PreDraw();
-	//particle->Draw(Renderer::viewProjection);
-
-	//パーティクル描画ここまで
-
-	//描画ここまで
 }
 #pragma region
 void GamePlayState::BehaviorUpdate()
@@ -153,14 +144,25 @@ void GamePlayState::TitleInit()
 void GamePlayState::TitleUpdate()
 {
 	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
-		behaviorRequest_ = StageBehavior::kPlay;
+		IsTitleToGameFlag = true;
 	}
+	if (IsTitleToGameFlag) {
+		if (followCamera->PlaySceneInit(&player_->GetWorld())) {
+			behaviorRequest_ = StageBehavior::kPlay;
+
+		}
+	}
+}
+
+void GamePlayState::TitleDraw()
+{
 }
 
 #pragma endregion Title
 #pragma region
 void GamePlayState::PlayInit()
 {
+	IsTitleToGameFlag = false;
 }
 
 void GamePlayState::PlayUpdate()
