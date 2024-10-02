@@ -31,8 +31,14 @@ public:
 	bool PlaySceneInit(const WorldTransform* target);
 	void PlaySceneReset();
 private:
-	bool resetFlag_ = false;
+	Vector3 InitCameraPos = {-1.4f,0.4f,-2.3f};
+	Vector3 InitCameraRot = {-0.3f,0.1f,0.0f};
+	Vector3 InitCameraPos2 = {-2.1f,1.9f,2.9f};
+	Vector3 InitCameraRot2 = {0.5f,2.6f,0.0f};
+
+	bool resetFlag_ = true;
 	float lerpT = 0.0f;
+	float addValue = 0.01f;
 	Vector3 resetTransform;
 	Quaternion resetRotate;
 
@@ -57,5 +63,5 @@ private:
 	//追従対象からのオフセットを計算する
 	Vector3 OffsetCalc();
 
-	Vector3 offsetPos = { 0.0f, 2.0f, -15.0f };
+	Vector3 offsetPos = { 0.0f, 2.0f, -7.0f };
 };

@@ -4,6 +4,9 @@
 void FollowCamera::Initialize() {
 	viewProj.Initialize();
 	workInter.interParameter_ = 1.0f;
+
+	viewProj.translation_ = InitCameraPos2;
+	viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
 }
 
 void FollowCamera::Update() {
@@ -50,9 +53,9 @@ void FollowCamera::Update() {
 
 	//TODO : LerpShortAngleを使うと一定角度で急にワープする
 	if (resetFlag_ == false) {
-		EulerRot.z = rotate_.z;
-		EulerRot.y = rotate_.y + rotAngle_;
 		EulerRot.x = rotate_.x;
+		EulerRot.y = rotate_.y + rotAngle_;
+		EulerRot.z = rotate_.z;
 		viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 		if (target_) {
@@ -81,7 +84,13 @@ void FollowCamera::ImGui()
 #ifdef _DEBUG
 	ImGui::Begin("FollowCamera");
 	ImGui::DragFloat3("Offset",&offsetPos.x);
-	ImGui::DragFloat3("translate",&viewProj.translation_.x);
+	ImGui::DragFloat3("translate",&InitCameraPos2.x,0.1f);
+	ImGui::DragFloat3("rotate",&InitCameraRot2.x,0.1f);
+	if (!target_) {
+		viewProj.translation_ = InitCameraPos2;
+		viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
+	}
+
 	ImGui::End();
 #endif
 }
@@ -103,7 +112,7 @@ bool FollowCamera::PlaySceneInit(const WorldTransform* target)
 	}
 
 	PlaySceneReset();
-	lerpT += 0.05f;
+	lerpT += addValue;
 
 	if (lerpT > 1.0f) {
 		resetFlag_ = false;
