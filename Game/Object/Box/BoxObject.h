@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Object/IObject.h"
-#include "Base/Collider/Box/BoxCollider.h"
+#include "Collider/Box/BoxCollider.h"
 
 static uint32_t BoxObjectNumber = 0;
 

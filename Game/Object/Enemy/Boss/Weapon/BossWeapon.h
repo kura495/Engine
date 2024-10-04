@@ -1,9 +1,9 @@
 #pragma once
 #include "Game/Object/Character.h"
-#include "Base/Collider/Box/BoxCollider.h"
-#include "Base/Collider/OBB/OBBoxCollider.h"
-#include "Base/Input/Input.h"
-#include "Base/ParticleSystem/ParticleSystem.h"
+#include "Collider/Box/BoxCollider.h"
+#include "Collider/OBB/OBBoxCollider.h"
+#include "Input/Input.h"
+#include "ParticleSystem/ParticleSystem.h"
 
 class BossWeapon
 {

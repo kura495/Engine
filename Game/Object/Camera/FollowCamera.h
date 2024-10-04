@@ -1,6 +1,6 @@
 #pragma once
-#include "Base/Camera/Camera.h"
-#include "Base/Input/Input.h"
+#include "Camera/Camera.h"
+#include "Input/Input.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Math/Matrix/MatrixCalc.h"
 #include "Math/Vector/VectorCalc.h"

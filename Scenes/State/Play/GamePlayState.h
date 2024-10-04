@@ -15,17 +15,17 @@
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
-#include "Base/Camera/DebugCamera/DebugCamera.h"
+#include "Camera/DebugCamera/DebugCamera.h"
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
 #include "Math_Structs.h"
-#include "Base/ParticleSystem/ParticleSystem.h"
-#include "Base/Collider/Manager/CollisionManager.h"
-#include "Base/Editer/Editer.h"
-#include "Base/Object/Manaer/ObjectManager.h"
-#include "Base/Animation/Animation.h"
-#include "Base/Renderer/Renderer.h"
-#include "Base/Object/Line/Line.h"
+#include "ParticleSystem/ParticleSystem.h"
+#include "Collider/Manager/CollisionManager.h"
+#include "Editer/Editer.h"
+#include "Object/Manager/ObjectManager.h"
+#include "Animation/Animation.h"
+#include "Renderer/Renderer.h"
+#include "Object/Line/Line.h"
 
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"

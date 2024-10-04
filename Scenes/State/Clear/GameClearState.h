@@ -1,6 +1,6 @@
 #pragma once
 #include"Scenes/State/IgameState.h"
-#include "Base/Input/Input.h"
+#include "Input/Input.h"
 #include "Texture/TextureManager.h"
 #include "Sprite/Sprite.h"
 #include "WorldTransform/WorldTransform.h"

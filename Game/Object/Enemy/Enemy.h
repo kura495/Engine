@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Base/Object/IObject.h"
-#include "Base/Collider/Box/BoxCollider.h"
-#include "Base/Collider/OBB/OBBoxCollider.h"
-#include "Base/Input/Input.h"
-#include "Base/Animation/Animation.h"
+#include "Object/IObject.h"
+#include "Collider/Box/BoxCollider.h"
+#include "Collider/OBB/OBBoxCollider.h"
+#include "Input/Input.h"
+#include "Animation/Animation.h"
 
 class Player;
 

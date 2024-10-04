@@ -1,5 +1,5 @@
 #pragma once
-#include "Base/Object/IObject.h"
+#include "Object/IObject.h"
 
 class SkyDome : public IObject
 {

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Base/Object/IObject.h"
+#include "Object/IObject.h"
 #include "Game/Object/Weapon/Weapon.h"
-#include "Base/Collider/Box/BoxCollider.h"
-#include "Base/Collider/OBB/OBBoxCollider.h"
-#include "Base/Input/Input.h"
-#include "Base/Animation/Animation.h"
+#include "Collider/Box/BoxCollider.h"
+#include "Collider/OBB/OBBoxCollider.h"
+#include "Input/Input.h"
+#include "Animation/Animation.h"
 
 //前方宣言
 class LockOn;
