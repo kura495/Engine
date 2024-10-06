@@ -29,6 +29,9 @@ void Model::Initialize(const std::string& directoryPath, const std::string& file
 	materialData->enableLighting = lightFlag;
 	materialData->color = color_;
 
+	DissolveResource = directX_->CreateBufferResource(sizeof(Vector4));
+	DissolveResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&dissolveValue_));
+
 }
 
 void Model::Draw(const WorldTransform& transform,int DDSTexHandle)
@@ -89,34 +92,36 @@ void Model::SkinDraw(const WorldTransform& transform, const SkinCluster& skinClu
 	};
 
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//頂点
-	directX_->GetcommandList()->IASetVertexBuffers(0, 2, vbvs);
 	//IndexBuffer
 	directX_->GetcommandList()->IASetIndexBuffer(&indexBufferView);
+	//頂点
+	//色とuvTransform
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
+	directX_->GetcommandList()->IASetVertexBuffers(0, 2, vbvs);
+	//テクスチャ
+	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
+	//Light
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 	//ViewProjection
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
-	//色とuvTransform
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
-	//テクスチャ
-	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(2, textureManager_->GetGPUHandle(modelData_.TextureIndex));
 	//StructuredBuffer
 	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(6, skinCluster.paletteSRVHandle.GPU);
-	//Light
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 
 	directX_->GetcommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
 }
 
-void Model::SkinDissolveDraw(const WorldTransform& transform, const SkinCluster& skinCluster, int DissolveTex)
+void Model::SkinDissolveDraw(const WorldTransform& transform, const SkinCluster& skinCluster, int DissolveTex, float DeissolveValue)
 {
 	D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
 		vertexBufferView,
 		skinCluster.influenceBufferView
 	};
+
+	dissolveValue_->x = DeissolveValue;
 
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//頂点
@@ -138,6 +143,8 @@ void Model::SkinDissolveDraw(const WorldTransform& transform, const SkinCluster&
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 	//ディゾルブ用画像
 	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(7, textureManager_->GetGPUHandle(DissolveTex));
+	//ディゾルブのボリューム
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(8, DissolveResource->GetGPUVirtualAddress());
 	//Light
 	//directX_->GetcommandList()->SetGraphicsRootConstantBufferView(8,);
 

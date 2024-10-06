@@ -1,17 +1,17 @@
-#include "Standard.h"
+#include "Dissolve.h"
 
-void Standard::ShaderCompile()
+void Dissolve::ShaderCompile()
 {
-	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Object3D/Object3d.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Dissolve/Dissolve.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob =  ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Object3D/Object3d.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/Dissolve/Dissolve.PS.hlsl", L"ps_6_0");
 }
 
-void Standard::CreateRootSignature()
+void Dissolve::CreateRootSignature()
 {
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	D3D12_ROOT_PARAMETER rootParameters[7] = {};
+	D3D12_ROOT_PARAMETER rootParameters[9] = {};
 	//色に関するルートパラメーター
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PIXELShaderで使う
@@ -21,6 +21,17 @@ void Standard::CreateRootSignature()
 	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;//VERTEXShaderで使う
 	rootParameters[1].Descriptor.ShaderRegister = 0;//レジスタ番号を0にバインド
+	//頂点位置に関するルートパラメーター(ViewProjection)
+	rootParameters[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
+	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;//VERTEXShaderで使う
+	rootParameters[4].Descriptor.ShaderRegister = 1;//レジスタ番号を1にバインド
+	//頂点位置に関するルートパラメーター(Camera)
+	rootParameters[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
+	rootParameters[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//VERTEXShaderで使う
+	rootParameters[5].Descriptor.ShaderRegister = 2;//レジスタ番号を1にバインド
+
+	descriptionRootSignature.pParameters = rootParameters;//ルートパラメータ配列へのポインタ
+	descriptionRootSignature.NumParameters = _countof(rootParameters);//配列の長さ
 	//テクスチャで使う
 	//DescriptorRange
 	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
@@ -37,31 +48,37 @@ void Standard::CreateRootSignature()
 	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
 	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixelShaderで使う
 	rootParameters[3].Descriptor.ShaderRegister = 1;//レジスタ番号を1にバインド
-	//頂点位置に関するルートパラメーター(ViewProjection)
-	rootParameters[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
-	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;//VERTEXShaderで使う
-	rootParameters[4].Descriptor.ShaderRegister = 1;//レジスタ番号を1にバインド
-	//頂点位置に関するルートパラメーター(Camera)
-	rootParameters[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
-	rootParameters[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//VERTEXShaderで使う
-	rootParameters[5].Descriptor.ShaderRegister = 2;//レジスタ番号を1にバインド
 
-	//環境マップ
+	//StructuredBuffer用で使う
+	//DescriptorRange
+	D3D12_DESCRIPTOR_RANGE descriptorRangeForStructured[1] = {};
+	descriptorRangeForStructured[0].BaseShaderRegister = 0;//0から始まる
+	descriptorRangeForStructured[0].NumDescriptors = 1;//数は1つ
+	descriptorRangeForStructured[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;//SRVを使う
+	descriptorRangeForStructured[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;//Offsetを自動計算
+	//DescriptorTable
+	rootParameters[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;//DescriptorTableを使う
+	rootParameters[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;//VertexShaderで使う
+	rootParameters[6].DescriptorTable.pDescriptorRanges = descriptorRangeForStructured;//Tableの中身の配列を指定
+	rootParameters[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForStructured);
+
+	//
+	//DescriptorRange
 	D3D12_DESCRIPTOR_RANGE descriptorRange2[1] = {};
-	descriptorRange2[0].BaseShaderRegister = 1;//0から始まる
+	descriptorRange2[0].BaseShaderRegister = 0;//0から始まる
 	descriptorRange2[0].NumDescriptors = 1;//数は1つ
 	descriptorRange2[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;//SRVを使う
 	descriptorRange2[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;//Offsetを自動計算
 	//DescriptorTable
-	rootParameters[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;//DescriptorTableを使う
-	rootParameters[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixelShaderで使う
-	rootParameters[6].DescriptorTable.pDescriptorRanges = descriptorRange2;//Tableの中身の配列を指定
-	rootParameters[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange2);//Tableで利用する数
+	rootParameters[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;//DescriptorTableを使う
+	rootParameters[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixelShaderで使う
+	rootParameters[7].DescriptorTable.pDescriptorRanges = descriptorRange2;//Tableの中身の配列を指定
+	rootParameters[7].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange2);//Tableで利用する数
 
-
-	descriptionRootSignature.pParameters = rootParameters;//ルートパラメータ配列へのポインタ
-	descriptionRootSignature.NumParameters = _countof(rootParameters);//配列の長さ
-
+	//value用
+	rootParameters[8].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CSVで使う
+	rootParameters[8].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//VERTEXShaderで使う
+	rootParameters[8].Descriptor.ShaderRegister = 3;//レジスタ番号を0にバインド
 
 	//Samplerの設定
 	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
@@ -86,29 +103,44 @@ void Standard::CreateRootSignature()
 	assert(SUCCEEDED(hr));
 }
 
-void Standard::CreateInputLayOut()
+void Dissolve::CreateInputLayOut()
 {
 	//頂点レイアウト
-	inputElementDescs[0].SemanticName = "POSITION";
-	inputElementDescs[0].SemanticIndex = 0;
-	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	inputElementarrayDescs[0].SemanticName = "POSITION";
+	inputElementarrayDescs[0].SemanticIndex = 0;
+	inputElementarrayDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementarrayDescs[0].InputSlot = 0;
+	inputElementarrayDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 	//UV座標レイアウト
-	inputElementDescs[1].SemanticName = "TEXCOORD";
-	inputElementDescs[1].SemanticIndex = 0;
-	inputElementDescs[1].Format = DXGI_FORMAT_R32G32_FLOAT;
-	inputElementDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	inputElementarrayDescs[1].SemanticName = "TEXCOORD";
+	inputElementarrayDescs[1].SemanticIndex = 0;
+	inputElementarrayDescs[1].Format = DXGI_FORMAT_R32G32_FLOAT;
+	inputElementarrayDescs[1].InputSlot = 0;
+	inputElementarrayDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 	//法線レイアウト
-	inputElementDescs[2].SemanticName = "NORMAL";
-	inputElementDescs[2].SemanticIndex = 0;
-	inputElementDescs[2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
-	inputElementDescs[2].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	inputElementarrayDescs[2].SemanticName = "NORMAL";
+	inputElementarrayDescs[2].SemanticIndex = 0;
+	inputElementarrayDescs[2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementarrayDescs[2].InputSlot = 0;
+	inputElementarrayDescs[2].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 
-	inputLayoutDesc.pInputElementDescs = inputElementDescs;
-	inputLayoutDesc.NumElements = _countof(inputElementDescs);
+	inputElementarrayDescs[3].SemanticName = "WEIGHT";
+	inputElementarrayDescs[3].SemanticIndex = 0;
+	inputElementarrayDescs[3].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementarrayDescs[3].InputSlot = 1;
+	inputElementarrayDescs[3].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementarrayDescs[4].SemanticName = "INDEX";
+	inputElementarrayDescs[4].SemanticIndex = 0;
+	inputElementarrayDescs[4].Format = DXGI_FORMAT_R32G32B32A32_SINT;
+	inputElementarrayDescs[4].InputSlot = 1;
+	inputElementarrayDescs[4].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputLayoutDesc.pInputElementDescs = inputElementarrayDescs;
+	inputLayoutDesc.NumElements = _countof(inputElementarrayDescs);
 }
 
-void Standard::CreateBlendState()
+void Dissolve::CreateBlendState()
 {
 	//NormalBlendに設定
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
@@ -121,13 +153,13 @@ void Standard::CreateBlendState()
 	blendDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
 }
 
-void Standard::CreateRasterizarState()
+void Dissolve::CreateRasterizarState()
 {
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 }
 
-void Standard::CreatePipelineStateObject()
+void Dissolve::CreatePipelineStateObject()
 {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	graphicsPipelineStateDesc.pRootSignature = PipelineStateObject_.rootSignature.Get();

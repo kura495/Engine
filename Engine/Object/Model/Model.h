@@ -31,7 +31,7 @@ public:
 	void Draw(const WorldTransform& transform, int DDSTexHandle);
 	void WireFlameDraw(const WorldTransform& transform);
 	void SkinDraw(const WorldTransform& transform,const SkinCluster& skinCluster);
-	void SkinDissolveDraw(const WorldTransform& transform,const SkinCluster& skinCluster,int DissolveTex);
+	void SkinDissolveDraw(const WorldTransform& transform,const SkinCluster& skinCluster,int DissolveTex,float DeissolveValue);
 
 
 	void RendererDraw(WorldTransform& transform);
@@ -76,7 +76,9 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = nullptr;
 	//マテリアルデータ
 	Material* materialData = nullptr;
-
+	//ディゾルブのおおきさ
+	Microsoft::WRL::ComPtr<ID3D12Resource> DissolveResource = nullptr;
+	Vector4* dissolveValue_ = nullptr;
 	
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 

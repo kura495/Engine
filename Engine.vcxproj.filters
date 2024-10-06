@@ -584,6 +584,8 @@
       <Filter>Engine\PostProsess\Normal</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\PostProsess\Dissolve\PPDissolve.cpp" />
+    <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -919,6 +921,8 @@
     <ClInclude Include="Engine\Math\Math_Structs.h">
       <Filter>Engine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\PostProsess\Dissolve\PPDissolve.h" />
+    <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
