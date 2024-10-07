@@ -36,11 +36,15 @@ void PSOManager::Initalize()
 	rGBtoHSV.Initalize();
 	CubeMap cubeMap;
 	cubeMap.Initalize();
-
+	ParticlePipeLine particlePipeLine;
+	particlePipeLine.Initalize();
+	SpritePSO sprite;
+	sprite.Initalize();
 
 	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
 	AddPipeline(dissolve.GetPSO(),PipelineType::SkinningDissolve);
+	AddPipeline(particlePipeLine.GetPSO(),PipelineType::Particle);
 	AddPipeline(standard.GetPSO(), PipelineType::Sprite);
 	AddPipeline(drawLinePSO.GetPSO(),PipelineType::DrawLine);
 	AddPipeline(wireFlame.GetPSO(),PipelineType::WireFlame);

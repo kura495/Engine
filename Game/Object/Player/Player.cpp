@@ -10,7 +10,7 @@ void Player::Init(std::vector<Model*> models)
 
 	models_ = models;
 	world_.Initialize();
-	world_.transform.translate.z = -7.0f;
+	world_.transform.translate.z = -3.0f;
 	input = Input::GetInstance();
 
 	world_.Update();
@@ -29,6 +29,11 @@ void Player::Init(std::vector<Model*> models)
 	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
 	animation->Init();
 	animation->AnimeInit(*models_[0],true);
+
+	Idleanimation = new Animation();
+	Idleanimation = Animation::LoadAnimationFile("resources/human", "Idle.gltf");
+	Idleanimation->Init();
+	Idleanimation->AnimeInit(*models_[0],true);
 #pragma endregion Anime
 
 	weapon_ = std::make_unique<Weapon>();
@@ -37,6 +42,11 @@ void Player::Init(std::vector<Model*> models)
 	weapon_->Update();
 
 
+}
+
+void Player::TitleUpdate()
+{
+	Idleanimation->PlayAnimation();
 }
 
 void Player::Update()
@@ -117,9 +127,15 @@ void Player::Update()
 	joyStatePre = joyState;
 }
 
+void Player::TitleDraw()
+{
+	models_[0]->RendererSkinDraw(world_, Idleanimation->GetSkinCluster());
+}
+
 void Player::Draw()
 {
 	//models_[0]->RendererSkinDissolveDraw(world_, animation->GetSkinCluster(),0.0f);
+
 	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
 	weapon_->Draw();
 	animation->DebugDraw(world_);

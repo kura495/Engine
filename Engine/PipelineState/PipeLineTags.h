@@ -4,6 +4,7 @@ enum class PipelineType {
 	Standerd,
 	Skinning,
 	SkinningDissolve,
+	Particle,
 	Sprite,
 	DrawLine,
 	WireFlame,

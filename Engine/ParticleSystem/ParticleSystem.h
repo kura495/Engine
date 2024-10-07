@@ -49,6 +49,8 @@ public:
 
 	void Draw(const ViewProjection& viewProjection);
 
+
+
 	void PreDraw();
 
 	void SetPos(Vector3 Pos);

@@ -20,7 +20,9 @@ class Player : public IObject
 public:
 
 	void Init(std::vector<Model*> models)override;
+	void TitleUpdate();
 	void Update()override;
+	void TitleDraw();
 	void Draw()override;
 
 	void ImGui();
@@ -81,6 +83,7 @@ private:
 	float attack = 0.0f;
 
 	Animation* animation;
+	Animation* Idleanimation;
 
 	OBBoxCollider collider;
 

@@ -60,13 +60,13 @@ void Renderer::Draw()
 	drawModelSkinningData_.clear();
 
 	//SkinningとDissolve
-	//ChangePipeline(PipelineType::SkinningDissolve);
-	/////描画
-	//for (DrawSkinningDissolveData model : drawModelSkinningDissolveData_) {
-	//	model.modelData->SkinDissolveDraw(*model.world_,*model.skinCluster, Texture, model.DissolveValue);
-	//}
-	////中身を消す
-	//drawModelSkinningDissolveData_.clear();
+	ChangePipeline(PipelineType::SkinningDissolve);
+	///描画
+	for (DrawSkinningDissolveData model : drawModelSkinningDissolveData_) {
+		model.modelData->SkinDissolveDraw(*model.world_,*model.skinCluster, Texture, model.DissolveValue);
+	}
+	//中身を消す
+	drawModelSkinningDissolveData_.clear();
 
 	//ライン描画
 	ChangePipeline(PipelineType::DrawLine);

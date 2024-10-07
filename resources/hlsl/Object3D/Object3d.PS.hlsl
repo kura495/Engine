@@ -77,6 +77,11 @@ PixelShaderOutput main(VertexShaderOutput input) {
             output.color.rgb += environmentColor.rgb;
         }
     }
+    
+    if (output.color.a == 0.0f)
+    {
+        discard;
+    }
 	
-    return output;
+        return output;
 }

@@ -22,6 +22,13 @@ void GamePlayState::Initialize()
 	lanthanumModel_.push_back(Model::CreateModelFromObj("resources/Object", "Object.obj"));
 	lanthan.Initialize();
 
+	titleSprite = new Sprite;
+	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
+	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/Title.png");
+	title.Initialize();
+	//title.transform.translate.z = -1.0f;
+	//title.Update();
+
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
 
@@ -48,11 +55,14 @@ void GamePlayState::Initialize()
 	//天球
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
+
 }
 
 void GamePlayState::Update()
 {
 	BehaviorUpdate();
+
+	particle->Update();
 
 	skyDome_->Update();
 
@@ -75,7 +85,7 @@ void GamePlayState::Draw()
 
 	objectManager->Draw();
 
-	player_->Draw();
+
 
 	enemyManager->Draw();
 
@@ -83,7 +93,13 @@ void GamePlayState::Draw()
 
 	if (behavior_ == StageBehavior::kPlay) {
 
+		player_->Draw();
 	}
+	else {
+		TitleDraw();
+	}
+
+
 	for (Model* model : lanthanumModel_) {
 		model->RendererDraw(lanthan);
 	}
@@ -92,8 +108,8 @@ void GamePlayState::Draw()
 
 	collisionManager->Draw();
 
-	
-	particle->Draw(Renderer::viewProjection);
+	//particle->PreDraw();
+	//particle->Draw(Renderer::viewProjection);
 
 }
 #pragma region
@@ -160,10 +176,13 @@ void GamePlayState::TitleUpdate()
 
 		}
 	}
+	player_->TitleUpdate();
 }
 
 void GamePlayState::TitleDraw()
 {
+	titleSprite->RendererDraw(title);
+	player_->TitleDraw();
 }
 
 #pragma endregion Title
@@ -177,7 +196,7 @@ void GamePlayState::PlayUpdate()
 {
 	player_->Update();
 	enemyManager->Update();
-	particle->Update();
+
 	collisionManager->Update();
 
 	lockOn.Update(enemyManager->GetList());

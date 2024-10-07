@@ -102,4 +102,6 @@ private:
 
 	Input* input;
 
+	Sprite* titleSprite;
+	WorldTransform title;
 };
