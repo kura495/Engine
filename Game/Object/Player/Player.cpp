@@ -116,7 +116,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
+	models_[0]->RendererSkinDissolveDraw(world_, animation->GetSkinCluster(),0.0f);
 	weapon_->Draw();
 	animation->DebugDraw(world_);
 }

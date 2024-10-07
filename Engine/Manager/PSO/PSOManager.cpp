@@ -16,6 +16,8 @@ void PSOManager::Initalize()
 	standard.Initalize();
 	Skinning skinning;
 	skinning.Initalize();
+	Dissolve dissolve;
+	dissolve.Initalize();
 	DrawLinePSO drawLinePSO;
 	drawLinePSO.Initalize();
 	PostProsessPSO postProsessPSO;
@@ -35,8 +37,10 @@ void PSOManager::Initalize()
 	CubeMap cubeMap;
 	cubeMap.Initalize();
 
+
 	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
+	AddPipeline(dissolve.GetPSO(),PipelineType::SkinningDissolve);
 	AddPipeline(standard.GetPSO(), PipelineType::Sprite);
 	AddPipeline(drawLinePSO.GetPSO(),PipelineType::DrawLine);
 	AddPipeline(wireFlame.GetPSO(),PipelineType::WireFlame);

@@ -17,11 +17,16 @@ struct Camera
 {
     float32_t3 worldPosition;
 };
+struct Value
+{
+    float32_t4 value;
+};
 ConstantBuffer<Material> gMaterial : register(b0);
 ConstantBuffer<DirectionalLight> gDirectionalLight : register(b1);
 ConstantBuffer<Camera> gCamera : register(b2);
+ConstantBuffer<Value> gValue : register(b3);
 Texture2D<float32_t4> gTexture : register(t0);
-Texture2D<float32_t4> gTexture : register(t0);
+Texture2D<float32_t4> gTexture2 : register(t1);
 SamplerState gSampler : register(s0);
 
 struct PixelShaderOutput

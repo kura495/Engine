@@ -71,6 +71,7 @@ private:
 	SkyBox skyBox;
 
 	int Texture;
+	int dissolveTexture;
 	WorldTransform cubeWorld_;
 
 	ViewProjection viewproj;

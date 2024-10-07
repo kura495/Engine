@@ -29,6 +29,9 @@ void Renderer::Initalize()
 	cubeWorld_.Initialize();
 	cubeWorld_.transform.scale *= 100;
 	cubeWorld_.Update();
+
+	dissolveTexture = TextureManager::GetInstance()->LoadTexture("resources/rostock_laage_airport_4k.dds");
+
 }
 
 void Renderer::Draw()
@@ -56,14 +59,14 @@ void Renderer::Draw()
 	//中身を消す
 	drawModelSkinningData_.clear();
 
-	////SkinningとDissolve
-	//ChangePipeline(PipelineType::SkinningDissolve);
-	/////描画
-	//for (DrawSkinningDissolveData model : drawModelSkinningDissolveData_) {
-	//	model.modelData->SkinDissolveDraw(*model.world_,*model.skinCluster, Texture);
-	//}
-	////中身を消す
-	//drawModelSkinningDissolveData_.clear();
+	//SkinningとDissolve
+	ChangePipeline(PipelineType::SkinningDissolve);
+	///描画
+	for (DrawSkinningDissolveData model : drawModelSkinningDissolveData_) {
+		model.modelData->SkinDissolveDraw(*model.world_,*model.skinCluster, Texture, model.DissolveValue);
+	}
+	//中身を消す
+	drawModelSkinningDissolveData_.clear();
 
 	//ライン描画
 	ChangePipeline(PipelineType::DrawLine);

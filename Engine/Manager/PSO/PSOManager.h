@@ -15,6 +15,7 @@
 #include "PipelineState/LuminanceBasedOutline/LuminanceBasedOutline.h"
 #include "PipelineState/RGBtoHSV/RGBtoHSV.h"
 #include "PipelineState/CubeMap/CubeMap.h"
+#include "PipelineState/Dissolve/Dissolve.h"
 
 class PSOManager
 {

@@ -65,7 +65,7 @@ void Dissolve::CreateRootSignature()
 	//
 	//DescriptorRange
 	D3D12_DESCRIPTOR_RANGE descriptorRange2[1] = {};
-	descriptorRange2[0].BaseShaderRegister = 0;//0から始まる
+	descriptorRange2[0].BaseShaderRegister = 1;//1から始まる
 	descriptorRange2[0].NumDescriptors = 1;//数は1つ
 	descriptorRange2[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;//SRVを使う
 	descriptorRange2[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;//Offsetを自動計算
