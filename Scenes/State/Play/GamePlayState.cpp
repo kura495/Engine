@@ -19,6 +19,8 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
+	lanthanumModel_.push_back(Model::CreateModelFromObj("resources/Object", "Object.obj"));
+	lanthan.Initialize();
 
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
@@ -81,6 +83,9 @@ void GamePlayState::Draw()
 
 	if (behavior_ == StageBehavior::kPlay) {
 
+	}
+	for (Model* model : lanthanumModel_) {
+		model->RendererDraw(lanthan);
 	}
 
 	skyDome_->Draw();
