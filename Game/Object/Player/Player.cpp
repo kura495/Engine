@@ -10,8 +10,10 @@ void Player::Init(std::vector<Model*> models)
 
 	models_ = models;
 	world_.Initialize();
-	world_.transform.translate.z = -1.0f;
+	world_.transform.translate.z = -7.0f;
 	input = Input::GetInstance();
+
+	world_.Update();
 
 	models_[0]->GetMaterial()->enableLighting = Lighting::NotDo;
 	
@@ -32,8 +34,9 @@ void Player::Init(std::vector<Model*> models)
 	weapon_ = std::make_unique<Weapon>();
 	weapon_->Initalize(models);
 	weapon_->SetParent(world_);
+	weapon_->Update();
 
-	world_.Update();
+
 }
 
 void Player::Update()

@@ -92,6 +92,9 @@ void GamePlayState::Draw()
 
 	collisionManager->Draw();
 
+	
+	particle->Draw(Renderer::viewProjection);
+
 }
 #pragma region
 void GamePlayState::BehaviorUpdate()

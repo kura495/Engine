@@ -17,6 +17,7 @@ void Boss::Init(std::vector<Model*> models){
 	bossWeapon_ = std::make_unique<BossWeapon>();
 	bossWeapon_->Initalize(models_);
 	bossWeapon_->SetParent(world_);
+	bossWeapon_->Update();
 
 	HP_ = 10;
 }
