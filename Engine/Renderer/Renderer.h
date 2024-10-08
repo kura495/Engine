@@ -8,6 +8,7 @@
 #include "Sprite/Sprite.h"
 #include "WorldTransform/WorldTransform.h"
 
+
 #include "Game/Object/SkyBox/SkyBox.h"
 
 struct DrawModelData {
@@ -33,6 +34,10 @@ struct DrawSpriteData {
 	Sprite* sprite;
 	WorldTransform* world_;
 };
+class ParticleSystem;
+struct DrawParticleData {
+	ParticleSystem* particle;
+};
 class Renderer
 {
 public:
@@ -48,6 +53,7 @@ public:
 	static void AddLineData(Line& line,WorldTransform& world);
 	static void AddWireFlameData(Model& model, WorldTransform& world);
 	static void AddSpriteData(Sprite& sprite, WorldTransform& world);
+	static void AddParticleData(ParticleSystem& particle);
 
 	 void ChangePipeline(PipelineType Type);
 
@@ -67,6 +73,7 @@ private:
 	static std::vector<DrawLineData> drawLineData_;
 	static std::vector<DrawModelData> drawWireFlameData_;
 	static std::vector<DrawSpriteData> drawSpriteData_;
+	static std::vector<DrawParticleData> drawParticleData_;
 
 	SkyBox skyBox;
 

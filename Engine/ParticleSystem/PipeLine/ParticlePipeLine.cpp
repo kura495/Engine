@@ -97,15 +97,16 @@ void ParticlePipeLine::CreateInputLayOut()
 
 void ParticlePipeLine::CreateBlendState()
 {
-	//AddBlendに設定
-	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-	blendDesc.RenderTarget[0].BlendEnable = TRUE;
-	blendDesc.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
-	blendDesc.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
-	blendDesc.RenderTarget[0].DestBlend = D3D12_BLEND_ONE;
-	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;
-	blendDesc.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
-	blendDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
+	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = blendDesc.RenderTarget[0];
+	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	blenddesc.BlendEnable = true;
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+	
 }
 
 void ParticlePipeLine::CreateRasterizarState()
@@ -135,7 +136,7 @@ void ParticlePipeLine::CreatePipelineStateObject()
 	//Depthの機能を有効化する
 	depthStencilDesc.DepthEnable = true;
 	//書き込み
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	//比較関数はLessEqual 近ければ描画される
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	//DepthStencilの設定

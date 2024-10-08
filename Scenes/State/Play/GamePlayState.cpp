@@ -44,7 +44,7 @@ void GamePlayState::Initialize()
 	renderer_ = Renderer::GetInstance();
 
 	particle = new ParticleSystem();
-	particle->Initalize("resources/circle.png");
+	particle->Initalize("resources/circle2.png");
 
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();
@@ -108,8 +108,7 @@ void GamePlayState::Draw()
 
 	collisionManager->Draw();
 
-	//particle->PreDraw();
-	//particle->Draw(Renderer::viewProjection);
+	particle->RendererDraw();
 
 }
 #pragma region

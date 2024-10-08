@@ -1,5 +1,4 @@
 #pragma once
-#include "Editer/Editer.h"
 #include "Object/IObject.h"
 #include "WorldTransform/WorldTransform.h"
 class Emitter

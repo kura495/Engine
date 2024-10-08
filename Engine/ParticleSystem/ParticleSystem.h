@@ -47,6 +47,7 @@ public:
 
 	void Update();
 
+	void RendererDraw();
 	void Draw(const ViewProjection& viewProjection);
 
 

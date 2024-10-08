@@ -33,7 +33,7 @@ public:
 private:
 	Vector3 InitCameraPos = {-1.4f,0.4f,-2.3f};
 	Vector3 InitCameraRot = {-0.3f,0.1f,0.0f};
-	Vector3 InitCameraPos2 = {-2.1f,3.9f,2.9f};
+	Vector3 InitCameraPos2 = {-1.5f,1.9f,1.9f};
 	Vector3 InitCameraRot2 = {0.5f,2.6f,0.0f};
 
 	bool resetFlag_ = true;

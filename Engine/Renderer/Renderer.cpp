@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "ParticleSystem/ParticleSystem.h"
 
 ViewProjection Renderer::viewProjection;
 std::vector<DrawModelData> Renderer::drawModelData_;
@@ -7,6 +8,7 @@ std::vector<DrawSkinningDissolveData> Renderer::drawModelSkinningDissolveData_;
 std::vector<DrawLineData> Renderer::drawLineData_;
 std::vector<DrawModelData> Renderer::drawWireFlameData_;
 std::vector<DrawSpriteData> Renderer::drawSpriteData_;
+std::vector<DrawParticleData> Renderer::drawParticleData_;
 ;
 Renderer* Renderer::GetInstance()
 {
@@ -41,6 +43,9 @@ void Renderer::Draw()
 	ChangePipeline(PipelineType::CubeMap);
 	//skyBox.Draw(cubeWorld_);
 
+
+
+	
 	//標準描画
 	ChangePipeline(PipelineType::Standerd);
 	///描画
@@ -85,6 +90,15 @@ void Renderer::Draw()
 	//中身を消す
 	drawWireFlameData_.clear();
 
+	//Particle描画
+	ChangePipeline(PipelineType::Particle);
+	///描画
+	for (DrawParticleData model : drawParticleData_) {
+		model.particle->Draw(Renderer::viewProjection);
+	}
+	//中身を消す
+	drawParticleData_.clear();
+
 	//スプライト描画
 	ChangePipeline(PipelineType::Sprite);
 	///描画
@@ -93,6 +107,7 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawSpriteData_.clear();
+
 
 }
 
@@ -149,6 +164,13 @@ void Renderer::AddSpriteData(Sprite& sprite, WorldTransform& world)
 	result.sprite = &sprite;
 	result.world_ = &world;
 	drawSpriteData_.push_back(result);
+}
+
+void Renderer::AddParticleData(ParticleSystem& particle)
+{
+	DrawParticleData result;
+	result.particle = &particle;
+	drawParticleData_.push_back(result);
 }
 
 void Renderer::ChangePipeline(PipelineType Type)

@@ -94,6 +94,11 @@ void ParticleSystem::Update()
 
 }
 
+void ParticleSystem::RendererDraw()
+{
+	Renderer::AddParticleData(*this);
+}
+
 void ParticleSystem::Draw(const ViewProjection& viewProjection)
 {
 	directX_->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

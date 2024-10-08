@@ -23,6 +23,7 @@ private:// 変数
 	std::list<Enemy*> enemys_;
 
 	std::unique_ptr<Boss>bossEnemy_;
+	//std::unique_ptr<BossSpider>bossEnemy_;
 	
 	Player* player_;
 
