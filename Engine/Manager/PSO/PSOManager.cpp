@@ -45,7 +45,7 @@ void PSOManager::Initalize()
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
 	AddPipeline(dissolve.GetPSO(),PipelineType::SkinningDissolve);
 	AddPipeline(particlePipeLine.GetPSO(),PipelineType::Particle);
-	AddPipeline(standard.GetPSO(), PipelineType::Sprite);
+	AddPipeline(sprite.GetPSO(), PipelineType::Sprite);
 	AddPipeline(drawLinePSO.GetPSO(),PipelineType::DrawLine);
 	AddPipeline(wireFlame.GetPSO(),PipelineType::WireFlame);
 	AddPipeline(postProsessPSO.GetPSO(),PipelineType::PostProsessPSO);

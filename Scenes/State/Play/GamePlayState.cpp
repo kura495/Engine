@@ -108,7 +108,7 @@ void GamePlayState::Draw()
 
 	collisionManager->Draw();
 
-	particle->RendererDraw();
+	//particle->RendererDraw();
 
 }
 #pragma region
