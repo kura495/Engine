@@ -49,19 +49,19 @@ void GameManager::Initialize()
 	currentSceneNum_ = 1;
 	state[currentSceneNum_]->Initialize();
 	//TODO : ちゃんとユニポとかにする
-	renderTextrue = new PPFilter();
+	renderTextrue = new PPNormal();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
-	renderTextrue2 = new PPGrayScale();
+	renderTextrue2 = new PPNormal();
 	renderTextrue2->Init();
 	renderTextrue2->Create(2);
-	renderTextrue3 = new PPVinette();
+	renderTextrue3 = new PPNormal();
 	renderTextrue3->Init();
 	renderTextrue3->Create(3);
-	renderTextrue4 = new PPLuminanceBasedOutline();
+	renderTextrue4 = new PPNormal();
 	renderTextrue4->Init();
 	renderTextrue4->Create(4);
-	renderTextrue5 = new PPRGBtoHSV();
+	renderTextrue5 = new PPNormal();
 	renderTextrue5->Init();
 	renderTextrue5->Create(5);
 	renderTextrue6 = new PPNormal();
@@ -103,51 +103,52 @@ void GameManager::Gameloop(){
 			state[currentSceneNum_]->Draw();
 			renderer_->Draw();
 #pragma endregion
-			//renderTargetを変更
-			renderTextrue2->PreDraw();
-			//レンダーターゲットから画像に変更
-			renderTextrue->PreCopy();
-			// TODO : ここにPipelineとDrawを書き込んでいく
-			renderer_->ChangePipeline(PipelineType::GaussianFilter);
-			renderTextrue->Draw();
-			renderer_->PostProsessDraw();
-			//画像からレンダーターゲット
-			renderTextrue->PostCopy();
-
-			renderTextrue3->PreDraw();
-			renderTextrue2->PreCopy();
-			renderer_->ChangePipeline(PipelineType::GrayScale);
-			renderTextrue2->Draw();
-			//renderer_->PostProsessDraw();
-			renderTextrue2->PostCopy();
-
-			renderTextrue4->PreDraw();
-			renderTextrue3->PreCopy();
-			renderer_->ChangePipeline(PipelineType::Vinette);
-			renderTextrue3->Draw();
-			//renderer_->PostProsessDraw();
-			renderTextrue3->PostCopy();
-			
-			renderTextrue5->PreDraw();
-			renderTextrue4->PreCopy();
-			renderer_->ChangePipeline(PipelineType::LuminanceBasedOutline);
-			renderTextrue4->Draw();
-			//renderer_->PostProsessDraw();
-			renderTextrue4->PostCopy();
-
-			renderTextrue6->PreDraw();
-			renderTextrue5->PreCopy();
-			renderer_->ChangePipeline(PipelineType::RGBtoHSV);
-			renderTextrue5->Draw();
-			//renderer_->PostProsessDraw();
-			renderTextrue5->PostCopy();
-
 			directX->PreView();
-			//renderTargetを変更
-			renderTextrue6->PreCopy();
-			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			renderTextrue6->Draw();
-			renderTextrue6->PostCopy();
+			////renderTargetを変更
+			//renderTextrue2->PreDraw();
+			////レンダーターゲットから画像に変更
+			renderTextrue->PreCopy();
+			//// TODO : ここにPipelineとDrawを書き込んでいく
+		renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderTextrue->Draw();
+			//renderer_->PostProsessDraw();
+			////画像からレンダーターゲット
+		renderTextrue->PostCopy();
+
+			//renderTextrue3->PreDraw();
+			//renderTextrue2->PreCopy();
+			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			//renderTextrue2->Draw();
+			////renderer_->PostProsessDraw();
+			//renderTextrue2->PostCopy();
+
+			//renderTextrue4->PreDraw();
+			//renderTextrue3->PreCopy();
+			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			//renderTextrue3->Draw();
+			////renderer_->PostProsessDraw();
+			//renderTextrue3->PostCopy();
+			//
+			//renderTextrue5->PreDraw();
+			//renderTextrue4->PreCopy();
+			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			//renderTextrue4->Draw();
+			////renderer_->PostProsessDraw();
+			//renderTextrue4->PostCopy();
+
+			//renderTextrue6->PreDraw();
+			//renderTextrue5->PreCopy();
+			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			//renderTextrue5->Draw();
+			////renderer_->PostProsessDraw();
+			//renderTextrue5->PostCopy();
+
+			//
+			////renderTargetを変更
+			//renderTextrue6->PreCopy();
+			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			//renderTextrue6->Draw();
+			//renderTextrue6->PostCopy();
 
 			editer->Draw();
 			imGuiManager->EndFrame();

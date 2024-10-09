@@ -57,11 +57,11 @@ private:
 	std::unique_ptr<GameState>state[GameStateMax];
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
-	PPFilter* renderTextrue = nullptr;
-	PPGrayScale* renderTextrue2 = nullptr;
-	PPVinette* renderTextrue3 = nullptr;
-	PPLuminanceBasedOutline* renderTextrue4 = nullptr;
-	PPRGBtoHSV* renderTextrue5 = nullptr;
+	PPNormal* renderTextrue = nullptr;
+	PPNormal* renderTextrue2 = nullptr;
+	PPNormal* renderTextrue3 = nullptr;
+	PPNormal* renderTextrue4 = nullptr;
+	PPNormal* renderTextrue5 = nullptr;
 	PPNormal* renderTextrue6 = nullptr;
 
 	int currentSceneNum_;
