@@ -15,6 +15,11 @@ enum class Behavior {
 	kStep
 };
 
+enum class StepBehavior {
+	kStep,
+	kRolling
+};
+
 class Player : public IObject
 {
 public:
@@ -83,7 +88,8 @@ private:
 	float attack = 0.0f;
 
 	Animation* animation;
-	Animation* Idleanimation;
+	Animation* IdleAnimation;
+	Animation* rollingAnimation;
 
 	OBBoxCollider collider;
 
@@ -95,6 +101,6 @@ private:
 	bool IsEndStep = false;
 	float stepFlame = 0;
 	//移動の量
-	const float kStepValue = 1.0f;
+	const float kStepValue = 0.2f;
 
 };

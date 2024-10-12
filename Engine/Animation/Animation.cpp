@@ -121,7 +121,7 @@ void Animation::PlayAnimation()
 	SkeletonUpdate();
 	SkinClusterUpdate();
 	if (IsDebugLine) {
-	UpdateLine();
+		UpdateLine();
 
 	}
 }

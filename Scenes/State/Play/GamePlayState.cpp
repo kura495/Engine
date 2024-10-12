@@ -99,7 +99,6 @@ void GamePlayState::Draw()
 		TitleDraw();
 	}
 
-
 	for (Model* model : lanthanumModel_) {
 		model->RendererDraw(lanthan);
 	}

@@ -30,10 +30,15 @@ void Player::Init(std::vector<Model*> models)
 	animation->Init();
 	animation->AnimeInit(*models_[0],true);
 
-	Idleanimation = new Animation();
-	Idleanimation = Animation::LoadAnimationFile("resources/human", "Idle.gltf");
-	Idleanimation->Init();
-	Idleanimation->AnimeInit(*models_[0],true);
+	IdleAnimation = new Animation();
+	IdleAnimation = Animation::LoadAnimationFile("resources/human", "Idle.gltf");
+	IdleAnimation->Init();
+	IdleAnimation->AnimeInit(*models_[0],true);
+
+	rollingAnimation = new Animation();
+	rollingAnimation = Animation::LoadAnimationFile("resources/human", "rolling.gltf");
+	rollingAnimation->Init();
+	rollingAnimation->AnimeInit(*models_[0],true);
 #pragma endregion Anime
 
 	weapon_ = std::make_unique<Weapon>();
@@ -46,7 +51,7 @@ void Player::Init(std::vector<Model*> models)
 
 void Player::TitleUpdate()
 {
-	Idleanimation->PlayAnimation();
+	IdleAnimation->PlayAnimation();
 }
 
 void Player::Update()
@@ -129,16 +134,20 @@ void Player::Update()
 
 void Player::TitleDraw()
 {
-	models_[0]->RendererSkinDraw(world_, Idleanimation->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, IdleAnimation->GetSkinCluster());
 }
 
 void Player::Draw()
 {
-	//models_[0]->RendererSkinDissolveDraw(world_, animation->GetSkinCluster(),0.0f);
-
-	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
 	weapon_->Draw();
 	animation->DebugDraw(world_);
+	//回転の時
+	if (behavior_ == Behavior::kStep) {
+		models_[0]->RendererSkinDraw(world_, rollingAnimation->GetSkinCluster());
+	}
+	else {
+		models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
+	}
 }
 
 void Player::ImGui()
@@ -344,21 +353,21 @@ void Player::StepUpdate(){
 		Rolling();
 	}
 	else {
-	//後ろに回避
-	BackStep();
+		Rolling();
+		//後ろに回避
+		//BackStep();
 	}
 
-	stepFlame++;
-	if (stepFlame > 5.0f) {
-		//終わりを知らせる
-		IsEndStep = true;
-	}
+	rollingAnimation->PlayAnimation();
 
-	if (IsEndStep) {
+	stepFlame += 1.0f / 60.0f;
+
+	if (stepFlame >= rollingAnimation->duration) {
 		//Behaviorを戻す
 		behaviorRequest_ = Behavior::kRoot;
 	}
 }
+
 void Player::Rolling()
 {
 	Vector3 StepMoveValue = { 0.0f,0.0f,kStepValue };
@@ -371,6 +380,7 @@ void Player::Rolling()
 	//移動
 	world_.transform.translate += StepMoveValue;
 }
+
 void Player::BackStep()
 {
 	Vector3 StepMoveValue = { 0.0f,0.0f,kStepValue };
@@ -383,4 +393,5 @@ void Player::BackStep()
 	//移動
 	world_.transform.translate -= StepMoveValue;
 }
+
 #pragma endregion BeheviorTree

@@ -42,6 +42,7 @@ public:
 	float duration; // アニメーション全体の尺(単位は秒)
 	// NodeAnimationの集合　Node名で検索できるようにする
 	std::map<std::string, NodeAnimation> nodeAnimations;
+
 private:
 	DirectXCommon* directX_ = nullptr;
 	SRVManager* srvManager_;
