@@ -382,7 +382,6 @@ void Player::Rolling()
 	//移動
 	world_.transform.translate += StepMoveValue;
 }
-
 void Player::BackStep()
 {
 	Vector3 StepMoveValue = { 0.0f,0.0f,kStepValue };
@@ -395,5 +394,4 @@ void Player::BackStep()
 	//移動
 	world_.transform.translate -= StepMoveValue;
 }
-
 #pragma endregion BeheviorTree
