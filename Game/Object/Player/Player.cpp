@@ -140,7 +140,9 @@ void Player::TitleDraw()
 void Player::Draw()
 {
 	weapon_->Draw();
+#ifdef _DEBUG
 	animation->DebugDraw(world_);
+#endif
 	//回転の時
 	if (behavior_ == Behavior::kStep) {
 		models_[0]->RendererSkinDraw(world_, rollingAnimation->GetSkinCluster());

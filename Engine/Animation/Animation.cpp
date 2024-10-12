@@ -139,6 +139,7 @@ void Animation::AnimationLerp(Animation* animeA, Animation* animeB, float t)
 
 void Animation::DebugDraw(WorldTransform& world)
 {
+
 	SkeletonLine.RendererDraw(world);
 }
 
