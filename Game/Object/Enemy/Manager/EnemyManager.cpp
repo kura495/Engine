@@ -9,6 +9,7 @@ void EnemyManager::Init(Player* player)
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
 	bossEnemy_ = std::make_unique<Boss>();
+	//bossEnemy_ = std::make_unique<BossSpider>();
 	bossEnemy_->Init(enemyModel_);
 	bossEnemy_->SetPlayer(player_);
 

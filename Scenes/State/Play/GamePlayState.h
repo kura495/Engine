@@ -32,6 +32,7 @@
 #include "Game/Object/Enemy/Manager/EnemyManager.h"
 #include "Game/Object/Camera/LockOn.h"
 #include "Game/Object/SkyDome/SkyDome.h"
+#include "Game/Object/Transition/Fade/Fade.h"
 
 enum class StageBehavior {
 	kTitle,
@@ -64,14 +65,17 @@ private:
 #pragma region
 	void PlayInit();
 	void PlayUpdate();
+	void PlayDraw();
 #pragma endregion Play
 #pragma region
 	void ClearInit();
 	void ClearUpdate();
+	void ClearDraw();
 #pragma endregion Clear
 #pragma region
 	void OverInit();
 	void OverUpdate();
+	void OverDraw();
 #pragma endregion Over
 
 #pragma endregion Behavior
@@ -104,4 +108,7 @@ private:
 
 	Sprite* titleSprite;
 	WorldTransform title;
+
+	Fade* fade;
+	float sceneInterval = 0.0f;
 };

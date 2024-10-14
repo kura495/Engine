@@ -56,6 +56,11 @@ void GamePlayState::Initialize()
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
 
+	fade = Fade::GetInstance();
+	fade->OutInit();
+
+	behaviorRequest_ = StageBehavior::kTitle;
+
 }
 
 void GamePlayState::Update()
@@ -70,11 +75,11 @@ void GamePlayState::Update()
 	Renderer::viewProjection = followCamera->GetViewProjection();
 
 	if (enemyManager->GetisClear()) {
-		StateNo = 2;
+		behaviorRequest_ = StageBehavior::kClear;
 	}
-	if (player_->GetisDead()) {
-		StateNo = 3;
-	}
+	/*if (player_->GetisDead()) {
+		behaviorRequest_ = StageBehavior::kOver;
+	}*/
 }
 
 void GamePlayState::Draw()
@@ -85,19 +90,29 @@ void GamePlayState::Draw()
 
 	objectManager->Draw();
 
-
-
 	enemyManager->Draw();
 
 #pragma endregion
 
-	if (behavior_ == StageBehavior::kPlay) {
-
-		player_->Draw();
-	}
-	else {
+#pragma region
+	switch (behavior_)
+	{
+	case StageBehavior::kTitle:
+	default:
 		TitleDraw();
+		break;
+	case StageBehavior::kPlay:
+		PlayDraw();
+		break;
+	case StageBehavior::kClear:
+		ClearDraw();
+		break;
+	case StageBehavior::kOver:
+		OverDraw();
+		break;
 	}
+
+#pragma endregion
 
 	for (Model* model : lanthanumModel_) {
 		model->RendererDraw(lanthan);
@@ -161,12 +176,19 @@ void GamePlayState::BehaviorUpdate()
 #pragma region
 void GamePlayState::TitleInit()
 {
-
+	sceneInterval = 0.0f;
 }
 void GamePlayState::TitleUpdate()
 {
+	if (fade->Out() == false) {
+		return;
+	}
+
+	sceneInterval += 1.0f;
 	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
-		IsTitleToGameFlag = true;
+		if (sceneInterval > 25.0f) {
+			IsTitleToGameFlag = true;
+		}
 	}
 	if (IsTitleToGameFlag) {
 		if (followCamera->PlaySceneInit(&player_->GetWorld())) {
@@ -176,20 +198,18 @@ void GamePlayState::TitleUpdate()
 	}
 	player_->TitleUpdate();
 }
-
 void GamePlayState::TitleDraw()
 {
 	titleSprite->RendererDraw(title);
 	player_->TitleDraw();
+	fade->Draw();
 }
-
 #pragma endregion Title
 #pragma region
 void GamePlayState::PlayInit()
 {
 	IsTitleToGameFlag = false;
 }
-
 void GamePlayState::PlayUpdate()
 {
 	player_->Update();
@@ -199,26 +219,43 @@ void GamePlayState::PlayUpdate()
 
 	lockOn.Update(enemyManager->GetList());
 }
-
+void GamePlayState::PlayDraw()
+{
+	player_->Draw();
+}
 #pragma endregion Play
 #pragma region
 void GamePlayState::ClearInit()
 {
 }
-
 void GamePlayState::ClearUpdate()
 {
+	if (fade->In()) {
+		StateNo = 2;
+	}
 }
-
+void GamePlayState::ClearDraw()
+{
+	player_->Draw();
+	fade->Draw();
+}
 #pragma endregion Clear
 #pragma region
 void GamePlayState::OverInit()
 {
-}
 
+}
 void GamePlayState::OverUpdate()
 {
+	if (fade->In()) {
+		StateNo = 3;
+	}
 }
 
+void GamePlayState::OverDraw()
+{
+	player_->Draw();
+	fade->Draw();
+}
 #pragma endregion Over
 #pragma endregion Behavior

@@ -586,6 +586,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\PostProsess\Dissolve\PPDissolve.cpp" />
     <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp" />
+    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -923,6 +924,7 @@
     </ClInclude>
     <ClInclude Include="Engine\PostProsess\Dissolve\PPDissolve.h" />
     <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h" />
+    <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

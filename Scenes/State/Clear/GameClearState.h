@@ -5,6 +5,7 @@
 #include "Sprite/Sprite.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Editer/Editer.h"
+#include "Game/Object/Transition/Fade/Fade.h"
 
 class GameClearState :public GameState
 {
@@ -24,4 +25,6 @@ private:
 
 	bool IsCanPush = false;
 	int time = 0;
+
+	Fade* fade;
 };

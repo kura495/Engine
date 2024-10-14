@@ -80,7 +80,7 @@ void BossSpider::Draw()
 void BossSpider::InitCollider()
 {
 	collider.Init(&world_);
-	collider.SetSize({ 1.0f,1.0f,1.0f });
+	collider.SetSize({ 3.0f,3.0f,3.0f });
 	collider.OnCollision = [this](ICollider* colliderB) { OnCollision(colliderB); };
 	collider.SetcollitionAttribute(ColliderTag::Enemy);
 	collider.SetcollisionMask(~ColliderTag::Enemy);

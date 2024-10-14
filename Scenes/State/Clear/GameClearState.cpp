@@ -13,23 +13,33 @@ void GameClearState::Initialize()
 	texture->TextureHandle = textureManager_->LoadTexture("resources/Clear.png");
 	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 
+	fade = Fade::GetInstance();
+	fade->OutInit();
 }
 
 void GameClearState::Update()
 {
 	time++;
-	if (time > 60) {
+	if (IsCanPush == false &&fade->Out() == false) {
+		return;
+	}
+
+
+	if (time > 60 && input->GetPadPrecede(XINPUT_GAMEPAD_A, 10)) {
 		IsCanPush = true;
 	}
-	if (input->GetPadPrecede(XINPUT_GAMEPAD_A, 10)) {
-		if (IsCanPush) {
-			StateNo = 0;
+
+	if (IsCanPush) {
+		if (fade->In()) {
+			StateNo = 1;
 		}
 	}
 }
 
 void GameClearState::Draw()
 {
+
 	texture->RendererDraw(texture_world_);
+	fade->Draw();
 }
 

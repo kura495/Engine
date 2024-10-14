@@ -260,6 +260,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp" />
+    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\Manager\GameManager.cpp" />
@@ -375,6 +376,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Game\Object\SkyDome\SkyDome.h" />
+    <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Scenes\Manager\GameManager.h" />
     <ClInclude Include="Scenes\State\Clear\GameClearState.h" />

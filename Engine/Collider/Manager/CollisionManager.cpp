@@ -4,6 +4,7 @@ std::list<ICollider*> CollisionManager::Colliders_;
 
 void CollisionManager::Init()
 {
+	Colliders_.clear();
 	checkCollisions_[ICollider::Shape::Box][ICollider::Shape::Box] = [this](ICollider* colliderA, ICollider* colliderB)
 		{return CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));};
 	checkCollisions_[ICollider::Shape::OBB][ICollider::Shape::OBB] = [this](ICollider* colliderA, ICollider* colliderB)
@@ -33,7 +34,9 @@ void CollisionManager::Draw()
 {
 #ifdef _DEBUG
 	for (ICollider* collider : Colliders_) {
-		collider->CollisionDraw();
+		if (collider->IsDalete == false) {
+			collider->CollisionDraw();
+		}
 	}
 #endif
 }
