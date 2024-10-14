@@ -27,8 +27,6 @@ public:
 private:
 	void LookPlayer();
 
-	std::unique_ptr<BossWeapon> bossWeapon_;
-
 #pragma region
 	//ふるまい
 	BossBehavior behavior_ = BossBehavior::kRoot;

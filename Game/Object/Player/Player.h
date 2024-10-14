@@ -44,7 +44,7 @@ public:
 	static bool PushOptionButtern;
 
 private:
-	Input* input = nullptr;
+
 
 #pragma region 
 	//ふるまい
@@ -61,6 +61,8 @@ private:
 	void StepInit();
 	void StepUpdate();
 #pragma endregion BehaviorTree
+
+	Input* input = nullptr;
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;

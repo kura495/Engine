@@ -14,11 +14,6 @@ void Boss::Init(std::vector<Model*> models){
 	world_.Update();
 	InitCollider();
 
-	bossWeapon_ = std::make_unique<BossWeapon>();
-	bossWeapon_->Initalize(models_);
-	bossWeapon_->SetParent(world_);
-	bossWeapon_->Update();
-
 	HP_ = 10;
 }
 void Boss::Update(){
@@ -28,15 +23,12 @@ void Boss::Update(){
 
 	BehaviorUpdate();
 
-	bossWeapon_->Update();
 	world_.Update();
 }
 void Boss::Draw()
 {
 	models_[0]->RendererDraw(world_);
-	//for (Model* model : models_) {
-	//}
-	bossWeapon_->Draw();
+
 }
 
 void Boss::LookPlayer(){
@@ -66,7 +58,6 @@ void Boss::BehaviorUpdate()
 		case BossBehavior::kRoot:
 		default:
 			RootInit();
-			bossWeapon_->RootInit();
 			break;
 		case BossBehavior::kAttack:
 			AttackInit();
@@ -81,7 +72,6 @@ void Boss::BehaviorUpdate()
 	case BossBehavior::kRoot:
 	default:
 		RootUpdate();
-		bossWeapon_->RootUpdate();
 		break;
 	case BossBehavior::kAttack:
 		AttackUpdate();
@@ -100,9 +90,6 @@ void Boss::AttackInit(){
 }
 void Boss::AttackUpdate(){
 	AttackBehaviorUpdate();
-	if (bossWeapon_->GetIsAttackOver() == true) {
-		behaviorRequest_ = BossBehavior::kRoot;
-	}
 }
 #pragma endregion Behavior
 
@@ -138,10 +125,10 @@ void Boss::AttackBehaviorUpdate(){
 	}
 }
 void Boss::Attack1Init(){
-	bossWeapon_->AttackInit();
+
 }
 void Boss::Attack1Update(){
-	bossWeapon_->AttackUpdate();
+
 }
 void Boss::Attack2Init(){
 
