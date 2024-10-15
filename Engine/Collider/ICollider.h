@@ -92,7 +92,6 @@ protected:
 	/// </summary>
 	Vector3 size_{0};
 
-
 private:
 
 	/// <summary>

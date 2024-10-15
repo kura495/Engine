@@ -6,9 +6,6 @@
 #include "Math/Vector/VectorCalc.h"
 #include "Calc.h"
 
-//前方宣言
-class LockOn;
-
 //カメラ補間用ワーク
 struct WorkInterpolation {
 	//追従対象の残像座標
@@ -26,7 +23,6 @@ public:
 	void Update()override;
 	void ImGui();
 	void SetTarget(const WorldTransform* target);
-	void SetLockOn(LockOn* lockOn) { this->lockOn_ = lockOn; }
 
 	bool PlaySceneInit(const WorldTransform* target);
 	void PlaySceneReset();
@@ -47,9 +43,6 @@ private:
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド
 	XINPUT_STATE joyState;
-
-	//ロックオン
-	const LockOn* lockOn_ = nullptr;
 
 	Vector3 rotate_ = { 0.0f,0.0f,0.0f };
 	float rotAngle_;

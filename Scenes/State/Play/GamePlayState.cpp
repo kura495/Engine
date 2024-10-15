@@ -26,19 +26,12 @@ void GamePlayState::Initialize()
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/Title.png");
 	title.Initialize();
-	//title.transform.translate.z = -1.0f;
-	//title.Update();
 
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
-
-
-	lockOn.Init();
-	followCamera->SetLockOn(&lockOn);
-	player_->SetLockOn(&lockOn);
 
 	//Renderer
 	renderer_ = Renderer::GetInstance();
@@ -77,9 +70,9 @@ void GamePlayState::Update()
 	if (enemyManager->GetisClear()) {
 		behaviorRequest_ = StageBehavior::kClear;
 	}
-	/*if (player_->GetisDead()) {
+	if (player_->GetisDead()) {
 		behaviorRequest_ = StageBehavior::kOver;
-	}*/
+	}
 }
 
 void GamePlayState::Draw()

@@ -9,7 +9,7 @@ void Boss::Init(std::vector<Model*> models){
 	models_ = models;
 	world_.Initialize();
 
-	world_.transform.translate.y = 5.0f;
+	//world_.transform.translate.y = 5.0f;
 	world_.transform.translate.z = 5.0f;
 	world_.Update();
 	InitCollider();
