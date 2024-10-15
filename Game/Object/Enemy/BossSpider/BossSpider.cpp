@@ -17,7 +17,7 @@ void BossSpider::Init(std::vector<Model*> models)
 
 	world_.Update();
 
-	HP_ = 10;
+	HP_ = 5;
 
 }
 
