@@ -53,12 +53,6 @@
     <Filter Include="Game\Object\Player">
       <UniqueIdentifier>{439f6f08-c159-4584-b923-057e35a1a85a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Object\SkyDome">
-      <UniqueIdentifier>{1e91881f-43a1-436f-93a7-648de05c1252}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Weapon">
-      <UniqueIdentifier>{e67c36eb-cdcc-4cb0-857d-bef9e41cfadb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Object\Enemy">
       <UniqueIdentifier>{a5506102-88b8-4c2b-9741-160832b53bc9}</UniqueIdentifier>
     </Filter>
@@ -68,23 +62,8 @@
     <Filter Include="Game\Object\Box">
       <UniqueIdentifier>{0f8fb1fe-a969-4588-9d1b-1908a769799f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Object\Enemy\Boss">
-      <UniqueIdentifier>{c654698b-66e6-485d-b438-ddd86844504a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\BossSpider">
-      <UniqueIdentifier>{bd212a98-aacf-4e2f-b659-87fd4659d3b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Object\Enemy\Manager">
       <UniqueIdentifier>{0c223d83-0aca-4b38-ac73-85c31d97735e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Spider">
-      <UniqueIdentifier>{d2de935a-57d4-4142-9173-10b180ece1ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\Weapon">
-      <UniqueIdentifier>{a3bd80db-27ca-4830-b356-0e54a219a826}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\BossSpider\Bullet">
-      <UniqueIdentifier>{ebc721ed-4750-45d4-ac98-635bc76589c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Object\Player\SkyBox">
       <UniqueIdentifier>{b4e41c4e-1b5b-43b1-b030-d982e181c0fc}</UniqueIdentifier>
@@ -299,6 +278,9 @@
     <Filter Include="Engine\PostProsess\Vinette">
       <UniqueIdentifier>{c01fafd4-f08a-4e0c-b7f5-07a93361dfe4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\SkyBox">
+      <UniqueIdentifier>{df457b34-8368-499d-8b7d-dd0a8656d129}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -325,9 +307,6 @@
     <ClCompile Include="Scenes\Manager\GameManager.cpp">
       <Filter>Game\Scenes\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Enemy.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="externals\imgui\ImGuizmo.cpp">
       <Filter>externals\imGuizmo</Filter>
     </ClCompile>
@@ -343,46 +322,7 @@
     <ClCompile Include="Scenes\State\GameOver\GameOverState.cpp">
       <Filter>Game\Scenes\State\GameOver</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp">
-      <Filter>Game\Object\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.cpp">
-      <Filter>Game\Object\Enemy\Boss\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.cpp">
-      <Filter>Game\Object\Enemy\BossSpider\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\BossSpider\BossSpider.cpp">
-      <Filter>Game\Object\Enemy\BossSpider</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp">
-      <Filter>Game\Object\Enemy\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Spider\Spider.cpp">
-      <Filter>Game\Object\Enemy\Spider</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Weapon\Weapon.cpp">
-      <Filter>Game\Object\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Box\BoxObject.cpp">
-      <Filter>Game\Object\Box</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp">
-      <Filter>Game\Object\SkyDome</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp">
-      <Filter>Game\Object\Player\SkyBox</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Player\Player.cpp">
-      <Filter>Game\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp">
-      <Filter>Game\Object\Plane</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp">
-      <Filter>Game\Object\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Camera\LockOn.cpp">
       <Filter>Game\Object\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Animation\Animation.cpp">
@@ -586,7 +526,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\PostProsess\Dissolve\PPDissolve.cpp" />
     <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp" />
-    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
+    <ClCompile Include="Game\Object\Box\BoxObject.cpp">
+      <Filter>Game\Object\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp">
+      <Filter>Game\Object\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp">
+      <Filter>Game\Object\SkyBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -619,9 +567,6 @@
     <ClInclude Include="Scenes\State\IgameState.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Enemy.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="externals\imgui\ImGuizmo.h">
       <Filter>externals\imGuizmo</Filter>
     </ClInclude>
@@ -637,49 +582,7 @@
     <ClInclude Include="Scenes\State\GameOver\GameOverState.h">
       <Filter>Game\Scenes\State\GameOver</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Character.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h">
-      <Filter>Game\Object\Enemy\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.h">
-      <Filter>Game\Object\Enemy\Boss\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.h">
-      <Filter>Game\Object\Enemy\BossSpider\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\BossSpider\BossSpider.h">
-      <Filter>Game\Object\Enemy\BossSpider</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h">
-      <Filter>Game\Object\Enemy\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Spider\Spider.h">
-      <Filter>Game\Object\Enemy\Spider</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Weapon\Weapon.h">
-      <Filter>Game\Object\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Box\BoxObject.h">
-      <Filter>Game\Object\Box</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\SkyDome\SkyDome.h">
-      <Filter>Game\Object\SkyDome</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\SkyBox\SkyBox.h">
-      <Filter>Game\Object\Player\SkyBox</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Player\Player.h">
-      <Filter>Game\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Plane\PlaneObject.h">
-      <Filter>Game\Object\Plane</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Object\Camera\FollowCamera.h">
-      <Filter>Game\Object\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Camera\LockOn.h">
       <Filter>Game\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Animation\Animation.h">
@@ -924,7 +827,15 @@
     </ClInclude>
     <ClInclude Include="Engine\PostProsess\Dissolve\PPDissolve.h" />
     <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h" />
-    <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
+    <ClInclude Include="Game\Object\Box\BoxObject.h">
+      <Filter>Game\Object\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Plane\PlaneObject.h">
+      <Filter>Game\Object\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\SkyBox\SkyBox.h">
+      <Filter>Game\Object\SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

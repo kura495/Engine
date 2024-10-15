@@ -2,7 +2,6 @@
 
 #include "Common/DirectX/DirectXCommon.h"
 #include "Manager/SRV/SRVManager.h"
-#include "Game/Object/Player/Player.h"
 #include "externals/DirectXTex/DirectXTex.h"
 
 using namespace Microsoft::WRL;

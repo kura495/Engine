@@ -1,5 +1,4 @@
 #include "FollowCamera.h"
-#include "Game/Object/Camera/LockOn.h"
 
 void FollowCamera::Initialize() {
 	viewProj.Initialize();
@@ -11,28 +10,8 @@ void FollowCamera::Initialize() {
 
 void FollowCamera::Update() {
 	rotAngle_ = 0;
-	//ロックオン中
-	if (lockOn_->ExistTarget()) {
-		//ロックオン座標
-		Vector3 lockOnPos = lockOn_->GetTargetPosition();
-
-		Vector3 sub = lockOnPos - workInter.interTarget_;
-
-		if (sub.z != 0.0) {
-			rotAngle_ = std::asin(sub.x / std::sqrt(sub.x * sub.x + sub.z * sub.z));
-
-			if (sub.z < 0.0) {
-				rotAngle_ = (sub.x >= 0.0) ? std::numbers::pi_v<float> -rotAngle_ : -std::numbers::pi_v<float> -rotAngle_;
-			}
-		}
-		else {
-			rotAngle_ = (sub.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
-		}
-
-		parameter_t = 0.1f;
-	}
 	//スティックでのカメラ回転
-	else if (Input::GetInstance()->GetJoystickState(joyState)) {
+	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
 		const float kRadian = 0.03f;
 
