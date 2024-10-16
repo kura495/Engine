@@ -28,8 +28,6 @@ public:
 	bool GetisDead() { return isDead; };
 
 	void Move();
-	static bool playerMoveValue;
-	static bool PushOptionButtern;
 
 private:
 #pragma region 
@@ -65,7 +63,11 @@ private:
 	uint32_t HP_ = 10;
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
-
+	//ジャンプの強さ
+	const float kJumpForce = 10.0f;
+	float jumpForce = 0.0f;
+	//ジャンプした時の減算
+	const float kJumpSubValue = 0.2f;
 #pragma endregion Parameter
 
 	Input* input = nullptr;

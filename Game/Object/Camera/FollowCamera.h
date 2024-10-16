@@ -13,7 +13,7 @@ struct WorkInterpolation {
 	//追従対象のY軸
 	float targetAngleY_ = 0.0f;
 	//カメラ補間の媒介変数
-	float interParameter_ = 1.0f;
+	float interParameter_ = 0.0f;
 };
 
 class FollowCamera : public Camera
@@ -27,16 +27,21 @@ public:
 	bool PlaySceneInit(const WorldTransform* target);
 	void PlaySceneReset();
 private:
+#pragma region
 	Vector3 InitCameraPos = {-1.4f,0.4f,-2.3f};
 	Vector3 InitCameraRot = {-0.3f,0.1f,0.0f};
 	Vector3 InitCameraPos2 = {-1.5f,1.9f,1.9f};
 	Vector3 InitCameraRot2 = {0.5f,2.6f,0.0f};
 
 	bool resetFlag_ = true;
-	float lerpT = 0.0f;
-	float addValue = 0.01f;
+	float lerpTTitle = 0.0f;
+	float addValueTitle = 0.01f;
 	Vector3 resetTransform;
 	Quaternion resetRotate;
+#pragma endregion PlaySceneInit用
+
+	Vector3 chackTargetPos;
+	Vector3 PrePos;
 
 	Vector3 EulerRot;
 	//追従対象
@@ -56,5 +61,5 @@ private:
 	//追従対象からのオフセットを計算する
 	Vector3 OffsetCalc();
 
-	Vector3 offsetPos = { 0.0f, 2.0f, -7.0f };
+	Vector3 offsetPos = { 0.0f, 2.0f, -15.0f };
 };

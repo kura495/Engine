@@ -176,7 +176,10 @@ void GamePlayState::TitleUpdate()
 	if (fade->Out() == false) {
 		return;
 	}
-
+#ifdef _DEBUG
+	//TODO:デバッグ用なので消すこと！
+	IsTitleToGameFlag = true;
+#endif 
 	sceneInterval += 1.0f;
 	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
 		if (sceneInterval > 25.0f) {

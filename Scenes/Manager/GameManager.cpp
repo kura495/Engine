@@ -20,8 +20,8 @@ void GameManager::Initialize()
 	renderer_ = Renderer::GetInstance();
 	renderer_->Initalize();
 	//Audio
-	audio = Audio::GetInstance();
-	audio->Initialize();
+	//audio = Audio::GetInstance();
+	//audio->Initialize();
 	//Input
 	input = Input::GetInstance();
 	input->Initialize(winApp);

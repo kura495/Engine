@@ -1,8 +1,4 @@
 #include "Player.h"
-#include "Game/Object/Camera/LockOn.h"
-
-bool Player::playerMoveValue;
-bool Player::PushOptionButtern;
 
 void Player::Init(std::vector<Model*> models)
 {
@@ -41,28 +37,30 @@ void Player::TitleUpdate()
 
 void Player::Update()
 {
+
+	//パッドの状態をゲット
+	input->GetJoystickState(joyState);
+
 	if (HP_ <= 0) {
 		isDead = true;
 	}
+	Move();
+
 	BehaviorUpdate();
 
 #ifdef USE_IMGUI
 	ImGui();
 #endif
-	//パッドの状態をゲット
-	input->GetJoystickState(joyState);
-
-	playerMoveValue = false;
 
 	//メニュー画面を開く
-	if (input->pushPad(XINPUT_GAMEPAD_START) || input->pushKey(DIK_ESCAPE)) {
-		if (PushOptionButtern) {
-			PushOptionButtern = false;
-		}
-		else {
-			PushOptionButtern = true;
-		}
-	}
+	//if (input->pushPad(XINPUT_GAMEPAD_START) || input->pushKey(DIK_ESCAPE)) {
+	//	if (PushOptionButtern) {
+	//		PushOptionButtern = false;
+	//	}
+	//	else {
+	//		PushOptionButtern = true;
+	//	}
+	//}
 
 	world_.Update();
 
@@ -127,7 +125,6 @@ void Player::Move()
 		world_.transform.translate = world_.transform.translate + move;
 
 #pragma endregion 移動
-
 #pragma region
 		//移動ベクトルをカメラの角度だけ回転
 		//追従対象からロックオン対象へのベクトル
@@ -143,7 +140,7 @@ void Player::Move()
 		world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
 #pragma endregion プレイヤーの回転
-
+	
 		animation->PlayAnimation();
 
 		return;
@@ -197,10 +194,13 @@ void Player::RootInit()
 }
 void Player::RootUpdate()
 {
-	Move();
-
+	//攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		behaviorRequest_ = Behavior::kAttack;
+	}
+	//ジャンプ
+	else if (input->GetPadPrecede(XINPUT_GAMEPAD_A, 20)) {
+		behaviorRequest_ = Behavior::kJump;
 	}
 }
 //kAttack
@@ -216,9 +216,16 @@ void Player::AttackUpdate()
 //kJump
 void Player::JumpInit() {
 	colliderPlayer.IsUsing = false;
+	jumpForce = kJumpForce;
 }
 void Player::JumpUpdate() {
+	world_.transform.translate.y += jumpForce;
+	jumpForce -= kJumpSubValue;
 
+	if (world_.transform.translate.y <= 0) {
+		world_.transform.translate.y = 0;
+		behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 #pragma endregion BeheviorTree
@@ -237,7 +244,7 @@ void Player::OnCollision(const ICollider* ICollider)
 
 	if (ICollider->GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		HP_ -= 1;
-		playerMoveValue = true;
+		//playerMoveValue = true;
 	}
 
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
