@@ -40,16 +40,23 @@ void FollowCamera::Update() {
 
 		if (target_) {
 			Vector3 pos = target_->transform.translate;
-			//もしペアレントを結んでいるなら
-			if (target_->parent_) {
-				pos = target_->transform.translate + target_->parent_->transform.translate;
-			}
 			//追従座標の補間
-			workInter.interTarget_ = Vector3::Lerp(target_->transform.translate, pos, workInter.interParameter_);
+			workInter.interTarget_ = Vector3:: Lerp(viewProj.translation_, pos, workInter.interParameter_);
 
 			Vector3 offset = OffsetCalc();
 			//オフセット分と追従座標の補間分ずらす
-			viewProj.translation_ = pos + offset;
+			viewProj.translation_ = workInter.interTarget_ + offset;
+
+			////もしペアレントを結んでいるなら
+			//if (target_->parent_) {
+			//	pos = target_->transform.translate + target_->parent_->transform.translate;
+			//}
+			////追従座標の補間
+			//workInter.interTarget_ = Vector3::Lerp(target_->transform.translate, pos, workInter.interParameter_);
+
+			//Vector3 offset = OffsetCalc();
+			////オフセット分と追従座標の補間分ずらす
+			//viewProj.translation_ = pos + offset;
 		}
 	}
 #ifdef _DEBUG
