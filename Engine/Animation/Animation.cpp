@@ -1,5 +1,6 @@
 #include "Animation.h"
 
+
 void Animation::Init(){
 	directX_ = DirectXCommon::GetInstance();
 	srvManager_ = SRVManager::GetInstance();
