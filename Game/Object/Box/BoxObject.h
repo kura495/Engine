@@ -1,4 +1,5 @@
 #pragma once
+//箱型オブジェクト//
 
 #include "Object/IObject.h"
 #include "Collider/Box/BoxCollider.h"

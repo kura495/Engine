@@ -3,7 +3,6 @@
 void BoxObject::Init(std::vector<Model*> models)
 {
 
-
 	models_ = models;
 	world_.Initialize();
 

@@ -1,4 +1,6 @@
 #pragma once
+//ターゲットを追従するカメラ//
+
 #include "Camera/Camera.h"
 #include "Input/Input.h"
 #include "WorldTransform/WorldTransform.h"
@@ -21,12 +23,18 @@ class FollowCamera : public Camera
 public:
 	void Initialize()override;
 	void Update()override;
-	void ImGui();
+	/// <summary>
+	/// ターゲットを指定
+	/// </summary>
+	/// <param name="target">ターゲットのWorldTransform</param>
 	void SetTarget(const WorldTransform* target);
-
+	/// <summary>
+	/// ゲームプレイシーンがプレイビヘイビアーに以降するときに使用
+	/// </summary>
 	bool PlaySceneInit(const WorldTransform* target);
 	void PlaySceneReset();
 private:
+	void ImGui();
 #pragma region
 	Vector3 InitCameraPos = {-1.4f,0.4f,-2.3f};
 	Vector3 InitCameraRot = {-0.3f,0.1f,0.0f};
