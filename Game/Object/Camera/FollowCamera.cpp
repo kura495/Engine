@@ -8,8 +8,7 @@ void FollowCamera::Initialize() {
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
 }
 
-void FollowCamera::Update() {
-	rotAngle_ = 0;
+void FollowCamera::Update() { 
 
 	//スティックでのカメラ回転
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
@@ -27,14 +26,12 @@ void FollowCamera::Update() {
 		else if (rotate_.x < -1.0f) {
 			rotate_.x = -1.0f;
 		}
-
-		parameter_t = 1.0f;
 	}		
 
 	//TODO : LerpShortAngleを使うと一定角度で急にワープする
 	if (resetFlag_ == false) {
 		EulerRot.x = rotate_.x;
-		EulerRot.y = rotate_.y + rotAngle_;
+		EulerRot.y = rotate_.y;
 		EulerRot.z = rotate_.z;
 		viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 

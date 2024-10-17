@@ -23,13 +23,12 @@ public:
 	void TitleDraw();
 	void Draw()override;
 
-	void ImGui();
 
 	bool GetisDead() { return isDead; };
 
-	void Move();
-
 private:
+	void ImGui();
+	void Move();
 #pragma region 
 	//ふるまい
 	Behavior behavior_ = Behavior::kRoot;
