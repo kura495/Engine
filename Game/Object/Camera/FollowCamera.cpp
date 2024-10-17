@@ -1,35 +1,17 @@
 #include "FollowCamera.h"
-#include "Game/Object/Camera/LockOn.h"
 
 void FollowCamera::Initialize() {
 	viewProj.Initialize();
 	workInter.interParameter_ = 1.0f;
+
+	viewProj.translation_ = InitCameraPos2;
+	viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
 }
 
-void FollowCamera::Update() {
-	rotAngle_ = 0;
-	//ロックオン中
-	if (lockOn_->ExistTarget()) {
-		//ロックオン座標
-		Vector3 lockOnPos = lockOn_->GetTargetPosition();
+void FollowCamera::Update() { 
 
-		Vector3 sub = lockOnPos - workInter.interTarget_;
-
-		if (sub.z != 0.0) {
-			rotAngle_ = std::asin(sub.x / std::sqrt(sub.x * sub.x + sub.z * sub.z));
-
-			if (sub.z < 0.0) {
-				rotAngle_ = (sub.x >= 0.0) ? std::numbers::pi_v<float> -rotAngle_ : -std::numbers::pi_v<float> -rotAngle_;
-			}
-		}
-		else {
-			rotAngle_ = (sub.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
-		}
-
-		parameter_t = 0.1f;
-	}
 	//スティックでのカメラ回転
-	else if (Input::GetInstance()->GetJoystickState(joyState)) {
+	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
 		const float kRadian = 0.03f;
 
@@ -44,35 +26,41 @@ void FollowCamera::Update() {
 		else if (rotate_.x < -1.0f) {
 			rotate_.x = -1.0f;
 		}
-
-		parameter_t = 1.0f;
 	}		
-	Vector3 EulerRot;
+
 	//TODO : LerpShortAngleを使うと一定角度で急にワープする
-	EulerRot.z = rotate_.z;
-	EulerRot.y = rotate_.y + rotAngle_;
-	EulerRot.x = rotate_.x;
-	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
+	if (resetFlag_ == false) {
+		EulerRot.x = rotate_.x;
+		EulerRot.y = rotate_.y;
+		EulerRot.z = rotate_.z;
+		viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
-	if (target_) {
-		Vector3 pos = target_->transform.translate;
-		//もしペアレントを結んでいるなら
-		if (target_->parent_) {
-			pos = target_->transform.translate + target_->parent_->transform.translate;
+		if (target_) {
+			Vector3 pos = target_->transform.translate;
+			//追従座標の補間
+			workInter.interTarget_ = Vector3:: Lerp(viewProj.translation_, pos, workInter.interParameter_);
+
+			Vector3 offset = OffsetCalc();
+			//オフセット分と追従座標の補間分ずらす
+			viewProj.translation_ = workInter.interTarget_ + offset;
+
+			////もしペアレントを結んでいるなら
+			//if (target_->parent_) {
+			//	pos = target_->transform.translate + target_->parent_->transform.translate;
+			//}
+			////追従座標の補間
+			//workInter.interTarget_ = Vector3::Lerp(target_->transform.translate, pos, workInter.interParameter_);
+
+			//Vector3 offset = OffsetCalc();
+			////オフセット分と追従座標の補間分ずらす
+			//viewProj.translation_ = pos + offset;
 		}
-		//追従座標の補間
-		workInter.interTarget_ = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_);
-
-		Vector3 offset = OffsetCalc();
-		//オフセット分と追従座標の補間分ずらす
-		viewProj.translation_ = pos + offset;
 	}
-
 #ifdef _DEBUG
 	ImGui();
 #endif
 
-	viewProj.UpdateMatrix();
+	viewProj.Update();
 }
 
 void FollowCamera::ImGui()
@@ -80,6 +68,13 @@ void FollowCamera::ImGui()
 #ifdef _DEBUG
 	ImGui::Begin("FollowCamera");
 	ImGui::DragFloat3("Offset",&offsetPos.x);
+	ImGui::DragFloat3("translate",&InitCameraPos2.x,0.1f);
+	ImGui::DragFloat3("rotate",&InitCameraRot2.x,0.1f);
+	if (!target_) {
+		viewProj.translation_ = InitCameraPos2;
+		viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
+	}
+
 	ImGui::End();
 #endif
 }
@@ -90,13 +85,47 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 	Reset();
 }
 
+bool FollowCamera::PlaySceneInit(const WorldTransform* target)
+{
+	if (lerpTTitle == 0.0f) {
+		resetTransform = viewProj.translation_;
+		resetRotate = viewProj.rotation_;
+		rotate_ = { 0.0f,0.0f,0.0f };
+		target_ = target;
+		resetFlag_ = true;
+	}
+
+	PlaySceneReset();
+	lerpTTitle += addValueTitle;
+
+	if (lerpTTitle > 1.0f) {
+		resetFlag_ = false;
+		return true;
+	}
+	return false;
+}
+
+void FollowCamera::PlaySceneReset()
+{
+	//追従対象がいれば
+	if (target_) {
+		//追従座標・角度の初期化
+		workInter.interTarget_ = Vector3::Lerp(resetTransform, target_->transform.translate + offsetPos, lerpTTitle);
+		viewProj.rotation_ = Quaternion::Slerp(resetRotate, target_->transform.quaternion, lerpTTitle);
+	}
+
+	//追従大賞からのオフセット
+	Vector3 offset = OffsetCalc();
+	viewProj.translation_ = workInter.interTarget_;
+}
+
 void FollowCamera::Reset()
 {
 	//追従対象がいれば
 	if (target_) {
 		//追従座標・角度の初期化
 		workInter.interTarget_ = target_->transform.translate;
-		viewProj.rotation_.y = target_->transform.quaternion.y;
+		viewProj.rotation_.y = LerpShortAngle(viewProj.rotation_.y,target_->transform.quaternion.y, 1.0f);
 	}
 	workInter.targetAngleY_ = viewProj.rotation_.y;
 

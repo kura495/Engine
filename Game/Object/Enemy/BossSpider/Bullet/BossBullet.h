@@ -1,7 +1,7 @@
 #pragma once
-#include "Base/Object/IObject.h"
-#include "Base/Collider/OBB/OBBoxCollider.h"
-#include "Base/Math/Vector/Vector3.h"
+#include "Object/IObject.h"
+#include "Collider/OBB/OBBoxCollider.h"
+#include "Math/Vector/Vector3.h"
 
 class Player;
 class BossBullet : public IObject

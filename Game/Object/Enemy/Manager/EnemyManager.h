@@ -1,6 +1,7 @@
 #pragma once
 #include "Game/Object/Enemy/Spider/Spider.h"
 #include "Game/Object/Enemy/BossSpider/BossSpider.h"
+#include "Game/Object/Enemy/Boss/Boss.h"
 
 class Player;
 
@@ -21,7 +22,8 @@ private:// 変数
 	std::vector<Model*> enemyModel_;
 	std::list<Enemy*> enemys_;
 
-	std::unique_ptr<BossSpider>bossSpider_;
+	std::unique_ptr<Boss>bossEnemy_;
+	//std::unique_ptr<BossSpider>bossEnemy_;
 	
 	Player* player_;
 

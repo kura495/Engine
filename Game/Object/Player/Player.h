@@ -1,18 +1,16 @@
 #pragma once
 
-#include "Base/Object/IObject.h"
+#include "Object/IObject.h"
 #include "Game/Object/Weapon/Weapon.h"
-#include "Base/Collider/Box/BoxCollider.h"
-#include "Base/Collider/OBB/OBBoxCollider.h"
-#include "Base/Input/Input.h"
-#include "Base/Animation/Animation.h"
+#include "Collider/Box/BoxCollider.h"
+#include "Collider/OBB/OBBoxCollider.h"
+#include "Input/Input.h"
+#include "Animation/Animation.h"
 
-//前方宣言
-class LockOn;
 enum class Behavior {
 	kRoot,
-	kAttack,
-	kStep
+	kJump,
+	kAttack
 };
 
 class Player : public IObject
@@ -20,78 +18,63 @@ class Player : public IObject
 public:
 
 	void Init(std::vector<Model*> models)override;
+	void TitleUpdate();
 	void Update()override;
+	void TitleDraw();
 	void Draw()override;
 
-	void ImGui();
-
-	void OnCollision(const ICollider* collider);
-
-	void SetLockOn(LockOn* lockOn) { this->lockOn_ = lockOn; }
 
 	bool GetisDead() { return isDead; };
 
-	void Move();
-	void PlayerRoring();
-	static bool playerMoveValue;
-	static bool PushOptionButtern;
-
 private:
-	Input* input = nullptr;
-
+	void ImGui();
+	void Move();
 #pragma region 
 	//ふるまい
 	Behavior behavior_ = Behavior::kRoot;
 	//次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+	void BehaviorUpdate();
 	//kRoot
 	void RootInit();
 	void RootUpdate();
 	//kAttack
 	void AttackInit();
 	void AttackUpdate();
-	//kStep
-	void StepInit();
-	void StepUpdate();
+	//kJump
+	void JumpInit();
+	void JumpUpdate();
 #pragma endregion BehaviorTree
+#pragma region 
+	void ColliderInit();
+	void OnCollision(const ICollider* collider);
+	void AttackColliderInit();
+	void AttackOnCollision(const ICollider* collider);
+	OBBoxCollider colliderPlayer;
+	OBBoxCollider colliderAttack;
+	WorldTransform attackColliderWorld_;
+#pragma endregion Collider
+
+#pragma region
+	//プレイヤーの移動速度
+	const float kMoveSpeed_ = 0.1f;
+	//HP
+	uint32_t HP_ = 10;
+	//生きているか死んでいるかのフラグ
+	bool isDead = false;
+	//ジャンプの強さ
+	const float kJumpForce = 10.0f;
+	float jumpForce = 0.0f;
+	//ジャンプした時の減算
+	const float kJumpSubValue = 0.2f;
+#pragma endregion Parameter
+
+	Input* input = nullptr;
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
 
-	//ロックオン
-	const LockOn* lockOn_ = nullptr;
-
-	Vector3 lookPoint;
-	Vector3 sub;
-
-	Vector3 move;
-	//プレイヤーの移動
-	float speed = 0.1f;
-	//HP
-	uint32_t HP_ = 10;
-	bool isDead = false;
-
-	const float kDamegeEffectF = 120;
-	float DamegeEffectF = 0;
-
-	Vector3 tlanslatePre = { 0.0f,0.0f,0.0f };
-
-	std::unique_ptr<Weapon> weapon_;
-
-	float attack = 0.0f;
-
 	Animation* animation;
-
-	OBBoxCollider collider;
-
-	//Step関係
-	//プレイヤーが前転をしながら
-	void Rolling();
-	//プレイヤーが後ろ側に回避
-	void BackStep();
-	bool IsEndStep = false;
-	float stepFlame = 0;
-	//移動の量
-	const float kStepValue = 1.0f;
+	Animation* IdleAnimation;
 
 };

@@ -2,6 +2,8 @@
 
 void GamePlayState::Initialize()
 {
+	StateNo = GameStateNo::PLAY;
+
 	//基本機能生成
 	debugcamera_ = new DebugCamera();
 	debugcamera_->Initialize();
@@ -17,23 +19,25 @@ void GamePlayState::Initialize()
 	//3Dオブジェクト生成
 	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
+	lanthanumModel_.push_back(Model::CreateModelFromObj("resources/Object", "Object.obj"));
+	lanthan.Initialize();
+
+	titleSprite = new Sprite;
+	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
+	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/Title.png");
+	title.Initialize();
 
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
-	followCamera->SetTarget(&player_->GetWorld());
-
-	lockOn.Init();
-	followCamera->SetLockOn(&lockOn);
-	player_->SetLockOn(&lockOn);
 
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
 	particle = new ParticleSystem();
-	particle->Initalize("resources/circle.png");
+	particle->Initalize("resources/circle2.png");
 
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();
@@ -44,26 +48,30 @@ void GamePlayState::Initialize()
 	//天球
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
+
+	fade = Fade::GetInstance();
+	fade->OutInit();
+
+	behaviorRequest_ = StageBehavior::kTitle;
+
 }
 
 void GamePlayState::Update()
 {
-	skyDome_->Update();
-	player_->Update();
-	enemyManager->Update();
-	particle->Update();
-	collisionManager->Update();
+	BehaviorUpdate();
 
-	lockOn.Update(enemyManager->GetList());
+	particle->Update();
+
+	skyDome_->Update();
 
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
 
 	if (enemyManager->GetisClear()) {
-		StateNo = 2;
+		behaviorRequest_ = StageBehavior::kClear;
 	}
 	if (player_->GetisDead()) {
-		StateNo = 3;
+		behaviorRequest_ = StageBehavior::kOver;
 	}
 }
 
@@ -75,27 +83,175 @@ void GamePlayState::Draw()
 
 	objectManager->Draw();
 
-	player_->Draw();
-
 	enemyManager->Draw();
 
 #pragma endregion
 
+#pragma region
+	switch (behavior_)
+	{
+	case StageBehavior::kTitle:
+	default:
+		TitleDraw();
+		break;
+	case StageBehavior::kPlay:
+		PlayDraw();
+		break;
+	case StageBehavior::kClear:
+		ClearDraw();
+		break;
+	case StageBehavior::kOver:
+		OverDraw();
+		break;
+	}
+
+#pragma endregion
+
+	for (Model* model : lanthanumModel_) {
+		model->RendererDraw(lanthan);
+	}
+
 	skyDome_->Draw();
 
 	collisionManager->Draw();
-	//3Dモデル描画ここまで	
 
-	//Sprite描画ここから
+	//particle->RendererDraw();
 
-	//Sprite描画ここまで
-
-	//パーティクル描画ここから
-
-	//particle->PreDraw();
-	//particle->Draw(Renderer::viewProjection);
-
-	//パーティクル描画ここまで
-
-	//描画ここまで
 }
+#pragma region
+void GamePlayState::BehaviorUpdate()
+{
+#pragma region
+	//初期化
+	if (behaviorRequest_) {
+		//ふるまいの変更
+		behavior_ = behaviorRequest_.value();
+		//各ふるまいごとに初期化
+		switch (behavior_)
+		{
+		case StageBehavior::kTitle:
+		default:
+			TitleInit();
+			break;
+		case StageBehavior::kPlay:
+			PlayInit();
+			break;
+		case StageBehavior::kClear:
+			ClearInit();
+			break;
+		case StageBehavior::kOver:
+			OverInit();
+			break;
+		}
+
+		behaviorRequest_ = std::nullopt;
+	}
+	//更新
+	switch (behavior_)
+	{
+	case StageBehavior::kTitle:
+	default:
+		TitleUpdate();
+		break;
+	case StageBehavior::kPlay:
+		PlayUpdate();
+		break;
+	case StageBehavior::kClear:
+		ClearUpdate();
+		break;
+	case StageBehavior::kOver:
+		OverUpdate();
+		break;
+	}
+#pragma endregion BehaviorTree
+}
+
+#pragma region
+void GamePlayState::TitleInit()
+{
+	sceneInterval = 0.0f;
+}
+void GamePlayState::TitleUpdate()
+{
+	if (fade->Out() == false) {
+		return;
+	}
+#ifdef _DEBUG
+	//TODO:デバッグ用なので消すこと！
+	IsTitleToGameFlag = true;
+#endif 
+	sceneInterval += 1.0f;
+	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
+		if (sceneInterval > 25.0f) {
+			IsTitleToGameFlag = true;
+		}
+	}
+	if (IsTitleToGameFlag) {
+		if (followCamera->PlaySceneInit(&player_->GetWorld())) {
+			behaviorRequest_ = StageBehavior::kPlay;
+
+		}
+	}
+	player_->TitleUpdate();
+}
+void GamePlayState::TitleDraw()
+{
+	titleSprite->RendererDraw(title);
+	player_->TitleDraw();
+	fade->Draw();
+}
+#pragma endregion Title
+#pragma region
+void GamePlayState::PlayInit()
+{
+	IsTitleToGameFlag = false;
+}
+void GamePlayState::PlayUpdate()
+{
+	player_->Update();
+	enemyManager->Update();
+
+	collisionManager->Update();
+
+	lockOn.Update(enemyManager->GetList());
+}
+void GamePlayState::PlayDraw()
+{
+	player_->Draw();
+}
+#pragma endregion Play
+#pragma region
+void GamePlayState::ClearInit()
+{
+}
+void GamePlayState::ClearUpdate()
+{
+	if (fade->In()) {
+		StateNo = 2;
+	}
+}
+void GamePlayState::ClearDraw()
+{
+	player_->Draw();
+	fade->Draw();
+}
+#pragma endregion Clear
+#pragma region
+void GamePlayState::OverInit()
+{
+
+}
+void GamePlayState::OverUpdate()
+{
+	if (fade->In()) {
+		StateNo = 3;
+	}
+}
+
+void GamePlayState::OverDraw()
+{
+	player_->Draw();
+	fade->Draw();
+}
+#pragma endregion Over
+#pragma endregion Behavior

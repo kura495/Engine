@@ -11,7 +11,7 @@ void Weapon::Initalize(std::vector<Model*> models)
 	firstPos = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(-0.8f));
 	world_.transform.quaternion = firstPos;
 
-	world_.UpdateMatrix();
+	world_.Update();
 
 	collider.Init(&world_);
 	collider.SetSize({ 0.5f,2.0f,0.5f });
@@ -24,7 +24,13 @@ void Weapon::Initalize(std::vector<Model*> models)
 
 void Weapon::Update()
 {
-	world_.UpdateMatrix();
+	world_.Update();
+}
+
+void Weapon::UpdateMat(Matrix4x4 matrix)
+{
+	//world_.transform.translate = matrix;
+	world_.UpdateMatrix(matrix);
 }
 
 void Weapon::Draw()
@@ -69,7 +75,7 @@ void Weapon::RootInit()
 	world_.transform.translate.x = 0.7f;
 	world_.transform.translate.z = 1.0f;
 	world_.transform.quaternion = firstPos;
-	world_.UpdateMatrix();
+	world_.Update();
 	collider.IsUsing = false;
 	collider.SetSize({ 0.5f,2.0f,0.5f });
 }
@@ -92,7 +98,7 @@ void Weapon::AttackInit()
 	world_.transform.translate.x = 0.5f;
 	world_.transform.translate.y = 0.5f;
 	world_.transform.translate.z = 2.0f;
-	world_.UpdateMatrix();
+	world_.Update();
 
 	AttackQuaParam_t = 0.0f;
 	IsAttackOver = false;

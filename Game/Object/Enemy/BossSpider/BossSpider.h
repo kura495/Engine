@@ -16,6 +16,9 @@ public:
 
 private:
 	void InitCollider();
+	OBBoxCollider attackCollider;
+	WorldTransform attackWorld_;
+	void AttackOnCollision(const ICollider* ICollider);
 
 	void ImGui();
 #pragma region
@@ -35,6 +38,7 @@ private:
 	void LookPlayer();
 
 	std::list<BossBullet*> bossBullet_;
+
 
 	float attackFlame_;
 	float kAttackFlame_ = 120.0f;

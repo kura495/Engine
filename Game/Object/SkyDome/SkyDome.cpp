@@ -12,7 +12,7 @@ void SkyDome::Update()
 	ImGui::Begin("SkyDome");
 	ImGui::DragFloat3("Scale",&world_.transform.scale.x);
 	ImGui::End();
-	world_.UpdateMatrix();
+	world_.Update();
 #endif 
 }
 

@@ -59,17 +59,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/resources/hlsl;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir);$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
     <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/resources/hlsl;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">
-    <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/resources/hlsl;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/Base/Object;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgTriplet>x64-windows</VcpkgTriplet>
@@ -170,71 +170,74 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Base\Animation\Animation.cpp" />
-    <ClCompile Include="Base\Audio\Audio.cpp" />
-    <ClCompile Include="Base\Camera\DebugCamera\DebugCamera.cpp" />
-    <ClCompile Include="Base\Collider\ColliderModel\Box\BoxColliderModel.cpp" />
-    <ClCompile Include="Base\Collider\ColliderModel\OBB\OBBColliderModel.cpp" />
-    <ClCompile Include="Base\Collider\ContactRecord\ContactRecord.cpp" />
-    <ClCompile Include="Base\Common\DirectX\DirectXCommon.cpp" />
-    <ClCompile Include="Base\Editer\Editer.cpp" />
-    <ClCompile Include="Base\Input\Input.cpp" />
-    <ClCompile Include="Base\Light\Light.cpp" />
-    <ClCompile Include="Base\Manager\PSO\PSOManager.cpp" />
-    <ClCompile Include="Base\Manager\RTV\RTVManager.cpp" />
-    <ClCompile Include="Base\Manager\SRV\SRVManager.cpp" />
-    <ClCompile Include="Base\Math\Calc.cpp" />
-    <ClCompile Include="Base\Math\Matrix\Matrix4x4.cpp" />
-    <ClCompile Include="Base\Math\Matrix\MatrixCalc.cpp" />
-    <ClCompile Include="Base\Math\Quaternion\Quaternion.cpp" />
-    <ClCompile Include="Base\Math\Vector\Vector2.cpp" />
-    <ClCompile Include="Base\Math\Vector\Vector3.cpp" />
-    <ClCompile Include="Base\Math\Vector\VectorCalc.cpp" />
-    <ClCompile Include="Base\Object\IObject.cpp" />
-    <ClCompile Include="Base\Object\Line\Line.cpp" />
-    <ClCompile Include="Base\Object\Manaer\ObjectManager.cpp" />
-    <ClCompile Include="Base\Object\Mesh\Mesh.cpp" />
-    <ClCompile Include="Base\Object\Model\Model.cpp" />
-    <ClCompile Include="Base\Common\Engine\MyEngine.cpp" />
-    <ClCompile Include="Base\ParticleSystem\ParticleSystem.cpp" />
-    <ClCompile Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.cpp" />
-    <ClCompile Include="Base\PipelineState\CubeMap\CubeMap.cpp" />
-    <ClCompile Include="Base\PipelineState\DrawLine\DrawLinePSO.cpp" />
-    <ClCompile Include="Base\PipelineState\GaussianFilter\GaussianFilter.cpp" />
-    <ClCompile Include="Base\PipelineState\GrayScale\GrayScale.cpp" />
-    <ClCompile Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp" />
-    <ClCompile Include="Base\PipelineState\PostProsess\PostProsessPSO.cpp" />
-    <ClCompile Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.cpp" />
-    <ClCompile Include="Base\PipelineState\Skinning\Skinning.cpp" />
-    <ClCompile Include="Base\PipelineState\Sprite\SpritePSO.cpp" />
-    <ClCompile Include="Base\PipelineState\Standard\Standard.cpp" />
-    <ClCompile Include="Base\PipelineState\Vignetting\Vignetting.cpp" />
-    <ClCompile Include="Base\PipelineState\WireFlame\WireFlame.cpp" />
-    <ClCompile Include="Base\PostProsess\CubeMap\PPCubeMap.cpp" />
-    <ClCompile Include="Base\PostProsess\Filter\Filter.cpp" />
-    <ClCompile Include="Base\PostProsess\GrayScale\PPGrayScale.cpp" />
-    <ClCompile Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp" />
-    <ClCompile Include="Base\PostProsess\Normal\Normal.cpp" />
-    <ClCompile Include="Base\PostProsess\PostProsess.cpp" />
-    <ClCompile Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
-    <ClCompile Include="Base\PostProsess\Vinette\PPVinette.cpp" />
-    <ClCompile Include="Base\Renderer\Model\ModelRenderer.cpp" />
-    <ClCompile Include="Base\Renderer\Renderer.cpp" />
-    <ClCompile Include="Base\ShaderCompiler\ShaderCompiler.cpp" />
-    <ClCompile Include="Base\Object\Sphere\Sphere.cpp" />
-    <ClCompile Include="Base\Sprite\Sprite.cpp" />
-    <ClCompile Include="Base\Texture\TextureManager.cpp" />
-    <ClCompile Include="Base\Collider\Box\BoxCollider.cpp" />
-    <ClCompile Include="Base\Collider\Circle\CircleCollider.cpp" />
-    <ClCompile Include="Base\Collider\Manager\CollisionManager.cpp" />
-    <ClCompile Include="Base\Utility\GlobalVariables.cpp" />
-    <ClCompile Include="Base\Utility\ImGuiManager.cpp" />
-    <ClCompile Include="Base\Utility\LoadCSV.cpp" />
-    <ClCompile Include="Base\Utility\Log.cpp" />
-    <ClCompile Include="Base\Collider\OBB\OBBoxCollider.cpp" />
-    <ClCompile Include="Base\ViewProj\ViewProjection.cpp" />
-    <ClCompile Include="Base\Common\WinApp\WinApp.cpp" />
-    <ClCompile Include="Base\WorldTransform\WorldTransform.cpp" />
+    <ClCompile Include="Engine\Animation\Animation.cpp" />
+    <ClCompile Include="Engine\Audio\Audio.cpp" />
+    <ClCompile Include="Engine\Camera\DebugCamera\DebugCamera.cpp" />
+    <ClCompile Include="Engine\Collider\Box\BoxCollider.cpp" />
+    <ClCompile Include="Engine\Collider\Circle\CircleCollider.cpp" />
+    <ClCompile Include="Engine\Collider\ColliderModel\Box\BoxColliderModel.cpp" />
+    <ClCompile Include="Engine\Collider\ColliderModel\OBB\OBBColliderModel.cpp" />
+    <ClCompile Include="Engine\Collider\ContactRecord\ContactRecord.cpp" />
+    <ClCompile Include="Engine\Collider\Manager\CollisionManager.cpp" />
+    <ClCompile Include="Engine\Collider\OBB\OBBoxCollider.cpp" />
+    <ClCompile Include="Engine\Common\DirectX\DirectXCommon.cpp" />
+    <ClCompile Include="Engine\Common\Engine\MyEngine.cpp" />
+    <ClCompile Include="Engine\Common\WinApp\WinApp.cpp" />
+    <ClCompile Include="Engine\Editer\Editer.cpp" />
+    <ClCompile Include="Engine\Input\Input.cpp" />
+    <ClCompile Include="Engine\Light\Light.cpp" />
+    <ClCompile Include="Engine\Manager\PSO\PSOManager.cpp" />
+    <ClCompile Include="Engine\Manager\RTV\RTVManager.cpp" />
+    <ClCompile Include="Engine\Manager\SRV\SRVManager.cpp" />
+    <ClCompile Include="Engine\Math\Calc.cpp" />
+    <ClCompile Include="Engine\Math\Matrix\Matrix4x4.cpp" />
+    <ClCompile Include="Engine\Math\Matrix\MatrixCalc.cpp" />
+    <ClCompile Include="Engine\Math\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="Engine\Math\Vector\Vector2.cpp" />
+    <ClCompile Include="Engine\Math\Vector\Vector3.cpp" />
+    <ClCompile Include="Engine\Math\Vector\VectorCalc.cpp" />
+    <ClCompile Include="Engine\Object\IObject.cpp" />
+    <ClCompile Include="Engine\Object\Line\Line.cpp" />
+    <ClCompile Include="Engine\Object\Manager\ObjectManager.cpp" />
+    <ClCompile Include="Engine\Object\Mesh\Mesh.cpp" />
+    <ClCompile Include="Engine\Object\Model\Model.cpp" />
+    <ClCompile Include="Engine\Object\Sphere\Sphere.cpp" />
+    <ClCompile Include="Engine\ParticleSystem\ParticleSystem.cpp" />
+    <ClCompile Include="Engine\ParticleSystem\PipeLine\ParticlePipeLine.cpp" />
+    <ClCompile Include="Engine\PipelineState\CubeMap\CubeMap.cpp" />
+    <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp" />
+    <ClCompile Include="Engine\PipelineState\DrawLine\DrawLinePSO.cpp" />
+    <ClCompile Include="Engine\PipelineState\GaussianFilter\GaussianFilter.cpp" />
+    <ClCompile Include="Engine\PipelineState\GrayScale\GrayScale.cpp" />
+    <ClCompile Include="Engine\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp" />
+    <ClCompile Include="Engine\PipelineState\MotionBlur\MotionBlur.cpp" />
+    <ClCompile Include="Engine\PipelineState\PostProsess\PostProsessPSO.cpp" />
+    <ClCompile Include="Engine\PipelineState\RGBtoHSV\RGBtoHSV.cpp" />
+    <ClCompile Include="Engine\PipelineState\Skinning\Skinning.cpp" />
+    <ClCompile Include="Engine\PipelineState\Sprite\SpritePSO.cpp" />
+    <ClCompile Include="Engine\PipelineState\Standard\Standard.cpp" />
+    <ClCompile Include="Engine\PipelineState\Vignetting\Vignetting.cpp" />
+    <ClCompile Include="Engine\PipelineState\WireFlame\WireFlame.cpp" />
+    <ClCompile Include="Engine\PostProsess\CubeMap\PPCubeMap.cpp" />
+    <ClCompile Include="Engine\PostProsess\Dissolve\PPDissolve.cpp" />
+    <ClCompile Include="Engine\PostProsess\Filter\Filter.cpp" />
+    <ClCompile Include="Engine\PostProsess\GrayScale\PPGrayScale.cpp" />
+    <ClCompile Include="Engine\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp" />
+    <ClCompile Include="Engine\PostProsess\Normal\Normal.cpp" />
+    <ClCompile Include="Engine\PostProsess\PostProsess.cpp" />
+    <ClCompile Include="Engine\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
+    <ClCompile Include="Engine\PostProsess\Vinette\PPVinette.cpp" />
+    <ClCompile Include="Engine\Renderer\Model\ModelRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\Renderer.cpp" />
+    <ClCompile Include="Engine\ShaderCompiler\ShaderCompiler.cpp" />
+    <ClCompile Include="Engine\Sprite\Sprite.cpp" />
+    <ClCompile Include="Engine\Texture\TextureManager.cpp" />
+    <ClCompile Include="Engine\Utility\GlobalVariables.cpp" />
+    <ClCompile Include="Engine\Utility\ImGuiManager.cpp" />
+    <ClCompile Include="Engine\Utility\LoadCSV.cpp" />
+    <ClCompile Include="Engine\Utility\Log.cpp" />
+    <ClCompile Include="Engine\ViewProj\ViewProjection.cpp" />
+    <ClCompile Include="Engine\WorldTransform\WorldTransform.cpp" />
     <ClCompile Include="externals\imgui\ImGuizmo.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
@@ -248,6 +251,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\Camera\LockOn.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossSpider\BossSpider.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Enemy\Spider\Spider.cpp" />
@@ -255,93 +260,98 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp" />
+    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
     <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="Scenes\State\Clear\GameClearState.cpp" />
-    <ClCompile Include="Scenes\State\GameOver\GameOver.cpp" />
+    <ClCompile Include="Scenes\State\GameOver\GameOverState.cpp" />
     <ClCompile Include="Scenes\State\Play\GamePlayState.cpp" />
     <ClCompile Include="Scenes\State\Title\GameTitleState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Base\Animation\Animation.h" />
-    <ClInclude Include="Base\Animation\KeyFrame\Struct\KeyFrame_Struct.h" />
-    <ClInclude Include="Base\Audio\Audio.h" />
-    <ClInclude Include="Base\Camera\Camera.h" />
-    <ClInclude Include="Base\Camera\DebugCamera\DebugCamera.h" />
-    <ClInclude Include="Base\Collider\ColliderModel\Box\BoxColliderModel.h" />
-    <ClInclude Include="Base\Collider\ColliderModel\OBB\OBBColliderModel.h" />
-    <ClInclude Include="Base\Collider\ContactRecord\ContactRecord.h" />
-    <ClInclude Include="Base\Common\DirectX\DirectXCommon.h" />
-    <ClInclude Include="Base\Editer\Editer.h" />
-    <ClInclude Include="Base\Input\Input.h" />
-    <ClInclude Include="Base\Light\Light.h" />
-    <ClInclude Include="Base\Manager\PSO\PSOManager.h" />
-    <ClInclude Include="Base\Manager\RTV\RTVManager.h" />
-    <ClInclude Include="Base\Manager\SRV\SRVManager.h" />
-    <ClInclude Include="Base\Math\Calc.h" />
-    <ClInclude Include="Base\Math\Math_Structs.h" />
-    <ClInclude Include="Base\Math\Matrix\MatrixCalc.h" />
-    <ClInclude Include="Base\Math\Matrix\Matrix3x3.h" />
-    <ClInclude Include="Base\Math\Matrix\Matrix4x4.h" />
-    <ClInclude Include="Base\Math\Quaternion\Quaternion.h" />
-    <ClInclude Include="Base\Math\Vector\Vector2.h" />
-    <ClInclude Include="Base\Math\Vector\Vector3.h" />
-    <ClInclude Include="Base\Math\Vector\Vector4.h" />
-    <ClInclude Include="Base\Math\Vector\VectorCalc.h" />
-    <ClInclude Include="Base\Object\Line\Line.h" />
-    <ClInclude Include="Base\Object\Manaer\ObjectManager.h" />
-    <ClInclude Include="Base\Object\Mesh\Mesh.h" />
-    <ClInclude Include="Base\Object\Model\Model.h" />
-    <ClInclude Include="Base\Model_Struct\Material.h" />
-    <ClInclude Include="Base\Model_Struct\ModelData.h" />
-    <ClInclude Include="Base\Model_Struct\Transform.h" />
-    <ClInclude Include="Base\Model_Struct\VertexData.h" />
-    <ClInclude Include="Base\Common\Engine\MyEngine.h" />
-    <ClInclude Include="Base\ParticleSystem\ParticleSystem.h" />
-    <ClInclude Include="Base\ParticleSystem\PipeLine\ParticlePipeLine.h" />
-    <ClInclude Include="Base\PipelineState\CubeMap\CubeMap.h" />
-    <ClInclude Include="Base\PipelineState\DrawLine\DrawLinePSO.h" />
-    <ClInclude Include="Base\PipelineState\GaussianFilter\GaussianFilter.h" />
-    <ClInclude Include="Base\PipelineState\GrayScale\GrayScale.h" />
-    <ClInclude Include="Base\PipelineState\IPipelineStateObject.h" />
-    <ClInclude Include="Base\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.h" />
-    <ClInclude Include="Base\PipelineState\PipeLineTags.h" />
-    <ClInclude Include="Base\PipelineState\PostProsess\PostProsessPSO.h" />
-    <ClInclude Include="Base\PipelineState\RGBtoHSV\RGBtoHSV.h" />
-    <ClInclude Include="Base\PipelineState\Skinning\Skinning.h" />
-    <ClInclude Include="Base\PipelineState\Sprite\SpritePSO.h" />
-    <ClInclude Include="Base\PipelineState\Standard\Standard.h" />
-    <ClInclude Include="Base\PipelineState\Vignetting\Vignetting.h" />
-    <ClInclude Include="Base\PipelineState\WireFlame\WireFlame.h" />
-    <ClInclude Include="Base\PostProsess\CubeMap\PPCubeMap.h" />
-    <ClInclude Include="Base\PostProsess\Filter\Filter.h" />
-    <ClInclude Include="Base\PostProsess\GrayScale\PPGrayScale.h" />
-    <ClInclude Include="Base\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
-    <ClInclude Include="Base\PostProsess\Normal\Normal.h" />
-    <ClInclude Include="Base\PostProsess\PostProsess.h" />
-    <ClInclude Include="Base\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
-    <ClInclude Include="Base\PostProsess\Vinette\PPVinette.h" />
-    <ClInclude Include="Base\Renderer\Model\ModelRenderer.h" />
-    <ClInclude Include="Base\Renderer\Renderer.h" />
-    <ClInclude Include="Base\ShaderCompiler\ShaderCompiler.h" />
-    <ClInclude Include="Base\Object\Sphere\Sphere.h" />
-    <ClInclude Include="Base\Sprite\Sprite.h" />
-    <ClInclude Include="Base\Texture\TextureManager.h" />
-    <ClInclude Include="Base\Collider\Box\BoxCollider.h" />
-    <ClInclude Include="Base\Collider\Circle\CircleCollider.h" />
-    <ClInclude Include="Base\Collider\ICollider.h" />
-    <ClInclude Include="Base\Collider\CollisionConfig.h" />
-    <ClInclude Include="Base\Collider\Manager\CollisionManager.h" />
-    <ClInclude Include="Base\Utility\GlobalVariables.h" />
-    <ClInclude Include="Base\Utility\ImGuiManager.h" />
-    <ClInclude Include="Base\Utility\LoadCSV.h" />
-    <ClInclude Include="Base\Utility\Log.h" />
-    <ClInclude Include="Base\Collider\OBB\OBBoxCollider.h" />
-    <ClInclude Include="Base\ViewProj\ViewProjection.h" />
-    <ClInclude Include="Base\Common\WinApp\WinApp.h" />
-    <ClInclude Include="Base\WorldTransform\WorldTransform.h" />
-    <ClInclude Include="Base\ParticleSystem\Emitter\Emitter.h" />
+    <ClInclude Include="Engine\Animation\Animation.h" />
+    <ClInclude Include="Engine\Animation\KeyFrame\Struct\KeyFrame_Struct.h" />
+    <ClInclude Include="Engine\Audio\Audio.h" />
+    <ClInclude Include="Engine\Camera\Camera.h" />
+    <ClInclude Include="Engine\Camera\DebugCamera\DebugCamera.h" />
+    <ClInclude Include="Engine\Collider\Box\BoxCollider.h" />
+    <ClInclude Include="Engine\Collider\Circle\CircleCollider.h" />
+    <ClInclude Include="Engine\Collider\ColliderModel\Box\BoxColliderModel.h" />
+    <ClInclude Include="Engine\Collider\ColliderModel\OBB\OBBColliderModel.h" />
+    <ClInclude Include="Engine\Collider\CollisionConfig.h" />
+    <ClInclude Include="Engine\Collider\ContactRecord\ContactRecord.h" />
+    <ClInclude Include="Engine\Collider\ICollider.h" />
+    <ClInclude Include="Engine\Collider\Manager\CollisionManager.h" />
+    <ClInclude Include="Engine\Collider\OBB\OBBoxCollider.h" />
+    <ClInclude Include="Engine\Common\DirectX\DirectXCommon.h" />
+    <ClInclude Include="Engine\Common\Engine\MyEngine.h" />
+    <ClInclude Include="Engine\Common\WinApp\WinApp.h" />
+    <ClInclude Include="Engine\Editer\Editer.h" />
+    <ClInclude Include="Engine\Input\Input.h" />
+    <ClInclude Include="Engine\Light\Light.h" />
+    <ClInclude Include="Engine\Manager\PSO\PSOManager.h" />
+    <ClInclude Include="Engine\Manager\RTV\RTVManager.h" />
+    <ClInclude Include="Engine\Manager\SRV\SRVManager.h" />
+    <ClInclude Include="Engine\Math\Calc.h" />
+    <ClInclude Include="Engine\Math\Math_Structs.h" />
+    <ClInclude Include="Engine\Math\Matrix\Matrix3x3.h" />
+    <ClInclude Include="Engine\Math\Matrix\Matrix4x4.h" />
+    <ClInclude Include="Engine\Math\Matrix\MatrixCalc.h" />
+    <ClInclude Include="Engine\Math\Quaternion\Quaternion.h" />
+    <ClInclude Include="Engine\Math\Vector\Vector2.h" />
+    <ClInclude Include="Engine\Math\Vector\Vector3.h" />
+    <ClInclude Include="Engine\Math\Vector\Vector4.h" />
+    <ClInclude Include="Engine\Math\Vector\VectorCalc.h" />
+    <ClInclude Include="Engine\Model_Struct\Material.h" />
+    <ClInclude Include="Engine\Model_Struct\ModelData.h" />
+    <ClInclude Include="Engine\Model_Struct\Transform.h" />
+    <ClInclude Include="Engine\Model_Struct\VertexData.h" />
+    <ClInclude Include="Engine\Object\IObject.h" />
+    <ClInclude Include="Engine\Object\Line\Line.h" />
+    <ClInclude Include="Engine\Object\Manager\ObjectManager.h" />
+    <ClInclude Include="Engine\Object\Mesh\Mesh.h" />
+    <ClInclude Include="Engine\Object\Model\Model.h" />
+    <ClInclude Include="Engine\Object\Sphere\Sphere.h" />
+    <ClInclude Include="Engine\ParticleSystem\Emitter\Emitter.h" />
+    <ClInclude Include="Engine\ParticleSystem\ParticleSystem.h" />
+    <ClInclude Include="Engine\ParticleSystem\PipeLine\ParticlePipeLine.h" />
+    <ClInclude Include="Engine\PipelineState\CubeMap\CubeMap.h" />
+    <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h" />
+    <ClInclude Include="Engine\PipelineState\DrawLine\DrawLinePSO.h" />
+    <ClInclude Include="Engine\PipelineState\GaussianFilter\GaussianFilter.h" />
+    <ClInclude Include="Engine\PipelineState\GrayScale\GrayScale.h" />
+    <ClInclude Include="Engine\PipelineState\IPipelineStateObject.h" />
+    <ClInclude Include="Engine\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.h" />
+    <ClInclude Include="Engine\PipelineState\MotionBlur\MotionBlur.h" />
+    <ClInclude Include="Engine\PipelineState\PipeLineTags.h" />
+    <ClInclude Include="Engine\PipelineState\PostProsess\PostProsessPSO.h" />
+    <ClInclude Include="Engine\PipelineState\RGBtoHSV\RGBtoHSV.h" />
+    <ClInclude Include="Engine\PipelineState\Skinning\Skinning.h" />
+    <ClInclude Include="Engine\PipelineState\Sprite\SpritePSO.h" />
+    <ClInclude Include="Engine\PipelineState\Standard\Standard.h" />
+    <ClInclude Include="Engine\PipelineState\Vignetting\Vignetting.h" />
+    <ClInclude Include="Engine\PipelineState\WireFlame\WireFlame.h" />
+    <ClInclude Include="Engine\PostProsess\CubeMap\PPCubeMap.h" />
+    <ClInclude Include="Engine\PostProsess\Dissolve\PPDissolve.h" />
+    <ClInclude Include="Engine\PostProsess\Filter\Filter.h" />
+    <ClInclude Include="Engine\PostProsess\GrayScale\PPGrayScale.h" />
+    <ClInclude Include="Engine\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h" />
+    <ClInclude Include="Engine\PostProsess\Normal\Normal.h" />
+    <ClInclude Include="Engine\PostProsess\PostProsess.h" />
+    <ClInclude Include="Engine\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
+    <ClInclude Include="Engine\PostProsess\Vinette\PPVinette.h" />
+    <ClInclude Include="Engine\Renderer\Model\ModelRenderer.h" />
+    <ClInclude Include="Engine\Renderer\Renderer.h" />
+    <ClInclude Include="Engine\ShaderCompiler\ShaderCompiler.h" />
+    <ClInclude Include="Engine\Sprite\Sprite.h" />
+    <ClInclude Include="Engine\Texture\TextureManager.h" />
+    <ClInclude Include="Engine\Utility\GlobalVariables.h" />
+    <ClInclude Include="Engine\Utility\ImGuiManager.h" />
+    <ClInclude Include="Engine\Utility\LoadCSV.h" />
+    <ClInclude Include="Engine\Utility\Log.h" />
+    <ClInclude Include="Engine\ViewProj\ViewProjection.h" />
+    <ClInclude Include="Engine\WorldTransform\WorldTransform.h" />
     <ClInclude Include="externals\imgui\ImGuizmo.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
@@ -357,18 +367,20 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Character.h" />
     <ClInclude Include="Game\Object\Enemy\BossSpider\BossSpider.h" />
     <ClInclude Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
-    <ClInclude Include="Base\Object\IObject.h" />
     <ClInclude Include="Game\Object\Enemy\Spider\Spider.h" />
     <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Game\Object\SkyDome\SkyDome.h" />
+    <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
     <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Scenes\Manager\GameManager.h" />
     <ClInclude Include="Scenes\State\Clear\GameClearState.h" />
-    <ClInclude Include="Scenes\State\GameOver\GameOver.h" />
+    <ClInclude Include="Scenes\State\GameOver\GameOverState.h" />
     <ClInclude Include="Scenes\State\Play\GamePlayState.h" />
     <ClInclude Include="Scenes\State\Title\GameTitleState.h" />
     <ClInclude Include="Scenes\State\IgameState.h" />
@@ -387,7 +399,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="resources\hlsl\Line.hlsli">
+    <None Include="resources\hlsl\line\Line.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -397,7 +409,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="resources\hlsl\Particle.hlsli">
+    <None Include="resources\hlsl\Particle\Particle.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
@@ -414,7 +426,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\GaussianFilter.PS.hlsl">
+    <FxCompile Include="resources\hlsl\GaussianFilter\GaussianFilter.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Pixel</ShaderType>
@@ -422,7 +434,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\GaussianFilter.VS.hlsl">
+    <FxCompile Include="resources\hlsl\GaussianFilter\GaussianFilter.VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Vertex</ShaderType>
@@ -430,7 +442,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Line.PS.hlsl">
+    <FxCompile Include="resources\hlsl\line\Line.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Pixel</ShaderType>
@@ -438,7 +450,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Line.VS.hlsl">
+    <FxCompile Include="resources\hlsl\line\Line.VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Vertex</ShaderType>
@@ -446,22 +458,22 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Object3d.PS.hlsl">
+    <FxCompile Include="resources\hlsl\Object3D\Object3d.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Object3d.VS.hlsl">
+    <FxCompile Include="resources\hlsl\Object3D\Object3d.VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Particle.PS.hlsl">
+    <FxCompile Include="resources\hlsl\Particle\Particle.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Particle.VS.hlsl">
+    <FxCompile Include="resources\hlsl\Particle\Particle.VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
@@ -476,12 +488,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Sprite.PS.hlsl">
+    <FxCompile Include="resources\hlsl\Sprite\Sprite.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="resources\hlsl\Sprite.VS.hlsl">
+    <FxCompile Include="resources\hlsl\Sprite\Sprite.VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>

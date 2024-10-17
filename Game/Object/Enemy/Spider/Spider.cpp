@@ -42,7 +42,7 @@ void Spider::Update()
 		}
 		spawnFlame_++;
 
-		world_.UpdateMatrix();
+		world_.Update();
 		return;
 	}
 
@@ -68,7 +68,7 @@ void Spider::Update()
 
 	DamageEffect();
 
-	world_.UpdateMatrix();
+	world_.Update();
 }
 
 void Spider::Draw()
@@ -125,7 +125,7 @@ void Spider::PlayAttackAnime()
 		world_.transform.quaternion = PreQua * rotation;
 		world_.transform.scale = scale;
 	}
-	world_.UpdateMatrix();
+	world_.Update();
 }
 
 void Spider::AttackInit()
@@ -184,5 +184,12 @@ void Spider::DamageEffect()
 	if (damegeInterval > kDamegeInterval) {
 		models_[0]->color_ = { 1.0f,1.0f,1.0f,1.0f };
 		isDamege = false;
+	}
+}
+
+void Spider::AttackOnCollision(const ICollider* ICollider)
+{
+	if (ICollider->GetcollitionAttribute() == ColliderTag::Player) {
+		attackCollider.IsUsing = false;
 	}
 }

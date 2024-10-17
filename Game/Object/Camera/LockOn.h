@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Base/Renderer/Renderer.h"
+#include "Renderer/Renderer.h"
 #include "Game/Object/Enemy/Enemy.h"
-#include "Base/Input/Input.h"
+#include "Input/Input.h"
 
 class LockOn
 {
