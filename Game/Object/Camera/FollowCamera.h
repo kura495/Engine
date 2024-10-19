@@ -15,7 +15,7 @@ struct WorkInterpolation {
 	//追従対象のY軸
 	float targetAngleY_ = 0.0f;
 	//カメラ補間の媒介変数
-	float interParameter_ = 0.5f;
+	float interParameter_ = 0.1f;
 };
 
 class FollowCamera : public Camera
@@ -48,10 +48,6 @@ private:
 	Quaternion resetRotate;
 #pragma endregion PlaySceneInit用
 
-	Vector3 chackTargetPos;
-	Vector3 PrePos;
-
-	Vector3 EulerRot;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド

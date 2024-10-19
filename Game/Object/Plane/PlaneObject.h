@@ -1,5 +1,5 @@
 #pragma once
-
+//プレーンオブジェクト//
 #include "Object/IObject.h"
 #include "Collider/Box/BoxCollider.h"
 

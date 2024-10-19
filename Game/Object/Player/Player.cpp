@@ -215,14 +215,13 @@ void Player::AttackUpdate()
 }
 //kJump
 void Player::JumpInit() {
-	colliderPlayer.IsUsing = false;
 	jumpForce = kJumpForce;
 }
 void Player::JumpUpdate() {
 	world_.transform.translate.y += jumpForce;
 	jumpForce -= kJumpSubValue;
 
-	if (world_.transform.translate.y <= 0) {
+	if (world_.transform.translate.y <= -1) {
 		world_.transform.translate.y = 0;
 		behaviorRequest_ = Behavior::kRoot;
 	}

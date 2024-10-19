@@ -63,16 +63,17 @@ private:
 #pragma endregion Collider
 #pragma region
 	//プレイヤーの移動速度
-	const float kMoveSpeed_ = 0.1f;
+	const float kMoveSpeed_ = 0.3f;
 	//HP
 	uint32_t HP_ = 10;
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
 	//ジャンプの強さ
-	const float kJumpForce = 10.0f;
+	const float kJumpForce = 0.9f;
+	//ジャンプに使う実数値
 	float jumpForce = 0.0f;
 	//ジャンプした時の減算
-	const float kJumpSubValue = 0.2f;
+	const float kJumpSubValue = 0.03f;
 #pragma endregion Parameter
 
 	Input* input = nullptr;
