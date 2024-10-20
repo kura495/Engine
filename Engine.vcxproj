@@ -249,10 +249,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Camera\LockOn.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossSpider\BossSpider.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Enemy\Spider\Spider.cpp" />
@@ -365,10 +362,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Camera\LockOn.h" />
     <ClInclude Include="Game\Object\Character.h" />
-    <ClInclude Include="Game\Object\Enemy\BossSpider\BossSpider.h" />
-    <ClInclude Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Game\Object\Enemy\Spider\Spider.h" />

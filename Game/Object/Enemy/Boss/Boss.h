@@ -1,69 +1,77 @@
 #pragma once
 #include "Game/Object/Enemy/Enemy.h"
-#include "Game/Object/Enemy/Boss/Weapon/BossWeapon.h"
+#include "Animation/Animation.h"
+
+enum Body {
+	body,
+	ArmL,
+	ArmR
+};
 enum class BossBehavior {
 	kRoot,
-	kAttack,
-	kParry,
-	kSpown,
-	kDying,
-};
-enum class AttackBehavior {
-	kAttack1,
-	kAttack2,
+	kAttackL,
+	kAttackR,
 };
 
 class Boss : public Enemy
 {
 public:
-	Boss();
-	~Boss();
 
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
-	void BehaviorUpdate();
 	void Draw()override;
 
 private:
-	void LookPlayer();
-
 #pragma region
 	//ふるまい
 	BossBehavior behavior_ = BossBehavior::kRoot;
 	//次のふるまいリクエスト
 	std::optional<BossBehavior> behaviorRequest_ = std::nullopt;
+	void BehaviorUpdate();
 	//kRoot
-	void RootInit();
-	void RootUpdate();
-	//kAttack
-	void AttackInit();
-	void AttackUpdate();
-	//kParry
-	void ParryInit();
-	void ParryUpdate();
-	//kSpown
-	void SpownInit();
-	void SpownUpdate();
-	//kDying
-	void DyingInit();
-	void DyingUpdate();
+	void kRootInit();
+	void kRootUpdate();
+	//kAttackL
+	void kAttackLInit();
+	void kAttackLUpdate();
+	//kAttackR
+	void kAttackRInit();
+	void kAttackRUpdate();
 #pragma endregion Behavior
 #pragma region
-	//ふるまい
-	AttackBehavior attackBehavior_ = AttackBehavior::kAttack1;
-	//次のふるまいリクエスト
-	std::optional<AttackBehavior> attackbehaviorRequest_ = std::nullopt;
-	void AttackBehaviorUpdate();
-	//kAttack1
-	void Attack1Init();
-	void Attack1Update();
-	//kAttack2
-	void Attack2Init();
-	void Attack2Update();
-#pragma endregion AttackBehavior
-#pragma region
+	//プレイヤーキャラ事態の当たり判定
+	//
 	void InitCollider();
+
+	void colliderDamageInit();
+	void OnCollision(const ICollider* colliderA)override;
+	//攻撃の当たり判定
+	void colliderAttackInit();
+	void onCollisionAttack(const ICollider* collider);
+	OBBoxCollider colliderDamage;
+	OBBoxCollider colliderAttack;
+	WorldTransform ColliderDamegeWorld_;
+	WorldTransform colliderAttackWorld_;
+
 #pragma endregion Collider
 
-};
+	WorldTransform worldArmL;
+	//WorldTransform worldArmR;
 
+	void Damage();
+
+	int HP_ = 10;
+
+#pragma region
+
+	Animation* animationBodykRoot;
+
+	Animation* animationArmLRoot;
+	//Animation* animationArmRRoot;
+	Animation* animationArmLDamage;
+	//Animation* animationArmRDamage;
+
+
+	Animation* IdleAnimation;
+#pragma endregion Animation
+};

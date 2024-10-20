@@ -15,7 +15,7 @@ struct WorkInterpolation {
 	//追従対象のY軸
 	float targetAngleY_ = 0.0f;
 	//カメラ補間の媒介変数
-	float interParameter_ = 0.1f;
+	Vector3 interParameter_ = {1.0f,1.0f,1.0f};
 };
 
 class FollowCamera : public Camera
@@ -33,6 +33,11 @@ public:
 	/// </summary>
 	bool PlaySceneInit(const WorldTransform* target);
 	void PlaySceneReset();
+	
+	void SetInterParameter(Vector3 iaramater);
+
+	static WorkInterpolation workInter;
+
 private:
 	void ImGui();
 #pragma region
@@ -57,7 +62,7 @@ private:
 
 	//追従対象の座標・角度を再設定
 	void Reset();
-	WorkInterpolation workInter;
+
 	//追従対象からのオフセットを計算する
 	Vector3 OffsetCalc();
 

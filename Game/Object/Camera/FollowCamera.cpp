@@ -1,5 +1,7 @@
 #include "FollowCamera.h"
 
+WorkInterpolation FollowCamera::workInter;
+
 void FollowCamera::Initialize() {
 	viewProj.Initialize();
 
@@ -39,10 +41,10 @@ void FollowCamera::Update() {
 		if (target_) {
 			Vector3 pos = target_->transform.translate;
 			//追従座標の補間
-			workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, pos,1.0f).x;
-			workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, pos,1.0f).z;
+			workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.x).x;
+			workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.z).z;
 
-			workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_).y;
+			workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.y).y;
 
 			Vector3 offset = OffsetCalc();
 			//オフセット分と追従座標の補間分ずらす
@@ -121,6 +123,11 @@ void FollowCamera::PlaySceneReset()
 	//追従大賞からのオフセット
 	Vector3 offset = OffsetCalc();
 	viewProj.translation_ = workInter.interTarget_;
+}
+
+void FollowCamera::SetInterParameter(Vector3 paramater)
+{
+	workInter.interTarget_ = paramater;
 }
 
 void FollowCamera::Reset()

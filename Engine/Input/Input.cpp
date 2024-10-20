@@ -195,11 +195,10 @@ void Input::UpdateJoyState()
 
 bool Input::GetPadPrecede(uint32_t buttonNumber, int delayTime)
 {
-	//押されたボタンがbuttonNumvberと同じで、
+	//押されたボタンがbuttonNumberと同じで、
 	//経過フレームがdelayTimeより小さいならtrueを返す
-	auto result = find_if(
-		joy_stack.begin(), joy_stack.end()
-		,[buttonNumber, delayTime](ListData data){
+	auto result = find_if(joy_stack.begin(), joy_stack.end(),
+		[buttonNumber, delayTime](ListData data){
 	return data.code == buttonNumber && data.frame < delayTime;
 	});
 	if (result != joy_stack.end()) {
