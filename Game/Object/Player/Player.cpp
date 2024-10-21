@@ -63,11 +63,16 @@ void Player::Update()
 	//}
 	/*float leng = followCamera->GetViewProjection().translation_.y - world_.transform.translate.y;
 	if (leng > kMax) {
-		FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
+		
 	}*/
 	//TODO　着地面の高さを求めて、カメラの高さを決めると、アストロボット的なジャンプが実装できそう
 	//		ジャンプ先が高い位置にあると、カメラが上に移動する
+	if (behavior_ != Behavior::kJump) {
+		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
 
+	}
+	
+	
 	world_.Update();
 
 	//前フレームのゲームパッドの状態を保存
@@ -208,7 +213,7 @@ void Player::RootUpdate()
 		behaviorRequest_ = Behavior::kAttack;
 	}
 	//ジャンプ
-	else if (input->GetPadPrecede(XINPUT_GAMEPAD_A, 20)) {
+	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
 		behaviorRequest_ = Behavior::kJump;
 	}
 }
