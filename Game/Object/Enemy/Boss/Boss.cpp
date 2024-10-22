@@ -116,21 +116,23 @@ void Boss::kRootUpdate()
 }
 void Boss::kAttackLInit()
 {
-
+	addEaseT = 0.01f;
 }
 void Boss::kAttackLUpdate()
 {
-	easeT = (std::min)(easeT + 0.05f,1.0f);
+
+	easeT = (std::min)(easeT + addEaseT,1.0f);
 
 	worldArmL.transform.translate.y -= Ease::InBack(easeT);
+	float aaa = Ease::InBack(easeT);
+
+	if (aaa > 0){
+		addEaseT = 0.05f;
+	}
 
 	if (worldArmL.transform.translate.y <= 0){
 		worldArmL.transform.translate.y = 0.5f;
 		behaviorRequest_ = BossBehavior::kRoot;
-	}
-
-	if (easeT == 1.0f){
-
 	}
 }
 void Boss::kAttackRInit()

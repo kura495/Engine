@@ -72,4 +72,5 @@ private:
 #pragma endregion Animation
 
 	float easeT = 0.0f;
+	float addEaseT = 0.05f;
 };
