@@ -5,11 +5,10 @@ void EnemyManager::Init(Player* player)
 {
 	player_ = player;
 
-	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Enemy.gltf"));
+	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Arm.gltf"));
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Arm.gltf"));
 
 	bossEnemy_ = std::make_unique<Boss>();
-	//bossEnemy_ = std::make_unique<BossSpider>();
 	bossEnemy_->Init(enemyModel_);
 	bossEnemy_->SetPlayer(player_);
 
@@ -26,20 +25,11 @@ void EnemyManager::Update()
 		{
 			if (enemy->GetIsAlive() == false)
 			{
-				enemyDeadCount++;
 				delete enemy;
 				return true;
 			}
 			return false;
 	});
-
-	spawnFlame++;
-	if (spawnFlame > KSpawnFlame) {
-		spawn++;
-		//TODO：いったんコメントアウト
-		//Spawn();
-		spawnFlame = 0;
-	}
 
 	bossEnemy_->Update();
 
@@ -61,19 +51,10 @@ void EnemyManager::Draw()
 	}
 }
 
-void EnemyManager::Spawn()
-{
-	Enemy* enemy = new Spider;
-	enemy->Init(enemyModel_);
-	enemy->SetPlayer(player_);
-	enemys_.push_back(enemy);
-}
-
 void EnemyManager::ImGui()
 {
-	ImGui::Begin("EnemyManager");
-	if (ImGui::Button("Spawn")) {
-		Spawn();
+	bossEnemy_->ImGui();
+	for (Enemy* enemy : enemys_){
+		enemy->ImGui();
 	}
-	ImGui::End();
 }

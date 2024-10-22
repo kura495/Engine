@@ -5,7 +5,7 @@ void Boss::Init(std::vector<Model*> models)
 	models_ = models;
 
 	worldArmL.Initialize();
-	worldArmL.transform.translate.y = 0.5f;
+	worldArmL.transform.translate.y = 5.5f;
 
 	ColliderDamegeWorld_.Initialize();
 	colliderAttackWorld_.Initialize();
@@ -15,13 +15,14 @@ void Boss::Init(std::vector<Model*> models)
 
 	colliderDamageInit();
 	colliderAttackInit();
-	InitCollider();
 
 	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
 
-	behaviorRequest_ = BossBehavior::kAttackL;
+	behaviorRequest_ = BossBehavior::kRoot;
+
+	name = "Boss";
 
 }
 
@@ -39,6 +40,9 @@ void Boss::Update()
 	}
 
 	BehaviorUpdate();
+
+	world_.Update();
+	worldArmL.Update();
 }
 
 void Boss::Draw()
@@ -47,18 +51,18 @@ void Boss::Draw()
 	{
 	case BossBehavior::kRoot:
 	default:
-		models_[Body::body]->RendererDraw(world_);
+		//models_[Body::body]->RendererDraw(world_);
 		models_[Body::ArmL]->RendererDraw(worldArmL);
 		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRRoot->GetSkinCluster());
 		break;
 	case BossBehavior::kAttackL:
+		//models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
 	case BossBehavior::kAttackR:
 		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRDamage->GetSkinCluster());
 		break;
 	}
-
 }
 #pragma region
 void Boss::BehaviorUpdate()
@@ -101,16 +105,33 @@ void Boss::BehaviorUpdate()
 }
 void Boss::kRootInit()
 {
+	easeT = 0.0f;
 }
 void Boss::kRootUpdate()
 {
+	//攻撃をする
+	if (/*条件*/true) {
+		//behaviorRequest_ = BossBehavior::kAttackL;
+	}
 }
 void Boss::kAttackLInit()
 {
+
 }
 void Boss::kAttackLUpdate()
 {
+	easeT = (std::min)(easeT + 0.05f,1.0f);
 
+	worldArmL.transform.translate.y -= Ease::InBack(easeT);
+
+	if (worldArmL.transform.translate.y <= 0){
+		worldArmL.transform.translate.y = 0.5f;
+		behaviorRequest_ = BossBehavior::kRoot;
+	}
+
+	if (easeT == 1.0f){
+
+	}
 }
 void Boss::kAttackRInit()
 {
@@ -120,15 +141,6 @@ void Boss::kAttackRUpdate()
 }
 #pragma endregion Behavior
 #pragma region
-void Boss::InitCollider()
-{
-	collider.Init(&world_);
-	collider.SetSize({ 1.0f,1.0f,1.0f });
-	collider.OnCollision = [this](ICollider* colliderB) { OnCollision(colliderB); };
-	collider.SetcollitionAttribute(ColliderTag::Enemy);
-	collider.SetcollisionMask(~ColliderTag::Enemy);
-	collider.IsUsing = false;
-}
 void Boss::colliderDamageInit()
 {
 	ColliderDamegeWorld_.SetParent(&worldArmL);
@@ -166,10 +178,12 @@ void Boss::onCollisionAttack(const ICollider* Collider)
 	Collider;
 }
 #pragma endregion Collider
-void Boss::Damage()
+void Boss::AddImGui()
 {
-	//hpを減らす
-	HP_ = -1;
-
-
+	if (ImGui::Button("AttackMove")) {
+		behaviorRequest_ = BossBehavior::kAttackL;
+	}
+	ImGui::DragFloat3("Scale", &worldArmL.transform.scale.x);
+	ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);
+	ImGui::DragFloat3("Translate", &worldArmL.transform.translate.x);
 }

@@ -2,6 +2,8 @@
 #include "Game/Object/Enemy/Enemy.h"
 #include "Animation/Animation.h"
 
+#include "Utility/Ease/Ease.h"
+
 enum Body {
 	body,
 	ArmL,
@@ -39,9 +41,6 @@ private:
 	void kAttackRUpdate();
 #pragma endregion Behavior
 #pragma region
-	//プレイヤーキャラ事態の当たり判定
-	//
-	void InitCollider();
 
 	void colliderDamageInit();
 	void OnCollision(const ICollider* colliderA)override;
@@ -55,12 +54,10 @@ private:
 
 #pragma endregion Collider
 
+	void AddImGui()override;
+
 	WorldTransform worldArmL;
 	//WorldTransform worldArmR;
-
-	void Damage();
-
-	int HP_ = 10;
 
 #pragma region
 
@@ -71,7 +68,8 @@ private:
 	Animation* animationArmLDamage;
 	//Animation* animationArmRDamage;
 
-
 	Animation* IdleAnimation;
 #pragma endregion Animation
+
+	float easeT = 0.0f;
 };

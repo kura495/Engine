@@ -25,18 +25,15 @@ public:
 	bool GetIsAlive() {
 		return IsAlive;
 	}
-
+	 void ImGui();
 protected://関数
 
-	void ImGui();
+
+	virtual void AddImGui(){};
 
 	virtual void OnCollision(const ICollider* ICollider);
 
 protected:
-
-	OBBoxCollider collider;
-
-	Animation* animation = nullptr;
 
 	const float AttackRange = 2.0f;
 	bool isAttackFlag = false;
@@ -61,4 +58,5 @@ protected:
 
 	Player* player_ = nullptr;
 
+	std::string name = "Enemy";
 };

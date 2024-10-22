@@ -3,17 +3,11 @@
 void Enemy::ImGui()
 {
 #ifdef USE_IMGUI
-	ImGui::Begin("Enemy");
+	ImGui::Begin(name.c_str());
 	ImGui::DragFloat3("Scale", &world_.transform.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform.translate.x);
-	if (ImGui::Button("CollisionOn")) {
-		collider.IsUsing = true;
-	}
-	if (ImGui::Button("CollisionOff")) {
-		collider.IsUsing = false;
-	}
-	ImGui::Text("HP : %d", HP_);
+	AddImGui();
 	ImGui::End();
 #endif
 }
