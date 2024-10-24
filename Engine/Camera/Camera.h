@@ -1,4 +1,5 @@
 ﻿#pragma once
+//カメラの基本クラス//
 #include "ViewProj/ViewProjection.h"
 
 class Camera

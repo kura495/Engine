@@ -1,5 +1,5 @@
 #pragma once
-
+//デバッグカメラクラス//
 #include "Input/Input.h"
 #include "Camera/Camera.h"
 #include "Calc.h"
