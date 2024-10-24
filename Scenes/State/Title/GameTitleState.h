@@ -1,4 +1,5 @@
 #pragma once
+//ゲームタイトルシーン//
 #include"Scenes/State/IgameState.h"
 #include "Input/Input.h"
 #include "Texture/TextureManager.h"

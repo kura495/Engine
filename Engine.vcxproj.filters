@@ -346,9 +346,6 @@
     <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp">
       <Filter>Game\Object\Enemy\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Weapon\Weapon.cpp">
-      <Filter>Game\Object\Weapon</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Object\Box\BoxObject.cpp">
       <Filter>Game\Object\Box</Filter>
     </ClCompile>
@@ -624,14 +621,8 @@
     <ClInclude Include="Scenes\State\GameOver\GameOverState.h">
       <Filter>Game\Scenes\State\GameOver</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Character.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h">
       <Filter>Game\Object\Enemy\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Weapon\Weapon.h">
-      <Filter>Game\Object\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Box\BoxObject.h">
       <Filter>Game\Object\Box</Filter>

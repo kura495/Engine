@@ -1,4 +1,5 @@
 #pragma once
+//画面遷移クラス//
 #include "Texture/TextureManager.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Sprite/Sprite.h"
@@ -6,10 +7,13 @@ class Fade
 {
 public:
 	static Fade* GetInstance();
-
+	//フェードインをする時の初期化
 	void InInit();
+	//フェードアウトをする時の初期化
 	void OutInit();
+	//フェードイン用更新処理　終了するとtrueを返す
 	bool In();
+	//フェードアウト用更新処理　終了するとtrueを返す
 	bool Out();
 	void Draw();
 

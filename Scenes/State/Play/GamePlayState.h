@@ -1,4 +1,5 @@
 ﻿#pragma once
+//ゲームプレイシーン//
 #include "Scenes/State/IgameState.h"
 #include "Common/Engine/MyEngine.h"
 #include "ModelData.h"
@@ -30,7 +31,6 @@
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Camera/FollowCamera.h"
 #include "Game/Object/Enemy/Manager/EnemyManager.h"
-#include "Game/Object/Camera/LockOn.h"
 #include "Game/Object/SkyDome/SkyDome.h"
 #include "Game/Object/Transition/Fade/Fade.h"
 
@@ -91,7 +91,6 @@ private:
 	std::unique_ptr<Player>player_;
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
-	LockOn lockOn;
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;

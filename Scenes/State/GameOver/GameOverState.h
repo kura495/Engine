@@ -1,4 +1,5 @@
 #pragma once
+//ゲームオーバーシーン//
 #include"Scenes/State/IgameState.h"
 #include "Input/Input.h"
 #include "Texture/TextureManager.h"

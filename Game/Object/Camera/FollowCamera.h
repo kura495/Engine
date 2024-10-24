@@ -33,16 +33,13 @@ public:
 	/// </summary>
 	bool PlaySceneInit(const WorldTransform* target);
 	void PlaySceneReset();
-	
-	void SetInterParameter(Vector3 iaramater);
 
 	static WorkInterpolation workInter;
 
 private:
 	void ImGui();
 #pragma region
-	Vector3 InitCameraPos = {-1.4f,0.4f,-2.3f};
-	Vector3 InitCameraRot = {-0.3f,0.1f,0.0f};
+	//カメラの位置と向き
 	Vector3 InitCameraPos2 = {-1.5f,1.9f,1.9f};
 	Vector3 InitCameraRot2 = {0.5f,2.6f,0.0f};
 

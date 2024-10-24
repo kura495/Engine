@@ -17,9 +17,7 @@ void EnemyManager::Init(Player* player)
 
 void EnemyManager::Update()
 {
-	if (bossEnemy_->GetIsAlive() == false) {
-		isClear = true;
-	}
+	ClearJudge();
 
 	enemys_.remove_if([this](Enemy* enemy)
 		{
@@ -56,5 +54,12 @@ void EnemyManager::ImGui()
 	bossEnemy_->ImGui();
 	for (Enemy* enemy : enemys_){
 		enemy->ImGui();
+	}
+}
+
+void EnemyManager::ClearJudge()
+{
+	if (bossEnemy_->GetIsAlive() == false) {
+		isClear = true;
 	}
 }

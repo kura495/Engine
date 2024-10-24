@@ -1,4 +1,5 @@
 #pragma once
+//天球クラス//
 #include "Object/IObject.h"
 
 class SkyDome : public IObject

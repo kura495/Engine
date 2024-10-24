@@ -124,9 +124,9 @@ void Boss::kAttackLUpdate()
 	easeT = (std::min)(easeT + addEaseT,1.0f);
 
 	worldArmL.transform.translate.y -= Ease::InBack(easeT);
-	float aaa = Ease::InBack(easeT);
+	float newPoint = Ease::InBack(easeT);
 
-	if (aaa > 0){
+	if (newPoint > 0){
 		addEaseT = 0.05f;
 	}
 

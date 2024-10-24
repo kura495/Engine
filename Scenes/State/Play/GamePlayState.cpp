@@ -214,8 +214,6 @@ void GamePlayState::PlayUpdate()
 	enemyManager->Update();
 
 	collisionManager->Update();
-
-	lockOn.Update(enemyManager->GetList());
 }
 void GamePlayState::PlayDraw()
 {

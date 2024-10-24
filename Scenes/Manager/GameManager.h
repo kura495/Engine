@@ -1,4 +1,5 @@
 #pragma once
+//ゲームシーンやポストプロセスを管理するシーン//
 #include"Common/WinApp/WinApp.h"
 #include"Common/DirectX/DirectXCommon.h"
 #include"Common/Engine/MyEngine.h"

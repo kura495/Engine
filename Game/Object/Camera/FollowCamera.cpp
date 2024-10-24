@@ -124,12 +124,6 @@ void FollowCamera::PlaySceneReset()
 	Vector3 offset = OffsetCalc();
 	viewProj.translation_ = workInter.interTarget_;
 }
-
-void FollowCamera::SetInterParameter(Vector3 paramater)
-{
-	workInter.interTarget_ = paramater;
-}
-
 void FollowCamera::Reset()
 {
 	//追従対象がいれば

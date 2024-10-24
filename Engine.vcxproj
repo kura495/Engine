@@ -258,7 +258,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp" />
     <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
-    <ClCompile Include="Game\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="Scenes\State\Clear\GameClearState.cpp" />
@@ -362,7 +361,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Box\BoxObject.h" />
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Camera\LockOn.h" />
-    <ClInclude Include="Game\Object\Character.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
@@ -371,7 +369,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
     <ClInclude Include="Game\Object\SkyDome\SkyDome.h" />
     <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
-    <ClInclude Include="Game\Object\Weapon\Weapon.h" />
     <ClInclude Include="Scenes\Manager\GameManager.h" />
     <ClInclude Include="Scenes\State\Clear\GameClearState.h" />
     <ClInclude Include="Scenes\State\GameOver\GameOverState.h" />

@@ -41,18 +41,24 @@ private:
 	void kAttackRUpdate();
 #pragma endregion Behavior
 #pragma region
-
+	//ボスの弱点の当たり判定
 	void colliderDamageInit();
 	void OnCollision(const ICollider* colliderA)override;
-	//攻撃の当たり判定
+	OBBoxCollider colliderDamage;
+	WorldTransform ColliderDamegeWorld_;
+	//ボスの攻撃の当たり判定
 	void colliderAttackInit();
 	void onCollisionAttack(const ICollider* collider);
-	OBBoxCollider colliderDamage;
 	OBBoxCollider colliderAttack;
-	WorldTransform ColliderDamegeWorld_;
 	WorldTransform colliderAttackWorld_;
-
 #pragma endregion Collider
+
+#pragma region
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float addEaseT = 0.05f;
+#pragma endregion 攻撃に関する物
 
 	void AddImGui()override;
 
@@ -71,6 +77,4 @@ private:
 	Animation* IdleAnimation;
 #pragma endregion Animation
 
-	float easeT = 0.0f;
-	float addEaseT = 0.05f;
 };
