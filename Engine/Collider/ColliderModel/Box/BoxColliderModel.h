@@ -1,5 +1,6 @@
 #pragma once
-
+//コライダー表示用モデル//
+//AABB用//
 #include "Common/DirectX/DirectXCommon.h"
 #include "Manager/SRV/SRVManager.h"
 #include "WorldTransform/WorldTransform.h"

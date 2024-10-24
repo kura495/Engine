@@ -1,4 +1,6 @@
 #pragma once
+//円型コライダー(Circle)//
+//TODO:未完成
 #include "Collider/ICollider.h"
 class CircleCollider : public ICollider
 {

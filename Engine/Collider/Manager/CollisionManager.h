@@ -1,4 +1,5 @@
 ﻿#pragma once
+//当たり判定管理クラス//
 #include "Collider/ICollider.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"

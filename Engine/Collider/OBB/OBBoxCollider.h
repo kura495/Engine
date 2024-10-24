@@ -1,5 +1,5 @@
 #pragma once
-
+//ボックス型コライダー(OBB)//
 #include "Collider/ICollider.h"
 #include "Collider/ColliderModel/OBB/OBBColliderModel.h"
 
