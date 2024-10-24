@@ -18,7 +18,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
-	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
+	//animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
 
 	behaviorRequest_ = BossBehavior::kRoot;
 

@@ -13,7 +13,6 @@
 #include "ViewProj/ViewProjection.h"
 #include "Object/Model/Model.h"
 
-
 class Animation {
 public:
 	void Init();

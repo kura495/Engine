@@ -1,4 +1,5 @@
 ﻿#pragma once
+//オーディオクラス//
 #include "Common/DirectX/DirectXCommon.h"
 #include "Math_Structs.h"
 #include <xaudio2.h>
@@ -54,14 +55,36 @@ public:
 	void Initialize();
 
 	void Release();
+#pragma region
 	uint32_t LoadAudio(const std::string& filePath, bool LoopFlag);
 	uint32_t LoadAudioMP3(const std::string& filePath, bool LoopFlag);
+#pragma endregion 読み込み
+
+#pragma region
+	/// <summary>
+	/// 再生
+	/// </summary>
+	/// <param name="AudioIndex">オーディオファイルの番号</param>
+	/// <param name="AudioVolume">音量</param>
 	void Play(uint32_t AudioIndex, float AudioVolume, int pan);
+	/// <summary>
+	/// 再生
+	/// </summary>
+	/// <param name="AudioIndex">オーディオファイルの番号</param>
+	/// <param name="AudioVolume">音量</param>
 	void Play(uint32_t AudioIndex, float AudioVolume);
+	/// <summary>
+	/// 停止
+	/// </summary>
+	/// <param name="AudioIndex">オーディオファイルの番号</param>
+	/// <param name="PlayBegin">再生位置を戻す</param>
+	/// <param name="LoopFlag">ループをさせる</param>
 	void Stop(uint32_t AudioIndex, bool PlayBegin, bool LoopFlag);
+	//ループを抜ける
 	void ExitLoop(uint32_t AudioIndex);
 	void Reset(uint32_t AudioIndex, bool LoopFlag);
 	void SoundUnload(uint32_t Index);
+#pragma endregion オーディオコントロール
 private:
 	Audio() = default;
 	~Audio() = default;
