@@ -1,4 +1,5 @@
 ﻿#pragma once
+//コライダーに関する設定項目//
 #include<cstdint>
 
 namespace ColliderTag{

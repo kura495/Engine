@@ -1,5 +1,5 @@
 #pragma once
-
+//エディタクラス//
 #include "ImGuiManager.h"
 #include "ViewProj/ViewProjection.h"
 #include "WorldTransform/WorldTransform.h"
@@ -14,16 +14,24 @@ public:
 	void Initalize();
 	void Update();
 	void Draw();
-
+	//使うかどうか
 	void IsEnable(bool Flag) {
 		IsEnableFlag = Flag;
 	}
 
 
 #pragma region Setter
+	/// <summary>
+	/// ビュープロジェクションをセット
+	/// </summary>
+	/// <param name="viewProjection">ビュープロジェクションのポインタ</param>
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;
 	}
+	/// <summary>
+	/// IObjectをセット
+	/// </summary>
+	/// <param name="object">オブジェクトのポインタ</param>
 	void SetObject(IObject* object);
 #pragma endregion
 private:

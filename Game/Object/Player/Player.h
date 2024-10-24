@@ -31,9 +31,9 @@ public:
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
 
-	void SetCamera(FollowCamera* camera) { followCamera = camera; };
 private:
 	void ImGui();
+	//スティック入力で移動させる関数
 	void Move();
 #pragma region 
 	//ふるまい
@@ -76,13 +76,6 @@ private:
 	//ジャンプした時の減算
 	const float kJumpSubValue = 0.03f;
 #pragma endregion Parameter
-
-#pragma region
-
-	FollowCamera* followCamera;
-	//一定幅開くとカメラが近くなる
-	const float kMax = 5.0f;
-#pragma endregion
 
 	Input* input = nullptr;
 

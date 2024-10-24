@@ -1,4 +1,5 @@
 ﻿#pragma once
+//メッシュオブジェクト//
 #include "Common/DirectX/DirectXCommon.h"
 #include "Texture/TextureManager.h"
 #include "WorldTransform/WorldTransform.h"

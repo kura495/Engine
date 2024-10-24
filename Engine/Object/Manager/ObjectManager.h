@@ -1,4 +1,5 @@
 #pragma once
+//IObjectを管理するクラス//
 #include "Object/IObject.h"
 #include "Game/Object/Box/BoxObject.h"
 #include "Game/Object/Plane/PlaneObject.h"
@@ -25,8 +26,9 @@ public:
 	void Initalize();
 	void Update();
 	void Draw();
-
+	//jsonファイルの読み込み
 	void LordFile(std::string fileName);
+	//ブレンダーで作ったシーンファイルを読み込み
 	void LordBlenderScene(std::string fileName);
 
 private:
@@ -36,13 +38,14 @@ private:
 	ObjectManager& operator=(const ObjectManager& obj) = delete;
 
 	void LoadjsonObject(nlohmann::json& object);
+#pragma region
 	void AddBox();
 	void AddBox(ObjectData input);
 	void AddPlane();
 	void AddPlane(ObjectData input);
 	void AddEnemy(ObjectData input);
 	void addModel(ObjectData input, std::string path);
-
+#pragma region 読み込んだjson　
 	std::list<IObject*> object_;
 	int32_t boxObjectCount;
 	int32_t PlaneObjectCount;

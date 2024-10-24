@@ -1,4 +1,5 @@
 ﻿#pragma once
+//ライトクラス//
 #include "Math_Structs.h"
 #include "ImGuiManager.h"
 #include <d3d12.h>

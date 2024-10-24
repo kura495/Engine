@@ -1,4 +1,5 @@
 ﻿#pragma once
+//当たり判定基底クラス//
 #include "Math_Structs.h"
 #include "CollisionConfig.h"
 #include "WorldTransform/WorldTransform.h"
@@ -10,7 +11,7 @@ class ICollider {
 public:
 
 	bool IsDalete = false;
-
+	//コライダーの種類
 	enum Shape {
 		None,//セットされていない
 		Box,
@@ -33,7 +34,7 @@ public:
 	/*virtual void ColliderImGui(std::string TabName) {
 	
 	};*/
-
+	//関数ポインタ　OnCollisionを入れる
 	using HitFunction = std::function<void(ICollider*)>;
 	HitFunction OnCollision;
 	//衝突時に呼ばれる関数

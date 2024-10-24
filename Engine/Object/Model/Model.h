@@ -1,4 +1,5 @@
 ﻿#pragma once
+//モデルオブジェクト//
 #include "Material.h"
 #include "Transform.h"
 #include "VertexData.h"

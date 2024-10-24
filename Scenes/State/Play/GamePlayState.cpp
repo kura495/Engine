@@ -32,7 +32,6 @@ void GamePlayState::Initialize()
 
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
-	player_->SetCamera(followCamera.get());
 
 
 	//Renderer
