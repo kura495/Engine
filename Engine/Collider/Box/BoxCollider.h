@@ -1,5 +1,6 @@
 ﻿#pragma once
-
+//ボックス型コライダー(AABB)//
+//TODO:未完成
 #include "Math/Vector/Vector3.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Collider/ICollider.h"
