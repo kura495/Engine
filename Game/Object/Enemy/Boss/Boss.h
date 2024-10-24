@@ -10,9 +10,9 @@ enum Body {
 	ArmR
 };
 enum class BossBehavior {
-	kRoot,
-	kAttackL,
-	kAttackR,
+	Root,
+	AttackL,
+	AttackR,
 };
 
 class Boss : public Enemy
@@ -26,29 +26,29 @@ public:
 private:
 #pragma region
 	//ふるまい
-	BossBehavior behavior_ = BossBehavior::kRoot;
+	BossBehavior behavior_ = BossBehavior::Root;
 	//次のふるまいリクエスト
 	std::optional<BossBehavior> behaviorRequest_ = std::nullopt;
 	void BehaviorUpdate();
-	//kRoot
-	void kRootInit();
-	void kRootUpdate();
-	//kAttackL
-	void kAttackLInit();
-	void kAttackLUpdate();
-	//kAttackR
-	void kAttackRInit();
-	void kAttackRUpdate();
+	//Root
+	void RootInit();
+	void RootUpdate();
+	//AttackL
+	void AttackLInit();
+	void AttackLUpdate();
+	//AttackR
+	void AttackRInit();
+	void AttackRUpdate();
 #pragma endregion Behavior
 #pragma region
 	//ボスの弱点の当たり判定
-	void colliderDamageInit();
+	void ColliderDamageInit();
 	void OnCollision(const ICollider* colliderA)override;
 	OBBoxCollider colliderDamage;
-	WorldTransform ColliderDamegeWorld_;
+	WorldTransform colliderDamegeWorld_;
 	//ボスの攻撃の当たり判定
-	void colliderAttackInit();
-	void onCollisionAttack(const ICollider* collider);
+	void ColliderAttackInit();
+	void OnCollisionAttack(const ICollider* collider);
 	OBBoxCollider colliderAttack;
 	WorldTransform colliderAttackWorld_;
 #pragma endregion Collider
