@@ -1,54 +1,73 @@
 #include "Boss.h"
-#include "Game/Object/Player/Player.h"
 
-Boss::Boss(){}
-Boss::~Boss(){}
-
-void Boss::Init(std::vector<Model*> models){
-
+void Boss::Init(std::vector<Model*> models)
+{
 	models_ = models;
+
+	worldArmL.Initialize();
+	worldArmL.transform.translate.y = 5.5f;
+
+	ColliderDamegeWorld_.Initialize();
+	colliderAttackWorld_.Initialize();
 	world_.Initialize();
-
-	//world_.transform.translate.y = 5.0f;
-	world_.transform.translate.z = 5.0f;
 	world_.Update();
-	InitCollider();
+	worldArmL.Update();
 
-	HP_ = 10;
+	colliderDamageInit();
+	colliderAttackInit();
+
+	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
+	animationArmLDamage->Init();
+	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
+
+	behaviorRequest_ = BossBehavior::kRoot;
+
+	name = "Boss";
+
 }
-void Boss::Update(){
-	if (HP_ <= 0) {
-		IsAlive = false;
+
+void Boss::Update()
+{
+	//ダメージを受けた時
+	if (isDamege) {
+		animationArmLDamage->PlayAnimation();
+		animationTime_ += 1.0f / 60.0f;
+		if (animationTime_ > animationArmLDamage->duration) {
+			isDamege = false;
+			animationTime_ = 0.0f;
+			colliderDamage.IsUsing = true;
+		}
 	}
 
 	BehaviorUpdate();
 
 	world_.Update();
+	worldArmL.Update();
 }
+
 void Boss::Draw()
 {
-	models_[0]->RendererDraw(world_);
-
+	switch (behavior_)
+	{
+	case BossBehavior::kRoot:
+	default:
+		//models_[Body::body]->RendererDraw(world_);
+		models_[Body::ArmL]->RendererDraw(worldArmL);
+		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRRoot->GetSkinCluster());
+		break;
+	case BossBehavior::kAttackL:
+		//models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		break;
+	case BossBehavior::kAttackR:
+		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRDamage->GetSkinCluster());
+		break;
+	}
 }
-
-void Boss::LookPlayer(){
-	// 自機に向かうベクトル
-	Vector3 targetVel = (player_->GetWorld().transform.translate - world_.transform.translate).Normalize();
-	targetVel.y = 0;
-	//プレイヤーの現在の向き
-	targetVel = targetVel.Normalize();
-
-	Vector3 cross = Vector3::Cross({ 0.0f,0.0f,1.0f }, targetVel).Normalize();
-	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, targetVel);
-
-	//行きたい方向のQuaternionの作成
-		world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
-}
-
 #pragma region
 void Boss::BehaviorUpdate()
 {
-
+	//初期化
 	if (behaviorRequest_) {
 		//ふるまいの変更
 		behavior_ = behaviorRequest_.value();
@@ -57,10 +76,13 @@ void Boss::BehaviorUpdate()
 		{
 		case BossBehavior::kRoot:
 		default:
-			RootInit();
+			kRootInit();
 			break;
-		case BossBehavior::kAttack:
-			AttackInit();
+		case BossBehavior::kAttackL:
+			kAttackLInit();
+			break;
+		case BossBehavior::kAttackR:
+			kAttackRInit();
 			break;
 		}
 
@@ -71,79 +93,99 @@ void Boss::BehaviorUpdate()
 	{
 	case BossBehavior::kRoot:
 	default:
-		RootUpdate();
+		kRootUpdate();
 		break;
-	case BossBehavior::kAttack:
-		AttackUpdate();
-
+	case BossBehavior::kAttackL:
+		kAttackLUpdate();
+		break;
+	case BossBehavior::kAttackR:
+		kAttackRUpdate();
 		break;
 	}
 }
-void Boss::RootInit(){
+void Boss::kRootInit()
+{
+	easeT = 0.0f;
+}
+void Boss::kRootUpdate()
+{
+	//攻撃をする
+	if (/*条件*/true) {
+		//behaviorRequest_ = BossBehavior::kAttackL;
+	}
+}
+void Boss::kAttackLInit()
+{
+	addEaseT = 0.01f;
+}
+void Boss::kAttackLUpdate()
+{
 
-}
-void Boss::RootUpdate(){
-	LookPlayer();
-}
-void Boss::AttackInit(){
+	easeT = (std::min)(easeT + addEaseT,1.0f);
 
+	worldArmL.transform.translate.y -= Ease::InBack(easeT);
+	float newPoint = Ease::InBack(easeT);
+
+	if (newPoint > 0){
+		addEaseT = 0.05f;
+	}
+
+	if (worldArmL.transform.translate.y <= 0){
+		worldArmL.transform.translate.y = 0.5f;
+		behaviorRequest_ = BossBehavior::kRoot;
+	}
 }
-void Boss::AttackUpdate(){
-	AttackBehaviorUpdate();
+void Boss::kAttackRInit()
+{
+}
+void Boss::kAttackRUpdate()
+{
 }
 #pragma endregion Behavior
-
 #pragma region
-void Boss::AttackBehaviorUpdate(){
-	if (attackbehaviorRequest_) {
-		//ふるまいの変更
-		attackBehavior_ = attackbehaviorRequest_.value();
-		//各ふるまいごとに初期化
-		switch (attackBehavior_)
-		{
-		case AttackBehavior::kAttack1:
-		default:
-			Attack1Init();
-			break;
-		case AttackBehavior::kAttack2:
-			Attack2Init();
-			break;
-		}
+void Boss::colliderDamageInit()
+{
+	ColliderDamegeWorld_.SetParent(&worldArmL);
 
-		attackbehaviorRequest_ = std::nullopt;
-	}
-	//更新
-	switch (attackBehavior_)
-	{
-	case AttackBehavior::kAttack1:
-	default:
-		Attack1Update();
-		break;
-	case AttackBehavior::kAttack2:
-		Attack2Update();
-		break;
+	colliderDamage.Init(&ColliderDamegeWorld_);
+	colliderDamage.SetSize({ 1.0f,1.0f,1.0f });
+	colliderDamage.OnCollision = [this](ICollider* colliderA) { OnCollision(colliderA); };
+	colliderDamage.SetcollitionAttribute(ColliderTag::Enemy);
+	colliderDamage.SetcollisionMask(~ColliderTag::EnemyAttack);
+	colliderDamage.IsUsing = true;
+}
+void Boss::OnCollision(const ICollider* colliderA)
+{
+	if (colliderA->GetcollitionAttribute() == ColliderTag::Weapon) {
+		HP_ -= 1;
+		isDamege = true;
+		damegeInterval = 0;
+		colliderDamage.IsUsing = false;
 	}
 }
-void Boss::Attack1Init(){
-
+void Boss::colliderAttackInit()
+{
+	colliderAttackWorld_.SetParent(&worldArmL);
+	colliderAttackWorld_.transform.translate.y = 0.5f;
+	colliderAttackWorld_.transform.translate.z = 1.0f;
+	colliderAttack.Init(&colliderAttackWorld_);
+	colliderAttack.SetSize({ 0.5f,1.0f,0.5f });
+	colliderAttack.OnCollision = [this](ICollider* colliderA) { onCollisionAttack(colliderA); };
+	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
+	colliderAttack.SetcollisionMask(~ColliderTag::Enemy);
+	colliderAttack.IsUsing = false;
 }
-void Boss::Attack1Update(){
-
-}
-void Boss::Attack2Init(){
-
-}
-void Boss::Attack2Update(){
-
-}
-#pragma endregion AttackBehavior
-
-#pragma region
-void Boss::InitCollider(){
-	collider.Init(&world_);
-	collider.SetSize({ 1.0f,1.0f,1.0f });
-	collider.OnCollision = [this](ICollider* colliderB) { OnCollision(colliderB); };
-	collider.SetcollitionAttribute(ColliderTag::Enemy);
-	collider.SetcollisionMask(~ColliderTag::Enemy);
+void Boss::onCollisionAttack(const ICollider* Collider)
+{
+	Collider;
 }
 #pragma endregion Collider
+void Boss::AddImGui()
+{
+	if (ImGui::Button("AttackMove")) {
+		behaviorRequest_ = BossBehavior::kAttackL;
+	}
+	ImGui::DragFloat3("Scale", &worldArmL.transform.scale.x);
+	ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);
+	ImGui::DragFloat3("Translate", &worldArmL.transform.translate.x);
+}

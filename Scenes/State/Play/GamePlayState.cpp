@@ -27,11 +27,13 @@ void GamePlayState::Initialize()
 	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/Title.png");
 	title.Initialize();
 
-	player_ = std::make_unique<Player>();
-	player_->Init(playerModel_);
-
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
+
+	player_ = std::make_unique<Player>();
+	player_->Init(playerModel_);
+	player_->SetCamera(followCamera.get());
+
 
 	//Renderer
 	renderer_ = Renderer::GetInstance();
@@ -212,8 +214,6 @@ void GamePlayState::PlayUpdate()
 	enemyManager->Update();
 
 	collisionManager->Update();
-
-	lockOn.Update(enemyManager->GetList());
 }
 void GamePlayState::PlayDraw()
 {

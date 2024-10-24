@@ -1,8 +1,9 @@
 #include "FollowCamera.h"
 
+WorkInterpolation FollowCamera::workInter;
+
 void FollowCamera::Initialize() {
 	viewProj.Initialize();
-	workInter.interParameter_ = 1.0f;
 
 	viewProj.translation_ = InitCameraPos2;
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
@@ -18,7 +19,6 @@ void FollowCamera::Update() {
 		rotate_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * kRadian;
 		rotate_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * kRadian;
 
-
 		//カメラの上下移動を制御
 		if (rotate_.x > 1.0f) {
 			rotate_.x = 1.0f;
@@ -30,6 +30,9 @@ void FollowCamera::Update() {
 
 	//TODO : LerpShortAngleを使うと一定角度で急にワープする
 	if (resetFlag_ == false) {
+
+		Vector3 EulerRot;
+
 		EulerRot.x = rotate_.x;
 		EulerRot.y = rotate_.y;
 		EulerRot.z = rotate_.z;
@@ -38,7 +41,10 @@ void FollowCamera::Update() {
 		if (target_) {
 			Vector3 pos = target_->transform.translate;
 			//追従座標の補間
-			workInter.interTarget_ = Vector3:: Lerp(viewProj.translation_, pos, workInter.interParameter_);
+			workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.x).x;
+			workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.z).z;
+
+			workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.y).y;
 
 			Vector3 offset = OffsetCalc();
 			//オフセット分と追従座標の補間分ずらす
@@ -118,7 +124,6 @@ void FollowCamera::PlaySceneReset()
 	Vector3 offset = OffsetCalc();
 	viewProj.translation_ = workInter.interTarget_;
 }
-
 void FollowCamera::Reset()
 {
 	//追従対象がいれば

@@ -1,5 +1,5 @@
 #pragma once
-
+//敵キャラクター基底クラス//
 #include "Object/IObject.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
@@ -12,44 +12,28 @@ class Enemy : public IObject
 {
 public:
 
-
+	/// <summary>
+	/// プレイヤーをセット
+	/// </summary>
+	/// <param name="player">プレイヤーのポインタ</param>
 	void SetPlayer(Player* player) { player_ = player; };
-	void SetPos(Vector3 pos) {
-		world_.transform.translate = pos;
-		world_.Update();
-	};
-	Vector3 GetPos() {
-		return world_.transform.translate;
-	}
 
 	bool GetIsAlive() {
 		return IsAlive;
 	}
-
-protected://関数
-
+	/// <summary>
+	/// スケール
+	/// 回転
+	/// 移動
+	/// </summary>
 	void ImGui();
-
+protected://関数
+	//追加用ImGui overrideするだけで追加可能
+	virtual void AddImGui(){};
+	//当たり判定用
 	virtual void OnCollision(const ICollider* ICollider);
 
-protected:
-
-	OBBoxCollider collider;
-
-	Animation* animation = nullptr;
-
-	const float AttackRange = 2.0f;
-	bool isAttackFlag = false;
-	bool attackColliderFlag = true;
-
 	float animationTime_ = 0.0f;
-	float animeInterval_ = 60.0f;
-
-	Quaternion PreQua;
-
-	bool isSpawn = true;
-	int spawnFlame_ = 0;
-	const int kSpawnFlame_ = 60;
 
 	bool isDamege = false;
 	int damegeInterval = 0;
@@ -60,5 +44,6 @@ protected:
 	bool IsAlive = true;
 
 	Player* player_ = nullptr;
-
+	//識別用の名前　変えることでImGuiのタブネームを変えることができる
+	std::string name = "Enemy";
 };

@@ -1,4 +1,5 @@
 #pragma once
+// アニメーションを再生するクラス//
 // Assimp
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -12,32 +13,39 @@
 #include "ViewProj/ViewProjection.h"
 #include "Object/Model/Model.h"
 
-// アニメーション構造体
+
 class Animation {
 public:
 	void Init();
 	void AnimeInit(Model& model, bool UseDebugLine);
-
+	//アニメーションファイルの読み込み
 	static Animation* LoadAnimationFile(const std::string& directrypath,const std::string& filename);
 	static Vector3 CalculateValue(const std::vector<KeyFrameVector3>& keyframes,float time);
 	static Quaternion CalculateValue(const std::vector<KeyFrameQuaternion>& keyframes,float time);
+	/// <summary>
+	/// アニメーション補間
+	/// </summary>
+	/// <param name="animeA">補間前のアニメーション</param>
+	/// <param name="animeB">補間後のアニメーション</param>
+	/// <param name="t">補間の値</param>
 	void AnimationLerp(Animation* animeA, Animation* animeB, float t);
 
 	void PlayAnimation();
 
-
+	/// <summary>
+	/// スケルトンを描画する
+	/// </summary>
+	/// <param name="world">描画に使用するworldTransform</param>
 	void DebugDraw(WorldTransform& world);
-
+#pragma region
 	SkinCluster& GetSkinCluster() {
 		return skinCluster;
 	};
 	Skeleton& GetSkeleton() {
 		return skeleton;
 	};
-	void SetSkeleton(Skeleton& inputSkeleton,float Duration) {
-		skeleton = inputSkeleton;
-		duration = Duration;
-	}
+#pragma endregion Getter Setter
+
 
 	float duration; // アニメーション全体の尺(単位は秒)
 	// NodeAnimationの集合　Node名で検索できるようにする

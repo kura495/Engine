@@ -343,26 +343,8 @@
     <ClCompile Include="Scenes\State\GameOver\GameOverState.cpp">
       <Filter>Game\Scenes\State\GameOver</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp">
-      <Filter>Game\Object\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.cpp">
-      <Filter>Game\Object\Enemy\Boss\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.cpp">
-      <Filter>Game\Object\Enemy\BossSpider\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\BossSpider\BossSpider.cpp">
-      <Filter>Game\Object\Enemy\BossSpider</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp">
       <Filter>Game\Object\Enemy\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Spider\Spider.cpp">
-      <Filter>Game\Object\Enemy\Spider</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Weapon\Weapon.cpp">
-      <Filter>Game\Object\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Game\Object\Box\BoxObject.cpp">
       <Filter>Game\Object\Box</Filter>
@@ -587,6 +569,8 @@
     <ClCompile Include="Engine\PostProsess\Dissolve\PPDissolve.cpp" />
     <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp" />
     <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
+    <ClCompile Include="Engine\Utility\Ease\Ease.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -637,29 +621,8 @@
     <ClInclude Include="Scenes\State\GameOver\GameOverState.h">
       <Filter>Game\Scenes\State\GameOver</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Character.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h">
-      <Filter>Game\Object\Enemy\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\Weapon\BossWeapon.h">
-      <Filter>Game\Object\Enemy\Boss\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\BossSpider\Bullet\BossBullet.h">
-      <Filter>Game\Object\Enemy\BossSpider\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\BossSpider\BossSpider.h">
-      <Filter>Game\Object\Enemy\BossSpider</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h">
       <Filter>Game\Object\Enemy\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Spider\Spider.h">
-      <Filter>Game\Object\Enemy\Spider</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Weapon\Weapon.h">
-      <Filter>Game\Object\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Box\BoxObject.h">
       <Filter>Game\Object\Box</Filter>
@@ -925,6 +888,8 @@
     <ClInclude Include="Engine\PostProsess\Dissolve\PPDissolve.h" />
     <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h" />
     <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
+    <ClInclude Include="Engine\Utility\Ease\Ease.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

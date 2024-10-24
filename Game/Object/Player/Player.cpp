@@ -61,7 +61,18 @@ void Player::Update()
 	//		PushOptionButtern = true;
 	//	}
 	//}
+	/*float leng = followCamera->GetViewProjection().translation_.y - world_.transform.translate.y;
+	if (leng > kMax) {
+		
+	}*/
+	//TODO　着地面の高さを求めて、カメラの高さを決めると、アストロボット的なジャンプが実装できそう
+	//		ジャンプ先が高い位置にあると、カメラが上に移動する
+	if (behavior_ != Behavior::kJump) {
+		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
 
+	}
+	
+	
 	world_.Update();
 
 	//前フレームのゲームパッドの状態を保存
@@ -191,15 +202,18 @@ void Player::BehaviorUpdate()
 void Player::RootInit()
 {
 	colliderPlayer.IsUsing = true;
+	FollowCamera::workInter.interParameter_.y = 0.0f;
+
 }
 void Player::RootUpdate()
 {
+
 	//攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		behaviorRequest_ = Behavior::kAttack;
 	}
 	//ジャンプ
-	else if (input->GetPadPrecede(XINPUT_GAMEPAD_A, 20)) {
+	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
 		behaviorRequest_ = Behavior::kJump;
 	}
 }
@@ -215,8 +229,8 @@ void Player::AttackUpdate()
 }
 //kJump
 void Player::JumpInit() {
-	colliderPlayer.IsUsing = false;
 	jumpForce = kJumpForce;
+	FollowCamera::workInter.interParameter_.y = 0.0f;
 }
 void Player::JumpUpdate() {
 	world_.transform.translate.y += jumpForce;
@@ -268,7 +282,7 @@ void Player::AttackColliderInit()
 	colliderAttack.Init(&attackColliderWorld_);
 	colliderAttack.SetSize({ 0.5f,1.0f,0.5f });
 	colliderAttack.OnCollision = [this](ICollider* collider) { AttackOnCollision(collider); };
-	colliderAttack.SetcollitionAttribute(ColliderTag::Player);
+	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
 	colliderAttack.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
 
 	colliderAttack.IsUsing = false;
