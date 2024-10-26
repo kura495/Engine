@@ -56,8 +56,9 @@ void Boss::Draw()
 		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRRoot->GetSkinCluster());
 		break;
 	case BossBehavior::AttackL:
+		models_[Body::ArmL]->RendererDraw(worldArmL);
 		//models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		//models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
 	case BossBehavior::AttackR:
 		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRDamage->GetSkinCluster());
@@ -117,7 +118,7 @@ void Boss::RootUpdate()
 void Boss::AttackLInit()
 {
 	addEaseT = 0.01f;
-	colliderAttack.IsUsing = false;
+	colliderAttack.IsUsing = true;
 }
 void Boss::AttackLUpdate()
 {
@@ -132,7 +133,7 @@ void Boss::AttackLUpdate()
 	}
 
 	if (worldArmL.transform.translate.y <= 0) {
-		colliderAttack.IsUsing = false;
+		//colliderAttack.IsUsing = false;
 		worldArmL.transform.translate.y = 0.5f;
 		behaviorRequest_ = BossBehavior::Root;
 	}
@@ -169,9 +170,8 @@ void Boss::ColliderAttackInit()
 {
 	colliderAttackWorld_.SetParent(&worldArmL);
 	colliderAttackWorld_.transform.translate.y = 0.5f;
-	colliderAttackWorld_.transform.translate.z = 1.0f;
 	colliderAttack.Init(&colliderAttackWorld_);
-	colliderAttack.SetSize({ 0.5f,1.0f,0.5f });
+	colliderAttack.SetSize({ 0.5f,1.0f,5.0f });
 	colliderAttack.OnCollision = [this](ICollider* colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttack.SetcollisionMask(~ColliderTag::Enemy);

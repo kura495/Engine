@@ -45,7 +45,8 @@ private:
 	void AddPlane(ObjectData input);
 	void AddEnemy(ObjectData input);
 	void addModel(ObjectData input, std::string path);
-#pragma region 読み込んだjson　
+#pragma endregion 読み込んだjson
+
 	std::list<IObject*> object_;
 	int32_t boxObjectCount;
 	int32_t PlaneObjectCount;

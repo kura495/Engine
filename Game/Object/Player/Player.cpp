@@ -260,7 +260,7 @@ void Player::OnCollision(const ICollider* ICollider)
 		HP_ -= 1;
 		//playerMoveValue = true;
 	}
-
+	//TODO:敵の攻撃に当たると浮いてしまう原因
 	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
 		if (ICollider->GetCenter().y > world_.transform.translate.y) {
 			world_.transform.translate.y = ICollider->GetCenter().y;

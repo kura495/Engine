@@ -364,9 +364,6 @@
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp">
       <Filter>Game\Object\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Camera\LockOn.cpp">
-      <Filter>Game\Object\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Animation\Animation.cpp">
       <Filter>Engine\Animation</Filter>
     </ClCompile>
@@ -640,9 +637,6 @@
       <Filter>Game\Object\Plane</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Camera\FollowCamera.h">
-      <Filter>Game\Object\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Camera\LockOn.h">
       <Filter>Game\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Animation\Animation.h">
