@@ -36,24 +36,24 @@ void ParticleSystem::Initalize(const std::string filePath)
 	Testemitter.world_.transform.scale	= { 1.0f,1.0f,1.0f };
 	Testemitter.world_.transform.translate = { 0.0f,0.0f,0.0f };
 
-	TestField.acceleration = {15.0f,0.0f,0.0f};
+	TestField.acceleration = {0.0f,0.0f,0.0f};
 	TestField.area.min = {-1.0f,-1.0f,-1.0f};
 	TestField.area.max = { 1.0f,1.0f,1.0f };
 	
 }
 
-void ParticleSystem::Update()
+void ParticleSystem::Update(Emitter emitter)
 {
 
-	Testemitter.frequencyTime += kDeltaTime;
-	if (Testemitter.frequency <= Testemitter.frequencyTime) {
+	emitter.frequencyTime += kDeltaTime;
+	if (emitter.frequency <= emitter.frequencyTime) {
 		//ランダム生成用
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
 
-		particles.splice(particles.end(), Emit(Testemitter, randomEngine));
+		particles.splice(particles.end(), Emit(emitter, randomEngine));
 
-		Testemitter.frequencyTime -= Testemitter.frequency;
+		emitter.frequencyTime -= emitter.frequency;
 	}
 
 	numInstance = 0;

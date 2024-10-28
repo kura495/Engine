@@ -61,7 +61,7 @@ void GamePlayState::Update()
 {
 	BehaviorUpdate();
 
-	particle->Update();
+	//particle->Update();
 
 	skyDome_->Update();
 
@@ -179,13 +179,14 @@ void GamePlayState::TitleUpdate()
 	}
 #ifdef _DEBUG
 	//TODO:デバッグ用なので消すこと！
-	IsTitleToGameFlag = true;
+	//IsTitleToGameFlag = true;
 #endif 
-	sceneInterval += 1.0f;
+	//sceneInterval += 1.0f;
 	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
-		if (sceneInterval > 25.0f) {
-			IsTitleToGameFlag = true;
-		}
+		/*if (sceneInterval > 25.0f) {
+			
+		}*/
+		IsTitleToGameFlag = true;
 	}
 	if (IsTitleToGameFlag) {
 		if (followCamera->PlaySceneInit(&player_->GetWorld())) {
@@ -225,6 +226,7 @@ void GamePlayState::ClearInit()
 }
 void GamePlayState::ClearUpdate()
 {
+	player_->Update();
 	if (fade->In()) {
 		StateNo = 2;
 	}
@@ -242,6 +244,7 @@ void GamePlayState::OverInit()
 }
 void GamePlayState::OverUpdate()
 {
+	player_->Update();
 	if (fade->In()) {
 		StateNo = 3;
 	}

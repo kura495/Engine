@@ -7,11 +7,13 @@
 #include "Input/Input.h"
 #include "Animation/Animation.h"
 #include "Game/Object/Camera/FollowCamera.h"
+#include "ParticleSystem/ParticleSystem.h"
 
 enum class Behavior {
 	kRoot,
 	kJump,
-	kAttack
+	kAttack,
+	kDead
 };
 
 class Player : public IObject
@@ -50,6 +52,9 @@ private:
 	//kJump
 	void JumpInit();
 	void JumpUpdate();
+	//kDead
+	void DeadInit();
+	void DeadUpdate();
 #pragma endregion BehaviorTree
 #pragma region 
 	//プレイヤーキャラ事態の当たり判定
@@ -66,7 +71,7 @@ private:
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
 	//HP
-	uint32_t HP_ = 10;
+	uint32_t HP_ = 1;
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
 	//ジャンプの強さ
@@ -79,11 +84,19 @@ private:
 
 	Input* input = nullptr;
 
+	ParticleSystem* particle;
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
 
-	Animation* animation;
-	Animation* IdleAnimation;
+	Animation* walkanimation;
+	Animation* idleAnimation;
+	Animation* deadAnimation;
+	//アニメーション
+	float animationTime_ = 0.0f;
 
+	bool isDamege = false;
+	//死んだときにモデルを描画するか
+	bool isDeadModelDraw = true;
+	Emitter deadParticleEmitter;
 };

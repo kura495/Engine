@@ -50,6 +50,7 @@ private:
 	void ColliderAttackInit();
 	void OnCollisionAttack(const ICollider* collider);
 	OBBoxCollider colliderAttack;
+	OBBoxCollider colliderAttackA;
 	WorldTransform colliderAttackWorld_;
 #pragma endregion Collider
 

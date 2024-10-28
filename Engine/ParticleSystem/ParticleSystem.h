@@ -45,7 +45,7 @@ public:
 
 	void Initalize(const std::string filePath);
 
-	void Update();
+	void Update(Emitter emitter);
 
 	void RendererDraw();
 	void Draw(const ViewProjection& viewProjection);

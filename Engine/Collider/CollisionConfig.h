@@ -11,7 +11,7 @@ namespace ColliderTag{
 	const uint32_t Goal = 0b1 << 5;
 	const uint32_t Box = 0b1 << 6;
 	const uint32_t EnemyAttack = 0b1 << 7;
-	const uint32_t Floor = 0b1 << 7;
+	const uint32_t Floor = 0b1 << 8;
 }
 
 

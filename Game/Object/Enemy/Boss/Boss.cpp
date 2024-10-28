@@ -10,6 +10,7 @@ void Boss::Init(std::vector<Model*> models)
 	colliderDamegeWorld_.Initialize();
 	colliderAttackWorld_.Initialize();
 	world_.Initialize();
+	world_.transform.translate.y = 5.5f;
 	world_.Update();
 	worldArmL.Update();
 
@@ -18,7 +19,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
-	//animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
+	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
 
 	behaviorRequest_ = BossBehavior::Root;
 
@@ -52,12 +53,13 @@ void Boss::Draw()
 	case BossBehavior::Root:
 	default:
 		//models_[Body::body]->RendererDraw(world_);
-		models_[Body::ArmL]->RendererDraw(worldArmL);
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRRoot->GetSkinCluster());
 		break;
 	case BossBehavior::AttackL:
-		models_[Body::ArmL]->RendererDraw(worldArmL);
-		//models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		//models_[Body::ArmL]->RendererDraw(worldArmL);
+
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		//models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
 	case BossBehavior::AttackR:
@@ -110,15 +112,23 @@ void Boss::RootInit()
 }
 void Boss::RootUpdate()
 {
+	
+	if (worldArmL.transform.translate.y < 5.5f) {
+		easeT = (std::min)(easeT + 0.01f, 1.0f);
+		worldArmL.transform.translate.y = Vector3::Lerp({0.0f,0.0f,0.0f},{0.0f,5.5f,0.0f}, easeT).y;
+
+	}
 	//攻撃をする
-	if (/*条件*/true) {
-		//behaviorRequest_ = BossBehavior::kAttackL;
+	if (worldArmL.transform.translate.y >= 5.5f) {
+		behaviorRequest_ = BossBehavior::AttackL;
 	}
 }
 void Boss::AttackLInit()
 {
 	addEaseT = 0.01f;
 	colliderAttack.IsUsing = true;
+	colliderAttackA.IsUsing = true;
+	easeT = 0.0f;
 }
 void Boss::AttackLUpdate()
 {
@@ -133,7 +143,8 @@ void Boss::AttackLUpdate()
 	}
 
 	if (worldArmL.transform.translate.y <= 0) {
-		//colliderAttack.IsUsing = false;
+		colliderAttack.IsUsing = false;
+		colliderAttackA.IsUsing = false;
 		worldArmL.transform.translate.y = 0.5f;
 		behaviorRequest_ = BossBehavior::Root;
 	}
@@ -169,18 +180,27 @@ void Boss::OnCollision(const ICollider* collider)
 void Boss::ColliderAttackInit()
 {
 	colliderAttackWorld_.SetParent(&worldArmL);
-	colliderAttackWorld_.transform.translate.y = 0.5f;
 	colliderAttack.Init(&colliderAttackWorld_);
-	colliderAttack.SetSize({ 0.5f,1.0f,5.0f });
+	colliderAttack.SetSize({ 1.0f,1.0f,7.0f });
+	colliderAttack.SetOffset({ 0.0f,0.0f,-2.0f });
 	colliderAttack.OnCollision = [this](ICollider* colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttack.SetcollisionMask(~ColliderTag::Enemy);
+
+	colliderAttackA.Init(&colliderAttackWorld_);
+	colliderAttackA.SetSize({ 2.0f,0.5f,1.0f });
+	colliderAttackA.SetOffset({ 0.0f,0.0f,-6.25f });
+	colliderAttackA.OnCollision = [this](ICollider* colliderA) { OnCollisionAttack(colliderA); };
+	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
+	colliderAttackA.SetcollisionMask(~ColliderTag::Enemy);	
 	colliderAttack.IsUsing = false;
+	colliderAttackA.IsUsing = false;
 }
 void Boss::OnCollisionAttack(const ICollider* collider)
 {
 	if (collider->GetcollitionAttribute() == ColliderTag::Player) {
 		colliderAttack.IsUsing = false;
+		colliderAttackA.IsUsing = false;
 	}
 }
 #pragma endregion Collider
