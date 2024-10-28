@@ -38,9 +38,9 @@ void Player::Init(std::vector<Model*> models)
 	particle = new ParticleSystem();
 	particle->Initalize("resources/circle2.png");
 
-	deadParticleEmitter.count = 10;
-	deadParticleEmitter.frequency = 100;
-	deadParticleEmitter.frequencyTime = 100;
+	deadParticleEmitter.count = 5;
+	deadParticleEmitter.frequency = 0.1f;
+	deadParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
 #pragma endregion パーティクル
 }
 
@@ -86,7 +86,6 @@ void Player::Update()
 		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
 
 	}
-
 
 	world_.Update();
 

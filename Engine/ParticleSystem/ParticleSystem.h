@@ -45,7 +45,7 @@ public:
 
 	void Initalize(const std::string filePath);
 
-	void Update(Emitter emitter);
+	void Update(Emitter& emitter);
 
 	void RendererDraw();
 	void Draw(const ViewProjection& viewProjection);
@@ -56,9 +56,9 @@ public:
 
 	void SetPos(Vector3 Pos);
 
-	void AddParticle(const Emitter& emitter);
+	void AddParticle(Emitter& emitter);
 
-	std::list<Particle> Emit(const Emitter& emitter, std::mt19937& randomEngine);
+	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
 
 	bool IsCollision(const AABBData& aabb, const Vector3& point);
 
@@ -99,7 +99,7 @@ private:
 	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ランダム
-	Particle MakeNewParticle(std::mt19937& randomEngine,const Vector3& translate);
+	Particle MakeNewParticle(std::mt19937& randomEngine,Vector3& translate);
 	Vector4 MakeParticleColor(std::mt19937& randomEngine);
 	float MakeParticleLifeTime(std::mt19937& randomEngine);
 

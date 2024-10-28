@@ -12,6 +12,6 @@ public:
 	uint32_t count = 0;		//発生数
 	float frequency = 0;	//発生頻度
 	float frequencyTime = 0;//頻度用時刻
-
+	Vector3 particleRadius = {1.0f,1.0f,1.0f};//パーティクルの大きさ
 };
 

@@ -30,19 +30,13 @@ void ParticleSystem::Initalize(const std::string filePath)
 	Pipeline_ = std::make_unique<ParticlePipeLine>();
 	Pipeline_->Initalize();
 
-	Testemitter.count = 5;
-	Testemitter.frequency = 0.1f;
-	Testemitter.frequencyTime = 0.0f;
-	Testemitter.world_.transform.scale	= { 1.0f,1.0f,1.0f };
-	Testemitter.world_.transform.translate = { 0.0f,0.0f,0.0f };
-
 	TestField.acceleration = {0.0f,0.0f,0.0f};
 	TestField.area.min = {-1.0f,-1.0f,-1.0f};
 	TestField.area.max = { 1.0f,1.0f,1.0f };
 	
 }
 
-void ParticleSystem::Update(Emitter emitter)
+void ParticleSystem::Update(Emitter& emitter)
 {
 
 	emitter.frequencyTime += kDeltaTime;
@@ -68,16 +62,18 @@ void ParticleSystem::Update(Emitter emitter)
 			continue;
 		}
 
-		if (IsCollision(TestField.area,(*particleIt).transform.translate)) {
+		/*if (IsCollision(TestField.area,(*particleIt).transform.translate)) {
 			(*particleIt).velocity += TestField.acceleration * kDeltaTime;
-		}
+		}*/
 
 		Vector3 velcity = (*particleIt).velocity * kDeltaTime;
 		(*particleIt).transform.translate += velcity;
+		//エミッターがパーティクルの半径を決める
+		(*particleIt).transform.scale = emitter.particleRadius;
 		float alpha = 1.0f - ((*particleIt).currentTime / (*particleIt).lifeTime);
 		(*particleIt).color.w = alpha;
 		(*particleIt).currentTime += kDeltaTime;
-		(*particleIt).matWorld = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, Vector3{ 0.0f,0.0f,0.0f }, (*particleIt).transform.translate);
+		(*particleIt).matWorld = MakeAffineMatrix((*particleIt).transform.scale, Vector3{ 0.0f,0.0f,0.0f }, (*particleIt).transform.translate);
 
 		if (numInstance < kNumMaxInstance) {
 			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
@@ -130,7 +126,7 @@ void ParticleSystem::SetPos(Vector3 Pos)
 	}
 }
 
-void ParticleSystem::AddParticle(const Emitter& emitter)
+void ParticleSystem::AddParticle(Emitter& emitter)
 {
 	//ランダム生成用
 	std::random_device seedGenerator;
@@ -140,7 +136,7 @@ void ParticleSystem::AddParticle(const Emitter& emitter)
 
 }
 
-std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& randomEngine)
+std::list<Particle> ParticleSystem::Emit(Emitter& emitter, std::mt19937& randomEngine)
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
@@ -209,14 +205,14 @@ void ParticleSystem::CreateSRV()
 	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, textureSrvHandle.CPU);
 }
 
-Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate)
+Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine,Vector3& translate)
 {
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Particle particle;
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
-	particle.transform.translate.x = translate.x + ramdomTranslate.x;
-	particle.transform.translate.y = translate.y + ramdomTranslate.y;
-	particle.transform.translate.z = translate.z + ramdomTranslate.z;
+	particle.transform.translate = translate + ramdomTranslate;
+	particle.transform.translate = translate + ramdomTranslate;
+	particle.transform.translate = translate + ramdomTranslate;
 	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.color = MakeParticleColor(randomEngine);
 	particle.lifeTime = MakeParticleLifeTime(randomEngine);
