@@ -109,5 +109,4 @@ private:
 	WorldTransform title;
 
 	Fade* fade;
-	float sceneInterval = 0.0f;
 };

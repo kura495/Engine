@@ -61,12 +61,13 @@ void GamePlayState::Update()
 {
 	BehaviorUpdate();
 
+	followCamera->Update();
+	Renderer::viewProjection = followCamera->GetViewProjection();
+
 	//particle->Update();
 
 	skyDome_->Update();
 
-	followCamera->Update();
-	Renderer::viewProjection = followCamera->GetViewProjection();
 
 	if (enemyManager->GetisClear()) {
 		behaviorRequest_ = StageBehavior::kClear;
@@ -170,7 +171,7 @@ void GamePlayState::BehaviorUpdate()
 #pragma region
 void GamePlayState::TitleInit()
 {
-	sceneInterval = 0.0f;
+
 }
 void GamePlayState::TitleUpdate()
 {
@@ -179,13 +180,9 @@ void GamePlayState::TitleUpdate()
 	}
 #ifdef _DEBUG
 	//TODO:デバッグ用なので消すこと！
-	//IsTitleToGameFlag = true;
-#endif 
-	//sceneInterval += 1.0f;
+	IsTitleToGameFlag = true;
+#endif
 	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
-		/*if (sceneInterval > 25.0f) {
-			
-		}*/
 		IsTitleToGameFlag = true;
 	}
 	if (IsTitleToGameFlag) {

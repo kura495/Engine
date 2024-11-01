@@ -12,21 +12,21 @@ void FollowCamera::Initialize() {
 void FollowCamera::Update() { 
 
 	//スティックでのカメラ回転
-	//if (Input::GetInstance()->GetJoystickState(joyState)) {
+	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
-	//	const float kRadian = 0.03f;
+		const float kRadian = 0.03f;
 
-	//	rotate_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * kRadian;
-	//	rotate_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * kRadian;
+		rotate_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * kRadian;
+		rotate_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * kRadian;
 
-	//	//カメラの上下移動を制御
-	//	if (rotate_.x > 1.0f) {
-	//		rotate_.x = 1.0f;
-	//	}
-	//	else if (rotate_.x < -1.0f) {
-	//		rotate_.x = -1.0f;
-	//	}
-	//}		
+		//カメラの上下移動を制御
+		if (rotate_.x > 1.0f) {
+			rotate_.x = 1.0f;
+		}
+		else if (rotate_.x < -1.0f) {
+			rotate_.x = -1.0f;
+		}
+	}		
 
 	//TODO : LerpShortAngleを使うと一定角度で急にワープする
 	if (resetFlag_ == false) {

@@ -4,13 +4,14 @@ void Boss::Init(std::vector<Model*> models)
 {
 	models_ = models;
 
+	world_.Initialize();
+	world_.transform.translate.y = 5.5f;
 	worldArmL.Initialize();
 	worldArmL.transform.translate.y = 5.5f;
 
 	colliderDamegeWorld_.Initialize();
 	colliderAttackWorld_.Initialize();
-	world_.Initialize();
-	world_.transform.translate.y = 5.5f;
+
 	world_.Update();
 	worldArmL.Update();
 
