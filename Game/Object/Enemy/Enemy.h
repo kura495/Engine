@@ -39,7 +39,7 @@ protected://関数
 	int damegeInterval = 0;
 	const int kDamegeInterval = 60;
 
-	uint32_t HP_;
+	int32_t HP_;
 
 	bool IsAlive = true;
 

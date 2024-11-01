@@ -41,6 +41,8 @@ void Player::Init(std::vector<Model*> models)
 	deadParticleEmitter.count = 5;
 	deadParticleEmitter.frequency = 0.1f;
 	deadParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
+	deadParticleEmitter.color = { 0.0f,0.0f,0.0f };
+	deadParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル
 }
 
@@ -218,13 +220,12 @@ void Player::JumpUpdate() {
 		behaviorRequest_ = Behavior::kRoot;
 	}
 }
-
+//kDead
 void Player::DeadInit()
 {
 	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 	deadParticleEmitter.world_.transform.translate.y += 1.0f;
 }
-
 void Player::DeadUpdate()
 {
 	deadAnimation->PlayAnimation();
@@ -233,7 +234,6 @@ void Player::DeadUpdate()
 	if (animationTime_ > deadAnimation->duration) {
 		isDamege = false;
 		animationTime_ = 0.0f;
-		//behaviorRequest_ = Behavior::kRoot;
 		if (HP_ <= 0) {
 			isDeadModelDraw = false;
 			isDead = true;
@@ -243,7 +243,6 @@ void Player::DeadUpdate()
 		particle->Update(deadParticleEmitter);
 	}
 }
-
 #pragma endregion BeheviorTree
 #pragma region
 void Player::ColliderInit()

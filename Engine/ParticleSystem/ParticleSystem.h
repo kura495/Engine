@@ -54,8 +54,6 @@ public:
 
 	void PreDraw();
 
-	void SetPos(Vector3 Pos);
-
 	void AddParticle(Emitter& emitter);
 
 	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
@@ -99,7 +97,7 @@ private:
 	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ランダム
-	Particle MakeNewParticle(std::mt19937& randomEngine,Vector3& translate);
+	Particle MakeNewParticle(std::mt19937& randomEngine);
 	Vector4 MakeParticleColor(std::mt19937& randomEngine);
 	float MakeParticleLifeTime(std::mt19937& randomEngine);
 

@@ -25,7 +25,8 @@ void Boss::Init(std::vector<Model*> models)
 	behaviorRequest_ = BossBehavior::Root;
 
 	name = "Boss";
-
+	//初期値を設定
+	HP_ = 1;
 }
 
 void Boss::Update()
@@ -38,6 +39,7 @@ void Boss::Update()
 			isDamege = false;
 			animationTime_ = 0.0f;
 			colliderDamage.IsUsing = true;
+
 		}
 	}
 
@@ -173,6 +175,9 @@ void Boss::OnCollision(const ICollider* collider)
 {
 	if (collider->GetcollitionAttribute() == ColliderTag::Weapon) {
 		HP_ -= 1;
+		if (HP_ <= 0) {
+			IsAlive = false;
+		}
 		isDamege = true;
 		damegeInterval = 0;
 		colliderDamage.IsUsing = false;

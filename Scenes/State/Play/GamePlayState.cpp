@@ -33,7 +33,6 @@ void GamePlayState::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
 
-
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
@@ -67,7 +66,6 @@ void GamePlayState::Update()
 	//particle->Update();
 
 	skyDome_->Update();
-
 
 	if (enemyManager->GetisClear()) {
 		behaviorRequest_ = StageBehavior::kClear;
