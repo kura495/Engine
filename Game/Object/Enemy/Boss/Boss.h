@@ -41,6 +41,9 @@ private:
 	void AttackRUpdate();
 #pragma endregion Behavior
 #pragma region
+	bool FollowPlayer();
+#pragma endregion
+#pragma region
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
 	void OnCollision(const ICollider* colliderA)override;

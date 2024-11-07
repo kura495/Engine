@@ -117,7 +117,7 @@ void Boss::RootUpdate()
 {
 
 	//攻撃をする
-	if (worldArmL.transform.translate.y >= 5.5f) {
+	if (FollowPlayer()) {
 		behaviorRequest_ = BossBehavior::AttackL;
 	}
 }
@@ -169,6 +169,11 @@ void Boss::AttackRUpdate()
 {
 }
 #pragma endregion Behavior
+bool Boss::FollowPlayer()
+{
+	return true;
+}
+
 #pragma region
 void Boss::ColliderDamageInit()
 {
