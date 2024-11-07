@@ -52,6 +52,7 @@ private:
 	OBBoxCollider colliderAttack;
 	OBBoxCollider colliderAttackA;
 	WorldTransform colliderAttackWorld_;
+	bool IsAttackFlag = false;
 #pragma endregion Collider
 
 #pragma region

@@ -115,12 +115,7 @@ void Boss::RootInit()
 }
 void Boss::RootUpdate()
 {
-	
-	if (worldArmL.transform.translate.y < 5.5f) {
-		easeT = (std::min)(easeT + 0.01f, 1.0f);
-		worldArmL.transform.translate.y = Vector3::Lerp({0.0f,0.0f,0.0f},{0.0f,5.5f,0.0f}, easeT).y;
 
-	}
 	//攻撃をする
 	if (worldArmL.transform.translate.y >= 5.5f) {
 		behaviorRequest_ = BossBehavior::AttackL;
@@ -131,26 +126,41 @@ void Boss::AttackLInit()
 	addEaseT = 0.01f;
 	colliderAttack.IsUsing = true;
 	colliderAttackA.IsUsing = true;
+	IsAttackFlag = true;
 	easeT = 0.0f;
 }
 void Boss::AttackLUpdate()
 {
+	if (IsAttackFlag) {
+		easeT = (std::min)(easeT + addEaseT, 1.0f);
 
-	easeT = (std::min)(easeT + addEaseT, 1.0f);
+		worldArmL.transform.translate.y -= Ease::InBack(easeT);
+		float newPoint = Ease::InBack(easeT);
 
-	worldArmL.transform.translate.y -= Ease::InBack(easeT);
-	float newPoint = Ease::InBack(easeT);
+		if (newPoint > 0) {
+			addEaseT = 0.05f;
+		}
 
-	if (newPoint > 0) {
-		addEaseT = 0.05f;
+		if (worldArmL.transform.translate.y <= 0) {
+			colliderAttack.IsUsing = false;
+			colliderAttackA.IsUsing = false;
+			worldArmL.transform.translate.y = 0.5f;
+			easeT = 0.0f;
+			IsAttackFlag = false;
+		}
+	}
+	else {
+		//手を位置に戻す
+		if (worldArmL.transform.translate.y < 5.5f) {
+			easeT = (std::min)(easeT + 0.01f, 1.0f);
+			worldArmL.transform.translate.y = Vector3::Lerp({0.0f,0.0f,0.0f},{0.0f,5.5f,0.0f}, easeT).y;
+		}
+		//初期位置についたら
+		else if (worldArmL.transform.translate.y >= 5.5f) {
+			behaviorRequest_ = BossBehavior::Root;
+		}
 	}
 
-	if (worldArmL.transform.translate.y <= 0) {
-		colliderAttack.IsUsing = false;
-		colliderAttackA.IsUsing = false;
-		worldArmL.transform.translate.y = 0.5f;
-		behaviorRequest_ = BossBehavior::Root;
-	}
 }
 void Boss::AttackRInit()
 {
