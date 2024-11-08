@@ -1,4 +1,5 @@
 #include "Boss.h"
+#include "Game/Object/Player/Player.h"
 
 void Boss::Init(std::vector<Model*> models)
 {
@@ -171,7 +172,17 @@ void Boss::AttackRUpdate()
 #pragma endregion Behavior
 bool Boss::FollowPlayer()
 {
-	return true;
+	//TODO:命名仮
+	Vector3 temp = player_->GetWorld().transform.translate - worldArmL.transform.translate;
+	temp.y = 0.0f;
+	float playerToEnemyLngth = temp.Length();
+	temp = temp.Normalize();
+	worldArmL.transform.translate += temp * 0.2f;
+	//TODO:命名仮
+	if (playerToEnemyLngth <= 2.0f) {
+		return true;
+	}
+	return false;
 }
 
 #pragma region
