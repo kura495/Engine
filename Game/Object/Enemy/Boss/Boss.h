@@ -13,6 +13,7 @@ enum class BossBehavior {
 	Root,
 	AttackL,
 	AttackR,
+	Spown,
 };
 
 class Boss : public Enemy
@@ -36,9 +37,7 @@ private:
 	//AttackL
 	void AttackLInit();
 	void AttackLUpdate();
-	//AttackR
-	void AttackRInit();
-	void AttackRUpdate();
+
 #pragma endregion Behavior
 #pragma region
 	bool FollowPlayer();

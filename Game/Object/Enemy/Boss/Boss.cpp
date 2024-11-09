@@ -88,9 +88,6 @@ void Boss::BehaviorUpdate()
 		case BossBehavior::AttackL:
 			AttackLInit();
 			break;
-		case BossBehavior::AttackR:
-			AttackRInit();
-			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -104,9 +101,6 @@ void Boss::BehaviorUpdate()
 		break;
 	case BossBehavior::AttackL:
 		AttackLUpdate();
-		break;
-	case BossBehavior::AttackR:
-		AttackRUpdate();
 		break;
 	}
 }
@@ -163,17 +157,13 @@ void Boss::AttackLUpdate()
 	}
 
 }
-void Boss::AttackRInit()
-{
-}
-void Boss::AttackRUpdate()
-{
-}
 #pragma endregion Behavior
 bool Boss::FollowPlayer()
 {
 	//TODO:命名仮
 	Vector3 temp = player_->GetWorld().transform.translate - worldArmL.transform.translate;
+	//モデルの中心から手のひらへ
+	temp.z += 10.0f;
 	temp.y = 0.0f;
 	float playerToEnemyLngth = temp.Length();
 	temp = temp.Normalize();
