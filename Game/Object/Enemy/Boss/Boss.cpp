@@ -22,6 +22,10 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
+	
+	//animationSpawn = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
+	//animationSpawn->Init();
+	//animationSpawn->AnimeInit(*models_[Body::ArmL], false);
 
 	behaviorRequest_ = BossBehavior::Root;
 
@@ -56,18 +60,13 @@ void Boss::Draw()
 	{
 	case BossBehavior::Root:
 	default:
-		//models_[Body::body]->RendererDraw(world_);
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRRoot->GetSkinCluster());
 		break;
 	case BossBehavior::AttackL:
-		//models_[Body::ArmL]->RendererDraw(worldArmL);
-
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		//models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
-	case BossBehavior::AttackR:
-		//models_[Body::ArmR]->RendererSkinDraw(worldArmR, animationArmRDamage->GetSkinCluster());
+	case BossBehavior::Spawn:
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationSpawn->GetSkinCluster());
 		break;
 	}
 }
@@ -88,6 +87,9 @@ void Boss::BehaviorUpdate()
 		case BossBehavior::AttackL:
 			AttackLInit();
 			break;
+		case BossBehavior::Spawn:
+			SpawnInit();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -102,6 +104,9 @@ void Boss::BehaviorUpdate()
 	case BossBehavior::AttackL:
 		AttackLUpdate();
 		break;
+	case BossBehavior::Spawn:
+		SpawnUpdate();
+		break;
 	}
 }
 void Boss::RootInit()
@@ -110,7 +115,6 @@ void Boss::RootInit()
 }
 void Boss::RootUpdate()
 {
-
 	//攻撃をする
 	if (FollowPlayer()) {
 		behaviorRequest_ = BossBehavior::AttackL;
@@ -155,6 +159,14 @@ void Boss::AttackLUpdate()
 			behaviorRequest_ = BossBehavior::Root;
 		}
 	}
+
+}
+void Boss::SpawnInit()
+{
+
+}
+void Boss::SpawnUpdate()
+{
 
 }
 #pragma endregion Behavior

@@ -13,7 +13,7 @@ enum class BossBehavior {
 	Root,
 	AttackL,
 	AttackR,
-	Spown,
+	Spawn,
 };
 
 class Boss : public Enemy
@@ -37,7 +37,9 @@ private:
 	//AttackL
 	void AttackLInit();
 	void AttackLUpdate();
-
+	//Spawn
+	void SpawnInit();
+	void SpawnUpdate();
 #pragma endregion Behavior
 #pragma region
 	bool FollowPlayer();
@@ -70,15 +72,8 @@ private:
 	//WorldTransform worldArmR;
 
 #pragma region
-
-	Animation* animationBodykRoot;
-
-	Animation* animationArmLRoot;
-	//Animation* animationArmRRoot;
 	Animation* animationArmLDamage;
-	//Animation* animationArmRDamage;
-
-	Animation* IdleAnimation;
+	Animation* animationSpawn;
 #pragma endregion Animation
 
 };
