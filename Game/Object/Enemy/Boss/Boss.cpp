@@ -27,7 +27,9 @@ void Boss::Init(std::vector<Model*> models)
 	//animationSpawn->Init();
 	//animationSpawn->AnimeInit(*models_[Body::ArmL], false);
 
-	behaviorRequest_ = BossBehavior::Root;
+	behaviorRequest_ = BossBehavior::Spawn;
+
+	models_[Body::ArmL]->color_.w = 0.0f;
 
 	name = "Boss";
 	//初期値を設定
@@ -66,7 +68,7 @@ void Boss::Draw()
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
 	case BossBehavior::Spawn:
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationSpawn->GetSkinCluster());
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
 	}
 }
@@ -163,11 +165,15 @@ void Boss::AttackLUpdate()
 }
 void Boss::SpawnInit()
 {
-
+	models_[Body::ArmL]->color_.w = 0.0f;
 }
 void Boss::SpawnUpdate()
 {
+	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
+	if (models_[Body::ArmL]->color_.w == 1.0f) {
+		behaviorRequest_ = BossBehavior::Root;
 
+	}
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()
