@@ -14,6 +14,7 @@ enum class BossBehavior {
 	AttackL,
 	AttackR,
 	Spawn,
+	Dead,
 };
 
 class Boss : public Enemy
@@ -40,6 +41,9 @@ private:
 	//Spawn
 	void SpawnInit();
 	void SpawnUpdate();
+	//Dead
+	void DeadInit();
+	void DeadUpdate();
 #pragma endregion Behavior
 #pragma region
 	bool FollowPlayer();

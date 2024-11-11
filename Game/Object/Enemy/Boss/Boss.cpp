@@ -70,6 +70,9 @@ void Boss::Draw()
 	case BossBehavior::Spawn:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
+	case BossBehavior::Dead:
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		break;
 	}
 }
 #pragma region
@@ -92,6 +95,9 @@ void Boss::BehaviorUpdate()
 		case BossBehavior::Spawn:
 			SpawnInit();
 			break;
+		case BossBehavior::Dead:
+			DeadInit();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -108,6 +114,9 @@ void Boss::BehaviorUpdate()
 		break;
 	case BossBehavior::Spawn:
 		SpawnUpdate();
+		break;
+	case BossBehavior::Dead:
+		DeadUpdate();
 		break;
 	}
 }
@@ -174,7 +183,17 @@ void Boss::SpawnUpdate()
 	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, 5.0f);
 	if (models_[Body::ArmL]->color_.w == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
+	}
+}
+void Boss::DeadInit()
+{
 
+}
+void Boss::DeadUpdate()
+{
+	models_[Body::ArmL]->color_.w = (std::max)(models_[Body::ArmL]->color_.w - 0.01f, 0.0f);
+	if (models_[Body::ArmL]->color_.w == 0.0f) {
+		IsAlive = false;
 	}
 }
 #pragma endregion Behavior
@@ -212,7 +231,7 @@ void Boss::OnCollision(const ICollider* collider)
 	if (collider->GetcollitionAttribute() == ColliderTag::Weapon) {
 		HP_ -= 1;
 		if (HP_ <= 0) {
-			IsAlive = false;
+			behaviorRequest_ = BossBehavior::Dead;
 		}
 		isDamege = true;
 		damegeInterval = 0;
