@@ -166,10 +166,12 @@ void Boss::AttackLUpdate()
 void Boss::SpawnInit()
 {
 	models_[Body::ArmL]->color_.w = 0.0f;
+	worldArmL.transform.translate.z = 10.0f;
 }
 void Boss::SpawnUpdate()
 {
 	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
+	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, 5.0f);
 	if (models_[Body::ArmL]->color_.w == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
 
