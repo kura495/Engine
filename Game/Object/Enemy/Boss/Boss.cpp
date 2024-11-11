@@ -64,7 +64,7 @@ void Boss::Draw()
 	default:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
-	case BossBehavior::AttackL:
+	case BossBehavior::AttackSlamPlayer:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
 	case BossBehavior::Spawn:
@@ -89,8 +89,11 @@ void Boss::BehaviorUpdate()
 		default:
 			RootInit();
 			break;
-		case BossBehavior::AttackL:
-			AttackLInit();
+		case BossBehavior::AttackSlamPlayer:
+			AttackSlamPlayerInit();
+			break;
+		case BossBehavior::AttackThrowBomb:
+			AttackSlamPlayerInit();
 			break;
 		case BossBehavior::Spawn:
 			SpawnInit();
@@ -109,8 +112,8 @@ void Boss::BehaviorUpdate()
 	default:
 		RootUpdate();
 		break;
-	case BossBehavior::AttackL:
-		AttackLUpdate();
+	case BossBehavior::AttackSlamPlayer:
+		AttackSlamPlayerUpdate();
 		break;
 	case BossBehavior::Spawn:
 		SpawnUpdate();
@@ -128,10 +131,10 @@ void Boss::RootUpdate()
 {
 	//攻撃をする
 	if (FollowPlayer()) {
-		behaviorRequest_ = BossBehavior::AttackL;
+		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 	}
 }
-void Boss::AttackLInit()
+void Boss::AttackSlamPlayerInit()
 {
 	addEaseT = 0.01f;
 	colliderAttack.IsUsing = true;
@@ -139,7 +142,7 @@ void Boss::AttackLInit()
 	IsAttackFlag = true;
 	easeT = 0.0f;
 }
-void Boss::AttackLUpdate()
+void Boss::AttackSlamPlayerUpdate()
 {
 	if (IsAttackFlag) {
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
@@ -170,6 +173,14 @@ void Boss::AttackLUpdate()
 			behaviorRequest_ = BossBehavior::Root;
 		}
 	}
+
+}
+void Boss::AttackThrowBombInit()
+{
+
+}
+void Boss::AttackThrowBombUpdate()
+{
 
 }
 void Boss::SpawnInit()
@@ -268,7 +279,7 @@ void Boss::OnCollisionAttack(const ICollider* collider)
 void Boss::AddImGui()
 {
 	if (ImGui::Button("AttackMove")) {
-		behaviorRequest_ = BossBehavior::AttackL;
+		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 	}
 	ImGui::DragFloat3("Scale", &worldArmL.transform.scale.x);
 	ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);

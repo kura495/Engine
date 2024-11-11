@@ -11,10 +11,10 @@ enum Body {
 };
 enum class BossBehavior {
 	Root,
-	AttackL,
-	AttackR,
-	Spawn,
-	Dead,
+	AttackSlamPlayer,//叩きつけ攻撃
+	AttackThrowBomb,//爆弾を投げる攻撃
+	Spawn,//出現時
+	Dead,//死亡時
 };
 
 class Boss : public Enemy
@@ -35,9 +35,12 @@ private:
 	//Root
 	void RootInit();
 	void RootUpdate();
-	//AttackL
-	void AttackLInit();
-	void AttackLUpdate();
+	//AttackSlamPlayer
+	void AttackSlamPlayerInit();
+	void AttackSlamPlayerUpdate();
+	//AttackThrowBomb
+	void AttackThrowBombInit();
+	void AttackThrowBombUpdate();
 	//Spawn
 	void SpawnInit();
 	void SpawnUpdate();
