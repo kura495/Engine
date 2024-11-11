@@ -208,7 +208,7 @@ bool Boss::FollowPlayer()
 	temp = temp.Normalize();
 	worldArmL.transform.translate += temp * 0.2f;
 	//TODO:命名仮
-	if (playerToEnemyLngth <= 2.0f) {
+	if (playerToEnemyLngth <= 1.5f) {
 		return true;
 	}
 	return false;

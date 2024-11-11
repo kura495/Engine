@@ -178,7 +178,7 @@ void Player::BehaviorUpdate()
 void Player::RootInit()
 {
 	colliderPlayer.IsUsing = true;
-	FollowCamera::workInter.interParameter_.y = 0.0f;
+	//FollowCamera::workInter.interParameter_.y = 0.0f;
 
 }
 void Player::RootUpdate()
@@ -206,7 +206,7 @@ void Player::AttackUpdate()
 //kJump
 void Player::JumpInit() {
 	jumpForce = kJumpForce;
-	FollowCamera::workInter.interParameter_.y = 0.0f;
+	//FollowCamera::workInter.interParameter_.y = 0.0f;
 }
 void Player::JumpUpdate() {
 
