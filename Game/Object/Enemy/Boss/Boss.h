@@ -11,6 +11,7 @@ enum Body {
 };
 enum class BossBehavior {
 	Root,
+	ReturnPosition,//元の位置に戻る
 	AttackSlamPlayer,//叩きつけ攻撃
 	AttackThrowBomb,//爆弾を投げる攻撃
 	Spawn,//出現時
@@ -28,7 +29,7 @@ public:
 private:
 #pragma region
 	//ふるまい
-	BossBehavior behavior_ = BossBehavior::Root;
+	BossBehavior behavior_ = BossBehavior::Spawn;
 	//次のふるまいリクエスト
 	std::optional<BossBehavior> behaviorRequest_ = std::nullopt;
 	void BehaviorUpdate();
@@ -56,7 +57,7 @@ private:
 	void ColliderDamageInit();
 	void OnCollision(const ICollider* colliderA)override;
 	OBBoxCollider colliderDamage;
-	WorldTransform colliderDamegeWorld_;
+	WorldTransform colliderDamageWorld_;
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
 	void OnCollisionAttack(const ICollider* collider);

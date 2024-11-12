@@ -568,6 +568,7 @@
     <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Engine\Utility\Ease\Ease.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\Bomb\Bomb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -884,6 +885,7 @@
     <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
     <ClInclude Include="Engine\Utility\Ease\Ease.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\Bomb\Bomb.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

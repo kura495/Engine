@@ -10,7 +10,7 @@ void Boss::Init(std::vector<Model*> models)
 	worldArmL.Initialize();
 	worldArmL.transform.translate.y = 5.5f;
 
-	colliderDamegeWorld_.Initialize();
+	colliderDamageWorld_.Initialize();
 	colliderAttackWorld_.Initialize();
 
 	world_.Update();
@@ -67,6 +67,9 @@ void Boss::Draw()
 	case BossBehavior::AttackSlamPlayer:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
+	case BossBehavior::AttackThrowBomb:
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		break;
 	case BossBehavior::Spawn:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
@@ -93,7 +96,7 @@ void Boss::BehaviorUpdate()
 			AttackSlamPlayerInit();
 			break;
 		case BossBehavior::AttackThrowBomb:
-			AttackSlamPlayerInit();
+			AttackThrowBombInit();
 			break;
 		case BossBehavior::Spawn:
 			SpawnInit();
@@ -114,6 +117,9 @@ void Boss::BehaviorUpdate()
 		break;
 	case BossBehavior::AttackSlamPlayer:
 		AttackSlamPlayerUpdate();
+		break;
+	case BossBehavior::AttackThrowBomb:
+		AttackThrowBombUpdate();
 		break;
 	case BossBehavior::Spawn:
 		SpawnUpdate();
@@ -228,9 +234,9 @@ bool Boss::FollowPlayer()
 #pragma region
 void Boss::ColliderDamageInit()
 {
-	colliderDamegeWorld_.SetParent(&worldArmL);
+	colliderDamageWorld_.SetParent(&worldArmL);
 
-	colliderDamage.Init(&colliderDamegeWorld_);
+	colliderDamage.Init(&colliderDamageWorld_);
 	colliderDamage.SetSize({ 1.0f,1.0f,1.0f });
 	colliderDamage.OnCollision = [this](ICollider* colliderA) { OnCollision(colliderA); };
 	colliderDamage.SetcollitionAttribute(ColliderTag::Enemy);
