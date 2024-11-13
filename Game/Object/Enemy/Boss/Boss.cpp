@@ -92,6 +92,9 @@ void Boss::BehaviorUpdate()
 		default:
 			RootInit();
 			break;
+		case BossBehavior::ReturnPosition:
+			ReturnPositionInit();
+			break;
 		case BossBehavior::AttackSlamPlayer:
 			AttackSlamPlayerInit();
 			break;
@@ -114,6 +117,9 @@ void Boss::BehaviorUpdate()
 	case BossBehavior::Root:
 	default:
 		RootUpdate();
+		break;
+	case BossBehavior::ReturnPosition:
+		ReturnPositionUpdate();
 		break;
 	case BossBehavior::AttackSlamPlayer:
 		AttackSlamPlayerUpdate();
@@ -140,6 +146,22 @@ void Boss::RootUpdate()
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 	}
 }
+void Boss::ReturnPositionInit()
+{
+	easeT = 0.0f;
+	addEaseT = 0.02f;
+	PrePos = worldArmL.transform.translate;
+}
+void Boss::ReturnPositionUpdate()
+{
+	if (easeT == 1.0f) {
+		behaviorRequest_ = BossBehavior::Root;
+	}
+	
+	easeT = (std::min)(easeT + addEaseT, 1.0f);
+	worldArmL.transform.translate = Vector3::Lerp(PrePos, { 0.0f,5.5f,10.0f }, easeT);
+	
+}
 void Boss::AttackSlamPlayerInit()
 {
 	addEaseT = 0.01f;
@@ -161,6 +183,7 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 
 		if (worldArmL.transform.translate.y <= 0) {
+			addEaseT = 0.01f;
 			colliderAttack.IsUsing = false;
 			colliderAttackA.IsUsing = false;
 			worldArmL.transform.translate.y = 0.5f;
@@ -169,15 +192,8 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 	}
 	else {
-		//手を位置に戻す
-		if (worldArmL.transform.translate.y < 5.5f) {
-			easeT = (std::min)(easeT + 0.01f, 1.0f);
-			worldArmL.transform.translate.y = Vector3::Lerp({0.0f,0.0f,0.0f},{0.0f,5.5f,0.0f}, easeT).y;
-		}
 		//初期位置についたら
-		else if (worldArmL.transform.translate.y >= 5.5f) {
-			behaviorRequest_ = BossBehavior::Root;
-		}
+		behaviorRequest_ = BossBehavior::ReturnPosition;
 	}
 
 }
@@ -187,7 +203,7 @@ void Boss::AttackThrowBombInit()
 }
 void Boss::AttackThrowBombUpdate()
 {
-
+	
 }
 void Boss::SpawnInit()
 {

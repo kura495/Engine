@@ -1,8 +1,8 @@
 #pragma once
 #include "Game/Object/Enemy/Enemy.h"
 #include "Animation/Animation.h"
-
 #include "Utility/Ease/Ease.h"
+#include "Bomb/Bomb.h"
 
 enum Body {
 	body,
@@ -36,6 +36,10 @@ private:
 	//Root
 	void RootInit();
 	void RootUpdate();
+	//ReturnPosition
+	void ReturnPositionInit();
+	void ReturnPositionUpdate();
+	Vector3 PrePos;
 	//AttackSlamPlayer
 	void AttackSlamPlayerInit();
 	void AttackSlamPlayerUpdate();

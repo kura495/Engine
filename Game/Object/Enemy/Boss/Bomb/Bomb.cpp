@@ -8,7 +8,7 @@ void Bomb::Init(std::vector<Model*> models)
 void Bomb::Update()
 {
 	//world_.transform.translate.x = std::min(boxMin.x, boxMax.x);
-	//ˆÚ“®‚Ì§ŒÀ(‰ºŒÀ‚ÆãŒÀ‚ğˆês‚Å‘‚¢‚Ä‚¢‚é)
+	//ç§»å‹•ã®åˆ¶é™(ä¸‹é™ã¨ä¸Šé™ã‚’ä¸€è¡Œã§æ›¸ã„ã¦ã„ã‚‹)
 	world_.transform.translate.x = (std::max)((std::min)(world_.transform.translate.x, boxMax.x), boxMin.x);
 
 	if (isThrowFlag) {

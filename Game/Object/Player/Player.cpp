@@ -264,17 +264,17 @@ void Player::OnCollision(const ICollider* ICollider)
 		ImGui::End();
 		//playerMoveValue = true;
 	}
-	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
-		if (ICollider->GetCenter().y > world_.transform.translate.y) {
-			world_.transform.translate.y = ICollider->GetCenter().y;
-			world_.Update();
-		}
-	}
-	else if (ICollider->GetcollitionAttribute() == ColliderTag::Box) {
-		Vector3 IColliderPos = ICollider->GetCenter();
+	//if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
+	//	if (ICollider->GetCenter().y > world_.transform.translate.y) {
+	//		world_.transform.translate.y = ICollider->GetCenter().y;
+	//		world_.Update();
+	//	}
+	//}
+	//else if (ICollider->GetcollitionAttribute() == ColliderTag::Box) {
+	//	Vector3 IColliderPos = ICollider->GetCenter();
 
-		world_.Update();
-	}
+	//	world_.Update();
+	//}
 	return;
 }
 void Player::AttackColliderInit()
