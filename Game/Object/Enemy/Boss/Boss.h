@@ -78,10 +78,15 @@ private:
 	float addEaseT = 0.05f;
 #pragma endregion 攻撃に関する物
 
+#pragma region
+	
+	std::unique_ptr<Bomb> bomb;
+
+#pragma endregion 爆弾
+
 	void AddImGui()override;
 
 	WorldTransform worldArmL;
-	//WorldTransform worldArmR;
 
 #pragma region
 	Animation* animationArmLDamage;

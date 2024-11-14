@@ -5,7 +5,7 @@ void GamePlayState::Initialize()
 	StateNo = GameStateNo::PLAY;
 
 	//基本機能生成
-	debugcamera_ = new DebugCamera();
+	debugcamera_ = std::make_unique<DebugCamera>();
 	debugcamera_->Initialize();
 	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
@@ -22,7 +22,7 @@ void GamePlayState::Initialize()
 	lanthanumModel_.push_back(Model::CreateModelFromObj("resources/Object", "Object.obj"));
 	lanthan.Initialize();
 
-	titleSprite = new Sprite;
+	titleSprite = std::make_unique<Sprite>();
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/Title.png");
 	title.Initialize();
@@ -36,7 +36,7 @@ void GamePlayState::Initialize()
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
-	particle = new ParticleSystem();
+	particle = std::make_unique<ParticleSystem>();
 	particle->Initalize("resources/circle2.png");
 
 	//enemyManager

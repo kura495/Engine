@@ -36,3 +36,12 @@ void Bomb::OnCollision(const ICollider* colliderA)
 {
 	colliderA;
 }
+
+void Bomb::ImGui()
+{
+	ImGui::Begin("Bomb");
+	ImGui::InputFloat3("Max",&boxMax.x);
+	ImGui::InputFloat3("Min",&boxMin.x);
+
+	ImGui::End();
+}

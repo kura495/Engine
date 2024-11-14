@@ -39,4 +39,5 @@ private:
 	OBBoxCollider collider;
 #pragma endregion Collider
 
+	void ImGui();
 };

@@ -10,15 +10,17 @@ void Boss::Init(std::vector<Model*> models)
 	worldArmL.Initialize();
 	worldArmL.transform.translate.y = 5.5f;
 
-	colliderDamageWorld_.Initialize();
-	colliderAttackWorld_.Initialize();
-
 	world_.Update();
 	worldArmL.Update();
+
+	//当たり判定
+	colliderDamageWorld_.Initialize();
+	colliderAttackWorld_.Initialize();
 
 	ColliderDamageInit();
 	ColliderAttackInit();
 
+	//アニメーション
 	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
@@ -28,8 +30,6 @@ void Boss::Init(std::vector<Model*> models)
 	//animationSpawn->AnimeInit(*models_[Body::ArmL], false);
 
 	behaviorRequest_ = BossBehavior::Spawn;
-
-	models_[Body::ArmL]->color_.w = 0.0f;
 
 	name = "Boss";
 	//初期値を設定
@@ -146,6 +146,7 @@ void Boss::RootUpdate()
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 	}
 }
+
 void Boss::ReturnPositionInit()
 {
 	easeT = 0.0f;

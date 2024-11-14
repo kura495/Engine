@@ -81,7 +81,7 @@ private:
 #pragma endregion Behavior
 
 	//基本機能ズ
-	DebugCamera* debugcamera_ = nullptr;
+	std::unique_ptr<DebugCamera> debugcamera_;
 	ObjectManager* objectManager = nullptr;
 	std::unique_ptr<CollisionManager> collisionManager;
 	Renderer* renderer_ = nullptr;
@@ -101,11 +101,11 @@ private:
 	std::unique_ptr<EnemyManager> enemyManager;
 	std::unique_ptr<SkyDome> skyDome_;
 
-	ParticleSystem* particle;
+	std::unique_ptr<ParticleSystem> particle;
 
 	Input* input;
 
-	Sprite* titleSprite;
+	std::unique_ptr<Sprite> titleSprite;
 	WorldTransform title;
 
 	Fade* fade;
