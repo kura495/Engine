@@ -12,28 +12,28 @@ public:
 	void Update()override;
 	void Draw()override;
 	/// <summary>
-	/// ”š’e‚ğ“Š‚°‚é‚ÉŒÄ‚Ño‚·ŠÖ”
+	/// çˆ†å¼¾ã‚’æŠ•ã’ã‚‹æ™‚ã«å‘¼ã³å‡ºã™é–¢æ•°
 	/// </summary>
-	/// <param name="targetVector">ƒ^[ƒQƒbƒg‚Ìƒ[ƒ‹ƒhÀ•W</param>
+	/// <param name="targetVector">ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™</param>
 	void ThrowBomb(Vector3 targetVector) {
 		isThrowFlag = true;
-		//•ûŒü‚ğŒˆ‚ß‚é
+		//æ–¹å‘ã‚’æ±ºã‚ã‚‹
 		Vector3 playerToBomb = targetVector - world_.transform.translate;
-		//‘¬‚³‚Ì’è”‚ğŠ|‚¯‚é
+		//é€Ÿã•ã®å®šæ•°ã‚’æ›ã‘ã‚‹
 		forTargetVector = playerToBomb.Normalize() * kSpeedValue;
 	};
 private:
-	//ƒvƒŒƒCƒ„[‚ÉŒü‚©‚Á‚Ä‚¢‚­‘¬‚³‚Ì”{”
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å‘ã‹ã£ã¦ã„ãé€Ÿã•ã®å€æ•°
 	float kSpeedValue = 0.5f;
-	//ƒvƒŒƒCƒ„[•ûŒü‚ÖŒü‚©‚¤ƒxƒNƒgƒ‹
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ–¹å‘ã¸å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 forTargetVector;
-	//“Š‚°‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	//æŠ•ã’ãŸã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 	bool isThrowFlag = false;
-	//“®‚­”ÍˆÍ
+	//å‹•ãç¯„å›²
 	Vector3 boxMax;
 	Vector3 boxMin;
 #pragma region
-	//ƒ{ƒX‚Ìã“_‚Ì“–‚½‚è”»’è
+	//ãƒœã‚¹ã®å¼±ç‚¹ã®å½“ãŸã‚Šåˆ¤å®š
 	void ColliderInit();
 	void OnCollision(const ICollider* colliderA);
 	OBBoxCollider collider;
