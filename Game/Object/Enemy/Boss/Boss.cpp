@@ -29,7 +29,20 @@ void Boss::Init(std::vector<Model*> models)
 	//animationSpawn->Init();
 	//animationSpawn->AnimeInit(*models_[Body::ArmL], false);
 
+#pragma region 
+	particle = new ParticleSystem();
+	particle->Initalize("resources/circle2.png");
+
+	deadEnemyParticleEmitter.count = 20;
+	deadEnemyParticleEmitter.frequency = 0.1f;
+	deadEnemyParticleEmitter.particleRadius = { 0.5f,0.5f,1.0f };
+	deadEnemyParticleEmitter.color = { 1.0f,0.0f,0.0f };
+	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
+#pragma endregion 
+
 	behaviorRequest_ = BossBehavior::Spawn;
+
+	models_[Body::ArmL]->color_.w = 0.0f;
 
 	name = "Boss";
 	//初期値を設定
@@ -75,6 +88,7 @@ void Boss::Draw()
 		break;
 	case BossBehavior::Dead:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		particle->RendererDraw();
 		break;
 	}
 }
@@ -141,12 +155,18 @@ void Boss::RootInit()
 }
 void Boss::RootUpdate()
 {
-	//攻撃をする
-	if (FollowPlayer()) {
-		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
+	//TODO:消すかifdefにする
+#pragma region 
+	if (easeT == 1.0f) {
+		behaviorRequest_ = BossBehavior::Dead;
 	}
+	easeT = (std::min)(easeT + 0.1f, 1.0f);
+#pragma endregion デバッグ用
+	//攻撃をする
+	//if (FollowPlayer()) {
+	//	behaviorRequest_ = BossBehavior::AttackSlamPlayer;
+	//}
 }
-
 void Boss::ReturnPositionInit()
 {
 	easeT = 0.0f;
@@ -221,14 +241,23 @@ void Boss::SpawnUpdate()
 }
 void Boss::DeadInit()
 {
-
+	deadEnemyParticleEmitter.world_.transform.translate = world_.transform.translate;
+	//deadEnemyParticleEmitter.world_.transform.translate.y += 1.0f;
+	easeT = 0.0f;
 }
 void Boss::DeadUpdate()
 {
+	easeT = (std::min)(easeT + 0.1f, 1.0f);
+
+	if (easeT == 1.0f) {
+		deadEnemyParticleEmitter
+	}
+
 	models_[Body::ArmL]->color_.w = (std::max)(models_[Body::ArmL]->color_.w - 0.01f, 0.0f);
 	if (models_[Body::ArmL]->color_.w == 0.0f) {
 		IsAlive = false;
 	}
+	particle->Update(deadEnemyParticleEmitter);
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()

@@ -2,6 +2,7 @@
 #include "Game/Object/Enemy/Enemy.h"
 #include "Animation/Animation.h"
 #include "Utility/Ease/Ease.h"
+#include "ParticleSystem/ParticleSystem.h"
 #include "Bomb/Bomb.h"
 
 enum Body {
@@ -87,7 +88,12 @@ private:
 	void AddImGui()override;
 
 	WorldTransform worldArmL;
+	//パーティクル
+	ParticleSystem* particle;
+	Emitter deadEnemyParticleEmitter;
+	Vector3 ranpos[3] = {
 
+	}
 #pragma region
 	Animation* animationArmLDamage;
 	Animation* animationSpawn;
