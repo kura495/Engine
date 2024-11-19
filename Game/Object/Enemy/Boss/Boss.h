@@ -91,9 +91,7 @@ private:
 	//パーティクル
 	ParticleSystem* particle;
 	Emitter deadEnemyParticleEmitter;
-	Vector3 ranpos[3] = {
 
-	}
 #pragma region
 	Animation* animationArmLDamage;
 	Animation* animationSpawn;

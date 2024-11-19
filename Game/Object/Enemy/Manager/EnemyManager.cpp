@@ -12,7 +12,6 @@ void EnemyManager::Init(Player* player)
 	bossEnemy_->Init(enemyModel_);
 	bossEnemy_->SetPlayer(player_);
 
-
 }
 
 void EnemyManager::Update()

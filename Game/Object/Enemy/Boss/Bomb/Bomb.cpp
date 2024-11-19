@@ -2,19 +2,21 @@
 
 void Bomb::Init(std::vector<Model*> models)
 {
+	models_ = models;
 	world_.Initialize();
+	ColliderInit();
 }
 
 void Bomb::Update()
 {
 	//world_.transform.translate.x = std::min(boxMin.x, boxMax.x);
 	//移動の制限(下限と上限を一行で書いている)
-	world_.transform.translate.x = (std::max)((std::min)(world_.transform.translate.x, boxMax.x), boxMin.x);
+	//world_.transform.translate.x = (std::max)((std::min)(world_.transform.translate.x, boxMax.x), boxMin.x);
 
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
 	}
-
+	world_.Update();
 }
 
 void Bomb::Draw()

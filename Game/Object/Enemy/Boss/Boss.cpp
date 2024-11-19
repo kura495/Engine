@@ -33,12 +33,17 @@ void Boss::Init(std::vector<Model*> models)
 	particle = new ParticleSystem();
 	particle->Initalize("resources/circle2.png");
 
-	deadEnemyParticleEmitter.count = 20;
+	deadEnemyParticleEmitter.count = 100;
 	deadEnemyParticleEmitter.frequency = 0.1f;
 	deadEnemyParticleEmitter.particleRadius = { 0.5f,0.5f,1.0f };
 	deadEnemyParticleEmitter.color = { 1.0f,0.0f,0.0f };
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
-#pragma endregion 
+#pragma endregion パーティクル
+
+	bomb = std::make_unique<Bomb>();
+	std::vector<Model*> Bombmodels;
+	Bombmodels.push_back(Model::CreateModelFromObj("resources/Enemy", "Arm.gltf"));
+	bomb->Init(Bombmodels);
 
 	behaviorRequest_ = BossBehavior::Spawn;
 
@@ -48,7 +53,6 @@ void Boss::Init(std::vector<Model*> models)
 	//初期値を設定
 	HP_ = 1;
 }
-
 void Boss::Update()
 {
 	//ダメージを受けた時
@@ -68,7 +72,6 @@ void Boss::Update()
 	world_.Update();
 	worldArmL.Update();
 }
-
 void Boss::Draw()
 {
 	switch (behavior_)
@@ -82,6 +85,7 @@ void Boss::Draw()
 		break;
 	case BossBehavior::AttackThrowBomb:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		bomb->Draw();
 		break;
 	case BossBehavior::Spawn:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
@@ -156,16 +160,16 @@ void Boss::RootInit()
 void Boss::RootUpdate()
 {
 	//TODO:消すかifdefにする
-#pragma region 
+#pragma region
 	if (easeT == 1.0f) {
-		behaviorRequest_ = BossBehavior::Dead;
+		behaviorRequest_ = BossBehavior::AttackThrowBomb;
 	}
 	easeT = (std::min)(easeT + 0.1f, 1.0f);
 #pragma endregion デバッグ用
 	//攻撃をする
-	//if (FollowPlayer()) {
-	//	behaviorRequest_ = BossBehavior::AttackSlamPlayer;
-	//}
+	/*if (FollowPlayer()) {
+		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
+	}*/
 }
 void Boss::ReturnPositionInit()
 {
@@ -220,11 +224,11 @@ void Boss::AttackSlamPlayerUpdate()
 }
 void Boss::AttackThrowBombInit()
 {
-
+	bomb->ThrowBomb(player_->GetWorld().transform.translate);
 }
 void Boss::AttackThrowBombUpdate()
 {
-	
+	bomb->Update();
 }
 void Boss::SpawnInit()
 {
@@ -249,9 +253,9 @@ void Boss::DeadUpdate()
 {
 	easeT = (std::min)(easeT + 0.1f, 1.0f);
 
-	if (easeT == 1.0f) {
-		deadEnemyParticleEmitter
-	}
+	//if (easeT == 1.0f) {
+	//	deadEnemyParticleEmitter
+	//}
 
 	models_[Body::ArmL]->color_.w = (std::max)(models_[Body::ArmL]->color_.w - 0.01f, 0.0f);
 	if (models_[Body::ArmL]->color_.w == 0.0f) {
@@ -276,7 +280,6 @@ bool Boss::FollowPlayer()
 	}
 	return false;
 }
-
 #pragma region
 void Boss::ColliderDamageInit()
 {
