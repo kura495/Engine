@@ -24,7 +24,7 @@ public:
 	};
 private:
 	//プレイヤーに向かっていく速さの倍数
-	float kSpeedValue = 0.5f;
+	float kSpeedValue = 0.1f;
 	//プレイヤー方向へ向かうベクトル
 	Vector3 forTargetVector;
 	//投げたかどうかのフラグ
