@@ -162,7 +162,7 @@ void Boss::RootUpdate()
 	//TODO:消すかifdefにする
 #pragma region
 	if (easeT == 1.0f) {
-		behaviorRequest_ = BossBehavior::AttackThrowBomb;
+		behaviorRequest_ = BossBehavior::Dead;
 	}
 	easeT = (std::min)(easeT + 0.1f, 1.0f);
 #pragma endregion デバッグ用
