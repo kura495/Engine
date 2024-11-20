@@ -22,6 +22,12 @@ float Vector3::Length() {
 	result = sqrt(Dot({ this->x,this->y,this->z }, { this->x,this->y,this->z }));
 	return result;
 }
+float Vector3::Distance(const Vector3& input1, const Vector3& input2)
+{
+	Vector3 vector = input1 - input2;
+	float result = sqrt(Dot(vector, vector));
+	return result;
+}
 Vector3 Vector3::Normalize(const Vector3& input) {
 	Vector3 result{};
 	float length = sqrt(input.x * input.x + input.y * input.y + input.z * input.z);

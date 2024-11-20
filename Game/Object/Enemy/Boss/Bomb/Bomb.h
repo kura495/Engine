@@ -29,9 +29,6 @@ private:
 	Vector3 forTargetVector;
 	//投げたかどうかのフラグ
 	bool isThrowFlag = false;
-	//動く範囲
-	Vector3 boxMax;
-	Vector3 boxMin;
 #pragma region
 	//ボスの弱点の当たり判定
 	void ColliderInit();
@@ -39,5 +36,8 @@ private:
 	OBBoxCollider collider;
 #pragma endregion Collider
 
+	bool IsOverline = false;
+	//TODO:デバッグ用
+	float distance;
 	void ImGui();
 };

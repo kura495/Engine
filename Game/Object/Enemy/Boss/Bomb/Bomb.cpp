@@ -5,18 +5,29 @@ void Bomb::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	ColliderInit();
+	world_.transform.translate.z = -11.0f;
 }
 
 void Bomb::Update()
 {
-	//world_.transform.translate.x = std::min(boxMin.x, boxMax.x);
+
+	ImGui();
+
+	if (IsOverline) {
+		return;
+	}
+
 	//移動の制限(下限と上限を一行で書いている)
-	//world_.transform.translate.x = (std::max)((std::min)(world_.transform.translate.x, boxMax.x), boxMin.x);
+	world_.transform.translate.y = (std::max)(world_.transform.translate.y,0.5f);
 
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
 	}
 	world_.Update();
+	distance = Vector3::Distance({ 0.0f,0.0f,-10.0f }, world_.transform.translate);
+	if (distance >= 10.0f) {
+		IsOverline = true;
+	}
 }
 
 void Bomb::Draw()
@@ -42,8 +53,11 @@ void Bomb::OnCollision(const ICollider* colliderA)
 void Bomb::ImGui()
 {
 	ImGui::Begin("Bomb");
-	ImGui::InputFloat3("Max",&boxMax.x);
-	ImGui::InputFloat3("Min",&boxMin.x);
+	ImGui::InputFloat("z",&world_.transform.translate.z);
+	ImGui::InputFloat("length",&distance);
+	if (IsOverline) {
+		ImGui::Text("IsOverline" );
+	}
 
 	ImGui::End();
 }

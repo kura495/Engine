@@ -42,7 +42,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	bomb = std::make_unique<Bomb>();
 	std::vector<Model*> Bombmodels;
-	Bombmodels.push_back(Model::CreateModelFromObj("resources/Enemy", "Arm.gltf"));
+	Bombmodels.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
 	bomb->Init(Bombmodels);
 
 	behaviorRequest_ = BossBehavior::Spawn;
@@ -161,15 +161,18 @@ void Boss::RootUpdate()
 {
 	//TODO:消すかifdefにする
 #pragma region
-	if (easeT == 1.0f) {
-		behaviorRequest_ = BossBehavior::Dead;
-	}
-	easeT = (std::min)(easeT + 0.1f, 1.0f);
+	//if (easeT == 1.0f) {
+	//	behaviorRequest_ = BossBehavior::Dead;
+	//}
+	//easeT = (std::min)(easeT + 0.1f, 1.0f);
 #pragma endregion デバッグ用
 	//攻撃をする
-	/*if (FollowPlayer()) {
-		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
-	}*/
+	//if (FollowPlayer()) {
+	//	behaviorRequest_ = BossBehavior::AttackThrowBomb;
+	//}
+	if (true) {
+		behaviorRequest_ = BossBehavior::AttackThrowBomb;
+	}
 }
 void Boss::ReturnPositionInit()
 {
@@ -238,7 +241,7 @@ void Boss::SpawnInit()
 void Boss::SpawnUpdate()
 {
 	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
-	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, 5.0f);
+	//worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, 5.0f);
 	if (models_[Body::ArmL]->color_.w == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
 	}

@@ -82,6 +82,9 @@ public:
 	//ベクトルの長さを求める式
 	//return float
 	float Length();
+	//ベクトルの距離を求める式
+	//return float
+	static float Distance(const Vector3& input1,const Vector3& input2);
 	//正規化
 	//return Vector3
 	static Vector3 Normalize(const Vector3& input);
