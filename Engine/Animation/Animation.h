@@ -12,7 +12,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
 #include "Object/Model/Model.h"
-
+using namespace Math;
 class Animation {
 public:
 	void Init();

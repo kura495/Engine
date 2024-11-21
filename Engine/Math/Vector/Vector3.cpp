@@ -1,5 +1,5 @@
 #include "Vector3.h"
-
+using namespace Math;
 float Vector3::Dot(const Vector3& input1, const Vector3& input2) {
 	float result = (input1.x * input2.x) + (input1.y * input2.y) + (input1.z * input2.z);
 	return result;

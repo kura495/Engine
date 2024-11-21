@@ -8,7 +8,7 @@ void BoxObject::Init(std::vector<Model*> models)
 
 	BoxCollider::Init(&world_);
 	BoxCollider::SetSize({ 1.0f,1.0f,1.0f });
-	BoxCollider::OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	BoxCollider::OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 	//SetcollitionAttribute(ColliderTag::Box);
 	//SetcollisionMask(~ColliderTag::Box);
 }
@@ -42,9 +42,9 @@ void BoxObject::ImGui()
 
 }
 
-void BoxObject::OnCollision(const ICollider* collider)
+void BoxObject::OnCollision(const ICollider& collider)
 {
-	if (collider->GetcollitionAttribute()) {
+	if (collider.GetcollitionAttribute()) {
 		return;
 	}
 }

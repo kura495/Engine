@@ -2,7 +2,7 @@
 #include "Common/WinApp/WinApp.h"
 #include "Common/DirectX/DirectXCommon.h"
 
-
+using namespace Math;
 class ImGuiManager
 {
 public:

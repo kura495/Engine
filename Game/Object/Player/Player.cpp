@@ -250,14 +250,14 @@ void Player::ColliderInit()
 	colliderPlayer.Init(&world_);
 	colliderPlayer.SetSize({ 0.5f,1.0f,0.5f });
 	colliderPlayer.SetOffset({ 0.0f,0.5f,0.0f });
-	colliderPlayer.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
+	colliderPlayer.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 	colliderPlayer.SetcollitionAttribute(ColliderTag::Player);
 	colliderPlayer.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
 }
-void Player::OnCollision(const ICollider* ICollider)
+void Player::OnCollision(const ICollider& ICollider)
 {
 
-	if (ICollider->GetcollitionAttribute() == ColliderTag::EnemyAttack) {
+	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		isDamege = true;
 		ImGui::Begin("Player");
 		ImGui::Text("Hit");
@@ -283,15 +283,15 @@ void Player::AttackColliderInit()
 	colliderAttack.Init(&attackColliderWorld_);
 	colliderAttack.SetSize({ 0.5f,1.0f,0.5f });
 	colliderAttack.SetOffset({ 0.0f,0.5f,1.0f });
-	colliderAttack.OnCollision = [this](ICollider* collider) { AttackOnCollision(collider); };
+	colliderAttack.OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
 	colliderAttack.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
 
 	colliderAttack.IsUsing = false;
 }
-void Player::AttackOnCollision(const ICollider* collider)
+void Player::AttackOnCollision(const ICollider& collider)
 {
-	if (collider->GetcollitionAttribute() == ColliderTag::Enemy) {
+	if (collider.GetcollitionAttribute() == ColliderTag::Enemy) {
 		colliderAttack.IsUsing = false;
 	}
 }

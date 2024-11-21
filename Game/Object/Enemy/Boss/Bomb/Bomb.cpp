@@ -39,13 +39,13 @@ void Bomb::ColliderInit()
 {
 	collider.Init(&world_);
 	collider.SetSize({ 1.0f,1.0f,1.0f });
-	collider.OnCollision = [this](ICollider* colliderA) { OnCollision(colliderA); };
+	collider.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
 	collider.SetcollitionAttribute(ColliderTag::Enemy);
 	collider.SetcollisionMask(~ColliderTag::EnemyBomb);
 	collider.IsUsing = true;
 }
 
-void Bomb::OnCollision(const ICollider* colliderA)
+void Bomb::OnCollision(const ICollider& colliderA)
 {
 	colliderA;
 }

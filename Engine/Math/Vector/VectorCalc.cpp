@@ -1,7 +1,6 @@
 #include "VectorCalc.h"
 
-
-
+using namespace Math;
 Vector3 VectorTransform(const Vector3& vector, const Matrix4x4& matrix)
 {
 	Vector3 result;

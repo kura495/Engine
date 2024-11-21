@@ -1,5 +1,6 @@
 #pragma once
 #include "Math/Math_Structs.h"
+using namespace Math;
 // キーフレーム構造体
 template<typename tValue>
 class KeyFrame{

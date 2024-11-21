@@ -80,7 +80,7 @@ private:
 	//ディゾルブのおおきさ
 	Microsoft::WRL::ComPtr<ID3D12Resource> DissolveResource = nullptr;
 	Vector4* dissolveValue_ = nullptr;
-	
+
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 	Node ReadNode(aiNode* node);

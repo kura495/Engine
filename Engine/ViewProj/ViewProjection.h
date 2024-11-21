@@ -5,7 +5,7 @@
 #include "Math/Matrix/MatrixCalc.h"
 #include <d3d12.h>
 #include <wrl.h>
-
+using namespace Math;
 // 定数バッファ用データ構造体
 struct ConstBufferDataViewProjection {
 	Matrix4x4 view;       // ワールド → ビュー変換行列

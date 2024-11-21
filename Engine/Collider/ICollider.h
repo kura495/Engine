@@ -4,7 +4,7 @@
 #include "CollisionConfig.h"
 #include "WorldTransform/WorldTransform.h"
 #include <cstdint>
-
+using namespace Math;
 static uint32_t CollisionNumber = 0;
 
 class ICollider {
@@ -35,7 +35,7 @@ public:
 	
 	};*/
 	//関数ポインタ　OnCollisionを入れる
-	using HitFunction = std::function<void(ICollider*)>;
+	using HitFunction = std::function<void(ICollider&)>;
 	HitFunction OnCollision;
 	//衝突時に呼ばれる関数
 	//コライダーの属性とマスク設定

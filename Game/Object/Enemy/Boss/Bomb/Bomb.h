@@ -32,7 +32,7 @@ private:
 #pragma region
 	//ボスの弱点の当たり判定
 	void ColliderInit();
-	void OnCollision(const ICollider* colliderA);
+	void OnCollision(const ICollider& colliderA);
 	OBBoxCollider collider;
 #pragma endregion Collider
 

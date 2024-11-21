@@ -290,14 +290,14 @@ void Boss::ColliderDamageInit()
 
 	colliderDamage.Init(&colliderDamageWorld_);
 	colliderDamage.SetSize({ 1.0f,1.0f,1.0f });
-	colliderDamage.OnCollision = [this](ICollider* colliderA) { OnCollision(colliderA); };
+	colliderDamage.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
 	colliderDamage.SetcollitionAttribute(ColliderTag::Enemy);
 	colliderDamage.SetcollisionMask(~ColliderTag::EnemyAttack);
 	colliderDamage.IsUsing = true;
 }
-void Boss::OnCollision(const ICollider* collider)
+void Boss::OnCollision(const ICollider& collider)
 {
-	if (collider->GetcollitionAttribute() == ColliderTag::Weapon) {
+	if (collider.GetcollitionAttribute() == ColliderTag::Weapon) {
 		HP_ -= 1;
 		if (HP_ <= 0) {
 			behaviorRequest_ = BossBehavior::Dead;
@@ -313,22 +313,22 @@ void Boss::ColliderAttackInit()
 	colliderAttack.Init(&colliderAttackWorld_);
 	colliderAttack.SetSize({ 1.0f,1.0f,7.0f });
 	colliderAttack.SetOffset({ 0.0f,0.0f,-2.0f });
-	colliderAttack.OnCollision = [this](ICollider* colliderA) { OnCollisionAttack(colliderA); };
+	colliderAttack.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttack.SetcollisionMask(~ColliderTag::Enemy);
 
 	colliderAttackA.Init(&colliderAttackWorld_);
 	colliderAttackA.SetSize({ 2.0f,0.5f,1.0f });
 	colliderAttackA.SetOffset({ 0.0f,0.0f,-6.25f });
-	colliderAttackA.OnCollision = [this](ICollider* colliderA) { OnCollisionAttack(colliderA); };
+	colliderAttackA.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttackA.SetcollisionMask(~ColliderTag::Enemy);	
 	colliderAttack.IsUsing = false;
 	colliderAttackA.IsUsing = false;
 }
-void Boss::OnCollisionAttack(const ICollider* collider)
+void Boss::OnCollisionAttack(const ICollider& collider)
 {
-	if (collider->GetcollitionAttribute() == ColliderTag::Player) {
+	if (collider.GetcollitionAttribute() == ColliderTag::Player) {
 		colliderAttack.IsUsing = false;
 		colliderAttackA.IsUsing = false;
 	}

@@ -21,6 +21,6 @@ public:
 
 	void ImGui();
 
-	void OnCollision(const ICollider* collider);
+	void OnCollision(const ICollider& collider);
 };
 

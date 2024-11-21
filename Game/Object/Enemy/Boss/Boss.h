@@ -60,12 +60,12 @@ private:
 #pragma region
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
-	void OnCollision(const ICollider* colliderA)override;
+	void OnCollision(const ICollider& colliderA)override;
 	OBBoxCollider colliderDamage;
 	WorldTransform colliderDamageWorld_;
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
-	void OnCollisionAttack(const ICollider* collider);
+	void OnCollisionAttack(const ICollider& collider);
 	OBBoxCollider colliderAttack;
 	OBBoxCollider colliderAttackA;
 	WorldTransform colliderAttackWorld_;

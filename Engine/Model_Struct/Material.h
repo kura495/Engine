@@ -2,7 +2,7 @@
 #include "Math_Structs.h"
 #include <stdint.h>
 #include <string>
-
+using namespace Math;
 struct Material {
 	Vector4 color;
 	int32_t enableLighting;

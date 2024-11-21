@@ -59,10 +59,10 @@ private:
 #pragma region 
 	//プレイヤーキャラ事態の当たり判定
 	void ColliderInit();
-	void OnCollision(const ICollider* collider);
+	void OnCollision(const ICollider& collider);
 	//攻撃の当たり判定
 	void AttackColliderInit();
-	void AttackOnCollision(const ICollider* collider);
+	void AttackOnCollision(const ICollider& collider);
 	OBBoxCollider colliderPlayer;
 	OBBoxCollider colliderAttack;
 	WorldTransform attackColliderWorld_;

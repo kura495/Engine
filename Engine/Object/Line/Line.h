@@ -8,7 +8,7 @@
 #include "Manager/SRV/SRVManager.h"
 #include "Texture/TextureManager.h"
 #include "Light/Light.h"
-
+using namespace Math;
 class Line
 {
 public:
