@@ -5,13 +5,22 @@ void Bomb::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	ColliderInit();
-	world_.transform.translate.z = -11.0f;
 }
 
 void Bomb::Update()
 {
 
 	ImGui();
+
+	world_.Update();
+	//一定ラインを超えたら止める
+	distance = Vector3::Distance(stertPos, world_.transform.translate);
+	if (distance >= 80.0f) {
+		IsOverline = true;
+	}
+	else {
+		IsOverline = false;
+	}
 
 	if (IsOverline) {
 		return;
@@ -23,11 +32,9 @@ void Bomb::Update()
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
 	}
-	world_.Update();
-	distance = Vector3::Distance({ 0.0f,0.0f,-10.0f }, world_.transform.translate);
-	if (distance >= 10.0f) {
-		IsOverline = true;
-	}
+
+	easeT = (std::min)(easeT + addEaseT, 1.0f);
+
 }
 
 void Bomb::Draw()
@@ -40,14 +47,29 @@ void Bomb::ColliderInit()
 	collider.Init(&world_);
 	collider.SetSize({ 1.0f,1.0f,1.0f });
 	collider.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	collider.SetcollitionAttribute(ColliderTag::Enemy);
-	collider.SetcollisionMask(~ColliderTag::EnemyBomb);
+	collider.SetcollitionAttribute(ColliderTag::EnemyBomb);
 	collider.IsUsing = true;
 }
 
 void Bomb::OnCollision(const ICollider& colliderA)
 {
-	colliderA;
+	if (colliderA.GetcollitionAttribute() == ColliderTag::Weapon) {
+		if (isHit) {
+			forTargetVector *= -1.2f;
+			easeT = 0.0f;
+			isHit = false;
+		}
+	}
+	if (colliderA.GetcollitionAttribute() == ColliderTag::Enemy){
+		if (isHit == false) {
+			forTargetVector *= -1.2f;
+			easeT = 0.0f;
+			isHit = true;
+		}
+	}
+	if (colliderA.GetcollitionAttribute() == ColliderTag::Player) {
+		collider.IsUsing = false;
+	}
 }
 
 void Bomb::ImGui()

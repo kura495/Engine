@@ -6,9 +6,9 @@ void Boss::Init(std::vector<Model*> models)
 	models_ = models;
 
 	world_.Initialize();
-	world_.transform.translate.y = 5.5f;
+	//world_.transform.translate.y = 5.5f;
 	worldArmL.Initialize();
-	worldArmL.transform.translate.y = 5.5f;
+	worldArmL.transform.translate = initialPosition;
 
 	world_.Update();
 	worldArmL.Update();
@@ -125,6 +125,9 @@ void Boss::BehaviorUpdate()
 		case BossBehavior::Dead:
 			DeadInit();
 			break;
+		case BossBehavior::Down:
+			DownInit();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -151,11 +154,17 @@ void Boss::BehaviorUpdate()
 	case BossBehavior::Dead:
 		DeadUpdate();
 		break;
+	case BossBehavior::Down:
+		DownUpdate();
+		break;
 	}
 }
 void Boss::RootInit()
 {
 	easeT = 0.0f;
+
+	colliderAttack.IsUsing = true;
+	colliderAttackA.IsUsing = true;
 }
 void Boss::RootUpdate()
 {
@@ -187,7 +196,7 @@ void Boss::ReturnPositionUpdate()
 	}
 	
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	worldArmL.transform.translate = Vector3::Lerp(PrePos, { 0.0f,5.5f,10.0f }, easeT);
+	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
 	
 }
 void Boss::AttackSlamPlayerInit()
@@ -227,21 +236,23 @@ void Boss::AttackSlamPlayerUpdate()
 }
 void Boss::AttackThrowBombInit()
 {
-	bomb->ThrowBomb(player_->GetWorld().transform.translate);
+	easeT = 0.0f;
+	bomb->ThrowBomb(worldArmL.transform.translate,player_->GetWorld().transform.translate);
 }
 void Boss::AttackThrowBombUpdate()
 {
+	easeT = (std::min)(easeT + 0.01f, 1.0f);
 	bomb->Update();
 }
 void Boss::SpawnInit()
 {
 	models_[Body::ArmL]->color_.w = 0.0f;
-	worldArmL.transform.translate.z = 10.0f;
+	worldArmL.transform.translate.z = 40.0f;
 }
 void Boss::SpawnUpdate()
 {
 	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
-	//worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, 5.0f);
+	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, 30.0f);
 	if (models_[Body::ArmL]->color_.w == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
 	}
@@ -265,6 +276,16 @@ void Boss::DeadUpdate()
 		IsAlive = false;
 	}
 	particle->Update(deadEnemyParticleEmitter);
+}
+void Boss::DownInit()
+{
+	worldArmL.transform.translate = DownPosition;
+	colliderAttack.IsUsing = false;
+	colliderAttackA.IsUsing = false;
+}
+void Boss::DownUpdate()
+{
+	worldArmL.Update();
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()
@@ -306,6 +327,17 @@ void Boss::OnCollision(const ICollider& collider)
 		damegeInterval = 0;
 		colliderDamage.IsUsing = false;
 	}
+	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb){
+		bomb->Reset(player_->GetWorld().transform.translate);
+		if (easeT == 1.0f) {
+			countHitBomb += 1;
+			easeT = 0.0f;
+		}
+
+		if (countHitBomb >= 3) {
+			behaviorRequest_ = BossBehavior::Down;
+		}
+	}
 }
 void Boss::ColliderAttackInit()
 {
@@ -323,8 +355,8 @@ void Boss::ColliderAttackInit()
 	colliderAttackA.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttackA.SetcollisionMask(~ColliderTag::Enemy);	
-	colliderAttack.IsUsing = false;
-	colliderAttackA.IsUsing = false;
+	colliderAttack.IsUsing = true;
+	colliderAttackA.IsUsing = true;
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {

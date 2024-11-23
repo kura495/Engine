@@ -84,8 +84,12 @@ namespace Math {
 		//ベクトルの長さを求める式
 		//return float
 		float Length();
-		//ベクトルの距離を求める式
-		//return float
+		/// <summary>
+		/// ベクトルの距離を求める式
+		/// </summary>
+		/// <param name="input1">スタート地点</param>
+		/// <param name="input2">ゴール地点</param>
+		/// <returns>スタート地点からゴール地点までの距離</returns>
 		static float Distance(const Vector3& input1, const Vector3& input2);
 		//正規化
 		//return Vector3

@@ -17,6 +17,7 @@ enum class BossBehavior {
 	AttackThrowBomb,//爆弾を投げる攻撃
 	Spawn,//出現時
 	Dead,//死亡時
+	Down,//ダウン時
 };
 
 class Boss : public Enemy
@@ -53,6 +54,9 @@ private:
 	//Dead
 	void DeadInit();
 	void DeadUpdate();
+	//Down
+	void DownInit();
+	void DownUpdate();
 #pragma endregion Behavior
 #pragma region
 	bool FollowPlayer();
@@ -82,6 +86,8 @@ private:
 #pragma region
 	
 	std::unique_ptr<Bomb> bomb;
+	//爆弾に当たった回数
+	int countHitBomb;
 
 #pragma endregion 爆弾
 
@@ -97,4 +103,8 @@ private:
 	Animation* animationSpawn;
 #pragma endregion Animation
 
+	//固定の位置
+	Vector3 initialPosition{ 0.0f,5.5f,40.0f };
+
+	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
 };

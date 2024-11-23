@@ -264,17 +264,13 @@ void Player::OnCollision(const ICollider& ICollider)
 		ImGui::End();
 		//playerMoveValue = true;
 	}
-	//if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
-	//	if (ICollider->GetCenter().y > world_.transform.translate.y) {
-	//		world_.transform.translate.y = ICollider->GetCenter().y;
-	//		world_.Update();
-	//	}
-	//}
-	//else if (ICollider->GetcollitionAttribute() == ColliderTag::Box) {
-	//	Vector3 IColliderPos = ICollider->GetCenter();
+	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
+		isDamege = true;
+		ImGui::Begin("Player");
+		ImGui::Text("Hit");
+		ImGui::End();
+	}
 
-	//	world_.Update();
-	//}
 	return;
 }
 void Player::AttackColliderInit()
@@ -292,6 +288,9 @@ void Player::AttackColliderInit()
 void Player::AttackOnCollision(const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == ColliderTag::Enemy) {
+		colliderAttack.IsUsing = false;
+	}
+	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
 		colliderAttack.IsUsing = false;
 	}
 }

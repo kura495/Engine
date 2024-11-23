@@ -20,8 +20,6 @@ void Enemy::OnCollision(const ICollider& ICollider)
 		damegeInterval = 0;
 
 	}
-	if (ICollider.GetcollitionAttribute() == ColliderTag::Player) {
-	}
 }
 
 
