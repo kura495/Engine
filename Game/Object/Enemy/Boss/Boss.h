@@ -104,7 +104,13 @@ private:
 #pragma endregion Animation
 
 	//固定の位置
-	Vector3 initialPosition{ 0.0f,5.5f,40.0f };
+	Vector3 initialPosition{ 0.0f,5.5f,30.0f };
 
+#pragma region Down
 	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
+	bool isDownStert;
+	int hitCount = 0;
+#pragma endregion
+
+	bool isAttackSelect = true;
 };

@@ -24,10 +24,6 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
-	
-	//animationSpawn = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
-	//animationSpawn->Init();
-	//animationSpawn->AnimeInit(*models_[Body::ArmL], false);
 
 #pragma region 
 	particle = new ParticleSystem();
@@ -51,7 +47,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	name = "Boss";
 	//初期値を設定
-	HP_ = 1;
+	HP_ = 10;
 }
 void Boss::Update()
 {
@@ -93,6 +89,9 @@ void Boss::Draw()
 	case BossBehavior::Dead:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		particle->RendererDraw();
+		break;
+	case BossBehavior::Down:
+		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
 	}
 }
@@ -163,6 +162,7 @@ void Boss::RootInit()
 {
 	easeT = 0.0f;
 
+	colliderDamage.IsUsing = true;
 	colliderAttack.IsUsing = true;
 	colliderAttackA.IsUsing = true;
 }
@@ -176,11 +176,13 @@ void Boss::RootUpdate()
 	//easeT = (std::min)(easeT + 0.1f, 1.0f);
 #pragma endregion デバッグ用
 	//攻撃をする
-	//if (FollowPlayer()) {
-	//	behaviorRequest_ = BossBehavior::AttackThrowBomb;
-	//}
-	if (true) {
+	if (isAttackSelect) {
 		behaviorRequest_ = BossBehavior::AttackThrowBomb;
+		isAttackSelect = false;
+	}
+	else if(FollowPlayer()){
+		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
+		isAttackSelect = true;
 	}
 }
 void Boss::ReturnPositionInit()
@@ -201,7 +203,7 @@ void Boss::ReturnPositionUpdate()
 }
 void Boss::AttackSlamPlayerInit()
 {
-	addEaseT = 0.01f;
+	addEaseT = 0.02f;
 	colliderAttack.IsUsing = true;
 	colliderAttackA.IsUsing = true;
 	IsAttackFlag = true;
@@ -216,7 +218,7 @@ void Boss::AttackSlamPlayerUpdate()
 		float newPoint = Ease::InBack(easeT);
 
 		if (newPoint > 0) {
-			addEaseT = 0.05f;
+			addEaseT = 0.06f;
 		}
 
 		if (worldArmL.transform.translate.y <= 0) {
@@ -238,11 +240,20 @@ void Boss::AttackThrowBombInit()
 {
 	easeT = 0.0f;
 	bomb->ThrowBomb(worldArmL.transform.translate,player_->GetWorld().transform.translate);
+	countHitBomb = 0;
 }
 void Boss::AttackThrowBombUpdate()
 {
-	easeT = (std::min)(easeT + 0.01f, 1.0f);
+	easeT = (std::min)(easeT + 0.1f, 1.0f);
 	bomb->Update();
+
+	if (countHitBomb >= 3) {
+		behaviorRequest_ = BossBehavior::Down;
+	}
+
+	if (bomb->GetIsOverline()) {
+		behaviorRequest_ = BossBehavior::Root;
+	}
 }
 void Boss::SpawnInit()
 {
@@ -252,7 +263,7 @@ void Boss::SpawnInit()
 void Boss::SpawnUpdate()
 {
 	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
-	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, 30.0f);
+	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, initialPosition.z);
 	if (models_[Body::ArmL]->color_.w == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
 	}
@@ -279,13 +290,32 @@ void Boss::DeadUpdate()
 }
 void Boss::DownInit()
 {
-	worldArmL.transform.translate = DownPosition;
 	colliderAttack.IsUsing = false;
 	colliderAttackA.IsUsing = false;
+	isDownStert = true;
+	easeT = 0.0f;
+	addEaseT = 0.02f;
+	PrePos = worldArmL.transform.translate;
+	hitCount = 0;
 }
 void Boss::DownUpdate()
 {
-	worldArmL.Update();
+	if (isDownStert) {
+		animationArmLDamage->PlayAnimation();
+		animationTime_ += 1.0f / 60.0f;
+		if (animationTime_ > animationArmLDamage->duration) {
+			isDownStert = false;
+			animationTime_ = 0.0f;
+		}
+	}
+
+	easeT = (std::min)(easeT + addEaseT, 1.0f);
+	worldArmL.transform.translate = Vector3::Lerp(PrePos, DownPosition, easeT);
+
+	if (hitCount == 3) {
+		behaviorRequest_ = BossBehavior::ReturnPosition;
+		colliderDamage.IsUsing = false;
+	}
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()
@@ -293,13 +323,13 @@ bool Boss::FollowPlayer()
 	//TODO:命名仮
 	Vector3 temp = player_->GetWorld().transform.translate - worldArmL.transform.translate;
 	//モデルの中心から手のひらへ
-	temp.z += 10.0f;
+	temp.z += 5.0f;
 	temp.y = 0.0f;
 	float playerToEnemyLngth = temp.Length();
 	temp = temp.Normalize();
-	worldArmL.transform.translate += temp * 0.2f;
+	worldArmL.transform.translate += temp * 0.5f;
 	//TODO:命名仮
-	if (playerToEnemyLngth <= 1.5f) {
+	if (playerToEnemyLngth <= 0.2f) {
 		return true;
 	}
 	return false;
@@ -320,6 +350,7 @@ void Boss::OnCollision(const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == ColliderTag::Weapon) {
 		HP_ -= 1;
+		hitCount += 1;
 		if (HP_ <= 0) {
 			behaviorRequest_ = BossBehavior::Dead;
 		}
@@ -327,17 +358,16 @@ void Boss::OnCollision(const ICollider& collider)
 		damegeInterval = 0;
 		colliderDamage.IsUsing = false;
 	}
-	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb){
-		bomb->Reset(player_->GetWorld().transform.translate);
-		if (easeT == 1.0f) {
-			countHitBomb += 1;
-			easeT = 0.0f;
-		}
-
-		if (countHitBomb >= 3) {
-			behaviorRequest_ = BossBehavior::Down;
+	if (behavior_ == BossBehavior::AttackThrowBomb) {
+		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb){
+			bomb->Reset(player_->GetWorld().transform.translate);
+			if (easeT == 1.0f) {
+				countHitBomb += 1;
+				easeT = 0.0f;
+			}
 		}
 	}
+
 }
 void Boss::ColliderAttackInit()
 {

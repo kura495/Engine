@@ -23,6 +23,8 @@ public:
 		Vector3 playerToBomb = targetVector - world_.transform.translate;
 		//速さの定数を掛ける
 		forTargetVector = playerToBomb.Normalize() * kSpeedValue;
+		//コライダーを有効化
+		collider.IsUsing = true;
 	};
 	
 	void Reset(Vector3 targetVector) {
@@ -32,10 +34,10 @@ public:
 		forTargetVector = playerToBomb.Normalize() * kSpeedValue;
 	}
 
-	bool GetIsHit() { return isHit; }
+	bool GetIsOverline() { return IsOverline; }
 private:
 	//プレイヤーに向かっていく速さの倍数
-	float kSpeedValue = 0.3f;
+	float kSpeedValue = 0.5f;
 	//プレイヤー方向へ向かうベクトル
 	Vector3 forTargetVector;
 	//投げたかどうかのフラグ

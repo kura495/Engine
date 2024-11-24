@@ -48,21 +48,21 @@ void Bomb::ColliderInit()
 	collider.SetSize({ 1.0f,1.0f,1.0f });
 	collider.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
 	collider.SetcollitionAttribute(ColliderTag::EnemyBomb);
-	collider.IsUsing = true;
+	collider.IsUsing = false;
 }
 
 void Bomb::OnCollision(const ICollider& colliderA)
 {
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Weapon) {
 		if (isHit) {
-			forTargetVector *= -1.2f;
+			forTargetVector *= -3.0f;
 			easeT = 0.0f;
 			isHit = false;
 		}
 	}
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Enemy){
 		if (isHit == false) {
-			forTargetVector *= -1.2f;
+			forTargetVector *= -0.5f;
 			easeT = 0.0f;
 			isHit = true;
 		}
