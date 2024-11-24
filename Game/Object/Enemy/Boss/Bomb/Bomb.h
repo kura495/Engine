@@ -16,6 +16,7 @@ public:
 	/// </summary>
 	/// <param name="targetVector">ターゲットのワールド座標</param>
 	void ThrowBomb(Vector3 StertPos,Vector3 targetVector) {
+		boundFlag = false;
 		isThrowFlag = true;
 		stertPos = StertPos;
 		world_.transform.translate = stertPos;
@@ -28,6 +29,7 @@ public:
 	};
 	
 	void Reset(Vector3 targetVector) {
+		boundFlag = false;
 		//方向を決める
 		Vector3 playerToBomb = targetVector - world_.transform.translate;
 		//速さの定数を掛ける
@@ -37,7 +39,7 @@ public:
 	bool GetIsOverline() { return IsOverline; }
 private:
 	//プレイヤーに向かっていく速さの倍数
-	float kSpeedValue = 0.5f;
+	float kSpeedValue = 0.2f;
 	//プレイヤー方向へ向かうベクトル
 	Vector3 forTargetVector;
 	//投げたかどうかのフラグ
@@ -58,11 +60,18 @@ private:
 	bool isHit = false;
 
 	Vector3 stertPos;
+	Vector3 PrePos;
 
 	//現在のTの値
 	float easeT = 0.0f;
 	//raseTに毎フレーム加算する値
 	float addEaseT = 0.01f;
 
-
+#pragma region
+	bool boundFlag = false;
+	float jumpValue = 0.3f;
+	float kjumpValue = 0.3f;
+	float subjumpValue = 0.02f;
+#pragma endregion 跳ねる動き
 };
+

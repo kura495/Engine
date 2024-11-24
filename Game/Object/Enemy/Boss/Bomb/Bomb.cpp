@@ -15,7 +15,7 @@ void Bomb::Update()
 	world_.Update();
 	//一定ラインを超えたら止める
 	distance = Vector3::Distance(stertPos, world_.transform.translate);
-	if (distance >= 80.0f) {
+	if (distance >= 60.0f) {
 		IsOverline = true;
 	}
 	else {
@@ -27,13 +27,28 @@ void Bomb::Update()
 	}
 
 	//移動の制限(下限と上限を一行で書いている)
-	world_.transform.translate.y = (std::max)(world_.transform.translate.y,0.5f);
+	world_.transform.translate.y = (std::max)(world_.transform.translate.y,1.0f);
+
+	//地面で反射する用のコード
+	/*if (world_.transform.translate.y == 1.0f) {
+		boundFlag = true;
+		jumpValue = kjumpValue;
+	}
+	if (boundFlag) {
+		world_.transform.translate.y += jumpValue;
+		jumpValue -= subjumpValue;
+	}*/
 
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
+		//
+		/*if (isHit == false) {
+			world_.transform.translate = Vector3::Lerp(PrePos, stertPos, easeT);
+		}	
+		easeT = (std::min)(easeT + addEaseT, 1.0f);*/
 	}
 
-	easeT = (std::min)(easeT + addEaseT, 1.0f);
+
 
 }
 
@@ -55,15 +70,17 @@ void Bomb::OnCollision(const ICollider& colliderA)
 {
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Weapon) {
 		if (isHit) {
-			forTargetVector *= -3.0f;
-			easeT = 0.0f;
+			forTargetVector *= -2.0f;
 			isHit = false;
+			//地面で反射する用のコード
+			/*easeT = 0.0f;
+			boundFlag = false;
+			PrePos = world_.transform.translate;*/
 		}
 	}
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Enemy){
 		if (isHit == false) {
 			forTargetVector *= -0.5f;
-			easeT = 0.0f;
 			isHit = true;
 		}
 	}
@@ -74,6 +91,7 @@ void Bomb::OnCollision(const ICollider& colliderA)
 
 void Bomb::ImGui()
 {
+#ifdef _DEBUG
 	ImGui::Begin("Bomb");
 	ImGui::InputFloat("z",&world_.transform.translate.z);
 	ImGui::InputFloat("length",&distance);
@@ -82,4 +100,5 @@ void Bomb::ImGui()
 	}
 
 	ImGui::End();
+#endif
 }

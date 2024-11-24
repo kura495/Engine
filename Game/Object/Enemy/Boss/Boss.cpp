@@ -47,7 +47,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	name = "Boss";
 	//初期値を設定
-	HP_ = 10;
+	HP_ = 9;
 }
 void Boss::Update()
 {
@@ -244,7 +244,7 @@ void Boss::AttackThrowBombInit()
 }
 void Boss::AttackThrowBombUpdate()
 {
-	easeT = (std::min)(easeT + 0.1f, 1.0f);
+	easeT = (std::min)(easeT + 0.05f, 1.0f);
 	bomb->Update();
 
 	if (countHitBomb >= 3) {
