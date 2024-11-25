@@ -47,9 +47,6 @@ void Bomb::Update()
 		}	
 		easeT = (std::min)(easeT + addEaseT, 1.0f);*/
 	}
-
-
-
 }
 
 void Bomb::Draw()

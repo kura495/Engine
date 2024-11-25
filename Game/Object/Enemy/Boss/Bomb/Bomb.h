@@ -74,4 +74,3 @@ private:
 	float subjumpValue = 0.02f;
 #pragma endregion 跳ねる動き
 };
-

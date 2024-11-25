@@ -47,7 +47,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	name = "Boss";
 	//初期値を設定
-	HP_ = 9;
+	HP_ = 1;
 }
 void Boss::Update()
 {
@@ -270,7 +270,7 @@ void Boss::SpawnUpdate()
 }
 void Boss::DeadInit()
 {
-	deadEnemyParticleEmitter.world_.transform.translate = world_.transform.translate;
+	deadEnemyParticleEmitter.world_.transform.translate = worldArmL.transform.translate;
 	//deadEnemyParticleEmitter.world_.transform.translate.y += 1.0f;
 	easeT = 0.0f;
 }
