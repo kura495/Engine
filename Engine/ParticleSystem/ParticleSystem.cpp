@@ -36,59 +36,11 @@ void ParticleSystem::Initalize(const std::string filePath)
 	
 }
 
-void ParticleSystem::Update(Emitter& emitter)
+void ParticleSystem::Update()
 {
-
-	emitter.frequencyTime += kDeltaTime;
-	if (emitter.frequency <= emitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-
-		particles.splice(particles.end(), Emit(emitter, randomEngine));
-
-		emitter.frequencyTime -= emitter.frequency;
-	}
-
-	numInstance = 0;
-	Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
-	billboardMatrix.m[3][0] = 0.0f;
-	billboardMatrix.m[3][1] = 0.0f;
-	billboardMatrix.m[3][2] = 0.0f;
-
+	
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
-		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {
-			particleIt = particles.erase(particleIt);
-			continue;
-		}
-
-		/*if (IsCollision(TestField.area,(*particleIt).transform.translate)) {
-			(*particleIt).velocity += TestField.acceleration * kDeltaTime;
-		}*/
-
-		Vector3 velcity = (*particleIt).velocity * kDeltaTime;
-		(*particleIt).transform.translate += velcity * emitter.speed;
-		//エミッターがパーティクルの半径を決める
-		(*particleIt).transform.scale = emitter.particleRadius;
-		Vector3 translate = (*particleIt).transform.translate + emitter.world_.transform.translate;
-		float alpha = 1.0f - ((*particleIt).currentTime / (*particleIt).lifeTime);
-		(*particleIt).color.w = alpha;
-		(*particleIt).color.x = emitter.color.x;
-		(*particleIt).color.y = emitter.color.y;
-		(*particleIt).color.z = emitter.color.z;
-		(*particleIt).currentTime += kDeltaTime;
-		(*particleIt).matWorld = MakeAffineMatrix((*particleIt).transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
-
-		if (numInstance < kNumMaxInstance) {
-			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
-			instancinsData[numInstance].matWorld.m[3][0] = translate.x;
-			instancinsData[numInstance].matWorld.m[3][1] = translate.y;
-			instancinsData[numInstance].matWorld.m[3][2] = translate.z;
-			instancinsData[numInstance].color = (*particleIt).color;
-			++numInstance;
-		}
-
-		++particleIt;
+		UpdateParticle(*particleIt);
 	}
 
 #ifdef _DEBUG

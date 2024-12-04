@@ -95,8 +95,9 @@ private:
 
 	WorldTransform worldArmL;
 	//パーティクル
-	ParticleSystem* particle;
+	ParticleSystem* particle_;
 	Emitter deadEnemyParticleEmitter;
+	void UpdateParticle(Particle& particle);
 
 #pragma region
 	Animation* animationArmLDamage;

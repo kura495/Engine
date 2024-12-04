@@ -45,7 +45,11 @@ public:
 
 	void Initalize(const std::string filePath);
 
-	void Update(Emitter& emitter);
+	void Update();
+
+	//関数ポインタ　OnCollisionを入れる
+	using UpdateFunction = std::function<void(Particle&)>;
+	UpdateFunction UpdateParticle;
 
 	void RendererDraw();
 	void Draw(const ViewProjection& viewProjection);

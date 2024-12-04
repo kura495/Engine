@@ -26,13 +26,14 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
 
 #pragma region 
-	particle = new ParticleSystem();
-	particle->Initalize("resources/circle2.png");
+	particle_ = new ParticleSystem();
+	particle_->Initalize("resources/circle2.png");
+	particle_->UpdateParticle = [this](Particle& particle) {UpdateParticle(particle); };
 
 	deadEnemyParticleEmitter.count = 100;
 	deadEnemyParticleEmitter.frequency = 0.1f;
 	deadEnemyParticleEmitter.particleRadius = { 0.5f,0.5f,1.0f };
-	deadEnemyParticleEmitter.color = { 1.0f,0.0f,0.0f };
+	deadEnemyParticleEmitter.color = { 1.0f,1.0f,1.0f };
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル
 
@@ -88,7 +89,7 @@ void Boss::Draw()
 		break;
 	case BossBehavior::Dead:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		particle->RendererDraw();
+		particle_->RendererDraw();
 		break;
 	case BossBehavior::Down:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
@@ -271,22 +272,17 @@ void Boss::SpawnUpdate()
 void Boss::DeadInit()
 {
 	deadEnemyParticleEmitter.world_.transform.translate = worldArmL.transform.translate;
-	//deadEnemyParticleEmitter.world_.transform.translate.y += 1.0f;
 	easeT = 0.0f;
 }
 void Boss::DeadUpdate()
 {
 	easeT = (std::min)(easeT + 0.1f, 1.0f);
 
-	//if (easeT == 1.0f) {
-	//	deadEnemyParticleEmitter
-	//}
-
 	models_[Body::ArmL]->color_.w = (std::max)(models_[Body::ArmL]->color_.w - 0.01f, 0.0f);
 	if (models_[Body::ArmL]->color_.w == 0.0f) {
 		IsAlive = false;
 	}
-	particle->Update(deadEnemyParticleEmitter);
+	particle_->Update();
 }
 void Boss::DownInit()
 {
