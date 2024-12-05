@@ -65,36 +65,12 @@ void Player::Update()
 	}
 
 	BehaviorUpdate();
-	//パーティクル
-	deadParticleEmitter.frequencyTime += kDeltaTime;
-	if (deadParticleEmitter.frequency <= deadParticleEmitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
 
-		particle_->SpawnParticle(deadParticleEmitter, randomEngine);
-
-		deadParticleEmitter.frequencyTime -= deadParticleEmitter.frequency;
-	}
 	particle_->Update();
 	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 #ifdef USE_IMGUI
 	ImGui();
 #endif
-
-	//メニュー画面を開く
-	//if (input->pushPad(XINPUT_GAMEPAD_START) || input->pushKey(DIK_ESCAPE)) {
-	//	if (PushOptionButtern) {
-	//		PushOptionButtern = false;
-	//	}
-	//	else {
-	//		PushOptionButtern = true;
-	//	}
-	//}
-	/*float leng = followCamera->GetViewProjection().translation_.y - world_.transform.translate.y;
-	if (leng > kMax) {
-
-	}*/
 	//TODO　着地面の高さを求めて、カメラの高さを決めると、アストロボット的なジャンプが実装できそう
 	//		ジャンプ先が高い位置にあると、カメラが上に移動する
 	if (behavior_ != Behavior::kJump) {
@@ -119,7 +95,7 @@ void Player::Draw()
 	walkanimation->DebugDraw(world_);
 #endif
 	
-	particle_->RendererDraw();
+
 	switch (behavior_)
 	{
 	case Behavior::kRoot:
@@ -136,7 +112,7 @@ void Player::Draw()
 			models_[0]->RendererSkinDraw(world_, deadAnimation->GetSkinCluster());
 		}
 		else {
-
+			particle_->RendererDraw();
 		}
 		break;
 	}
@@ -242,6 +218,18 @@ void Player::DeadInit()
 }
 void Player::DeadUpdate()
 {
+	//パーティクル
+	deadParticleEmitter.frequencyTime += kDeltaTime;
+	if (deadParticleEmitter.frequency <= deadParticleEmitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		particle_->SpawnParticle(deadParticleEmitter, randomEngine);
+
+		deadParticleEmitter.frequencyTime -= deadParticleEmitter.frequency;
+	}
+
 	deadAnimation->PlayAnimation();
 
 	animationTime_ += 2.0f / 60.0f;
@@ -250,12 +238,11 @@ void Player::DeadUpdate()
 		animationTime_ = 0.0f;
 		if (HP_ <= 0) {
 			isDeadModelDraw = false;
-			//isDead = true;
+			isDead = true;
 		}
 	}
 	if (isDeadModelDraw == false) {
-		//TODO
-		//particle_->Update();
+		particle_->Update();
 	}
 }
 #pragma endregion BeheviorTree
@@ -314,7 +301,7 @@ void Player::UpdateParticle(Particle& particle)
 {
 
 	Vector3 velcity = particle.velocity * kDeltaTime;
-	//particle.transform.translate += velcity * deadParticleEmitter.speed;
+	particle.transform.translate += velcity * deadParticleEmitter.speed;
 	//エミッターがパーティクルの半径を決める
 	particle.transform.scale = deadParticleEmitter.particleRadius;
 	Vector3 translate = particle.transform.translate;

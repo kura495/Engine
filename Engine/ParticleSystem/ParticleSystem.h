@@ -99,7 +99,7 @@ private:
 	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ランダム
-	Particle MakeNewParticle(Emitter& emitter,std::mt19937& randomEngine);
+	Particle MakeNewParticle(Emitter& emitter, std::mt19937& randomEngine);
 	Vector4 MakeParticleColor(std::mt19937& randomEngine);
 	float MakeParticleLifeTime(std::mt19937& randomEngine);
 

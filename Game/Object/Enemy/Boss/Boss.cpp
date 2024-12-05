@@ -64,18 +64,6 @@ void Boss::Update()
 		}
 	}
 
-	//パーティクル
-	deadEnemyParticleEmitter.frequencyTime += kDeltaTime;
-	if (deadEnemyParticleEmitter.frequency <= deadEnemyParticleEmitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-
-		particle_->SpawnParticle(deadEnemyParticleEmitter, randomEngine);
-
-		deadEnemyParticleEmitter.frequencyTime -= deadEnemyParticleEmitter.frequency;
-	}
-
 	BehaviorUpdate();
 
 	world_.Update();
@@ -293,6 +281,18 @@ void Boss::DeadUpdate()
 	models_[Body::ArmL]->color_.w = (std::max)(models_[Body::ArmL]->color_.w - 0.01f, 0.0f);
 	if (models_[Body::ArmL]->color_.w == 0.0f) {
 		IsAlive = false;
+	}
+
+	//パーティクル
+	deadEnemyParticleEmitter.frequencyTime += kDeltaTime;
+	if (deadEnemyParticleEmitter.frequency <= deadEnemyParticleEmitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		particle_->SpawnParticle(deadEnemyParticleEmitter, randomEngine);
+
+		deadEnemyParticleEmitter.frequencyTime -= deadEnemyParticleEmitter.frequency;
 	}
 	particle_->Update();
 }

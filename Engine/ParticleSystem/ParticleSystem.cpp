@@ -39,6 +39,12 @@ void ParticleSystem::Initalize(const std::string filePath)
 void ParticleSystem::Update()
 {
 	numInstance = 0;
+
+	Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
+	billboardMatrix.m[3][0] = 0.0f;
+	billboardMatrix.m[3][1] = 0.0f;
+	billboardMatrix.m[3][2] = 0.0f;
+
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
 
 		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {
@@ -48,10 +54,6 @@ void ParticleSystem::Update()
 
 		UpdateParticle(*particleIt);
 
-		Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
-		billboardMatrix.m[3][0] = 0.0f;
-		billboardMatrix.m[3][1] = 0.0f;
-		billboardMatrix.m[3][2] = 0.0f;
 		if (numInstance < kNumMaxInstance) {
 			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
 			instancinsData[numInstance].matWorld.m[3][0] = (*particleIt).transform.translate.x;
@@ -60,6 +62,7 @@ void ParticleSystem::Update()
 			instancinsData[numInstance].color = (*particleIt).color;
 			++numInstance;
 		}
+		++particleIt;
 	}
 
 #ifdef _DEBUG
@@ -93,7 +96,6 @@ void ParticleSystem::Draw(const ViewProjection& viewProjection)
 
 void ParticleSystem::SpawnParticle(Emitter& emitter, std::mt19937& randomEngine)
 {
-	Testemitter = emitter;
 	particles.splice(particles.end(), Emit(emitter, randomEngine));
 }
 
@@ -177,9 +179,7 @@ Particle ParticleSystem::MakeNewParticle(Emitter& emitter,std::mt19937& randomEn
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Particle particle;
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
-	particle.transform.translate.x = emitter.world_.transform.translate.x + ramdomTranslate.x;
-	particle.transform.translate.y = emitter.world_.transform.translate.y + ramdomTranslate.y;
-	particle.transform.translate.z = emitter.world_.transform.translate.z + ramdomTranslate.z;
+	particle.transform.translate = ramdomTranslate + emitter.world_.transform.translate;
 	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.color = MakeParticleColor(randomEngine);
 	particle.lifeTime = MakeParticleLifeTime(randomEngine);
