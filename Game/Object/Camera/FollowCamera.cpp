@@ -7,6 +7,8 @@ void FollowCamera::Initialize() {
 
 	viewProj.translation_ = InitCameraPos2;
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
+
+	workInter.interTarget_ = { 0.0f,0.0f,0.0f };
 }
 
 void FollowCamera::Update() { 
@@ -60,11 +62,12 @@ void FollowCamera::Update() {
 			//Vector3 offset = OffsetCalc();
 			////オフセット分と追従座標の補間分ずらす
 			//viewProj.translation_ = pos + offset;
-		}
-	}
-#ifdef _DEBUG
+		#ifdef _DEBUG
 	ImGui();
 #endif
+		}
+	}
+
 
 	viewProj.Update();
 }

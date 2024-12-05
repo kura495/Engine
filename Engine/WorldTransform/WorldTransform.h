@@ -4,7 +4,6 @@
 #include "Common/DirectX/DirectXCommon.h"
 #include "Math/Vector/VectorCalc.h"
 #include "Transform.h"
-
 class Model;
 struct ConstBufferDataWorldTransform {
 	Matrix4x4 matWorld; // ローカル → ワールド変換行列

@@ -25,7 +25,7 @@ void OBBoxCollider::CollisionUpdate()
 	Quaternion qua = center_->transform.quaternion;
 	SetOrientations(MakeRotateMatrix(center_->transform.quaternion));
 	if (center_->parent_) {
-		offsetVec = center_->transform.translate;
+		offsetVec = center_->transform.translate + offsetVec;
 		offsetVec = TransformNormal(offsetVec, MakeRotateMatrix(center_->parent_->transform.quaternion));
 		//移動
 		SetOrientations(MakeRotateMatrix(center_->parent_->transform.quaternion * center_->transform.quaternion));

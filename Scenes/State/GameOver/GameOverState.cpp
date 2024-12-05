@@ -23,7 +23,7 @@ void GameOverState::Update()
 	}
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_A, 10)) {
 		if (IsCanPush) {
-			StateNo = 0;
+			StateNo = 1;
 		}
 	}
 }

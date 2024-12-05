@@ -32,6 +32,7 @@ void GameClearState::Update()
 	if (IsCanPush) {
 		if (fade->In()) {
 			StateNo = 1;
+			IsCanPush = false;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 #include "Vector2.h"
-
+using namespace Math;
 Vector2 Vector2::VectorLerp(const Vector2& v1, const Vector2& v2, float t) {
 	Vector2 result;
 	if (t < 0) {

@@ -39,7 +39,7 @@ Matrix4x4 MakeRotateMatrix(Vector3 rotation)
 {
 	Matrix4x4 result;
 	result = Matrix4x4::CreateIdentity();
-	result = Matrix4x4::Multiply(MakeRotateXMatrix(rotation.x), Matrix4x4::Multiply(MakeRotateYMatrix(rotation.y),MakeRotateZMatrix(rotation.z)));
+	result = Matrix4x4::Multiply(MakeRotateXMatrix(rotation.x), Matrix4x4::Multiply(MakeRotateYMatrix(rotation.y), MakeRotateZMatrix(rotation.z)));
 	return result;
 }
 Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion)

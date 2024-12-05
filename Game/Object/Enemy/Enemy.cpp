@@ -12,15 +12,13 @@ void Enemy::ImGui()
 #endif
 }
 
-void Enemy::OnCollision(const ICollider* ICollider)
+void Enemy::OnCollision(const ICollider& ICollider)
 {
-	if (ICollider->GetcollitionAttribute() == ColliderTag::Weapon) {
+	if (ICollider.GetcollitionAttribute() == ColliderTag::Weapon) {
 		HP_ -= 1;
 		isDamege = true;
 		damegeInterval = 0;
 
-	}
-	if (ICollider->GetcollitionAttribute() == ColliderTag::Player) {
 	}
 }
 

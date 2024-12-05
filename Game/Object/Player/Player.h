@@ -7,11 +7,13 @@
 #include "Input/Input.h"
 #include "Animation/Animation.h"
 #include "Game/Object/Camera/FollowCamera.h"
+#include "ParticleSystem/ParticleSystem.h"
 
 enum class Behavior {
 	kRoot,
 	kJump,
-	kAttack
+	kAttack,
+	kDead
 };
 
 class Player : public IObject
@@ -31,9 +33,9 @@ public:
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
 
-	void SetCamera(FollowCamera* camera) { followCamera = camera; };
 private:
 	void ImGui();
+	//スティック入力で移動させる関数
 	void Move();
 #pragma region 
 	//ふるまい
@@ -50,14 +52,17 @@ private:
 	//kJump
 	void JumpInit();
 	void JumpUpdate();
+	//kDead
+	void DeadInit();
+	void DeadUpdate();
 #pragma endregion BehaviorTree
 #pragma region 
 	//プレイヤーキャラ事態の当たり判定
 	void ColliderInit();
-	void OnCollision(const ICollider* collider);
+	void OnCollision(const ICollider& collider);
 	//攻撃の当たり判定
 	void AttackColliderInit();
-	void AttackOnCollision(const ICollider* collider);
+	void AttackOnCollision(const ICollider& collider);
 	OBBoxCollider colliderPlayer;
 	OBBoxCollider colliderAttack;
 	WorldTransform attackColliderWorld_;
@@ -66,7 +71,7 @@ private:
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
 	//HP
-	uint32_t HP_ = 10;
+	uint32_t HP_ = 1;
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
 	//ジャンプの強さ
@@ -77,20 +82,24 @@ private:
 	const float kJumpSubValue = 0.03f;
 #pragma endregion Parameter
 
-#pragma region
-
-	FollowCamera* followCamera;
-	//一定幅開くとカメラが近くなる
-	const float kMax = 5.0f;
-#pragma endregion
-
 	Input* input = nullptr;
 
+	ParticleSystem* particle_;
+	void UpdateParticle(Particle& particle);
+	Emitter deadParticleEmitter;
+	const float kDeltaTime = 1.0f / 60.0f;
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
 
-	Animation* animation;
-	Animation* IdleAnimation;
+	Animation* walkanimation;
+	Animation* idleAnimation;
+	Animation* deadAnimation;
+	//アニメーション
+	float animationTime_ = 0.0f;
+
+	bool isDamege = false;
+	//死んだときにモデルを描画するか
+	bool isDeadModelDraw = true;
 
 };

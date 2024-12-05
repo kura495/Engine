@@ -16,7 +16,7 @@ public:
 	/// プレイヤーをセット
 	/// </summary>
 	/// <param name="player">プレイヤーのポインタ</param>
-	void SetPlayer(Player* player) { player_ = player; };
+	void SetPlayer(Player*& player) { player_ = player; };
 
 	bool GetIsAlive() {
 		return IsAlive;
@@ -31,7 +31,7 @@ protected://関数
 	//追加用ImGui overrideするだけで追加可能
 	virtual void AddImGui(){};
 	//当たり判定用
-	virtual void OnCollision(const ICollider* ICollider);
+	virtual void OnCollision(const ICollider& ICollider);
 
 	float animationTime_ = 0.0f;
 
@@ -39,7 +39,7 @@ protected://関数
 	int damegeInterval = 0;
 	const int kDamegeInterval = 60;
 
-	uint32_t HP_;
+	int32_t HP_;
 
 	bool IsAlive = true;
 

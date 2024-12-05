@@ -18,21 +18,38 @@ void Player::Init(std::vector<Model*> models)
 	AttackColliderInit();
 
 #pragma region
-	animation = new Animation();
-	animation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
-	animation->Init();
-	animation->AnimeInit(*models_[0], true);
+	walkanimation = new Animation();
+	walkanimation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
+	walkanimation->Init();
+	walkanimation->AnimeInit(*models_[0], true);
 
-	IdleAnimation = new Animation();
-	IdleAnimation = Animation::LoadAnimationFile("resources/human", "Idle.gltf");
-	IdleAnimation->Init();
-	IdleAnimation->AnimeInit(*models_[0], true);
+	idleAnimation = new Animation();
+	idleAnimation = Animation::LoadAnimationFile("resources/human", "Idle.gltf");
+	idleAnimation->Init();
+	idleAnimation->AnimeInit(*models_[0], true);
+
+	deadAnimation = new Animation();
+	deadAnimation = Animation::LoadAnimationFile("resources/human", "dead.gltf");
+	deadAnimation->Init();
+	deadAnimation->AnimeInit(*models_[0], true);
 #pragma endregion Anime
+
+#pragma region
+	particle_ = new ParticleSystem();
+	particle_->Initalize("resources/circle2.png");
+	particle_->UpdateParticle = [this](Particle& particle) {return UpdateParticle(particle); };
+
+	deadParticleEmitter.count = 5;
+	deadParticleEmitter.frequency = 0.1f;
+	deadParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
+	deadParticleEmitter.color = { 0.0f,0.0f,0.0f };
+	deadParticleEmitter.speed = { 2.0f,2.0f,2.0f };
+#pragma endregion パーティクル
 }
 
 void Player::TitleUpdate()
 {
-	IdleAnimation->PlayAnimation();
+	walkanimation->PlayAnimation();
 }
 
 void Player::Update()
@@ -41,38 +58,26 @@ void Player::Update()
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
 
-	if (HP_ <= 0) {
-		isDead = true;
+	if (isDamege) {
+		behaviorRequest_ = Behavior::kDead;
+		isDamege = false;
+		HP_ -= 1;
 	}
-	Move();
 
 	BehaviorUpdate();
 
+	particle_->Update();
+	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 #ifdef USE_IMGUI
 	ImGui();
 #endif
-
-	//メニュー画面を開く
-	//if (input->pushPad(XINPUT_GAMEPAD_START) || input->pushKey(DIK_ESCAPE)) {
-	//	if (PushOptionButtern) {
-	//		PushOptionButtern = false;
-	//	}
-	//	else {
-	//		PushOptionButtern = true;
-	//	}
-	//}
-	/*float leng = followCamera->GetViewProjection().translation_.y - world_.transform.translate.y;
-	if (leng > kMax) {
-		
-	}*/
 	//TODO　着地面の高さを求めて、カメラの高さを決めると、アストロボット的なジャンプが実装できそう
 	//		ジャンプ先が高い位置にあると、カメラが上に移動する
 	if (behavior_ != Behavior::kJump) {
 		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
 
 	}
-	
-	
+
 	world_.Update();
 
 	//前フレームのゲームパッドの状態を保存
@@ -81,17 +86,233 @@ void Player::Update()
 
 void Player::TitleDraw()
 {
-	models_[0]->RendererSkinDraw(world_, IdleAnimation->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, idleAnimation->GetSkinCluster());
 }
 
 void Player::Draw()
 {
 #ifdef _DEBUG
-	animation->DebugDraw(world_);
+	walkanimation->DebugDraw(world_);
 #endif
-	models_[0]->RendererSkinDraw(world_, animation->GetSkinCluster());
+	
+
+	switch (behavior_)
+	{
+	case Behavior::kRoot:
+	default:
+		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
+		break;
+	case Behavior::kAttack:
+		break;
+	case Behavior::kJump:
+		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
+		break;
+	case Behavior::kDead:
+		if (isDeadModelDraw) {
+			models_[0]->RendererSkinDraw(world_, deadAnimation->GetSkinCluster());
+		}
+		else {
+			particle_->RendererDraw();
+		}
+		break;
+	}
+
 }
 
+#pragma region
+void Player::BehaviorUpdate()
+{
+	//初期化
+	if (behaviorRequest_) {
+		//ふるまいの変更
+		behavior_ = behaviorRequest_.value();
+		//各ふるまいごとに初期化
+		switch (behavior_)
+		{
+		case Behavior::kRoot:
+		default:
+			RootInit();
+			break;
+		case Behavior::kAttack:
+			AttackInit();
+			break;
+		case Behavior::kJump:
+			JumpInit();
+			break;
+		case Behavior::kDead:
+			DeadInit();
+			break;
+		}
+
+		behaviorRequest_ = std::nullopt;
+	}
+	//更新
+	switch (behavior_)
+	{
+	case Behavior::kRoot:
+	default:
+		RootUpdate();
+		break;
+	case Behavior::kAttack:
+		AttackUpdate();
+		break;
+	case Behavior::kJump:
+		JumpUpdate();
+		break;
+	case Behavior::kDead:
+		DeadUpdate();
+		break;
+	}
+}
+//kRoot
+void Player::RootInit()
+{
+	colliderPlayer.IsUsing = true;
+	//FollowCamera::workInter.interParameter_.y = 0.0f;
+
+}
+void Player::RootUpdate()
+{
+	Move();
+	//攻撃
+	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
+		behaviorRequest_ = Behavior::kAttack;
+	}
+	//ジャンプ
+	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
+		behaviorRequest_ = Behavior::kJump;
+	}
+}
+//kAttack
+void Player::AttackInit()
+{
+	colliderAttack.IsUsing = true;
+}
+void Player::AttackUpdate()
+{
+	//kRootに戻す
+	behaviorRequest_ = Behavior::kRoot;
+}
+//kJump
+void Player::JumpInit() {
+	jumpForce = kJumpForce;
+	//FollowCamera::workInter.interParameter_.y = 0.0f;
+}
+void Player::JumpUpdate() {
+
+	Move();
+
+	world_.transform.translate.y += jumpForce;
+	jumpForce -= kJumpSubValue;
+
+	if (world_.transform.translate.y <= 0) {
+		world_.transform.translate.y = 0;
+		behaviorRequest_ = Behavior::kRoot;
+	}
+}
+//kDead
+void Player::DeadInit()
+{
+	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
+	deadParticleEmitter.world_.transform.translate.y += 1.0f;
+}
+void Player::DeadUpdate()
+{
+	//パーティクル
+	deadParticleEmitter.frequencyTime += kDeltaTime;
+	if (deadParticleEmitter.frequency <= deadParticleEmitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		particle_->SpawnParticle(deadParticleEmitter, randomEngine);
+
+		deadParticleEmitter.frequencyTime -= deadParticleEmitter.frequency;
+	}
+
+	deadAnimation->PlayAnimation();
+
+	animationTime_ += 2.0f / 60.0f;
+	if (animationTime_ > deadAnimation->duration) {
+		isDamege = false;
+		animationTime_ = 0.0f;
+		if (HP_ <= 0) {
+			isDeadModelDraw = false;
+			isDead = true;
+		}
+	}
+	if (isDeadModelDraw == false) {
+		particle_->Update();
+	}
+}
+#pragma endregion BeheviorTree
+#pragma region
+void Player::ColliderInit()
+{
+	colliderPlayer.Init(&world_);
+	colliderPlayer.SetSize({ 0.5f,1.0f,0.5f });
+	colliderPlayer.SetOffset({ 0.0f,0.5f,0.0f });
+	colliderPlayer.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
+	colliderPlayer.SetcollitionAttribute(ColliderTag::Player);
+	colliderPlayer.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
+}
+void Player::OnCollision(const ICollider& ICollider)
+{
+
+	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
+		isDamege = true;
+		ImGui::Begin("Player");
+		ImGui::Text("Hit");
+		ImGui::End();
+		//playerMoveValue = true;
+	}
+	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
+		isDamege = true;
+		ImGui::Begin("Player");
+		ImGui::Text("Hit");
+		ImGui::End();
+	}
+
+	return;
+}
+void Player::AttackColliderInit()
+{
+	attackColliderWorld_.SetParent(&world_);
+	colliderAttack.Init(&attackColliderWorld_);
+	colliderAttack.SetSize({ 0.5f,1.0f,0.5f });
+	colliderAttack.SetOffset({ 0.0f,0.5f,1.0f });
+	colliderAttack.OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
+	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
+	colliderAttack.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
+
+	colliderAttack.IsUsing = false;
+}
+void Player::AttackOnCollision(const ICollider& collider)
+{
+	if (collider.GetcollitionAttribute() == ColliderTag::Enemy) {
+		colliderAttack.IsUsing = false;
+	}
+	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
+		colliderAttack.IsUsing = false;
+	}
+}
+#pragma endregion Collider
+void Player::UpdateParticle(Particle& particle)
+{
+
+	Vector3 velcity = particle.velocity * kDeltaTime;
+	particle.transform.translate += velcity * deadParticleEmitter.speed;
+	//エミッターがパーティクルの半径を決める
+	particle.transform.scale = deadParticleEmitter.particleRadius;
+	Vector3 translate = particle.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	particle.color.w = alpha;
+	particle.color.x = deadParticleEmitter.color.x;
+	particle.color.y = deadParticleEmitter.color.y;
+	particle.color.z = deadParticleEmitter.color.z;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+}
 void Player::ImGui()
 {
 	ImGui::Begin("Player");
@@ -151,146 +372,11 @@ void Player::Move()
 		world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
 #pragma endregion プレイヤーの回転
-	
-		animation->PlayAnimation();
+
+		walkanimation->PlayAnimation();
 
 		return;
 	}
 
 
 }
-#pragma region
-void Player::BehaviorUpdate()
-{
-	//初期化
-	if (behaviorRequest_) {
-		//ふるまいの変更
-		behavior_ = behaviorRequest_.value();
-		//各ふるまいごとに初期化
-		switch (behavior_)
-		{
-		case Behavior::kRoot:
-		default:
-			RootInit();
-			break;
-		case Behavior::kAttack:
-			AttackInit();
-			break;
-		case Behavior::kJump:
-			JumpInit();
-			break;
-		}
-
-		behaviorRequest_ = std::nullopt;
-	}
-	//更新
-	switch (behavior_)
-	{
-	case Behavior::kRoot:
-	default:
-		RootUpdate();
-		break;
-	case Behavior::kAttack:
-		AttackUpdate();
-		break;
-	case Behavior::kJump:
-		JumpUpdate();
-		break;
-	}
-}
-//kRoot
-void Player::RootInit()
-{
-	colliderPlayer.IsUsing = true;
-	FollowCamera::workInter.interParameter_.y = 0.0f;
-
-}
-void Player::RootUpdate()
-{
-
-	//攻撃
-	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
-		behaviorRequest_ = Behavior::kAttack;
-	}
-	//ジャンプ
-	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
-		behaviorRequest_ = Behavior::kJump;
-	}
-}
-//kAttack
-void Player::AttackInit()
-{
-	colliderAttack.IsUsing = true;
-}
-void Player::AttackUpdate()
-{
-	//kRootに戻す
-	behaviorRequest_ = Behavior::kRoot;
-}
-//kJump
-void Player::JumpInit() {
-	jumpForce = kJumpForce;
-	FollowCamera::workInter.interParameter_.y = 0.0f;
-}
-void Player::JumpUpdate() {
-	world_.transform.translate.y += jumpForce;
-	jumpForce -= kJumpSubValue;
-
-	if (world_.transform.translate.y <= 0) {
-		world_.transform.translate.y = 0;
-		behaviorRequest_ = Behavior::kRoot;
-	}
-}
-
-#pragma endregion BeheviorTree
-#pragma region
-void Player::ColliderInit()
-{
-	colliderPlayer.Init(&world_);
-	colliderPlayer.SetSize({ 0.5f,1.0f,0.5f });
-	colliderPlayer.SetOffset({ 0.0f,0.5f,0.0f });
-	colliderPlayer.OnCollision = [this](ICollider* collider) { OnCollision(collider); };
-	colliderPlayer.SetcollitionAttribute(ColliderTag::Player);
-	colliderPlayer.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
-}
-void Player::OnCollision(const ICollider* ICollider)
-{
-
-	if (ICollider->GetcollitionAttribute() == ColliderTag::EnemyAttack) {
-		HP_ -= 1;
-		//playerMoveValue = true;
-	}
-
-	if (ICollider->GetcollitionAttribute() == ColliderTag::Floor) {
-		if (ICollider->GetCenter().y > world_.transform.translate.y) {
-			world_.transform.translate.y = ICollider->GetCenter().y;
-			world_.Update();
-		}
-	}
-	else if (ICollider->GetcollitionAttribute() == ColliderTag::Box) {
-		Vector3 IColliderPos = ICollider->GetCenter();
-
-		world_.Update();
-	}
-	return;
-}
-void Player::AttackColliderInit()
-{
-	attackColliderWorld_.SetParent(&world_);
-	attackColliderWorld_.transform.translate.y = 0.5f;
-	attackColliderWorld_.transform.translate.z = 1.0f;
-	colliderAttack.Init(&attackColliderWorld_);
-	colliderAttack.SetSize({ 0.5f,1.0f,0.5f });
-	colliderAttack.OnCollision = [this](ICollider* collider) { AttackOnCollision(collider); };
-	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
-	colliderAttack.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
-
-	colliderAttack.IsUsing = false;
-}
-void Player::AttackOnCollision(const ICollider* collider)
-{
-	if (collider->GetcollitionAttribute() == ColliderTag::Enemy) {
-		colliderAttack.IsUsing = false;
-	}
-}
-#pragma endregion Collider

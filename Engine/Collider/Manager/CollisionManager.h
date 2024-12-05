@@ -27,7 +27,8 @@ private:
 	
 	// 関数ポインタの型
 	using CollisionFunction = std::function<bool(ICollider*, ICollider*)>;
-	CollisionFunction checkCollisions_[ICollider::Shape::MaxValue][ICollider::Shape::MaxValue];	// Shape::Countの値がサイズだよ！
+	CollisionFunction checkCollisions_[ICollider::Shape::MaxValue][ICollider::Shape::MaxValue];	
+	// Shape::Countの値がサイズ！
 	//判定用関数
 	//void CheckCollisionCircle(Collider* colliderA, Collider* colliderB);
 	bool CheckCollision(BoxCollider* colliderA, BoxCollider* colliderB);

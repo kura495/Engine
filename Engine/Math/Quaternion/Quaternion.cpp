@@ -1,5 +1,5 @@
 #include "Quaternion.h"
-
+using namespace Math;
 Quaternion Quaternion::IdentityQuaternion()
 {
 	return Quaternion({0.0f,0.0f,0.0f,1.0f});

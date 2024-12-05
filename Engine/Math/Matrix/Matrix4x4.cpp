@@ -1,5 +1,5 @@
 ﻿#include "Matrix4x4.h"
-
+using namespace Math;
 Matrix4x4 Matrix4x4::CreateIdentity()
 {
     Matrix4x4 result = {

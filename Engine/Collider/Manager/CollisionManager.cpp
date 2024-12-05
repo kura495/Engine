@@ -69,8 +69,8 @@ void CollisionManager::CheckAllCollisions() {
 			}
 			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
 				//当たった時の処理呼び出し
-				colliderA->OnCollision(colliderB);
-				colliderB->OnCollision(colliderA);
+				colliderA->OnCollision(*colliderB);
+				colliderB->OnCollision(*colliderA);
 			}
 		}
 	}

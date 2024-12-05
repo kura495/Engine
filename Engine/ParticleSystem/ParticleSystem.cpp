@@ -30,13 +30,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 	Pipeline_ = std::make_unique<ParticlePipeLine>();
 	Pipeline_->Initalize();
 
-	Testemitter.count = 5;
-	Testemitter.frequency = 0.1f;
-	Testemitter.frequencyTime = 0.0f;
-	Testemitter.world_.transform.scale	= { 1.0f,1.0f,1.0f };
-	Testemitter.world_.transform.translate = { 0.0f,0.0f,0.0f };
-
-	TestField.acceleration = {15.0f,0.0f,0.0f};
+	TestField.acceleration = {0.0f,0.0f,0.0f};
 	TestField.area.min = {-1.0f,-1.0f,-1.0f};
 	TestField.area.max = { 1.0f,1.0f,1.0f };
 	
@@ -44,47 +38,30 @@ void ParticleSystem::Initalize(const std::string filePath)
 
 void ParticleSystem::Update()
 {
-
-	Testemitter.frequencyTime += kDeltaTime;
-	if (Testemitter.frequency <= Testemitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-
-		particles.splice(particles.end(), Emit(Testemitter, randomEngine));
-
-		Testemitter.frequencyTime -= Testemitter.frequency;
-	}
-
 	numInstance = 0;
+
 	Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
 
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
+
 		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {
 			particleIt = particles.erase(particleIt);
 			continue;
 		}
 
-		if (IsCollision(TestField.area,(*particleIt).transform.translate)) {
-			(*particleIt).velocity += TestField.acceleration * kDeltaTime;
-		}
-
-		Vector3 velcity = (*particleIt).velocity * kDeltaTime;
-		(*particleIt).transform.translate += velcity;
-		float alpha = 1.0f - ((*particleIt).currentTime / (*particleIt).lifeTime);
-		(*particleIt).color.w = alpha;
-		(*particleIt).currentTime += kDeltaTime;
-		(*particleIt).matWorld = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, Vector3{ 0.0f,0.0f,0.0f }, (*particleIt).transform.translate);
+		UpdateParticle(*particleIt);
 
 		if (numInstance < kNumMaxInstance) {
 			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
+			instancinsData[numInstance].matWorld.m[3][0] = (*particleIt).transform.translate.x;
+			instancinsData[numInstance].matWorld.m[3][1] = (*particleIt).transform.translate.y;
+			instancinsData[numInstance].matWorld.m[3][2] = (*particleIt).transform.translate.z;
 			instancinsData[numInstance].color = (*particleIt).color;
 			++numInstance;
 		}
-
 		++particleIt;
 	}
 
@@ -117,34 +94,22 @@ void ParticleSystem::Draw(const ViewProjection& viewProjection)
 	directX_->GetcommandList()->DrawInstanced(6, numInstance, 0, 0);
 }
 
+void ParticleSystem::SpawnParticle(Emitter& emitter, std::mt19937& randomEngine)
+{
+	particles.splice(particles.end(), Emit(emitter, randomEngine));
+}
+
 void ParticleSystem::PreDraw()
 {
 	directX_->GetcommandList()->SetGraphicsRootSignature(Pipeline_->GetPSO().rootSignature.Get());
 	directX_->GetcommandList()->SetPipelineState(Pipeline_->GetPSO().graphicsPipelineState.Get());
 }
 
-void ParticleSystem::SetPos(Vector3 Pos)
-{
-	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end(); ++particleIt) {
-		(*particleIt).transform.translate = Pos;
-	}
-}
-
-void ParticleSystem::AddParticle(const Emitter& emitter)
-{
-	//ランダム生成用
-	std::random_device seedGenerator;
-	std::mt19937 randomEngine(seedGenerator());
-
-	particles.splice(particles.end(), Emit(emitter, randomEngine));
-
-}
-
-std::list<Particle> ParticleSystem::Emit(const Emitter& emitter, std::mt19937& randomEngine)
+std::list<Particle> ParticleSystem::Emit(Emitter& emitter, std::mt19937& randomEngine)
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(MakeNewParticle(randomEngine,emitter.world_.transform.translate));
+		Emitparticles.push_back(MakeNewParticle(emitter,randomEngine));
 	}
 	return Emitparticles;
 }
@@ -209,14 +174,12 @@ void ParticleSystem::CreateSRV()
 	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, textureSrvHandle.CPU);
 }
 
-Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate)
+Particle ParticleSystem::MakeNewParticle(Emitter& emitter,std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Particle particle;
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
-	particle.transform.translate.x = translate.x + ramdomTranslate.x;
-	particle.transform.translate.y = translate.y + ramdomTranslate.y;
-	particle.transform.translate.z = translate.z + ramdomTranslate.z;
+	particle.transform.translate = ramdomTranslate + emitter.world_.transform.translate;
 	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.color = MakeParticleColor(randomEngine);
 	particle.lifeTime = MakeParticleLifeTime(randomEngine);

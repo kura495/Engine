@@ -7,7 +7,7 @@
 #include <map>
 #include <string>
 #include <fstream>
-
+using namespace Math;
 struct Item {
 	//項目の値
 	std::variant<int32_t, float, Vector3,Matrix4x4, TransformQua> value;

@@ -1,4 +1,5 @@
 ﻿#pragma once
+//球体オブジェクト//
 #include "Common/DirectX/DirectXCommon.h"
 #include "Texture/TextureManager.h"
 #include "Light/Light.h"

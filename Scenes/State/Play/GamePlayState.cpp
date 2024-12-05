@@ -5,7 +5,7 @@ void GamePlayState::Initialize()
 	StateNo = GameStateNo::PLAY;
 
 	//基本機能生成
-	debugcamera_ = new DebugCamera();
+	debugcamera_ = std::make_unique<DebugCamera>();
 	debugcamera_->Initialize();
 	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
 	Editer::GetInstance()->IsEnable(true);
@@ -22,7 +22,7 @@ void GamePlayState::Initialize()
 	lanthanumModel_.push_back(Model::CreateModelFromObj("resources/Object", "Object.obj"));
 	lanthan.Initialize();
 
-	titleSprite = new Sprite;
+	titleSprite = std::make_unique<Sprite>();
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/Title.png");
 	title.Initialize();
@@ -32,13 +32,11 @@ void GamePlayState::Initialize()
 
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
-	player_->SetCamera(followCamera.get());
-
 
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
-	particle = new ParticleSystem();
+	particle = std::make_unique<ParticleSystem>();
 	particle->Initalize("resources/circle2.png");
 
 	//enemyManager
@@ -62,12 +60,12 @@ void GamePlayState::Update()
 {
 	BehaviorUpdate();
 
-	particle->Update();
-
-	skyDome_->Update();
-
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
+
+	//particle->Update();
+
+	skyDome_->Update();
 
 	if (enemyManager->GetisClear()) {
 		behaviorRequest_ = StageBehavior::kClear;
@@ -171,7 +169,7 @@ void GamePlayState::BehaviorUpdate()
 #pragma region
 void GamePlayState::TitleInit()
 {
-	sceneInterval = 0.0f;
+
 }
 void GamePlayState::TitleUpdate()
 {
@@ -181,12 +179,9 @@ void GamePlayState::TitleUpdate()
 #ifdef _DEBUG
 	//TODO:デバッグ用なので消すこと！
 	IsTitleToGameFlag = true;
-#endif 
-	sceneInterval += 1.0f;
+#endif
 	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
-		if (sceneInterval > 25.0f) {
-			IsTitleToGameFlag = true;
-		}
+		IsTitleToGameFlag = true;
 	}
 	if (IsTitleToGameFlag) {
 		if (followCamera->PlaySceneInit(&player_->GetWorld())) {
@@ -226,6 +221,7 @@ void GamePlayState::ClearInit()
 }
 void GamePlayState::ClearUpdate()
 {
+	player_->Update();
 	if (fade->In()) {
 		StateNo = 2;
 	}
@@ -243,6 +239,7 @@ void GamePlayState::OverInit()
 }
 void GamePlayState::OverUpdate()
 {
+	player_->Update();
 	if (fade->In()) {
 		StateNo = 3;
 	}

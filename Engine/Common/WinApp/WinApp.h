@@ -1,4 +1,5 @@
 ﻿#pragma once
+//ウィンドウクラス
 #include <Windows.h>
 #include <cstdint>
 #include "Log.h"

@@ -2,7 +2,7 @@
 #include "Math_Structs.h"
 #include "externals/nlohmann/json.hpp"
 #include <iostream>
-
+using namespace Math;
 struct Transform {
 	Vector3 scale;
 	Vector3 rotate;

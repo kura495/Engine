@@ -1,5 +1,5 @@
 #pragma once
-
+//パイプラインマネージャークラス//
 #include <map>
 
 #include "Common/DirectX/DirectXCommon.h"

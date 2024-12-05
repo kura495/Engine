@@ -1,4 +1,5 @@
 #pragma once
+//シェーダーリソースビューの管理クラス//
 #include "Common/DirectX/DirectXCommon.h"
 #include "externals/DirectXTex/DirectXTex.h"
 

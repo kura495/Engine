@@ -1,4 +1,5 @@
 #pragma once
+//オブジェクトの基底クラス//
 #include <vector>
 #include "Object/Model/Model.h"
 #include "Editer/Editer.h"
@@ -33,11 +34,13 @@ public:
 		world_.Update();
 	};
 
+#pragma region
 	uint32_t GetNumber()const { return objectNumber_; };
 
 	WorldTransform& GetWorld() { return world_; };
 
 	std::vector<Model*> Getmodels() { return models_; }
+#pragma endregion Getter
 
 protected:
 

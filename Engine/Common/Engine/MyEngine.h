@@ -1,4 +1,6 @@
 ﻿#pragma once
+//エンジンクラス//
+//未完成　ちゃんとまとめたい
 
 //Base
 #include "Common/WinApp/WinApp.h"

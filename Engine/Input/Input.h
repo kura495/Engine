@@ -1,4 +1,5 @@
 ﻿#pragma once
+//インプットクラス//
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
 #pragma comment(lib,"dinput8.lib")
@@ -19,7 +20,7 @@
 #define MOUSE_BOTTON5	5
 #define MOUSE_BOTTON6	6
 #define MOUSE_BOTTON7	7
-
+using namespace Math;
 struct ListData {
 	uint32_t code;
 	int frame;
