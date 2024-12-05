@@ -38,9 +38,28 @@ void ParticleSystem::Initalize(const std::string filePath)
 
 void ParticleSystem::Update()
 {
-	
+	numInstance = 0;
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
+
+		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {
+			particleIt = particles.erase(particleIt);
+			continue;
+		}
+
 		UpdateParticle(*particleIt);
+
+		Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
+		billboardMatrix.m[3][0] = 0.0f;
+		billboardMatrix.m[3][1] = 0.0f;
+		billboardMatrix.m[3][2] = 0.0f;
+		if (numInstance < kNumMaxInstance) {
+			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
+			instancinsData[numInstance].matWorld.m[3][0] = (*particleIt).transform.translate.x;
+			instancinsData[numInstance].matWorld.m[3][1] = (*particleIt).transform.translate.y;
+			instancinsData[numInstance].matWorld.m[3][2] = (*particleIt).transform.translate.z;
+			instancinsData[numInstance].color = (*particleIt).color;
+			++numInstance;
+		}
 	}
 
 #ifdef _DEBUG
@@ -72,27 +91,23 @@ void ParticleSystem::Draw(const ViewProjection& viewProjection)
 	directX_->GetcommandList()->DrawInstanced(6, numInstance, 0, 0);
 }
 
+void ParticleSystem::SpawnParticle(Emitter& emitter, std::mt19937& randomEngine)
+{
+	Testemitter = emitter;
+	particles.splice(particles.end(), Emit(emitter, randomEngine));
+}
+
 void ParticleSystem::PreDraw()
 {
 	directX_->GetcommandList()->SetGraphicsRootSignature(Pipeline_->GetPSO().rootSignature.Get());
 	directX_->GetcommandList()->SetPipelineState(Pipeline_->GetPSO().graphicsPipelineState.Get());
 }
 
-void ParticleSystem::AddParticle(Emitter& emitter)
-{
-	//ランダム生成用
-	std::random_device seedGenerator;
-	std::mt19937 randomEngine(seedGenerator());
-
-	particles.splice(particles.end(), Emit(emitter, randomEngine));
-
-}
-
 std::list<Particle> ParticleSystem::Emit(Emitter& emitter, std::mt19937& randomEngine)
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(MakeNewParticle(randomEngine));
+		Emitparticles.push_back(MakeNewParticle(emitter,randomEngine));
 	}
 	return Emitparticles;
 }
@@ -157,14 +172,14 @@ void ParticleSystem::CreateSRV()
 	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, textureSrvHandle.CPU);
 }
 
-Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine)
+Particle ParticleSystem::MakeNewParticle(Emitter& emitter,std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Particle particle;
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
-	particle.transform.translate = ramdomTranslate;
-	particle.transform.translate = ramdomTranslate;
-	particle.transform.translate = ramdomTranslate;
+	particle.transform.translate.x = emitter.world_.transform.translate.x + ramdomTranslate.x;
+	particle.transform.translate.y = emitter.world_.transform.translate.y + ramdomTranslate.y;
+	particle.transform.translate.z = emitter.world_.transform.translate.z + ramdomTranslate.z;
 	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.color = MakeParticleColor(randomEngine);
 	particle.lifeTime = MakeParticleLifeTime(randomEngine);

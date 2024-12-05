@@ -35,8 +35,9 @@ void Player::Init(std::vector<Model*> models)
 #pragma endregion Anime
 
 #pragma region
-	particle = new ParticleSystem();
-	particle->Initalize("resources/circle2.png");
+	particle_ = new ParticleSystem();
+	particle_->Initalize("resources/circle2.png");
+	particle_->UpdateParticle = [this](Particle& particle) {return UpdateParticle(particle); };
 
 	deadParticleEmitter.count = 5;
 	deadParticleEmitter.frequency = 0.1f;
@@ -64,7 +65,19 @@ void Player::Update()
 	}
 
 	BehaviorUpdate();
+	//パーティクル
+	deadParticleEmitter.frequencyTime += kDeltaTime;
+	if (deadParticleEmitter.frequency <= deadParticleEmitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
 
+		particle_->SpawnParticle(deadParticleEmitter, randomEngine);
+
+		deadParticleEmitter.frequencyTime -= deadParticleEmitter.frequency;
+	}
+	particle_->Update();
+	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 #ifdef USE_IMGUI
 	ImGui();
 #endif
@@ -105,7 +118,8 @@ void Player::Draw()
 #ifdef _DEBUG
 	walkanimation->DebugDraw(world_);
 #endif
-
+	
+	particle_->RendererDraw();
 	switch (behavior_)
 	{
 	case Behavior::kRoot:
@@ -122,7 +136,7 @@ void Player::Draw()
 			models_[0]->RendererSkinDraw(world_, deadAnimation->GetSkinCluster());
 		}
 		else {
-			particle->RendererDraw();
+
 		}
 		break;
 	}
@@ -236,11 +250,12 @@ void Player::DeadUpdate()
 		animationTime_ = 0.0f;
 		if (HP_ <= 0) {
 			isDeadModelDraw = false;
-			isDead = true;
+			//isDead = true;
 		}
 	}
 	if (isDeadModelDraw == false) {
-		particle->Update(deadParticleEmitter);
+		//TODO
+		//particle_->Update();
 	}
 }
 #pragma endregion BeheviorTree
@@ -295,7 +310,22 @@ void Player::AttackOnCollision(const ICollider& collider)
 	}
 }
 #pragma endregion Collider
+void Player::UpdateParticle(Particle& particle)
+{
 
+	Vector3 velcity = particle.velocity * kDeltaTime;
+	//particle.transform.translate += velcity * deadParticleEmitter.speed;
+	//エミッターがパーティクルの半径を決める
+	particle.transform.scale = deadParticleEmitter.particleRadius;
+	Vector3 translate = particle.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	particle.color.w = alpha;
+	particle.color.x = deadParticleEmitter.color.x;
+	particle.color.y = deadParticleEmitter.color.y;
+	particle.color.z = deadParticleEmitter.color.z;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+}
 void Player::ImGui()
 {
 	ImGui::Begin("Player");

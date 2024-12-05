@@ -84,7 +84,10 @@ private:
 
 	Input* input = nullptr;
 
-	ParticleSystem* particle;
+	ParticleSystem* particle_;
+	void UpdateParticle(Particle& particle);
+	Emitter deadParticleEmitter;
+	const float kDeltaTime = 1.0f / 60.0f;
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
@@ -98,5 +101,5 @@ private:
 	bool isDamege = false;
 	//死んだときにモデルを描画するか
 	bool isDeadModelDraw = true;
-	Emitter deadParticleEmitter;
+
 };

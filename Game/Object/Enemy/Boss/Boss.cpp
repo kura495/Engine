@@ -64,6 +64,18 @@ void Boss::Update()
 		}
 	}
 
+	//パーティクル
+	deadEnemyParticleEmitter.frequencyTime += kDeltaTime;
+	if (deadEnemyParticleEmitter.frequency <= deadEnemyParticleEmitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		particle_->SpawnParticle(deadEnemyParticleEmitter, randomEngine);
+
+		deadEnemyParticleEmitter.frequencyTime -= deadEnemyParticleEmitter.frequency;
+	}
+
 	BehaviorUpdate();
 
 	world_.Update();
@@ -181,7 +193,7 @@ void Boss::RootUpdate()
 		behaviorRequest_ = BossBehavior::AttackThrowBomb;
 		isAttackSelect = false;
 	}
-	else if(FollowPlayer()){
+	else if (FollowPlayer()) {
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 		isAttackSelect = true;
 	}
@@ -197,10 +209,10 @@ void Boss::ReturnPositionUpdate()
 	if (easeT == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
 	}
-	
+
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
 	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
-	
+
 }
 void Boss::AttackSlamPlayerInit()
 {
@@ -240,7 +252,7 @@ void Boss::AttackSlamPlayerUpdate()
 void Boss::AttackThrowBombInit()
 {
 	easeT = 0.0f;
-	bomb->ThrowBomb(worldArmL.transform.translate,player_->GetWorld().transform.translate);
+	bomb->ThrowBomb(worldArmL.transform.translate, player_->GetWorld().transform.translate);
 	countHitBomb = 0;
 }
 void Boss::AttackThrowBombUpdate()
@@ -355,7 +367,7 @@ void Boss::OnCollision(const ICollider& collider)
 		colliderDamage.IsUsing = false;
 	}
 	if (behavior_ == BossBehavior::AttackThrowBomb) {
-		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb){
+		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
 			bomb->Reset(player_->GetWorld().transform.translate);
 			if (easeT == 1.0f) {
 				countHitBomb += 1;
@@ -380,7 +392,7 @@ void Boss::ColliderAttackInit()
 	colliderAttackA.SetOffset({ 0.0f,0.0f,-6.25f });
 	colliderAttackA.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliderAttackA.SetcollisionMask(~ColliderTag::Enemy);	
+	colliderAttackA.SetcollisionMask(~ColliderTag::Enemy);
 	colliderAttack.IsUsing = true;
 	colliderAttackA.IsUsing = true;
 }
@@ -400,4 +412,22 @@ void Boss::AddImGui()
 	ImGui::DragFloat3("Scale", &worldArmL.transform.scale.x);
 	ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);
 	ImGui::DragFloat3("Translate", &worldArmL.transform.translate.x);
+}
+
+void Boss::UpdateParticle(Particle& particle)
+{
+
+	Vector3 velcity = particle.velocity * kDeltaTime;
+	particle.transform.translate += velcity * deadEnemyParticleEmitter.speed;
+	//エミッターがパーティクルの半径を決める
+	particle.transform.scale = deadEnemyParticleEmitter.particleRadius;
+	Vector3 translate = particle.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	particle.color.w = alpha;
+	particle.color.x = deadEnemyParticleEmitter.color.x;
+	particle.color.y = deadEnemyParticleEmitter.color.y;
+	particle.color.z = deadEnemyParticleEmitter.color.z;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+
 }
