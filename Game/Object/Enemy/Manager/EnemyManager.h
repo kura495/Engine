@@ -18,6 +18,7 @@ public:
 	//定められた条件(ClearJudge)をクリアしていたならtrue
 	bool GetisClear() { return isClear; };
 
+	bool GetSlamFlag() { return bossEnemy_->GetSlamFlag(); };
 private:
 	void ImGui();
 	//ゲームクリアの条件を記載

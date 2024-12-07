@@ -28,6 +28,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	bool GetSlamFlag() { return isSlamFlag; };
 private:
 #pragma region
 	//ふるまい
@@ -81,6 +82,8 @@ private:
 	float easeT = 0.0f;
 	//raseTに毎フレーム加算する値
 	float addEaseT = 0.05f;
+	//叩きつけ攻撃時のカメラシェイク用のフラグ
+	bool isSlamFlag = false;
 #pragma endregion 攻撃に関する物
 
 #pragma region

@@ -63,7 +63,12 @@ void GamePlayState::Update()
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
 
-	//followCamera->isShake = true;
+	if (enemyManager->GetSlamFlag()) {
+		followCamera->isShake = true;
+	}
+	else {
+		followCamera->isShake = false;
+	}
 
 	//particle->Update();
 

@@ -49,7 +49,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	name = "Boss";
 	//初期値を設定
-	HP_ = 1;
+	HP_ = 10;
 }
 void Boss::Update()
 {
@@ -215,6 +215,9 @@ void Boss::ReturnPositionUpdate()
 	if (easeT == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
 	}
+	if (easeT >= 0.2f) {
+		isSlamFlag = false;
+	}
 
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
 	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
@@ -241,6 +244,7 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 
 		if (worldArmL.transform.translate.y <= 0) {
+			isSlamFlag = true;
 			addEaseT = 0.01f;
 			colliderAttack.IsUsing = false;
 			colliderAttackA.IsUsing = false;
@@ -284,7 +288,7 @@ void Boss::SpawnUpdate()
 	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
 	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, initialPosition.z);
 	if (models_[Body::ArmL]->color_.w == 1.0f) {
-		//behaviorRequest_ = BossBehavior::Root;
+		behaviorRequest_ = BossBehavior::Root;
 	}
 }
 void Boss::DeadInit()
