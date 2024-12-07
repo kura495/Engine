@@ -20,7 +20,9 @@ struct Particle {
 	Matrix4x4 matWorld;
 	Vector3 velocity;
 	Vector4 color;
+	//生成されてから消えるまでの時間
 	float lifeTime;
+	//生成されてからの経過時間
 	float currentTime;
 	Transform transform;
 };
@@ -47,22 +49,37 @@ public:
 
 	void Update();
 
-	//関数ポインタ　OnCollisionを入れる
+	//関数ポインタ　UpdateParticleを入れる
 	using UpdateFunction = std::function<void(Particle&)>;
 	UpdateFunction UpdateParticle;
+	//関数ポインタ　CustumSpawnを入れる
+	using CustumSpawnFunction = std::function<Particle()>;
+	/// <summary>
+	/// カスタムスポーン　生成関数
+	/// </summary>
+	CustumSpawnFunction CustumSpawn;
 
 	void RendererDraw();
 	void Draw(const ViewProjection& viewProjection);
 
 	void SpawnParticle(Emitter& emitter, std::mt19937& randomEngine);
+	/// <summary>
+	/// カスタムスポーンを使ってパーティクルを生成
+	/// </summary>
+	/// <param name="emitter"></param>
+	void CustumSpawnParticle(Emitter& emitter);
 
+	
 	void PreDraw();
 
-	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
 
-	bool IsCollision(const AABBData& aabb, const Vector3& point);
 
 private:
+	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
+	std::list<Particle> CustumEmit(Emitter& emitter);
+	
+	bool IsCollision(const AABBData& aabb, const Vector3& point);
+
 	void ImGui();
 
 	//インスタンスの数

@@ -28,11 +28,12 @@ void Boss::Init(std::vector<Model*> models)
 #pragma region 
 	particle_ = new ParticleSystem();
 	particle_->Initalize("resources/circle2.png");
-	particle_->UpdateParticle = [this](Particle& particle) {UpdateParticle(particle); };
+	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
+	particle_->CustumSpawn = [this]() { return CustomParticle(); };
 
 	deadEnemyParticleEmitter.count = 100;
 	deadEnemyParticleEmitter.frequency = 0.1f;
-	deadEnemyParticleEmitter.particleRadius = { 0.5f,0.5f,1.0f };
+	deadEnemyParticleEmitter.particleRadius = { 1.0f,1.0f,1.0f };
 	deadEnemyParticleEmitter.color = { 1.0f,1.0f,1.0f };
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル
@@ -63,6 +64,20 @@ void Boss::Update()
 
 		}
 	}
+	//TODO:デバッグ用
+	particle_->Update();
+	//パーティクル
+	deadEnemyParticleEmitter.world_.transform.translate = worldArmL.transform.translate;
+	deadEnemyParticleEmitter.frequencyTime += kDeltaTime;
+	if (deadEnemyParticleEmitter.frequency <= deadEnemyParticleEmitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		particle_->CustumSpawnParticle(deadEnemyParticleEmitter);
+
+		deadEnemyParticleEmitter.frequencyTime -= deadEnemyParticleEmitter.frequency;
+	}
 
 	BehaviorUpdate();
 
@@ -70,7 +85,10 @@ void Boss::Update()
 	worldArmL.Update();
 }
 void Boss::Draw()
-{
+{	
+	//TODO:デバッグ用
+	particle_->RendererDraw();
+
 	switch (behavior_)
 	{
 	case BossBehavior::Root:
@@ -89,7 +107,7 @@ void Boss::Draw()
 		break;
 	case BossBehavior::Dead:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		particle_->RendererDraw();
+	
 		break;
 	case BossBehavior::Down:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
@@ -266,7 +284,7 @@ void Boss::SpawnUpdate()
 	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
 	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, initialPosition.z);
 	if (models_[Body::ArmL]->color_.w == 1.0f) {
-		behaviorRequest_ = BossBehavior::Root;
+		//behaviorRequest_ = BossBehavior::Root;
 	}
 }
 void Boss::DeadInit()
@@ -430,4 +448,16 @@ void Boss::UpdateParticle(Particle& particle)
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 
+}
+
+Particle Boss::CustomParticle()
+{
+	Particle particle{};
+	particle.color = { 1.0f,1.0f,1.0f };
+	particle.currentTime = 0.0f;
+	particle.lifeTime = 2.0f;
+	particle.transform.translate = worldArmL.transform.translate;
+	//particle.velocity = {0.5f,0.5f,0.5f};
+
+	return particle;
 }

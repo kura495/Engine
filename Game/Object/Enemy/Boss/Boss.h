@@ -98,6 +98,7 @@ private:
 	ParticleSystem* particle_;
 	Emitter deadEnemyParticleEmitter;
 	void UpdateParticle(Particle& particle);
+	Particle CustomParticle();
 
 #pragma region
 	Animation* animationArmLDamage;

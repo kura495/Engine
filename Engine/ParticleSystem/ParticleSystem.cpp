@@ -99,6 +99,20 @@ void ParticleSystem::SpawnParticle(Emitter& emitter, std::mt19937& randomEngine)
 	particles.splice(particles.end(), Emit(emitter, randomEngine));
 }
 
+void ParticleSystem::CustumSpawnParticle(Emitter& emitter)
+{
+	particles.splice(particles.end(), CustumEmit(emitter));
+}
+
+std::list<Particle> ParticleSystem::CustumEmit(Emitter& emitter)
+{
+	std::list<Particle> Emitparticles;
+	for (uint32_t count = 0; count < emitter.count; ++count) {
+		Emitparticles.push_back(CustumSpawn());
+	}
+	return Emitparticles;
+}
+
 void ParticleSystem::PreDraw()
 {
 	directX_->GetcommandList()->SetGraphicsRootSignature(Pipeline_->GetPSO().rootSignature.Get());
