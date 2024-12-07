@@ -63,6 +63,8 @@ void GamePlayState::Update()
 	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
 
+	//followCamera->isShake = true;
+
 	//particle->Update();
 
 	skyDome_->Update();

@@ -68,8 +68,24 @@ void FollowCamera::Update() {
 		}
 	}
 
+	if (isShake) {
+		Shake();
+	}
 
 	viewProj.Update();
+}
+
+void FollowCamera::Shake()
+{
+	//ランダム生成用
+	std::random_device seedGenerator;
+	std::mt19937 randomEngine(seedGenerator());
+	std::uniform_real_distribution<float> distribution(-0.7f, 0.7f);
+	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
+
+	viewProj.translation_.x += ramdomTranslate.x;
+	viewProj.translation_.y += ramdomTranslate.y;
+	viewProj.translation_.z += ramdomTranslate.z;
 }
 
 void FollowCamera::ImGui()
@@ -82,6 +98,12 @@ void FollowCamera::ImGui()
 	if (!target_) {
 		viewProj.translation_ = InitCameraPos2;
 		viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
+	}
+	if (ImGui::Button("isShakeOn")) {
+		isShake = true;
+	}
+	if (ImGui::Button("isShakeOff")) {
+		isShake = false;
 	}
 
 	ImGui::End();

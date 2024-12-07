@@ -1,5 +1,7 @@
 #pragma once
 //ターゲットを追従するカメラ//
+#include <random>
+#include <numbers>
 
 #include "Camera/Camera.h"
 #include "Input/Input.h"
@@ -36,6 +38,11 @@ public:
 
 	static WorkInterpolation workInter;
 
+	
+#pragma region
+	void Shake();
+	bool isShake = false;
+#pragma endregion シェイク
 private:
 	void ImGui();
 #pragma region
@@ -49,6 +56,8 @@ private:
 	Vector3 resetTransform;
 	Quaternion resetRotate;
 #pragma endregion PlaySceneInit用
+
+
 
 	//追従対象
 	const WorldTransform* target_ = nullptr;
