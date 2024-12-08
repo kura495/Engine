@@ -98,7 +98,7 @@ void Bomb::OnCollision(const ICollider& colliderA)
 			//方向を決める
 			Vector3 playerToBomb = stertPos - world_.transform.translate;
 			//速さの定数を掛ける
-			accelValue += 0.5f;
+			accelValue += 1.0f;
 			forTargetVector = playerToBomb.Normalize() * kSpeedValue * accelValue;
 			isHit = false;
 			//地面で反射する用のコード
