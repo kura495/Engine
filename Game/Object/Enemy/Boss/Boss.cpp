@@ -185,7 +185,7 @@ void Boss::RootUpdate()
 	}
 	else if (FollowPlayer()) {
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
-		isAttackSelect = true;
+		isAttackSelect = false;
 	}
 }
 void Boss::ReturnPositionInit()

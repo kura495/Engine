@@ -11,7 +11,7 @@ void Bomb::Init(std::vector<Model*> models)
 	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
 	particle_->CustumSpawn = [this]() { return CustomParticle(); };
 
-	emitter.count = 50;
+	emitter.count = 10;
 	emitter.frequency = 0.1f;
 	emitter.particleRadius = { 1.75f,1.75f,1.75f };
 	emitter.color = { 0.5f,0.5f,1.0f };
