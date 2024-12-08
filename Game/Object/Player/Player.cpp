@@ -58,7 +58,7 @@ void Player::Update()
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
 
-	if (isDamege) {
+	if (isDamege && HP_ >= 1) {
 		behaviorRequest_ = Behavior::kDead;
 		isDamege = false;
 		HP_ -= 1;

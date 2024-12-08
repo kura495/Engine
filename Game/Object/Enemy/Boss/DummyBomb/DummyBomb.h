@@ -19,7 +19,6 @@ public:
 	/// <param name="targetVector">ターゲットのワールド座標</param>
 	void ThrowBomb(Vector3 StertPoint, Vector3 TargetPoint, Vector3 targetVector) {
 		isThrowFlag = true;
-		accelValue = 1.0f;
 		startPoint = StertPoint;
 		targetPoint = TargetPoint;
 		isCompleteMoveFlag = false;
@@ -31,6 +30,12 @@ public:
 		//コライダーを有効化
 		collider.IsUsing = true;
 	};
+
+	void Reset() {
+		collider.IsUsing = false;
+		isThrowFlag = false;
+		isCompleteMoveFlag = false;
+	}
 
 	bool GetIsOverline() { return IsOverline; }
 private:

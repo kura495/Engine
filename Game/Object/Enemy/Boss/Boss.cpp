@@ -242,7 +242,7 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 	}
 	else {
-		if (isSlam2ndFlag) {
+		if (isSlam2ndFlag && HP_ <= 6) {
 			isAttackSelect = false;
 			isSlam2ndFlag = false;
 		}
@@ -260,7 +260,7 @@ void Boss::AttackThrowBombInit()
 {
 	easeT = 0.0f;
 	bomb->ThrowBomb(worldArmL.transform.translate, player_->GetWorld().transform.translate);
-	dummyBomb->ThrowBomb(worldArmL.transform.translate,{ worldArmL.transform.translate.x + 5.0f,worldArmL.transform.translate.y,worldArmL.transform.translate.z }, player_->GetWorld().transform.translate);
+	isThrowDummyBombFlag = false;
 	countHitBomb = 0;
 }
 void Boss::AttackThrowBombUpdate()
@@ -269,11 +269,18 @@ void Boss::AttackThrowBombUpdate()
 	bomb->Update();
 	dummyBomb->Update();
 
+	if (countHitBomb == 1 && isThrowDummyBombFlag == false) {
+		dummyBomb->ThrowBomb(worldArmL.transform.translate, { worldArmL.transform.translate.x + 5.0f,worldArmL.transform.translate.y,worldArmL.transform.translate.z }, player_->GetWorld().transform.translate);
+		isThrowDummyBombFlag = true;
+	}
+
 	if (countHitBomb >= 3) {
+		dummyBomb->Reset();
 		behaviorRequest_ = BossBehavior::Down;
 	}
 
 	if (bomb->GetIsOverline()) {
+		dummyBomb->Reset();
 		behaviorRequest_ = BossBehavior::Root;
 	}
 }

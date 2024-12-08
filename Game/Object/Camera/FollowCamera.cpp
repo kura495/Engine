@@ -80,7 +80,7 @@ void FollowCamera::Shake()
 	//ランダム生成用
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
-	std::uniform_real_distribution<float> distribution(-0.7f, 0.7f);
+	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 
 	viewProj.translation_.x += ramdomTranslate.x;

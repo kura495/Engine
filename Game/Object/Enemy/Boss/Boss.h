@@ -87,6 +87,8 @@ private:
 	bool isSlamFlag = false;
 	//叩きつけを一回以上しているか
 	bool isSlam2ndFlag = false;
+	//ダミーを発射したかどうか
+	bool isThrowDummyBombFlag = false;
 #pragma endregion 攻撃に関する物
 
 #pragma region
