@@ -4,6 +4,7 @@
 #include "Utility/Ease/Ease.h"
 #include "ParticleSystem/ParticleSystem.h"
 #include "Bomb/Bomb.h"
+#include "DummyBomb/DummyBomb.h"
 
 enum Body {
 	body,
@@ -91,6 +92,8 @@ private:
 #pragma region
 	
 	std::unique_ptr<Bomb> bomb;
+
+	std::unique_ptr<DummyBomb> dummyBomb;
 	//爆弾に当たった回数
 	int countHitBomb;
 

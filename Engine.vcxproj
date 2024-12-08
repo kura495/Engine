@@ -251,6 +251,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\Bomb\Bomb.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\DummyBomb\DummyBomb.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
@@ -362,6 +363,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Bomb\Bomb.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\DummyBomb\DummyBomb.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Game\Object\Plane\PlaneObject.h" />

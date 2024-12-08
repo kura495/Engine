@@ -43,6 +43,9 @@ void Boss::Init(std::vector<Model*> models)
 	Bombmodels.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
 	bomb->Init(Bombmodels);
 
+	dummyBomb = std::make_unique<DummyBomb>();
+	dummyBomb->Init(Bombmodels);
+
 	behaviorRequest_ = BossBehavior::Spawn;
 
 	models_[Body::ArmL]->color_.w = 0.0f;
@@ -85,6 +88,7 @@ void Boss::Draw()
 	case BossBehavior::AttackThrowBomb:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		bomb->Draw();
+		dummyBomb->Draw();
 		break;
 	case BossBehavior::Spawn:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
@@ -256,12 +260,14 @@ void Boss::AttackThrowBombInit()
 {
 	easeT = 0.0f;
 	bomb->ThrowBomb(worldArmL.transform.translate, player_->GetWorld().transform.translate);
+	dummyBomb->ThrowBomb(worldArmL.transform.translate,{ worldArmL.transform.translate.x + 5.0f,worldArmL.transform.translate.y,worldArmL.transform.translate.z }, player_->GetWorld().transform.translate);
 	countHitBomb = 0;
 }
 void Boss::AttackThrowBombUpdate()
 {
 	easeT = (std::min)(easeT + 0.05f, 1.0f);
 	bomb->Update();
+	dummyBomb->Update();
 
 	if (countHitBomb >= 3) {
 		behaviorRequest_ = BossBehavior::Down;
