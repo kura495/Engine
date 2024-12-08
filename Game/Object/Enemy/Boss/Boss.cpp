@@ -31,7 +31,7 @@ void Boss::Init(std::vector<Model*> models)
 	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
 	particle_->CustumSpawn = [this]() { return CustomParticle(); };
 
-	deadEnemyParticleEmitter.count = 100;
+	deadEnemyParticleEmitter.count = 50;
 	deadEnemyParticleEmitter.frequency = 0.1f;
 	deadEnemyParticleEmitter.particleRadius = { 1.0f,1.0f,1.0f };
 	deadEnemyParticleEmitter.color = { 1.0f,1.0f,1.0f };
@@ -64,20 +64,6 @@ void Boss::Update()
 
 		}
 	}
-	//TODO:デバッグ用
-	particle_->Update();
-	//パーティクル
-	deadEnemyParticleEmitter.world_.transform.translate = worldArmL.transform.translate;
-	deadEnemyParticleEmitter.frequencyTime += kDeltaTime;
-	if (deadEnemyParticleEmitter.frequency <= deadEnemyParticleEmitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-
-		particle_->CustumSpawnParticle(deadEnemyParticleEmitter);
-
-		deadEnemyParticleEmitter.frequencyTime -= deadEnemyParticleEmitter.frequency;
-	}
 
 	BehaviorUpdate();
 
@@ -86,8 +72,6 @@ void Boss::Update()
 }
 void Boss::Draw()
 {	
-	//TODO:デバッグ用
-	particle_->RendererDraw();
 
 	switch (behavior_)
 	{
@@ -107,7 +91,7 @@ void Boss::Draw()
 		break;
 	case BossBehavior::Dead:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-	
+		particle_->RendererDraw();
 		break;
 	case BossBehavior::Down:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
@@ -431,9 +415,9 @@ void Boss::AddImGui()
 	if (ImGui::Button("AttackMove")) {
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 	}
-	ImGui::DragFloat3("Scale", &worldArmL.transform.scale.x);
-	ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);
-	ImGui::DragFloat3("Translate", &worldArmL.transform.translate.x);
+	//ImGui::DragFloat3("Scale", &worldArmL.transform.scale.x);
+	//ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);
+	ImGui::DragFloat3("ParticleTranslate", &deadEnemyParticleEmitter.world_.transform.translate.x);
 }
 
 void Boss::UpdateParticle(Particle& particle)
@@ -443,7 +427,7 @@ void Boss::UpdateParticle(Particle& particle)
 	particle.transform.translate += velcity * deadEnemyParticleEmitter.speed;
 	//エミッターがパーティクルの半径を決める
 	particle.transform.scale = deadEnemyParticleEmitter.particleRadius;
-	Vector3 translate = particle.transform.translate;
+	Vector3 translate = particle.transform.translate + deadEnemyParticleEmitter.world_.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
 	particle.color.w = alpha;
 	particle.color.x = deadEnemyParticleEmitter.color.x;

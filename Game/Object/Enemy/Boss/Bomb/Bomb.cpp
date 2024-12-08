@@ -5,11 +5,35 @@ void Bomb::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	ColliderInit();
+
+	particle_ = std::make_unique<ParticleSystem>();
+	particle_->Initalize("resources/circle2.png");
+	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
+	particle_->CustumSpawn = [this]() { return CustomParticle(); };
+
+	emitter.count = 50;
+	emitter.frequency = 0.1f;
+	emitter.particleRadius = { 1.75f,1.75f,1.75f };
+	emitter.color = { 0.5f,0.5f,1.0f };
+	emitter.speed = { 2.0f,2.0f,2.0f };
+
 }
 
 void Bomb::Update()
 {
+	//パーティクル
+	//emitter.world_.transform.translate = world_.transform.translate;
+	emitter.frequencyTime += kDeltaTime;
+	if (emitter.frequency <= emitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
 
+		particle_->CustumSpawnParticle(emitter);
+
+		emitter.frequencyTime -= emitter.frequency;
+	}
+	particle_->Update();
 	ImGui();
 
 	world_.Update();
@@ -41,6 +65,9 @@ void Bomb::Update()
 
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
+
+
+
 		//
 		/*if (isHit == false) {
 			world_.transform.translate = Vector3::Lerp(PrePos, stertPos, easeT);
@@ -51,7 +78,8 @@ void Bomb::Update()
 
 void Bomb::Draw()
 {
-	models_[0]->RendererDraw(world_);
+	particle_->RendererDraw();
+	//models_[0]->RendererDraw(world_);
 }
 
 void Bomb::ColliderInit()
@@ -67,7 +95,11 @@ void Bomb::OnCollision(const ICollider& colliderA)
 {
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Weapon) {
 		if (isHit) {
-			forTargetVector *= -2.0f;
+			//方向を決める
+			Vector3 playerToBomb = stertPos - world_.transform.translate;
+			//速さの定数を掛ける
+			accelValue += 0.5f;
+			forTargetVector = playerToBomb.Normalize() * kSpeedValue * accelValue;
 			isHit = false;
 			//地面で反射する用のコード
 			/*easeT = 0.0f;
@@ -77,13 +109,43 @@ void Bomb::OnCollision(const ICollider& colliderA)
 	}
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Enemy){
 		if (isHit == false) {
-			forTargetVector *= -0.5f;
+			forTargetVector *= -1.0f;
 			isHit = true;
 		}
 	}
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Player) {
 		collider.IsUsing = false;
 	}
+}
+
+void Bomb::UpdateParticle(Particle& particle)
+{
+	Vector3 velcity = particle.velocity * kDeltaTime;
+	//particle.transform.translate += velcity * emitter.speed;
+	//エミッターがパーティクルの半径を決める
+	particle.transform.scale = emitter.particleRadius;
+	particle.transform.translate = world_.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	particle.color.w = alpha;
+	particle.color.x = emitter.color.x;
+	particle.color.y = emitter.color.y;
+	particle.color.z = emitter.color.z;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, particle.transform.translate);
+}
+
+Particle Bomb::CustomParticle()
+{
+	Particle particle{};
+
+	particle.color = { 0.5f,0.5f,1.0f };
+	particle.currentTime = 0.0f;
+	particle.lifeTime = 2.0f;
+	particle.transform.translate = world_.transform.translate;
+	particle.transform.scale = emitter.particleRadius;
+
+
+	return particle;
 }
 
 void Bomb::ImGui()

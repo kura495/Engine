@@ -94,6 +94,7 @@ private:
 
 #pragma endregion 爆弾
 
+#pragma region
 	void AddImGui()override;
 
 	WorldTransform worldArmL;
@@ -102,6 +103,8 @@ private:
 	Emitter deadEnemyParticleEmitter;
 	void UpdateParticle(Particle& particle);
 	Particle CustomParticle();
+
+#pragma endregion パーティクル
 
 #pragma region
 	Animation* animationArmLDamage;
