@@ -71,7 +71,10 @@ void DummyBomb::Update()
 
 void DummyBomb::Draw()
 {
-	particle_->RendererDraw();
+	if (collider.IsUsing) {
+		particle_->RendererDraw();
+
+	}
 	//models_[0]->RendererDraw(world_);
 }
 
