@@ -84,6 +84,8 @@ private:
 	float addEaseT = 0.05f;
 	//叩きつけ攻撃時のカメラシェイク用のフラグ
 	bool isSlamFlag = false;
+	//叩きつけを一回以上しているか
+	bool isSlam2ndFlag = false;
 #pragma endregion 攻撃に関する物
 
 #pragma region

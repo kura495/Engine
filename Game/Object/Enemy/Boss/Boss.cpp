@@ -185,7 +185,7 @@ void Boss::RootUpdate()
 	}
 	else if (FollowPlayer()) {
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
-		isAttackSelect = false;
+		isAttackSelect = true;
 	}
 }
 void Boss::ReturnPositionInit()
@@ -238,8 +238,17 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 	}
 	else {
+		if (isSlam2ndFlag) {
+			isAttackSelect = false;
+			isSlam2ndFlag = false;
+		}
+		else if (isSlam2ndFlag == false) {
+			isSlam2ndFlag = true;
+		}
+
 		//初期位置についたら
 		behaviorRequest_ = BossBehavior::ReturnPosition;
+
 	}
 
 }
