@@ -211,9 +211,6 @@ void Player::AttackUpdate()
 	//攻撃中は一定の方向を向くように固定
 	world_.transform.quaternion = attackPosture;
 
-	//アニメーション再生
-	attackAnimation->PlayAnimation();
-
 	animationTime_ += 1.0f / 60.0f;
 
 	if (animationTime_ > attackAnimation->duration) {
@@ -222,7 +219,8 @@ void Player::AttackUpdate()
 		//kRootに戻す
 		behaviorRequest_ = Behavior::kRoot;
 	}
-
+	//アニメーション再生
+	attackAnimation->PlayAnimation();
 }
 //kJump
 void Player::JumpInit() {
