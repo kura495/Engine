@@ -7,7 +7,7 @@ void DummyBomb::Init(std::vector<Model*> models)
 	ColliderInit();
 
 	particle_ = std::make_unique<ParticleSystem>();
-	particle_->Initalize("resources/circle2.png");
+	particle_->Initalize("resources/circle2.dds");
 	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
 	particle_->CustumSpawn = [this]() { return CustomParticle(); };
 
