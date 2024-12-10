@@ -19,17 +19,12 @@ void Player::Init(std::vector<Model*> models)
 
 #pragma region
 	walkanimation = new Animation();
-	walkanimation = Animation::LoadAnimationFile("resources/human", "walk.gltf");
+	walkanimation = Animation::LoadAnimationFile("resources/Player", "player_walk.gltf");
 	walkanimation->Init();
 	walkanimation->AnimeInit(*models_[0], true);
 
-	idleAnimation = new Animation();
-	idleAnimation = Animation::LoadAnimationFile("resources/human", "Idle.gltf");
-	idleAnimation->Init();
-	idleAnimation->AnimeInit(*models_[0], true);
-
 	deadAnimation = new Animation();
-	deadAnimation = Animation::LoadAnimationFile("resources/human", "dead.gltf");
+	deadAnimation = Animation::LoadAnimationFile("resources/Player", "player_dead.gltf");
 	deadAnimation->Init();
 	deadAnimation->AnimeInit(*models_[0], true);
 #pragma endregion Anime
@@ -86,14 +81,13 @@ void Player::Update()
 
 void Player::TitleDraw()
 {
-	//models_[0]->RendererSkinDraw(world_, idleAnimation->GetSkinCluster());
 	models_[0]->RendererDraw(world_);
 }
 
 void Player::Draw()
 {
 #ifdef _DEBUG
-	walkanimation->DebugDraw(world_);
+	//walkanimation->DebugDraw(world_);
 #endif
 	
 
@@ -102,7 +96,7 @@ void Player::Draw()
 	case Behavior::kRoot:
 	default:
 		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
-		models_[0]->RendererDraw(world_);
+		//models_[0]->RendererDraw(world_);
 		break;
 	case Behavior::kAttack:
 		break;

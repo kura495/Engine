@@ -17,7 +17,7 @@ void GamePlayState::Initialize()
 	collisionManager->Init();
 	//
 	//3Dオブジェクト生成
-	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "simple.gltf"));
+	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "player.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
 
 	titleSprite = std::make_unique<Sprite>();
