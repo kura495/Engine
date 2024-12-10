@@ -86,7 +86,8 @@ void Player::Update()
 
 void Player::TitleDraw()
 {
-	models_[0]->RendererSkinDraw(world_, idleAnimation->GetSkinCluster());
+	//models_[0]->RendererSkinDraw(world_, idleAnimation->GetSkinCluster());
+	models_[0]->RendererDraw(world_);
 }
 
 void Player::Draw()
@@ -101,6 +102,7 @@ void Player::Draw()
 	case Behavior::kRoot:
 	default:
 		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
+		models_[0]->RendererDraw(world_);
 		break;
 	case Behavior::kAttack:
 		break;

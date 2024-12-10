@@ -17,10 +17,8 @@ void GamePlayState::Initialize()
 	collisionManager->Init();
 	//
 	//3Dオブジェクト生成
-	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "walk.gltf"));
+	playerModel_.push_back(Model::CreateModelFromObj("resources/human", "simple.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
-	lanthanumModel_.push_back(Model::CreateModelFromObj("resources/Object", "Object.obj"));
-	lanthan.Initialize();
 
 	titleSprite = std::make_unique<Sprite>();
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
@@ -113,10 +111,6 @@ void GamePlayState::Draw()
 	}
 
 #pragma endregion
-
-	for (Model* model : lanthanumModel_) {
-		model->RendererDraw(lanthan);
-	}
 
 	skyDome_->Draw();
 

@@ -52,7 +52,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	name = "Boss";
 	//初期値を設定
-	HP_ = 1;
+	HP_ = 9;
 }
 void Boss::Update()
 {
@@ -242,7 +242,7 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 	}
 	else {
-		if (isSlam2ndFlag && HP_ <= 6) {
+		if (isSlam2ndFlag && HP_ <= 3) {
 			isAttackSelect = false;
 			isSlam2ndFlag = false;
 		}

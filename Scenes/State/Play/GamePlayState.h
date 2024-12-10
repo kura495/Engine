@@ -95,8 +95,6 @@ private:
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> glTFplaneModel_;
-	std::vector<Model*> lanthanumModel_;
-	WorldTransform lanthan;
 
 	std::unique_ptr<EnemyManager> enemyManager;
 	std::unique_ptr<SkyDome> skyDome_;
