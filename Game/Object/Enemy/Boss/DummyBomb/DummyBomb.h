@@ -42,7 +42,7 @@ private:
 	//プレイヤーに向かっていく速さの倍数
 	float kSpeedValue = 0.2f;
 	//プレイヤーが叩くたびに増える加速値
-	float accelValue = 1.0f;
+	float accelValue = 1.5f;
 	//プレイヤー方向へ向かうベクトル
 	Vector3 forTargetVector;
 	//投げたかどうかのフラグ

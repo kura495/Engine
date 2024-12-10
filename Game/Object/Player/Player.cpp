@@ -27,6 +27,11 @@ void Player::Init(std::vector<Model*> models)
 	deadAnimation = Animation::LoadAnimationFile("resources/Player", "player_dead.gltf");
 	deadAnimation->Init();
 	deadAnimation->AnimeInit(*models_[0], true);
+	
+	attackAnimation = new Animation();
+	attackAnimation = Animation::LoadAnimationFile("resources/Player", "player_attack.gltf");
+	attackAnimation->Init();
+	attackAnimation->AnimeInit(*models_[0], true);
 #pragma endregion Anime
 
 #pragma region
@@ -99,6 +104,7 @@ void Player::Draw()
 		//models_[0]->RendererDraw(world_);
 		break;
 	case Behavior::kAttack:
+		models_[0]->RendererSkinDraw(world_, attackAnimation->GetSkinCluster());
 		break;
 	case Behavior::kJump:
 		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
@@ -164,12 +170,22 @@ void Player::BehaviorUpdate()
 void Player::RootInit()
 {
 	colliderPlayer.IsUsing = true;
-	//FollowCamera::workInter.interParameter_.y = 0.0f;
+	animationTime_ = 0.0f;
 
 }
 void Player::RootUpdate()
 {
 	Move();
+	//動いていたら歩きモーションを再生
+	if (isMovedFlag) {
+		animationTime_ += 1.0f / 60.0f;
+		if (animationTime_ > deadAnimation->duration) {
+			animationTime_ = 0.0f;
+			isMovedFlag = false;
+		}
+		walkanimation->PlayAnimation();
+	}
+
 	//攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		behaviorRequest_ = Behavior::kAttack;
@@ -183,11 +199,30 @@ void Player::RootUpdate()
 void Player::AttackInit()
 {
 	colliderAttack.IsUsing = true;
+	animationTime_ = 0.0f;
+	attackPosture = world_.transform.quaternion;
+	isMovedFlag = false;
+
 }
 void Player::AttackUpdate()
 {
-	//kRootに戻す
-	behaviorRequest_ = Behavior::kRoot;
+	//攻撃中も移動できるように
+	Move();
+	//攻撃中は一定の方向を向くように固定
+	world_.transform.quaternion = attackPosture;
+
+	//アニメーション再生
+	attackAnimation->PlayAnimation();
+
+	animationTime_ += 1.0f / 60.0f;
+
+	if (animationTime_ > attackAnimation->duration) {
+		animationTime_ = 0.0f;
+		colliderAttack.IsUsing = false;
+		//kRootに戻す
+		behaviorRequest_ = Behavior::kRoot;
+	}
+
 }
 //kJump
 void Player::JumpInit() {
@@ -211,6 +246,7 @@ void Player::DeadInit()
 {
 	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 	deadParticleEmitter.world_.transform.translate.y += 1.0f;
+	animationTime_ = 0.0f;
 }
 void Player::DeadUpdate()
 {
@@ -228,7 +264,7 @@ void Player::DeadUpdate()
 
 	deadAnimation->PlayAnimation();
 
-	animationTime_ += 2.0f / 60.0f;
+	animationTime_ += 1.0f / 60.0f;
 	if (animationTime_ > deadAnimation->duration) {
 		isDamege = false;
 		animationTime_ = 0.0f;
@@ -275,7 +311,7 @@ void Player::AttackColliderInit()
 {
 	attackColliderWorld_.SetParent(&world_);
 	colliderAttack.Init(&attackColliderWorld_);
-	colliderAttack.SetSize({ 0.5f,1.0f,0.5f });
+	colliderAttack.SetSize({ 1.0f,1.0f,1.0f });
 	colliderAttack.SetOffset({ 0.0f,0.5f,1.0f });
 	colliderAttack.OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
@@ -369,7 +405,7 @@ void Player::Move()
 
 #pragma endregion プレイヤーの回転
 
-		walkanimation->PlayAnimation();
+		isMovedFlag = true;
 
 		return;
 	}

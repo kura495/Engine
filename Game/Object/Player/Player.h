@@ -93,7 +93,10 @@ private:
 	XINPUT_STATE joyStatePre;
 
 	Animation* walkanimation;
-	Animation* idleAnimation;
+	Animation* attackAnimation;
+	//攻撃の瞬間に向いていた姿勢を表すクォータニオン
+	Quaternion attackPosture;
+
 	Animation* deadAnimation;
 	//アニメーション
 	float animationTime_ = 0.0f;
@@ -101,5 +104,7 @@ private:
 	bool isDamege = false;
 	//死んだときにモデルを描画するか
 	bool isDeadModelDraw = true;
+	//動いていたかどうか
+	bool isMovedFlag = false;
 
 };
