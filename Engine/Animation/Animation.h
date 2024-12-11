@@ -17,6 +17,9 @@ class Animation {
 public:
 	void Init();
 	void AnimeInit(Model& model, bool UseDebugLine);
+	void Reset() {
+		animationTime_ = 0;
+	};
 	//アニメーションファイルの読み込み
 	static Animation* LoadAnimationFile(const std::string& directrypath,const std::string& filename);
 	static Vector3 CalculateValue(const std::vector<KeyFrameVector3>& keyframes,float time);
