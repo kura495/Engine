@@ -36,7 +36,7 @@ void Player::Init(std::vector<Model*> models)
 
 #pragma region
 	particle_ = new ParticleSystem();
-	particle_->Initalize("resources/circle2.png");
+	particle_->Initalize("resources/circle3.png");
 	particle_->UpdateParticle = [this](Particle& particle) {return UpdateParticle(particle); };
 
 	deadParticleEmitter.count = 5;
@@ -412,6 +412,11 @@ void Player::Move()
 #pragma endregion プレイヤーの回転
 
 		isMovedFlag = true;
+
+		return;
+	}
+	else {
+		isMovedFlag = false;
 
 		return;
 	}
