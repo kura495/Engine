@@ -134,7 +134,7 @@ void ParticlePipeLine::CreatePipelineStateObject()
 	//深度 DepthStencilStateの設定
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
 	//Depthの機能を有効化する
-	depthStencilDesc.DepthEnable = false;
+	depthStencilDesc.DepthEnable = true;
 	//書き込み
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	//比較関数はLessEqual 近ければ描画される

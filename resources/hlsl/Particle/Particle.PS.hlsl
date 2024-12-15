@@ -27,7 +27,6 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         discard;
     }
-    
 
     return output;
 }

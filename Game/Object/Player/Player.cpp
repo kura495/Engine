@@ -171,19 +171,25 @@ void Player::RootInit()
 {
 	colliderPlayer.IsUsing = true;
 	animationTime_ = 0.0f;
+	walkanimation->Reset();
+	isMovedFlag = false;
 
 }
 void Player::RootUpdate()
 {
 	Move();
-	//動いていたら歩きモーションを再生
+
+
 	if (isMovedFlag) {
+		//動いていたら歩きモーションを再生
+		walkanimation->PlayAnimation();
+
 		animationTime_ += 1.0f / 60.0f;
 		if (animationTime_ > deadAnimation->duration) {
 			animationTime_ = 0.0f;
 			isMovedFlag = false;
+
 		}
-		walkanimation->PlayAnimation();
 	}
 
 	//攻撃
@@ -211,6 +217,8 @@ void Player::AttackUpdate()
 	//攻撃中は一定の方向を向くように固定
 	world_.transform.quaternion = attackPosture;
 
+	//アニメーション再生
+	attackAnimation->PlayAnimation();
 	animationTime_ += 1.0f / 60.0f;
 
 	if (animationTime_ > attackAnimation->duration) {
@@ -218,9 +226,9 @@ void Player::AttackUpdate()
 		colliderAttack.IsUsing = false;
 		//kRootに戻す
 		behaviorRequest_ = Behavior::kRoot;
+		attackAnimation->Reset();
 	}
-	//アニメーション再生
-	attackAnimation->PlayAnimation();
+
 }
 //kJump
 void Player::JumpInit() {
@@ -404,6 +412,11 @@ void Player::Move()
 #pragma endregion プレイヤーの回転
 
 		isMovedFlag = true;
+
+		return;
+	}
+	else {
+		isMovedFlag = false;
 
 		return;
 	}
