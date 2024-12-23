@@ -314,7 +314,8 @@ void Player::OnCollision(const ICollider& ICollider)
 
 		Vector3 aaaaa2 = (ICollider.GetCenter() - ICollider.pushForce);
 		world_.transform.translate -= move;
-
+		//world_.transform.translate += aaaaa2;
+		world_.Update();
 
 	}		
 	Vector3 aaaaa = (ICollider.GetCenter() - ICollider.pushForce);
