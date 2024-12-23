@@ -23,7 +23,7 @@ public:
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
-	
+	Vector3 move;
 	/// <summary>
 	/// ゲームプレイシーンがタイトル状態の時
 	/// </summary>

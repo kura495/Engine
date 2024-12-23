@@ -18,7 +18,8 @@ public:
 		Colliders_.clear();
 	}
 	void CheckAllCollisions();
-
+	Vector3 CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2);
+	float CalculateOverlap(OBBoxCollider* obb1,OBBoxCollider* obb2,Vector3& axis);
 private:
 	/// <summary>
 	///　コライダー登録用

@@ -6,9 +6,10 @@ void Boss::Init(std::vector<Model*> models)
 	models_ = models;
 
 	world_.Initialize();
-	//world_.transform.translate.y = 5.5f;
 	worldArmL.Initialize();
 	worldArmL.transform.translate = initialPosition;
+	//DEBUG
+	//worldArmL.transform.translate.y = 0.0f;
 
 	world_.Update();
 	worldArmL.Update();
@@ -172,6 +173,10 @@ void Boss::RootInit()
 	colliderDamage.IsUsing = true;
 	colliderAttack.IsUsing = true;
 	colliderAttackA.IsUsing = true;
+
+	//当たり判定を通常に変更
+	colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
+	colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
 }
 void Boss::RootUpdate()
 {
@@ -218,6 +223,9 @@ void Boss::AttackSlamPlayerInit()
 	colliderAttackA.IsUsing = true;
 	IsAttackFlag = true;
 	easeT = 0.0f;
+	//当たり判定を攻撃に変更
+	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
+	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
 }
 void Boss::AttackSlamPlayerUpdate()
 {
@@ -288,6 +296,9 @@ void Boss::SpawnInit()
 {
 	models_[Body::ArmL]->color_.w = 0.0f;
 	worldArmL.transform.translate.z = 40.0f;
+	//当たり判定を通常に変更
+	colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
+	colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
 }
 void Boss::SpawnUpdate()
 {
@@ -326,8 +337,12 @@ void Boss::DeadUpdate()
 }
 void Boss::DownInit()
 {
-	colliderAttack.IsUsing = false;
-	colliderAttackA.IsUsing = false;
+	colliderAttack.IsUsing = true;
+	colliderAttackA.IsUsing = true;
+	//当たり判定を通常に変更
+	colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
+	colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
+
 	isDownStert = true;
 	easeT = 0.0f;
 	addEaseT = 0.02f;
@@ -378,7 +393,7 @@ void Boss::ColliderDamageInit()
 	colliderDamage.Init(&colliderDamageWorld_);
 	colliderDamage.SetSize({ 1.0f,1.0f,1.0f });
 	colliderDamage.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	colliderDamage.SetcollitionAttribute(ColliderTag::Enemy);
+	colliderDamage.SetcollitionAttribute(ColliderTag::EnemyCore);
 	colliderDamage.SetcollisionMask(~ColliderTag::EnemyAttack);
 	colliderDamage.IsUsing = true;
 }
@@ -408,25 +423,25 @@ void Boss::OnCollision(const ICollider& collider)
 void Boss::ColliderAttackInit()
 {
 	colliderAttackWorld_.SetParent(&worldArmL);
-	colliderAttack.Init(&colliderAttackWorld_);
+	colliderAttack.Init(&worldArmL);
 	colliderAttack.SetSize({ 1.0f,1.0f,7.0f });
 	colliderAttack.SetOffset({ 0.0f,0.0f,-2.0f });
 	colliderAttack.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliderAttack.SetcollisionMask(~ColliderTag::Enemy);
+	colliderAttack.SetcollisionMask(~ColliderTag::EnemyCore);
 
-	colliderAttackA.Init(&colliderAttackWorld_);
+	colliderAttackA.Init(&worldArmL);
 	colliderAttackA.SetSize({ 2.0f,0.5f,1.0f });
 	colliderAttackA.SetOffset({ 0.0f,0.0f,-6.25f });
 	colliderAttackA.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliderAttackA.SetcollisionMask(~ColliderTag::Enemy);
+	colliderAttackA.SetcollisionMask(~ColliderTag::EnemyCore);
 	colliderAttack.IsUsing = true;
 	colliderAttackA.IsUsing = true;
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == ColliderTag::Player) {
+	if (collider.GetcollitionAttribute() == ColliderTag::Player && colliderAttack.GetcollisionMask() == ColliderTag::EnemyAttack) {
 		colliderAttack.IsUsing = false;
 		colliderAttackA.IsUsing = false;
 	}

@@ -29,6 +29,8 @@ public:
 
 	virtual void CollisionUpdate() = 0;
 	virtual void CollisionDraw() = 0;
+	//押し戻し用
+	Vector3 pushForce;
 
 	//TODO：共通のImGuiをまとめたものを作りたい
 	/*virtual void ColliderImGui(std::string TabName) {

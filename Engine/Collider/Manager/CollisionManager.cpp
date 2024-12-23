@@ -247,6 +247,8 @@ bool CollisionManager::CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* c
 	if (L > rA + rB)
 		return false;
 
+	colliderA->pushForce = CalculateMTV(colliderA, colliderB);
+	colliderB->pushForce = colliderA->pushForce;
 	// 分離平面が存在しないので「衝突している」
 	return true;
 }
@@ -260,4 +262,63 @@ float CollisionManager::LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3*
 	FLOAT r2 = fabs(Vector3::Dot(*Sep, *e2));
 	FLOAT r3 = e3 ? (fabs(Vector3::Dot(*Sep, *e3))) : 0;
 	return r1 + r2 + r3;
+}
+
+Vector3 CollisionManager::CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2) {
+	Vector3 axes[] = {
+		obb1->GetDirect(0), obb1->GetDirect(1), obb1->GetDirect(2),
+		obb2->GetDirect(0), obb2->GetDirect(1), obb2->GetDirect(2),
+		Vector3::Cross(obb1->GetDirect(0), obb2->GetDirect(0)),
+		Vector3::Cross(obb1->GetDirect(0), obb2->GetDirect(1)),
+		Vector3::Cross(obb1->GetDirect(0), obb2->GetDirect(2)),
+		Vector3::Cross(obb1->GetDirect(1), obb2->GetDirect(0)),
+		Vector3::Cross(obb1->GetDirect(1), obb2->GetDirect(1)),
+		Vector3::Cross(obb1->GetDirect(1), obb2->GetDirect(2)),
+		Vector3::Cross(obb1->GetDirect(2), obb2->GetDirect(0)),
+		Vector3::Cross(obb1->GetDirect(2), obb2->GetDirect(1)),
+		Vector3::Cross(obb1->GetDirect(2), obb2->GetDirect(2))
+	};
+
+	float minOverlap = FLT_MAX;
+	Vector3 mtvAxis;
+
+	for (Vector3 axis : axes) {
+		if (axis.Length() < FLT_EPSILON) continue; // 無効な軸はスキップ
+
+		axis.Normalize();
+		float overlap = CalculateOverlap(obb1, obb2, axis);
+
+		if (overlap < 0) return Vector3(0, 0, 0); // 衝突なし
+		if (overlap < minOverlap) {
+			minOverlap = overlap;
+			mtvAxis = axis;
+		}
+	}
+
+	return mtvAxis * minOverlap;
+}
+
+float CollisionManager::CalculateOverlap(OBBoxCollider* obb1, OBBoxCollider* obb2,Vector3& axis) {
+	// 軸の正規化
+	Vector3 normalizedAxis = axis.Normalize();
+
+	// OBB1 の中心と半径の計算
+	float center1 = Vector3::Dot(obb1->GetCenter(), normalizedAxis);
+	float radius1 =
+		obb1->GetLen(0) * fabs(Vector3::Dot(obb1->GetDirect(0), normalizedAxis)) +
+		obb1->GetLen(1) * fabs(Vector3::Dot(obb1->GetDirect(1), normalizedAxis)) +
+		obb1->GetLen(2) * fabs(Vector3::Dot(obb1->GetDirect(2), normalizedAxis));
+
+	// OBB2 の中心と半径の計算
+	float center2 = Vector3::Dot(obb1->GetCenter(), normalizedAxis);
+	float radius2 =
+		obb2->GetLen(0) * fabs(Vector3::Dot(obb2->GetDirect(0), normalizedAxis)) +
+		obb2->GetLen(1) * fabs(Vector3::Dot(obb2->GetDirect(1), normalizedAxis)) +
+		obb2->GetLen(2) * fabs(Vector3::Dot(obb2->GetDirect(2), normalizedAxis));
+
+	// 重なり量の計算
+	float overlap = (radius1 + radius2) - fabs(center1 - center2);
+
+	// 結果を返す
+	return overlap;
 }

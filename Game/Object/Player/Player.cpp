@@ -296,7 +296,7 @@ void Player::ColliderInit()
 }
 void Player::OnCollision(const ICollider& ICollider)
 {
-
+	
 	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		isDamege = true;
 		ImGui::Begin("Player");
@@ -310,7 +310,20 @@ void Player::OnCollision(const ICollider& ICollider)
 		ImGui::Text("Hit");
 		ImGui::End();
 	}
+	if (ICollider.GetcollitionAttribute() == ColliderTag::Enemy) {
 
+		Vector3 aaaaa2 = (ICollider.GetCenter() - ICollider.pushForce);
+		world_.transform.translate -= move;
+
+
+	}		
+	Vector3 aaaaa = (ICollider.GetCenter() - ICollider.pushForce);
+	Vector3 temp = ICollider.pushForce;
+	
+		ImGui::Begin("Player");
+		ImGui::InputFloat3("pushForce",&temp.x);
+		ImGui::InputFloat3("pushForce - ICollider.GetCenter()",&aaaaa.x);
+		ImGui::End();
 	return;
 }
 void Player::AttackColliderInit()
@@ -373,11 +386,12 @@ void Player::ImGui()
 
 void Player::Move()
 {
+	move = {0.0f,0.0f,0.0f };
 	//移動量
 	if (joyState.Gamepad.sThumbLX != 0 && joyState.Gamepad.sThumbLY != 0) {
 
 #pragma region
-		Vector3 move = {
+		move = {
 		(float)joyState.Gamepad.sThumbLX / SHRT_MAX, 0.0f,
 		(float)joyState.Gamepad.sThumbLY / SHRT_MAX };
 		//正規化をして斜めの移動量を正しくする

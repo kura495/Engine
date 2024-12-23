@@ -40,4 +40,6 @@ private:
 	std::unique_ptr<OBBColliderModel> model_;
 
 	OBBData obb_;
+
+	bool IsPushByCollider_ = false;
 };

@@ -107,7 +107,7 @@ void Bomb::OnCollision(const ICollider& colliderA)
 			PrePos = world_.transform.translate;*/
 		}
 	}
-	if (colliderA.GetcollitionAttribute() == ColliderTag::Enemy){
+	if (colliderA.GetcollitionAttribute() == ColliderTag::EnemyCore){
 		if (isHit == false) {
 			forTargetVector *= -1.0f;
 			isHit = true;
