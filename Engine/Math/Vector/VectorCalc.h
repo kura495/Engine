@@ -3,5 +3,6 @@
 #include<cmath>
 #include<cassert>
 namespace Math {
-	Vector3 VectorTransform(const Vector3& vector, const Matrix4x4& matrix);
+	
 }
+Math::Vector3 VectorTransform(const Math::Vector3& vector, const Math::Matrix4x4& matrix);

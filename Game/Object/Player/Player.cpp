@@ -35,15 +35,32 @@ void Player::Init(std::vector<Model*> models)
 #pragma endregion Anime
 
 #pragma region
-	particle_ = new ParticleSystem();
-	particle_->Initalize("resources/circle2.dds");
-	particle_->UpdateParticle = [this](Particle& particle) {return UpdateParticle(particle); };
-
+	deadParticle_ = new ParticleSystem();
+	deadParticle_->Initalize("resources/circle2.dds");
+	deadParticle_->UpdateParticle = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	deadParticleEmitter.count = 5;
 	deadParticleEmitter.frequency = 0.1f;
 	deadParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
 	deadParticleEmitter.color = { 0.0f,0.0f,0.0f };
 	deadParticleEmitter.speed = { 2.0f,2.0f,2.0f };
+
+	attackHitParticle_ = new ParticleSystem();
+	attackHitParticle_->Initalize("resources/circle2.dds");
+	attackHitParticle_->UpdateParticle = [this](Particle& particle) {return UpdateAttackHitParticle(particle); };
+	AttackHitParticleEmitter.count = 20;
+	AttackHitParticleEmitter.frequency = 0.1f;
+	AttackHitParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
+	AttackHitParticleEmitter.color = { 1.0f,0.5f,0.5f };
+	AttackHitParticleEmitter.speed = { 5.0f,3.5f,5.0f };
+
+	attackHitBombParticle_ = new ParticleSystem();
+	attackHitBombParticle_->Initalize("resources/circle2.dds");
+	attackHitBombParticle_->UpdateParticle = [this](Particle& particle) {return UpdateAttackHitBombParticle(particle); };
+	AttackHitBombParticleEmitter.count = 5;
+	AttackHitBombParticleEmitter.frequency = 0.1f;
+	AttackHitBombParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
+	AttackHitBombParticleEmitter.color = { 0.5f,0.5f,1.0f };
+	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
 }
 
@@ -66,7 +83,9 @@ void Player::Update()
 
 	BehaviorUpdate();
 
-	particle_->Update();
+	attackHitParticle_->Update();
+	attackHitBombParticle_->Update();
+	deadParticle_->Update();
 	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 #ifdef USE_IMGUI
 	ImGui();
@@ -101,7 +120,6 @@ void Player::Draw()
 	case Behavior::kRoot:
 	default:
 		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
-		//models_[0]->RendererDraw(world_);
 		break;
 	case Behavior::kAttack:
 		models_[0]->RendererSkinDraw(world_, attackAnimation->GetSkinCluster());
@@ -114,11 +132,12 @@ void Player::Draw()
 			models_[0]->RendererSkinDraw(world_, deadAnimation->GetSkinCluster());
 		}
 		else {
-			particle_->RendererDraw();
+			deadParticle_->RendererDraw();
 		}
 		break;
 	}
-
+	attackHitParticle_->RendererDraw();
+	attackHitBombParticle_->RendererDraw();
 }
 
 #pragma region
@@ -263,7 +282,7 @@ void Player::DeadUpdate()
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
 
-		particle_->SpawnParticle(deadParticleEmitter, randomEngine);
+		deadParticle_->SpawnParticle(deadParticleEmitter, randomEngine);
 
 		deadParticleEmitter.frequencyTime -= deadParticleEmitter.frequency;
 	}
@@ -280,7 +299,7 @@ void Player::DeadUpdate()
 		}
 	}
 	if (isDeadModelDraw == false) {
-		particle_->Update();
+		deadParticle_->Update();
 	}
 }
 #pragma endregion BeheviorTree
@@ -299,16 +318,9 @@ void Player::OnCollision(const ICollider& ICollider)
 	
 	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		isDamege = true;
-		ImGui::Begin("Player");
-		ImGui::Text("Hit");
-		ImGui::End();
-		//playerMoveValue = true;
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
 		isDamege = true;
-		ImGui::Begin("Player");
-		ImGui::Text("Hit");
-		ImGui::End();
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Enemy) {
 
@@ -321,10 +333,10 @@ void Player::OnCollision(const ICollider& ICollider)
 	Vector3 aaaaa = (ICollider.GetCenter() - ICollider.pushForce);
 	Vector3 temp = ICollider.pushForce;
 	
-		ImGui::Begin("Player");
-		ImGui::InputFloat3("pushForce",&temp.x);
-		ImGui::InputFloat3("pushForce - ICollider.GetCenter()",&aaaaa.x);
-		ImGui::End();
+	/*ImGui::Begin("Player");
+	ImGui::InputFloat3("pushForce",&temp.x);
+	ImGui::InputFloat3("pushForce - ICollider.GetCenter()",&aaaaa.x);
+	ImGui::End();*/
 	return;
 }
 void Player::AttackColliderInit()
@@ -341,15 +353,39 @@ void Player::AttackColliderInit()
 }
 void Player::AttackOnCollision(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == ColliderTag::Enemy) {
+	if (collider.GetcollitionAttribute() == ColliderTag::EnemyCore) {
 		colliderAttack.IsUsing = false;
+		//パーティクル用の
+		attackVector = VectorTransform({0.0f,0.0f,1.0f},Matrix4x4 (MakeRotateMatrix(world_.transform.quaternion)));
+		attackVector.Normalize();
+		attackVector *= -1;
+		//パーティクル生成
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		AttackHitParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
+		AttackHitParticleEmitter.world_.transform.translate.y += 1.0f;
+		attackHitParticle_->SpawnParticle(AttackHitParticleEmitter, randomEngine);
 	}
 	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
 		colliderAttack.IsUsing = false;
+		//パーティクル用の
+		attackVector = VectorTransform({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
+		attackVector.Normalize();
+		attackVector *= -1;
+		//パーティクル生成
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
+		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
+		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);
 	}
 }
 #pragma endregion Collider
-void Player::UpdateParticle(Particle& particle)
+void Player::UpdatedeadParticle(Particle& particle)
 {
 
 	Vector3 velcity = particle.velocity * kDeltaTime;
@@ -362,6 +398,36 @@ void Player::UpdateParticle(Particle& particle)
 	particle.color.x = deadParticleEmitter.color.x;
 	particle.color.y = deadParticleEmitter.color.y;
 	particle.color.z = deadParticleEmitter.color.z;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+}
+void Player::UpdateAttackHitParticle(Particle& particle)
+{
+	Vector3 velcity = particle.velocity + (AttackHitBombParticleEmitter.speed * attackVector);
+	particle.transform.translate += velcity * kDeltaTime;
+	//エミッターがパーティクルの半径を決める
+	particle.transform.scale = AttackHitParticleEmitter.particleRadius;
+	Vector3 translate = particle.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	particle.color.w = alpha;
+	particle.color.x = AttackHitParticleEmitter.color.x;
+	particle.color.y = AttackHitParticleEmitter.color.y;
+	particle.color.z = AttackHitParticleEmitter.color.z;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+}
+void Player::UpdateAttackHitBombParticle(Particle& particle)
+{
+	Vector3 velcity = particle.velocity + (AttackHitBombParticleEmitter.speed * attackVector);
+	particle.transform.translate += velcity * kDeltaTime;
+	//エミッターがパーティクルの半径を決める
+	particle.transform.scale = AttackHitBombParticleEmitter.particleRadius;
+	Vector3 translate = particle.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	particle.color.w = alpha;
+	particle.color.x = AttackHitBombParticleEmitter.color.x;
+	particle.color.y = AttackHitBombParticleEmitter.color.y;
+	particle.color.z = AttackHitBombParticleEmitter.color.z;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }

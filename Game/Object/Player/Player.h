@@ -1,6 +1,8 @@
 #pragma once
 //操作キャラクタークラス//
 
+#include "Math/Matrix/MatrixCalc.h"
+#include "Math/Vector/VectorCalc.h"
 #include "Object/IObject.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
@@ -23,7 +25,7 @@ public:
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
-	Vector3 move;
+
 	/// <summary>
 	/// ゲームプレイシーンがタイトル状態の時
 	/// </summary>
@@ -84,10 +86,22 @@ private:
 
 	Input* input = nullptr;
 
-	ParticleSystem* particle_;
-	void UpdateParticle(Particle& particle);
+#pragma region
+	ParticleSystem* deadParticle_;
+	void UpdatedeadParticle(Particle& particle);
 	Emitter deadParticleEmitter;
+
+	ParticleSystem* attackHitParticle_;
+	void UpdateAttackHitParticle(Particle& particle);
+	Emitter AttackHitParticleEmitter;
+	Vector3 attackVector;
+
+	ParticleSystem* attackHitBombParticle_;
+	void UpdateAttackHitBombParticle(Particle& particle);
+	Emitter AttackHitBombParticleEmitter;
+
 	const float kDeltaTime = 1.0f / 60.0f;
+#pragma endregion Particle
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
@@ -107,4 +121,5 @@ private:
 	//動いていたかどうか
 	bool isMovedFlag = false;
 
+	Vector3 move;
 };

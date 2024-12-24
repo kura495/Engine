@@ -23,19 +23,22 @@ void DummyBomb::Update()
 {
 	//パーティクル
 	emitter.frequencyTime += kDeltaTime;
-	if (emitter.frequency <= emitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
+	if (isThrowFlag) {
+		if (emitter.frequency <= emitter.frequencyTime) {
+			//ランダム生成用
+			std::random_device seedGenerator;
+			std::mt19937 randomEngine(seedGenerator());
 
-		particle_->CustumSpawnParticle(emitter);
+			particle_->CustumSpawnParticle(emitter);
 
-		emitter.frequencyTime -= emitter.frequency;
+			emitter.frequencyTime -= emitter.frequency;
+		}
 	}
+
 	particle_->Update();
 	ImGui();
 
-	world_.Update();
+
 	//一定ラインを超えたら止める
 	distance = Vector3::Distance(stertPos, world_.transform.translate);
 	if (distance >= 60.0f) {
@@ -52,7 +55,6 @@ void DummyBomb::Update()
 	//移動の制限(下限と上限を一行で書いている)
 	world_.transform.translate.y = (std::max)(world_.transform.translate.y, 1.0f);
 
-
 	if (isThrowFlag) {
 		if (isCompleteMoveFlag == false) {
 			easeT = (std::min)(easeT + addEaseT, 1.0f);
@@ -67,6 +69,8 @@ void DummyBomb::Update()
 
 		}
 	}
+
+	world_.Update();
 }
 
 void DummyBomb::Draw()
