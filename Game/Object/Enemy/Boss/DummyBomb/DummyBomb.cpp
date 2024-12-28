@@ -19,6 +19,7 @@ void DummyBomb::Init(std::vector<Model*> models)
 
 }
 
+
 void DummyBomb::Update()
 {
 	//パーティクル
