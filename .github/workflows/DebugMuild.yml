@@ -7,7 +7,7 @@ on:
 
 env:
   # リポジトリのルートディレクトリを基点としたソリューションファイルのパス
-  SOLUTION_FILE_PATH: project/Engine.sln
+  SOLUTION_FILE_PATH: Engine.sln
   # VisualStadioの構成(Debug / Release)
   CONFIGURATION: Debug
     
