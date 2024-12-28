@@ -2,10 +2,13 @@ master
 -----------------------
 Debug
 -----------------------
+
 [![DebugBuild](https://github.com/kura495/Engine/actions/workflows/DebugMuild.yml/badge.svg)](https://github.com/kura495/Engine/actions/workflows/DebugMuild.yml)
 
 -----------------------
 Release
 -----------------------
+
 [![ReleaseBuild](https://github.com/kura495/Engine/actions/workflows/ReleaseBuild.yml/badge.svg)](https://github.com/kura495/Engine/actions/workflows/ReleaseBuild.yml)
+
 -----------------------
