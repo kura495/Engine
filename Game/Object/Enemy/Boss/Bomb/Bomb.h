@@ -62,7 +62,6 @@ private:
 	Emitter emitter;
 	void UpdateParticle(Particle& particle);
 	Particle CustomParticle();
-	const float kDeltaTime = 1.0f / 60.0f;
 #pragma region パーティクル
 
 	bool IsOverline = false;

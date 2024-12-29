@@ -100,7 +100,6 @@ private:
 	void UpdateAttackHitBombParticle(Particle& particle);
 	Emitter AttackHitBombParticleEmitter;
 
-	const float kDeltaTime = 1.0f / 60.0f;
 #pragma endregion Particle
 
 	XINPUT_STATE joyState;

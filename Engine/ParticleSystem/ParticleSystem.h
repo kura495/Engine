@@ -16,6 +16,8 @@
 #include "PipeLine/ParticlePipeLine.h"
 #include "Emitter/Emitter.h"
 
+static const float kDeltaTime = 1.0f / 60.0f;
+
 struct Particle {
 	Matrix4x4 matWorld;
 	Vector3 velocity;
@@ -72,8 +74,6 @@ public:
 	
 	void PreDraw();
 
-
-
 private:
 	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
 	std::list<Particle> CustumEmit(Emitter& emitter);
@@ -112,8 +112,6 @@ private:
 	void CreateSRV();
 
 	std::unique_ptr<ParticlePipeLine> Pipeline_;
-
-	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ランダム
 	Particle MakeNewParticle(Emitter& emitter, std::mt19937& randomEngine);

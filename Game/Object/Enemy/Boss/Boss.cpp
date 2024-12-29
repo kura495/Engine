@@ -482,7 +482,6 @@ Particle Boss::CustomParticle()
 	particle.currentTime = 0.0f;
 	particle.lifeTime = 2.0f;
 	particle.transform.translate = worldArmL.transform.translate;
-	//particle.velocity = {0.5f,0.5f,0.5f};
 
 	return particle;
 }

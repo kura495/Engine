@@ -22,7 +22,6 @@ void Bomb::Init(std::vector<Model*> models)
 void Bomb::Update()
 {
 	//パーティクル
-	//emitter.world_.transform.translate = world_.transform.translate;
 	emitter.frequencyTime += kDeltaTime;
 	if (emitter.frequency <= emitter.frequencyTime) {
 		//ランダム生成用
@@ -65,14 +64,6 @@ void Bomb::Update()
 
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
-
-
-
-		//
-		/*if (isHit == false) {
-			world_.transform.translate = Vector3::Lerp(PrePos, stertPos, easeT);
-		}	
-		easeT = (std::min)(easeT + addEaseT, 1.0f);*/
 	}
 }
 

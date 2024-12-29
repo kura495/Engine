@@ -128,6 +128,4 @@ private:
 #pragma endregion
 
 	bool isAttackSelect = true;
-
-	const float kDeltaTime = 1.0f / 60.0f;
 };
