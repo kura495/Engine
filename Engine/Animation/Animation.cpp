@@ -160,7 +160,7 @@ void Animation::SkeletonUpdate()
 
 void Animation::SkinClusterUpdate()
 {
-	// SkinClusterの更新
+
 
 	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); ++jointIndex) {
 		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());

@@ -342,10 +342,8 @@ SoundData Audio::SoundLoadMP3(const std::string& filePath)
 	return soundData;
 }
 
-void Audio::SoundUnload(uint32_t Index)
+void Audio::SoundUnload(uint32_t AudioIndex)
 {
-	soundData_[Index].mediaData.clear();
-	soundData_[Index].wfex = {};
+	soundData_[AudioIndex].mediaData.clear();
+	soundData_[AudioIndex].wfex = {};
 }
-
-void Audio::Log(const std::string& message) { OutputDebugStringA(message.c_str()); }
