@@ -18,11 +18,3 @@ public:
 private:
 
 };
-
-CircleCollider::CircleCollider()
-{
-}
-
-CircleCollider::~CircleCollider()
-{
-}

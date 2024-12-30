@@ -253,7 +253,6 @@ bool CollisionManager::CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* c
 	return true;
 }
 
-// 分離軸に投影された軸成分から投影線分長を算出
 float CollisionManager::LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3* e2, Vector3* e3)
 {
 	// 3つの内積の絶対値の和で投影線分長を計算
