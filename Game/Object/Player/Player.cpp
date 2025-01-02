@@ -356,7 +356,7 @@ void Player::AttackOnCollision(const ICollider& collider)
 	if (collider.GetcollitionAttribute() == ColliderTag::EnemyCore) {
 		colliderAttack.IsUsing = false;
 		//パーティクル用の
-		attackVector = VectorTransform({0.0f,0.0f,1.0f},Matrix4x4 (MakeRotateMatrix(world_.transform.quaternion)));
+		attackVector = TransformNormal({0.0f,0.0f,1.0f},Matrix4x4 (MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
 		attackVector *= -1;
 		//パーティクル生成
@@ -371,7 +371,7 @@ void Player::AttackOnCollision(const ICollider& collider)
 	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
 		colliderAttack.IsUsing = false;
 		//パーティクル用の
-		attackVector = VectorTransform({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
+		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
 		attackVector *= -1;
 		//パーティクル生成

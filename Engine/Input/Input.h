@@ -45,43 +45,43 @@ public:
 	/// 押した瞬間
 	/// </summary>
 	/// <param name="keyNumber"></param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	bool pushKey(uint8_t keyNumber);
 	/// <summary>
 	/// 押している間
 	/// </summary>
 	/// <param name="keyNumber"></param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	bool TriggerKey(uint8_t keyNumber);
 	/// <summary>
 	/// 離した瞬間
 	/// </summary>
 	/// <param name="keyNumber"></param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	bool IsTriggerKey(uint8_t keyNumber);
 	/// <summary>
 	/// 押した瞬間
 	/// </summary>
 	/// <param name="keyNumber"></param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	bool pushPad(uint32_t buttonNumber);
 	/// <summary>
 	/// 押している間
 	/// </summary>
 	/// <param name="buttonNumber"></param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	bool TriggerPad(uint32_t buttonNumber);
 	/// <summary>
 	/// 押している間
 	/// </summary>
 	/// <param name="buttonNumber">XINPUT_GAMEPAD</param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	bool IsTriggerPad(uint32_t buttonNumber);
 	/// <summary>
-	/// 
+	/// 未完成のため使用不可
 	/// </summary>
 	/// <param name="Mousebutton">MOUSE_BOTTON</param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	bool pushMouse(uint32_t Mousebutton);
 
 	/// <summary>
@@ -101,7 +101,7 @@ public:
 	/// </summary>
 	/// <param name="buttonNumber">XINPUT_GAMEPAD_</param>
 	/// <param name="delayTime">何フレーム猶予区間をつくるか</param>
-	/// <returns></returns>
+	/// <returns>bool</returns>
 	static bool GetPadPrecede(uint32_t buttonNumber,int delayTime);
 
 private:
@@ -122,6 +122,11 @@ private:
 	//ImGui
 	void ImGui();
 
+	/// <summary>
+	/// パッドで押されているボタンを識別して、押されているボタン対応の文字列を返す
+	/// </summary>
+	/// <param name="Number">押されているボタンの番号</param>
+	/// <returns></returns>
 	std::string PadButtonList(uint32_t Number);
 
 	HRESULT hr;

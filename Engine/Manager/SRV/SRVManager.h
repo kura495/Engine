@@ -12,7 +12,10 @@ class SRVManager
 public:
 
 	static SRVManager* GetInstance();
-
+	/// <summary>
+	/// 一番後ろのSRVハンドルを取得
+	/// </summary>
+	/// <returns>DESCRIPTERHANDLE</returns>
 	DESCRIPTERHANDLE GetDescriptorHandle();
 	uint32_t descriptorSizeSRV;
 private:
@@ -22,8 +25,15 @@ private:
 	~SRVManager() = default;
 	SRVManager(const SRVManager& obj) = delete;
 	SRVManager& operator=(const SRVManager& obj) = delete;
-
+	/// <summary>
+	/// 現在のハンドルの数を計算
+	/// </summary>
+	/// <returns>D3D12_CPU_DESCRIPTOR_HANDLE</returns>
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle();
+	/// <summary>
+	/// 現在のハンドルの数を計算
+	/// </summary>
+	/// <returns>D3D12_GPU_DESCRIPTOR_HANDLE</returns>
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle();
 
 	uint32_t SRVValue = 1;

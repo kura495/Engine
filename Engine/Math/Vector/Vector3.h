@@ -72,17 +72,30 @@ namespace Math {
 		}
 #pragma endregion 
 	public:
-		//ベクトルの内積
-		//return float
+		/// <summary>
+		/// ベクトルの内積
+		/// </summary>
+		/// <param name="input1">ベクトル</param>
+		/// <param name="input2">ベクトル</param>
+		/// <returns>float</returns>
 		static float Dot(const Vector3& input1, const Vector3& input2);
-		//ベクトルの外積
-		//return Vector3
+		/// <summary>
+		/// ベクトルの外積
+		/// </summary>
+		/// <param name="input1">ベクトル</param>
+		/// <param name="input2">ベクトル</param>
+		/// <returns>Vector3</returns>
 		static Vector3 Cross(const Vector3& input1, const Vector3& input2);
-		//ベクトルの長さを求める式
-		//return float
+		/// <summary>
+		/// ベクトルの長さを求める式
+		/// </summary>
+		/// <param name="input">ベクトル</param>
+		/// <returns>float</returns>
 		static float Length(const Vector3& input);
-		//ベクトルの長さを求める式
-		//return float
+		/// <summary>
+		/// ベクトルの長さを求める式
+		/// </summary>
+		/// <returns>float</returns>
 		float Length();
 		/// <summary>
 		/// ベクトルの距離を求める式
@@ -91,14 +104,24 @@ namespace Math {
 		/// <param name="input2">ゴール地点</param>
 		/// <returns>スタート地点からゴール地点までの距離</returns>
 		static float Distance(const Vector3& input1, const Vector3& input2);
-		//正規化
-		//return Vector3
+		/// <summary>
+		/// 正規化
+		/// </summary>
+		/// <param name="input">ベクトル</param>
+		/// <returns>Vector3</returns>
 		static Vector3 Normalize(const Vector3& input);
-		//正規化
-		//return Vector3
+		/// <summary>
+		/// 正規化
+		/// </summary>
+		/// <returns>Vector3</returns>
 		Vector3 Normalize();
-		//線形補間
-		//return Vector3
+		/// <summary>
+		/// 線形補間
+		/// </summary>
+		/// <param name="v1">ベクトル</param>
+		/// <param name="v2">ベクトル</param>
+		/// <param name="t">パラメーター</param>
+		/// <returns>Vector3</returns>
 		static Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
 	};
 }

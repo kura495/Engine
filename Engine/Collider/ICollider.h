@@ -74,7 +74,7 @@ public:
 	/// <summary>
 	/// 当たり判定の位置を取得
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>Vector3</returns>
 	Vector3 GetCenter() const {
 		return
 		{ center_->transform.translate.x,center_->transform.translate.y,center_->transform.translate.z };
@@ -82,7 +82,7 @@ public:
 	/// <summary>
 	/// 当たり判定のワールドトランスフォームを取得
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>WorldTransform*</returns>
 	WorldTransform* GetColliderWorld() { return center_; };
 	/// <summary>
 	/// コライダーの当たり判定のオフセットを設定
@@ -100,12 +100,12 @@ public:
 	/// <summary>
 	/// 当たり判定の大きさを取得
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>Vector3</returns>
 	Vector3 GetSize() const { return size_; }
 	/// <summary>
 	/// 形状の判別をする関数
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>Shape</returns>
 	virtual Shape GetShape() = 0;
 
 	//コライダー有効化フラグ(trueなら当たり判定をとる)

@@ -44,41 +44,75 @@ namespace Math {
 		}
 #pragma endregion
 	public:
-		//単位Quaternionを作る
-		//return Quaternion
+		/// <summary>
+		/// 単位Quaternionを作る
+		/// </summary>
+		/// <returns>Quaternion</returns>
 		static Quaternion IdentityQuaternion();
-		//共役Quaternionを返す
-		//return Quaternion
+		/// <summary>
+		/// 共役Quaternionを返す
+		/// </summary>
+		/// <param name="quaternion">クォータニオン</param>
+		/// <returns>Quaternion</returns>
 		static Quaternion Conjugate(const Quaternion& quaternion);
-		//共役Quaternionを返す
-		//return Quaternion
+		/// <summary>
+		/// 共役Quaternionを返す
+		/// </summary>
+		/// <returns>Quaternion</returns>
 		Quaternion Conjugate();
-		//Quaternionのnormを返す
-		//return float
+		/// <summary>
+		/// Quaternionのnormを返す
+		/// </summary>
+		/// <param name="quaternion">クォータニオン</param>
+		/// <returns>float</returns>
 		static float Norm(const Quaternion& quaternion);
-		//Quaternionのnormを返す
-		//return float
+		/// <summary>
+		/// Quaternionのnormを返す
+		/// </summary>
+		/// <returns>float</returns>
 		float Norm();
-		//逆Quaternionを返す
-		//return Quaternion
+		/// <summary>
+		/// 逆Quaternionを返す
+		/// </summary>
+		/// <param name="quaternion">クォータニオン</param>
+		/// <returns>Quaternion</returns>
 		static Quaternion Inverse(const Quaternion& quaternion);
-		//逆Quaternionを返す
-		//return Quaternion
+		/// <summary>
+		/// 逆Quaternionを返す
+		/// </summary>
+		/// <returns>Quaternion</returns>
 		Quaternion Inverse();
-		//正規化したQuaternionを返す
-		//return Quaternion
+		/// <summary>
+		/// 正規化したQuaternionを返す
+		/// </summary>
+		/// <param name="quaternion">クォータニオン</param>
+		/// <returns>Quaternion</returns>
 		static Quaternion Normalize(const Quaternion& quaternion);
-		//正規化したQuaternionを返す
-		//return Quaternion
+		/// <summary>
+		/// 正規化したQuaternionを返す
+		/// </summary>
+		/// <returns>Quaternion</returns>
 		Quaternion Normalize();
-		//球面線形補間
-		//return Quaternion
+		/// <summary>
+		/// 球面線形補間
+		/// </summary>
+		/// <param name="q0">クォータニオン</param>
+		/// <param name="q1">クォータニオン</param>
+		/// <param name="t">パラメーター</param>
+		/// <returns>Quaternion</returns>
 		static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
-		//オイラー角をクォータニオン
-		//return Quaternion
+		/// <summary>
+		/// オイラー角をクォータニオン
+		/// </summary>
+		/// <param name="input">オイラー角で表現された回転</param>
+		/// <returns>Quaternion</returns>
 		static Quaternion EulerToQuaterion(Vector3 input);
-
-		//任意軸回転を表すQuaternionの生成
+		/// <summary>
+		/// 任意軸回転を表すQuaternionの生成
+		/// </summary>
+		/// <param name="axis">軸</param>
+		/// <param name="angle">回転量</param>
+		/// <returns>Quaternion</returns>
 		static Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
 	};
 }

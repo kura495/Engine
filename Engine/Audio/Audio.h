@@ -61,14 +61,14 @@ public:
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
 	/// <param name="LoopFlag">ループ再生するかどうか</param>
-	/// <returns></returns>
+	/// <returns>uint32_t</returns>
 	uint32_t LoadAudio(const std::string& filePath, bool LoopFlag);
 	/// <summary>
 	/// mp3ファイルを読み込み
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
 	/// <param name="LoopFlag">ループ再生するかどうか</param>
-	/// <returns></returns>
+	/// <returns>uint32_t</returns>
 	uint32_t LoadAudioMP3(const std::string& filePath, bool LoopFlag);
 #pragma endregion 読み込み
 
@@ -136,13 +136,13 @@ private:
 	/// サウンドの読み込み(wav)
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
-	/// <returns></returns>
+	/// <returns>SoundData</returns>
 	SoundData SoundLoadWave(const std::string& filePath);
 	/// <summary>
 	/// サウンドの読み込み(mp3)
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
-	/// <returns></returns>
+	/// <returns>SoundData</returns>
 	SoundData SoundLoadMP3(const std::string& filePath);
 
 

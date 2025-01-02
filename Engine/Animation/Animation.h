@@ -35,7 +35,7 @@ public:
 	/// </summary>
 	/// <param name="directrypath">ディレクトリパス</param>
 	/// <param name="filename">ファイルネーム</param>
-	/// <returns></returns>
+	/// <returns>Animation*</returns>
 	static Animation* LoadAnimationFile(const std::string& directrypath,const std::string& filename);
 	/// <summary>
 	/// アニメーション補間
@@ -77,14 +77,14 @@ private:
 	/// </summary>
 	/// <param name="keyframes">キーフレーム</param>
 	/// <param name="time">経過時間</param>
-	/// <returns></returns>
+	/// <returns>Vector3</returns>
 	static Vector3 CalculateValue(const std::vector<KeyFrameVector3>& keyframes, float time);
 	/// <summary>
 	/// ノードアニメーションの更新
 	/// </summary>
 	/// <param name="keyframes">キーフレーム</param>
 	/// <param name="time">経過時間</param>
-	/// <returns></returns>
+	/// <returns>Quaternion</returns>
 	static Quaternion CalculateValue(const std::vector<KeyFrameQuaternion>& keyframes, float time);
 	/// <summary>
 	/// Skeletonのjointをすべて更新
@@ -110,7 +110,7 @@ private:
 	/// <param name="node"></param>
 	/// <param name="parent"></param>
 	/// <param name="joints"></param>
-	/// <returns></returns>
+	/// <returns>int32_t</returns>
 	int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
 	/// <summary>
 	/// ノードアニメーションの更新処理

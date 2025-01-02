@@ -32,7 +32,7 @@ public:
 	/// </summary>
 	/// <param name="obb1"></param>
 	/// <param name="obb2"></param>
-	/// <returns></returns>
+	/// <returns>Vector3</returns>
 	Vector3 CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2);
 	/// <summary>
 	/// OBB同士の判定でめり込んでいる分の計算(軸ひとつづつ)
@@ -40,7 +40,7 @@ public:
 	/// <param name="obb1"></param>
 	/// <param name="obb2"></param>
 	/// <param name="axis"></param>
-	/// <returns></returns>
+	/// <returns>float</returns>
 	float CalculateOverlap(OBBoxCollider* obb1,OBBoxCollider* obb2,Vector3& axis);
 private:
 	/// <summary>
@@ -61,10 +61,10 @@ private:
 	/// <summary>
 	/// 分離軸に投影された軸成分から投影線分長を算出
 	/// </summary>
-	/// <param name="Sep"></param>
-	/// <param name="e1"></param>
-	/// <param name="e2"></param>
-	/// <param name="e3"></param>
-	/// <returns></returns>
+	/// <param name="Sep">分離軸</param>
+	/// <param name="e1">方向ベクトル</param>
+	/// <param name="e2">方向ベクトル</param>
+	/// <param name="e3">方向ベクトル</param>
+	/// <returns>float</returns>
 	float LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3* e2, Vector3* e3 = 0);
 };

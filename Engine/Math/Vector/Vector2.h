@@ -72,8 +72,13 @@ namespace Math {
 #pragma endregion 
 
 	public:
-		//線形補間
-		//return Vector2
+		/// <summary>
+		/// 線形補間
+		/// </summary>
+		/// <param name="v1">ベクトル</param>
+		/// <param name="v2">ベクトル</param>
+		/// <param name="t">パラメーター</param>
+		/// <returns>Vector2</returns>
 		static Vector2 VectorLerp(const Vector2& v1, const Vector2& v2, float t);
 	};
 }

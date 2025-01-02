@@ -20,7 +20,10 @@ public:
 	void CollisionDraw()override;
 
 	AABBData GetAABB() const { return aabb_; }
-
+	/// <summary>
+	/// 形状の判別をする関数
+	/// </summary>
+	/// <returns>Shape</returns>
 	Shape GetShape() override {
 		return Shape::Box;
 	};

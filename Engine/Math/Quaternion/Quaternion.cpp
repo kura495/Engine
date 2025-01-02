@@ -135,7 +135,7 @@ Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, float 
 	return result;
 }
 
-Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion)
+Vector3 TransformNormal(const Vector3& vector, const Quaternion& quaternion)
 {
 	Quaternion fromVector = {vector.x,vector.y,vector.z,0.0f};
 	Quaternion conj = Quaternion::Conjugate(quaternion);

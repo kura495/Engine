@@ -20,17 +20,33 @@ public:
 	void CollisionDraw()override;
 
 	void SetOrientations(Matrix4x4 Matrix);
-
+	/// <summary>
+	/// 指定軸番号の方向ベクトルを取得
+	/// </summary>
+	/// <param name="elem">x = 0, y = 1, z = 2 数字で軸を選択</param>
+	/// <returns>Vector3</returns>
 	Vector3 GetDirect(int elem) {
 		return obb_.orientations[elem];
-	};// 指定軸番号の方向ベクトルを取得
+	};
+	/// <summary>
+	/// 指定軸方向の長さを取得
+	/// </summary>
+	/// <param name="elem">x = 0, y = 1, z = 2 数字で軸を選択</param>
+	/// <returns>float</returns>
 	float GetLen(int elem) {
 		return obb_.size[elem];
-	};   // 指定軸方向の長さを取得
+	};
+	/// <summary>
+	/// 位置を取得
+	/// </summary>
+	/// <returns>Vector3</returns>
 	Vector3 GetPos() {
 		return obb_.center;
-	};// 位置を取得
-
+	};
+	/// <summary>
+	/// 形状の判別をする関数
+	/// </summary>
+	/// <returns>Shape</returns>
 	Shape GetShape() override {
 		return Shape::OBB;
 	};

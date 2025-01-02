@@ -61,44 +61,69 @@ namespace Math {
 			return *this;
 		}
 #pragma endregion 
-		//[0][0],[1][1],[2][2],[3][3]に1を代入、それ以外に0を代入した行列を作成
-		//return : Matrix4x4
+		/// <summary>
+		/// [0][0],[1][1],[2][2],[3][3]に1を代入、それ以外に0を代入した行列を作成
+		/// </summary>
+		/// <returns>Matrix4x4</returns>
 		static Matrix4x4 CreateIdentity();
-
+		/// <summary>
+		/// 乗算
+		/// </summary>
+		/// <param name="input1">4x4行列</param>
+		/// <param name="input2">4x4行列</param>
+		/// <returns>Matrix4x4</returns>
 		static Matrix4x4 Multiply(const Matrix4x4& input1, const Matrix4x4& input2);
-		//行列からScaleの値を抜き出す
-		//return : Vector3
+		/// <summary>
+		/// 行列からScaleの値を抜き出す
+		/// </summary>
+		/// <returns>Vector3</returns>
 		Vector3 GetScale();
-
-		//行列からRotateの値を抜き出す
-		//return : Quaternion
+		/// <summary>
+		/// 行列からRotateの値を抜き出す
+		/// </summary>
+		/// <returns>Quaternion</returns>
 		Quaternion GetRotation();
-
-		//行列からTranslateの値を抜き出す
-		//return : Vector3
+		/// <summary>
+		/// 行列からTranslateの値を抜き出す
+		/// </summary>
+		/// <returns>Vector3</returns>
 		inline Vector3 GetTransform() {
 			Vector3 result;
 			result = { m[3][0],m[3][1],m[3][2] };
 			return result;
 		}
-
-		//行列を反転 転置行列をつくる
-		//return : Matrix4x4
+		/// <summary>
+		/// 行列を反転 転置行列をつくる
+		/// </summary>
+		/// <param name="m">4x4行列</param>
+		/// <returns>Matrix4x4</returns>
 		static Matrix4x4 Transpose(const Matrix4x4& m);
-		//行列を反転 転置行列をつくる
-		//return : Matrix4x4
+		/// <summary>
+		/// 行列を反転 転置行列をつくる
+		/// </summary>
+		/// <returns>Matrix4x4</returns>
 		Matrix4x4 Transpose();
-		//行列式の計算
-		//return : float
+		/// <summary>
+		/// 行列式の計算
+		/// </summary>
+		/// <param name="m">4x4行列</param>
+		/// <returns>float</returns>
 		static float det(const Matrix4x4& m);
-		//行列式の計算
-		//return : float
+		/// <summary>
+		/// 行列式の計算
+		/// </summary>
+		/// <returns>float</returns>
 		float det();
-		//逆行列の計算
-		//return : Matrix4x4
+		/// <summary>
+		/// 逆行列の計算
+		/// </summary>
+		/// <param name="m">4x4行列</param>
+		/// <returns>Matrix4x4</returns>
 		static Matrix4x4 Inverse(const Matrix4x4& m);
-		//逆行列の計算
-		//return : Matrix4x4
+		/// <summary>
+		/// 逆行列の計算
+		/// </summary>
+		/// <returns>Matrix4x4</returns>
 		Matrix4x4 Inverse();
 
 	};

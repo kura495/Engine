@@ -10,7 +10,10 @@ public:
 
 	void CollisionUpdate()override;
 	void CollisionDraw()override;
-
+	/// <summary>
+	/// 形状の判別をする関数
+	/// </summary>
+	/// <returns>Shape</returns>
 	Shape GetShape() override {
 		return Shape::Circle;
 	};
