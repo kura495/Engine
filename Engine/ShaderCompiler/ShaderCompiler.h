@@ -1,5 +1,5 @@
 #pragma once
-
+/*シェーダーコンパイルクラス*/
 #include "Common/DirectX/DirectXCommon.h"
 
 class ShaderCompiler
@@ -9,6 +9,12 @@ public:
 	static ShaderCompiler* GetInstance();
 
 	void Initalize();
+	/// <summary>
+	/// シェーダーをコンパイルする関数
+	/// </summary>
+	/// <param name="filePath">ファイルパス</param>
+	/// <param name="profile">シェーダープロファイル</param>
+	/// <returns></returns>
 	IDxcBlob* CompileShader(const std::wstring& filePath, const wchar_t* profile);
 
 private:

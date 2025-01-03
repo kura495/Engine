@@ -1,4 +1,5 @@
 #pragma once
+/*Quaternionクラス*/
 #include "Math/Vector/Vector3.h"
 #include "DirectXMath.h"
 #include <numbers>

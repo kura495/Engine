@@ -1,4 +1,5 @@
 ﻿#pragma once
+/*グローバル*/
 #include "Math_Structs.h"
 #include "Transform.h"
 #include "ImGuiManager.h"

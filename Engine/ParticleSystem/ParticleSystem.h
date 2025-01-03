@@ -15,7 +15,7 @@
 #include "Collider/Box/BoxCollider.h"
 #include "PipeLine/ParticlePipeLine.h"
 #include "Emitter/Emitter.h"
-
+/*パーティクルシステムクラス*/
 static const float kDeltaTime = 1.0f / 60.0f;
 
 struct Particle {
@@ -32,12 +32,6 @@ struct ParticleForGPU {
 	Matrix4x4 matWorld;
 	Vector4 color;
 };
-//struct Emitter {
-//	Transform transform;//エミッタのTransform
-//	uint32_t count;		//発生数
-//	float frequency;	//発生頻度
-//	float frequencyTime;//頻度用時刻
-//};
 struct AccelerationField {
 	Vector3 acceleration;//加速度
 	AABBData area;			 //範囲
@@ -115,8 +109,18 @@ private:
 
 	//ランダム
 	Particle MakeNewParticle(Emitter& emitter, std::mt19937& randomEngine);
-	Vector4 MakeParticleColor(std::mt19937& randomEngine);
-	float MakeParticleLifeTime(std::mt19937& randomEngine);
+	/// <summary>
+	/// パーティクルの色をランダムに設定
+	/// </summary>
+	/// <param name="randomEngine"></param>
+	/// <returns></returns>
+	Vector4 SetParticleColor(std::mt19937& randomEngine);
+	/// <summary>
+	/// パーティクルの生存時間をランダムに設定
+	/// </summary>
+	/// <param name="randomEngine"></param>
+	/// <returns></returns>
+	float SetParticleLifeTime(std::mt19937& randomEngine);
 
 	Emitter Testemitter;
 

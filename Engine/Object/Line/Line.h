@@ -16,10 +16,17 @@ public:
 	~Line() = default;
 
 	void Init();
+	/// <summary>
+	/// 線の頂点の更新
+	/// </summary>
+	/// <param name="vertices"></param>
 	void UpdateVertexData(std::vector<Vector4>& vertices);
 	void Draw(const WorldTransform& transform);
 	void RendererDraw(WorldTransform& transform);
-
+	/// <summary>
+	/// 頂点情報の登録
+	/// </summary>
+	/// <param name="vertices"></param>
 	void SetVertexData(std::vector<Vector4>& vertices);
 	void CreateBuffer();
 

@@ -1,7 +1,7 @@
 #pragma once
 #include<cmath>
 #include "externals/nlohmann/json.hpp"
-
+/*Vector3クラス*/
 namespace Math {
 	class Vector3 final {
 	public:

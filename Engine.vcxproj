@@ -195,7 +195,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Engine\Math\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Engine\Math\Vector\Vector2.cpp" />
     <ClCompile Include="Engine\Math\Vector\Vector3.cpp" />
-    <ClCompile Include="Engine\Math\Vector\VectorCalc.cpp" />
     <ClCompile Include="Engine\Object\IObject.cpp" />
     <ClCompile Include="Engine\Object\Line\Line.cpp" />
     <ClCompile Include="Engine\Object\Manager\ObjectManager.cpp" />
@@ -227,7 +226,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Engine\PostProsess\PostProsess.cpp" />
     <ClCompile Include="Engine\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp" />
     <ClCompile Include="Engine\PostProsess\Vinette\PPVinette.cpp" />
-    <ClCompile Include="Engine\Renderer\Model\ModelRenderer.cpp" />
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\ShaderCompiler\ShaderCompiler.cpp" />
     <ClCompile Include="Engine\Sprite\Sprite.cpp" />
@@ -299,7 +297,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Engine\Math\Vector\Vector2.h" />
     <ClInclude Include="Engine\Math\Vector\Vector3.h" />
     <ClInclude Include="Engine\Math\Vector\Vector4.h" />
-    <ClInclude Include="Engine\Math\Vector\VectorCalc.h" />
     <ClInclude Include="Engine\Model_Struct\Material.h" />
     <ClInclude Include="Engine\Model_Struct\ModelData.h" />
     <ClInclude Include="Engine\Model_Struct\Transform.h" />
@@ -338,7 +335,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Engine\PostProsess\PostProsess.h" />
     <ClInclude Include="Engine\PostProsess\RGBtoHSV\PPRGBtoHSV.h" />
     <ClInclude Include="Engine\PostProsess\Vinette\PPVinette.h" />
-    <ClInclude Include="Engine\Renderer\Model\ModelRenderer.h" />
     <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\ShaderCompiler\ShaderCompiler.h" />
     <ClInclude Include="Engine\Sprite\Sprite.h" />

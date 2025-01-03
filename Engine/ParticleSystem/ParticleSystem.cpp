@@ -195,18 +195,18 @@ Particle ParticleSystem::MakeNewParticle(Emitter& emitter,std::mt19937& randomEn
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	particle.transform.translate = ramdomTranslate + emitter.world_.transform.translate;
 	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
-	particle.color = MakeParticleColor(randomEngine);
-	particle.lifeTime = MakeParticleLifeTime(randomEngine);
+	particle.color = SetParticleColor(randomEngine);
+	particle.lifeTime = SetParticleLifeTime(randomEngine);
 	particle.currentTime = 0;
 	return particle;
 }
-Vector4 ParticleSystem::MakeParticleColor(std::mt19937& randomEngine)
+Vector4 ParticleSystem::SetParticleColor(std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
 	return { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) 
 	,distribution(randomEngine) };
 }
-float ParticleSystem::MakeParticleLifeTime(std::mt19937& randomEngine)
+float ParticleSystem::SetParticleLifeTime(std::mt19937& randomEngine)
 {
 	std::uniform_real_distribution<float> distribution(1.0f, 3.0f);
 	return distribution(randomEngine);

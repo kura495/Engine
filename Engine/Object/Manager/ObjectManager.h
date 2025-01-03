@@ -26,9 +26,15 @@ public:
 	void Initalize();
 	void Update();
 	void Draw();
-	//jsonファイルの読み込み
+	/// <summary>
+	/// jsonファイルの読み込み
+	/// </summary>
+	/// <param name="fileName">ファイル名</param>
 	void LordFile(std::string fileName);
-	//ブレンダーで作ったシーンファイルを読み込み
+	/// <summary>
+	/// ブレンダーで作ったシーンファイルを読み込み
+	/// </summary>
+	/// <param name="fileName">ファイル</param>
 	void LordBlenderScene(std::string fileName);
 
 private:

@@ -1,5 +1,5 @@
 #pragma once
-
+/*描画を一つにまとめるクラス*/
 #include "Common/DirectX/DirectXCommon.h"
 #include "Manager/PSO/PSOManager.h"
 
@@ -46,15 +46,54 @@ public:
 	//void Update();
 	void Draw();
 	void PostProsessDraw();
-
+	/// <summary>
+	/// 通常のモデルデータを描画リストに追加
+	/// </summary>
+	/// <param name="model">モデルデータ</param>
+	/// <param name="world">座標情報</param>
 	static void AddModelData(Model& model,WorldTransform& world);
+	/// <summary>
+	/// スキンアニメーション付きのモデルデータを描画リストに追加
+	/// </summary>
+	/// <param name="model">モデルデータ</param>
+	/// <param name="world">座標情報</param>
+	/// <param name="skinCluster">スキンクラスター</param>
 	static void AddModelSkinningData(Model& model,WorldTransform& world,SkinCluster& skinCluster);
+	/// <summary>
+	/// スキンアニメーション+ディゾルブのモデルデータを描画リストに追加
+	/// </summary>
+	/// <param name="model">モデルデータ</param>
+	/// <param name="world">座標情報</param>
+	/// <param name="skinCluster">スキンクラスター<</param>
+	/// <param name="DissolveValue">ディゾルブの値</param>
 	static void AddModelSkinningDissolveData(Model& model,WorldTransform& world,SkinCluster& skinCluster, float DissolveValue);
+	/// <summary>
+	/// ラインデータの描画リストに追加
+	/// </summary>
+	/// <param name="line">ラインデータ</param>
+	/// <param name="world">座標情報</param>
 	static void AddLineData(Line& line,WorldTransform& world);
+	/// <summary>
+	/// モデルデータをワイヤーフレームとして描画リストに追加
+	/// </summary>
+	/// <param name="model">モデルデータ</param>
+	/// <param name="world">座標情報</param>
 	static void AddWireFlameData(Model& model, WorldTransform& world);
+	/// <summary>
+	/// スプライトを描画リストに追加
+	/// </summary>
+	/// <param name="sprite">スプライトデータ</param>
+	/// <param name="world">座標情報</param>
 	static void AddSpriteData(Sprite& sprite, WorldTransform& world);
+	/// <summary>
+	/// パーティクルを描画リストに追加
+	/// </summary>
+	/// <param name="particle">パーティクルデータ</param>
 	static void AddParticleData(ParticleSystem& particle);
-
+	 /// <summary>
+	 /// パイプラインを変更
+	 /// </summary>
+	 /// <param name="Type"></param>
 	 void ChangePipeline(PipelineType Type);
 
 	static ViewProjection viewProjection;

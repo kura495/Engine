@@ -1,5 +1,5 @@
 #pragma once
-
+/*ポストプロセスクラス*/
 #include "Common/DirectX/DirectXCommon.h"
 #include "Manager/SRV/SRVManager.h"
 #include "Game/Object/Player/Player.h"
@@ -11,9 +11,19 @@ class PostProsess
 {
 public:
 	void Init();
+	/// <summary>
+	/// 追加の初期化処理を行う場合にオーバーライド
+	/// </summary>
 	virtual void addInit();
 	void Draw();
+	/// <summary>
+	/// 追加の描画処理を行う場合にオーバーライド
+	/// </summary>
 	virtual void addDraw();
+	/// <summary>
+	/// RTVやSRVなど、必要な物を作成
+	/// </summary>
+	/// <param name="Index">RTVの個数を代入</param>
 	void Create(int Index);
 	virtual void CreateBuffer();
 	virtual void Update() = 0;

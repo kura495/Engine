@@ -1,4 +1,5 @@
 ﻿#pragma once
+/*スプライトクラス*/
 #include "Common/DirectX/DirectXCommon.h"
 #include "Texture/TextureManager.h"
 #include "Transform.h"

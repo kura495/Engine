@@ -34,13 +34,30 @@ public:
 	void SkinDraw(const WorldTransform& transform,const SkinCluster& skinCluster);
 	void SkinDissolveDraw(const WorldTransform& transform,const SkinCluster& skinCluster,int DissolveTex,float DeissolveValue);
 
-
+	/// <summary>
+	/// モデルを描画
+	/// </summary>
+	/// <param name="transform">トランスフォーム</param>
 	void RendererDraw(WorldTransform& transform);
+	/// <summary>
+	/// スキンアニメーション付きのモデルを描画
+	/// </summary>
+	/// <param name="transform">トランスフォーム</param>
+	/// <param name="skinCluster">スキンクラスター</param>
 	void RendererSkinDraw(WorldTransform& transform, SkinCluster& skinCluster);
+	/// <summary>
+	/// 使用不可
+	/// </summary>
 	void RendererSkinDissolveDraw(WorldTransform& transform, SkinCluster& skinCluster, float DissolveValue);
 	void WireFrameDraw(WorldTransform& transform);
 
 	static Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
+	/// <summary>
+	/// モデルデータを読み込み
+	/// </summary>
+	/// <param name="directoryPath">ディレクトリ名</param>
+	/// <param name="filename">ファイル名</param>
+	/// <returns></returns>
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
 	void SetLightMode(Lighting number) { lightFlag = number; };
 

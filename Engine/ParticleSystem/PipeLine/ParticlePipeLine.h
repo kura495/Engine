@@ -1,5 +1,5 @@
 #pragma once
-
+/*パーティクルのパイプライン*/
 #include "PipelineState/IPipelineStateObject.h"
 #include "Manager/PSO/PSOManager.h"
 

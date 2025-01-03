@@ -1,6 +1,6 @@
 #pragma once
+/*行列計算クラス*/
 #include "Math_Structs.h"
-#include "Math/Vector/VectorCalc.h"
 #include <numbers>
 #include <cmath>
 using namespace Math;
