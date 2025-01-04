@@ -319,7 +319,7 @@ void Player::OnCollision(const ICollider& ICollider)
 	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		isDamege = true;
 	}
-	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
+	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 		isDamege = true;
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Enemy) {
@@ -368,7 +368,7 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitParticle_->SpawnParticle(AttackHitParticleEmitter, randomEngine);
 	}
-	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
+	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 		colliderAttack.IsUsing = false;
 		//パーティクル用の
 		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));

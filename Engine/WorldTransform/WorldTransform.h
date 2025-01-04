@@ -1,8 +1,8 @@
 ﻿#pragma once
+/*トランスフォームクラス*/
 #include "Math_Structs.h"
 #include "Math/Matrix/MatrixCalc.h"
 #include "Common/DirectX/DirectXCommon.h"
-#include "Math/Vector/VectorCalc.h"
 #include "Transform.h"
 class Model;
 struct ConstBufferDataWorldTransform {

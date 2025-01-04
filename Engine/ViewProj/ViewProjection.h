@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+/*ビュープロジェクションクラス*/
 #include "Common/DirectX/DirectXCommon.h"
 #include "Math_Structs.h"
 #include "Math/Matrix/MatrixCalc.h"

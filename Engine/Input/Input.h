@@ -4,13 +4,12 @@
 #include <dinput.h>
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
-
 #include <wrl.h>
 #include "Common/WinApp/WinApp.h"
 #include <array>
-
 #include <XInput.h>
-#include "Math/Vector/VectorCalc.h"
+#include <list>
+#include "Matrix/MatrixCalc.h"
 
 #define MOUSE_BOTTON0	0
 #define MOUSE_BOTTON1	1

@@ -1,6 +1,6 @@
-#include "DummyBomb.h"
+#include "DummyBall.h"
 
-void DummyBomb::Init(std::vector<Model*> models)
+void DummyBall::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
@@ -20,7 +20,7 @@ void DummyBomb::Init(std::vector<Model*> models)
 }
 
 
-void DummyBomb::Update()
+void DummyBall::Update()
 {
 	//パーティクル
 	emitter.frequencyTime += kDeltaTime;
@@ -74,7 +74,7 @@ void DummyBomb::Update()
 	world_.Update();
 }
 
-void DummyBomb::Draw()
+void DummyBall::Draw()
 {
 	if (collider.IsUsing) {
 		particle_->RendererDraw();
@@ -83,23 +83,23 @@ void DummyBomb::Draw()
 	//models_[0]->RendererDraw(world_);
 }
 
-void DummyBomb::ColliderInit()
+void DummyBall::ColliderInit()
 {
 	collider.Init(&world_);
 	collider.SetSize({ 1.0f,1.0f,1.0f });
 	collider.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	collider.SetcollitionAttribute(ColliderTag::EnemyBomb);
+	collider.SetcollitionAttribute(ColliderTag::EnemyBall);
 	collider.IsUsing = false;
 }
 
-void DummyBomb::OnCollision(const ICollider& colliderA)
+void DummyBall::OnCollision(const ICollider& colliderA)
 {
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Weapon) {
 		collider.IsUsing = false;
 	}
 }
 
-void DummyBomb::UpdateParticle(Particle& particle)
+void DummyBall::UpdateParticle(Particle& particle)
 {
 	Vector3 velcity = particle.velocity * kDeltaTime;
 	//エミッターがパーティクルの半径を決める
@@ -114,7 +114,7 @@ void DummyBomb::UpdateParticle(Particle& particle)
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, particle.transform.translate);
 }
 
-Particle DummyBomb::CustomParticle()
+Particle DummyBall::CustomParticle()
 {
 	Particle particle{};
 
@@ -128,7 +128,7 @@ Particle DummyBomb::CustomParticle()
 	return particle;
 }
 
-void DummyBomb::ImGui()
+void DummyBall::ImGui()
 {
 #ifdef _DEBUG
 	ImGui::Begin("Bomb");

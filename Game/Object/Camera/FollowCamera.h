@@ -7,7 +7,6 @@
 #include "Input/Input.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Math/Matrix/MatrixCalc.h"
-#include "Math/Vector/VectorCalc.h"
 #include "Calc.h"
 
 //カメラ補間用ワーク
@@ -31,8 +30,9 @@ public:
 	/// <param name="target">ターゲットのWorldTransform</param>
 	void SetTarget(const WorldTransform* target);
 	/// <summary>
-	/// ゲームプレイシーンがプレイビヘイビアーに以降するときに使用
+	/// ゲームプレイシーンがプレイビヘイビアーに移行するときに使用
 	/// </summary>
+	/// <param name="target">ターゲットのWorldTransform</param>
 	bool PlaySceneInit(const WorldTransform* target);
 	void PlaySceneReset();
 

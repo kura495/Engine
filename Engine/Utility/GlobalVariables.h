@@ -1,5 +1,5 @@
 ﻿#pragma once
-/*グローバル*/
+/*データの外部出力(json形式)を行うクラス*/
 #include "Math_Structs.h"
 #include "Transform.h"
 #include "ImGuiManager.h"
@@ -21,18 +21,56 @@ class GlobalVariables
 {
 public:
 	static GlobalVariables* GetInstance();
+	
+	
+	/// <summary>
+	/// グループ名からグループを作成
+	/// </summary>
+	/// <param name="groupName">グループ名</param>
 	void CreateGroup(const std::string& groupName);
+
+
+
 	//毎フレーム処理
 	void Update();
 	//値がなければ、SetValueを呼ぶ関数たち(すでに値があるときは呼ばない)
 	#pragma region AddItem
-	//アイテムの追加(int)(アイテムが追加済みなら何もしない)
+	//
+
+	/// <summary>
+	///	アイテムの追加(int)(アイテムが追加済みなら何もしない)
+	/// </summary>
+	/// <param name="groupName">グループ名</param>
+	/// <param name="key">ImGui表示名</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
-	//アイテムの追加(float)(アイテムが追加済みなら何もしない)
+	/// <summary>
+	///	アイテムの追加(float)(アイテムが追加済みなら何もしない)
+	/// </summary>
+	/// <param name="groupName">グループ名</param>
+	/// <param name="key">ImGui表示名</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, float value);
-	//アイテムの追加(Vector3)(アイテムが追加済みなら何もしない)
+	/// <summary>
+	///	アイテムの追加(Vector3)(アイテムが追加済みなら何もしない)
+	/// </summary>
+	/// <param name="groupName">グループ名</param>
+	/// <param name="key">ImGui表示名</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, const Vector3& value);
+	/// <summary>
+	///	アイテムの追加(Matrix4x4)(アイテムが追加済みなら何もしない)
+	/// </summary>
+	/// <param name="groupName">グループ名</param>
+	/// <param name="key">ImGui表示名</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, const Matrix4x4& value);
+	/// <summary>
+	///	アイテムの追加(TransformQua)(アイテムが追加済みなら何もしない)
+	/// </summary>
+	/// <param name="groupName">グループ名</param>
+	/// <param name="key">ImGui表示名</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, const TransformQua& value);
 	//アイテムの追加(bool)(アイテムが追加済みなら何もしない)
 	//void AddItem(const std::string& groupName, const std::string& key, const bool& value);
@@ -47,8 +85,10 @@ public:
 #pragma endregion Getter
 	void Updateint32_tItem(const std::string& groupName, const std::string& key, const int32_t& value);
 	void UpdateTransformQuaItem(const std::string& groupName, const std::string& key, const TransformQua& value);
-
-	//ファイルにデータを保存
+	/// <summary>
+	/// ファイルにデータを保存
+	/// </summary>
+	/// <param name="groupName">グループ名</param>
 	void SaveFile(const std::string& groupName);
 	//ディレクトリの全ファイルを読み込む(LoadFileを呼び出す)
 	void LoadFiles();

@@ -1,6 +1,6 @@
-#include "Bomb.h"
+#include "Ball.h"
 
-void Bomb::Init(std::vector<Model*> models)
+void Ball::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
@@ -19,7 +19,7 @@ void Bomb::Init(std::vector<Model*> models)
 
 }
 
-void Bomb::Update()
+void Ball::Update()
 {
 	//パーティクル
 	emitter.frequencyTime += kDeltaTime;
@@ -67,22 +67,22 @@ void Bomb::Update()
 	}
 }
 
-void Bomb::Draw()
+void Ball::Draw()
 {
 	particle_->RendererDraw();
 	//models_[0]->RendererDraw(world_);
 }
 
-void Bomb::ColliderInit()
+void Ball::ColliderInit()
 {
 	collider.Init(&world_);
 	collider.SetSize({ 1.0f,1.0f,1.0f });
 	collider.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	collider.SetcollitionAttribute(ColliderTag::EnemyBomb);
+	collider.SetcollitionAttribute(ColliderTag::EnemyBall);
 	collider.IsUsing = false;
 }
 
-void Bomb::OnCollision(const ICollider& colliderA)
+void Ball::OnCollision(const ICollider& colliderA)
 {
 	if (colliderA.GetcollitionAttribute() == ColliderTag::Weapon) {
 		if (isHit) {
@@ -109,7 +109,7 @@ void Bomb::OnCollision(const ICollider& colliderA)
 	}
 }
 
-void Bomb::UpdateParticle(Particle& particle)
+void Ball::UpdateParticle(Particle& particle)
 {
 	Vector3 velcity = particle.velocity * kDeltaTime;
 	//particle.transform.translate += velcity * emitter.speed;
@@ -125,7 +125,7 @@ void Bomb::UpdateParticle(Particle& particle)
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, particle.transform.translate);
 }
 
-Particle Bomb::CustomParticle()
+Particle Ball::CustomParticle()
 {
 	Particle particle{};
 
@@ -139,7 +139,7 @@ Particle Bomb::CustomParticle()
 	return particle;
 }
 
-void Bomb::ImGui()
+void Ball::ImGui()
 {
 #ifdef _DEBUG
 	ImGui::Begin("Bomb");

@@ -1,10 +1,11 @@
 #pragma once
+/*ボスクラス*/
 #include "Game/Object/Enemy/Enemy.h"
 #include "Animation/Animation.h"
 #include "Utility/Ease/Ease.h"
 #include "ParticleSystem/ParticleSystem.h"
-#include "Bomb/Bomb.h"
-#include "DummyBomb/DummyBomb.h"
+#include "Ball/Ball.h"
+#include "DummyBall/DummyBall.h"
 
 enum Body {
 	body,
@@ -15,7 +16,7 @@ enum class BossBehavior {
 	Root,
 	ReturnPosition,//元の位置に戻る
 	AttackSlamPlayer,//叩きつけ攻撃
-	AttackThrowBomb,//爆弾を投げる攻撃
+	AttackThrowball,//爆弾を投げる攻撃
 	Spawn,//出現時
 	Dead,//死亡時
 	Down,//ダウン時
@@ -48,8 +49,8 @@ private:
 	void AttackSlamPlayerInit();
 	void AttackSlamPlayerUpdate();
 	//AttackThrowBomb
-	void AttackThrowBombInit();
-	void AttackThrowBombUpdate();
+	void AttackThrowBallInit();
+	void AttackThrowBallUpdate();
 	//Spawn
 	void SpawnInit();
 	void SpawnUpdate();
@@ -88,16 +89,16 @@ private:
 	//叩きつけを一回以上しているか
 	bool isSlam2ndFlag = false;
 	//ダミーを発射したかどうか
-	bool isThrowDummyBombFlag = false;
+	bool isThrowdummyBallFlag = false;
 #pragma endregion 攻撃に関する物
 
 #pragma region
 	
-	std::unique_ptr<Bomb> bomb;
+	std::unique_ptr<Ball> ball;
 
-	std::unique_ptr<DummyBomb> dummyBomb;
+	std::unique_ptr<DummyBall> dummyBall;
 	//爆弾に当たった回数
-	int countHitBomb;
+	int countHitBall;
 
 #pragma endregion 爆弾
 

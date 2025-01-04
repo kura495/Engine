@@ -1,4 +1,5 @@
 #pragma once
+/*ImGuiのマネージャークラス*/
 #include "Common/WinApp/WinApp.h"
 #include "Common/DirectX/DirectXCommon.h"
 

@@ -1,4 +1,5 @@
 ﻿#pragma once
+/*CSV読み込みクラス*/
 #include <string>
 #include <sstream>
 #include <fstream>

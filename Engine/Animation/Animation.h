@@ -6,8 +6,7 @@
 #include <assimp/postprocess.h>
 
 #include "KeyFrame/Struct/KeyFrame_Struct.h"
-#include "Math/Vector/VectorCalc.h"
-#include "ModelData.h"
+#include"ModelData.h"
 #include "Math/Matrix/MatrixCalc.h"
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"

@@ -562,8 +562,8 @@
     <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Engine\Utility\Ease\Ease.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\Bomb\Bomb.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\DummyBomb\DummyBomb.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\Ball\Ball.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -874,8 +874,8 @@
     <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
     <ClInclude Include="Engine\Utility\Ease\Ease.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\Bomb\Bomb.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\DummyBomb\DummyBomb.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

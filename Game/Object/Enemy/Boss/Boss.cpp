@@ -39,13 +39,13 @@ void Boss::Init(std::vector<Model*> models)
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル
 
-	bomb = std::make_unique<Bomb>();
-	std::vector<Model*> Bombmodels;
-	Bombmodels.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
-	bomb->Init(Bombmodels);
+	ball = std::make_unique<Ball>();
+	std::vector<Model*> ballmodels;
+	ballmodels.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
+	ball->Init(ballmodels);
 
-	dummyBomb = std::make_unique<DummyBomb>();
-	dummyBomb->Init(Bombmodels);
+	dummyBall = std::make_unique<DummyBall>();
+	dummyBall->Init(ballmodels);
 
 	behaviorRequest_ = BossBehavior::Spawn;
 
@@ -86,10 +86,10 @@ void Boss::Draw()
 	case BossBehavior::AttackSlamPlayer:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 		break;
-	case BossBehavior::AttackThrowBomb:
+	case BossBehavior::AttackThrowball:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		bomb->Draw();
-		dummyBomb->Draw();
+		ball->Draw();
+		dummyBall->Draw();
 		break;
 	case BossBehavior::Spawn:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
@@ -123,8 +123,8 @@ void Boss::BehaviorUpdate()
 		case BossBehavior::AttackSlamPlayer:
 			AttackSlamPlayerInit();
 			break;
-		case BossBehavior::AttackThrowBomb:
-			AttackThrowBombInit();
+		case BossBehavior::AttackThrowball:
+			AttackThrowBallInit();
 			break;
 		case BossBehavior::Spawn:
 			SpawnInit();
@@ -152,8 +152,8 @@ void Boss::BehaviorUpdate()
 	case BossBehavior::AttackSlamPlayer:
 		AttackSlamPlayerUpdate();
 		break;
-	case BossBehavior::AttackThrowBomb:
-		AttackThrowBombUpdate();
+	case BossBehavior::AttackThrowball:
+		AttackThrowBallUpdate();
 		break;
 	case BossBehavior::Spawn:
 		SpawnUpdate();
@@ -189,7 +189,7 @@ void Boss::RootUpdate()
 #pragma endregion デバッグ用
 	//攻撃をする
 	if (isAttackSelect) {
-		behaviorRequest_ = BossBehavior::AttackThrowBomb;
+		behaviorRequest_ = BossBehavior::AttackThrowball;
 		isAttackSelect = false;
 	}
 	else if (FollowPlayer()) {
@@ -264,31 +264,31 @@ void Boss::AttackSlamPlayerUpdate()
 	}
 
 }
-void Boss::AttackThrowBombInit()
+void Boss::AttackThrowBallInit()
 {
 	easeT = 0.0f;
-	bomb->ThrowBomb(worldArmL.transform.translate, player_->GetWorld().transform.translate);
-	isThrowDummyBombFlag = false;
-	countHitBomb = 0;
+	ball->ThrowBall(worldArmL.transform.translate, player_->GetWorld().transform.translate);
+	isThrowdummyBallFlag = false;
+	countHitBall = 0;
 }
-void Boss::AttackThrowBombUpdate()
+void Boss::AttackThrowBallUpdate()
 {
 	easeT = (std::min)(easeT + 0.05f, 1.0f);
-	bomb->Update();
-	dummyBomb->Update();
+	ball->Update();
+	dummyBall->Update();
 
-	if (countHitBomb == 1 && isThrowDummyBombFlag == false) {
-		dummyBomb->ThrowBomb(worldArmL.transform.translate, { worldArmL.transform.translate.x + 5.0f,worldArmL.transform.translate.y,worldArmL.transform.translate.z }, player_->GetWorld().transform.translate);
-		isThrowDummyBombFlag = true;
+	if (countHitBall == 1 && isThrowdummyBallFlag == false) {
+		dummyBall->ThrowBall(worldArmL.transform.translate, { worldArmL.transform.translate.x + 5.0f,worldArmL.transform.translate.y,worldArmL.transform.translate.z }, player_->GetWorld().transform.translate);
+		isThrowdummyBallFlag = true;
 	}
 
-	if (countHitBomb >= 3) {
-		dummyBomb->Reset();
+	if (countHitBall >= 3) {
+		dummyBall->Reset();
 		behaviorRequest_ = BossBehavior::Down;
 	}
 
-	if (bomb->GetIsOverline()) {
-		dummyBomb->Reset();
+	if (ball->GetIsOverline()) {
+		dummyBall->Reset();
 		behaviorRequest_ = BossBehavior::Root;
 	}
 }
@@ -409,11 +409,11 @@ void Boss::OnCollision(const ICollider& collider)
 		damegeInterval = 0;
 		colliderDamage.IsUsing = false;
 	}
-	if (behavior_ == BossBehavior::AttackThrowBomb) {
-		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBomb) {
-			bomb->Reset(player_->GetWorld().transform.translate);
+	if (behavior_ == BossBehavior::AttackThrowball) {
+		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
+			ball->Reset(player_->GetWorld().transform.translate);
 			if (easeT == 1.0f) {
-				countHitBomb += 1;
+				countHitBall += 1;
 				easeT = 0.0f;
 			}
 		}

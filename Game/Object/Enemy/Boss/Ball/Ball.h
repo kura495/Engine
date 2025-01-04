@@ -1,11 +1,12 @@
 #pragma once
+/*ボール*/
 #include "Object/IObject.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
 #include <algorithm>
 #include "ParticleSystem/ParticleSystem.h"
 
-class Bomb : public IObject
+class Ball : public IObject
 {
 public:
 
@@ -13,10 +14,10 @@ public:
 	void Update()override;
 	void Draw()override;
 	/// <summary>
-	/// 爆弾を投げる時に呼び出す関数
+	/// ボールを投げる時に呼び出す関数
 	/// </summary>
 	/// <param name="targetVector">ターゲットのワールド座標</param>
-	void ThrowBomb(Vector3 StertPos,Vector3 targetVector) {
+	void ThrowBall(Vector3 StertPos,Vector3 targetVector) {
 		boundFlag = false;
 		isThrowFlag = true;
 		accelValue = 1.0f;
@@ -29,7 +30,10 @@ public:
 		//コライダーを有効化
 		collider.IsUsing = true;
 	};
-	
+	/// <summary>
+	/// ターゲットに向けてボールを飛ばす
+	/// </summary>
+	/// <param name="targetVector">ターゲットのワールド座標</param>
 	void Reset(Vector3 targetVector) {
 		boundFlag = false;
 		//方向を決める

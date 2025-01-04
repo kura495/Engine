@@ -1,11 +1,12 @@
 #pragma once
+/*白いボール*/
 #include "Object/IObject.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
 #include <algorithm>
 #include "ParticleSystem/ParticleSystem.h"
 
-class DummyBomb : public IObject
+class DummyBall : public IObject
 {
 public:
 
@@ -17,7 +18,7 @@ public:
 	/// 爆弾を投げる時に呼び出す関数
 	/// </summary>
 	/// <param name="targetVector">ターゲットのワールド座標</param>
-	void ThrowBomb(Vector3 StertPoint, Vector3 TargetPoint, Vector3 targetVector) {
+	void ThrowBall(Vector3 StertPoint, Vector3 TargetPoint, Vector3 targetVector) {
 		isThrowFlag = true;
 		startPoint = StertPoint;
 		targetPoint = TargetPoint;
@@ -30,7 +31,9 @@ public:
 		//コライダーを有効化
 		collider.IsUsing = true;
 	};
-
+	/// <summary>
+	/// ボールを飛ばす前の状態に戻す
+	/// </summary>
 	void Reset() {
 		collider.IsUsing = false;
 		isThrowFlag = false;
