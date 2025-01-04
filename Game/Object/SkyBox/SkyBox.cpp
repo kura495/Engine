@@ -4,21 +4,21 @@ void SkyBox::Init()
 {
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
-
+	//バーテックスデータ
 	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * 24);
 	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 
 	MakeVertexBufferView();
-
+	//インデックスリソース
 	indexResource = directX_->CreateBufferResource(sizeof(uint32_t) * 36);
 	indexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 	MakeIndexBufferView();
-
+	//マテリアルリソース
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 
+	//マテリアルの設定
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
-
 	materialData->enableLighting = false;
 	materialData->color = {1.0f,1.0f,1.0f,1.0f};
 

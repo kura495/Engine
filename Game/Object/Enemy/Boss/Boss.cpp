@@ -4,28 +4,21 @@
 void Boss::Init(std::vector<Model*> models)
 {
 	models_ = models;
-
+	//ワールド初期化
 	world_.Initialize();
+	world_.Update();
 	worldArmL.Initialize();
 	worldArmL.transform.translate = initialPosition;
-	//DEBUG
-	//worldArmL.transform.translate.y = 0.0f;
-
-	world_.Update();
 	worldArmL.Update();
-
 	//当たり判定
 	colliderDamageWorld_.Initialize();
 	colliderAttackWorld_.Initialize();
-
 	ColliderDamageInit();
 	ColliderAttackInit();
-
 	//アニメーション
 	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
-
 #pragma region 
 	particle_ = new ParticleSystem();
 	particle_->Initalize("resources/circle2.dds");
@@ -38,7 +31,7 @@ void Boss::Init(std::vector<Model*> models)
 	deadEnemyParticleEmitter.color = { 1.0f,1.0f,1.0f };
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル
-
+#pragma region
 	ball = std::make_unique<Ball>();
 	std::vector<Model*> ballmodels;
 	ballmodels.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
@@ -46,7 +39,8 @@ void Boss::Init(std::vector<Model*> models)
 
 	dummyBall = std::make_unique<DummyBall>();
 	dummyBall->Init(ballmodels);
-
+#pragma endregion ボール
+	//ビヘイビアーを初期化
 	behaviorRequest_ = BossBehavior::Spawn;
 
 	models_[Body::ArmL]->color_.w = 0.0f;
@@ -76,7 +70,6 @@ void Boss::Update()
 }
 void Boss::Draw()
 {	
-
 	switch (behavior_)
 	{
 	case BossBehavior::Root:
@@ -169,11 +162,10 @@ void Boss::BehaviorUpdate()
 void Boss::RootInit()
 {
 	easeT = 0.0f;
-
+	//当たり判定を有効か
 	colliderDamage.IsUsing = true;
 	colliderAttack.IsUsing = true;
 	colliderAttackA.IsUsing = true;
-
 	//当たり判定を通常に変更
 	colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
 	colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
@@ -189,10 +181,12 @@ void Boss::RootUpdate()
 #pragma endregion デバッグ用
 	//攻撃をする
 	if (isAttackSelect) {
+		//ボールを投げる攻撃
 		behaviorRequest_ = BossBehavior::AttackThrowball;
 		isAttackSelect = false;
 	}
 	else if (FollowPlayer()) {
+		//プレイヤーを叩きつけ攻撃
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 		isAttackSelect = true;
 	}
@@ -211,7 +205,7 @@ void Boss::ReturnPositionUpdate()
 	if (easeT >= 0.2f) {
 		isSlamFlag = false;
 	}
-
+	//
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
 	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
 
@@ -238,7 +232,7 @@ void Boss::AttackSlamPlayerUpdate()
 		if (newPoint > 0) {
 			addEaseT = 0.06f;
 		}
-
+		//位置が0になったら
 		if (worldArmL.transform.translate.y <= 0) {
 			isSlamFlag = true;
 			addEaseT = 0.01f;
@@ -250,15 +244,16 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 	}
 	else {
+		//2回目移行かつHPが低くなった時に処理を実行
 		if (isSlam2ndFlag && HP_ <= 3) {
+			//falseにすることで2回連続で叩きつけをするようにする
 			isAttackSelect = false;
 			isSlam2ndFlag = false;
 		}
 		else if (isSlam2ndFlag == false) {
 			isSlam2ndFlag = true;
 		}
-
-		//初期位置についたら
+		//初期位置に戻す
 		behaviorRequest_ = BossBehavior::ReturnPosition;
 
 	}
@@ -276,17 +271,17 @@ void Boss::AttackThrowBallUpdate()
 	easeT = (std::min)(easeT + 0.05f, 1.0f);
 	ball->Update();
 	dummyBall->Update();
-
+	//跳ね返しのタイミングでもう一つの球を出す
 	if (countHitBall == 1 && isThrowdummyBallFlag == false) {
 		dummyBall->ThrowBall(worldArmL.transform.translate, { worldArmL.transform.translate.x + 5.0f,worldArmL.transform.translate.y,worldArmL.transform.translate.z }, player_->GetWorld().transform.translate);
 		isThrowdummyBallFlag = true;
 	}
-
+	//3回球に当たったらやられ状態にする
 	if (countHitBall >= 3) {
 		dummyBall->Reset();
 		behaviorRequest_ = BossBehavior::Down;
 	}
-
+	//ボールが一定のラインを超えたらルートビヘイビアーに戻す
 	if (ball->GetIsOverline()) {
 		dummyBall->Reset();
 		behaviorRequest_ = BossBehavior::Root;
@@ -322,7 +317,7 @@ void Boss::DeadUpdate()
 		IsAlive = false;
 	}
 
-	//パーティクル
+	//パーティクル生成
 	deadEnemyParticleEmitter.frequencyTime += kDeltaTime;
 	if (deadEnemyParticleEmitter.frequency <= deadEnemyParticleEmitter.frequencyTime) {
 		//ランダム生成用
@@ -333,6 +328,7 @@ void Boss::DeadUpdate()
 
 		deadEnemyParticleEmitter.frequencyTime -= deadEnemyParticleEmitter.frequency;
 	}
+	//パーティクル更新
 	particle_->Update();
 }
 void Boss::DownInit()
@@ -362,7 +358,7 @@ void Boss::DownUpdate()
 
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
 	worldArmL.transform.translate = Vector3::Lerp(PrePos, DownPosition, easeT);
-
+	//3回攻撃を受けると元の位置に戻す
 	if (hitCount == 3) {
 		behaviorRequest_ = BossBehavior::ReturnPosition;
 		colliderDamage.IsUsing = false;

@@ -7,16 +7,16 @@ void Player::Init(std::vector<Model*> models)
 	input = Input::GetInstance();
 
 	models_ = models;
+	//ワールド設定
 	world_.Initialize();
 	world_.transform.translate.z = -3.0f;
-
 	world_.Update();
-
+	//ライトの設定
 	models_[0]->GetMaterial()->enableLighting = Lighting::NotDo;
-
+	//コライダー設定
 	ColliderInit();
 	AttackColliderInit();
-
+	//アニメーション設定
 #pragma region
 	walkanimation = new Animation();
 	walkanimation = Animation::LoadAnimationFile("resources/Player", "player_walk.gltf");
@@ -33,7 +33,7 @@ void Player::Init(std::vector<Model*> models)
 	attackAnimation->Init();
 	attackAnimation->AnimeInit(*models_[0], true);
 #pragma endregion Anime
-
+	//パーティクル設定
 #pragma region
 	deadParticle_ = new ParticleSystem();
 	deadParticle_->Initalize("resources/circle2.dds");
@@ -66,6 +66,7 @@ void Player::Init(std::vector<Model*> models)
 
 void Player::TitleUpdate()
 {
+	//待機モーション再生
 	walkanimation->PlayAnimation();
 }
 
@@ -74,7 +75,7 @@ void Player::Update()
 
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
-
+	//HPを減らす処理
 	if (isDamege && HP_ >= 1) {
 		behaviorRequest_ = Behavior::kDead;
 		isDamege = false;
@@ -82,7 +83,7 @@ void Player::Update()
 	}
 
 	BehaviorUpdate();
-
+	//パーティクルアップデート
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
 	deadParticle_->Update();
@@ -113,8 +114,7 @@ void Player::Draw()
 #ifdef _DEBUG
 	//walkanimation->DebugDraw(world_);
 #endif
-	
-
+	//描画
 	switch (behavior_)
 	{
 	case Behavior::kRoot:
@@ -136,6 +136,7 @@ void Player::Draw()
 		}
 		break;
 	}
+	//パーティクル描画
 	attackHitParticle_->RendererDraw();
 	attackHitBombParticle_->RendererDraw();
 }
@@ -197,8 +198,7 @@ void Player::RootInit()
 void Player::RootUpdate()
 {
 	Move();
-
-
+	//動いていたら
 	if (isMovedFlag) {
 		//動いていたら歩きモーションを再生
 		walkanimation->PlayAnimation();
@@ -210,12 +210,11 @@ void Player::RootUpdate()
 
 		}
 	}
-
-	//攻撃
+	//ボタンを押したら攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		behaviorRequest_ = Behavior::kAttack;
 	}
-	//ジャンプ
+	//ボタンを押したらジャンプ
 	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
 		behaviorRequest_ = Behavior::kJump;
 	}
@@ -255,9 +254,9 @@ void Player::JumpInit() {
 	//FollowCamera::workInter.interParameter_.y = 0.0f;
 }
 void Player::JumpUpdate() {
-
+	//移動関数
 	Move();
-
+	//ジャンプの処理
 	world_.transform.translate.y += jumpForce;
 	jumpForce -= kJumpSubValue;
 
@@ -275,7 +274,7 @@ void Player::DeadInit()
 }
 void Player::DeadUpdate()
 {
-	//パーティクル
+	//パーティクル生成
 	deadParticleEmitter.frequencyTime += kDeltaTime;
 	if (deadParticleEmitter.frequency <= deadParticleEmitter.frequencyTime) {
 		//ランダム生成用
@@ -286,9 +285,8 @@ void Player::DeadUpdate()
 
 		deadParticleEmitter.frequencyTime -= deadParticleEmitter.frequency;
 	}
-
+	//死亡アニメーション更新
 	deadAnimation->PlayAnimation();
-
 	animationTime_ += 1.0f / 60.0f;
 	if (animationTime_ > deadAnimation->duration) {
 		isDamege = false;
@@ -324,19 +322,12 @@ void Player::OnCollision(const ICollider& ICollider)
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Enemy) {
 
-		Vector3 aaaaa2 = (ICollider.GetCenter() - ICollider.pushForce);
+		//Vector3 aaaaa2 = (ICollider.GetCenter() - ICollider.pushForce);
 		world_.transform.translate -= move;
 		//world_.transform.translate += aaaaa2;
 		world_.Update();
 
 	}		
-	Vector3 aaaaa = (ICollider.GetCenter() - ICollider.pushForce);
-	Vector3 temp = ICollider.pushForce;
-	
-	/*ImGui::Begin("Player");
-	ImGui::InputFloat3("pushForce",&temp.x);
-	ImGui::InputFloat3("pushForce - ICollider.GetCenter()",&aaaaa.x);
-	ImGui::End();*/
 	return;
 }
 void Player::AttackColliderInit()
@@ -355,30 +346,28 @@ void Player::AttackOnCollision(const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == ColliderTag::EnemyCore) {
 		colliderAttack.IsUsing = false;
-		//パーティクル用の
+		//パーティクル用のベクトル
 		attackVector = TransformNormal({0.0f,0.0f,1.0f},Matrix4x4 (MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
 		attackVector *= -1;
-		//パーティクル生成
 		//ランダム生成用
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
-
+		//パーティクル生成
 		AttackHitParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitParticle_->SpawnParticle(AttackHitParticleEmitter, randomEngine);
 	}
 	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 		colliderAttack.IsUsing = false;
-		//パーティクル用の
+		//パーティクル用のベクトル
 		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
 		attackVector *= -1;
-		//パーティクル生成
 		//ランダム生成用
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
-
+		//パーティクル生成
 		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);
@@ -387,13 +376,14 @@ void Player::AttackOnCollision(const ICollider& collider)
 #pragma endregion Collider
 void Player::UpdatedeadParticle(Particle& particle)
 {
-
+	//速度を1/60にする
 	Vector3 velcity = particle.velocity * kDeltaTime;
 	particle.transform.translate += velcity * deadParticleEmitter.speed;
 	//エミッターがパーティクルの半径を決める
 	particle.transform.scale = deadParticleEmitter.particleRadius;
 	Vector3 translate = particle.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	//色をセット
 	particle.color.w = alpha;
 	particle.color.x = deadParticleEmitter.color.x;
 	particle.color.y = deadParticleEmitter.color.y;
@@ -403,12 +393,14 @@ void Player::UpdatedeadParticle(Particle& particle)
 }
 void Player::UpdateAttackHitParticle(Particle& particle)
 {
+	//速度を1/60にする
 	Vector3 velcity = particle.velocity + (AttackHitBombParticleEmitter.speed * attackVector);
 	particle.transform.translate += velcity * kDeltaTime;
 	//エミッターがパーティクルの半径を決める
 	particle.transform.scale = AttackHitParticleEmitter.particleRadius;
 	Vector3 translate = particle.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	//色をセット
 	particle.color.w = alpha;
 	particle.color.x = AttackHitParticleEmitter.color.x;
 	particle.color.y = AttackHitParticleEmitter.color.y;
@@ -418,12 +410,14 @@ void Player::UpdateAttackHitParticle(Particle& particle)
 }
 void Player::UpdateAttackHitBombParticle(Particle& particle)
 {
+	//速度を1/60にする
 	Vector3 velcity = particle.velocity + (AttackHitBombParticleEmitter.speed * attackVector);
 	particle.transform.translate += velcity * kDeltaTime;
 	//エミッターがパーティクルの半径を決める
 	particle.transform.scale = AttackHitBombParticleEmitter.particleRadius;
 	Vector3 translate = particle.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	//色をセット
 	particle.color.w = alpha;
 	particle.color.x = AttackHitBombParticleEmitter.color.x;
 	particle.color.y = AttackHitBombParticleEmitter.color.y;
@@ -453,11 +447,13 @@ void Player::ImGui()
 
 void Player::Move()
 {
+	//加算量を0に戻す
 	move = {0.0f,0.0f,0.0f };
 	//移動量
 	if (joyState.Gamepad.sThumbLX != 0 && joyState.Gamepad.sThumbLY != 0) {
 
 #pragma region
+		//スティックから移動量を計算
 		move = {
 		(float)joyState.Gamepad.sThumbLX / SHRT_MAX, 0.0f,
 		(float)joyState.Gamepad.sThumbLY / SHRT_MAX };

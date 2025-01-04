@@ -4,10 +4,10 @@
 void EnemyManager::Init(Player* player)
 {
 	player_ = player;
-
+	//モデル
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Arm.gltf"));
 	enemyModel_.push_back(Model::CreateModelFromObj("resources/Enemy", "Arm.gltf"));
-
+	//ボスの初期化
 	bossEnemy_ = std::make_unique<Boss>();
 	bossEnemy_->Init(enemyModel_);
 	bossEnemy_->SetPlayer(player_);
@@ -17,7 +17,7 @@ void EnemyManager::Init(Player* player)
 void EnemyManager::Update()
 {
 	ClearJudge();
-
+	//敵キャラが条件を満たしていたらデリート
 	enemys_.remove_if([this](Enemy* enemy)
 		{
 			if (enemy->GetIsAlive() == false)

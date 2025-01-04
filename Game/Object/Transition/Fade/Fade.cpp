@@ -20,6 +20,7 @@ void Fade::OutInit()
 
 bool Fade::In()
 {
+	//アルファを徐々に上げていく
 	alpha_ = (std::min)(alpha_ + 0.01f,1.0f);
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,alpha_ });
 
@@ -33,6 +34,7 @@ bool Fade::In()
 
 bool Fade::Out()
 {
+	//アルファを徐々に下げていく
 	alpha_ = (std::max)(alpha_ - 0.01f, 0.0f);
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,alpha_ });
 
