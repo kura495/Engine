@@ -2,7 +2,7 @@
 //操作キャラクタークラス//
 
 #include "Math/Matrix/MatrixCalc.h"
-#include "Object/IObject.h"
+#include "Game/Object/GameCharacter/GameCharacter.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
 #include "Input/Input.h"
@@ -17,7 +17,7 @@ enum class Behavior {
 	kDead
 };
 
-class Player : public IObject
+class Player : public GameCharacter
 {
 public:
 

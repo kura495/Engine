@@ -62,7 +62,6 @@ void Boss::Update()
 
 		}
 	}
-
 	BehaviorUpdate();
 
 	world_.Update();
@@ -318,16 +317,7 @@ void Boss::DeadUpdate()
 	}
 
 	//パーティクル生成
-	deadEnemyParticleEmitter.frequencyTime += kDeltaTime;
-	if (deadEnemyParticleEmitter.frequency <= deadEnemyParticleEmitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-
-		particle_->SpawnParticle(deadEnemyParticleEmitter, randomEngine);
-
-		deadEnemyParticleEmitter.frequencyTime -= deadEnemyParticleEmitter.frequency;
-	}
+	GameCharacter::ParticleSpawn(*particle_, deadEnemyParticleEmitter);
 	//パーティクル更新
 	particle_->Update();
 }
@@ -453,7 +443,6 @@ void Boss::AddImGui()
 	//ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);
 	ImGui::DragFloat3("ParticleTranslate", &deadEnemyParticleEmitter.world_.transform.translate.x);
 }
-
 void Boss::UpdateParticle(Particle& particle)
 {
 
@@ -471,7 +460,6 @@ void Boss::UpdateParticle(Particle& particle)
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 
 }
-
 Particle Boss::CustomParticle()
 {
 	Particle particle{};

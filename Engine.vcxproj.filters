@@ -564,6 +564,7 @@
     <ClCompile Include="Engine\Utility\Ease\Ease.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\Ball\Ball.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
+    <ClCompile Include="Game\Object\GameCharacter\GameCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -876,6 +877,7 @@
     <ClInclude Include="Engine\Utility\Ease\Ease.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h" />
+    <ClInclude Include="Game\Object\GameCharacter\GameCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

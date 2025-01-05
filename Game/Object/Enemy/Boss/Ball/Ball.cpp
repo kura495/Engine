@@ -133,7 +133,6 @@ Particle Ball::CustomParticle()
 	particle.transform.translate = world_.transform.translate;
 	particle.transform.scale = emitter.particleRadius;
 
-
 	return particle;
 }
 

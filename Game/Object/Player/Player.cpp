@@ -63,16 +63,13 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
 }
-
 void Player::TitleUpdate()
 {
 	//待機モーション再生
 	walkanimation->PlayAnimation();
 }
-
 void Player::Update()
 {
-
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
 	//HPを減らす処理
@@ -81,7 +78,6 @@ void Player::Update()
 		isDamege = false;
 		HP_ -= 1;
 	}
-
 	BehaviorUpdate();
 	//パーティクルアップデート
 	attackHitParticle_->Update();
@@ -97,18 +93,15 @@ void Player::Update()
 		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
 
 	}
-
 	world_.Update();
 
 	//前フレームのゲームパッドの状態を保存
 	joyStatePre = joyState;
 }
-
 void Player::TitleDraw()
 {
 	models_[0]->RendererDraw(world_);
 }
-
 void Player::Draw()
 {
 #ifdef _DEBUG
@@ -140,7 +133,6 @@ void Player::Draw()
 	attackHitParticle_->RendererDraw();
 	attackHitBombParticle_->RendererDraw();
 }
-
 #pragma region
 void Player::BehaviorUpdate()
 {
@@ -275,16 +267,7 @@ void Player::DeadInit()
 void Player::DeadUpdate()
 {
 	//パーティクル生成
-	deadParticleEmitter.frequencyTime += kDeltaTime;
-	if (deadParticleEmitter.frequency <= deadParticleEmitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-
-		deadParticle_->SpawnParticle(deadParticleEmitter, randomEngine);
-
-		deadParticleEmitter.frequencyTime -= deadParticleEmitter.frequency;
-	}
+	GameCharacter::ParticleSpawn(*deadParticle_, deadParticleEmitter);
 	//死亡アニメーション更新
 	deadAnimation->PlayAnimation();
 	animationTime_ += 1.0f / 60.0f;

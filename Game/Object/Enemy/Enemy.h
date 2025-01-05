@@ -1,6 +1,6 @@
 #pragma once
 //敵キャラクター基底クラス//
-#include "Object/IObject.h"
+#include "Game/Object/GameCharacter/GameCharacter.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
 #include "Input/Input.h"
@@ -8,7 +8,7 @@
 
 class Player;
 
-class Enemy : public IObject
+class Enemy : public GameCharacter
 {
 public:
 

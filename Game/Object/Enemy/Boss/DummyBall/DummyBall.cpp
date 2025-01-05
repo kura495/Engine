@@ -116,13 +116,11 @@ void DummyBall::UpdateParticle(Particle& particle)
 Particle DummyBall::CustomParticle()
 {
 	Particle particle{};
-
-	particle.color = { 0.5f,0.5f,1.0f };
+	particle.color = { 1.0f,1.0f,1.0f };
 	particle.currentTime = 0.0f;
 	particle.lifeTime = 2.0f;
 	particle.transform.translate = world_.transform.translate;
 	particle.transform.scale = emitter.particleRadius;
-
 
 	return particle;
 }
