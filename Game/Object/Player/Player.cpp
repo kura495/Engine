@@ -313,7 +313,6 @@ void Player::ColliderInit()
 }
 void Player::OnCollision(const ICollider& ICollider)
 {
-	
 	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		isDamege = true;
 	}
@@ -444,7 +443,6 @@ void Player::ImGui()
 	ImGui::Text("%d", HP_);
 	ImGui::End();
 }
-
 void Player::Move()
 {
 	//加算量を0に戻す
