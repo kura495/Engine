@@ -14,12 +14,15 @@ void Editer::Initalize()
 
 void Editer::Update()
 {
+	//有効でないなら
 	if (IsEnableFlag == false) {
 		return;
 	}
+	//オブジェクトがないなら
 	if (object_.empty()) {
 		return;
 	}
+	//ビュープロジェクションがないなら
 	if (viewProjection_ == nullptr) {
 		return;
 	}
@@ -28,18 +31,23 @@ void Editer::Update()
 
 void Editer::Draw()
 {
+	//有効でないなら
 	if (IsEnableFlag == false) {
 		return;
 	}
+	//オブジェクトがないなら
 	if (object_.empty()) {
 		return;
 	}
+	//ビュープロジェクションがないなら
 	if (viewProjection_ == nullptr) {
 		return;
 	}
+	//マニピュレーターが有効なら
 	if (IsManipulatorFlag) {
 		Manipulator();
 	}
+	//グリッドが有効なら
 	if (IsGridFlag) {
 		Grid();
 	}
@@ -55,6 +63,7 @@ void Editer::GuizmoOption()
 #ifdef USE_IMGUI
 #pragma region
 	ImGui::Begin("Editer");
+	//オブジェクトの選択
 	if (ImGui::InputInt("ObjectNumber", &ObjectCount)) {
 		if (ObjectCount < 0) {
 			ObjectCount = 0;
@@ -64,7 +73,7 @@ void Editer::GuizmoOption()
 		}
 		textrueName = object_[ObjectCount]->Getmodels().at(0)->GetModelData().material.textureFilePath;
 	};
-
+	//移動、回転、拡縮を選択
 	if (ImGui::IsKeyPressed(ImGuiKey_T))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
 	if (ImGui::IsKeyPressed(ImGuiKey_R))
@@ -90,9 +99,11 @@ void Editer::GuizmoOption()
 	ImGui::DragFloat3("Translate", &object_[ObjectCount]->GetWorld().transform.translate.x);
 	
 	ImGui::InputText("string", &textrueName, 256);
+	//テクスチャを名前から変更
 	if (ImGui::Button("Textrue")) {
 		object_[ObjectCount]->Getmodels().at(0)->GetModelData().TextureIndex = TextureManager::GetInstance()->LoadTexture(textrueName);
 	}
+	//オブジェクトにドラッグアンドドロップしたテクスチャを適応
 	if (!WinApp::dropFileName.empty()) {
 		object_[ObjectCount]->Getmodels().at(0)->GetModelData().TextureIndex = TextureManager::GetInstance()->LoadTexture(WinApp::dropFileName);
 		WinApp::dropFileName.clear();

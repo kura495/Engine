@@ -73,7 +73,9 @@ private:
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
 	void OnCollisionAttack(const ICollider& collider);
+	//腕側の攻撃判定
 	OBBoxCollider colliderAttack;
+	//指側の攻撃判定
 	OBBoxCollider colliderAttackA;
 	WorldTransform colliderAttackWorld_;
 	bool IsAttackFlag = false;

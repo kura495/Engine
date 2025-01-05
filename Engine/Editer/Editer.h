@@ -39,9 +39,17 @@ private:
 	~Editer() = default;
 	Editer(const Editer& obj) = delete;
 	Editer& operator=(const Editer& obj) = delete;
-
+	/// <summary>
+	/// Guizmoを使用する
+	/// </summary>
 	void GuizmoOption();
+	/// <summary>
+	/// マニピュレーターの表示
+	/// </summary>
 	void Manipulator();
+	/// <summary>
+	/// グリッド線の描画
+	/// </summary>
 	void Grid();
 
 	int ObjectCount = 0;

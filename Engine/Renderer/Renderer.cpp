@@ -38,14 +38,9 @@ void Renderer::Initalize()
 
 void Renderer::Draw()
 {
-
 	//CubeMap
 	ChangePipeline(PipelineType::CubeMap);
 	//skyBox.Draw(cubeWorld_);
-
-
-
-	
 	//標準描画
 	ChangePipeline(PipelineType::Standerd);
 	///描画
@@ -54,7 +49,6 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawModelData_.clear();
-
 	//Skinning
 	ChangePipeline(PipelineType::Skinning);
 	///描画
@@ -63,7 +57,6 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawModelSkinningData_.clear();
-
 	//SkinningとDissolve
 	ChangePipeline(PipelineType::SkinningDissolve);
 	///描画
@@ -72,7 +65,6 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawModelSkinningDissolveData_.clear();
-
 	//ライン描画
 	ChangePipeline(PipelineType::DrawLine);
 	///描画
@@ -89,7 +81,6 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawWireFlameData_.clear();
-
 	//Particle描画
 	ChangePipeline(PipelineType::Particle);
 	///描画
@@ -98,7 +89,6 @@ void Renderer::Draw()
 	}
 	//中身を消す
 	drawParticleData_.clear();
-
 	//スプライト描画
 	ChangePipeline(PipelineType::Sprite);
 	///描画

@@ -67,7 +67,7 @@ void FollowCamera::Update() {
 #endif
 		}
 	}
-
+	//画面を揺らす
 	if (isShake) {
 		Shake();
 	}
@@ -118,6 +118,7 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 
 bool FollowCamera::PlaySceneInit(const WorldTransform* target)
 {
+
 	if (lerpTTitle == 0.0f) {
 		resetTransform = viewProj.translation_;
 		resetRotate = viewProj.rotation_;

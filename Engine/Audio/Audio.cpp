@@ -29,6 +29,7 @@ uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
 
 #pragma region Index
 	uint32_t index = 0;
+	//同じファイルを読み込んでいた場合、同じファイルのインデックス番号を返す
 	for (uint32_t index_i = 0; index_i < kMaxAudio; index_i++) {
 		if (soundData_.at(index_i).IsUsed) {
 			if (filePath == soundData_.at(index_i).name) {
@@ -36,7 +37,7 @@ uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
 			}
 		}
 	}
-
+	//使われていないインデックス番号を検索
 	for (uint32_t index_i = 0; index_i < kMaxAudio; index_i++) {
 		if (soundData_.at(index_i).IsUsed == false) {
 			index = index_i;
@@ -53,18 +54,17 @@ uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
 	soundData_.at(index).IsUsed = true;
 #pragma endregion 位置決め
 
-
 	if (FAILED(XAudioInterface->CreateSourceVoice(&pSourceVoice[index], &soundData_[index].wfex))) {
 		SoundUnload(index);
 		assert(false);
 	}
+	//バッファを作成
 	XAUDIO2_BUFFER buffer{};
 	buffer.pAudioData = soundData_[index].mediaData.data();
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
 	buffer.AudioBytes = soundData_[index].bufferSize;
 	buffer.LoopBegin = 0;
 	buffer.LoopLength = 0;
-
 	buffer.LoopCount = LoopFlag ? XAUDIO2_LOOP_INFINITE : 0;
 
 	pSourceVoice[index]->SubmitSourceBuffer(&buffer);
@@ -77,6 +77,7 @@ uint32_t Audio::LoadAudioMP3(const std::string& filePath, bool LoopFlag)
 
 #pragma region Index
 	uint32_t index = 0;
+	//同じファイルを読み込んでいた場合、同じファイルのインデックス番号を返す
 	for (uint32_t index_i = 0; index_i < kMaxAudio; index_i++) {
 		if (soundData_.at(index_i).IsUsed) {
 			if (filePath == soundData_.at(index_i).name) {
@@ -84,7 +85,7 @@ uint32_t Audio::LoadAudioMP3(const std::string& filePath, bool LoopFlag)
 			}
 		}
 	}
-
+	//使われていないインデックス番号を検索
 	for (uint32_t index_i = 0; index_i < kMaxAudio; index_i++) {
 		if (soundData_.at(index_i).IsUsed == false) {
 			index = index_i;
@@ -93,26 +94,22 @@ uint32_t Audio::LoadAudioMP3(const std::string& filePath, bool LoopFlag)
 	}
 	//SoundLoadWaveの戻り値がSoundDataなので、読み込んでから名前と使用済みを記入
 	soundData_[index] = SoundLoadMP3(filePath);
-
-
 	//名前としてファイルのパスを登録
 	soundData_.at(index).name = filePath;
-
 	soundData_.at(index).IsUsed = true;
 #pragma endregion 位置決め
-
 
 	if (FAILED(XAudioInterface->CreateSourceVoice(&pSourceVoice[index], &soundData_[index].wfex))) {
 		SoundUnload(index);
 		assert(false);
 	}
+	//バッファを作成
 	XAUDIO2_BUFFER buffer{};
 	buffer.pAudioData = soundData_[index].mediaData.data();
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
 	buffer.AudioBytes = soundData_[index].bufferSize;
 	buffer.LoopBegin = 0;
 	buffer.LoopLength = 0;
-
 	buffer.LoopCount = LoopFlag ? XAUDIO2_LOOP_INFINITE : 0;
 
 	pSourceVoice[index]->SubmitSourceBuffer(&buffer);

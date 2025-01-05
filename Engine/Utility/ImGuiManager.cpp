@@ -10,6 +10,7 @@ ImGuiManager* ImGuiManager::GetInstance()
 
 void ImGuiManager::Initialize(WinApp*winapp,DirectXCommon*directXcommon)
 {
+	//ImGuiの初期設定
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
@@ -23,6 +24,7 @@ void ImGuiManager::Initialize(WinApp*winapp,DirectXCommon*directXcommon)
 
 void ImGuiManager::BeginFrame()
 {
+	//ImGuiのフレーム開始時の設定
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();

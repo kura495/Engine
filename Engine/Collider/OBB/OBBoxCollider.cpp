@@ -24,6 +24,7 @@ void OBBoxCollider::CollisionUpdate()
 	Vector3 offsetVec = offset;
 	Quaternion qua = center_->transform.quaternion;
 	SetOrientations(MakeRotateMatrix(center_->transform.quaternion));
+	//親があるなら
 	if (center_->parent_) {
 		offsetVec = center_->transform.translate + offsetVec;
 		offsetVec = TransformNormal(offsetVec, MakeRotateMatrix(center_->parent_->transform.quaternion));
@@ -32,6 +33,7 @@ void OBBoxCollider::CollisionUpdate()
 		qua = center_->parent_->transform.quaternion * center_->transform.quaternion;
 		Pos = center_->parent_->GetTranslateFromMatWorld();
 	}
+	//適応
 	obb_.center = Pos + offsetVec;
 	obb_.size[0] = size_.x;
 	obb_.size[1] = size_.y;
@@ -52,7 +54,9 @@ void OBBoxCollider::SetOrientations(Matrix4x4 Matrix)
 {
 	//X成分
 	obb_.orientations[0] = GetXAxis(Matrix);
+	//Y成分
 	obb_.orientations[1] = GetYAxis(Matrix);
+	//Z成分
 	obb_.orientations[2] = GetZAxis(Matrix);
 
 }

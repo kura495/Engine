@@ -6,16 +6,13 @@ void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
-
+	//リソースとバッファの設定
 	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * 4);
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
-
 	MakeVertexBufferView();
 	indexResource = directX_->CreateBufferResource(sizeof(uint32_t) * 6);
 	MakeIndexBufferView();
-
 	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-
 	//左下
 	vertexData[0].position = { LeftBottom.x,LeftBottom.y,0.0f,1.0f };
 	vertexData[0].texcoord = { 0.0f,1.0f };
@@ -28,10 +25,8 @@ void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const
 	//右上
 	vertexData[3].position = { RightTop.x, RightTop.y, 0.0f, 1.0f };
 	vertexData[3].texcoord = { 1.0f,0.0f };
-
 	//インデックスリソースにデータを書き込む
 	indexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
-
 	//三角形1枚目
 	indexData[0] = 0;
 	indexData[1] = 1;
@@ -53,16 +48,13 @@ void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 	directX_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	light_ = Light::GetInstance();
-
+	//リソースとバッファの設定
 	vertexResource = directX_->CreateBufferResource(sizeof(VertexData) * 4);
 	materialResource = directX_->CreateBufferResource(sizeof(Material));
-
 	MakeVertexBufferView();
 	indexResource = directX_->CreateBufferResource(sizeof(uint32_t) * 6);
 	MakeIndexBufferView();
-
 	vertexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-
 	//左下
 	vertexData[0].position = { anchorPoint.x - textureSize.x, anchorPoint.y + textureSize.y,0.0f,1.0f };
 	vertexData[0].texcoord = { 0.0f,1.0f };
@@ -75,10 +67,8 @@ void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 	//右上
 	vertexData[3].position = { anchorPoint.x + textureSize.x, anchorPoint.y - textureSize.y,0.0f,1.0f };
 	vertexData[3].texcoord = { 1.0f,0.0f };
-
 	//インデックスリソースにデータを書き込む
 	indexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
-
 	//三角形1枚目
 	indexData[0] = 0;
 	indexData[1] = 1;

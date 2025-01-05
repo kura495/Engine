@@ -5,6 +5,7 @@ std::list<ICollider*> CollisionManager::Colliders_;
 void CollisionManager::Init()
 {
 	Colliders_.clear();
+	//関数ポインタに入れる
 	checkCollisions_[ICollider::Shape::Box][ICollider::Shape::Box] = [this](ICollider* colliderA, ICollider* colliderB)
 		{return CheckCollision(dynamic_cast<BoxCollider*>(colliderA), dynamic_cast<BoxCollider*>(colliderB));};
 	checkCollisions_[ICollider::Shape::OBB][ICollider::Shape::OBB] = [this](ICollider* colliderA, ICollider* colliderB)
@@ -52,13 +53,11 @@ void CollisionManager::CheckAllCollisions() {
 		if (colliderA->IsUsing == false) {
 			continue;
 		}
-
 		// イテレータBはイテレータAの次の要素から回す(重複を避ける)
 		std::list<ICollider*>::iterator BoxitrB = BoxitrA;
 		BoxitrB++;
 		for (; BoxitrB != Colliders_.end(); ++BoxitrB) {
 			ICollider* colliderB = *BoxitrB;
-
 			// colliderBを使うかどうか
 			if (colliderB->IsUsing == false) {
 				continue;
@@ -67,6 +66,7 @@ void CollisionManager::CheckAllCollisions() {
 			if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
 					continue;
 			}
+			//判定処理
 			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
 				//当たった時の処理呼び出し
 				colliderA->OnCollision(*colliderB);

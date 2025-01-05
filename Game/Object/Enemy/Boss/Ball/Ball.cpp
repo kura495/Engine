@@ -5,12 +5,12 @@ void Ball::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	ColliderInit();
-
+	//パーティクル設定
 	particle_ = std::make_unique<ParticleSystem>();
 	particle_->Initalize("resources/circle2.dds");
 	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
 	particle_->CustumSpawn = [this]() { return CustomParticle(); };
-
+	//パーティクルエミッターの設定
 	emitter.count = 10;
 	emitter.frequency = 0.1f;
 	emitter.particleRadius = { 1.75f,1.75f,1.75f };
@@ -21,7 +21,7 @@ void Ball::Init(std::vector<Model*> models)
 
 void Ball::Update()
 {
-	//パーティクル
+	//パーティクル生成
 	emitter.frequencyTime += kDeltaTime;
 	if (emitter.frequency <= emitter.frequencyTime) {
 		//ランダム生成用
@@ -48,7 +48,6 @@ void Ball::Update()
 	if (IsOverline) {
 		return;
 	}
-
 	//移動の制限(下限と上限を一行で書いている)
 	world_.transform.translate.y = (std::max)(world_.transform.translate.y,1.0f);
 
@@ -61,7 +60,6 @@ void Ball::Update()
 		world_.transform.translate.y += jumpValue;
 		jumpValue -= subjumpValue;
 	}*/
-
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
 	}

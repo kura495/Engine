@@ -15,7 +15,6 @@ void Sphere::Initialize()
 	indexResource = directX_->CreateBufferResource(sizeof(uint32_t) * 6 * kSubdivision * kSubdivision);
 	indexResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 	MakeIndexBufferView();
-
 	//経度分割の1つ分の角度　φ 横
 	const float kLonEvery = float(std::numbers::pi) * 2.0f / float(kSubdivision);
 	//緯度分割の1つ分の角度　θ 縦

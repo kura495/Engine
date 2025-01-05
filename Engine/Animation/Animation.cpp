@@ -112,6 +112,7 @@ Quaternion Animation::CalculateValue(const std::vector<KeyFrameQuaternion>& keyf
 
 void Animation::PlayAnimation()
 {
+	//時間の加算
 	animationTime_ += 1.0f / 60.0f;
 
 	animationTime_ = std::fmod(animationTime_, duration);
@@ -160,14 +161,11 @@ void Animation::SkeletonUpdate()
 
 void Animation::SkinClusterUpdate()
 {
-
-
 	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); ++jointIndex) {
 		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());
 		skinCluster.mappedPaette[jointIndex].skeletonSpaceMatrix = Matrix4x4::Multiply(skinCluster.inverseBindPoseMatrices[jointIndex], skeleton.joints[jointIndex].skeletonSpaceMatrix);
 		skinCluster.mappedPaette[jointIndex].skeletonSpaceInverseTransposeMatrix = Matrix4x4::Transpose((Matrix4x4::Inverse(skinCluster.mappedPaette[jointIndex].skeletonSpaceMatrix)));
 	}
-
 }
 
 void Animation::CreateSkeleton(const Node& rootNode)

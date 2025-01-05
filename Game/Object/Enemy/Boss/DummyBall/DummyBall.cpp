@@ -5,12 +5,12 @@ void DummyBall::Init(std::vector<Model*> models)
 	models_ = models;
 	world_.Initialize();
 	ColliderInit();
-
+	//パーティクル設定
 	particle_ = std::make_unique<ParticleSystem>();
 	particle_->Initalize("resources/circle2.dds");
 	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
 	particle_->CustumSpawn = [this]() { return CustomParticle(); };
-
+	//パーティクルのエミッター設定
 	emitter.count = 10;
 	emitter.frequency = 0.1f;
 	emitter.particleRadius = { 1.75f,1.75f,1.75f };
@@ -19,10 +19,9 @@ void DummyBall::Init(std::vector<Model*> models)
 
 }
 
-
 void DummyBall::Update()
 {
-	//パーティクル
+	//パーティクル生成
 	emitter.frequencyTime += kDeltaTime;
 	if (isThrowFlag) {
 		if (emitter.frequency <= emitter.frequencyTime) {
@@ -38,7 +37,6 @@ void DummyBall::Update()
 
 	particle_->Update();
 	ImGui();
-
 
 	//一定ラインを超えたら止める
 	distance = Vector3::Distance(stertPos, world_.transform.translate);
@@ -57,6 +55,7 @@ void DummyBall::Update()
 	world_.transform.translate.y = (std::max)(world_.transform.translate.y, 1.0f);
 
 	if (isThrowFlag) {
+		//横に移動させる
 		if (isCompleteMoveFlag == false) {
 			easeT = (std::min)(easeT + addEaseT, 1.0f);
 			world_.transform.translate = Vector3::Lerp(startPoint, targetPoint, easeT);

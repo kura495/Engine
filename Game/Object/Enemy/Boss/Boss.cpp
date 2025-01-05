@@ -418,6 +418,7 @@ void Boss::OnCollision(const ICollider& collider)
 }
 void Boss::ColliderAttackInit()
 {
+	//腕側の攻撃判定
 	colliderAttackWorld_.SetParent(&worldArmL);
 	colliderAttack.Init(&worldArmL);
 	colliderAttack.SetSize({ 1.0f,1.0f,7.0f });
@@ -425,7 +426,7 @@ void Boss::ColliderAttackInit()
 	colliderAttack.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttack.SetcollisionMask(~ColliderTag::EnemyCore);
-
+	//指側の攻撃判定
 	colliderAttackA.Init(&worldArmL);
 	colliderAttackA.SetSize({ 2.0f,0.5f,1.0f });
 	colliderAttackA.SetOffset({ 0.0f,0.0f,-6.25f });

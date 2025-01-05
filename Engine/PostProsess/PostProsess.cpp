@@ -14,7 +14,6 @@ void PostProsess::addInit()
 
 void PostProsess::Draw()
 {
-
 	DirectX->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//テクスチャ
 	DirectX->GetcommandList()->SetGraphicsRootDescriptorTable(0, SRVhandle.GPU);
@@ -38,7 +37,6 @@ void PostProsess::Create(int Index)
 	CreateViewport();
 	CreateScissor();
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, SRVhandle.CPU);
-
 	materialResource = DirectX->CreateBufferResource(sizeof(Vector3));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 

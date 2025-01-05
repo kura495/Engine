@@ -5,7 +5,7 @@ void ParticleSystem::Initalize(const std::string filePath)
 	textureManager_ = TextureManager::GetInstance();
 	directX_ = DirectXCommon::GetInstance();
 	sRVManager_ = SRVManager::GetInstance();
-
+	//四角形を作る
 	modelData.vertices.push_back({ .position = { -1.0f,1.0f,0.0f,1.0f },.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//左上
 	modelData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},   .texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });//右上
 	modelData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f}, .texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });//左下
@@ -15,45 +15,33 @@ void ParticleSystem::Initalize(const std::string filePath)
 	modelData.material.textureFilePath = filePath;
 	int Texture = textureManager_->LoadTexture(modelData.material.textureFilePath);
 	modelData.TextureIndex = Texture;
-
+	//リソースとSRVの設定
 	CreateResources();
 	CreateSRV();	
-
-	//ランダム生成用
-	std::random_device seedGenerator;
-	std::mt19937 randomEngine(seedGenerator());
-
+	//マテリアル設定
 	materialData->enableLighting = false;
 	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
-
-	Pipeline_ = std::make_unique<ParticlePipeLine>();
-	Pipeline_->Initalize();
-
-	TestField.acceleration = {0.0f,0.0f,0.0f};
-	TestField.area.min = {-1.0f,-1.0f,-1.0f};
-	TestField.area.max = { 1.0f,1.0f,1.0f };
-	
 }
 
 void ParticleSystem::Update()
 {
 	numInstance = 0;
-
+	//ビルボード
 	Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
 
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
-
+		//一定時間経過したパーティクルを削除
 		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {
 			particleIt = particles.erase(particleIt);
 			continue;
 		}
 
 		UpdateParticle(*particleIt);
-
+		//パーティクルにビルボードを掛けてカメラ目線にする
 		if (numInstance < kNumMaxInstance) {
 			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
 			instancinsData[numInstance].matWorld.m[3][0] = (*particleIt).transform.translate.x;
@@ -64,7 +52,6 @@ void ParticleSystem::Update()
 		}
 		++particleIt;
 	}
-
 #ifdef _DEBUG
 	ImGui();
 #endif
@@ -111,12 +98,6 @@ std::list<Particle> ParticleSystem::CustumEmit(Emitter& emitter)
 		Emitparticles.push_back(CustumSpawn());
 	}
 	return Emitparticles;
-}
-
-void ParticleSystem::PreDraw()
-{
-	directX_->GetcommandList()->SetGraphicsRootSignature(Pipeline_->GetPSO().rootSignature.Get());
-	directX_->GetcommandList()->SetPipelineState(Pipeline_->GetPSO().graphicsPipelineState.Get());
 }
 
 std::list<Particle> ParticleSystem::Emit(Emitter& emitter, std::mt19937& randomEngine)
@@ -170,6 +151,7 @@ void ParticleSystem::CreateResources()
 
 void ParticleSystem::CreateSRV()
 {
+	//SRVの設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
 	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
 	instancingSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
@@ -180,7 +162,6 @@ void ParticleSystem::CreateSRV()
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 
 	textureSrvHandle = sRVManager_->GetDescriptorHandle();
-
 	//ImGui分
 	textureSrvHandle.CPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	textureSrvHandle.GPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);

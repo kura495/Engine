@@ -65,9 +65,6 @@ public:
 	/// <param name="emitter"></param>
 	void CustumSpawnParticle(Emitter& emitter);
 
-	
-	void PreDraw();
-
 private:
 	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
 	std::list<Particle> CustumEmit(Emitter& emitter);
@@ -104,9 +101,6 @@ private:
 
 	void CreateResources();
 	void CreateSRV();
-
-	std::unique_ptr<ParticlePipeLine> Pipeline_;
-
 	//ランダム
 	Particle MakeNewParticle(Emitter& emitter, std::mt19937& randomEngine);
 	/// <summary>

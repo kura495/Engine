@@ -9,7 +9,9 @@ void DebugCamera::Initialize()
 
 void DebugCamera::Update()
 {
+	//LALTを押している
 	if (Input::GetInstance()->TriggerKey(DIK_LALT)) {
+	//キー入力でカメラ回転
 #pragma region rotation
 	const float rotSpeed = 0.05f;
 
@@ -32,6 +34,7 @@ void DebugCamera::Update()
 
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 #pragma endregion 回転
+	//キー入力でカメラ移動
 #pragma region translation_
 	const float translateSpeed = 0.5f;
 	if (Input::GetInstance()->TriggerKey(DIK_A)) {
