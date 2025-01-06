@@ -39,10 +39,10 @@ void Player::Init(std::vector<Model*> models)
 	deadParticle_->Initalize("resources/circle2.dds");
 	deadParticle_->UpdateParticle = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	deadParticleEmitter.count = 5;
-	deadParticleEmitter.frequency = 0.1f;
+	deadParticleEmitter.frequency = 0.5f;
 	deadParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
 	deadParticleEmitter.color = { 0.0f,0.0f,0.0f };
-	deadParticleEmitter.speed = { 2.0f,2.0f,2.0f };
+	deadParticleEmitter.speed = { 1.0f,1.0f,1.0f };
 
 	attackHitParticle_ = new ParticleSystem();
 	attackHitParticle_->Initalize("resources/circle2.dds");
@@ -58,7 +58,7 @@ void Player::Init(std::vector<Model*> models)
 	attackHitBombParticle_->UpdateParticle = [this](Particle& particle) {return UpdateAttackHitBombParticle(particle); };
 	AttackHitBombParticleEmitter.count = 5;
 	AttackHitBombParticleEmitter.frequency = 0.1f;
-	AttackHitBombParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
+	AttackHitBombParticleEmitter.particleRadius = {0.1f,0.1f,1.0f};
 	AttackHitBombParticleEmitter.color = { 0.5f,0.5f,1.0f };
 	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
@@ -269,25 +269,24 @@ void Player::DeadInit()
 {
 	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 	deadParticleEmitter.world_.transform.translate.y += 1.0f;
-	animationTime_ = 0.0f;
+	animationTime_ = 1.0f / 60.0f;
 }
 void Player::DeadUpdate()
 {
 	isOnFloorFlag = true;
-	//パーティクル生成
-	GameCharacter::ParticleSpawn(*deadParticle_, deadParticleEmitter);
 	//死亡アニメーション更新
-	deadAnimation->PlayAnimation();
+
 	animationTime_ += 1.0f / 60.0f;
-	if (animationTime_ > deadAnimation->duration) {
+	deadAnimation->PlayAnimation(false);
+	if (animationTime_ >= deadAnimation->duration) {
 		isDamege = false;
 		animationTime_ = 0.0f;
-		if (HP_ <= 0) {
-			isDeadModelDraw = false;
-			isDead = true;
-		}
+		isDeadModelDraw = false;
+		isDead = true;
 	}
 	if (isDeadModelDraw == false) {
+		//パーティクル生成
+		GameCharacter::ParticleSpawn(*deadParticle_, deadParticleEmitter);
 		deadParticle_->Update();
 	}
 }
@@ -379,6 +378,22 @@ void Player::AttackOnCollision(const ICollider& collider)
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
 		//パーティクル生成
+		AttackHitBombParticleEmitter.color = { 0.5f,0.5f,1.0f };
+		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
+		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
+		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);
+	}
+	if (collider.GetcollitionAttribute() == ColliderTag::FakeEnemyBall) {
+		colliderAttack.IsUsing = false;
+		//パーティクル用のベクトル
+		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
+		attackVector.Normalize();
+		attackVector *= -1;
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+		//パーティクル生成
+		AttackHitBombParticleEmitter.color = { 1.0f,1.0f,1.0f };
 		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);

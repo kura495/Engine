@@ -87,7 +87,7 @@ void DummyBall::ColliderInit()
 	collider.Init(&world_);
 	collider.SetSize({ 1.0f,1.0f,1.0f });
 	collider.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	collider.SetcollitionAttribute(ColliderTag::EnemyBall);
+	collider.SetcollitionAttribute(ColliderTag::FakeEnemyBall);
 	collider.IsUsing = false;
 }
 

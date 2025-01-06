@@ -110,13 +110,20 @@ Quaternion Animation::CalculateValue(const std::vector<KeyFrameQuaternion>& keyf
 	return (*keyframes.rbegin()).value;
 }
 
-void Animation::PlayAnimation()
+void Animation::PlayAnimation(bool LoopFlag)
 {
+	if (animationTime_ > duration && LoopFlag == false) {
+		isFin = true;
+	}
+
 	//時間の加算
-	animationTime_ += 1.0f / 60.0f;
-
-	animationTime_ = std::fmod(animationTime_, duration);
-
+	if (isFin == true) {
+		animationTime_ = duration;
+	}
+	else {
+		animationTime_ += 1.0f / 60.0f;
+		animationTime_ = std::fmod(animationTime_, duration);
+	}
 	ApplyAnimation(animationTime_);
 
 	SkeletonUpdate();

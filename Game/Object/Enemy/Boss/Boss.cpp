@@ -351,7 +351,7 @@ void Boss::DownInit()
 void Boss::DownUpdate()
 {
 	if (isDownStert) {
-		animationArmLDamage->PlayAnimation();
+		animationArmLDamage->PlayAnimation(true);
 		animationTime_ += 1.0f / 60.0f;
 		if (animationTime_ > animationArmLDamage->duration) {
 			isDownStert = false;

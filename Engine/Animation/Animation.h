@@ -26,6 +26,7 @@ public:
 	/// </summary>
 	void Reset() {
 		animationTime_ = 0;
+		isFin = false;
 	};
 	//アニメーションファイルの読み込
 	
@@ -46,7 +47,8 @@ public:
 	/// <summary>
 	/// アニメーションを再生(ノードアニメーション用)
 	/// </summary>
-	void PlayAnimation();
+	/// <param name="LoopFlag">アニメーションをループさせるかどうかのフラグ</param>
+	void PlayAnimation(bool LoopFlag = true);
 
 	/// <summary>
 	/// スケルトンを描画する
@@ -132,4 +134,6 @@ private:
 	SkinCluster skinCluster;
 
 	bool IsDebugLine = false;
+
+	bool isFin = false;
 };
