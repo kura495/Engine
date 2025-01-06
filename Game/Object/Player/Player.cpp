@@ -269,6 +269,7 @@ void Player::DeadInit()
 {
 	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
 	deadParticleEmitter.world_.transform.translate.y += 1.0f;
+	deadParticleEmitter.frequencyTime = deadParticleEmitter.frequency;
 	animationTime_ = 1.0f / 60.0f;
 }
 void Player::DeadUpdate()
