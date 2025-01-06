@@ -210,7 +210,6 @@ void Player::RootUpdate()
 		if (animationTime_ > deadAnimation->duration) {
 			animationTime_ = 0.0f;
 			isMovedFlag = false;
-
 		}
 	}
 	//ボタンを押したら攻撃
@@ -500,11 +499,6 @@ void Player::Move()
 #pragma endregion プレイヤーの回転
 
 		isMovedFlag = true;
-
-		return;
-	}
-	else {
-		isMovedFlag = false;
 
 		return;
 	}
