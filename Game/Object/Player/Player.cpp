@@ -324,10 +324,6 @@ void Player::OnCollision(const ICollider& ICollider)
 		return;
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Floor) {
-
-		ImGui::Begin("Player");
-		ImGui::Text("floorHit");
-		ImGui::End();
 		if (behavior_ == Behavior::kJump) {
 			return;
 		}
