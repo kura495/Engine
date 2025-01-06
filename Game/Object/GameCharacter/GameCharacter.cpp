@@ -13,3 +13,13 @@ void GameCharacter::ParticleSpawn(ParticleSystem& particle, Emitter& emitter)
 		emitter.frequencyTime -= emitter.frequency;
 	}
 }
+
+void GameCharacter::ParticleCustumSpawn(ParticleSystem& particle, Emitter& emitter)
+{
+	emitter.frequencyTime += kDeltaTime;
+	if (emitter.frequency <= emitter.frequencyTime) {
+		particle.CustumSpawnParticle(emitter);
+
+		emitter.frequencyTime -= emitter.frequency;
+	}
+}

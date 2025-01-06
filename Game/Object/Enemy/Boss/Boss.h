@@ -103,17 +103,26 @@ private:
 	int countHitBall;
 
 #pragma endregion 爆弾
-
-#pragma region
 	void AddImGui()override;
 
 	WorldTransform worldArmL;
+#pragma region
 	//パーティクル
 	ParticleSystem* particle_;
 	Emitter deadEnemyParticleEmitter;
 	void UpdateParticle(Particle& particle);
 	Particle CustomParticle();
 
+	//寝てる演出パーティクル
+	ParticleSystem* sleepParticle_;
+	Emitter sleepParticleEmitter;
+	void SleepUpdateParticle(Particle& particle);
+	//
+	float minX = -1.0f;
+	float maxX = 1.0f;
+	float circlecycle = 0.0f;
+	float addcirclecycle = 1.0f;
+	float sleepParticleValue = 2.0f;
 #pragma endregion パーティクル
 
 #pragma region

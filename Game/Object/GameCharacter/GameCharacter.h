@@ -6,5 +6,6 @@
 class GameCharacter : public IObject {
 public:
 	void ParticleSpawn(ParticleSystem& particle, Emitter& emitter);
+	void ParticleCustumSpawn(ParticleSystem& particle, Emitter& emitter);
 
 };

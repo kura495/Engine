@@ -64,7 +64,26 @@ public:
 	/// </summary>
 	/// <param name="emitter"></param>
 	void CustumSpawnParticle(Emitter& emitter);
-
+	//ランダム
+	Particle MakeNewParticle(Emitter& emitter, std::mt19937& randomEngine);
+	/// <summary>
+	/// パーティクルの位置をランダムに設定
+	/// </summary>
+	/// <param name="randomEngine"></param>
+	/// <returns></returns>
+	Vector3 SetParticlePos(std::mt19937& randomEngine);
+	/// <summary>
+	/// パーティクルの色をランダムに設定
+	/// </summary>
+	/// <param name="randomEngine"></param>
+	/// <returns></returns>
+	Vector4 SetParticleColor(std::mt19937& randomEngine);
+	/// <summary>
+	/// パーティクルの生存時間をランダムに設定
+	/// </summary>
+	/// <param name="randomEngine"></param>
+	/// <returns></returns>
+	static float SetParticleLifeTime(std::mt19937& randomEngine, float min, float max);
 private:
 	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
 	std::list<Particle> CustumEmit(Emitter& emitter);
@@ -101,20 +120,7 @@ private:
 
 	void CreateResources();
 	void CreateSRV();
-	//ランダム
-	Particle MakeNewParticle(Emitter& emitter, std::mt19937& randomEngine);
-	/// <summary>
-	/// パーティクルの色をランダムに設定
-	/// </summary>
-	/// <param name="randomEngine"></param>
-	/// <returns></returns>
-	Vector4 SetParticleColor(std::mt19937& randomEngine);
-	/// <summary>
-	/// パーティクルの生存時間をランダムに設定
-	/// </summary>
-	/// <param name="randomEngine"></param>
-	/// <returns></returns>
-	float SetParticleLifeTime(std::mt19937& randomEngine);
+
 
 	Emitter Testemitter;
 

@@ -8,7 +8,7 @@ void Boss::Init(std::vector<Model*> models)
 	world_.Initialize();
 	world_.Update();
 	worldArmL.Initialize();
-	worldArmL.transform.translate = initialPosition;
+	worldArmL.transform.translate = DownPosition;
 	worldArmL.Update();
 	//当たり判定
 	colliderDamageWorld_.Initialize();
@@ -23,13 +23,26 @@ void Boss::Init(std::vector<Model*> models)
 	particle_ = new ParticleSystem();
 	particle_->Initalize("resources/circle2.dds");
 	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
-	particle_->CustumSpawn = [this]() { return CustomParticle(); };
 
 	deadEnemyParticleEmitter.count = 50;
 	deadEnemyParticleEmitter.frequency = 0.1f;
 	deadEnemyParticleEmitter.particleRadius = { 1.0f,1.0f,1.0f };
 	deadEnemyParticleEmitter.color = { 1.0f,1.0f,1.0f };
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
+
+	sleepParticle_ = new ParticleSystem();
+	sleepParticle_->Initalize("resources/sleepParticle.png");
+	sleepParticle_->UpdateParticle = [this](Particle& particle) { SleepUpdateParticle(particle); };
+	sleepParticle_->CustumSpawn = [this]() { return CustomParticle(); };
+
+	sleepParticleEmitter.count = 1;
+	sleepParticleEmitter.frequency = 2.0f;
+	sleepParticleEmitter.particleRadius = { 0.2f,0.2f,0.2f };
+	sleepParticleEmitter.world_.transform.translate.z = 12.0f;
+	sleepParticleEmitter.world_.transform.translate.x = -1.0f;
+	sleepParticleEmitter.world_.transform.translate.y = 1.0f;
+	sleepParticleEmitter.color = { 1.0f,1.0f,1.0f };
+	sleepParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル
 #pragma region
 	ball = std::make_unique<Ball>();
@@ -43,11 +56,9 @@ void Boss::Init(std::vector<Model*> models)
 	//ビヘイビアーを初期化
 	behaviorRequest_ = BossBehavior::Spawn;
 
-	models_[Body::ArmL]->color_.w = 0.0f;
-
 	name = "Boss";
 	//初期値を設定
-	HP_ = 9;
+	HP_ = 1;
 }
 void Boss::Update()
 {
@@ -85,6 +96,7 @@ void Boss::Draw()
 		break;
 	case BossBehavior::Spawn:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+		sleepParticle_->RendererDraw();
 		break;
 	case BossBehavior::Dead:
 		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
@@ -288,18 +300,19 @@ void Boss::AttackThrowBallUpdate()
 }
 void Boss::SpawnInit()
 {
-	models_[Body::ArmL]->color_.w = 0.0f;
-	worldArmL.transform.translate.z = 40.0f;
+	worldArmL.transform.translate = DownPosition;
 	//当たり判定を通常に変更
 	colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
 	colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
 }
 void Boss::SpawnUpdate()
 {
-	models_[Body::ArmL]->color_.w = (std::min)(models_[Body::ArmL]->color_.w + 0.01f, 1.0f);
-	worldArmL.transform.translate.z = (std::max)(worldArmL.transform.translate.z - 0.1f, initialPosition.z);
-	if (models_[Body::ArmL]->color_.w == 1.0f) {
-		behaviorRequest_ = BossBehavior::Root;
+	//パーティクル生成
+	GameCharacter::ParticleCustumSpawn(*sleepParticle_, sleepParticleEmitter);
+	//パーティクル更新
+	sleepParticle_->Update();
+	if (HP_ <= 9) {
+		behaviorRequest_ = BossBehavior::ReturnPosition;
 	}
 }
 void Boss::DeadInit()
@@ -464,9 +477,27 @@ Particle Boss::CustomParticle()
 {
 	Particle particle{};
 	particle.color = { 1.0f,1.0f,1.0f };
-	particle.currentTime = 0.0f;
-	particle.lifeTime = 2.0f;
-	particle.transform.translate = worldArmL.transform.translate;
+	//ランダム生成用
+	std::random_device seedGenerator;
+	std::mt19937 randomEngine(seedGenerator());
+
+	particle.lifeTime = ParticleSystem::SetParticleLifeTime(randomEngine,1.0f,3.0f);
+	particle.transform.scale = sleepParticleEmitter.particleRadius;
+	particle.transform.translate = sleepParticleEmitter.world_.transform.translate;
 
 	return particle;
+}
+void Boss::SleepUpdateParticle(Particle& particle)
+{
+	particle.transform.translate.y += sleepParticleValue * kDeltaTime;
+	if (particle.transform.translate.y <= 10.0f) {
+		particle.transform.translate.x += std::sin(std::clamp(particle.transform.translate.y,0.0f,1.0f)) * kDeltaTime * -1.0f;
+	}
+	//エミッターがパーティクルの半径を決める
+	particle.transform.scale = sleepParticleEmitter.particleRadius;
+	Vector3 translate = particle.transform.translate + sleepParticleEmitter.world_.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	particle.color.w = alpha;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }

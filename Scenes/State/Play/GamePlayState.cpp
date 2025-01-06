@@ -227,7 +227,7 @@ void GamePlayState::ClearInit()
 }
 void GamePlayState::ClearUpdate()
 {
-	player_->Update();
+	//player_->Update();
 	if (fade->In()) {
 		StateNo = 2;
 	}
