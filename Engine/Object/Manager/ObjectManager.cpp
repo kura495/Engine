@@ -214,8 +214,8 @@ void ObjectManager::AddPlane(ObjectData input)
 
 	plane->SetTransform(input.object.transform);
 
-	plane->SetSize(input.object.colloder.size);
-	plane->SetOffset(input.object.colloder.center);
+	//plane->SetSize(input.object.colloder.size);
+	//plane->SetOffset(input.object.colloder.center);
 
 	object_.push_back(plane);
 }

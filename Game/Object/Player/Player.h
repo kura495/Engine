@@ -118,6 +118,10 @@ private:
 	bool isDeadModelDraw = true;
 	//動いていたかどうか
 	bool isMovedFlag = false;
+	//地面にいるかどうか
+	bool isOnFloorFlag = true;
+	//死亡
+	bool isDeadFlag = false;
 
 	Vector3 move;
 };

@@ -72,18 +72,23 @@ void Player::Update()
 {
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
-	//HPを減らす処理
-	if (isDamege && HP_ >= 1) {
-		behaviorRequest_ = Behavior::kDead;
-		isDamege = false;
-		HP_ -= 1;
+	
+	if (isDeadFlag == false) {
+		//ダメージを受けた時、落っこちた時の処理
+		if (isDamege && HP_ >= 1 || world_.transform.translate.y <= -10.0f) {
+			isDeadFlag = true;
+	
+			behaviorRequest_ = Behavior::kDead;
+			isDamege = false;
+			HP_ -= 1;
+		}
 	}
 	BehaviorUpdate();
 	//パーティクルアップデート
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
 	deadParticle_->Update();
-	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
+
 #ifdef USE_IMGUI
 	ImGui();
 #endif
@@ -93,6 +98,12 @@ void Player::Update()
 		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
 
 	}
+	//落下の処理
+	if (isOnFloorFlag == false) {
+		world_.transform.translate.y += jumpForce;
+		jumpForce -= kJumpSubValue;
+	}
+	isOnFloorFlag = false;
 	world_.Update();
 
 	//前フレームのゲームパッドの状態を保存
@@ -208,7 +219,7 @@ void Player::RootUpdate()
 	}
 	//ボタンを押したらジャンプ
 	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
-		behaviorRequest_ = Behavior::kJump;
+		//behaviorRequest_ = Behavior::kJump;
 	}
 }
 //kAttack
@@ -243,16 +254,13 @@ void Player::AttackUpdate()
 //kJump
 void Player::JumpInit() {
 	jumpForce = kJumpForce;
-	//FollowCamera::workInter.interParameter_.y = 0.0f;
 }
 void Player::JumpUpdate() {
 	//移動関数
 	Move();
 	//ジャンプの処理
-	world_.transform.translate.y += jumpForce;
-	jumpForce -= kJumpSubValue;
 
-	if (world_.transform.translate.y <= 0) {
+	if (world_.transform.translate.y <= 0 && jumpForce <= 0) {
 		world_.transform.translate.y = 0;
 		behaviorRequest_ = Behavior::kRoot;
 	}
@@ -266,6 +274,7 @@ void Player::DeadInit()
 }
 void Player::DeadUpdate()
 {
+	isOnFloorFlag = true;
 	//パーティクル生成
 	GameCharacter::ParticleSpawn(*deadParticle_, deadParticleEmitter);
 	//死亡アニメーション更新
@@ -298,9 +307,11 @@ void Player::OnCollision(const ICollider& ICollider)
 {
 	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
 		isDamege = true;
+		return;
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 		isDamege = true;
+		return;
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Enemy) {
 
@@ -308,8 +319,27 @@ void Player::OnCollision(const ICollider& ICollider)
 		world_.transform.translate -= move;
 		//world_.transform.translate += aaaaa2;
 		world_.Update();
+		return;
+	}
+	if (ICollider.GetcollitionAttribute() == ColliderTag::Weapon) {
+		return;
+	}
+	if (ICollider.GetcollitionAttribute() == ColliderTag::Floor) {
 
-	}		
+		ImGui::Begin("Player");
+		ImGui::Text("floorHit");
+		ImGui::End();
+		if (behavior_ == Behavior::kJump) {
+			return;
+		}
+
+		if (isOnFloorFlag == false) {
+			world_.transform.translate.y = 0.0f;
+		}
+		isOnFloorFlag = true;
+		return;
+	}
+
 	return;
 }
 void Player::AttackColliderInit()
@@ -320,7 +350,7 @@ void Player::AttackColliderInit()
 	colliderAttack.SetOffset({ 0.0f,0.5f,1.0f });
 	colliderAttack.OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
-	colliderAttack.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
+	colliderAttack.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon && ~ColliderTag::Floor);
 
 	colliderAttack.IsUsing = false;
 }

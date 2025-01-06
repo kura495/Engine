@@ -40,6 +40,7 @@ void Ball::Update()
 	distance = Vector3::Distance(stertPos, world_.transform.translate);
 	if (distance >= 60.0f) {
 		IsOverline = true;
+		collider.IsUsing = false;
 	}
 	else {
 		IsOverline = false;

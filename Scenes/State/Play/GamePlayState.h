@@ -101,6 +101,8 @@ private:
 
 	std::unique_ptr<ParticleSystem> particle;
 
+	std::unique_ptr<PlaneObject> floor;
+
 	Input* input;
 
 	std::unique_ptr<Sprite> titleSprite;

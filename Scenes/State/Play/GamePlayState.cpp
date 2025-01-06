@@ -47,6 +47,10 @@ void GamePlayState::Initialize()
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
 
+	floor = std::make_unique<PlaneObject>();
+	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
+	floor->Init(planeModel_);
+
 	fade = Fade::GetInstance();
 	fade->OutInit();
 
@@ -67,7 +71,7 @@ void GamePlayState::Update()
 	else {
 		followCamera->isShake = false;
 	}
-
+	//floor->Update();
 	//particle->Update();
 
 	skyDome_->Update();
@@ -90,6 +94,7 @@ void GamePlayState::Draw()
 
 	enemyManager->Draw();
 
+	//floor->Draw();
 #pragma endregion
 
 #pragma region

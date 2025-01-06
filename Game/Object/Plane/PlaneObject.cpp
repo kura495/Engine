@@ -4,19 +4,17 @@ void PlaneObject::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	world_.Initialize();
-
-	BoxCollider::Init(&world_);
-	BoxCollider::SetSize({ 5.0f,0.0f,5.0f });
-	//SetcollitionAttribute(ColliderTag::Floor);
-	//SetcollisionMask(~ColliderTag::Floor);
-	BoxCollider::OnCollision = [this](ICollider& collider) { OnCollision(collider); };
+	world_.Update();
+	collider.Init(&world_);
+	collider.SetSize({ 25.0f,0.0f,25.0f });
+	collider.SetcollitionAttribute(ColliderTag::Floor);
+	collider.SetcollisionMask(~ColliderTag::Floor);
+	collider.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 }
 
 void PlaneObject::Update()
 {
 	world_.Update();
-
-	BoxCollider::SetSize({world_.transform.scale.x * 5.0f,0.0f,world_.transform.scale.z * 5.0f });
 }
 
 void PlaneObject::Draw()
@@ -40,9 +38,9 @@ void PlaneObject::ImGui()
 	GlobalVariables::GetInstance()->UpdateTransformQuaItem("Editer", Name, world_.transform);
 }
 
-void PlaneObject::OnCollision(const ICollider& collider)
+void PlaneObject::OnCollision(const ICollider& Collider)
 {
-	if (collider.GetcollitionAttribute()) {
+	if (Collider.GetcollitionAttribute()) {
 		return;
 	}
 }
