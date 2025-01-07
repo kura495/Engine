@@ -36,7 +36,8 @@ void Boss::Init(std::vector<Model*> models)
 	sleepParticle_->CustumSpawn = [this]() { return CustomParticle(); };
 
 	sleepParticleEmitter.count = 1;
-	sleepParticleEmitter.frequency = 2.0f;
+	sleepParticleEmitter.frequency = 1.0f;
+	sleepParticleEmitter.frequencyTime = 0.5f;
 	sleepParticleEmitter.particleRadius = { 0.2f,0.2f,0.2f };
 	sleepParticleEmitter.world_.transform.translate.z = 12.0f;
 	sleepParticleEmitter.world_.transform.translate.x = -1.0f;
