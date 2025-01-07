@@ -62,6 +62,10 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitBombParticleEmitter.color = { 0.5f,0.5f,1.0f };
 	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
+	//音声
+	SETest = Audio::GetInstance();
+	SEnumber = SETest->LoadAudioMP3("resources/sound/attack.mp3",false);
+	SETest->Stop(SEnumber, true, false);
 }
 void Player::TitleUpdate()
 {
@@ -461,8 +465,16 @@ void Player::ImGui()
 	if (ImGui::Button("CollisionOn")) {
 		colliderPlayer.IsUsing = true;
 	}
+
 	if (ImGui::Button("CollisionOff")) {
 		colliderPlayer.IsUsing = false;
+	}
+	if (ImGui::Button("SE")) {
+		SETest->Play(SEnumber,1.0f);
+	}
+	if (ImGui::Button("SEReset")) {
+		SETest->Stop(SEnumber,true,false);
+		//SETest->Reset(SEnumber,false);
 	}
 	ImGui::Text("%d", HP_);
 	ImGui::End();

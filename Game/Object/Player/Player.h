@@ -3,6 +3,7 @@
 
 #include "Math/Matrix/MatrixCalc.h"
 #include "Game/Object/GameCharacter/GameCharacter.h"
+#include "Audio/Audio.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
 #include "Input/Input.h"
@@ -100,6 +101,11 @@ private:
 	Emitter AttackHitBombParticleEmitter;
 
 #pragma endregion Particle
+
+#pragma region
+	Audio* SETest;
+	int SEnumber;
+#pragma endregion 音声
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
