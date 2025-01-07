@@ -6,6 +6,7 @@
 #include "ParticleSystem/ParticleSystem.h"
 #include "Ball/Ball.h"
 #include "DummyBall/DummyBall.h"
+#include "Engine/Audio/Audio.h"
 
 enum Body {
 	body,
@@ -62,9 +63,6 @@ private:
 	void DownUpdate();
 #pragma endregion Behavior
 #pragma region
-	bool FollowPlayer();
-#pragma endregion
-#pragma region
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
 	void OnCollision(const ICollider& colliderA)override;
@@ -80,7 +78,6 @@ private:
 	WorldTransform colliderAttackWorld_;
 	bool IsAttackFlag = false;
 #pragma endregion Collider
-
 #pragma region
 	//現在のTの値
 	float easeT = 0.0f;
@@ -93,7 +90,6 @@ private:
 	//ダミーを発射したかどうか
 	bool isThrowdummyBallFlag = false;
 #pragma endregion 攻撃に関する物
-
 #pragma region
 	
 	std::unique_ptr<Ball> ball;
@@ -102,10 +98,7 @@ private:
 	//爆弾に当たった回数
 	int countHitBall;
 
-#pragma endregion 爆弾
-	void AddImGui()override;
-
-	WorldTransform worldArmL;
+#pragma endregion ボール
 #pragma region
 	//パーティクル
 	ParticleSystem* particle_;
@@ -124,20 +117,24 @@ private:
 	float addcirclecycle = 1.0f;
 	float sleepParticleValue = 2.0f;
 #pragma endregion パーティクル
-
 #pragma region
 	Animation* animationArmLDamage;
 	Animation* animationSpawn;
 #pragma endregion Animation
-
-	//固定の位置
-	Vector3 initialPosition{ 0.0f,5.5f,35.0f };
-
 #pragma region Down
 	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
 	bool isDownStert;
 	int hitCount = 0;
 #pragma endregion
+	bool FollowPlayer();
+	void AddImGui()override;
+
+	WorldTransform worldArmL;
+
+	//固定の位置
+	Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 
 	bool isAttackSelect = true;
+
+
 };
