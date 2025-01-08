@@ -306,7 +306,7 @@ void Player::ColliderInit()
 	colliderPlayer.SetOffset({ 0.0f,0.5f,0.0f });
 	colliderPlayer.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 	colliderPlayer.SetcollitionAttribute(ColliderTag::Player);
-	colliderPlayer.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon);
+	colliderPlayer.SetcollisionMask(~ColliderTag::Player & ~ColliderTag::Weapon);
 }
 void Player::OnCollision(const ICollider& ICollider)
 {
@@ -328,8 +328,8 @@ void Player::OnCollision(const ICollider& ICollider)
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Floor) {
 		if (behavior_ == Behavior::kJump) {
-			if (world_.transform.translate.y <= 0 && jumpForce <= 0) {
-				world_.transform.translate.y = 0;
+			if (world_.transform.translate.y <= ICollider.GetCenter().y && jumpForce <= 0) {
+				world_.transform.translate.y = ICollider.GetCenter().y;
 				world_.Update();
 				behaviorRequest_ = Behavior::kRoot;
 			}
@@ -356,7 +356,7 @@ void Player::AttackColliderInit()
 	colliderAttack.SetOffset({ 0.0f,0.5f,1.0f });
 	colliderAttack.OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
-	colliderAttack.SetcollisionMask(~ColliderTag::Player && ~ColliderTag::Weapon && ~ColliderTag::Floor);
+	colliderAttack.SetcollisionMask(~ColliderTag::Player & ~ColliderTag::Weapon & ~ColliderTag::Floor);
 
 	colliderAttack.IsUsing = false;
 }
@@ -431,7 +431,8 @@ void Player::UpdatedeadParticle(Particle& particle)
 }
 Particle Player::SpawndeadParticle()
 {
-
+	Particle particle;
+	return particle;
 }
 void Player::UpdateAttackHitParticle(Particle& particle)
 {

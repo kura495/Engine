@@ -14,13 +14,18 @@ void PlaneObject::Init(std::vector<Model*> models)
 
 void PlaneObject::Update()
 {
+	if (isCrash) {
+		CrashEffect();
+	}
 	world_.Update();
 }
 
 void PlaneObject::Draw()
 {
 	for (Model* model : models_) {
-		model->RendererDraw(world_);
+		if (collider.IsUsing) {
+			model->RendererDraw(world_);
+		}
 	}
 }
 
@@ -40,16 +45,27 @@ void PlaneObject::ImGui()
 
 void PlaneObject::OnCollision(const ICollider& Collider)
 {
-	if (Collider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
+	if (Collider.GetcollitionAttribute() == (ColliderTag::EnemyAttackFront | ColliderTag::EnemyAttack)) {
 		isCrash = true;
-		ImGui::Begin("Plane");
-		ImGui::Text("Hit");
-		ImGui::End();
 		return;
 	}
 }
 
 void PlaneObject::CrashEffect()
 {
-
+	easeT = (std::min)(easeT + addEaseT,1.0f);
+	world_.transform.translate.y -= 0.02f;
+	//前のフレームのランダム加算を打ち消す
+	world_.transform.translate += saveramdomTranslate;
+	//ランダム生成用
+	std::random_device seedGenerator;
+	std::mt19937 randomEngine(seedGenerator());
+	std::uniform_real_distribution<float> distribution(-0.1f, 0.1f);
+	Vector3 ramdomTranslate = { distribution(randomEngine),0.0f ,distribution(randomEngine) };
+	world_.transform.translate += ramdomTranslate;
+	saveramdomTranslate = ramdomTranslate;
+	if (easeT == 1.0f) {
+		isCrash = false;
+		collider.IsUsing = false;
+	}
 }

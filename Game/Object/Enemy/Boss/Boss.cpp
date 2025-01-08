@@ -238,7 +238,7 @@ void Boss::AttackSlamPlayerInit()
 	easeT = 0.0f;
 	//当たり判定を攻撃に変更
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
+	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack | ColliderTag::EnemyAttackFront);
 }
 void Boss::AttackSlamPlayerUpdate()
 {
@@ -402,7 +402,7 @@ void Boss::ColliderDamageInit()
 	colliderDamage.SetSize({ 1.0f,1.0f,1.0f });
 	colliderDamage.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
 	colliderDamage.SetcollitionAttribute(ColliderTag::EnemyCore);
-	colliderDamage.SetcollisionMask(~ColliderTag::EnemyAttack);
+	colliderDamage.SetcollisionMask(~ColliderTag::EnemyAttack & ~ColliderTag::EnemyAttackFront);
 	colliderDamage.IsUsing = true;
 }
 void Boss::OnCollision(const ICollider& collider)
@@ -439,7 +439,7 @@ void Boss::ColliderAttackInit()
 	colliderAttack.SetOffset({ 0.0f,0.0f,-2.0f });
 	colliderAttack.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliderAttack.SetcollisionMask(~ColliderTag::EnemyCore);
+	colliderAttack.SetcollisionMask(~ColliderTag::EnemyCore & ~ColliderTag::EnemyAttackFront);
 	//指側の攻撃判定
 	colliderAttackA.Init(&worldArmL);
 	colliderAttackA.SetSize({ 2.0f,0.5f,1.0f });

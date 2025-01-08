@@ -3,6 +3,8 @@
 //オブジェクトマネージャーで使用//
 #include "Object/IObject.h"
 #include "Collider/OBB/OBBoxCollider.h"
+#include <random>
+#include <numbers>
 
 static uint32_t PlaneObjectNumber = 0;
 
@@ -30,7 +32,13 @@ private:
 
 	void OnCollision(const ICollider& Collider);
 
-	bool isCrash;
+	bool isCrash = false;
 	void CrashEffect();
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float addEaseT = 0.01f;
+	//前のフレームのランダムに加算した値を保存
+	Vector3 saveramdomTranslate;
 };
 
