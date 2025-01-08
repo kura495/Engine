@@ -253,6 +253,8 @@ void GamePlayState::OverInit()
 void GamePlayState::OverUpdate()
 {
 	player_->Update();
+	audioValue = (std::max)(audioValue - 0.001f, 0.0f);
+	BGMPlayer->Play(BGMHundle, audioValue);
 	if (fade->In()) {
 		StateNo = 3;
 	}
