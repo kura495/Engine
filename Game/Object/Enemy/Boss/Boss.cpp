@@ -282,7 +282,7 @@ void Boss::AttackThrowBallInit()
 {
 	easeT = 0.0f;
 	ball->ThrowBall(worldArmL.transform.translate, player_->GetWorld().transform.translate);
-	SEPlayer->Play(SEthrowBall,1.0f);
+	SEPlayer->Play(SEthrowBall,0.2f);
 	isThrowdummyBallFlag = false;
 	countHitBall = 0;
 }
@@ -420,8 +420,10 @@ void Boss::OnCollision(const ICollider& collider)
 	if (behavior_ == BossBehavior::AttackThrowball) {
 		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 			ball->Reset(player_->GetWorld().transform.translate);
-			SEPlayer->Stop(SEthrowBall,true,false);
-			SEPlayer->Play(SEthrowBall, 1.0f);
+			if (hitCount < 3) {
+				SEPlayer->Stop(SEthrowBall,true,false);
+				SEPlayer->Play(SEthrowBall, 0.2f);
+			}
 			if (easeT == 1.0f) {
 				countHitBall += 1;
 				easeT = 0.0f;
