@@ -35,6 +35,7 @@ public:
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
 
+	Behavior GetBehavior() const { return behavior_; };
 private:
 	void ImGui();
 	//スティック入力で移動させる関数

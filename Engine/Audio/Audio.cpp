@@ -81,6 +81,7 @@ uint32_t Audio::LoadAudioMP3(const std::string& filePath, bool LoopFlag)
 	for (uint32_t index_i = 0; index_i < kMaxAudio; index_i++) {
 		if (soundData_.at(index_i).IsUsed) {
 			if (filePath == soundData_.at(index_i).name) {
+				Stop(index_i,true,false);
 				return index_i;
 			}
 		}

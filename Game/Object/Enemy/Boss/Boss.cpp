@@ -190,6 +190,9 @@ void Boss::RootInit()
 }
 void Boss::RootUpdate()
 {
+	if (player_->GetBehavior() == Behavior::kDead) {
+		return;
+	}
 	//TODO:消すかifdefにする
 #pragma region
 	//if (easeT == 1.0f) {
@@ -451,9 +454,10 @@ void Boss::ColliderAttackInit()
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == ColliderTag::Player && colliderAttack.GetcollisionMask() == ColliderTag::EnemyAttack) {
+	if (collider.GetcollitionAttribute() == ColliderTag::Player && behavior_ == BossBehavior::AttackSlamPlayer) {
 		colliderAttack.IsUsing = false;
 		colliderAttackA.IsUsing = false;
+		SEPlayer->Play(SEHitattack, 1.0f);
 	}
 }
 #pragma endregion Collider
