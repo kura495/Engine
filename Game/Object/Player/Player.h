@@ -93,6 +93,7 @@ private:
 #pragma region
 	ParticleSystem* deadParticle_;
 	void UpdatedeadParticle(Particle& particle);
+	Particle SpawndeadParticle();
 	Emitter deadParticleEmitter;
 
 	ParticleSystem* attackHitParticle_;

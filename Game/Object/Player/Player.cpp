@@ -38,6 +38,8 @@ void Player::Init(std::vector<Model*> models)
 	deadParticle_ = new ParticleSystem();
 	deadParticle_->Initalize("resources/circle2.dds");
 	deadParticle_->UpdateParticle = [this](Particle& particle) {return UpdatedeadParticle(particle); };
+	//deadParticle_->CustumSpawn = [this]() {return SpawndeadParticle(); };
+
 	deadParticleEmitter.count = 5;
 	deadParticleEmitter.frequency = 0.5f;
 	deadParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
@@ -426,6 +428,10 @@ void Player::UpdatedeadParticle(Particle& particle)
 	particle.color.z = deadParticleEmitter.color.z;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+}
+Particle Player::SpawndeadParticle()
+{
+
 }
 void Player::UpdateAttackHitParticle(Particle& particle)
 {
