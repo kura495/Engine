@@ -39,9 +39,7 @@ void Boss::Init(std::vector<Model*> models)
 	sleepParticleEmitter.frequency = 1.0f;
 	sleepParticleEmitter.frequencyTime = 0.5f;
 	sleepParticleEmitter.particleRadius = { 0.2f,0.2f,0.2f };
-	sleepParticleEmitter.world_.transform.translate.z = 12.0f;
-	sleepParticleEmitter.world_.transform.translate.x = -1.0f;
-	sleepParticleEmitter.world_.transform.translate.y = 1.0f;
+	sleepParticleEmitter.world_.transform.translate = {-1.0f,1.0f,12.0f};
 	sleepParticleEmitter.color = { 1.0f,1.0f,1.0f };
 	sleepParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル

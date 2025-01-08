@@ -91,10 +91,7 @@ void GameManager::Gameloop(){
 			state[currentSceneNum_]->Update();
 			renderTextrue->Update();
 			renderTextrue2->Update();
-			renderTextrue3->Update();
-			renderTextrue4->Update();
-			renderTextrue5->Update();
-			renderTextrue6->Update();
+
 #pragma endregion
 		#pragma region Draw
 			//renderTextureに色々書き込んでいく

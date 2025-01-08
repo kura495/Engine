@@ -2,7 +2,7 @@
 
 void PPVinette::Update()
 {
-
+	materialData->x = 0.8f;
 	/*if (Player::playerMoveValue) {
 		materialData->x = 0.8f;
 	}
