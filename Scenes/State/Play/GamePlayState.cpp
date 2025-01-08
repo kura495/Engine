@@ -47,10 +47,6 @@ void GamePlayState::Initialize()
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
 
-	floor = std::make_unique<PlaneObject>();
-	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
-	floor->Init(planeModel_);
-
 	floorManager = std::make_unique<FloorManager>();
 	floorManager->Init();
 
@@ -77,7 +73,6 @@ void GamePlayState::Update()
 		followCamera->isShake = false;
 	}
 	floorManager->Update();
-	//particle->Update();
 
 	skyDome_->Update();
 

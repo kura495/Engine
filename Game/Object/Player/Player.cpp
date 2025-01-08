@@ -74,6 +74,7 @@ void Player::TitleUpdate()
 }
 void Player::Update()
 {
+	gravity += kgravity;
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
 	
@@ -102,14 +103,9 @@ void Player::Update()
 		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
 
 	}
-	//落下の処理
-	if (isOnFloorFlag == false) {
-		world_.transform.translate.y += jumpForce;
-		jumpForce -= kJumpSubValue;
-	}
-	isOnFloorFlag = false;
 	world_.Update();
 
+	isOnFloorFlag = false;
 	//前フレームのゲームパッドの状態を保存
 	joyStatePre = joyState;
 }
@@ -216,13 +212,16 @@ void Player::RootUpdate()
 			isMovedFlag = false;
 		}
 	}
+	//重力
+	world_.transform.translate.y -= gravity;
+
 	//ボタンを押したら攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		behaviorRequest_ = Behavior::kAttack;
 	}
 	//ボタンを押したらジャンプ
 	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
-		//behaviorRequest_ = Behavior::kJump;
+		behaviorRequest_ = Behavior::kJump;
 	}
 }
 //kAttack
@@ -245,6 +244,8 @@ void Player::AttackUpdate()
 	//アニメーション再生
 	attackAnimation->PlayAnimation();
 	animationTime_ += 1.0f / 60.0f;
+	//重力
+	world_.transform.translate.y -= gravity;
 
 	if (animationTime_ > attackAnimation->duration) {
 		animationTime_ = 0.0f;
@@ -264,11 +265,8 @@ void Player::JumpUpdate() {
 	//移動関数
 	Move();
 	//ジャンプの処理
-
-	if (world_.transform.translate.y <= 0 && jumpForce <= 0) {
-		world_.transform.translate.y = 0;
-		behaviorRequest_ = Behavior::kRoot;
-	}
+	world_.transform.translate.y += jumpForce;
+	jumpForce -= kJumpSubValue;
 }
 //kDead
 void Player::DeadInit()
@@ -319,10 +317,7 @@ void Player::OnCollision(const ICollider& ICollider)
 		return;
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Enemy) {
-
-		//Vector3 aaaaa2 = (ICollider.GetCenter() - ICollider.pushForce);
 		world_.transform.translate -= move;
-		//world_.transform.translate += aaaaa2;
 		world_.Update();
 		return;
 	}
@@ -331,16 +326,24 @@ void Player::OnCollision(const ICollider& ICollider)
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Floor) {
 		if (behavior_ == Behavior::kJump) {
-			return;
+			if (world_.transform.translate.y <= 0 && jumpForce <= 0) {
+				world_.transform.translate.y = 0;
+				world_.Update();
+				behaviorRequest_ = Behavior::kRoot;
+			}
 		}
-
-		if (isOnFloorFlag == false) {
-			world_.transform.translate.y = 0.0f;
+		else {
+			if (isOnFloorFlag) {
+				return;
+			}
+			world_.transform.translate.y += gravity;
+			isOnFloorFlag = true;
+			gravity = kgravity;
+			world_.Update();
 		}
-		isOnFloorFlag = true;
+		//重力分
 		return;
 	}
-
 	return;
 }
 void Player::AttackColliderInit()

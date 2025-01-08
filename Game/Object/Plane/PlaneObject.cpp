@@ -40,7 +40,16 @@ void PlaneObject::ImGui()
 
 void PlaneObject::OnCollision(const ICollider& Collider)
 {
-	if (Collider.GetcollitionAttribute()) {
+	if (Collider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
+		isCrash = true;
+		ImGui::Begin("Plane");
+		ImGui::Text("Hit");
+		ImGui::End();
 		return;
 	}
+}
+
+void PlaneObject::CrashEffect()
+{
+
 }

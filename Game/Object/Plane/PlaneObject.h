@@ -25,8 +25,12 @@ public:
 		world_.Update();
 	};
 
+private:
 	void ImGui();
 
 	void OnCollision(const ICollider& Collider);
+
+	bool isCrash;
+	void CrashEffect();
 };
 

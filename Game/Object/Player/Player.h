@@ -83,6 +83,9 @@ private:
 	float jumpForce = 0.0f;
 	//ジャンプした時の減算
 	const float kJumpSubValue = 0.03f;
+
+	const float kgravity = 0.03f;
+	float gravity = 0.03f;
 #pragma endregion Parameter
 
 	Input* input = nullptr;

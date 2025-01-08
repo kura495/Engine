@@ -107,7 +107,6 @@ private:
 
 	std::unique_ptr<ParticleSystem> particle;
 
-	std::unique_ptr<PlaneObject> floor;
 	std::unique_ptr<FloorManager> floorManager;
 
 	Input* input;
