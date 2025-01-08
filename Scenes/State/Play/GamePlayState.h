@@ -33,6 +33,7 @@
 #include "Game/Object/Enemy/Manager/EnemyManager.h"
 #include "Game/Object/SkyDome/SkyDome.h"
 #include "Game/Object/Transition/Fade/Fade.h"
+#include "Game/Object/FloorManager/FloorManager.h"
 
 enum class StageBehavior {
 	kTitle,
@@ -79,7 +80,12 @@ private:
 #pragma endregion Over
 
 #pragma endregion Behavior
-
+#pragma region
+	Audio* BGMPlayer;
+	int BGMHundle;
+	float audioValue = 0.0f;
+	float kMaxaudioValue = 0.04f;
+#pragma endregion BGM
 	//基本機能ズ
 	std::unique_ptr<DebugCamera> debugcamera_;
 	ObjectManager* objectManager = nullptr;
@@ -102,6 +108,7 @@ private:
 	std::unique_ptr<ParticleSystem> particle;
 
 	std::unique_ptr<PlaneObject> floor;
+	std::unique_ptr<FloorManager> floorManager;
 
 	Input* input;
 
@@ -109,4 +116,5 @@ private:
 	WorldTransform title;
 
 	Fade* fade;
+
 };

@@ -6,7 +6,7 @@ void PlaneObject::Init(std::vector<Model*> models)
 	world_.Initialize();
 	world_.Update();
 	collider.Init(&world_);
-	collider.SetSize({ 25.0f,0.0f,25.0f });
+	collider.SetSize({ 5.0f,0.0f,5.0f });
 	collider.SetcollitionAttribute(ColliderTag::Floor);
 	collider.SetcollisionMask(~ColliderTag::Floor);
 	collider.OnCollision = [this](ICollider& collider) { OnCollision(collider); };

@@ -51,13 +51,18 @@ void GamePlayState::Initialize()
 	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
 	floor->Init(planeModel_);
 
+	floorManager = std::make_unique<FloorManager>();
+	floorManager->Init();
+
 	fade = Fade::GetInstance();
 	fade->OutInit();
 
 	behaviorRequest_ = StageBehavior::kTitle;
 
+	BGMPlayer = Audio::GetInstance();
+	BGMHundle = BGMPlayer->LoadAudioMP3("resources/sound/BGM/Nisemono_Rock.mp3",true);
+	BGMPlayer->Play(BGMHundle, audioValue);
 }
-
 void GamePlayState::Update()
 {
 	BehaviorUpdate();
@@ -71,7 +76,7 @@ void GamePlayState::Update()
 	else {
 		followCamera->isShake = false;
 	}
-	//floor->Update();
+	floorManager->Update();
 	//particle->Update();
 
 	skyDome_->Update();
@@ -83,18 +88,17 @@ void GamePlayState::Update()
 		behaviorRequest_ = StageBehavior::kOver;
 	}
 }
-
 void GamePlayState::Draw()
 {
 	//3Dモデル描画ここから
 
 #pragma region Game
 
-	objectManager->Draw();
+	//objectManager->Draw();
 
 	enemyManager->Draw();
 
-	//floor->Draw();
+	floorManager->Draw();
 #pragma endregion
 
 #pragma region
@@ -171,7 +175,6 @@ void GamePlayState::BehaviorUpdate()
 	}
 #pragma endregion BehaviorTree
 }
-
 #pragma region
 void GamePlayState::TitleInit()
 {
@@ -179,6 +182,8 @@ void GamePlayState::TitleInit()
 }
 void GamePlayState::TitleUpdate()
 {
+	audioValue = (std::min)(audioValue + 0.001f, kMaxaudioValue);
+	BGMPlayer->Play(BGMHundle, audioValue);
 	if (fade->Out() == false) {
 		return;
 	}
@@ -227,6 +232,8 @@ void GamePlayState::ClearInit()
 }
 void GamePlayState::ClearUpdate()
 {
+	audioValue = (std::max)(audioValue - 0.001f,0.0f);
+	BGMPlayer->Play(BGMHundle, audioValue);
 	//player_->Update();
 	if (fade->In()) {
 		StateNo = 2;
@@ -250,7 +257,6 @@ void GamePlayState::OverUpdate()
 		StateNo = 3;
 	}
 }
-
 void GamePlayState::OverDraw()
 {
 	player_->Draw();
