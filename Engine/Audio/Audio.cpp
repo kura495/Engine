@@ -133,6 +133,7 @@ void Audio::Release() {
 		XAudioInterface = nullptr;
 	}
 	//soundData_.clear();
+	MFShutdown();
 	CoUninitialize();
 }
 
@@ -331,10 +332,6 @@ SoundData Audio::SoundLoadMP3(const std::string& filePath)
 	CoTaskMemFree(waveFormat);
 	pMFMediaType->Release();
 	pMFSourceReader->Release();
-	MFShutdown();
-
-	CoUninitialize();
-
 
 	return soundData;
 }

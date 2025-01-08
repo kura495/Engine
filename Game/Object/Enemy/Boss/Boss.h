@@ -126,6 +126,11 @@ private:
 	bool isDownStert;
 	int hitCount = 0;
 #pragma endregion
+#pragma region
+	Audio* SEPlayer;
+	int SEthrowBall;
+	int SEHitattack;
+#pragma endregion 音声
 	bool FollowPlayer();
 	void AddImGui()override;
 

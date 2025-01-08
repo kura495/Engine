@@ -48,6 +48,9 @@ struct SoundData {
 	std::string name;
 	// 使っているかどうか
 	bool IsUsed = false;
+	// SourceLeader
+	IMFSourceReader* pMFSourceReader;
+	IMFMediaType* pMFMediaType;
 };
 class Audio {
 public:

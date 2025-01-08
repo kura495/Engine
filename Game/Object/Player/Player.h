@@ -103,8 +103,9 @@ private:
 #pragma endregion Particle
 
 #pragma region
-	Audio* SETest;
-	int SEnumber;
+	Audio* SEPlayer;
+	int SEattack;
+	int SEHitattack;
 #pragma endregion 音声
 
 	XINPUT_STATE joyState;

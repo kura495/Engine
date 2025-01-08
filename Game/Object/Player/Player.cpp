@@ -63,9 +63,9 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
 	//音声
-	SETest = Audio::GetInstance();
-	SEnumber = SETest->LoadAudioMP3("resources/sound/attack.mp3",false);
-	SETest->Stop(SEnumber, true, false);
+	SEPlayer = Audio::GetInstance();
+	SEattack = SEPlayer->LoadAudioMP3("resources/sound/Player/attack.mp3",false);
+	SEHitattack = SEPlayer->LoadAudioMP3("resources/sound/Player/Hitattack.mp3",false);
 }
 void Player::TitleUpdate()
 {
@@ -232,7 +232,8 @@ void Player::AttackInit()
 	animationTime_ = 0.0f;
 	attackPosture = world_.transform.quaternion;
 	isMovedFlag = false;
-
+	SEPlayer->Play(SEattack, 0.5f);
+	SEPlayer->Stop(SEHitattack, true, false);
 }
 void Player::AttackUpdate()
 {
@@ -251,6 +252,7 @@ void Player::AttackUpdate()
 		//kRootに戻す
 		behaviorRequest_ = Behavior::kRoot;
 		attackAnimation->Reset();
+		SEPlayer->Stop(SEattack, true, false);
 	}
 
 }
@@ -368,6 +370,10 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitParticle_->SpawnParticle(AttackHitParticleEmitter, randomEngine);
+		//音関連
+		SEPlayer->Stop(SEattack, true,false);
+		SEPlayer->Play(SEHitattack, 1.0f);
+
 	}
 	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 		colliderAttack.IsUsing = false;
@@ -470,11 +476,10 @@ void Player::ImGui()
 		colliderPlayer.IsUsing = false;
 	}
 	if (ImGui::Button("SE")) {
-		SETest->Play(SEnumber,1.0f);
+		SEPlayer->Play(SEattack,1.0f);
 	}
 	if (ImGui::Button("SEReset")) {
-		SETest->Stop(SEnumber,true,false);
-		//SETest->Reset(SEnumber,false);
+		SEPlayer->Stop(SEattack,true,false);
 	}
 	ImGui::Text("%d", HP_);
 	ImGui::End();

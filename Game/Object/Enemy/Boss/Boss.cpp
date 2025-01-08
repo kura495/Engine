@@ -54,6 +54,12 @@ void Boss::Init(std::vector<Model*> models)
 	dummyBall = std::make_unique<DummyBall>();
 	dummyBall->Init(ballmodels);
 #pragma endregion ボール
+#pragma region
+	SEPlayer = Audio::GetInstance();
+	SEthrowBall = SEPlayer->LoadAudioMP3("resources/sound/Boss/throwBall.mp3", false);
+	SEHitattack = SEPlayer->LoadAudioMP3("resources/sound/Boss/attackPlayer.mp3", false);
+#pragma endregion
+
 	//ビヘイビアーを初期化
 	behaviorRequest_ = BossBehavior::Spawn;
 
@@ -275,6 +281,7 @@ void Boss::AttackThrowBallInit()
 {
 	easeT = 0.0f;
 	ball->ThrowBall(worldArmL.transform.translate, player_->GetWorld().transform.translate);
+	SEPlayer->Play(SEthrowBall,1.0f);
 	isThrowdummyBallFlag = false;
 	countHitBall = 0;
 }
@@ -412,6 +419,8 @@ void Boss::OnCollision(const ICollider& collider)
 	if (behavior_ == BossBehavior::AttackThrowball) {
 		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 			ball->Reset(player_->GetWorld().transform.translate);
+			SEPlayer->Stop(SEthrowBall,true,false);
+			SEPlayer->Play(SEthrowBall, 1.0f);
 			if (easeT == 1.0f) {
 				countHitBall += 1;
 				easeT = 0.0f;
