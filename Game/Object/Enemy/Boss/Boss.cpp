@@ -22,7 +22,7 @@ void Boss::Init(std::vector<Model*> models)
 #pragma region 
 	particle_ = new ParticleSystem();
 	particle_->Initalize("resources/circle2.dds");
-	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
+	particle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 
 	deadEnemyParticleEmitter.count = 50;
 	deadEnemyParticleEmitter.frequency = 0.1f;
@@ -32,8 +32,8 @@ void Boss::Init(std::vector<Model*> models)
 
 	sleepParticle_ = new ParticleSystem();
 	sleepParticle_->Initalize("resources/sleepParticle.png");
-	sleepParticle_->UpdateParticle = [this](Particle& particle) { SleepUpdateParticle(particle); };
-	sleepParticle_->CustumSpawn = [this]() { return CustomParticle(); };
+	sleepParticle_->UpdateFunc = [this](Particle& particle) { SleepUpdateParticle(particle); };
+	sleepParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 
 	sleepParticleEmitter.count = 1;
 	sleepParticleEmitter.frequency = 1.0f;
@@ -317,7 +317,7 @@ void Boss::SpawnInit()
 void Boss::SpawnUpdate()
 {
 	//パーティクル生成
-	GameCharacter::ParticleCustumSpawn(*sleepParticle_, sleepParticleEmitter);
+	ParticleSystem::ParticleCustumSpawn(*sleepParticle_, sleepParticleEmitter);
 	//パーティクル更新
 	sleepParticle_->Update();
 	if (HP_ <= 9) {
@@ -339,7 +339,7 @@ void Boss::DeadUpdate()
 	}
 
 	//パーティクル生成
-	GameCharacter::ParticleSpawn(*particle_, deadEnemyParticleEmitter);
+	ParticleSystem::ParticleSpawn(*particle_, deadEnemyParticleEmitter);
 	//パーティクル更新
 	particle_->Update();
 }

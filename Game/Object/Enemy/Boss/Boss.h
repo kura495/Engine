@@ -23,7 +23,7 @@ enum class BossBehavior {
 	Down,//ダウン時
 };
 
-class Boss : public Enemy
+class Boss : public IObject
 {
 public:
 

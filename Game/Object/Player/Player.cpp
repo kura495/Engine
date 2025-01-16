@@ -37,7 +37,7 @@ void Player::Init(std::vector<Model*> models)
 #pragma region
 	deadParticle_ = new ParticleSystem();
 	deadParticle_->Initalize("resources/circle2.dds");
-	deadParticle_->UpdateParticle = [this](Particle& particle) {return UpdatedeadParticle(particle); };
+	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	//deadParticle_->CustumSpawn = [this]() {return SpawndeadParticle(); };
 
 	deadParticleEmitter.count = 5;
@@ -48,7 +48,7 @@ void Player::Init(std::vector<Model*> models)
 
 	attackHitParticle_ = new ParticleSystem();
 	attackHitParticle_->Initalize("resources/circle2.dds");
-	attackHitParticle_->UpdateParticle = [this](Particle& particle) {return UpdateAttackHitParticle(particle); };
+	attackHitParticle_->UpdateFunc = [this](Particle& particle) {return UpdateAttackHitParticle(particle); };
 	AttackHitParticleEmitter.count = 20;
 	AttackHitParticleEmitter.frequency = 0.1f;
 	AttackHitParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
@@ -57,7 +57,7 @@ void Player::Init(std::vector<Model*> models)
 
 	attackHitBombParticle_ = new ParticleSystem();
 	attackHitBombParticle_->Initalize("resources/circle2.dds");
-	attackHitBombParticle_->UpdateParticle = [this](Particle& particle) {return UpdateAttackHitBombParticle(particle); };
+	attackHitBombParticle_->UpdateFunc = [this](Particle& particle) {return UpdateAttackHitBombParticle(particle); };
 	AttackHitBombParticleEmitter.count = 5;
 	AttackHitBombParticleEmitter.frequency = 0.1f;
 	AttackHitBombParticleEmitter.particleRadius = {0.1f,0.1f,1.0f};
@@ -65,9 +65,8 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
 	//音声
-	SEPlayer = Audio::GetInstance();
-	SEattack = SEPlayer->LoadAudioMP3("resources/sound/Player/attack.mp3",false);
-	SEHitattack = SEPlayer->LoadAudioMP3("resources/sound/Player/Hitattack.mp3",false);
+	SEattack = Audio::LoadAudioMP3("resources/sound/Player/attack.mp3",false);
+	SEHitattack = Audio::LoadAudioMP3("resources/sound/Player/Hitattack.mp3",false);
 }
 void Player::TitleUpdate()
 {
@@ -233,8 +232,8 @@ void Player::AttackInit()
 	animationTime_ = 0.0f;
 	attackPosture = world_.transform.quaternion;
 	isMovedFlag = false;
-	SEPlayer->Play(SEattack, 0.5f);
-	SEPlayer->Stop(SEHitattack, true, false);
+	Audio::Play(SEattack, 0.5f);
+	Audio::Stop(SEHitattack, true, false);
 }
 void Player::AttackUpdate()
 {
@@ -255,7 +254,7 @@ void Player::AttackUpdate()
 		//kRootに戻す
 		behaviorRequest_ = Behavior::kRoot;
 		attackAnimation->Reset();
-		SEPlayer->Stop(SEattack, true, false);
+		Audio::Stop(SEattack, true, false);
 	}
 
 }
@@ -293,7 +292,7 @@ void Player::DeadUpdate()
 	}
 	if (isDeadModelDraw == false) {
 		//パーティクル生成
-		GameCharacter::ParticleSpawn(*deadParticle_, deadParticleEmitter);
+		ParticleSystem::ParticleSpawn(*deadParticle_, deadParticleEmitter);
 		deadParticle_->Update();
 	}
 }
@@ -376,8 +375,8 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitParticle_->SpawnParticle(AttackHitParticleEmitter, randomEngine);
 		//音関連
-		SEPlayer->Stop(SEattack, true,false);
-		SEPlayer->Play(SEHitattack, 1.0f);
+		Audio::Stop(SEattack, true,false);
+		Audio::Play(SEHitattack, 1.0f);
 
 	}
 	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
@@ -486,10 +485,10 @@ void Player::ImGui()
 		colliderPlayer.IsUsing = false;
 	}
 	if (ImGui::Button("SE")) {
-		SEPlayer->Play(SEattack,1.0f);
+		Audio::Play(SEattack,1.0f);
 	}
 	if (ImGui::Button("SEReset")) {
-		SEPlayer->Stop(SEattack,true,false);
+		Audio::Stop(SEattack,true,false);
 	}
 	ImGui::Text("%d", HP_);
 	ImGui::End();

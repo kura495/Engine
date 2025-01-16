@@ -253,7 +253,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\FloorManager\FloorManager.cpp" />
-    <ClCompile Include="Game\Object\GameCharacter\GameCharacter.cpp" />
     <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
@@ -365,7 +364,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Game\Object\FloorManager\FloorManager.h" />
-    <ClInclude Include="Game\Object\GameCharacter\GameCharacter.h" />
     <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />

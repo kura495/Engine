@@ -15,7 +15,7 @@ public:
 		ObjectNumber++;
 	}
 	~IObject(){}
-
+	
 	virtual void Init(std::vector<Model*> models);
 	virtual void Update();
 	virtual void Draw();

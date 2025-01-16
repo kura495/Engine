@@ -40,7 +40,7 @@ void ParticleSystem::Update()
 			continue;
 		}
 
-		UpdateParticle(*particleIt);
+		UpdateFunc(*particleIt);
 		//パーティクルにビルボードを掛けてカメラ目線にする
 		if (numInstance < kNumMaxInstance) {
 			instancinsData[numInstance].matWorld = Matrix4x4::Multiply((*particleIt).matWorld, billboardMatrix);
@@ -81,6 +81,30 @@ void ParticleSystem::Draw(const ViewProjection& viewProjection)
 	directX_->GetcommandList()->DrawInstanced(6, numInstance, 0, 0);
 }
 
+void ParticleSystem::ParticleSpawn(ParticleSystem& particle, Emitter& emitter)
+{
+	emitter.frequencyTime += kDeltaTime;
+	if (emitter.frequency <= emitter.frequencyTime) {
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+
+		particle.SpawnParticle(emitter, randomEngine);
+
+		emitter.frequencyTime -= emitter.frequency;
+	}
+}
+
+void ParticleSystem::ParticleCustumSpawn(ParticleSystem& particle, Emitter& emitter)
+{
+	emitter.frequencyTime += kDeltaTime;
+	if (emitter.frequency <= emitter.frequencyTime) {
+		particle.CustumSpawnParticle(emitter);
+
+		emitter.frequencyTime -= emitter.frequency;
+	}
+}
+
 void ParticleSystem::SpawnParticle(Emitter& emitter, std::mt19937& randomEngine)
 {
 	particles.splice(particles.end(), Emit(emitter, randomEngine));
@@ -95,7 +119,7 @@ std::list<Particle> ParticleSystem::CustumEmit(Emitter& emitter)
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(CustumSpawn());
+		Emitparticles.push_back(CustumSpawnFunc());
 	}
 	return Emitparticles;
 }

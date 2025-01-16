@@ -1,5 +1,8 @@
 #include"Audio.h"
-
+Microsoft::WRL::ComPtr<IXAudio2> Audio::XAudioInterface;
+const int Audio::kMaxAudio;
+IXAudio2SourceVoice* Audio::pSourceVoice[kMaxAudio];
+std::array<SoundData, Audio::kMaxAudio> Audio::soundData_;
 Audio* Audio::GetInstance()
 {
 	static Audio instance;
@@ -13,7 +16,6 @@ void Audio::Initialize() {
 	// Madia Foundationの初期化
 	MFStartup(MF_VERSION, MFSTARTUP_NOSOCKET);
 #pragma endregion Madia Foundation
-
 
 	hr = XAudio2Create(&XAudioInterface, 0, XAUDIO2_DEFAULT_PROCESSOR);
 	assert(SUCCEEDED(hr));
@@ -138,29 +140,6 @@ void Audio::Release() {
 	CoUninitialize();
 }
 
-void Audio::Play(uint32_t AudioIndex, float AudioVolume, int pan) {
-	// pan of -1.0 indicates all left speaker, 
-// 1.0 is all right speaker, 0.0 is split between left and right
-	right = 0;
-	left = 0;
-	if (pan >= 1) {
-		right = 1;
-	}
-	else if (pan < 0) {
-		left = 1;
-	}
-	else if (pan == 0) {
-		right = 1;
-		left = 1;
-	}
-	outputMatrix[0] = right;
-	outputMatrix[2] = left;
-	int InChannels = 2;
-	int OutChannels = 4;
-	pSourceVoice[AudioIndex]->SetOutputMatrix(NULL, InChannels, OutChannels, outputMatrix);
-	pSourceVoice[AudioIndex]->SetVolume(AudioVolume);
-	pSourceVoice[AudioIndex]->Start(0);
-}
 void Audio::Play(uint32_t AudioIndex, float AudioVolume) {
 	pSourceVoice[AudioIndex]->SetVolume(AudioVolume);
 	pSourceVoice[AudioIndex]->Start(0);

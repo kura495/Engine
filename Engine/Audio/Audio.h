@@ -65,14 +65,14 @@ public:
 	/// <param name="filePath">ファイルパス</param>
 	/// <param name="LoopFlag">ループ再生するかどうか</param>
 	/// <returns>uint32_t</returns>
-	uint32_t LoadAudio(const std::string& filePath, bool LoopFlag);
+	static uint32_t LoadAudio(const std::string& filePath, bool LoopFlag);
 	/// <summary>
 	/// mp3ファイルを読み込み
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
 	/// <param name="LoopFlag">ループ再生するかどうか</param>
 	/// <returns>uint32_t</returns>
-	uint32_t LoadAudioMP3(const std::string& filePath, bool LoopFlag);
+	static uint32_t LoadAudioMP3(const std::string& filePath, bool LoopFlag);
 #pragma endregion 読み込み
 
 #pragma region
@@ -81,36 +81,30 @@ public:
 	/// </summary>
 	/// <param name="AudioIndex">オーディオファイルの番号</param>
 	/// <param name="AudioVolume">音量</param>
-	void Play(uint32_t AudioIndex, float AudioVolume, int pan);
-	/// <summary>
-	/// 再生
-	/// </summary>
-	/// <param name="AudioIndex">オーディオファイルの番号</param>
-	/// <param name="AudioVolume">音量</param>
-	void Play(uint32_t AudioIndex, float AudioVolume);
+	static void Play(uint32_t AudioIndex, float AudioVolume);
 	/// <summary>
 	/// 停止
 	/// </summary>
 	/// <param name="AudioIndex">オーディオファイルの番号</param>
 	/// <param name="PlayBegin">再生位置を戻す</param>
 	/// <param name="LoopFlag">ループ再生するかどうか</param>
-	void Stop(uint32_t AudioIndex, bool PlayBegin, bool LoopFlag);
+	static void Stop(uint32_t AudioIndex, bool PlayBegin, bool LoopFlag);
 	/// <summary>
 	/// ループを抜ける
 	/// </summary>
 	/// <param name="AudioIndex">オーディオファイルの番号</param>
-	void ExitLoop(uint32_t AudioIndex);
+	static void ExitLoop(uint32_t AudioIndex);
 	/// <summary>
 	/// 再生位置を最初に戻す
 	/// </summary>
 	/// <param name="AudioIndex">オーディオファイルの番号</param>
 	/// <param name="LoopFlag">ループ再生するかどうか</param>
-	void Reset(uint32_t AudioIndex, bool LoopFlag);
+	static void Reset(uint32_t AudioIndex, bool LoopFlag);
 	/// <summary>
 	/// サウンドのアンロード
 	/// </summary>
 	/// <param name="AudioIndex">オーディオファイルの番号</param>
-	void SoundUnload(uint32_t AudioIndex);
+	static void SoundUnload(uint32_t AudioIndex);
 #pragma endregion オーディオコントロール
 private:
 	Audio() = default;
@@ -122,14 +116,14 @@ private:
 	float right = 0;
 	static const int kMaxAudio = 64;
 	HRESULT hr;
-	Microsoft::WRL::ComPtr<IXAudio2> XAudioInterface = nullptr;
+	static Microsoft::WRL::ComPtr<IXAudio2> XAudioInterface;
 	IXAudio2MasteringVoice* pMasteringVoice = nullptr;
 	//ソースボイス
-	IXAudio2SourceVoice* pSourceVoice[kMaxAudio];
+	static IXAudio2SourceVoice* pSourceVoice[kMaxAudio];
 	bool IsusedAudioIndex[kMaxAudio];
 	//生音声データ
 	//再生中にぶっ飛ばすとバグるぜ！！！
-	std::array<SoundData, kMaxAudio> soundData_;
+	static std::array<SoundData, kMaxAudio> soundData_;
 	//再生中にぶっ飛ばすとバグるぜ！！！
 
 
@@ -140,13 +134,13 @@ private:
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
 	/// <returns>SoundData</returns>
-	SoundData SoundLoadWave(const std::string& filePath);
+	static SoundData SoundLoadWave(const std::string& filePath);
 	/// <summary>
 	/// サウンドの読み込み(mp3)
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
 	/// <returns>SoundData</returns>
-	SoundData SoundLoadMP3(const std::string& filePath);
+	static SoundData SoundLoadMP3(const std::string& filePath);
 
 
 };

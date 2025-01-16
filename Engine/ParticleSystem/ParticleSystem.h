@@ -47,17 +47,33 @@ public:
 
 	//関数ポインタ　UpdateParticleを入れる
 	using UpdateFunction = std::function<void(Particle&)>;
-	UpdateFunction UpdateParticle;
+	UpdateFunction UpdateFunc;
 	//関数ポインタ　CustumSpawnを入れる
 	using CustumSpawnFunction = std::function<Particle()>;
 	/// <summary>
 	/// カスタムスポーン　生成関数
 	/// </summary>
-	CustumSpawnFunction CustumSpawn;
+	CustumSpawnFunction CustumSpawnFunc;
 
 	void RendererDraw();
 	void Draw(const ViewProjection& viewProjection);
-
+	/// <summary>
+	/// パーティクルを周期ごとに生成して行く関数
+	/// </summary>
+	/// <param name="particle"></param>
+	/// <param name="emitter"></param>
+	static void ParticleSpawn(ParticleSystem& particle, Emitter& emitter);
+	/// <summary>
+	/// パーティクルを周期ごとに生成して行く関数
+	/// CustumSpawnFuncに渡された関数を使って生成
+	/// </summary>
+	/// <param name="particle"></param>
+	/// <param name="emitter"></param>
+	static void ParticleCustumSpawn(ParticleSystem& particle, Emitter& emitter);
+	/// <summary>
+	/// パーティクルを生成
+	/// </summary>
+	/// <param name="emitter"></param>
 	void SpawnParticle(Emitter& emitter, std::mt19937& randomEngine);
 	/// <summary>
 	/// カスタムスポーンを使ってパーティクルを生成

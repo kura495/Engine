@@ -1,8 +1,7 @@
 #pragma once
 //操作キャラクタークラス//
-
+#include "Object/IObject.h"
 #include "Math/Matrix/MatrixCalc.h"
-#include "Game/Object/GameCharacter/GameCharacter.h"
 #include "Audio/Audio.h"
 #include "Collider/Box/BoxCollider.h"
 #include "Collider/OBB/OBBoxCollider.h"
@@ -18,7 +17,7 @@ enum class Behavior {
 	kDead
 };
 
-class Player : public GameCharacter
+class Player : public IObject
 {
 public:
 
@@ -109,7 +108,6 @@ private:
 #pragma endregion Particle
 
 #pragma region
-	Audio* SEPlayer;
 	int SEattack;
 	int SEHitattack;
 #pragma endregion 音声

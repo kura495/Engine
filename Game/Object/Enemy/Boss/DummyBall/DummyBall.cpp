@@ -8,8 +8,8 @@ void DummyBall::Init(std::vector<Model*> models)
 	//パーティクル設定
 	particle_ = std::make_unique<ParticleSystem>();
 	particle_->Initalize("resources/circle2.dds");
-	particle_->UpdateParticle = [this](Particle& particle) { UpdateParticle(particle); };
-	particle_->CustumSpawn = [this]() { return CustomParticle(); };
+	particle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
+	particle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 	//パーティクルのエミッター設定
 	emitter.count = 10;
 	emitter.frequency = 0.1f;
