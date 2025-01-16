@@ -878,6 +878,7 @@
     <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h" />
     <ClInclude Include="Game\Object\FloorManager\FloorManager.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\IBossState.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

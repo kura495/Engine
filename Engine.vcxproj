@@ -361,6 +361,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\IBossState.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Game\Object\FloorManager\FloorManager.h" />

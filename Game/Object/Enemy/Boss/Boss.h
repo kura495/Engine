@@ -7,6 +7,7 @@
 #include "Ball/Ball.h"
 #include "DummyBall/DummyBall.h"
 #include "Engine/Audio/Audio.h"
+#include "State/IBossState.h"
 
 enum Body {
 	body,
@@ -23,7 +24,7 @@ enum class BossBehavior {
 	Down,//ダウン時
 };
 
-class Boss : public IObject
+class Boss : public Enemy
 {
 public:
 
