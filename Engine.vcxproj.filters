@@ -373,7 +373,7 @@
     <ClCompile Include="project\application\Object\Enemy\Boss\State\Down\Down.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\Down</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Dead\Dead.cpp">
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Dead\EDead.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\Dead</Filter>
     </ClCompile>
     <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp">
@@ -388,7 +388,7 @@
     <ClCompile Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\Spawn</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Root\Root.cpp">
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Root\ERoot.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\Root</Filter>
     </ClCompile>
     <ClCompile Include="project\application\Object\FloorManager\FloorManager.cpp">
@@ -652,6 +652,10 @@
     <ClCompile Include="project\Engine\WorldTransform\WorldTransform.cpp">
       <Filter>project\Engine\WorldTransform</Filter>
     </ClCompile>
+    <ClCompile Include="project\application\Object\Player\State\Root\Root.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\Jump\Jump.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\Attack\Attack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -678,7 +682,7 @@
     <ClInclude Include="project\application\Object\Enemy\Boss\State\Down\Down.h">
       <Filter>project\application\Object\Enemy\Boss\State\Down</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Dead\Dead.h">
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Dead\EDead.h">
       <Filter>project\application\Object\Enemy\Boss\State\Dead</Filter>
     </ClInclude>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h">
@@ -693,7 +697,7 @@
     <ClInclude Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.h">
       <Filter>project\application\Object\Enemy\Boss\State\Spawn</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Root\Root.h">
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Root\ERoot.h">
       <Filter>project\application\Object\Enemy\Boss\State\Root</Filter>
     </ClInclude>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\IBossState.h">
@@ -1254,6 +1258,11 @@
     <ClInclude Include="project\Engine\WorldTransform\WorldTransform.h">
       <Filter>project\Engine\WorldTransform</Filter>
     </ClInclude>
+    <ClInclude Include="project\application\Object\Player\State\IPlayerState.h" />
+    <ClInclude Include="project\application\Object\Player\State\Root\Root.h" />
+    <ClInclude Include="project\application\Object\Player\State\Jump\Jump.h" />
+    <ClInclude Include="project\application\Object\Player\State\Dead\PDead.h" />
+    <ClInclude Include="project\application\Object\Player\State\Attack\Attack.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

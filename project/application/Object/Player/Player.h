@@ -10,6 +10,7 @@
 #include "Object/Camera/FollowCamera.h"
 #include "ParticleSystem/ParticleSystem.h"
 
+
 enum class Behavior {
 	kRoot,
 	kJump,
