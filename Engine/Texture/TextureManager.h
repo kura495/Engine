@@ -1,7 +1,7 @@
 ﻿#pragma once
 /*テクスチャ管理クラス*/
 #include "Common/DirectX/DirectXCommon.h"
-#include "externals/DirectXTex/DirectXTex.h"
+#include "project/externals/DirectXTex/DirectXTex.h"
 #include "Manager/SRV/SRVManager.h"
 
 #include <wrl.h>
