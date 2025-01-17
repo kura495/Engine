@@ -9,7 +9,7 @@
 #include "WorldTransform/WorldTransform.h"
 
 
-#include "Game/Object/SkyBox/SkyBox.h"
+#include "Object/SkyBox/SkyBox.h"
 
 struct DrawModelData {
 	Model* modelData;

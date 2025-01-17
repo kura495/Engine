@@ -1,8 +1,8 @@
 #pragma once
 //IObjectを管理するクラス//
 #include "Object/IObject.h"
-#include "Game/Object/Box/BoxObject.h"
-#include "Game/Object/Plane/PlaneObject.h"
+#include "Object/Box/BoxObject.h"
+#include "Object/Plane/PlaneObject.h"
 struct ColloderData {
 	Vector3 center;/*当たり判定の中心 {0,0,0}でオブジェクトの中心*/
 	Vector3 size;/*当たり判定のサイズ*/

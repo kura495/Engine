@@ -1,6 +1,6 @@
 #pragma once
 /*ボスクラス*/
-#include "Game/Object/Enemy/Enemy.h"
+#include "Object/Enemy/Enemy.h"
 #include "Animation/Animation.h"
 #include "Utility/Ease/Ease.h"
 #include "ParticleSystem/ParticleSystem.h"

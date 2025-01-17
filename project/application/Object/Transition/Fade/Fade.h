@@ -21,7 +21,7 @@ private:
 	Fade() {
 		sprite_ = new Sprite;
 		sprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
-		sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/BlackTexture.png");
+		sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/BlackTexture.png");
 		world_.Initialize();
 	}
 	~Fade() = default;

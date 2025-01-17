@@ -10,11 +10,11 @@ void ObjectManager::Initalize()
 {
 	globalVariables = GlobalVariables::GetInstance();
 
-	boxModel_.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
+	boxModel_.push_back(Model::CreateModelFromObj("project/resources/Cube", "Cube.obj"));
 
-	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
+	planeModel_.push_back(Model::CreateModelFromObj("project/resources/Plane", "Plane.obj"));
 	
-	enemyModel_.push_back(Model::CreateModelFromObj("resources/NormalEnemy", "NormalEnemy.obj"));
+	enemyModel_.push_back(Model::CreateModelFromObj("project/resources/NormalEnemy", "NormalEnemy.obj"));
 }
 
 void ObjectManager::Update()

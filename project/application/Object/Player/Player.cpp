@@ -24,19 +24,19 @@ void Player::Init(std::vector<Model*> models)
 	walkanimation->AnimeInit(*models_[0], true);
 
 	deadAnimation = new Animation();
-	deadAnimation = Animation::LoadAnimationFile("resources/Player", "player_dead.gltf");
+	deadAnimation = Animation::LoadAnimationFile("project/resources/Player", "player_dead.gltf");
 	deadAnimation->Init();
 	deadAnimation->AnimeInit(*models_[0], true);
 	
 	attackAnimation = new Animation();
-	attackAnimation = Animation::LoadAnimationFile("resources/Player", "player_attack.gltf");
+	attackAnimation = Animation::LoadAnimationFile("project/resources/Player", "player_attack.gltf");
 	attackAnimation->Init();
 	attackAnimation->AnimeInit(*models_[0], true);
 #pragma endregion Anime
 	//パーティクル設定
 #pragma region
 	deadParticle_ = new ParticleSystem();
-	deadParticle_->Initalize("resources/circle2.dds");
+	deadParticle_->Initalize("project/resources/circle2.dds");
 	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	//deadParticle_->CustumSpawn = [this]() {return SpawndeadParticle(); };
 
@@ -47,7 +47,7 @@ void Player::Init(std::vector<Model*> models)
 	deadParticleEmitter.speed = { 1.0f,1.0f,1.0f };
 
 	attackHitParticle_ = new ParticleSystem();
-	attackHitParticle_->Initalize("resources/circle2.dds");
+	attackHitParticle_->Initalize("project/resources/circle2.dds");
 	attackHitParticle_->UpdateFunc = [this](Particle& particle) {return UpdateAttackHitParticle(particle); };
 	AttackHitParticleEmitter.count = 20;
 	AttackHitParticleEmitter.frequency = 0.1f;
@@ -56,7 +56,7 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 
 	attackHitBombParticle_ = new ParticleSystem();
-	attackHitBombParticle_->Initalize("resources/circle2.dds");
+	attackHitBombParticle_->Initalize("project/resources/circle2.dds");
 	attackHitBombParticle_->UpdateFunc = [this](Particle& particle) {return UpdateAttackHitBombParticle(particle); };
 	AttackHitBombParticleEmitter.count = 5;
 	AttackHitBombParticleEmitter.frequency = 0.1f;
@@ -65,8 +65,8 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
 	//音声
-	SEattack = Audio::LoadAudioMP3("resources/sound/Player/attack.mp3",false);
-	SEHitattack = Audio::LoadAudioMP3("resources/sound/Player/Hitattack.mp3",false);
+	SEattack = Audio::LoadAudioMP3("project/resources/sound/Player/attack.mp3",false);
+	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Player/Hitattack.mp3",false);
 }
 void Player::TitleUpdate()
 {

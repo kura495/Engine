@@ -60,16 +60,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(SolutionDir)/project/;$(SolutionDir)/project/application/</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
+    <IncludePath>$(ProjectDir)..\externals\nlohmann;$(IncludePath)</IncludePath>
     <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
+    <IncludePath>$(ProjectDir)..\externals\nlohmann;$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(SolutionDir)/project/;$(SolutionDir)/project/application/</ExternalIncludePath>
     <TargetName>$Generated</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">
-    <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
+    <IncludePath>$(ProjectDir)..\externals\nlohmann;$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(SolutionDir)/project/;$(SolutionDir)/project/application/</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

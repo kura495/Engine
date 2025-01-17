@@ -118,7 +118,7 @@ private:
 	//全データ
 	std::map<std::string, Group> datas_;
 	//jsonファイルの保存先のパス
-	const std::string kDirectoryPath = "resources/GlobalVariables/";
+	const std::string kDirectoryPath = "project/resources/GlobalVariables/";
 
 };
 

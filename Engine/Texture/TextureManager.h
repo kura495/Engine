@@ -43,7 +43,7 @@ private:
 
 	HRESULT hr;
 
-	const std::string directoryPath = "resources/";
+	const std::string directoryPath = "project/resources/";
 	
 	bool IsusedTextureIndex[kMaxTexture];
 	DirectXCommon* directX_ = nullptr;

@@ -11,7 +11,7 @@ void GameTitleState::Initialize()
 
 	texture_world_.Initialize();
 	texture = std::make_unique<Sprite>();
-	texture->TextureHandle = textureManager_->LoadTexture("resources/title.png");
+	texture->TextureHandle = textureManager_->LoadTexture("project/resources/title.png");
 	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 
 	time = 0;

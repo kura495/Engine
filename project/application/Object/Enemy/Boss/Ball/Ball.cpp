@@ -7,7 +7,7 @@ void Ball::Init(std::vector<Model*> models)
 	ColliderInit();
 	//パーティクル設定
 	particle_ = std::make_unique<ParticleSystem>();
-	particle_->Initalize("resources/circle2.dds");
+	particle_->Initalize("project/resources/circle2.dds");
 	particle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 	particle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 	//パーティクルエミッターの設定

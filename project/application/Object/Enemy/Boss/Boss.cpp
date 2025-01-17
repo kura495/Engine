@@ -1,5 +1,5 @@
 #include "Boss.h"
-#include "Game/Object/Player/Player.h"
+#include "Object/Player/Player.h"
 
 void Boss::Init(std::vector<Model*> models)
 {
@@ -16,12 +16,12 @@ void Boss::Init(std::vector<Model*> models)
 	ColliderDamageInit();
 	ColliderAttackInit();
 	//アニメーション
-	animationArmLDamage = Animation::LoadAnimationFile("resources/Enemy", "Arm.gltf");
+	animationArmLDamage = Animation::LoadAnimationFile("project/resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
 #pragma region 
 	particle_ = new ParticleSystem();
-	particle_->Initalize("resources/circle2.dds");
+	particle_->Initalize("project/resources/circle2.dds");
 	particle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 
 	deadEnemyParticleEmitter.count = 50;
@@ -31,7 +31,7 @@ void Boss::Init(std::vector<Model*> models)
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 
 	sleepParticle_ = new ParticleSystem();
-	sleepParticle_->Initalize("resources/sleepParticle.png");
+	sleepParticle_->Initalize("project/resources/sleepParticle.png");
 	sleepParticle_->UpdateFunc = [this](Particle& particle) { SleepUpdateParticle(particle); };
 	sleepParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 
@@ -46,7 +46,7 @@ void Boss::Init(std::vector<Model*> models)
 #pragma region
 	ball = std::make_unique<Ball>();
 	std::vector<Model*> ballmodels;
-	ballmodels.push_back(Model::CreateModelFromObj("resources/Cube", "Cube.obj"));
+	ballmodels.push_back(Model::CreateModelFromObj("project/resources/Cube", "Cube.obj"));
 	ball->Init(ballmodels);
 
 	dummyBall = std::make_unique<DummyBall>();
@@ -54,8 +54,8 @@ void Boss::Init(std::vector<Model*> models)
 #pragma endregion ボール
 #pragma region
 	SEPlayer = Audio::GetInstance();
-	SEthrowBall = SEPlayer->LoadAudioMP3("resources/sound/Boss/throwBall.mp3", false);
-	SEHitattack = SEPlayer->LoadAudioMP3("resources/sound/Boss/attackPlayer.mp3", false);
+	SEthrowBall = SEPlayer->LoadAudioMP3("project/resources/sound/Boss/throwBall.mp3", false);
+	SEHitattack = SEPlayer->LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
 #pragma endregion
 
 	//ビヘイビアーを初期化

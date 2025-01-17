@@ -2,9 +2,9 @@
 
 void CubeMap::ShaderCompile()
 {
-	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/SkyBox/SkyBox.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/SkyBox/SkyBox.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/SkyBox/SkyBox.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/SkyBox/SkyBox.PS.hlsl", L"ps_6_0");
 }
 
 void CubeMap::CreateRootSignature()

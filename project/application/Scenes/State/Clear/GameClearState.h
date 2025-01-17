@@ -6,7 +6,7 @@
 #include "Sprite/Sprite.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Editer/Editer.h"
-#include "Game/Object/Transition/Fade/Fade.h"
+#include "Object/Transition/Fade/Fade.h"
 
 class GameClearState :public GameState
 {

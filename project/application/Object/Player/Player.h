@@ -7,7 +7,7 @@
 #include "Collider/OBB/OBBoxCollider.h"
 #include "Input/Input.h"
 #include "Animation/Animation.h"
-#include "Game/Object/Camera/FollowCamera.h"
+#include "Object/Camera/FollowCamera.h"
 #include "ParticleSystem/ParticleSystem.h"
 
 enum class Behavior {

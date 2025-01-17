@@ -2,9 +2,9 @@
 
 void RGBtoHSV::ShaderCompile()
 {
-	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/RGBtoHSV/RGBtoHSV.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/RGBtoHSV/RGBtoHSV.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/RGBtoHSV/RGBtoHSV.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/RGBtoHSV/RGBtoHSV.PS.hlsl", L"ps_6_0");
 }
 
 void RGBtoHSV::CreateRootSignature()

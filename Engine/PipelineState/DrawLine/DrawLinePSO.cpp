@@ -2,9 +2,9 @@
 
 void DrawLinePSO::ShaderCompile()
 {
-	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/line/Line.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/line/Line.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/line/Line.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/line/Line.PS.hlsl", L"ps_6_0");
 }
 
 void DrawLinePSO::CreateRootSignature()

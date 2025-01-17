@@ -2,9 +2,9 @@
 
 void LuminanceBasedOutline::ShaderCompile()
 {
-	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/LuminanceBasedOutline/LuminanceBasedOutline.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/LuminanceBasedOutline/LuminanceBasedOutline.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"resources/hlsl/LuminanceBasedOutline/LuminanceBasedOutline.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/LuminanceBasedOutline/LuminanceBasedOutline.PS.hlsl", L"ps_6_0");
 }
 
 void LuminanceBasedOutline::CreateRootSignature()

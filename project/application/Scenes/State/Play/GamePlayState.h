@@ -28,12 +28,12 @@
 #include "Renderer/Renderer.h"
 #include "Object/Line/Line.h"
 
-#include "Game/Object/Player/Player.h"
-#include "Game/Object/Camera/FollowCamera.h"
-#include "Game/Object/Enemy/Manager/EnemyManager.h"
-#include "Game/Object/SkyDome/SkyDome.h"
-#include "Game/Object/Transition/Fade/Fade.h"
-#include "Game/Object/FloorManager/FloorManager.h"
+#include "Object/Player/Player.h"
+#include "Object/Camera/FollowCamera.h"
+#include "Object/Enemy/Manager/EnemyManager.h"
+#include "Object/SkyDome/SkyDome.h"
+#include "Object/Transition/Fade/Fade.h"
+#include "Object/FloorManager/FloorManager.h"
 
 enum class StageBehavior {
 	kTitle,

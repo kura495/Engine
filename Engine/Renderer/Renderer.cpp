@@ -26,13 +26,13 @@ void Renderer::Initalize()
 	viewProjection = viewproj;
 
 	skyBox.Init();
-	Texture = TextureManager::GetInstance()->LoadTexture("resources/rostock_laage_airport_4k.dds");
+	Texture = TextureManager::GetInstance()->LoadTexture("project/resources/rostock_laage_airport_4k.dds");
 	skyBox.TextureHandle = Texture;
 	cubeWorld_.Initialize();
 	cubeWorld_.transform.scale *= 100;
 	cubeWorld_.Update();
 
-	dissolveTexture = TextureManager::GetInstance()->LoadTexture("resources/rostock_laage_airport_4k.dds");
+	dissolveTexture = TextureManager::GetInstance()->LoadTexture("project/resources/rostock_laage_airport_4k.dds");
 
 }
 

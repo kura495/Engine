@@ -2,7 +2,7 @@
 
 void FloorManager::Init()
 {
-	planeModel_.push_back(Model::CreateModelFromObj("resources/Plane", "Plane.obj"));
+	planeModel_.push_back(Model::CreateModelFromObj("project/resources/Plane", "Plane.obj"));
 
 	float offset = (floorCount * 10.0f) / 2.0f;
 	//縦

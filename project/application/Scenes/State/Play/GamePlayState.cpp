@@ -11,18 +11,18 @@ void GamePlayState::Initialize()
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
 
-	objectManager->LordBlenderScene("resources/Stage");
+	objectManager->LordBlenderScene("project/resources/Stage");
 
 	collisionManager = std::make_unique<CollisionManager>();
 	collisionManager->Init();
 	//
 	//3Dオブジェクト生成
-	playerModel_.push_back(Model::CreateModelFromObj("resources/Player", "player.gltf"));
-	playerModel_.push_back(Model::CreateModelFromObj("resources/Weapon", "Weapon.obj"));
+	playerModel_.push_back(Model::CreateModelFromObj("project/resources/Player", "player.gltf"));
+	playerModel_.push_back(Model::CreateModelFromObj("project/resources/Weapon", "Weapon.obj"));
 
 	titleSprite = std::make_unique<Sprite>();
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
-	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("resources/Title.png");
+	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/Title.png");
 	title.Initialize();
 
 	followCamera = std::make_unique<FollowCamera>();
@@ -35,7 +35,7 @@ void GamePlayState::Initialize()
 	renderer_ = Renderer::GetInstance();
 
 	particle = std::make_unique<ParticleSystem>();
-	particle->Initalize("resources/circle2.png");
+	particle->Initalize("project/resources/circle2.png");
 
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();
@@ -56,7 +56,7 @@ void GamePlayState::Initialize()
 	behaviorRequest_ = StageBehavior::kTitle;
 
 	BGMPlayer = Audio::GetInstance();
-	BGMHundle = BGMPlayer->LoadAudioMP3("resources/sound/BGM/Nisemono_Rock.mp3",true);
+	BGMHundle = BGMPlayer->LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3",true);
 	BGMPlayer->Play(BGMHundle, audioValue);
 }
 void GamePlayState::Update()

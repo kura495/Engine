@@ -1,6 +1,6 @@
 #pragma once
 //敵キャラクターを管理するクラス//
-#include "Game/Object/Enemy/Boss/Boss.h"
+#include "Object/Enemy/Boss/Boss.h"
 
 class Player;
 

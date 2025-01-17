@@ -10,7 +10,7 @@ void GameClearState::Initialize()
 	texture_world_.Initialize();
 	
 	texture = std::make_unique<Sprite>();
-	texture->TextureHandle = textureManager_->LoadTexture("resources/Clear.png");
+	texture->TextureHandle = textureManager_->LoadTexture("project/resources/Clear.png");
 	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 
 	fade = Fade::GetInstance();
