@@ -56,9 +56,6 @@
     <Filter Include="Game\Object\SkyDome">
       <UniqueIdentifier>{1e91881f-43a1-436f-93a7-648de05c1252}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Object\Weapon">
-      <UniqueIdentifier>{e67c36eb-cdcc-4cb0-857d-bef9e41cfadb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Object\Enemy">
       <UniqueIdentifier>{a5506102-88b8-4c2b-9741-160832b53bc9}</UniqueIdentifier>
     </Filter>
@@ -71,20 +68,8 @@
     <Filter Include="Game\Object\Enemy\Boss">
       <UniqueIdentifier>{c654698b-66e6-485d-b438-ddd86844504a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Object\Enemy\BossSpider">
-      <UniqueIdentifier>{bd212a98-aacf-4e2f-b659-87fd4659d3b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Object\Enemy\Manager">
       <UniqueIdentifier>{0c223d83-0aca-4b38-ac73-85c31d97735e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Spider">
-      <UniqueIdentifier>{d2de935a-57d4-4142-9173-10b180ece1ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\Weapon">
-      <UniqueIdentifier>{a3bd80db-27ca-4830-b356-0e54a219a826}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\BossSpider\Bullet">
-      <UniqueIdentifier>{ebc721ed-4750-45d4-ac98-635bc76589c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Object\Player\SkyBox">
       <UniqueIdentifier>{b4e41c4e-1b5b-43b1-b030-d982e181c0fc}</UniqueIdentifier>
@@ -299,6 +284,54 @@
     <Filter Include="Engine\PostProsess\Vinette">
       <UniqueIdentifier>{c01fafd4-f08a-4e0c-b7f5-07a93361dfe4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\Ball">
+      <UniqueIdentifier>{095d427f-5493-4f31-9226-55dfe5c0b1c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\DummyBall">
+      <UniqueIdentifier>{0f85125e-f36d-4eed-9a05-8267b813e190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State">
+      <UniqueIdentifier>{14e7a532-3692-423c-8bff-9cf7491e3f82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer">
+      <UniqueIdentifier>{04e406ba-0217-4ce4-8fb6-346f87d5c804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State\AttackThrowball">
+      <UniqueIdentifier>{c26ce1d6-e71f-455e-bd82-124bf78689a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State\Dead">
+      <UniqueIdentifier>{6d19bf63-4420-4a9e-ab58-6a97140dc3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State\Down">
+      <UniqueIdentifier>{a0937899-77e2-46bd-96ad-415217e313eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State\ReturnPosition">
+      <UniqueIdentifier>{6bd734b8-7a12-42d3-9be4-e82469bcc49f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State\Root">
+      <UniqueIdentifier>{0f2e84d7-6486-4beb-bfab-80d73be3bb99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Boss\State\Spawn">
+      <UniqueIdentifier>{da50a1fc-f27c-421e-a204-9fb846359271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\FloorManager">
+      <UniqueIdentifier>{11c2ff72-a1f4-4820-828b-c87d1aa04271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Transition">
+      <UniqueIdentifier>{4aa8a5e6-fdf5-4073-a8ee-a905f3982306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Transition\Fade">
+      <UniqueIdentifier>{53c7ff85-cc81-4ed5-ac4e-6f7d51dbcd86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utility\ease">
+      <UniqueIdentifier>{623bf1e5-7dd3-4868-b82a-bdf328f0cda1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\PostProsess\Dissolve">
+      <UniqueIdentifier>{d56d04ab-e0e8-4c63-afa7-258107f3e9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\PipeLineState\Dissolve">
+      <UniqueIdentifier>{2de4948c-528a-438a-bef4-37aaa63a04b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -324,9 +357,6 @@
     </ClCompile>
     <ClCompile Include="Scenes\Manager\GameManager.cpp">
       <Filter>Game\Scenes\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Enemy.cpp">
-      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="externals\imgui\ImGuizmo.cpp">
       <Filter>externals\imGuizmo</Filter>
@@ -557,21 +587,54 @@
       <Filter>Engine\PostProsess\Normal</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Engine\PostProsess\Dissolve\PPDissolve.cpp" />
-    <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp" />
-    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
-    <ClCompile Include="Engine\Utility\Ease\Ease.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\Ball\Ball.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
-    <ClCompile Include="Game\Object\FloorManager\FloorManager.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Root\Root.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Down\Down.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Dead\Dead.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Enemy.cpp">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\Ball\Ball.cpp">
+      <Filter>Game\Object\Enemy\Boss\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.cpp">
+      <Filter>Game\Object\Enemy\Boss\DummyBall</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp">
+      <Filter>Game\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp">
+      <Filter>Game\Object\Enemy\Boss\State\AttackThrowball</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Dead\Dead.cpp">
+      <Filter>Game\Object\Enemy\Boss\State\Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp">
+      <Filter>Game\Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Down\Down.cpp">
+      <Filter>Game\Object\Enemy\Boss\State\Down</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp">
+      <Filter>Game\Object\Enemy\Boss\State\ReturnPosition</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Root\Root.cpp">
+      <Filter>Game\Object\Enemy\Boss\State\Root</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.cpp">
+      <Filter>Game\Object\Enemy\Boss\State\Spawn</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\FloorManager\FloorManager.cpp">
+      <Filter>Game\Object\FloorManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp">
+      <Filter>Game\Object\Transition\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utility\Ease\Ease.cpp">
+      <Filter>Engine\Utility\ease</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\PostProsess\Dissolve\PPDissolve.cpp">
+      <Filter>Engine\PostProsess\Dissolve</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp">
+      <Filter>Engine\PipeLineState\Dissolve</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -603,9 +666,6 @@
     </ClInclude>
     <ClInclude Include="Scenes\State\IgameState.h">
       <Filter>Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Enemy.h">
-      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="externals\imgui\ImGuizmo.h">
       <Filter>externals\imGuizmo</Filter>
@@ -877,22 +937,57 @@
     <ClInclude Include="Engine\Math\Math_Structs.h">
       <Filter>Engine\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\PostProsess\Dissolve\PPDissolve.h" />
-    <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h" />
-    <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
-    <ClInclude Include="Engine\Utility\Ease\Ease.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h" />
-    <ClInclude Include="Game\Object\FloorManager\FloorManager.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\IBossState.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Root\Root.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Down\Down.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Dead\Dead.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h" />
+    <ClInclude Include="Game\Object\Enemy\Enemy.h">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h">
+      <Filter>Game\Object\Enemy\Boss\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h">
+      <Filter>Game\Object\Enemy\Boss\DummyBall</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h">
+      <Filter>Game\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h">
+      <Filter>Game\Object\Enemy\Boss\State\AttackThrowball</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Dead\Dead.h">
+      <Filter>Game\Object\Enemy\Boss\State\Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h">
+      <Filter>Game\Object\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Down\Down.h">
+      <Filter>Game\Object\Enemy\Boss\State\Down</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h">
+      <Filter>Game\Object\Enemy\Boss\State\ReturnPosition</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Root\Root.h">
+      <Filter>Game\Object\Enemy\Boss\State\Root</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.h">
+      <Filter>Game\Object\Enemy\Boss\State\Spawn</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\FloorManager\FloorManager.h">
+      <Filter>Game\Object\FloorManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Transition\Fade\Fade.h">
+      <Filter>Game\Object\Transition\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Boss\State\IBossState.h">
+      <Filter>Game\Object\Enemy\Boss\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Ease\Ease.h">
+      <Filter>Engine\Utility\ease</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\PostProsess\Dissolve\PPDissolve.h">
+      <Filter>Engine\PostProsess\Dissolve</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h">
+      <Filter>Engine\PipeLineState\Dissolve</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
