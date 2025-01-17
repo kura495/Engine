@@ -19,7 +19,7 @@ void Player::Init(std::vector<Model*> models)
 	//アニメーション設定
 #pragma region
 	walkanimation = new Animation();
-	walkanimation = Animation::LoadAnimationFile("resources/Player", "player_walk.gltf");
+	walkanimation = Animation::LoadAnimationFile("project/resources/Player", "player_walk.gltf");
 	walkanimation->Init();
 	walkanimation->AnimeInit(*models_[0], true);
 
