@@ -565,6 +565,13 @@
     <ClCompile Include="Game\Object\Enemy\Boss\Ball\Ball.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
     <ClCompile Include="Game\Object\FloorManager\FloorManager.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Root\Root.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Down\Down.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\State\Dead\Dead.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -879,6 +886,13 @@
     <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h" />
     <ClInclude Include="Game\Object\FloorManager\FloorManager.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\State\IBossState.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Root\Root.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Down\Down.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\Dead\Dead.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
