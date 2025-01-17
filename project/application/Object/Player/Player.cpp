@@ -38,7 +38,6 @@ void Player::Init(std::vector<Model*> models)
 	deadParticle_ = new ParticleSystem();
 	deadParticle_->Initalize("project/resources/circle2.dds");
 	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
-	//deadParticle_->CustumSpawn = [this]() {return SpawndeadParticle(); };
 
 	deadParticleEmitter.count = 5;
 	deadParticleEmitter.frequency = 0.5f;
@@ -67,6 +66,8 @@ void Player::Init(std::vector<Model*> models)
 	//音声
 	SEattack = Audio::LoadAudioMP3("project/resources/sound/Player/attack.mp3",false);
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Player/Hitattack.mp3",false);
+
+	ChangeState<Root>();
 }
 void Player::TitleUpdate()
 {
@@ -85,6 +86,7 @@ void Player::Update()
 			isDeadFlag = true;
 	
 			behaviorRequest_ = Behavior::kDead;
+			ChangeState<PDead>();
 			isDamege = false;
 			HP_ -= 1;
 		}
@@ -219,10 +221,12 @@ void Player::RootUpdate()
 	//ボタンを押したら攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		behaviorRequest_ = Behavior::kAttack;
+		ChangeState<Attack>();
 	}
 	//ボタンを押したらジャンプ
 	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
 		behaviorRequest_ = Behavior::kJump;
+		ChangeState<Jump>();
 	}
 }
 //kAttack
@@ -253,6 +257,7 @@ void Player::AttackUpdate()
 		colliderAttack.IsUsing = false;
 		//kRootに戻す
 		behaviorRequest_ = Behavior::kRoot;
+		ChangeState<Root>();
 		attackAnimation->Reset();
 		Audio::Stop(SEattack, true, false);
 	}
@@ -331,6 +336,7 @@ void Player::OnCollision(const ICollider& ICollider)
 				world_.transform.translate.y = ICollider.GetCenter().y;
 				world_.Update();
 				behaviorRequest_ = Behavior::kRoot;
+				ChangeState<Root>();
 			}
 		}
 		else {
@@ -428,11 +434,6 @@ void Player::UpdatedeadParticle(Particle& particle)
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }
-Particle Player::SpawndeadParticle()
-{
-	Particle particle;
-	return particle;
-}
 void Player::UpdateAttackHitParticle(Particle& particle)
 {
 	//速度を1/60にする
@@ -491,6 +492,7 @@ void Player::ImGui()
 		Audio::Stop(SEattack,true,false);
 	}
 	ImGui::Text("%d", HP_);
+	ImGui::Text(state_->ShowState().c_str());
 	ImGui::End();
 }
 void Player::Move()

@@ -656,6 +656,7 @@
     <ClCompile Include="project\application\Object\Player\State\Jump\Jump.cpp" />
     <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp" />
     <ClCompile Include="project\application\Object\Player\State\Attack\Attack.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\IPlayerState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">

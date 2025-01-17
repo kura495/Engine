@@ -173,6 +173,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Player\State\Attack\Attack.cpp" />
     <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\IPlayerState.cpp" />
     <ClCompile Include="project\application\Object\Player\State\Jump\Jump.cpp" />
     <ClCompile Include="project\application\main.cpp" />
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp" />

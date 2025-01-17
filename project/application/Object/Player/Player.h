@@ -10,6 +10,13 @@
 #include "Object/Camera/FollowCamera.h"
 #include "ParticleSystem/ParticleSystem.h"
 
+#pragma region
+#include "State/Attack/Attack.h"
+#include "State/Dead/PDead.h"
+#include "State/Jump/Jump.h"
+#include "State/Root/Root.h"
+#include "State/IPlayerState.h"
+#pragma endregion State
 
 enum class Behavior {
 	kRoot,
@@ -36,6 +43,15 @@ public:
 	bool GetisDead() { return isDead; };
 
 	Behavior GetBehavior() const { return behavior_; };
+	/// <summary>
+	/// ステートを切り替える
+	/// </summary>
+	template <typename T>
+	void ChangeState() {
+		state_ = std::make_unique<T>();
+		state_->Init(this);
+	}
+
 private:
 	void ImGui();
 	//スティック入力で移動させる関数
@@ -94,7 +110,6 @@ private:
 	ParticleSystem* deadParticle_;
 	void UpdatedeadParticle(Particle& particle);
 	//TODO:準備中
-	Particle SpawndeadParticle();
 	Emitter deadParticleEmitter;
 
 	ParticleSystem* attackHitParticle_;
@@ -112,6 +127,11 @@ private:
 	int SEattack;
 	int SEHitattack;
 #pragma endregion 音声
+
+#pragma region
+	std::unique_ptr<IPlayerState> state_;
+
+#pragma endregion State
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
