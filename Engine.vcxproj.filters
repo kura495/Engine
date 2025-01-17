@@ -20,60 +20,6 @@
     <Filter Include="externals\imGuizmo">
       <UniqueIdentifier>{bc7ba27f-1740-4601-8aaf-f9012648c7ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{2830557b-64b9-49e9-9536-5435e0fcce95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scenes">
-      <UniqueIdentifier>{4daa0f17-004f-4069-be16-b52ffc9211c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scenes\Manager">
-      <UniqueIdentifier>{d7d1cf80-41a1-433d-aa34-ec9099cfbd06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scenes\State">
-      <UniqueIdentifier>{815f09b2-983d-4b5d-9155-7098162ef22a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scenes\State\Clear">
-      <UniqueIdentifier>{5d1f0562-b35f-480e-8f10-031a4cab7f40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scenes\State\GameOver">
-      <UniqueIdentifier>{319b4b04-d1f4-4506-9f57-e3a2a885d16e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scenes\State\Play">
-      <UniqueIdentifier>{676a85ab-035f-4c51-93ea-3682b6c42798}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Scenes\State\Title">
-      <UniqueIdentifier>{2d1a3535-eee7-4a3f-9e25-285f793ed4c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object">
-      <UniqueIdentifier>{61a107fb-8cb8-46c9-9f29-dba99b7a967c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Plane">
-      <UniqueIdentifier>{c07bc24f-088f-4aea-b8ed-39a3644c8814}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Player">
-      <UniqueIdentifier>{439f6f08-c159-4584-b923-057e35a1a85a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\SkyDome">
-      <UniqueIdentifier>{1e91881f-43a1-436f-93a7-648de05c1252}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy">
-      <UniqueIdentifier>{a5506102-88b8-4c2b-9741-160832b53bc9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Camera">
-      <UniqueIdentifier>{8b1c630f-983b-4623-a234-24e540787de7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Box">
-      <UniqueIdentifier>{0f8fb1fe-a969-4588-9d1b-1908a769799f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss">
-      <UniqueIdentifier>{c654698b-66e6-485d-b438-ddd86844504a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Manager">
-      <UniqueIdentifier>{0c223d83-0aca-4b38-ac73-85c31d97735e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Player\SkyBox">
-      <UniqueIdentifier>{b4e41c4e-1b5b-43b1-b030-d982e181c0fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Animation">
       <UniqueIdentifier>{ad75e012-ca46-4d28-98dd-e2d36f2c0762}</UniqueIdentifier>
     </Filter>
@@ -284,45 +230,6 @@
     <Filter Include="Engine\PostProsess\Vinette">
       <UniqueIdentifier>{c01fafd4-f08a-4e0c-b7f5-07a93361dfe4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\Ball">
-      <UniqueIdentifier>{095d427f-5493-4f31-9226-55dfe5c0b1c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\DummyBall">
-      <UniqueIdentifier>{0f85125e-f36d-4eed-9a05-8267b813e190}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State">
-      <UniqueIdentifier>{14e7a532-3692-423c-8bff-9cf7491e3f82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer">
-      <UniqueIdentifier>{04e406ba-0217-4ce4-8fb6-346f87d5c804}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State\AttackThrowball">
-      <UniqueIdentifier>{c26ce1d6-e71f-455e-bd82-124bf78689a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State\Dead">
-      <UniqueIdentifier>{6d19bf63-4420-4a9e-ab58-6a97140dc3fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State\Down">
-      <UniqueIdentifier>{a0937899-77e2-46bd-96ad-415217e313eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State\ReturnPosition">
-      <UniqueIdentifier>{6bd734b8-7a12-42d3-9be4-e82469bcc49f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State\Root">
-      <UniqueIdentifier>{0f2e84d7-6486-4beb-bfab-80d73be3bb99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Enemy\Boss\State\Spawn">
-      <UniqueIdentifier>{da50a1fc-f27c-421e-a204-9fb846359271}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\FloorManager">
-      <UniqueIdentifier>{11c2ff72-a1f4-4820-828b-c87d1aa04271}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Transition">
-      <UniqueIdentifier>{4aa8a5e6-fdf5-4073-a8ee-a905f3982306}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Transition\Fade">
-      <UniqueIdentifier>{53c7ff85-cc81-4ed5-ac4e-6f7d51dbcd86}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Utility\ease">
       <UniqueIdentifier>{623bf1e5-7dd3-4868-b82a-bdf328f0cda1}</UniqueIdentifier>
     </Filter>
@@ -331,6 +238,102 @@
     </Filter>
     <Filter Include="Engine\PipeLineState\Dissolve">
       <UniqueIdentifier>{2de4948c-528a-438a-bef4-37aaa63a04b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project">
+      <UniqueIdentifier>{dc7b2706-1312-4e63-a0f7-fb209a17b517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application">
+      <UniqueIdentifier>{d7ee020e-5397-4732-bf5b-eee76aaf3304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object">
+      <UniqueIdentifier>{5c7dd7d1-54cd-40ef-a87f-48b554a85336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Box">
+      <UniqueIdentifier>{fd0a3a77-9537-4e3a-ab2e-d2f780cdba14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Camera">
+      <UniqueIdentifier>{fcc43b17-2f9d-4176-a5df-eb746053bd7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy">
+      <UniqueIdentifier>{1c6ae35c-a022-43fd-b138-43029548ab26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss">
+      <UniqueIdentifier>{7fb49185-af61-4311-97ea-2e562831c6dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Manager">
+      <UniqueIdentifier>{e42d649d-a287-410b-a9ca-ac60425a8fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\DummyBall">
+      <UniqueIdentifier>{b18b2d78-5397-40c3-9384-2bdc684b83eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State">
+      <UniqueIdentifier>{46937a93-7587-4b45-b325-8dedf9adff74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\Ball">
+      <UniqueIdentifier>{031599da-f3ee-4545-8a5d-2dd1afef5843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer">
+      <UniqueIdentifier>{518d673c-cf12-4c40-9615-e37fddb51f4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\AttackThrowball">
+      <UniqueIdentifier>{c8a3b1e0-f782-4e68-a91d-fff2ffa78a6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\Dead">
+      <UniqueIdentifier>{e6b3a3b3-0a57-4992-ade0-b3314d342ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\Down">
+      <UniqueIdentifier>{8e02e915-e595-41a8-9f55-2c1397b5aac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\ReturnPosition">
+      <UniqueIdentifier>{0fee8fb6-9145-4b54-b4a0-b258594cbc3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\Spawn">
+      <UniqueIdentifier>{f39d5ad4-d19d-42ee-aaf6-c63a8030eae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\Root">
+      <UniqueIdentifier>{821d0d0c-210c-41a8-a3e5-4db529a65bd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\FloorManager">
+      <UniqueIdentifier>{557106ac-c0cc-4ca1-b221-043c2bd87bb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Plane">
+      <UniqueIdentifier>{e3899f20-83f8-467a-b376-d199e5e80aba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Player">
+      <UniqueIdentifier>{df916220-3659-4652-a8db-ad3d37e4272d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\SkyBox">
+      <UniqueIdentifier>{ad96e47c-9728-4a42-8293-b8672b24ed87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\SkyDome">
+      <UniqueIdentifier>{bb58a100-7bf6-4fa6-ac91-49b9e4b537c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Transition">
+      <UniqueIdentifier>{298cb718-2539-488c-b4d6-7eacb0cd99b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Transition\Fade">
+      <UniqueIdentifier>{58c589cf-71fd-4041-bd8c-659bf1ccb8be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes">
+      <UniqueIdentifier>{0539b9c1-7fb8-4eb3-a615-678382adb491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\Manager">
+      <UniqueIdentifier>{daeb2fcd-4940-4d0d-baee-986e979d4796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State">
+      <UniqueIdentifier>{8d14c175-8e5d-4e08-bc4d-1d8a614367a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Clear">
+      <UniqueIdentifier>{19c2729b-418a-4fa6-8f83-1c630cc1153a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\GameOver">
+      <UniqueIdentifier>{4486f6a8-22b8-4180-9fa0-ebbf6889841e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Play">
+      <UniqueIdentifier>{6edb7336-f625-4c01-b2ca-e28527af891d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Title">
+      <UniqueIdentifier>{cfe2b814-6cd0-43be-9fdf-b83444081975}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -355,44 +358,8 @@
     <ClCompile Include="externals\imgui\imgui_widgets.cpp">
       <Filter>externals\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\Manager\GameManager.cpp">
-      <Filter>Game\Scenes\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="externals\imgui\ImGuizmo.cpp">
       <Filter>externals\imGuizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\State\Clear\GameClearState.cpp">
-      <Filter>Game\Scenes\State\Clear</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\State\Play\GamePlayState.cpp">
-      <Filter>Game\Scenes\State\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\State\Title\GameTitleState.cpp">
-      <Filter>Game\Scenes\State\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\State\GameOver\GameOverState.cpp">
-      <Filter>Game\Scenes\State\GameOver</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp">
-      <Filter>Game\Object\Enemy\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Box\BoxObject.cpp">
-      <Filter>Game\Object\Box</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp">
-      <Filter>Game\Object\SkyDome</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp">
-      <Filter>Game\Object\Player\SkyBox</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Player\Player.cpp">
-      <Filter>Game\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp">
-      <Filter>Game\Object\Plane</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Camera\FollowCamera.cpp">
-      <Filter>Game\Object\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Animation\Animation.cpp">
       <Filter>Engine\Animation</Filter>
@@ -587,45 +554,6 @@
       <Filter>Engine\PostProsess\Normal</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Enemy.cpp">
-      <Filter>Game\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\Ball\Ball.cpp">
-      <Filter>Game\Object\Enemy\Boss\Ball</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.cpp">
-      <Filter>Game\Object\Enemy\Boss\DummyBall</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp">
-      <Filter>Game\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp">
-      <Filter>Game\Object\Enemy\Boss\State\AttackThrowball</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Dead\Dead.cpp">
-      <Filter>Game\Object\Enemy\Boss\State\Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp">
-      <Filter>Game\Object\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Down\Down.cpp">
-      <Filter>Game\Object\Enemy\Boss\State\Down</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp">
-      <Filter>Game\Object\Enemy\Boss\State\ReturnPosition</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Root\Root.cpp">
-      <Filter>Game\Object\Enemy\Boss\State\Root</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.cpp">
-      <Filter>Game\Object\Enemy\Boss\State\Spawn</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\FloorManager\FloorManager.cpp">
-      <Filter>Game\Object\FloorManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp">
-      <Filter>Game\Object\Transition\Fade</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Utility\Ease\Ease.cpp">
       <Filter>Engine\Utility\ease</Filter>
     </ClCompile>
@@ -634,6 +562,81 @@
     </ClCompile>
     <ClCompile Include="Engine\PipelineState\Dissolve\Dissolve.cpp">
       <Filter>Engine\PipeLineState\Dissolve</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Box\BoxObject.cpp">
+      <Filter>project\application\Object\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Camera\FollowCamera.cpp">
+      <Filter>project\application\Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Enemy.cpp">
+      <Filter>project\application\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Manager\EnemyManager.cpp">
+      <Filter>project\application\Object\Enemy\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\Boss.cpp">
+      <Filter>project\application\Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\Ball\Ball.cpp">
+      <Filter>project\application\Object\Enemy\Boss\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp">
+      <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Down\Down.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\Down</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Dead\Dead.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\AttackThrowball</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\ReturnPosition</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\Spawn</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Root\Root.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\Root</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\FloorManager\FloorManager.cpp">
+      <Filter>project\application\Object\FloorManager</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Plane\PlaneObject.cpp">
+      <Filter>project\application\Object\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Player\Player.cpp">
+      <Filter>project\application\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\SkyBox\SkyBox.cpp">
+      <Filter>project\application\Object\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\SkyDome\SkyDome.cpp">
+      <Filter>project\application\Object\SkyDome</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Transition\Fade\Fade.cpp">
+      <Filter>project\application\Object\Transition\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\Manager\GameManager.cpp">
+      <Filter>project\application\Scenes\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Clear\GameClearState.cpp">
+      <Filter>project\application\Scenes\State\Clear</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\GameOver\GameOverState.cpp">
+      <Filter>project\application\Scenes\State\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp">
+      <Filter>project\application\Scenes\State\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Title\GameTitleState.cpp">
+      <Filter>project\application\Scenes\State\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -661,47 +664,8 @@
     <ClInclude Include="externals\imgui\imstb_truetype.h">
       <Filter>externals\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\Manager\GameManager.h">
-      <Filter>Game\Scenes\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\State\IgameState.h">
-      <Filter>Game\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="externals\imgui\ImGuizmo.h">
       <Filter>externals\imGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\State\Clear\GameClearState.h">
-      <Filter>Game\Scenes\State\Clear</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\State\Play\GamePlayState.h">
-      <Filter>Game\Scenes\State\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\State\Title\GameTitleState.h">
-      <Filter>Game\Scenes\State\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\State\GameOver\GameOverState.h">
-      <Filter>Game\Scenes\State\GameOver</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h">
-      <Filter>Game\Object\Enemy\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Box\BoxObject.h">
-      <Filter>Game\Object\Box</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\SkyDome\SkyDome.h">
-      <Filter>Game\Object\SkyDome</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\SkyBox\SkyBox.h">
-      <Filter>Game\Object\Player\SkyBox</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Player\Player.h">
-      <Filter>Game\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Plane\PlaneObject.h">
-      <Filter>Game\Object\Plane</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Camera\FollowCamera.h">
-      <Filter>Game\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Animation\Animation.h">
       <Filter>Engine\Animation</Filter>
@@ -937,48 +901,6 @@
     <ClInclude Include="Engine\Math\Math_Structs.h">
       <Filter>Engine\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Enemy.h">
-      <Filter>Game\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h">
-      <Filter>Game\Object\Enemy\Boss\Ball</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h">
-      <Filter>Game\Object\Enemy\Boss\DummyBall</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h">
-      <Filter>Game\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h">
-      <Filter>Game\Object\Enemy\Boss\State\AttackThrowball</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Dead\Dead.h">
-      <Filter>Game\Object\Enemy\Boss\State\Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h">
-      <Filter>Game\Object\Enemy\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Down\Down.h">
-      <Filter>Game\Object\Enemy\Boss\State\Down</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h">
-      <Filter>Game\Object\Enemy\Boss\State\ReturnPosition</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Root\Root.h">
-      <Filter>Game\Object\Enemy\Boss\State\Root</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.h">
-      <Filter>Game\Object\Enemy\Boss\State\Spawn</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\FloorManager\FloorManager.h">
-      <Filter>Game\Object\FloorManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Transition\Fade\Fade.h">
-      <Filter>Game\Object\Transition\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\IBossState.h">
-      <Filter>Game\Object\Enemy\Boss\State</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Utility\Ease\Ease.h">
       <Filter>Engine\Utility\ease</Filter>
     </ClInclude>
@@ -987,6 +909,87 @@
     </ClInclude>
     <ClInclude Include="Engine\PipelineState\Dissolve\Dissolve.h">
       <Filter>Engine\PipeLineState\Dissolve</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Box\BoxObject.h">
+      <Filter>project\application\Object\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Camera\FollowCamera.h">
+      <Filter>project\application\Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Enemy.h">
+      <Filter>project\application\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Manager\EnemyManager.h">
+      <Filter>project\application\Object\Enemy\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\Boss.h">
+      <Filter>project\application\Object\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h">
+      <Filter>project\application\Object\Enemy\Boss\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h">
+      <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Down\Down.h">
+      <Filter>project\application\Object\Enemy\Boss\State\Down</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Dead\Dead.h">
+      <Filter>project\application\Object\Enemy\Boss\State\Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h">
+      <Filter>project\application\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h">
+      <Filter>project\application\Object\Enemy\Boss\State\AttackThrowball</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h">
+      <Filter>project\application\Object\Enemy\Boss\State\ReturnPosition</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.h">
+      <Filter>project\application\Object\Enemy\Boss\State\Spawn</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Root\Root.h">
+      <Filter>project\application\Object\Enemy\Boss\State\Root</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\IBossState.h">
+      <Filter>project\application\Object\Enemy\Boss\State</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\FloorManager\FloorManager.h">
+      <Filter>project\application\Object\FloorManager</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Plane\PlaneObject.h">
+      <Filter>project\application\Object\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Player\Player.h">
+      <Filter>project\application\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\SkyBox\SkyBox.h">
+      <Filter>project\application\Object\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\SkyDome\SkyDome.h">
+      <Filter>project\application\Object\SkyDome</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Transition\Fade\Fade.h">
+      <Filter>project\application\Object\Transition\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\Manager\GameManager.h">
+      <Filter>project\application\Scenes\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\IgameState.h">
+      <Filter>project\application\Scenes\State</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Clear\GameClearState.h">
+      <Filter>project\application\Scenes\State\Clear</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\GameOver\GameOverState.h">
+      <Filter>project\application\Scenes\State\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayState.h">
+      <Filter>project\application\Scenes\State\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Title\GameTitleState.h">
+      <Filter>project\application\Scenes\State\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

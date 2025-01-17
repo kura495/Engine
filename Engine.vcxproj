@@ -59,17 +59,18 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir);$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(SolutionDir)/project/;$(SolutionDir)/project/application/</ExternalIncludePath>
     <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
     <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(SolutionDir)/project/;$(SolutionDir)/project/application/</ExternalIncludePath>
+    <TargetName>$Generated</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann;</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Base;$(SolutionDir)/Base/Audio;$(SolutionDir)/Base/Input;$(SolutionDir)/Base/Math;$(SolutionDir)/Base/Utility;$(SolutionDir)/Base/Model_Struct;$(SolutionDir)/Base/Object;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/Engine;$(SolutionDir)/Engine/Audio;$(SolutionDir)/Engine/Input;$(SolutionDir)/Engine/Math;$(SolutionDir)/Engine/Utility;$(SolutionDir)/Engine/Model_Struct;$(SolutionDir)/Engine/Object;$(SolutionDir)/Engine/Animation;$(SolutionDir)/project/;$(SolutionDir)/project/application/</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgTriplet>x64-windows</VcpkgTriplet>
@@ -170,10 +171,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Dead\Dead.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Down\Down.cpp" />
     <ClCompile Include="Engine\Animation\Animation.cpp" />
     <ClCompile Include="Engine\Audio\Audio.cpp" />
     <ClCompile Include="Engine\Camera\DebugCamera\DebugCamera.cpp" />
@@ -249,34 +246,34 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Game\Object\Box\BoxObject.cpp" />
-    <ClCompile Include="Game\Object\Camera\FollowCamera.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\Ball\Ball.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\Boss.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Root\Root.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Manager\EnemyManager.cpp" />
-    <ClCompile Include="Game\Object\FloorManager\FloorManager.cpp" />
-    <ClCompile Include="Game\Object\Plane\PlaneObject.cpp" />
-    <ClCompile Include="Game\Object\Player\Player.cpp" />
-    <ClCompile Include="Game\Object\SkyBox\SkyBox.cpp" />
-    <ClCompile Include="Game\Object\SkyDome\SkyDome.cpp" />
-    <ClCompile Include="Game\Object\Transition\Fade\Fade.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Scenes\Manager\GameManager.cpp" />
-    <ClCompile Include="Scenes\State\Clear\GameClearState.cpp" />
-    <ClCompile Include="Scenes\State\GameOver\GameOverState.cpp" />
-    <ClCompile Include="Scenes\State\Play\GamePlayState.cpp" />
-    <ClCompile Include="Scenes\State\Title\GameTitleState.cpp" />
+    <ClCompile Include="project\application\Object\Box\BoxObject.cpp" />
+    <ClCompile Include="project\application\Object\Camera\FollowCamera.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\Ball\Ball.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\Boss.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Dead\Dead.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Down\Down.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Root\Root.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Manager\EnemyManager.cpp" />
+    <ClCompile Include="project\application\Object\FloorManager\FloorManager.cpp" />
+    <ClCompile Include="project\application\Object\Plane\PlaneObject.cpp" />
+    <ClCompile Include="project\application\Object\Player\Player.cpp" />
+    <ClCompile Include="project\application\Object\SkyBox\SkyBox.cpp" />
+    <ClCompile Include="project\application\Object\SkyDome\SkyDome.cpp" />
+    <ClCompile Include="project\application\Object\Transition\Fade\Fade.cpp" />
+    <ClCompile Include="project\application\Scenes\Manager\GameManager.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Clear\GameClearState.cpp" />
+    <ClCompile Include="project\application\Scenes\State\GameOver\GameOverState.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Title\GameTitleState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Dead\Dead.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Down\Down.h" />
     <ClInclude Include="Engine\Animation\Animation.h" />
     <ClInclude Include="Engine\Animation\KeyFrame\Struct\KeyFrame_Struct.h" />
     <ClInclude Include="Engine\Audio\Audio.h" />
@@ -367,29 +364,33 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="Game\Object\Box\BoxObject.h" />
-    <ClInclude Include="Game\Object\Camera\FollowCamera.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\Ball\Ball.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\Boss.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\DummyBall\DummyBall.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\IBossState.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Root\Root.h" />
-    <ClInclude Include="Game\Object\Enemy\Boss\State\Spawn\Spawn.h" />
-    <ClInclude Include="Game\Object\Enemy\Enemy.h" />
-    <ClInclude Include="Game\Object\Enemy\Manager\EnemyManager.h" />
-    <ClInclude Include="Game\Object\FloorManager\FloorManager.h" />
-    <ClInclude Include="Game\Object\Plane\PlaneObject.h" />
-    <ClInclude Include="Game\Object\Player\Player.h" />
-    <ClInclude Include="Game\Object\SkyBox\SkyBox.h" />
-    <ClInclude Include="Game\Object\SkyDome\SkyDome.h" />
-    <ClInclude Include="Game\Object\Transition\Fade\Fade.h" />
-    <ClInclude Include="Scenes\Manager\GameManager.h" />
-    <ClInclude Include="Scenes\State\Clear\GameClearState.h" />
-    <ClInclude Include="Scenes\State\GameOver\GameOverState.h" />
-    <ClInclude Include="Scenes\State\Play\GamePlayState.h" />
-    <ClInclude Include="Scenes\State\Title\GameTitleState.h" />
-    <ClInclude Include="Scenes\State\IgameState.h" />
+    <ClInclude Include="project\application\Object\Box\BoxObject.h" />
+    <ClInclude Include="project\application\Object\Camera\FollowCamera.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\Boss.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Dead\Dead.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Down\Down.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\IBossState.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Root\Root.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.h" />
+    <ClInclude Include="project\application\Object\Enemy\Enemy.h" />
+    <ClInclude Include="project\application\Object\Enemy\Manager\EnemyManager.h" />
+    <ClInclude Include="project\application\Object\FloorManager\FloorManager.h" />
+    <ClInclude Include="project\application\Object\Plane\PlaneObject.h" />
+    <ClInclude Include="project\application\Object\Player\Player.h" />
+    <ClInclude Include="project\application\Object\SkyBox\SkyBox.h" />
+    <ClInclude Include="project\application\Object\SkyDome\SkyDome.h" />
+    <ClInclude Include="project\application\Object\Transition\Fade\Fade.h" />
+    <ClInclude Include="project\application\Scenes\Manager\GameManager.h" />
+    <ClInclude Include="project\application\Scenes\State\Clear\GameClearState.h" />
+    <ClInclude Include="project\application\Scenes\State\GameOver\GameOverState.h" />
+    <ClInclude Include="project\application\Scenes\State\IgameState.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayState.h" />
+    <ClInclude Include="project\application\Scenes\State\Title\GameTitleState.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
