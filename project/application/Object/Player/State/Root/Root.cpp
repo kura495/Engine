@@ -2,12 +2,17 @@
 #include "../../Player.h"
 void Root::Init(Player* p)
 {
-	p;
+	p->RootInit();
 }
 
 void Root::Update(Player* p)
 {
-	p;
+	p->RootUpdate();
+}
+
+void Root::Draw(Player* p)
+{
+	p->RootDraw();
 }
 
 std::string Root::ShowState()

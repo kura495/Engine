@@ -18,12 +18,6 @@
 #include "State/IPlayerState.h"
 #pragma endregion State
 
-enum class Behavior {
-	kRoot,
-	kJump,
-	kAttack,
-	kDead
-};
 
 class Player : public IObject
 {
@@ -42,7 +36,7 @@ public:
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
 
-	Behavior GetBehavior() const { return behavior_; };
+	PlayerState GetState() const { return state_->GetStateType(); };
 	/// <summary>
 	/// ステートを切り替える
 	/// </summary>
@@ -51,29 +45,31 @@ public:
 		state_ = std::make_unique<T>();
 		state_->Init(this);
 	}
-
+	//kRoot
+	void RootInit();
+	void RootUpdate();
+	void RootDraw();
+	//kAttack
+	void AttackInit();
+	void AttackUpdate();
+	void AttackDraw();
+	//kJump
+	void JumpInit();
+	void JumpUpdate();
+	void JumpDraw();
+	//kDead
+	void DeadInit();
+	void DeadUpdate();
+	void DeadDraw();
 private:
 	void ImGui();
 	//スティック入力で移動させる関数
 	void Move();
 #pragma region 
-	//ふるまい
-	Behavior behavior_ = Behavior::kRoot;
-	//次のふるまいリクエスト
-	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-	void BehaviorUpdate();
-	//kRoot
-	void RootInit();
-	void RootUpdate();
-	//kAttack
-	void AttackInit();
-	void AttackUpdate();
-	//kJump
-	void JumpInit();
-	void JumpUpdate();
-	//kDead
-	void DeadInit();
-	void DeadUpdate();
+#pragma region
+	std::unique_ptr<IPlayerState> state_;
+	void StateUpdate();
+#pragma endregion State
 #pragma endregion BehaviorTree
 #pragma region 
 	//プレイヤーキャラ事態の当たり判定
@@ -128,10 +124,6 @@ private:
 	int SEHitattack;
 #pragma endregion 音声
 
-#pragma region
-	std::unique_ptr<IPlayerState> state_;
-
-#pragma endregion State
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;

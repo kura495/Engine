@@ -188,7 +188,7 @@ void Boss::RootInit()
 }
 void Boss::RootUpdate()
 {
-	if (player_->GetBehavior() == Behavior::kDead) {
+	if (player_->GetState() == PlayerState::kDead) {
 		return;
 	}
 	//TODO:消すかifdefにする

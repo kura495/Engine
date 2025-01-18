@@ -84,14 +84,13 @@ void Player::Update()
 		//ダメージを受けた時、落っこちた時の処理
 		if (isDamege && HP_ >= 1 || world_.transform.translate.y <= -10.0f) {
 			isDeadFlag = true;
-	
-			behaviorRequest_ = Behavior::kDead;
 			ChangeState<PDead>();
 			isDamege = false;
 			HP_ -= 1;
 		}
 	}
-	BehaviorUpdate();
+	StateUpdate();
+	//BehaviorUpdate();
 	//パーティクルアップデート
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
@@ -100,12 +99,6 @@ void Player::Update()
 #ifdef USE_IMGUI
 	ImGui();
 #endif
-	//TODO　着地面の高さを求めて、カメラの高さを決めると、アストロボット的なジャンプが実装できそう
-	//		ジャンプ先が高い位置にあると、カメラが上に移動する
-	if (behavior_ != Behavior::kJump) {
-		//FollowCamera::workInter.interParameter_.y = (std::min)(FollowCamera::workInter.interParameter_.y + 0.1f, 1.0f);
-
-	}
 	world_.Update();
 
 	isOnFloorFlag = false;
@@ -122,75 +115,15 @@ void Player::Draw()
 	//walkanimation->DebugDraw(world_);
 #endif
 	//描画
-	switch (behavior_)
-	{
-	case Behavior::kRoot:
-	default:
-		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
-		break;
-	case Behavior::kAttack:
-		models_[0]->RendererSkinDraw(world_, attackAnimation->GetSkinCluster());
-		break;
-	case Behavior::kJump:
-		models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
-		break;
-	case Behavior::kDead:
-		if (isDeadModelDraw) {
-			models_[0]->RendererSkinDraw(world_, deadAnimation->GetSkinCluster());
-		}
-		else {
-			deadParticle_->RendererDraw();
-		}
-		break;
-	}
+	state_->Draw(this);
 	//パーティクル描画
 	attackHitParticle_->RendererDraw();
 	attackHitBombParticle_->RendererDraw();
 }
 #pragma region
-void Player::BehaviorUpdate()
+void Player::StateUpdate()
 {
-	//初期化
-	if (behaviorRequest_) {
-		//ふるまいの変更
-		behavior_ = behaviorRequest_.value();
-		//各ふるまいごとに初期化
-		switch (behavior_)
-		{
-		case Behavior::kRoot:
-		default:
-			RootInit();
-			break;
-		case Behavior::kAttack:
-			AttackInit();
-			break;
-		case Behavior::kJump:
-			JumpInit();
-			break;
-		case Behavior::kDead:
-			DeadInit();
-			break;
-		}
-
-		behaviorRequest_ = std::nullopt;
-	}
-	//更新
-	switch (behavior_)
-	{
-	case Behavior::kRoot:
-	default:
-		RootUpdate();
-		break;
-	case Behavior::kAttack:
-		AttackUpdate();
-		break;
-	case Behavior::kJump:
-		JumpUpdate();
-		break;
-	case Behavior::kDead:
-		DeadUpdate();
-		break;
-	}
+	state_->Update(this);
 }
 //kRoot
 void Player::RootInit()
@@ -220,14 +153,16 @@ void Player::RootUpdate()
 
 	//ボタンを押したら攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
-		behaviorRequest_ = Behavior::kAttack;
 		ChangeState<Attack>();
 	}
 	//ボタンを押したらジャンプ
 	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
-		behaviorRequest_ = Behavior::kJump;
 		ChangeState<Jump>();
 	}
+}
+void Player::RootDraw()
+{
+	models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
 }
 //kAttack
 void Player::AttackInit()
@@ -256,12 +191,15 @@ void Player::AttackUpdate()
 		animationTime_ = 0.0f;
 		colliderAttack.IsUsing = false;
 		//kRootに戻す
-		behaviorRequest_ = Behavior::kRoot;
 		ChangeState<Root>();
 		attackAnimation->Reset();
 		Audio::Stop(SEattack, true, false);
 	}
 
+}
+void Player::AttackDraw()
+{
+	models_[0]->RendererSkinDraw(world_, attackAnimation->GetSkinCluster());
 }
 //kJump
 void Player::JumpInit() {
@@ -273,6 +211,10 @@ void Player::JumpUpdate() {
 	//ジャンプの処理
 	world_.transform.translate.y += jumpForce;
 	jumpForce -= kJumpSubValue;
+}
+void Player::JumpDraw()
+{
+	models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
 }
 //kDead
 void Player::DeadInit()
@@ -301,13 +243,22 @@ void Player::DeadUpdate()
 		deadParticle_->Update();
 	}
 }
+void Player::DeadDraw()
+{
+	if (isDeadModelDraw) {
+		models_[0]->RendererSkinDraw(world_, deadAnimation->GetSkinCluster());
+	}
+	else {
+		deadParticle_->RendererDraw();
+	}
+}
 #pragma endregion BeheviorTree
 #pragma region
 void Player::ColliderInit()
 {
 	colliderPlayer.Init(&world_);
-	colliderPlayer.SetSize({ 0.5f,1.0f,0.5f });
-	colliderPlayer.SetOffset({ 0.0f,0.5f,0.0f });
+	colliderPlayer.SetSize({ 0.5f,0.7f,0.5f });
+	colliderPlayer.SetOffset({ 0.0f,0.7f,0.0f });
 	colliderPlayer.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 	colliderPlayer.SetcollitionAttribute(ColliderTag::Player);
 	colliderPlayer.SetcollisionMask(~ColliderTag::Player & ~ColliderTag::Weapon);
@@ -331,11 +282,10 @@ void Player::OnCollision(const ICollider& ICollider)
 		return;
 	}
 	if (ICollider.GetcollitionAttribute() == ColliderTag::Floor) {
-		if (behavior_ == Behavior::kJump) {
+		if (state_->GetStateType() == PlayerState::kJump) {
 			if (world_.transform.translate.y <= ICollider.GetCenter().y && jumpForce <= 0) {
 				world_.transform.translate.y = ICollider.GetCenter().y;
 				world_.Update();
-				behaviorRequest_ = Behavior::kRoot;
 				ChangeState<Root>();
 			}
 		}

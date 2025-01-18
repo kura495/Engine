@@ -28,9 +28,11 @@ void GamePlayState::Initialize()
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
 
+
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
-
+	
+	followCamera->SetTarget(&player_->GetWorld());
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
@@ -88,9 +90,6 @@ void GamePlayState::Draw()
 	//3Dモデル描画ここから
 
 #pragma region Game
-
-	//objectManager->Draw();
-
 	enemyManager->Draw();
 
 	floorManager->Draw();
@@ -119,8 +118,6 @@ void GamePlayState::Draw()
 	skyDome_->Draw();
 
 	collisionManager->Draw();
-
-	//particle->RendererDraw();
 
 }
 #pragma region
@@ -182,25 +179,32 @@ void GamePlayState::TitleUpdate()
 	if (fade->Out() == false) {
 		return;
 	}
+
 #ifdef _DEBUG
-	//TODO:デバッグ用なので消すこと！
-	IsTitleToGameFlag = true;
+	ImGui::Begin("Title");
+	ImGui::InputFloat("stertCount", &stertCount);
+	ImGui::End();
 #endif
-	if (input->IsTriggerPad(XINPUT_GAMEPAD_A) || input->IsTriggerKey(DIK_SPACE)) {
+
+	if (input->GetPadPrecede(XINPUT_GAMEPAD_A,20) || input->IsTriggerKey(DIK_SPACE)) {
+		stertCount += 0.3f;
+
+	}
+
+	stertCount = (std::max)(stertCount - subStertCount,0.0f);
+
+	if (stertCount >= 1.0f) {
 		IsTitleToGameFlag = true;
 	}
 	if (IsTitleToGameFlag) {
-		if (followCamera->PlaySceneInit(&player_->GetWorld())) {
-			behaviorRequest_ = StageBehavior::kPlay;
-
-		}
+		behaviorRequest_ = StageBehavior::kPlay;
 	}
 	player_->TitleUpdate();
 }
 void GamePlayState::TitleDraw()
 {
 	titleSprite->RendererDraw(title);
-	player_->TitleDraw();
+	
 	fade->Draw();
 }
 #pragma endregion Title

@@ -5,13 +5,11 @@ WorkInterpolation FollowCamera::workInter;
 void FollowCamera::Initialize() {
 	viewProj.Initialize();
 
-	viewProj.translation_ = InitCameraPos2;
-	viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
-
 	workInter.interTarget_ = { 0.0f,0.0f,0.0f };
+	PlaySceneReset();
 }
 
-void FollowCamera::Update() { 
+void FollowCamera::Update() {
 
 	//スティックでのカメラ回転
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
@@ -28,45 +26,31 @@ void FollowCamera::Update() {
 		else if (rotate_.x < -1.0f) {
 			rotate_.x = -1.0f;
 		}
-	}		
-
-	//TODO : LerpShortAngleを使うと一定角度で急にワープする
-	if (resetFlag_ == false) {
-
-		Vector3 EulerRot;
-
-		EulerRot.x = rotate_.x;
-		EulerRot.y = rotate_.y;
-		EulerRot.z = rotate_.z;
-		viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
-
-		if (target_) {
-			Vector3 pos = target_->transform.translate;
-			//追従座標の補間
-			workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.x).x;
-			workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.z).z;
-
-			workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.y).y;
-
-			Vector3 offset = OffsetCalc();
-			//オフセット分と追従座標の補間分ずらす
-			viewProj.translation_ = workInter.interTarget_ + offset;
-
-			////もしペアレントを結んでいるなら
-			//if (target_->parent_) {
-			//	pos = target_->transform.translate + target_->parent_->transform.translate;
-			//}
-			////追従座標の補間
-			//workInter.interTarget_ = Vector3::Lerp(target_->transform.translate, pos, workInter.interParameter_);
-
-			//Vector3 offset = OffsetCalc();
-			////オフセット分と追従座標の補間分ずらす
-			//viewProj.translation_ = pos + offset;
-		#ifdef _DEBUG
-	ImGui();
-#endif
-		}
 	}
+
+	Vector3 EulerRot;
+
+	EulerRot.x = rotate_.x;
+	EulerRot.y = rotate_.y;
+	EulerRot.z = rotate_.z;
+	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
+
+	if (target_) {
+		Vector3 pos = target_->transform.translate;
+		//追従座標の補間
+		workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.x).x;
+		workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.z).z;
+
+		workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.y).y;
+
+		Vector3 offset = OffsetCalc();
+		//オフセット分と追従座標の補間分ずらす
+		viewProj.translation_ = workInter.interTarget_ + offset;
+#ifdef _DEBUG
+		ImGui();
+#endif
+	}
+
 	//画面を揺らす
 	if (isShake) {
 		Shake();
@@ -92,9 +76,9 @@ void FollowCamera::ImGui()
 {
 #ifdef _DEBUG
 	ImGui::Begin("FollowCamera");
-	ImGui::DragFloat3("Offset",&offsetPos.x);
-	ImGui::DragFloat3("translate",&InitCameraPos2.x,0.1f);
-	ImGui::DragFloat3("rotate",&InitCameraRot2.x,0.1f);
+	ImGui::DragFloat3("Offset", &offsetPos.x);
+	ImGui::DragFloat3("translate", &InitCameraPos2.x, 0.1f);
+	ImGui::DragFloat3("rotate", &InitCameraRot2.x, 0.1f);
 	if (!target_) {
 		viewProj.translation_ = InitCameraPos2;
 		viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
@@ -156,7 +140,7 @@ void FollowCamera::Reset()
 	if (target_) {
 		//追従座標・角度の初期化
 		workInter.interTarget_ = target_->transform.translate;
-		viewProj.rotation_.y = LerpShortAngle(viewProj.rotation_.y,target_->transform.quaternion.y, 1.0f);
+		viewProj.rotation_.y = LerpShortAngle(viewProj.rotation_.y, target_->transform.quaternion.y, 1.0f);
 	}
 	workInter.targetAngleY_ = viewProj.rotation_.y;
 
