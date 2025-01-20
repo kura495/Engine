@@ -2,17 +2,17 @@
 #include "../../Boss.h"
 void EAttackThrowball::Init(Boss* Boss)
 {
-	Boss;
+	Boss->AttackThrowBallInit();
 }
 
 void EAttackThrowball::Update(Boss* Boss)
 {
-	Boss;
+	Boss->AttackThrowBallUpdate();
 }
 
 void EAttackThrowball::Draw(Boss* Boss)
 {
-	Boss;
+	Boss->AttackThrowBallDraw();
 }
 std::string EAttackThrowball::ShowState()
 {

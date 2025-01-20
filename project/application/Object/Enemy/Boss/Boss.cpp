@@ -79,103 +79,16 @@ void Boss::Update()
 
 		}
 	}
-	BehaviorUpdate();
+	state_->Update(this);
 
 	world_.Update();
 	worldArmL.Update();
 }
 void Boss::Draw()
 {	
-	switch (behavior_)
-	{
-	case BossBehavior::Root:
-	default:
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		break;
-	case BossBehavior::AttackSlamPlayer:
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		break;
-	case BossBehavior::AttackThrowball:
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		ball->Draw();
-		dummyBall->Draw();
-		break;
-	case BossBehavior::Spawn:
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		sleepParticle_->RendererDraw();
-		break;
-	case BossBehavior::Dead:
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		particle_->RendererDraw();
-		break;
-	case BossBehavior::Down:
-		models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-		break;
-	}
+	state_->Draw(this);
 }
 #pragma region
-void Boss::BehaviorUpdate()
-{
-	//初期化
-	if (behaviorRequest_) {
-		//ふるまいの変更
-		behavior_ = behaviorRequest_.value();
-		//各ふるまいごとに初期化
-		switch (behavior_)
-		{
-		case BossBehavior::Root:
-		default:
-			RootInit();
-			break;
-		case BossBehavior::ReturnPosition:
-			ReturnPositionInit();
-			break;
-		case BossBehavior::AttackSlamPlayer:
-			AttackSlamPlayerInit();
-			break;
-		case BossBehavior::AttackThrowball:
-			AttackThrowBallInit();
-			break;
-		case BossBehavior::Spawn:
-			SpawnInit();
-			break;
-		case BossBehavior::Dead:
-			DeadInit();
-			break;
-		case BossBehavior::Down:
-			DownInit();
-			break;
-		}
-
-		behaviorRequest_ = std::nullopt;
-	}
-	//更新
-	switch (behavior_)
-	{
-	case BossBehavior::Root:
-	default:
-		RootUpdate();
-		break;
-	case BossBehavior::ReturnPosition:
-		ReturnPositionUpdate();
-		break;
-	case BossBehavior::AttackSlamPlayer:
-		AttackSlamPlayerUpdate();
-		break;
-	case BossBehavior::AttackThrowball:
-		AttackThrowBallUpdate();
-		break;
-	case BossBehavior::Spawn:
-		SpawnUpdate();
-		break;
-	case BossBehavior::Dead:
-		DeadUpdate();
-		break;
-	case BossBehavior::Down:
-		DownUpdate();
-		break;
-	}
-}
 void Boss::RootInit()
 {
 	easeT = 0.0f;
@@ -207,6 +120,10 @@ void Boss::RootUpdate()
 		isAttackSelect = true;
 	}
 }
+void Boss::RootDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+}
 void Boss::ReturnPositionInit()
 {
 	easeT = 0.0f;
@@ -227,7 +144,11 @@ void Boss::ReturnPositionUpdate()
 	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
 
 }
-void Boss::AttackSlamPlayerInit()
+void Boss::ReturnPositionDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+}
+void Boss::AttackSlamInit()
 {
 	addEaseT = 0.02f;
 	colliderAttack.IsUsing = true;
@@ -238,7 +159,7 @@ void Boss::AttackSlamPlayerInit()
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack | ColliderTag::EnemyAttackFront);
 }
-void Boss::AttackSlamPlayerUpdate()
+void Boss::AttackSlamUpdate()
 {
 	if (IsAttackFlag) {
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
@@ -276,6 +197,10 @@ void Boss::AttackSlamPlayerUpdate()
 	}
 
 }
+void Boss::AttackSlamDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+}
 void Boss::AttackThrowBallInit()
 {
 	easeT = 0.0f;
@@ -307,6 +232,12 @@ void Boss::AttackThrowBallUpdate()
 		ChangeState<ERoot>();
 	}
 }
+void Boss::AttackThrowBallDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	ball->Draw();
+	dummyBall->Draw();
+}
 void Boss::SpawnInit()
 {
 	worldArmL.transform.translate = DownPosition;
@@ -324,6 +255,11 @@ void Boss::SpawnUpdate()
 		behaviorRequest_ = BossBehavior::ReturnPosition;
 		ChangeState<EReturnPosition>();
 	}
+}
+void Boss::SpawnDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	sleepParticle_->RendererDraw();
 }
 void Boss::DeadInit()
 {
@@ -343,6 +279,11 @@ void Boss::DeadUpdate()
 	ParticleSystem::ParticleSpawn(*particle_, deadEnemyParticleEmitter);
 	//パーティクル更新
 	particle_->Update();
+}
+void Boss::DeadDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	particle_->RendererDraw();
 }
 void Boss::DownInit()
 {
@@ -377,6 +318,10 @@ void Boss::DownUpdate()
 		ChangeState<EReturnPosition>();
 		colliderDamage.IsUsing = false;
 	}
+}
+void Boss::DownDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()

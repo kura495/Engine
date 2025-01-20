@@ -89,8 +89,8 @@ void Player::Update()
 			HP_ -= 1;
 		}
 	}
-	StateUpdate();
-	//BehaviorUpdate();
+	//ステートのアップデート
+	state_->Update(this);
 	//パーティクルアップデート
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
@@ -121,10 +121,7 @@ void Player::Draw()
 	attackHitBombParticle_->RendererDraw();
 }
 #pragma region
-void Player::StateUpdate()
-{
-	state_->Update(this);
-}
+
 //kRoot
 void Player::RootInit()
 {

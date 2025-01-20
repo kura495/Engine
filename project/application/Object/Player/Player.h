@@ -68,7 +68,6 @@ private:
 #pragma region 
 #pragma region
 	std::unique_ptr<IPlayerState> state_;
-	void StateUpdate();
 #pragma endregion State
 #pragma endregion BehaviorTree
 #pragma region 

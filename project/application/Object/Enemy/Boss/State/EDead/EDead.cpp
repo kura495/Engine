@@ -2,17 +2,17 @@
 #include "../../Boss.h"
 void EDead::Init(Boss* Boss)
 {
-	Boss;
+	Boss->DeadInit();
 }
 
 void EDead::Update(Boss* Boss)
 {
-	Boss;
+	Boss->DeadUpdate();
 }
 
 void EDead::Draw(Boss* Boss)
 {
-	Boss;
+	Boss->DeadDraw();
 }
 std::string EDead::ShowState()
 {

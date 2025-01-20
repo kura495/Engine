@@ -51,40 +51,44 @@ public:
 		state_ = std::make_unique<T>();
 		state_->Init(this);
 	}
-private:
-#pragma region
 	//ふるまい
 	BossBehavior behavior_ = BossBehavior::Spawn;
 	//次のふるまいリクエスト
 	std::optional<BossBehavior> behaviorRequest_ = std::nullopt;
-	void BehaviorUpdate();
+#pragma region
 	//Root
 	void RootInit();
 	void RootUpdate();
+	void RootDraw();
 	//ReturnPosition
 	void ReturnPositionInit();
 	void ReturnPositionUpdate();
+	void ReturnPositionDraw();
 	Vector3 PrePos;
 	//AttackSlamPlayer
-	void AttackSlamPlayerInit();
-	void AttackSlamPlayerUpdate();
+	void AttackSlamInit();
+	void AttackSlamUpdate();
+	void AttackSlamDraw();
 	//AttackThrowBomb
 	void AttackThrowBallInit();
 	void AttackThrowBallUpdate();
+	void AttackThrowBallDraw();
 	//Spawn
 	void SpawnInit();
 	void SpawnUpdate();
+	void SpawnDraw();
 	//Dead
 	void DeadInit();
 	void DeadUpdate();
+	void DeadDraw();
 	//Down
 	void DownInit();
 	void DownUpdate();
+	void DownDraw();
 #pragma endregion Behavior
-
+private:
 #pragma region
 	std::unique_ptr<IBossState> state_;
-	void StateUpdate();
 #pragma endregion State
 
 #pragma region
