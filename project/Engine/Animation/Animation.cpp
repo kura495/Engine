@@ -134,6 +134,30 @@ void Animation::PlayAnimation(bool LoopFlag)
 	}
 }
 
+void Animation::PlayAnimation(bool LoopFlag, int FlemeSpeed)
+{
+	if (FlemeSpeed > duration && LoopFlag == false) {
+		isFin = true;
+	}
+
+	//時間の加算
+	if (isFin == true) {
+		FlemeSpeed = duration;
+	}
+	else {
+		FlemeSpeed = FlemeSpeed / 60.0f;
+		animationTime_ = std::fmod(FlemeSpeed, duration);
+	}
+	ApplyAnimation(FlemeSpeed);
+
+	SkeletonUpdate();
+	SkinClusterUpdate();
+	if (IsDebugLine) {
+		UpdateLine();
+
+	}
+}
+
 void Animation::AnimationLerp(Animation* animeA, Animation* animeB, float t)
 {
 	for (Joint& joint : skeleton.joints) {

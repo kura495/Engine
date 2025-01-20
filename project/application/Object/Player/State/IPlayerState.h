@@ -5,12 +5,13 @@ enum class PlayerState {
 	kRoot,
 	kJump,
 	kAttack,
-	kDead
+	kDead,
+	End
 };
 class IPlayerState
 {
 public:
-	IPlayerState() {};
+	IPlayerState() { stateType = PlayerState::End; };
 	virtual ~IPlayerState() {};
 
 	virtual void Init(Player* p) = 0;

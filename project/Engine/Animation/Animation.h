@@ -45,10 +45,16 @@ public:
 	/// <param name="t">補間の値</param>
 	void AnimationLerp(Animation* animeA, Animation* animeB, float t);
 	/// <summary>
-	/// アニメーションを再生(ノードアニメーション用)
+	/// アニメーションを再生
 	/// </summary>
 	/// <param name="LoopFlag">アニメーションをループさせるかどうかのフラグ</param>
 	void PlayAnimation(bool LoopFlag = true);
+	/// <summary>
+	/// 指定したフレームのアニメーションを再生
+	/// </summary>
+	/// <param name="LoopFlag">アニメーションをループさせるかどうかのフラグ</param>
+	/// <param name="FlemeSpeed">指定したフレームのアニメーションを再生する</param>
+	void PlayAnimation(bool LoopFlag = true,int FlemeSpeed);
 
 	/// <summary>
 	/// スケルトンを描画する

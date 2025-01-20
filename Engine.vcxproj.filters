@@ -41,27 +41,6 @@
     <Filter Include="project\application\Object\Enemy\Boss\Ball">
       <UniqueIdentifier>{031599da-f3ee-4545-8a5d-2dd1afef5843}</UniqueIdentifier>
     </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer">
-      <UniqueIdentifier>{518d673c-cf12-4c40-9615-e37fddb51f4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\State\AttackThrowball">
-      <UniqueIdentifier>{c8a3b1e0-f782-4e68-a91d-fff2ffa78a6d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\State\Dead">
-      <UniqueIdentifier>{e6b3a3b3-0a57-4992-ade0-b3314d342ebc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\State\Down">
-      <UniqueIdentifier>{8e02e915-e595-41a8-9f55-2c1397b5aac9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\State\ReturnPosition">
-      <UniqueIdentifier>{0fee8fb6-9145-4b54-b4a0-b258594cbc3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\State\Spawn">
-      <UniqueIdentifier>{f39d5ad4-d19d-42ee-aaf6-c63a8030eae0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\State\Root">
-      <UniqueIdentifier>{821d0d0c-210c-41a8-a3e5-4db529a65bd8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="project\application\Object\FloorManager">
       <UniqueIdentifier>{557106ac-c0cc-4ca1-b221-043c2bd87bb6}</UniqueIdentifier>
     </Filter>
@@ -362,6 +341,27 @@
     <Filter Include="project\application\Object\Player\State\PAttack">
       <UniqueIdentifier>{a62053bf-de88-457d-8a39-d804d4da6649}</UniqueIdentifier>
     </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\EDead">
+      <UniqueIdentifier>{e6b3a3b3-0a57-4992-ade0-b3314d342ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\EDown">
+      <UniqueIdentifier>{8e02e915-e595-41a8-9f55-2c1397b5aac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\ERoot">
+      <UniqueIdentifier>{821d0d0c-210c-41a8-a3e5-4db529a65bd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\ESpawn">
+      <UniqueIdentifier>{f39d5ad4-d19d-42ee-aaf6-c63a8030eae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\EAttackSlam">
+      <UniqueIdentifier>{518d673c-cf12-4c40-9615-e37fddb51f4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\EAttackThrowball">
+      <UniqueIdentifier>{c8a3b1e0-f782-4e68-a91d-fff2ffa78a6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\EReturnPosition">
+      <UniqueIdentifier>{0fee8fb6-9145-4b54-b4a0-b258594cbc3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp">
@@ -385,26 +385,26 @@
     <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp">
       <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Down\Down.cpp">
-      <Filter>project\application\Object\Enemy\Boss\State\Down</Filter>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EDown\EDown.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\EDown</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Dead\EDead.cpp">
-      <Filter>project\application\Object\Enemy\Boss\State\Dead</Filter>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EDead\EDead.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\EDead</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp">
-      <Filter>project\application\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\EAttackSlam</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp">
-      <Filter>project\application\Object\Enemy\Boss\State\AttackThrowball</Filter>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\EAttackThrowball</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp">
-      <Filter>project\application\Object\Enemy\Boss\State\ReturnPosition</Filter>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EReturnPosition\EReturnPosition.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\EReturnPosition</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.cpp">
-      <Filter>project\application\Object\Enemy\Boss\State\Spawn</Filter>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ESpawn\ESpawn.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\ESpawn</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Root\ERoot.cpp">
-      <Filter>project\application\Object\Enemy\Boss\State\Root</Filter>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ERoot\ERoot.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\ERoot</Filter>
     </ClCompile>
     <ClCompile Include="project\application\Object\FloorManager\FloorManager.cpp">
       <Filter>project\application\Object\FloorManager</Filter>
@@ -667,16 +667,16 @@
     <ClCompile Include="project\Engine\WorldTransform\WorldTransform.cpp">
       <Filter>project\Engine\WorldTransform</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Player\State\Attack\PAttack.cpp">
+    <ClCompile Include="project\application\Object\Player\State\PAttack\PAttack.cpp">
       <Filter>project\application\Object\Player\State\PAttack</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Player\State\Jump\PJump.cpp">
+    <ClCompile Include="project\application\Object\Player\State\PJump\PJump.cpp">
       <Filter>project\application\Object\Player\State\PJump</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Player\State\Root\PRoot.cpp">
+    <ClCompile Include="project\application\Object\Player\State\PRoot\PRoot.cpp">
       <Filter>project\application\Object\Player\State\PRoot</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp">
+    <ClCompile Include="project\application\Object\Player\State\PDead\PDead.cpp">
       <Filter>project\application\Object\Player\State\PDead</Filter>
     </ClCompile>
   </ItemGroup>
@@ -702,26 +702,26 @@
     <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h">
       <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Down\Down.h">
-      <Filter>project\application\Object\Enemy\Boss\State\Down</Filter>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EDown\EDown.h">
+      <Filter>project\application\Object\Enemy\Boss\State\EDown</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Dead\EDead.h">
-      <Filter>project\application\Object\Enemy\Boss\State\Dead</Filter>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EDead\EDead.h">
+      <Filter>project\application\Object\Enemy\Boss\State\EDead</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h">
-      <Filter>project\application\Object\Enemy\Boss\State\AttackSlamPlayer</Filter>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.h">
+      <Filter>project\application\Object\Enemy\Boss\State\EAttackSlam</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h">
-      <Filter>project\application\Object\Enemy\Boss\State\AttackThrowball</Filter>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.h">
+      <Filter>project\application\Object\Enemy\Boss\State\EAttackThrowball</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h">
-      <Filter>project\application\Object\Enemy\Boss\State\ReturnPosition</Filter>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EReturnPosition\EReturnPosition.h">
+      <Filter>project\application\Object\Enemy\Boss\State\EReturnPosition</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.h">
-      <Filter>project\application\Object\Enemy\Boss\State\Spawn</Filter>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ESpawn\ESpawn.h">
+      <Filter>project\application\Object\Enemy\Boss\State\ESpawn</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Root\ERoot.h">
-      <Filter>project\application\Object\Enemy\Boss\State\Root</Filter>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ERoot\ERoot.h">
+      <Filter>project\application\Object\Enemy\Boss\State\ERoot</Filter>
     </ClInclude>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\IBossState.h">
       <Filter>project\application\Object\Enemy\Boss\State</Filter>
@@ -1281,19 +1281,19 @@
     <ClInclude Include="project\Engine\WorldTransform\WorldTransform.h">
       <Filter>project\Engine\WorldTransform</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Player\State\Attack\PAttack.h">
+    <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h">
       <Filter>project\application\Object\Player\State\PAttack</Filter>
     </ClInclude>
     <ClInclude Include="project\application\Object\Player\State\IPlayerState.h">
       <Filter>project\application\Object\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Player\State\Jump\PJump.h">
+    <ClInclude Include="project\application\Object\Player\State\PJump\PJump.h">
       <Filter>project\application\Object\Player\State\PJump</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Player\State\Root\PRoot.h">
+    <ClInclude Include="project\application\Object\Player\State\PRoot\PRoot.h">
       <Filter>project\application\Object\Player\State\PRoot</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Player\State\Dead\PDead.h">
+    <ClInclude Include="project\application\Object\Player\State\PDead\PDead.h">
       <Filter>project\application\Object\Player\State\PDead</Filter>
     </ClInclude>
   </ItemGroup>

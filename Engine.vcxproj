@@ -171,22 +171,22 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="project\application\Object\Player\State\Attack\PAttack.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Jump\PJump.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\PAttack\PAttack.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\PDead\PDead.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\PJump\PJump.cpp" />
     <ClCompile Include="project\application\main.cpp" />
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp" />
     <ClCompile Include="project\application\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\Ball\Ball.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Dead\EDead.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Down\Down.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Root\ERoot.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EDead\EDead.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EDown\EDown.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EReturnPosition\EReturnPosition.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ERoot\ERoot.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ESpawn\ESpawn.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="project\application\Object\FloorManager\FloorManager.cpp" />
@@ -275,25 +275,25 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="project\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="project\externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Root\PRoot.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\PRoot\PRoot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="project\application\Object\Player\State\Attack\PAttack.h" />
-    <ClInclude Include="project\application\Object\Player\State\Dead\PDead.h" />
-    <ClInclude Include="project\application\Object\Player\State\Jump\PJump.h" />
+    <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />
+    <ClInclude Include="project\application\Object\Player\State\PDead\PDead.h" />
+    <ClInclude Include="project\application\Object\Player\State\PJump\PJump.h" />
     <ClInclude Include="project\application\Object\Box\BoxObject.h" />
     <ClInclude Include="project\application\Object\Camera\FollowCamera.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\Boss.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackSlamPlayer\AttackSlamPlayer.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\AttackThrowball\AttackThrowball.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Dead\EDead.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Down\Down.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EDead\EDead.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EDown\EDown.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\IBossState.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\ReturnPosition\ReturnPosition.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Root\ERoot.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\Spawn\Spawn.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EReturnPosition\EReturnPosition.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ERoot\ERoot.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ESpawn\ESpawn.h" />
     <ClInclude Include="project\application\Object\Enemy\Enemy.h" />
     <ClInclude Include="project\application\Object\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="project\application\Object\FloorManager\FloorManager.h" />
@@ -482,7 +482,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="project\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="project\externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="project\application\Object\Player\State\Root\PRoot.h" />
+    <ClInclude Include="project\application\Object\Player\State\PRoot\PRoot.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project\externals\assimp\include\assimp\.editorconfig" />
