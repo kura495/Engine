@@ -54,7 +54,7 @@ public:
 	/// </summary>
 	/// <param name="LoopFlag">アニメーションをループさせるかどうかのフラグ</param>
 	/// <param name="FlemeSpeed">指定したフレームのアニメーションを再生する</param>
-	void PlayAnimation(bool LoopFlag = true,int FlemeSpeed);
+	void PlayAnimation(float FlemeSpeed,bool LoopFlag = true);
 
 	/// <summary>
 	/// スケルトンを描画する

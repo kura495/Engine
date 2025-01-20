@@ -134,7 +134,7 @@ void Animation::PlayAnimation(bool LoopFlag)
 	}
 }
 
-void Animation::PlayAnimation(bool LoopFlag, int FlemeSpeed)
+void Animation::PlayAnimation(float FlemeSpeed,bool LoopFlag)
 {
 	if (FlemeSpeed > duration && LoopFlag == false) {
 		isFin = true;
