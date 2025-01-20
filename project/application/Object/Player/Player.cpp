@@ -92,7 +92,7 @@ void Player::Update()
 	//ステートのアップデート
 	state_->Update(this);
 	//パーティクルアップデート
-	attackHitParticle_->Update(false);
+	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
 	deadParticle_->Update();
 

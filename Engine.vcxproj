@@ -66,7 +66,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann;$(SolutionDir)/project/externals;$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/project/;$(SolutionDir)/project/Engine;$(SolutionDir)/project/Engine/Audio;$(SolutionDir)/project/Engine/Input;$(SolutionDir)/project/Engine/Math;$(SolutionDir)/project/Engine/Utility;$(SolutionDir)/project/Engine/Model_Struct;$(SolutionDir)/project/Engine/Object;$(SolutionDir)/project/Engine/Animation;$(SolutionDir)/project/application/;$(SolutionDir)/project/externals</ExternalIncludePath>
-    <TargetName>$Generated</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann;$(SolutionDir)/project/externals;$(IncludePath)</IncludePath>
