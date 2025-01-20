@@ -252,7 +252,7 @@ void Player::DeadDraw()
 		deadParticle_->RendererDraw();
 	}
 }
-#pragma endregion BeheviorTree
+#pragma endregion State
 #pragma region
 void Player::ColliderInit()
 {

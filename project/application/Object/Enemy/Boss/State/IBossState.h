@@ -10,18 +10,19 @@ enum class BossState {
 	Spawn,//出現時
 	Dead,//死亡時
 	Down,//ダウン時
+	End,
 };
 class IBossState
 {
 public:
-	IBossState() {};
+	IBossState() { stateType = BossState::End; };
 	virtual ~IBossState() {};
 
 	virtual void Init(Boss* p) = 0;
 	virtual void Update(Boss* p) = 0;
 	virtual void Draw(Boss* p) = 0;
 	BossState GetStateType() { return stateType; };
-	virtual std::string ShowState() = 0;
+	virtual std::string ShowState() { return "default"; };
 	BossState stateType;
 protected:
 };

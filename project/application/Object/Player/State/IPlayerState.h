@@ -18,7 +18,7 @@ public:
 	virtual void Update(Player* p) = 0;
 	virtual void Draw(Player* p) = 0;
 	PlayerState GetStateType() { return stateType; };
-	virtual std::string ShowState() = 0;
+	virtual std::string ShowState() { return "default"; };
 	PlayerState stateType;
 protected:
 };

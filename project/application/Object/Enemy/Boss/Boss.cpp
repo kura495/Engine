@@ -60,6 +60,7 @@ void Boss::Init(std::vector<Model*> models)
 
 	//ビヘイビアーを初期化
 	behaviorRequest_ = BossBehavior::Spawn;
+	ChangeState<ESpawn>();
 
 	name = "Boss";
 	//初期値を設定
@@ -191,22 +192,18 @@ void Boss::RootUpdate()
 	if (player_->GetState() == PlayerState::kDead) {
 		return;
 	}
-	//TODO:消すかifdefにする
-#pragma region
-	//if (easeT == 1.0f) {
-	//	behaviorRequest_ = BossBehavior::Dead;
-	//}
-	//easeT = (std::min)(easeT + 0.1f, 1.0f);
-#pragma endregion デバッグ用
+
 	//攻撃をする
 	if (isAttackSelect) {
 		//ボールを投げる攻撃
 		behaviorRequest_ = BossBehavior::AttackThrowball;
+		ChangeState<EAttackThrowball>();
 		isAttackSelect = false;
 	}
 	else if (FollowPlayer()) {
 		//プレイヤーを叩きつけ攻撃
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
+		ChangeState<EAttackSlam>();
 		isAttackSelect = true;
 	}
 }
@@ -220,6 +217,7 @@ void Boss::ReturnPositionUpdate()
 {
 	if (easeT == 1.0f) {
 		behaviorRequest_ = BossBehavior::Root;
+		ChangeState<ERoot>();
 	}
 	if (easeT >= 0.2f) {
 		isSlamFlag = false;
@@ -274,7 +272,7 @@ void Boss::AttackSlamPlayerUpdate()
 		}
 		//初期位置に戻す
 		behaviorRequest_ = BossBehavior::ReturnPosition;
-
+		ChangeState<EReturnPosition>();
 	}
 
 }
@@ -300,11 +298,13 @@ void Boss::AttackThrowBallUpdate()
 	if (countHitBall >= 3) {
 		dummyBall->Reset();
 		behaviorRequest_ = BossBehavior::Down;
+		ChangeState<EDown>();
 	}
 	//ボールが一定のラインを超えたらルートビヘイビアーに戻す
 	if (ball->GetIsOverline()) {
 		dummyBall->Reset();
 		behaviorRequest_ = BossBehavior::Root;
+		ChangeState<ERoot>();
 	}
 }
 void Boss::SpawnInit()
@@ -322,6 +322,7 @@ void Boss::SpawnUpdate()
 	sleepParticle_->Update();
 	if (HP_ <= 9) {
 		behaviorRequest_ = BossBehavior::ReturnPosition;
+		ChangeState<EReturnPosition>();
 	}
 }
 void Boss::DeadInit()
@@ -373,6 +374,7 @@ void Boss::DownUpdate()
 	//3回攻撃を受けると元の位置に戻す
 	if (hitCount == 3) {
 		behaviorRequest_ = BossBehavior::ReturnPosition;
+		ChangeState<EReturnPosition>();
 		colliderDamage.IsUsing = false;
 	}
 }
@@ -412,6 +414,7 @@ void Boss::OnCollision(const ICollider& collider)
 		hitCount += 1;
 		if (HP_ <= 0) {
 			behaviorRequest_ = BossBehavior::Dead;
+			ChangeState<EDead>();
 		}
 		isDamege = true;
 		damegeInterval = 0;
@@ -465,10 +468,9 @@ void Boss::AddImGui()
 {
 	if (ImGui::Button("AttackMove")) {
 		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
+		ChangeState<EAttackSlam>();
 	}
-	//ImGui::DragFloat3("Scale", &worldArmL.transform.scale.x);
-	//ImGui::DragFloat4("Rotate", &worldArmL.transform.quaternion.x);
-	ImGui::DragFloat3("ParticleTranslate", &deadEnemyParticleEmitter.world_.transform.translate.x);
+	ImGui::Text(state_->ShowState().c_str());
 }
 void Boss::UpdateParticle(Particle& particle)
 {

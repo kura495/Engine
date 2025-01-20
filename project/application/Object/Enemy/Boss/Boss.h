@@ -7,7 +7,17 @@
 #include "Ball/Ball.h"
 #include "DummyBall/DummyBall.h"
 #include "Engine/Audio/Audio.h"
-#include "State/IBossState.h"
+#pragma region
+
+#include "State/EAttackSlam/EAttackSlam.h"
+#include "State/EAttackThrowball/EAttackThrowball.h"
+#include "State/EDead/EDead.h"
+#include "State/EDown/EDown.h"
+#include "State/EReturnPosition/EReturnPosition.h"
+#include "State/ERoot/ERoot.h"
+#include "State/ESpawn/ESpawn.h"
+
+#pragma endregion State
 
 enum Body {
 	body,
@@ -33,6 +43,14 @@ public:
 	void Draw()override;
 
 	bool GetSlamFlag() { return isSlamFlag; };
+	/// <summary>
+	/// ステートを切り替える
+	/// </summary>
+	template <typename T>
+	void ChangeState() {
+		state_ = std::make_unique<T>();
+		state_->Init(this);
+	}
 private:
 #pragma region
 	//ふるまい
@@ -63,6 +81,12 @@ private:
 	void DownInit();
 	void DownUpdate();
 #pragma endregion Behavior
+
+#pragma region
+	std::unique_ptr<IBossState> state_;
+	void StateUpdate();
+#pragma endregion State
+
 #pragma region
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
