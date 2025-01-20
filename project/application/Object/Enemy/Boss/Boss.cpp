@@ -59,7 +59,6 @@ void Boss::Init(std::vector<Model*> models)
 #pragma endregion
 
 	//ビヘイビアーを初期化
-	behaviorRequest_ = BossBehavior::Spawn;
 	ChangeState<ESpawn>();
 
 	name = "Boss";
@@ -109,13 +108,11 @@ void Boss::RootUpdate()
 	//攻撃をする
 	if (isAttackSelect) {
 		//ボールを投げる攻撃
-		behaviorRequest_ = BossBehavior::AttackThrowball;
 		ChangeState<EAttackThrowball>();
 		isAttackSelect = false;
 	}
 	else if (FollowPlayer()) {
-		//プレイヤーを叩きつけ攻撃
-		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
+		//叩きつけ攻撃
 		ChangeState<EAttackSlam>();
 		isAttackSelect = true;
 	}
@@ -132,17 +129,15 @@ void Boss::ReturnPositionInit()
 }
 void Boss::ReturnPositionUpdate()
 {
+	easeT = (std::min)(easeT + addEaseT, 1.0f);
+	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
+
 	if (easeT == 1.0f) {
-		behaviorRequest_ = BossBehavior::Root;
 		ChangeState<ERoot>();
 	}
 	if (easeT >= 0.2f) {
 		isSlamFlag = false;
 	}
-	//
-	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
-
 }
 void Boss::ReturnPositionDraw()
 {
@@ -192,7 +187,6 @@ void Boss::AttackSlamUpdate()
 			isSlam2ndFlag = true;
 		}
 		//初期位置に戻す
-		behaviorRequest_ = BossBehavior::ReturnPosition;
 		ChangeState<EReturnPosition>();
 	}
 
@@ -222,13 +216,11 @@ void Boss::AttackThrowBallUpdate()
 	//3回球に当たったらやられ状態にする
 	if (countHitBall >= 3) {
 		dummyBall->Reset();
-		behaviorRequest_ = BossBehavior::Down;
 		ChangeState<EDown>();
 	}
 	//ボールが一定のラインを超えたらルートビヘイビアーに戻す
 	if (ball->GetIsOverline()) {
 		dummyBall->Reset();
-		behaviorRequest_ = BossBehavior::Root;
 		ChangeState<ERoot>();
 	}
 }
@@ -252,7 +244,6 @@ void Boss::SpawnUpdate()
 	//パーティクル更新
 	sleepParticle_->Update();
 	if (HP_ <= 9) {
-		behaviorRequest_ = BossBehavior::ReturnPosition;
 		ChangeState<EReturnPosition>();
 	}
 }
@@ -314,7 +305,6 @@ void Boss::DownUpdate()
 	worldArmL.transform.translate = Vector3::Lerp(PrePos, DownPosition, easeT);
 	//3回攻撃を受けると元の位置に戻す
 	if (hitCount == 3) {
-		behaviorRequest_ = BossBehavior::ReturnPosition;
 		ChangeState<EReturnPosition>();
 		colliderDamage.IsUsing = false;
 	}
@@ -358,14 +348,13 @@ void Boss::OnCollision(const ICollider& collider)
 		HP_ -= 1;
 		hitCount += 1;
 		if (HP_ <= 0) {
-			behaviorRequest_ = BossBehavior::Dead;
 			ChangeState<EDead>();
 		}
 		isDamege = true;
 		damegeInterval = 0;
 		colliderDamage.IsUsing = false;
 	}
-	if (behavior_ == BossBehavior::AttackThrowball) {
+	if (state_->GetStateType() == BossState::AttackThrowball) {
 		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 			ball->Reset(player_->GetWorld().transform.translate);
 			if (hitCount < 3) {
@@ -378,7 +367,6 @@ void Boss::OnCollision(const ICollider& collider)
 			}
 		}
 	}
-
 }
 void Boss::ColliderAttackInit()
 {
@@ -402,7 +390,7 @@ void Boss::ColliderAttackInit()
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == ColliderTag::Player && behavior_ == BossBehavior::AttackSlamPlayer) {
+	if (collider.GetcollitionAttribute() == ColliderTag::Player && state_->GetStateType() == BossState::AttackSlam) {
 		colliderAttack.IsUsing = false;
 		colliderAttackA.IsUsing = false;
 		SEPlayer->Play(SEHitattack, 1.0f);
@@ -412,14 +400,12 @@ void Boss::OnCollisionAttack(const ICollider& collider)
 void Boss::AddImGui()
 {
 	if (ImGui::Button("AttackMove")) {
-		behaviorRequest_ = BossBehavior::AttackSlamPlayer;
 		ChangeState<EAttackSlam>();
 	}
 	ImGui::Text(state_->ShowState().c_str());
 }
 void Boss::UpdateParticle(Particle& particle)
 {
-
 	Vector3 velcity = particle.velocity * kDeltaTime;
 	particle.transform.translate += velcity * deadEnemyParticleEmitter.speed;
 	//エミッターがパーティクルの半径を決める
@@ -432,7 +418,6 @@ void Boss::UpdateParticle(Particle& particle)
 	particle.color.z = deadEnemyParticleEmitter.color.z;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
-
 }
 Particle Boss::CustomParticle()
 {
