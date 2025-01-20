@@ -33,6 +33,7 @@ void GamePlayState::Initialize()
 	player_->Init(playerModel_);
 	
 	followCamera->SetTarget(&player_->GetWorld());
+	followCamera->Update();
 	//Renderer
 	renderer_ = Renderer::GetInstance();
 
@@ -60,12 +61,17 @@ void GamePlayState::Initialize()
 	BGMPlayer = Audio::GetInstance();
 	BGMHundle = BGMPlayer->LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3",true);
 	BGMPlayer->Play(BGMHundle, audioValue);
+
+	woodenBox.push_back(Model::CreateModelFromObj("project/resources/Box", "Box.gltf"));
+
+	woodenBoxWorld_.Initialize();
+	woodenBoxWorld_.transform.translate.z = -3.0f;
+	woodenBoxWorld_.Update();
 }
 void GamePlayState::Update()
 {
 	BehaviorUpdate();
 
-	followCamera->Update();
 	Renderer::viewProjection = followCamera->GetViewProjection();
 
 	if (enemyManager->GetSlamFlag()) {
@@ -179,7 +185,7 @@ void GamePlayState::TitleUpdate()
 	if (fade->Out() == false) {
 		return;
 	}
-
+	followCamera->Update();
 #ifdef _DEBUG
 	ImGui::Begin("Title");
 	ImGui::InputFloat("stertCount", &stertCount);
@@ -190,10 +196,14 @@ void GamePlayState::TitleUpdate()
 		stertCount += 0.3f;
 
 	}
-
+	woodenBoxWorld_.Update();
 	stertCount = (std::max)(stertCount - subStertCount,0.0f);
 
-	if (stertCount >= 1.0f) {
+	woodenBoxWorld_.transform.scale.x = stertCount + 1.0f;
+	woodenBoxWorld_.transform.scale.y = stertCount + 1.0f;
+	woodenBoxWorld_.transform.scale.z = stertCount + 1.0f;
+
+	if (stertCount >= 0.7f) {
 		IsTitleToGameFlag = true;
 	}
 	if (IsTitleToGameFlag) {
@@ -204,7 +214,9 @@ void GamePlayState::TitleUpdate()
 void GamePlayState::TitleDraw()
 {
 	titleSprite->RendererDraw(title);
-	
+
+	woodenBox[0]->RendererDraw(woodenBoxWorld_);
+
 	fade->Draw();
 }
 #pragma endregion Title
@@ -217,8 +229,8 @@ void GamePlayState::PlayUpdate()
 {
 	player_->Update();
 	enemyManager->Update();
-
 	collisionManager->Update();
+	followCamera->Update();
 }
 void GamePlayState::PlayDraw()
 {

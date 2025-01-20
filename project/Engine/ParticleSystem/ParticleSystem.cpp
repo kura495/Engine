@@ -24,14 +24,18 @@ void ParticleSystem::Initalize(const std::string filePath)
 	materialData->uvTransform = Matrix4x4::CreateIdentity();
 }
 
-void ParticleSystem::Update()
+void ParticleSystem::Update(bool billboardFlag)
 {
 	numInstance = 0;
 	//ビルボード
-	Matrix4x4 billboardMatrix = Renderer::viewProjection.CameraMatrix;
-	billboardMatrix.m[3][0] = 0.0f;
-	billboardMatrix.m[3][1] = 0.0f;
-	billboardMatrix.m[3][2] = 0.0f;
+	Matrix4x4 billboardMatrix = Matrix4x4::CreateIdentity();
+	if (billboardFlag) {
+		billboardMatrix = Renderer::viewProjection.CameraMatrix;
+		billboardMatrix.m[3][0] = 0.0f;
+		billboardMatrix.m[3][1] = 0.0f;
+		billboardMatrix.m[3][2] = 0.0f;
+	}
+
 
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
 		//一定時間経過したパーティクルを削除

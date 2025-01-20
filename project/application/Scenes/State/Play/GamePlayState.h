@@ -109,10 +109,13 @@ private:
 
 	std::unique_ptr<FloorManager> floorManager;
 
+	std::vector<Model*> woodenBox;
+	WorldTransform woodenBoxWorld_;
+
 	Input* input;
 	//ボタンを押したときに加算する。一定値を超えたらプレイステートに移行する
 	float stertCount = 0.0f;
-	const float subStertCount = 0.001f;
+	const float subStertCount = 0.005f;
 
 	std::unique_ptr<Sprite> titleSprite;
 	WorldTransform title;

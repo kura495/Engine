@@ -46,9 +46,6 @@ void FollowCamera::Update() {
 		Vector3 offset = OffsetCalc();
 		//オフセット分と追従座標の補間分ずらす
 		viewProj.translation_ = workInter.interTarget_ + offset;
-#ifdef _DEBUG
-		ImGui();
-#endif
 	}
 
 	//画面を揺らす

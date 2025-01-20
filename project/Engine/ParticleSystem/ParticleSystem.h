@@ -43,7 +43,7 @@ public:
 
 	void Initalize(const std::string filePath);
 
-	void Update();
+	void Update(bool billboardFlag = true);
 
 	//関数ポインタ　UpdateParticleを入れる
 	using UpdateFunction = std::function<void(Particle&)>;

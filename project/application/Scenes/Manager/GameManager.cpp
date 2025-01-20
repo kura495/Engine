@@ -77,7 +77,6 @@ void GameManager::Gameloop(){
 		else {
 			prevSceneNum_ = currentSceneNum_;
 			currentSceneNum_ = state[currentSceneNum_]->GetSceneNum();
-
 			if (prevSceneNum_ != currentSceneNum_) {
 				state[currentSceneNum_]->Initialize();
 			}
