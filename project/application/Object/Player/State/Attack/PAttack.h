@@ -1,9 +1,9 @@
 #pragma once
 #include "../IPlayerState.h"
-class Root : public IPlayerState
+class PAttack : public IPlayerState
 {
 public:
-	Root() { stateType = PlayerState::kRoot; };
+	PAttack() { stateType = PlayerState::kAttack; };
 
 	void Init(Player* p)override;
 	void Update(Player* p)override;

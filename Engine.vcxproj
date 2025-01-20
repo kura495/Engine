@@ -171,10 +171,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="project\application\Object\Player\State\Attack\Attack.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\Attack\PAttack.cpp" />
     <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\IPlayerState.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Jump\Jump.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\Jump\PJump.cpp" />
     <ClCompile Include="project\application\main.cpp" />
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp" />
     <ClCompile Include="project\application\Object\Camera\FollowCamera.cpp" />
@@ -276,12 +275,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="project\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="project\externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Root\Root.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\Root\PRoot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="project\application\Object\Player\State\Attack\Attack.h" />
+    <ClInclude Include="project\application\Object\Player\State\Attack\PAttack.h" />
     <ClInclude Include="project\application\Object\Player\State\Dead\PDead.h" />
-    <ClInclude Include="project\application\Object\Player\State\Jump\Jump.h" />
+    <ClInclude Include="project\application\Object\Player\State\Jump\PJump.h" />
     <ClInclude Include="project\application\Object\Box\BoxObject.h" />
     <ClInclude Include="project\application\Object\Camera\FollowCamera.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h" />
@@ -483,7 +482,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="project\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="project\externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="project\application\Object\Player\State\Root\Root.h" />
+    <ClInclude Include="project\application\Object\Player\State\Root\PRoot.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project\externals\assimp\include\assimp\.editorconfig" />

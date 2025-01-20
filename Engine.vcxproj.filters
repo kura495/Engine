@@ -347,6 +347,21 @@
     <Filter Include="project\Engine\Sprite">
       <UniqueIdentifier>{ea325212-4ec9-4b84-b52e-a183dddd1252}</UniqueIdentifier>
     </Filter>
+    <Filter Include="project\application\Object\Player\State">
+      <UniqueIdentifier>{8281d9f6-9852-4c62-a6fd-384f351900e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Player\State\PDead">
+      <UniqueIdentifier>{283f9cf6-1a37-42bf-847c-c7596cb54529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Player\State\PRoot">
+      <UniqueIdentifier>{976fca1a-1e42-4dab-afe2-812433c99c80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Player\State\PJump">
+      <UniqueIdentifier>{879dff63-2823-498c-9be5-796d5a39e123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Player\State\PAttack">
+      <UniqueIdentifier>{a62053bf-de88-457d-8a39-d804d4da6649}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp">
@@ -652,11 +667,18 @@
     <ClCompile Include="project\Engine\WorldTransform\WorldTransform.cpp">
       <Filter>project\Engine\WorldTransform</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Player\State\Root\Root.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Jump\Jump.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\Attack\Attack.cpp" />
-    <ClCompile Include="project\application\Object\Player\State\IPlayerState.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\Attack\PAttack.cpp">
+      <Filter>project\application\Object\Player\State\PAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Player\State\Jump\PJump.cpp">
+      <Filter>project\application\Object\Player\State\PJump</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Player\State\Root\PRoot.cpp">
+      <Filter>project\application\Object\Player\State\PRoot</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Player\State\Dead\PDead.cpp">
+      <Filter>project\application\Object\Player\State\PDead</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1259,11 +1281,21 @@
     <ClInclude Include="project\Engine\WorldTransform\WorldTransform.h">
       <Filter>project\Engine\WorldTransform</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Player\State\IPlayerState.h" />
-    <ClInclude Include="project\application\Object\Player\State\Root\Root.h" />
-    <ClInclude Include="project\application\Object\Player\State\Jump\Jump.h" />
-    <ClInclude Include="project\application\Object\Player\State\Dead\PDead.h" />
-    <ClInclude Include="project\application\Object\Player\State\Attack\Attack.h" />
+    <ClInclude Include="project\application\Object\Player\State\Attack\PAttack.h">
+      <Filter>project\application\Object\Player\State\PAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Player\State\IPlayerState.h">
+      <Filter>project\application\Object\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Player\State\Jump\PJump.h">
+      <Filter>project\application\Object\Player\State\PJump</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Player\State\Root\PRoot.h">
+      <Filter>project\application\Object\Player\State\PRoot</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Player\State\Dead\PDead.h">
+      <Filter>project\application\Object\Player\State\PDead</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

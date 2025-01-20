@@ -11,10 +11,10 @@
 #include "ParticleSystem/ParticleSystem.h"
 
 #pragma region
-#include "State/Attack/Attack.h"
+#include "State/Attack/PAttack.h"
 #include "State/Dead/PDead.h"
-#include "State/Jump/Jump.h"
-#include "State/Root/Root.h"
+#include "State/Jump/PJump.h"
+#include "State/Root/PRoot.h"
 #include "State/IPlayerState.h"
 #pragma endregion State
 

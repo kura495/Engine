@@ -67,7 +67,7 @@ void Player::Init(std::vector<Model*> models)
 	SEattack = Audio::LoadAudioMP3("project/resources/sound/Player/attack.mp3",false);
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Player/Hitattack.mp3",false);
 
-	ChangeState<Root>();
+	ChangeState<PRoot>();
 }
 void Player::TitleUpdate()
 {
@@ -153,11 +153,11 @@ void Player::RootUpdate()
 
 	//ボタンを押したら攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
-		ChangeState<Attack>();
+		ChangeState<PAttack>();
 	}
 	//ボタンを押したらジャンプ
 	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
-		ChangeState<Jump>();
+		ChangeState<PJump>();
 	}
 }
 void Player::RootDraw()
@@ -191,7 +191,7 @@ void Player::AttackUpdate()
 		animationTime_ = 0.0f;
 		colliderAttack.IsUsing = false;
 		//kRootに戻す
-		ChangeState<Root>();
+		ChangeState<PRoot>();
 		attackAnimation->Reset();
 		Audio::Stop(SEattack, true, false);
 	}
@@ -286,7 +286,7 @@ void Player::OnCollision(const ICollider& ICollider)
 			if (world_.transform.translate.y <= ICollider.GetCenter().y && jumpForce <= 0) {
 				world_.transform.translate.y = ICollider.GetCenter().y;
 				world_.Update();
-				ChangeState<Root>();
+				ChangeState<PRoot>();
 			}
 		}
 		else {
