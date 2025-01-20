@@ -67,6 +67,12 @@ void GamePlayState::Initialize()
 	woodenBoxWorld_.Initialize();
 	woodenBoxWorld_.transform.translate.z = -3.0f;
 	woodenBoxWorld_.Update();
+
+	tutorialModel.push_back(Model::CreateModelFromObj("project/resources/Tutorial", "Tutorial.obj"));
+	tutorialWorld_.Initialize();
+	tutorialWorld_.transform.translate.z = -3.0f;
+	tutorialWorld_.transform.translate.x = -2.0f;
+	tutorialWorld_.Update();
 }
 void GamePlayState::Update()
 {
@@ -192,7 +198,7 @@ void GamePlayState::TitleUpdate()
 	ImGui::End();
 #endif
 
-	if (input->GetPadPrecede(XINPUT_GAMEPAD_A,20) || input->IsTriggerKey(DIK_SPACE)) {
+	if (input->GetPadPrecede(XINPUT_GAMEPAD_X,20) || input->IsTriggerKey(DIK_SPACE)) {
 		stertCount += 0.3f;
 
 	}
@@ -216,6 +222,7 @@ void GamePlayState::TitleDraw()
 	titleSprite->RendererDraw(title);
 
 	woodenBox[0]->RendererDraw(woodenBoxWorld_);
+	tutorialModel[0]->RendererDraw(tutorialWorld_);
 
 	fade->Draw();
 }
@@ -224,6 +231,7 @@ void GamePlayState::TitleDraw()
 void GamePlayState::PlayInit()
 {
 	IsTitleToGameFlag = false;
+	player_->ChangeState<PJump>();
 }
 void GamePlayState::PlayUpdate()
 {

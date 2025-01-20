@@ -111,6 +111,9 @@ private:
 
 	std::vector<Model*> woodenBox;
 	WorldTransform woodenBoxWorld_;
+	
+	std::vector<Model*> tutorialModel;
+	WorldTransform tutorialWorld_;
 
 	Input* input;
 	//ボタンを押したときに加算する。一定値を超えたらプレイステートに移行する
