@@ -7,6 +7,7 @@ enum class BossState {
 	ReturnPosition,//元の位置に戻る
 	AttackSlam,//叩きつけ攻撃
 	AttackThrowball,//爆弾を投げる攻撃
+	RocketPunth,//ロケットパンチをする攻撃
 	Spawn,//出現時
 	Dead,//死亡時
 	Down,//ダウン時

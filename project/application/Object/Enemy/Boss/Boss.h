@@ -68,6 +68,10 @@ public:
 	void AttackThrowBallInit();
 	void AttackThrowBallUpdate();
 	void AttackThrowBallDraw();
+	//AttackRocketPunch
+	void RocketPunchInit();
+	void RocketPunchUpdate();
+	void RocketPunchDraw();
 	//Spawn
 	void SpawnInit();
 	void SpawnUpdate();
@@ -111,6 +115,9 @@ private:
 	bool isThrowdummyBallFlag = false;
 	//SEハンドル
 	int SEthrowBall;
+//AttackRocketPunch
+	//ターゲットに向かうベクトル
+	Vector3 forTargetVector;
 //Spawn
 	//寝てる演出パーティクル
 	ParticleSystem* sleepParticle_;

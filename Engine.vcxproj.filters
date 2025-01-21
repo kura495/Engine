@@ -362,6 +362,9 @@
     <Filter Include="project\application\Object\Enemy\Boss\State\EReturnPosition">
       <UniqueIdentifier>{0fee8fb6-9145-4b54-b4a0-b258594cbc3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\ERocketPunch">
+      <UniqueIdentifier>{d8873748-2b29-45f1-9b9a-ec22d20e0814}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp">
@@ -678,6 +681,9 @@
     </ClCompile>
     <ClCompile Include="project\application\Object\Player\State\PDead\PDead.cpp">
       <Filter>project\application\Object\Player\State\PDead</Filter>
+    </ClCompile>
+    <ClCompile Include="ERocketPunch.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\ERocketPunch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1295,6 +1301,9 @@
     </ClInclude>
     <ClInclude Include="project\application\Object\Player\State\PDead\PDead.h">
       <Filter>project\application\Object\Player\State\PDead</Filter>
+    </ClInclude>
+    <ClInclude Include="ERocketPunch.h">
+      <Filter>project\application\Object\Enemy\Boss\State\ERocketPunch</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

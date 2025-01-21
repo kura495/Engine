@@ -181,7 +181,6 @@ void Boss::AttackSlamUpdate()
 		//初期位置に戻す
 		ChangeState<EReturnPosition>();
 	}
-
 }
 void Boss::AttackSlamDraw()
 {
@@ -222,9 +221,45 @@ void Boss::AttackThrowBallDraw()
 	ball->Draw();
 	dummyBall->Draw();
 }
+void Boss::RocketPunchInit()
+{
+	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
+	colliderAttackA.SetcollitionAttribute(ColliderTag::EnemyAttack);
+	easeT = 0.0f;
+}
+void Boss::RocketPunchUpdate()
+{
+	if (easeT != 1.0f) {
+		//方向を決める
+		Vector3 playerToBomb = player_->GetWorld().transform.translate - world_.transform.translate;
+
+		easeT = (std::max)(easeT + addEaseT,1.0f);
+		if (easeT == 1.0f) {
+			//ノーマライズする
+			forTargetVector = playerToBomb.Normalize();
+		}
+
+		//ランダム生成用
+		std::random_device seedGenerator;
+		std::mt19937 randomEngine(seedGenerator());
+		std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
+		Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
+
+		world_.transform.translate.x += ramdomTranslate.x;
+		world_.transform.translate.y += ramdomTranslate.y;
+		world_.transform.translate.z += ramdomTranslate.z;
+	}
+	else {
+
+	}
+
+}
+void Boss::RocketPunchDraw()
+{
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+}
 void Boss::SpawnInit()
 {
-	world_.transform.translate = DownPosition;
 	//当たり判定を通常に変更
 	colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
 	colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
@@ -257,7 +292,6 @@ void Boss::DeadUpdate()
 	if (models_[Body::ArmL]->color_.w == 0.0f) {
 		IsAlive = false;
 	}
-
 	//パーティクル生成
 	ParticleSystem::ParticleSpawn(*deadParticle_, deadEnemyParticleEmitter);
 	//パーティクル更新
@@ -285,7 +319,7 @@ void Boss::DownInit()
 void Boss::DownUpdate()
 {
 	if (isDownStert) {
-		animationArmLDamage->PlayAnimation(true);
+		animationArmLDamage->PlayAnimation();
 		animationTime_ += 1.0f / 60.0f;
 		if (animationTime_ > animationArmLDamage->duration) {
 			isDownStert = false;

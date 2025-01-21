@@ -52,15 +52,6 @@ void Ball::Update()
 	//移動の制限(下限と上限を一行で書いている)
 	world_.transform.translate.y = (std::max)(world_.transform.translate.y,1.0f);
 
-	//地面で反射する用のコード
-	/*if (world_.transform.translate.y == 1.0f) {
-		boundFlag = true;
-		jumpValue = kjumpValue;
-	}
-	if (boundFlag) {
-		world_.transform.translate.y += jumpValue;
-		jumpValue -= subjumpValue;
-	}*/
 	if (isThrowFlag) {
 		world_.transform.translate += forTargetVector;
 	}
