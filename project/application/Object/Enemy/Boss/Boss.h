@@ -51,10 +51,6 @@ public:
 		state_ = std::make_unique<T>();
 		state_->Init(this);
 	}
-	//ふるまい
-	BossBehavior behavior_ = BossBehavior::Spawn;
-	//次のふるまいリクエスト
-	std::optional<BossBehavior> behaviorRequest_ = std::nullopt;
 #pragma region
 	//Root
 	void RootInit();
@@ -85,7 +81,7 @@ public:
 	void DownInit();
 	void DownUpdate();
 	void DownDraw();
-#pragma endregion Behavior
+#pragma endregion State
 private:
 #pragma region
 	std::unique_ptr<IBossState> state_;

@@ -283,6 +283,7 @@ void Player::OnCollision(const ICollider& ICollider)
 			if (world_.transform.translate.y <= ICollider.GetCenter().y && jumpForce <= 0) {
 				world_.transform.translate.y = ICollider.GetCenter().y;
 				world_.Update();
+				gravity = 0.0f;
 				ChangeState<PRoot>();
 			}
 		}
@@ -421,24 +422,8 @@ void Player::ImGui()
 	ImGui::DragFloat3("Scale", &world_.transform.scale.x);
 	ImGui::DragFloat4("Rotate", &world_.transform.quaternion.x);
 	ImGui::DragFloat3("Translate", &world_.transform.translate.x, 0.1f);
-	if (ImGui::Button("Reset")) {
-		world_.transform.translate = { 0.0f,2.0f,0.0f };
-		world_.transform.quaternion = Quaternion::IdentityQuaternion();
-	}
-	if (ImGui::Button("CollisionOn")) {
-		colliderPlayer.IsUsing = true;
-	}
-
-	if (ImGui::Button("CollisionOff")) {
-		colliderPlayer.IsUsing = false;
-	}
-	if (ImGui::Button("SE")) {
-		Audio::Play(SEattack,1.0f);
-	}
-	if (ImGui::Button("SEReset")) {
-		Audio::Stop(SEattack,true,false);
-	}
 	ImGui::Text("%d", HP_);
+	ImGui::Text("%f", jumpForce);
 	ImGui::Text(state_->ShowState().c_str());
 	ImGui::End();
 }

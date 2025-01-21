@@ -73,6 +73,11 @@ void GamePlayState::Initialize()
 	tutorialWorld_.transform.translate.z = -3.0f;
 	tutorialWorld_.transform.translate.x = -2.0f;
 	tutorialWorld_.Update();
+	stertCount = 0.0f;
+	woodenBoxWorld_.transform.scale.x = stertCount + 1.0f;
+	woodenBoxWorld_.transform.scale.y = stertCount + 1.0f;
+	woodenBoxWorld_.transform.scale.z = stertCount + 1.0f;
+	woodenBoxWorld_.Update();
 }
 void GamePlayState::Update()
 {
