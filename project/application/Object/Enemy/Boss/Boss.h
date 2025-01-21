@@ -51,7 +51,7 @@ public:
 		state_ = std::make_unique<T>();
 		state_->Init(this);
 	}
-#pragma region
+	#pragma region
 	//Root
 	void RootInit();
 	void RootUpdate();
@@ -60,7 +60,6 @@ public:
 	void ReturnPositionInit();
 	void ReturnPositionUpdate();
 	void ReturnPositionDraw();
-	Vector3 PrePos;
 	//AttackSlamPlayer
 	void AttackSlamInit();
 	void AttackSlamUpdate();
@@ -81,10 +80,42 @@ public:
 	void DownInit();
 	void DownUpdate();
 	void DownDraw();
-#pragma endregion State
+	#pragma endregion State
 private:
+
 #pragma region
 	std::unique_ptr<IBossState> state_;
+//Root
+	
+//ReturnPosition
+	//戻る位置を保存する変数
+	Vector3 PrePos;
+//AttackSlamPlayer
+	//叩きつけ攻撃時のカメラシェイク用のフラグ
+	bool isSlamFlag = false;
+	//叩きつけを一回以上しているか
+	bool isSlam2ndFlag = false;
+//AttackThrowBomb
+	std::unique_ptr<Ball> ball;
+	std::unique_ptr<DummyBall> dummyBall;
+	//ボールに当たった回数
+	int countHitBall;
+	//ダミーを発射したかどうか
+	bool isThrowdummyBallFlag = false;
+//Spawn
+	//寝てる演出パーティクル
+	ParticleSystem* sleepParticle_;
+	Emitter sleepParticleEmitter;
+	void SleepUpdateParticle(Particle& particle);
+	float sleepParticleValue = 2.0f;
+//Dead
+	//死亡パーティクル
+	ParticleSystem* deadParticle_;
+	Emitter deadEnemyParticleEmitter;
+	void UpdateParticle(Particle& particle);
+	Particle CustomParticle();
+//Down
+	
 #pragma endregion State
 
 #pragma region
@@ -103,48 +134,14 @@ private:
 	WorldTransform colliderAttackWorld_;
 	bool IsAttackFlag = false;
 #pragma endregion Collider
-#pragma region
+
 	//現在のTの値
 	float easeT = 0.0f;
 	//raseTに毎フレーム加算する値
 	float addEaseT = 0.05f;
-	//叩きつけ攻撃時のカメラシェイク用のフラグ
-	bool isSlamFlag = false;
-	//叩きつけを一回以上しているか
-	bool isSlam2ndFlag = false;
-	//ダミーを発射したかどうか
-	bool isThrowdummyBallFlag = false;
-#pragma endregion 攻撃に関する物
-#pragma region
-	
-	std::unique_ptr<Ball> ball;
 
-	std::unique_ptr<DummyBall> dummyBall;
-	//爆弾に当たった回数
-	int countHitBall;
-
-#pragma endregion ボール
-#pragma region
-	//パーティクル
-	ParticleSystem* particle_;
-	Emitter deadEnemyParticleEmitter;
-	void UpdateParticle(Particle& particle);
-	Particle CustomParticle();
-
-	//寝てる演出パーティクル
-	ParticleSystem* sleepParticle_;
-	Emitter sleepParticleEmitter;
-	void SleepUpdateParticle(Particle& particle);
-	//
-	float minX = -1.0f;
-	float maxX = 1.0f;
-	float circlecycle = 0.0f;
-	float addcirclecycle = 1.0f;
-	float sleepParticleValue = 2.0f;
-#pragma endregion パーティクル
 #pragma region
 	Animation* animationArmLDamage;
-	Animation* animationSpawn;
 #pragma endregion Animation
 #pragma region Down
 	Vector3 DownPosition{ 0.0f,0.5f,20.0f };

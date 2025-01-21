@@ -20,9 +20,9 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
 #pragma region 
-	particle_ = new ParticleSystem();
-	particle_->Initalize("project/resources/circle2.dds");
-	particle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
+	deadParticle_ = new ParticleSystem();
+	deadParticle_->Initalize("project/resources/circle2.dds");
+	deadParticle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 
 	deadEnemyParticleEmitter.count = 50;
 	deadEnemyParticleEmitter.frequency = 0.1f;
@@ -267,14 +267,14 @@ void Boss::DeadUpdate()
 	}
 
 	//パーティクル生成
-	ParticleSystem::ParticleSpawn(*particle_, deadEnemyParticleEmitter);
+	ParticleSystem::ParticleSpawn(*deadParticle_, deadEnemyParticleEmitter);
 	//パーティクル更新
-	particle_->Update();
+	deadParticle_->Update();
 }
 void Boss::DeadDraw()
 {
 	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
-	particle_->RendererDraw();
+	deadParticle_->RendererDraw();
 }
 void Boss::DownInit()
 {
