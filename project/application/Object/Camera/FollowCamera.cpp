@@ -7,7 +7,10 @@ void FollowCamera::Initialize() {
 
 	workInter.interTarget_ = { 0.0f,0.0f,0.0f };
 	PlaySceneReset();
-}
+	workInter.interParameter_.x = 0.7f;
+	workInter.interParameter_.y = 0.7f;
+	workInter.interParameter_.z = 0.7f;
+} 
 
 void FollowCamera::Update() {
 
@@ -36,12 +39,24 @@ void FollowCamera::Update() {
 	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {
-		Vector3 pos = target_->transform.translate;
-		//追従座標の補間
-		workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.x).x;
-		workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.z).z;
+		prePos_ = currentPos_;
 
-		workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, pos, workInter.interParameter_.y).y;
+		currentPos_ = target_->transform.translate;
+
+		if (prePos_.x != currentPos_.x || prePos_.y != currentPos_.y || prePos_.z != currentPos_.z) {
+			interParameter_ = 0.5f;
+		}
+		else {
+			interParameter_ = 1.0f;
+		}
+
+		workInter.interParameter_.x = (std::min)(workInter.interParameter_.x + 0.05f, interParameter_);
+		workInter.interParameter_.y = (std::min)(workInter.interParameter_.y + 0.05f, interParameter_);
+		workInter.interParameter_.z = (std::min)(workInter.interParameter_.z + 0.05f, interParameter_);
+		//追従座標の補間
+		workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, currentPos_, workInter.interParameter_.x).x;
+		workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, currentPos_, workInter.interParameter_.y).y;
+		workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, currentPos_, workInter.interParameter_.z).z;
 
 		Vector3 offset = OffsetCalc();
 		//オフセット分と追従座標の補間分ずらす
@@ -74,12 +89,6 @@ void FollowCamera::ImGui()
 #ifdef _DEBUG
 	ImGui::Begin("FollowCamera");
 	ImGui::DragFloat3("Offset", &offsetPos.x);
-	ImGui::DragFloat3("translate", &InitCameraPos2.x, 0.1f);
-	ImGui::DragFloat3("rotate", &InitCameraRot2.x, 0.1f);
-	if (!target_) {
-		viewProj.translation_ = InitCameraPos2;
-		viewProj.rotation_ = Quaternion::EulerToQuaterion(InitCameraRot2);
-	}
 	if (ImGui::Button("isShakeOn")) {
 		isShake = true;
 	}

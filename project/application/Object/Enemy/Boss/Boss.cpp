@@ -53,9 +53,8 @@ void Boss::Init(std::vector<Model*> models)
 	dummyBall->Init(ballmodels);
 #pragma endregion ボール
 #pragma region
-	SEPlayer = Audio::GetInstance();
-	SEthrowBall = SEPlayer->LoadAudioMP3("project/resources/sound/Boss/throwBall.mp3", false);
-	SEHitattack = SEPlayer->LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
+	SEthrowBall = Audio::LoadAudioMP3("project/resources/sound/Boss/throwBall.mp3", false);
+	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
 #pragma endregion
 
 	//ビヘイビアーを初期化
@@ -199,7 +198,7 @@ void Boss::AttackThrowBallInit()
 {
 	easeT = 0.0f;
 	ball->ThrowBall(worldArmL.transform.translate, player_->GetWorld().transform.translate);
-	SEPlayer->Play(SEthrowBall,0.2f);
+	Audio::Play(SEthrowBall,0.2f);
 	isThrowdummyBallFlag = false;
 	countHitBall = 0;
 }
@@ -358,8 +357,8 @@ void Boss::OnCollision(const ICollider& collider)
 		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
 			ball->Reset(player_->GetWorld().transform.translate);
 			if (hitCount < 3) {
-				SEPlayer->Stop(SEthrowBall,true,false);
-				SEPlayer->Play(SEthrowBall, 0.2f);
+				Audio::Stop(SEthrowBall, true, false);
+				Audio::Play(SEthrowBall, 0.2f);
 			}
 			if (easeT == 1.0f) {
 				countHitBall += 1;
@@ -393,7 +392,7 @@ void Boss::OnCollisionAttack(const ICollider& collider)
 	if (collider.GetcollitionAttribute() == ColliderTag::Player && state_->GetStateType() == BossState::AttackSlam) {
 		colliderAttack.IsUsing = false;
 		colliderAttackA.IsUsing = false;
-		SEPlayer->Play(SEHitattack, 1.0f);
+		Audio::Play(SEHitattack, 1.0f);
 	}
 }
 #pragma endregion Collider

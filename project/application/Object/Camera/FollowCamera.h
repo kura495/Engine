@@ -46,9 +46,13 @@ public:
 private:
 	void ImGui();
 #pragma region
-	//カメラの位置と向き
-	Vector3 InitCameraPos2 = {-1.5f,1.9f,1.9f};
-	Vector3 InitCameraRot2 = {0.5f,2.6f,0.0f};
+
+	const float kinterParameterMin_ = 0.7f;
+	const float kinterParameterMax_ = 1.0f;
+	float interParameter_ = 1.0f;
+
+	Vector3 prePos_;
+	Vector3 currentPos_;
 
 	bool resetFlag_ = true;
 	float lerpTTitle = 0.0f;

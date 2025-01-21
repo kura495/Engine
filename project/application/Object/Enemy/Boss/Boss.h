@@ -86,7 +86,10 @@ private:
 #pragma region
 	std::unique_ptr<IBossState> state_;
 //Root
-	
+	//攻撃の選択をする
+	bool isAttackSelect = true;
+	//プレイヤーを追いかける関数
+	bool FollowPlayer();
 //ReturnPosition
 	//戻る位置を保存する変数
 	Vector3 PrePos;
@@ -115,7 +118,9 @@ private:
 	void UpdateParticle(Particle& particle);
 	Particle CustomParticle();
 //Down
-	
+	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
+	bool isDownStert;
+	int hitCount = 0;
 #pragma endregion State
 
 #pragma region
@@ -140,28 +145,21 @@ private:
 	//raseTに毎フレーム加算する値
 	float addEaseT = 0.05f;
 
+	void AddImGui()override;
 #pragma region
 	Animation* animationArmLDamage;
 #pragma endregion Animation
-#pragma region Down
-	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
-	bool isDownStert;
-	int hitCount = 0;
-#pragma endregion
 #pragma region
-	Audio* SEPlayer;
 	int SEthrowBall;
 	int SEHitattack;
 #pragma endregion 音声
-	bool FollowPlayer();
-	void AddImGui()override;
+
 
 	WorldTransform worldArmL;
 
 	//固定の位置
 	Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 
-	bool isAttackSelect = true;
 
 
 };
