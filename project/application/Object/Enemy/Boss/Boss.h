@@ -155,10 +155,4 @@ private:
 #pragma region
 	Animation* animationArmLDamage;
 #pragma endregion Animation
-
-	WorldTransform worldArmL;
-
-
-
-
 };

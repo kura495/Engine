@@ -136,20 +136,19 @@ void Animation::PlayAnimation(bool LoopFlag)
 
 void Animation::PlayAnimation(float FlemeSpeed,bool LoopFlag)
 {
-	if (FlemeSpeed > duration && LoopFlag == false) {
+	if (FlemeSpeed > duration) {
 		isFin = true;
 	}
-
 	//時間の加算
-	if (isFin == true) {
+	if (isFin == true && LoopFlag == false) {
 		FlemeSpeed = duration;
 	}
 	else {
 		FlemeSpeed = FlemeSpeed / 60.0f;
+
 		animationTime_ = std::fmod(FlemeSpeed, duration);
 	}
 	ApplyAnimation(FlemeSpeed);
-
 	SkeletonUpdate();
 	SkinClusterUpdate();
 	if (IsDebugLine) {

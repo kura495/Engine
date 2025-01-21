@@ -147,7 +147,6 @@ void Player::RootUpdate()
 	}
 	//重力
 	world_.transform.translate.y -= gravity;
-
 	//ボタンを押したら攻撃
 	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		ChangeState<PAttack>();
@@ -177,7 +176,6 @@ void Player::AttackUpdate()
 	Move();
 	//攻撃中は一定の方向を向くように固定
 	world_.transform.quaternion = attackPosture;
-
 	//アニメーション再生
 	attackAnimation->PlayAnimation();
 	animationTime_ += 1.0f / 60.0f;

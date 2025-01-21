@@ -6,10 +6,8 @@ void Boss::Init(std::vector<Model*> models)
 	models_ = models;
 	//ワールド初期化
 	world_.Initialize();
+	world_.transform.translate = DownPosition;
 	world_.Update();
-	worldArmL.Initialize();
-	worldArmL.transform.translate = DownPosition;
-	worldArmL.Update();
 	//当たり判定
 	colliderDamageWorld_.Initialize();
 	colliderAttackWorld_.Initialize();
@@ -77,7 +75,6 @@ void Boss::Update()
 	state_->Update(this);
 
 	world_.Update();
-	worldArmL.Update();
 }
 void Boss::Draw()
 {	
@@ -120,12 +117,12 @@ void Boss::ReturnPositionInit()
 {
 	easeT = 0.0f;
 	addEaseT = 0.02f;
-	PrePos = worldArmL.transform.translate;
+	PrePos = world_.transform.translate;
 }
 void Boss::ReturnPositionUpdate()
 {
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	worldArmL.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
+	world_.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
 
 	if (easeT == 1.0f) {
 		ChangeState<ERoot>();
@@ -136,7 +133,7 @@ void Boss::ReturnPositionUpdate()
 }
 void Boss::ReturnPositionDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 void Boss::AttackSlamInit()
 {
@@ -154,19 +151,19 @@ void Boss::AttackSlamUpdate()
 	if (IsAttackFlag) {
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
 
-		worldArmL.transform.translate.y -= Ease::InBack(easeT);
+		world_.transform.translate.y -= Ease::InBack(easeT);
 		float newPoint = Ease::InBack(easeT);
 
 		if (newPoint > 0) {
 			addEaseT = 0.06f;
 		}
 		//位置が0になったら
-		if (worldArmL.transform.translate.y <= 0) {
+		if (world_.transform.translate.y <= 0) {
 			isSlamFlag = true;
 			addEaseT = 0.01f;
 			colliderAttack.IsUsing = false;
 			colliderAttackA.IsUsing = false;
-			worldArmL.transform.translate.y = 0.5f;
+			world_.transform.translate.y = 0.5f;
 			easeT = 0.0f;
 			IsAttackFlag = false;
 		}
@@ -188,12 +185,12 @@ void Boss::AttackSlamUpdate()
 }
 void Boss::AttackSlamDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 void Boss::AttackThrowBallInit()
 {
 	easeT = 0.0f;
-	ball->ThrowBall(worldArmL.transform.translate, player_->GetWorld().transform.translate);
+	ball->ThrowBall(world_.transform.translate, player_->GetWorld().transform.translate);
 	Audio::Play(SEthrowBall,0.2f);
 	isThrowdummyBallFlag = false;
 	countHitBall = 0;
@@ -205,7 +202,7 @@ void Boss::AttackThrowBallUpdate()
 	dummyBall->Update();
 	//跳ね返しのタイミングでもう一つの球を出す
 	if (countHitBall == 1 && isThrowdummyBallFlag == false) {
-		dummyBall->ThrowBall(worldArmL.transform.translate, { worldArmL.transform.translate.x + 5.0f,worldArmL.transform.translate.y,worldArmL.transform.translate.z }, player_->GetWorld().transform.translate);
+		dummyBall->ThrowBall(world_.transform.translate, { world_.transform.translate.x + 5.0f,world_.transform.translate.y,world_.transform.translate.z }, player_->GetWorld().transform.translate);
 		isThrowdummyBallFlag = true;
 	}
 	//3回球に当たったらやられ状態にする
@@ -221,13 +218,13 @@ void Boss::AttackThrowBallUpdate()
 }
 void Boss::AttackThrowBallDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 	ball->Draw();
 	dummyBall->Draw();
 }
 void Boss::SpawnInit()
 {
-	worldArmL.transform.translate = DownPosition;
+	world_.transform.translate = DownPosition;
 	//当たり判定を通常に変更
 	colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
 	colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
@@ -244,12 +241,12 @@ void Boss::SpawnUpdate()
 }
 void Boss::SpawnDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 	sleepParticle_->RendererDraw();
 }
 void Boss::DeadInit()
 {
-	deadEnemyParticleEmitter.world_.transform.translate = worldArmL.transform.translate;
+	deadEnemyParticleEmitter.world_.transform.translate = world_.transform.translate;
 	easeT = 0.0f;
 }
 void Boss::DeadUpdate()
@@ -268,7 +265,7 @@ void Boss::DeadUpdate()
 }
 void Boss::DeadDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 	deadParticle_->RendererDraw();
 }
 void Boss::DownInit()
@@ -282,7 +279,7 @@ void Boss::DownInit()
 	isDownStert = true;
 	easeT = 0.0f;
 	addEaseT = 0.02f;
-	PrePos = worldArmL.transform.translate;
+	PrePos = world_.transform.translate;
 	hitCount = 0;
 }
 void Boss::DownUpdate()
@@ -297,7 +294,7 @@ void Boss::DownUpdate()
 	}
 
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	worldArmL.transform.translate = Vector3::Lerp(PrePos, DownPosition, easeT);
+	world_.transform.translate = Vector3::Lerp(PrePos, DownPosition, easeT);
 	//3回攻撃を受けると元の位置に戻す
 	if (hitCount == 3) {
 		ChangeState<EReturnPosition>();
@@ -306,19 +303,19 @@ void Boss::DownUpdate()
 }
 void Boss::DownDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()
 {
 	//TODO:命名仮
-	Vector3 temp = player_->GetWorld().transform.translate - worldArmL.transform.translate;
+	Vector3 temp = player_->GetWorld().transform.translate - world_.transform.translate;
 	//モデルの中心から手のひらへ
 	temp.z += 5.0f;
 	temp.y = 0.0f;
 	float playerToEnemyLngth = temp.Length();
 	temp = temp.Normalize();
-	worldArmL.transform.translate += temp * 0.5f;
+	world_.transform.translate += temp * 0.5f;
 	//TODO:命名仮
 	if (playerToEnemyLngth <= 0.2f) {
 		return true;
@@ -328,7 +325,7 @@ bool Boss::FollowPlayer()
 #pragma region
 void Boss::ColliderDamageInit()
 {
-	colliderDamageWorld_.SetParent(&worldArmL);
+	colliderDamageWorld_.SetParent(&world_);
 
 	colliderDamage.Init(&colliderDamageWorld_);
 	colliderDamage.SetSize({ 1.0f,1.0f,1.0f });
@@ -366,15 +363,15 @@ void Boss::OnCollision(const ICollider& collider)
 void Boss::ColliderAttackInit()
 {
 	//腕側の攻撃判定
-	colliderAttackWorld_.SetParent(&worldArmL);
-	colliderAttack.Init(&worldArmL);
+	colliderAttackWorld_.SetParent(&world_);
+	colliderAttack.Init(&world_);
 	colliderAttack.SetSize({ 1.0f,1.0f,7.0f });
 	colliderAttack.SetOffset({ 0.0f,0.0f,-2.0f });
 	colliderAttack.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliderAttack.SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliderAttack.SetcollisionMask(~ColliderTag::EnemyCore & ~ColliderTag::EnemyAttackFront);
 	//指側の攻撃判定
-	colliderAttackA.Init(&worldArmL);
+	colliderAttackA.Init(&world_);
 	colliderAttackA.SetSize({ 2.0f,0.5f,1.0f });
 	colliderAttackA.SetOffset({ 0.0f,0.0f,-6.25f });
 	colliderAttackA.OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
