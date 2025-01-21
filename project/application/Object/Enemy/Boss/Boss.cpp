@@ -48,7 +48,6 @@ void Boss::Init(std::vector<Model*> models)
 	std::vector<Model*> ballmodels;
 	ballmodels.push_back(Model::CreateModelFromObj("project/resources/Cube", "Cube.obj"));
 	ball->Init(ballmodels);
-
 	dummyBall = std::make_unique<DummyBall>();
 	dummyBall->Init(ballmodels);
 #pragma endregion ボール
@@ -56,10 +55,8 @@ void Boss::Init(std::vector<Model*> models)
 	SEthrowBall = Audio::LoadAudioMP3("project/resources/sound/Boss/throwBall.mp3", false);
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
 #pragma endregion
-
 	//ビヘイビアーを初期化
 	ChangeState<ESpawn>();
-
 	name = "Boss";
 	//初期値を設定
 	HP_ = 10;
@@ -103,7 +100,6 @@ void Boss::RootUpdate()
 	if (player_->GetState() == PlayerState::kDead) {
 		return;
 	}
-
 	//攻撃をする
 	if (isAttackSelect) {
 		//ボールを投げる攻撃
@@ -118,7 +114,7 @@ void Boss::RootUpdate()
 }
 void Boss::RootDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(worldArmL, animationArmLDamage->GetSkinCluster());
+	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 void Boss::ReturnPositionInit()
 {
