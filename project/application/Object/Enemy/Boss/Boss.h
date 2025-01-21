@@ -91,20 +91,26 @@ private:
 	//プレイヤーを追いかける関数
 	bool FollowPlayer();
 //ReturnPosition
-	//戻る位置を保存する変数
+	//戻る前の位置を保存する変数
 	Vector3 PrePos;
+	//固定の位置
+	Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 //AttackSlamPlayer
 	//叩きつけ攻撃時のカメラシェイク用のフラグ
 	bool isSlamFlag = false;
 	//叩きつけを一回以上しているか
 	bool isSlam2ndFlag = false;
-//AttackThrowBomb
+	//SEハンドル
+	int SEHitattack;
+//AttackThrowBall
 	std::unique_ptr<Ball> ball;
 	std::unique_ptr<DummyBall> dummyBall;
 	//ボールに当たった回数
 	int countHitBall;
 	//ダミーを発射したかどうか
 	bool isThrowdummyBallFlag = false;
+	//SEハンドル
+	int SEthrowBall;
 //Spawn
 	//寝てる演出パーティクル
 	ParticleSystem* sleepParticle_;
@@ -149,16 +155,9 @@ private:
 #pragma region
 	Animation* animationArmLDamage;
 #pragma endregion Animation
-#pragma region
-	int SEthrowBall;
-	int SEHitattack;
-#pragma endregion 音声
-
 
 	WorldTransform worldArmL;
 
-	//固定の位置
-	Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 
 
 
