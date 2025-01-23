@@ -18,9 +18,9 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
 #pragma region 
-	deadParticle_ = new ParticleSystem();
-	deadParticle_->Initalize("project/resources/circle2.dds");
-	deadParticle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
+	particle_ = new ParticleSystem();
+	particle_->Init("project/resources/circle2.dds");
+	particle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 
 	deadEnemyParticleEmitter.count = 50;
 	deadEnemyParticleEmitter.frequency = 0.1f;
@@ -29,7 +29,7 @@ void Boss::Init(std::vector<Model*> models)
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 
 	sleepParticle_ = new ParticleSystem();
-	sleepParticle_->Initalize("project/resources/sleepParticle.png");
+	sleepParticle_->Init("project/resources/sleepParticle.png");
 	sleepParticle_->UpdateFunc = [this](Particle& particle) { SleepUpdateParticle(particle); };
 	sleepParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 

@@ -38,7 +38,7 @@ void GamePlayState::Initialize()
 	renderer_ = Renderer::GetInstance();
 
 	particle = std::make_unique<ParticleSystem>();
-	particle->Initalize("project/resources/circle2.png");
+	particle->Init("project/resources/circle2.png");
 
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();

@@ -1,6 +1,6 @@
 ﻿#include "ParticleSystem.h"
 
-void ParticleSystem::Initalize(const std::string filePath)
+void ParticleSystem::Init(const std::string filePath)
 {
 	textureManager_ = TextureManager::GetInstance();
 	directX_ = DirectXCommon::GetInstance();

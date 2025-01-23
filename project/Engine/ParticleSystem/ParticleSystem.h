@@ -41,7 +41,7 @@ class ParticleSystem
 {
 public:
 
-	void Initalize(const std::string filePath);
+	void Init(const std::string filePath);
 
 	void Update(bool billboardFlag = true);
 
