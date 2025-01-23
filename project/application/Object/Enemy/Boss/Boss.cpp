@@ -16,11 +16,11 @@ void Boss::Init(std::vector<Model*> models)
 	//アニメーション
 	animationArmLDamage = Animation::LoadAnimationFile("project/resources/Enemy", "Arm.gltf");
 	animationArmLDamage->Init();
-	animationArmLDamage->AnimeInit(*models_[Body::ArmL], false);
+	animationArmLDamage->AnimeInit(*models_[0], false);
 #pragma region 
-	particle_ = new ParticleSystem();
-	particle_->Init("project/resources/circle2.dds");
-	particle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
+	deadParticle_ = new ParticleSystem();
+	deadParticle_->Init("project/resources/circle2.dds");
+	deadParticle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 
 	deadEnemyParticleEmitter.count = 50;
 	deadEnemyParticleEmitter.frequency = 0.1f;
@@ -111,7 +111,7 @@ void Boss::RootUpdate()
 }
 void Boss::RootDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 void Boss::ReturnPositionInit()
 {
@@ -133,7 +133,7 @@ void Boss::ReturnPositionUpdate()
 }
 void Boss::ReturnPositionDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 void Boss::AttackSlamInit()
 {
@@ -184,7 +184,7 @@ void Boss::AttackSlamUpdate()
 }
 void Boss::AttackSlamDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 void Boss::AttackThrowBallInit()
 {
@@ -217,7 +217,7 @@ void Boss::AttackThrowBallUpdate()
 }
 void Boss::AttackThrowBallDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 	ball->Draw();
 	dummyBall->Draw();
 }
@@ -256,7 +256,7 @@ void Boss::RocketPunchUpdate()
 }
 void Boss::RocketPunchDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 void Boss::SpawnInit()
 {
@@ -276,7 +276,7 @@ void Boss::SpawnUpdate()
 }
 void Boss::SpawnDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 	sleepParticle_->RendererDraw();
 }
 void Boss::DeadInit()
@@ -288,8 +288,8 @@ void Boss::DeadUpdate()
 {
 	easeT = (std::min)(easeT + 0.1f, 1.0f);
 
-	models_[Body::ArmL]->color_.w = (std::max)(models_[Body::ArmL]->color_.w - 0.01f, 0.0f);
-	if (models_[Body::ArmL]->color_.w == 0.0f) {
+	models_[0]->color_.w = (std::max)(models_[0]->color_.w - 0.01f, 0.0f);
+	if (models_[0]->color_.w == 0.0f) {
 		IsAlive = false;
 	}
 	//パーティクル生成
@@ -299,7 +299,7 @@ void Boss::DeadUpdate()
 }
 void Boss::DeadDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 	deadParticle_->RendererDraw();
 }
 void Boss::DownInit()
@@ -337,7 +337,7 @@ void Boss::DownUpdate()
 }
 void Boss::DownDraw()
 {
-	models_[Body::ArmL]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()

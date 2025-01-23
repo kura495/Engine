@@ -18,12 +18,6 @@
 #include "State/ESpawn/ESpawn.h"
 
 #pragma endregion State
-
-enum Body {
-	body,
-	ArmL,
-	ArmR
-};
 enum class BossBehavior {
 	Root,
 	ReturnPosition,//元の位置に戻る

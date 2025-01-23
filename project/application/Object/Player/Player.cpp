@@ -69,11 +69,6 @@ void Player::Init(std::vector<Model*> models)
 
 	ChangeState<PRoot>();
 }
-void Player::TitleUpdate()
-{
-	//待機モーション再生
-	walkanimation->PlayAnimation();
-}
 void Player::Update()
 {
 	gravity += kgravity;
@@ -104,10 +99,6 @@ void Player::Update()
 	isOnFloorFlag = false;
 	//前フレームのゲームパッドの状態を保存
 	joyStatePre = joyState;
-}
-void Player::TitleDraw()
-{
-	models_[0]->RendererDraw(world_);
 }
 void Player::Draw()
 {

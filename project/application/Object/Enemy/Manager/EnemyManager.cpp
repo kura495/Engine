@@ -6,7 +6,6 @@ void EnemyManager::Init(Player* player)
 	player_ = player;
 	//モデル
 	enemyModel_.push_back(Model::CreateModelFromObj("project/resources/Enemy", "Arm.gltf"));
-	enemyModel_.push_back(Model::CreateModelFromObj("project/resources/Enemy", "Arm.gltf"));
 	//ボスの初期化
 	bossEnemy_ = std::make_unique<Boss>();
 	bossEnemy_->Init(enemyModel_);

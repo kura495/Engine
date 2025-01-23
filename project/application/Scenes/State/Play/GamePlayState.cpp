@@ -220,7 +220,6 @@ void GamePlayState::TitleUpdate()
 	if (IsTitleToGameFlag) {
 		behaviorRequest_ = StageBehavior::kPlay;
 	}
-	player_->TitleUpdate();
 }
 void GamePlayState::TitleDraw()
 {

@@ -27,12 +27,6 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	/// <summary>
-	/// ゲームプレイシーンがタイトル状態の時
-	/// </summary>
-	void TitleDraw();
-	void TitleUpdate();
-
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
 
@@ -69,8 +63,7 @@ private:
 #pragma region
 	std::unique_ptr<IPlayerState> state_;
 #pragma endregion State
-#pragma endregion BehaviorTree
-#pragma region 
+
 	//プレイヤーキャラ事態の当たり判定
 	void ColliderInit();
 	void OnCollision(const ICollider& collider);
@@ -122,7 +115,6 @@ private:
 	int SEattack;
 	int SEHitattack;
 #pragma endregion 音声
-
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
