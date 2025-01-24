@@ -682,7 +682,7 @@
     <ClCompile Include="project\application\Object\Player\State\PDead\PDead.cpp">
       <Filter>project\application\Object\Player\State\PDead</Filter>
     </ClCompile>
-    <ClCompile Include="ERocketPunch.cpp">
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ERocketPunch\ERocketPunch.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\ERocketPunch</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1302,7 +1302,7 @@
     <ClInclude Include="project\application\Object\Player\State\PDead\PDead.h">
       <Filter>project\application\Object\Player\State\PDead</Filter>
     </ClInclude>
-    <ClInclude Include="ERocketPunch.h">
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ERocketPunch\ERocketPunch.h">
       <Filter>project\application\Object\Enemy\Boss\State\ERocketPunch</Filter>
     </ClInclude>
   </ItemGroup>
