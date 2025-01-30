@@ -42,14 +42,14 @@ enum class StageBehavior {
 	kOver,
 };
 
-class GamePlayState :public GameState
+class GamePlayState :public IGameState
 {
 public:
 
-	void Initialize();
-	void Update();
+	void Initialize()override;
+	void Update()override;
 	void BehaviorUpdate();
-	void Draw();
+	void Draw()override;
 
 private:
 #pragma region 

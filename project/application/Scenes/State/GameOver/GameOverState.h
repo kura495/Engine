@@ -7,12 +7,12 @@
 #include "WorldTransform/WorldTransform.h"
 #include "Editer/Editer.h"
 
-class GameOverState :public GameState
+class GameOverState :public IGameState
 {
 public:
-	void Initialize();
-	void Update();
-	void Draw();
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
 private:
 	TextureManager* textureManager_;
 

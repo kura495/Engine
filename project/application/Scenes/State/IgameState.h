@@ -7,7 +7,7 @@ enum GameStateNo {
 	GAMEOVER,
 	GameStateMax
 };
-class GameState
+class IGameState
 {
 public:
 	virtual void Initialize() = 0;
@@ -16,7 +16,7 @@ public:
 
 	int GetSceneNum() { return StateNo; }
 
-	virtual  ~GameState() {};
+	virtual  ~IGameState() {};
 protected:
 	static int StateNo;
 };

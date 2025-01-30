@@ -8,12 +8,12 @@
 #include "Editer/Editer.h"
 #include "Object/Transition/Fade/Fade.h"
 
-class GameClearState :public GameState
+class GameClearState :public IGameState
 {
 public:
-	void Initialize();
-	void Update();
-	void Draw();
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
 private:
 	TextureManager* textureManager_;
 
