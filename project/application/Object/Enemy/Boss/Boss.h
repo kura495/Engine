@@ -44,6 +44,9 @@ public:
 	void Draw()override;
 
 	bool GetSlamFlag() { return isSlamFlag; };
+
+	void SetColliderUse(int number,bool flag);
+	void SetColliderAttribute(int number, uint32_t collisionAttribute);
 	/// <summary>
 	/// ステートを切り替える
 	/// </summary>
@@ -54,14 +57,10 @@ public:
 	}
 	#pragma region
 	//Root
-	void RootInit();
-	void RootUpdate();
-	void RootDraw();
 	//攻撃の選択をする
 	bool isAttackSelect = true;
 	//プレイヤーを追いかける関数
 	bool FollowPlayer();
-	void ColliderUseSet(bool flag);
 	//ReturnPosition
 	void ReturnPositionInit();
 	void ReturnPositionUpdate();

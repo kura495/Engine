@@ -80,39 +80,15 @@ void Boss::Draw()
 {	
 	state_->Draw(this);
 }
+void Boss::SetColliderUse(int number, bool flag)
+{
+	colliders_[number].IsUsing = flag;
+}
+void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
+{
+	colliders_[number].SetcollitionAttribute(collisionAttribute);
+}
 #pragma region
-void Boss::RootInit()
-{
-	easeT = 0.0f;
-	//当たり判定を有効か
-	colliders_[ColliderNumber::WeekPoint].IsUsing = true;
-	colliders_[ColliderNumber::Arm].IsUsing = true;
-	colliders_[ColliderNumber::Hund].IsUsing = true;
-	//当たり判定を通常に変更
-	colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::Enemy);
-	colliders_[ColliderNumber::Hund].SetcollitionAttribute(ColliderTag::Enemy);
-}
-void Boss::RootUpdate()
-{
-	if (player_->GetState() == PlayerState::kDead) {
-		return;
-	}
-	//攻撃をする
-	if (isAttackSelect) {
-		//ボールを投げる攻撃
-		ChangeState<EAttackThrowball>();
-		isAttackSelect = false;
-	}
-	else if (FollowPlayer()) {
-		//叩きつけ攻撃
-		ChangeState<EAttackSlam>();
-		isAttackSelect = true;
-	}
-}
-void Boss::RootDraw()
-{
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-}
 void Boss::ReturnPositionInit()
 {
 	easeT = 0.0f;
