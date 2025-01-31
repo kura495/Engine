@@ -18,22 +18,23 @@ public:
 	/// <param name="player">プレイヤーのポインタ</param>
 	void SetPlayer(Player*& player) { player_ = player; };
 	Player*& GetPlayer() { return player_; };
+	int32_t GetHP() { return HP_; };
 	bool GetIsAlive() {
 		return IsAlive;
 	}
+	bool IsAlive = true;
 	/// <summary>
 	/// スケール
 	/// 回転
 	/// 移動
 	/// </summary>
 	void ImGui();
+
 protected://関数
 	//追加用ImGui overrideするだけで追加可能
 	virtual void AddImGui(){};
 	//当たり判定用
 	virtual void OnCollision(const ICollider& ICollider);
-
-	float animationTime_ = 0.0f;
 
 	bool isDamege = false;
 	int damegeInterval = 0;
@@ -41,14 +42,10 @@ protected://関数
 
 	int32_t HP_;
 
-	bool IsAlive = true;
 
 	Player* player_ = nullptr;
 	//識別用の名前　変えることでImGuiのタブネームを変えることができる
 	std::string name = "Enemy";
 
-	//現在のTの値
-	float easeT = 0.0f;
-	//raseTに毎フレーム加算する値
-	float addEaseT = 0.05f;
+
 };

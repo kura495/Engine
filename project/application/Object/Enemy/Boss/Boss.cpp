@@ -72,6 +72,13 @@ void Boss::Update()
 
 		}
 	}
+	if (state_->GetStateType() == BossState::AttackThrowball) {
+		easeT = (std::min)(easeT + addEaseT, 1.0f);
+	}else {
+		easeT = 0.0f;
+	}
+
+
 	state_->Update(this);
 
 	world_.Update();
@@ -89,231 +96,43 @@ void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 	colliders_[number].SetcollitionAttribute(collisionAttribute);
 }
 #pragma region
-void Boss::ReturnPositionInit()
-{
-	easeT = 0.0f;
-	addEaseT = 0.02f;
-	PrePos = world_.transform.translate;
-}
-void Boss::ReturnPositionUpdate()
-{
-	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	world_.transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
 
-	if (easeT == 1.0f) {
-		ChangeState<ERoot>();
-	}
-	if (easeT >= 0.2f) {
-		isSlamFlag = false;
-	}
-}
-void Boss::ReturnPositionDraw()
-{
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-}
-void Boss::AttackSlamInit()
-{
-	addEaseT = 0.02f;
-	colliders_[ColliderNumber::Arm].IsUsing = true;
-	colliders_[ColliderNumber::Hund].IsUsing = true;
-	IsAttackFlag = true;
-	easeT = 0.0f;
-	//当たり判定を攻撃に変更
-	colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliders_[ColliderNumber::Hund].SetcollitionAttribute(ColliderTag::EnemyAttack | ColliderTag::EnemyAttackFront);
-}
-void Boss::AttackSlamUpdate()
-{
-	if (IsAttackFlag) {
-		easeT = (std::min)(easeT + addEaseT, 1.0f);
-
-		world_.transform.translate.y -= Ease::InBack(easeT);
-		float newPoint = Ease::InBack(easeT);
-
-		if (newPoint > 0) {
-			addEaseT = 0.06f;
-		}
-		//位置が0になったら
-		if (world_.transform.translate.y <= 0) {
-			isSlamFlag = true;
-			addEaseT = 0.01f;
-			colliders_[ColliderNumber::Arm].IsUsing = false;
-			colliders_[ColliderNumber::Hund].IsUsing = false;
-			world_.transform.translate.y = 0.5f;
-			easeT = 0.0f;
-			IsAttackFlag = false;
-		}
-	}
-	else {
-		//2回目移行かつHPが低くなった時に処理を実行
-		if (isSlam2ndFlag && HP_ <= 3) {
-			//falseにすることで2回連続で叩きつけをするようにする
-			isAttackSelect = false;
-			isSlam2ndFlag = false;
-		}
-		else if (isSlam2ndFlag == false) {
-			isSlam2ndFlag = true;
-		}
-		//初期位置に戻す
-		ChangeState<EReturnPosition>();
-	}
-}
-void Boss::AttackSlamDraw()
-{
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-}
-void Boss::AttackThrowBallInit()
-{
-	easeT = 0.0f;
-	ball->ThrowBall(world_.transform.translate, player_->GetWorld().transform.translate);
-	Audio::Play(SEthrowBall,0.2f);
-	isThrowdummyBallFlag = false;
-	countHitBall = 0;
-}
-void Boss::AttackThrowBallUpdate()
-{
-	easeT = (std::min)(easeT + 0.05f, 1.0f);
-	ball->Update();
-	dummyBall->Update();
-	//跳ね返しのタイミングでもう一つの球を出す
-	if (countHitBall == 1 && isThrowdummyBallFlag == false) {
-		dummyBall->ThrowBall(world_.transform.translate, { world_.transform.translate.x + 5.0f,world_.transform.translate.y,world_.transform.translate.z }, player_->GetWorld().transform.translate);
-		isThrowdummyBallFlag = true;
-	}
-	//3回球に当たったらやられ状態にする
-	if (countHitBall >= 3) {
-		dummyBall->Reset();
-		ChangeState<EDown>();
-	}
-	//ボールが一定のラインを超えたらルートビヘイビアーに戻す
-	if (ball->GetIsOverline()) {
-		dummyBall->Reset();
-		ChangeState<ERoot>();
-	}
-}
-void Boss::AttackThrowBallDraw()
-{
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-	ball->Draw();
-	dummyBall->Draw();
-}
 void Boss::RocketPunchInit()
 {
-	colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::EnemyAttack);
+	/*colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::EnemyAttack);
 	colliders_[ColliderNumber::Hund].SetcollitionAttribute(ColliderTag::EnemyAttack);
-	easeT = 0.0f;
+	easeT = 0.0f;*/
 }
 void Boss::RocketPunchUpdate()
 {
-	if (easeT != 1.0f) {
-		//方向を決める
-		Vector3 playerToBomb = player_->GetWorld().transform.translate - world_.transform.translate;
+	//if (easeT != 1.0f) {
+	//	//方向を決める
+	//	Vector3 playerToBomb = player_->GetWorld().transform.translate - world_.transform.translate;
 
-		easeT = (std::max)(easeT + addEaseT,1.0f);
-		if (easeT == 1.0f) {
-			//ノーマライズする
-			forTargetVector = playerToBomb.Normalize();
-		}
+	//	easeT = (std::max)(easeT + addEaseT,1.0f);
+	//	if (easeT == 1.0f) {
+	//		//ノーマライズする
+	//		forTargetVector = playerToBomb.Normalize();
+	//	}
 
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-		std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
-		Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
+	//	//ランダム生成用
+	//	std::random_device seedGenerator;
+	//	std::mt19937 randomEngine(seedGenerator());
+	//	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
+	//	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 
-		world_.transform.translate.x += ramdomTranslate.x;
-		world_.transform.translate.y += ramdomTranslate.y;
-		world_.transform.translate.z += ramdomTranslate.z;
-	}
-	else {
+	//	world_.transform.translate.x += ramdomTranslate.x;
+	//	world_.transform.translate.y += ramdomTranslate.y;
+	//	world_.transform.translate.z += ramdomTranslate.z;
+	//}
+	//else {
 
-	}
+	//}
 
 }
 void Boss::RocketPunchDraw()
 {
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-}
-void Boss::SpawnInit()
-{
-	//当たり判定を通常に変更
-	colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::Enemy);
-	colliders_[ColliderNumber::Hund].SetcollitionAttribute(ColliderTag::Enemy);
-}
-void Boss::SpawnUpdate()
-{
-	//パーティクル生成
-	ParticleSystem::ParticleCustumSpawn(*sleepParticle_, sleepParticleEmitter);
-	//パーティクル更新
-	sleepParticle_->Update();
-	if (HP_ <= 9) {
-		ChangeState<EReturnPosition>();
-	}
-}
-void Boss::SpawnDraw()
-{
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-	sleepParticle_->RendererDraw();
-}
-void Boss::DeadInit()
-{
-	deadEnemyParticleEmitter.world_.transform.translate = world_.transform.translate;
-	easeT = 0.0f;
-}
-void Boss::DeadUpdate()
-{
-	easeT = (std::min)(easeT + 0.1f, 1.0f);
-
-	models_[0]->color_.w = (std::max)(models_[0]->color_.w - 0.01f, 0.0f);
-	if (models_[0]->color_.w == 0.0f) {
-		IsAlive = false;
-	}
-	//パーティクル生成
-	ParticleSystem::ParticleSpawn(*deadParticle_, deadEnemyParticleEmitter);
-	//パーティクル更新
-	deadParticle_->Update();
-}
-void Boss::DeadDraw()
-{
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-	deadParticle_->RendererDraw();
-}
-void Boss::DownInit()
-{
-	colliders_[ColliderNumber::Arm].IsUsing = true;
-	colliders_[ColliderNumber::Hund].IsUsing = true;
-	//当たり判定を通常に変更
-	colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::Enemy);
-	colliders_[ColliderNumber::Hund].SetcollitionAttribute(ColliderTag::Enemy);
-
-	isDownStert = true;
-	easeT = 0.0f;
-	addEaseT = 0.02f;
-	PrePos = world_.transform.translate;
-	hitCount = 0;
-}
-void Boss::DownUpdate()
-{
-	if (isDownStert) {
-		animationArmLDamage->PlayAnimation();
-		animationTime_ += 1.0f / 60.0f;
-		if (animationTime_ > animationArmLDamage->duration) {
-			isDownStert = false;
-			animationTime_ = 0.0f;
-		}
-	}
-
-	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	world_.transform.translate = Vector3::Lerp(PrePos, DownPosition, easeT);
-	//3回攻撃を受けると元の位置に戻す
-	if (hitCount == 3) {
-		ChangeState<EReturnPosition>();
-		colliders_[ColliderNumber::WeekPoint].IsUsing = false;
-	}
-}
-void Boss::DownDraw()
-{
-	models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
+	//models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
 }
 #pragma endregion Behavior
 bool Boss::FollowPlayer()

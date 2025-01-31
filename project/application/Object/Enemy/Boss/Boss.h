@@ -47,6 +47,7 @@ public:
 
 	void SetColliderUse(int number,bool flag);
 	void SetColliderAttribute(int number, uint32_t collisionAttribute);
+	Animation* GetAnime() { return animationArmLDamage; };
 	/// <summary>
 	/// ステートを切り替える
 	/// </summary>
@@ -62,17 +63,8 @@ public:
 	//プレイヤーを追いかける関数
 	bool FollowPlayer();
 	//ReturnPosition
-	void ReturnPositionInit();
-	void ReturnPositionUpdate();
-	void ReturnPositionDraw();
-	//戻る前の位置を保存する変数
-	Vector3 PrePos;
-	//固定の位置
-	Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 	//AttackSlamPlayer
-	void AttackSlamInit();
-	void AttackSlamUpdate();
-	void AttackSlamDraw();
+	bool IsAttackFlag = false;
 	//叩きつけ攻撃時のカメラシェイク用のフラグ
 	bool isSlamFlag = false;
 	//叩きつけを一回以上しているか
@@ -80,9 +72,6 @@ public:
 	//SEハンドル
 	int SEHitattack;
 	//AttackThrowBomb
-	void AttackThrowBallInit();
-	void AttackThrowBallUpdate();
-	void AttackThrowBallDraw();
 	std::unique_ptr<Ball> ball;
 	std::unique_ptr<DummyBall> dummyBall;
 	//ボールに当たった回数
@@ -98,9 +87,6 @@ public:
 	//ターゲットに向かうベクトル
 	Vector3 forTargetVector;
 	//Spawn
-	void SpawnInit();
-	void SpawnUpdate();
-	void SpawnDraw();
 	//寝てる演出パーティクル
 	ParticleSystem* sleepParticle_;
 	Emitter sleepParticleEmitter;
@@ -141,12 +127,17 @@ private:
 	void OnCollisionAttack(const ICollider& collider);
 	//指側の攻撃判定
 	WorldTransform colliderAttackWorld_;
-	bool IsAttackFlag = false;
+
 #pragma endregion Collider
 
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float addEaseT = 0.05f;
 
 	void AddImGui()override;
 #pragma region
 	Animation* animationArmLDamage;
+	float animationTime_ = 0.0f;
 #pragma endregion Animation
 };

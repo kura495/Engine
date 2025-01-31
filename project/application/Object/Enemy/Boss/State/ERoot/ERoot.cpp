@@ -3,7 +3,7 @@
 #include "application/Object/Player/Player.h"
 void ERoot::Init(Boss* Boss)
 {
-	//easeT = 0.0f;
+	easeT = 0.0f;
 	//当たり判定を有効か
 	Boss->SetColliderUse(ColliderNumber::WeekPoint,true);
 	Boss->SetColliderUse(ColliderNumber::Arm, true);
@@ -11,9 +11,6 @@ void ERoot::Init(Boss* Boss)
 	//当たり判定を通常に変更
 	Boss->SetColliderAttribute(ColliderNumber::Arm, ColliderTag::Enemy);
 	Boss->SetColliderAttribute(ColliderNumber::Hund, ColliderTag::Enemy);
-
-	//colliderAttack.SetcollitionAttribute(ColliderTag::Enemy);
-	//colliderAttackA.SetcollitionAttribute(ColliderTag::Enemy);
 }
 
 void ERoot::Update(Boss* Boss)

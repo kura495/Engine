@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Vector/Vector3.h"
 //前方宣言
 class Boss;
 enum class BossState {
@@ -24,6 +25,12 @@ public:
 	virtual void Draw(Boss* p) = 0;
 	BossState GetStateType() { return stateType; };
 	virtual std::string ShowState() { return "default"; };
-	BossState stateType;
+
 protected:
+	BossState stateType;
+
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float addEaseT = 0.05f;
 };
