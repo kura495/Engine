@@ -1,5 +1,7 @@
 #pragma once
 /*ボスクラス*/
+#include <vector>
+
 #include "Object/Enemy/Enemy.h"
 #include "Animation/Animation.h"
 #include "Utility/Ease/Ease.h"
@@ -27,7 +29,12 @@ enum class BossBehavior {
 	Dead,//死亡時
 	Down,//ダウン時
 };
-
+enum ColliderNumber {
+	WeekPoint,//弱点の当たり判定
+	Arm,//腕の当たり判定
+	Hund,//手の当たり判定
+	END,
+};
 class Boss : public Enemy
 {
 public:
@@ -50,57 +57,33 @@ public:
 	void RootInit();
 	void RootUpdate();
 	void RootDraw();
-	//ReturnPosition
-	void ReturnPositionInit();
-	void ReturnPositionUpdate();
-	void ReturnPositionDraw();
-	//AttackSlamPlayer
-	void AttackSlamInit();
-	void AttackSlamUpdate();
-	void AttackSlamDraw();
-	//AttackThrowBomb
-	void AttackThrowBallInit();
-	void AttackThrowBallUpdate();
-	void AttackThrowBallDraw();
-	//AttackRocketPunch
-	void RocketPunchInit();
-	void RocketPunchUpdate();
-	void RocketPunchDraw();
-	//Spawn
-	void SpawnInit();
-	void SpawnUpdate();
-	void SpawnDraw();
-	//Dead
-	void DeadInit();
-	void DeadUpdate();
-	void DeadDraw();
-	//Down
-	void DownInit();
-	void DownUpdate();
-	void DownDraw();
-	#pragma endregion State
-private:
-
-#pragma region
-	std::unique_ptr<IBossState> state_;
-//Root
 	//攻撃の選択をする
 	bool isAttackSelect = true;
 	//プレイヤーを追いかける関数
 	bool FollowPlayer();
-//ReturnPosition
+	void ColliderUseSet(bool flag);
+	//ReturnPosition
+	void ReturnPositionInit();
+	void ReturnPositionUpdate();
+	void ReturnPositionDraw();
 	//戻る前の位置を保存する変数
 	Vector3 PrePos;
 	//固定の位置
 	Vector3 initialPosition{ 0.0f,5.5f,35.0f };
-//AttackSlamPlayer
+	//AttackSlamPlayer
+	void AttackSlamInit();
+	void AttackSlamUpdate();
+	void AttackSlamDraw();
 	//叩きつけ攻撃時のカメラシェイク用のフラグ
 	bool isSlamFlag = false;
 	//叩きつけを一回以上しているか
 	bool isSlam2ndFlag = false;
 	//SEハンドル
 	int SEHitattack;
-//AttackThrowBall
+	//AttackThrowBomb
+	void AttackThrowBallInit();
+	void AttackThrowBallUpdate();
+	void AttackThrowBallDraw();
 	std::unique_ptr<Ball> ball;
 	std::unique_ptr<DummyBall> dummyBall;
 	//ボールに当たった回数
@@ -109,48 +92,59 @@ private:
 	bool isThrowdummyBallFlag = false;
 	//SEハンドル
 	int SEthrowBall;
-//AttackRocketPunch
+	//AttackRocketPunch
+	void RocketPunchInit();
+	void RocketPunchUpdate();
+	void RocketPunchDraw();
 	//ターゲットに向かうベクトル
 	Vector3 forTargetVector;
-//Spawn
+	//Spawn
+	void SpawnInit();
+	void SpawnUpdate();
+	void SpawnDraw();
 	//寝てる演出パーティクル
 	ParticleSystem* sleepParticle_;
 	Emitter sleepParticleEmitter;
 	void SleepUpdateParticle(Particle& particle);
 	float sleepParticleValue = 2.0f;
-//Dead
+	//Dead
+	void DeadInit();
+	void DeadUpdate();
+	void DeadDraw();
 	//死亡パーティクル
 	ParticleSystem* deadParticle_;
 	Emitter deadEnemyParticleEmitter;
 	void UpdateParticle(Particle& particle);
 	Particle CustomParticle();
-//Down
+	//Down
+	void DownInit();
+	void DownUpdate();
+	void DownDraw();
 	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
 	bool isDownStert;
 	int hitCount = 0;
+	#pragma endregion State
+private:
+
+#pragma region
+	std::unique_ptr<IBossState> state_;
+
 #pragma endregion State
 
 #pragma region
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
 	void OnCollision(const ICollider& colliderA)override;
-	OBBoxCollider colliderDamage;
+	std::array<OBBoxCollider,3> colliders_;
 	WorldTransform colliderDamageWorld_;
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
 	void OnCollisionAttack(const ICollider& collider);
-	//腕側の攻撃判定
-	OBBoxCollider colliderAttack;
 	//指側の攻撃判定
-	OBBoxCollider colliderAttackA;
 	WorldTransform colliderAttackWorld_;
 	bool IsAttackFlag = false;
 #pragma endregion Collider
 
-	//現在のTの値
-	float easeT = 0.0f;
-	//raseTに毎フレーム加算する値
-	float addEaseT = 0.05f;
 
 	void AddImGui()override;
 #pragma region

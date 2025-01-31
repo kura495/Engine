@@ -3,6 +3,8 @@
 OBBoxCollider::OBBoxCollider()
 {
 	CollisionManager::AddCollider(this);
+	model_ = std::make_unique<OBBColliderModel>();
+	model_->Init();
 }
 
 OBBoxCollider::~OBBoxCollider()
@@ -13,8 +15,6 @@ OBBoxCollider::~OBBoxCollider()
 void OBBoxCollider::Init(WorldTransform* world)
 {
 	ICollider::SetWorld(world);
-	model_ = std::make_unique<OBBColliderModel>();
-	model_->Init();
 	model_->SetWorld(size_, center_->transform.quaternion, center_->transform.translate);
 }
 
