@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include "Quaternion/Quaternion.h"
+#include "Animation/Animation.h"
 class Player;
 enum class PlayerState {
 	kRoot,

@@ -28,10 +28,7 @@ void Player::Init(std::vector<Model*> models)
 	deadAnimation->Init();
 	deadAnimation->AnimeInit(*models_[0], true);
 	
-	attackAnimation = new Animation();
-	attackAnimation = Animation::LoadAnimationFile("project/resources/Player", "player_attack.gltf");
-	attackAnimation->Init();
-	attackAnimation->AnimeInit(*models_[0], true);
+
 #pragma endregion Anime
 	//パーティクル設定
 #pragma region
@@ -64,8 +61,8 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitBombParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 #pragma endregion パーティクル
 	//音声
-	SEattack = Audio::LoadAudioMP3("project/resources/sound/Player/attack.mp3",false);
-	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Player/Hitattack.mp3",false);
+	SEattack = Audio::LoadAudioMP3("project/resources/sound/Player/attack.mp3", false);
+	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Player/Hitattack.mp3", false);
 
 	ChangeState<PRoot>();
 }
@@ -102,143 +99,12 @@ void Player::Update()
 }
 void Player::Draw()
 {
-#ifdef _DEBUG
-	//walkanimation->DebugDraw(world_);
-#endif
 	//描画
 	state_->Draw(this);
 	//パーティクル描画
 	attackHitParticle_->RendererDraw();
 	attackHitBombParticle_->RendererDraw();
 }
-#pragma region
-
-//kRoot
-void Player::RootInit()
-{
-	colliderPlayer.IsUsing = true;
-	animationTime_ = 0.0f;
-	walkanimation->Reset();
-	isMovedFlag = false;
-
-}
-void Player::RootUpdate()
-{
-	Move();
-	//動いていたら
-	if (isMovedFlag) {
-		//動いていたら歩きモーションを再生
-		walkanimation->PlayAnimation();
-
-		animationTime_ += 1.0f / 60.0f;
-		if (animationTime_ > deadAnimation->duration) {
-			animationTime_ = 0.0f;
-			isMovedFlag = false;
-		}
-	}
-	//重力
-	world_.transform.translate.y -= gravity;
-	//ボタンを押したら攻撃
-	if (input->GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
-		ChangeState<PAttack>();
-	}
-	//ボタンを押したらジャンプ
-	else if (input->IsTriggerPad(XINPUT_GAMEPAD_A)) {
-		ChangeState<PJump>();
-	}
-}
-void Player::RootDraw()
-{
-	models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
-}
-//kAttack
-void Player::AttackInit()
-{
-	colliderAttack.IsUsing = true;
-	animationTime_ = 0.0f;
-	attackPosture = world_.transform.quaternion;
-	isMovedFlag = false;
-	Audio::Play(SEattack, 0.5f);
-	Audio::Stop(SEHitattack, true, false);
-}
-void Player::AttackUpdate()
-{
-	//攻撃中も移動できるように
-	Move();
-	//攻撃中は一定の方向を向くように固定
-	world_.transform.quaternion = attackPosture;
-	//アニメーション再生
-	attackAnimation->PlayAnimation();
-	animationTime_ += 1.0f / 60.0f;
-	//重力
-	world_.transform.translate.y -= gravity;
-
-	if (animationTime_ > attackAnimation->duration) {
-		animationTime_ = 0.0f;
-		colliderAttack.IsUsing = false;
-		//kRootに戻す
-		ChangeState<PRoot>();
-		attackAnimation->Reset();
-		Audio::Stop(SEattack, true, false);
-	}
-
-}
-void Player::AttackDraw()
-{
-	models_[0]->RendererSkinDraw(world_, attackAnimation->GetSkinCluster());
-}
-//kJump
-void Player::JumpInit() {
-	jumpForce = kJumpForce;
-}
-void Player::JumpUpdate() {
-	//移動関数
-	Move();
-	//ジャンプの処理
-	world_.transform.translate.y += jumpForce;
-	jumpForce -= kJumpSubValue;
-}
-void Player::JumpDraw()
-{
-	models_[0]->RendererSkinDraw(world_, walkanimation->GetSkinCluster());
-}
-//kDead
-void Player::DeadInit()
-{
-	deadParticleEmitter.world_.transform.translate = world_.transform.translate;
-	deadParticleEmitter.world_.transform.translate.y += 1.0f;
-	deadParticleEmitter.frequencyTime = deadParticleEmitter.frequency;
-	animationTime_ = 1.0f / 60.0f;
-}
-void Player::DeadUpdate()
-{
-	isOnFloorFlag = true;
-	//死亡アニメーション更新
-
-	animationTime_ += 1.0f / 60.0f;
-	deadAnimation->PlayAnimation(false);
-	if (animationTime_ >= deadAnimation->duration) {
-		isDamege = false;
-		animationTime_ = 0.0f;
-		isDeadModelDraw = false;
-		isDead = true;
-	}
-	if (isDeadModelDraw == false) {
-		//パーティクル生成
-		ParticleSystem::ParticleSpawn(*deadParticle_, deadParticleEmitter);
-		deadParticle_->Update();
-	}
-}
-void Player::DeadDraw()
-{
-	if (isDeadModelDraw) {
-		models_[0]->RendererSkinDraw(world_, deadAnimation->GetSkinCluster());
-	}
-	else {
-		deadParticle_->RendererDraw();
-	}
-}
-#pragma endregion State
 #pragma region
 void Player::ColliderInit()
 {

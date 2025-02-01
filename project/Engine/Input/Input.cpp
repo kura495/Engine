@@ -6,6 +6,7 @@ const int Input::save_frame = 20;
 const int Input::log_save_frame = 120;
 std::array<int, 16> Input::joy_frame;
 XINPUT_STATE Input::joyState;
+XINPUT_STATE Input::joyStatePre;
 
 #define XINPUT_GAMEPAD_LEFT_TRIGER    0x0400
 #define XINPUT_GAMEPAD_RIGHT_TRIGER   0x0800

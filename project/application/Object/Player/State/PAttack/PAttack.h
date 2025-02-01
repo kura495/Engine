@@ -3,11 +3,17 @@
 class PAttack : public IPlayerState
 {
 public:
-	PAttack() { stateType = PlayerState::kAttack; };
+	PAttack();
 
 	void Init(Player* p)override;
 	void Update(Player* p)override;
 	void Draw(Player* p)override;
 	std::string ShowState()override;
+private:
+	int SEattack;
+	int SEHitattack;
+	//攻撃の瞬間に向いていた姿勢を表すクォータニオン
+	Math::Quaternion attackPosture;
+	Animation* attackAnimation;
 };
 

@@ -37,28 +37,49 @@ public:
 	template <typename T>
 	void ChangeState() {
 		state_ = std::make_unique<T>();
+		//ステートのすべての処理が終わる前にステートを切り替えてしまうと、
+		//ステートが変わって後の処理が出来なくなってエラーが出る
 		state_->Init(this);
 	}
+	OBBoxCollider colliderPlayer;
+	OBBoxCollider colliderAttack;
+	WorldTransform attackColliderWorld_;
 	//kRoot
-	void RootInit();
-	void RootUpdate();
-	void RootDraw();
-	//kAttack
-	void AttackInit();
-	void AttackUpdate();
-	void AttackDraw();
-	//kJump
-	void JumpInit();
-	void JumpUpdate();
-	void JumpDraw();
-	//kDead
-	void DeadInit();
-	void DeadUpdate();
-	void DeadDraw();
-private:
-	void ImGui();
 	//スティック入力で移動させる関数
 	void Move();
+	Animation* walkanimation;
+	//動いていたかどうか
+	bool isMovedFlag = false;
+	//アニメーション
+	float animationTime_ = 0.0f;
+	const float kgravity = 0.03f;
+	float gravity = 0.03f;
+	Animation* deadAnimation;
+	//kAttack
+	int SEattack;
+	int SEHitattack;
+	//kJump
+	//ジャンプの強さ
+	const float kJumpForce = 0.5f;
+	//ジャンプに使う実数値
+	float jumpForce = 0.0f;
+	//ジャンプした時の減算
+	const float kJumpSubValue = 0.03f;
+	//kDead
+		//生きているか死んでいるかのフラグ
+	bool isDead = false;
+	ParticleSystem* deadParticle_;
+	void UpdatedeadParticle(Particle& particle);
+	//TODO:準備中
+	Emitter deadParticleEmitter;
+	bool isDamege = false;
+	//死んだときにモデルを描画するか
+	bool isDeadModelDraw = true;
+	//地面にいるかどうか
+	bool isOnFloorFlag = true;
+private:
+	void ImGui();
+
 #pragma region 
 #pragma region
 	std::unique_ptr<IPlayerState> state_;
@@ -70,35 +91,19 @@ private:
 	//攻撃の当たり判定
 	void AttackColliderInit();
 	void AttackOnCollision(const ICollider& collider);
-	OBBoxCollider colliderPlayer;
-	OBBoxCollider colliderAttack;
-	WorldTransform attackColliderWorld_;
+
 #pragma endregion Collider
 #pragma region
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
 	//HP
 	uint32_t HP_ = 1;
-	//生きているか死んでいるかのフラグ
-	bool isDead = false;
-	//ジャンプの強さ
-	const float kJumpForce = 0.5f;
-	//ジャンプに使う実数値
-	float jumpForce = 0.0f;
-	//ジャンプした時の減算
-	const float kJumpSubValue = 0.03f;
 
-	const float kgravity = 0.03f;
-	float gravity = 0.03f;
 #pragma endregion Parameter
 
 	Input* input = nullptr;
 
 #pragma region
-	ParticleSystem* deadParticle_;
-	void UpdatedeadParticle(Particle& particle);
-	//TODO:準備中
-	Emitter deadParticleEmitter;
 
 	ParticleSystem* attackHitParticle_;
 	void UpdateAttackHitParticle(Particle& particle);
@@ -112,29 +117,12 @@ private:
 #pragma endregion Particle
 
 #pragma region
-	int SEattack;
-	int SEHitattack;
+
 #pragma endregion 音声
 
 	XINPUT_STATE joyState;
 	XINPUT_STATE joyStatePre;
 
-	Animation* walkanimation;
-	Animation* attackAnimation;
-	//攻撃の瞬間に向いていた姿勢を表すクォータニオン
-	Quaternion attackPosture;
-
-	Animation* deadAnimation;
-	//アニメーション
-	float animationTime_ = 0.0f;
-
-	bool isDamege = false;
-	//死んだときにモデルを描画するか
-	bool isDeadModelDraw = true;
-	//動いていたかどうか
-	bool isMovedFlag = false;
-	//地面にいるかどうか
-	bool isOnFloorFlag = true;
 	//死亡
 	bool isDeadFlag = false;
 

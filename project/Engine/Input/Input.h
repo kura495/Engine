@@ -75,7 +75,7 @@ public:
 	/// </summary>
 	/// <param name="buttonNumber">XINPUT_GAMEPAD</param>
 	/// <returns>bool</returns>
-	bool IsTriggerPad(uint32_t buttonNumber);
+	static bool IsTriggerPad(uint32_t buttonNumber);
 	/// <summary>
 	/// 未完成のため使用不可
 	/// </summary>
@@ -142,7 +142,7 @@ private:
 	//パッド
 	static XINPUT_STATE joyState;
 	static std::array<int, 16> joy_frame;
-	XINPUT_STATE joyStatePre;
+	static XINPUT_STATE joyStatePre;
 
 	//先行入力
 	static std::list<ListData> joy_stack;

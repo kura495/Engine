@@ -2,17 +2,21 @@
 #include "../../Player.h"
 void PJump::Init(Player* p)
 {
-	p->JumpInit();
+	p->jumpForce = p->kJumpForce;
 }
 
 void PJump::Update(Player* p)
 {
-	p->JumpUpdate();
+	//移動関数
+	p->Move();
+	//ジャンプの処理
+	p->GetWorld().transform.translate.y += p->jumpForce;
+	p->jumpForce -= p->kJumpSubValue;
 }
 
 void PJump::Draw(Player* p)
 {
-	p->JumpDraw();
+	p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), p->walkanimation->GetSkinCluster());
 }
 
 std::string PJump::ShowState()
