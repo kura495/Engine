@@ -279,6 +279,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Object\Player\State\PRoot\PRoot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\ERocketPunch\ERocketPunch.h" />
     <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />
     <ClInclude Include="project\application\Object\Player\State\PDead\PDead.h" />

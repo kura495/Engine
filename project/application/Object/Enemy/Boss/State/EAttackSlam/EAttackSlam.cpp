@@ -3,13 +3,13 @@
 void EAttackSlam::Init(Boss* Boss)
 {
 	addEaseT = 0.02f;
-	Boss->SetColliderUse(ColliderNumber::Arm,true);
-	Boss->SetColliderUse(ColliderNumber::Hund,true);
+	Boss->SetColliderUse(Boss::ColliderType::Arm,true);
+	Boss->SetColliderUse(Boss::ColliderType::Hund,true);
 	Boss->IsAttackFlag = true;
 	easeT = 0.0f;
 	//当たり判定を攻撃に変更
-	Boss->SetColliderAttribute(ColliderNumber::Arm,ColliderTag::EnemyAttack);
-	Boss->SetColliderAttribute(ColliderNumber::Hund, ColliderTag::EnemyAttack | ColliderTag::EnemyAttackFront);
+	Boss->SetColliderAttribute(Boss::ColliderType::Arm,Collider::Tag::EnemyAttack);
+	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::EnemyAttack | Collider::Tag::EnemyAttackFront);
 }
 
 void EAttackSlam::Update(Boss* Boss)
@@ -27,8 +27,8 @@ void EAttackSlam::Update(Boss* Boss)
 		if (Boss->GetWorld().transform.translate.y <= 0) {
 			Boss->isSlamFlag = true;
 			addEaseT = 0.01f;
-			Boss->SetColliderUse(ColliderNumber::Arm, false);
-			Boss->SetColliderUse(ColliderNumber::Hund, false);
+			Boss->SetColliderUse(Boss::ColliderType::Arm, false);
+			Boss->SetColliderUse(Boss::ColliderType::Hund, false);
 			Boss->GetWorld().transform.translate.y = 0.5f;
 			easeT = 0.0f;
 			Boss->IsAttackFlag = false;

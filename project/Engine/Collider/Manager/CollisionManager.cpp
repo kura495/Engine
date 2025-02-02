@@ -15,14 +15,13 @@ void CollisionManager::Init()
 
 void CollisionManager::Update()
 {
-	Colliders_.remove_if([this](ICollider* Icollider)
+	Colliders_.remove_if([this](ICollider* Icollider){
+		if (Icollider->IsDalete)
 		{
-			if (Icollider->IsDalete)
-			{
-				return true;
-			}
-			return false;
-		});
+			return true;
+		}
+		return false;
+	});
 
 	for (ICollider* collider : Colliders_) {
 		collider->CollisionUpdate();

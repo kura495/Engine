@@ -1305,6 +1305,9 @@
     <ClInclude Include="project\application\Object\Enemy\Boss\State\ERocketPunch\ERocketPunch.h">
       <Filter>project\application\Object\Enemy\Boss\State\ERocketPunch</Filter>
     </ClInclude>
+    <ClInclude Include="project\Engine\Utility\GlobalTime.h">
+      <Filter>project\Engine\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

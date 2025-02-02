@@ -16,7 +16,7 @@ void PJump::Update(Player* p)
 
 void PJump::Draw(Player* p)
 {
-	p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), p->walkanimation->GetSkinCluster());
+	p->Getmodels()[0]->RendererDraw(p->GetWorld());
 }
 
 std::string PJump::ShowState()

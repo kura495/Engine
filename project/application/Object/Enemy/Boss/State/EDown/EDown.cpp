@@ -2,11 +2,11 @@
 #include "../../Boss.h"
 void EDown::Init(Boss* Boss)
 {
-	Boss->SetColliderUse(ColliderNumber::Arm, true);
-	Boss->SetColliderUse(ColliderNumber::Hund, true);
+	Boss->SetColliderUse(Boss::ColliderType::Arm, true);
+	Boss->SetColliderUse(Boss::ColliderType::Hund, true);
 	//当たり判定を通常に変更
-	Boss->SetColliderAttribute(ColliderNumber::Arm, ColliderTag::Enemy);
-	Boss->SetColliderAttribute(ColliderNumber::Hund, ColliderTag::Enemy);
+	Boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 
 	Boss->isDownStert = true;
 	easeT = 0.0f;
@@ -31,7 +31,7 @@ void EDown::Update(Boss* Boss)
 	//3回攻撃を受けると元の位置に戻す
 	if (Boss->hitCount == 3) {
 		Boss->ChangeState<EReturnPosition>();
-		Boss->SetColliderUse(ColliderNumber::WeekPoint, false);
+		Boss->SetColliderUse(Boss::ColliderType::WeekPoint, false);
 	}
 }
 

@@ -68,7 +68,7 @@ void Boss::Update()
 		if (animationTime_ > animationArmLDamage->duration) {
 			isDamege = false;
 			animationTime_ = 0.0f;
-			colliders_[ColliderNumber::WeekPoint].IsUsing = true;
+			colliders_[Boss::ColliderType::WeekPoint].IsUsing = true;
 
 		}
 	}
@@ -99,8 +99,8 @@ void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 
 void Boss::RocketPunchInit()
 {
-	/*colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliders_[ColliderNumber::Hund].SetcollitionAttribute(ColliderTag::EnemyAttack);
+	/*colliders_[Boss::ColliderType::Arm].SetcollitionAttribute(Collider::Tag::EnemyAttack);
+	colliders_[Boss::ColliderType::Hund].SetcollitionAttribute(Collider::Tag::EnemyAttack);
 	easeT = 0.0f;*/
 }
 void Boss::RocketPunchUpdate()
@@ -155,16 +155,16 @@ bool Boss::FollowPlayer()
 void Boss::ColliderDamageInit()
 {
 	colliderDamageWorld_.SetParent(&world_);
-	colliders_[ColliderNumber::WeekPoint].Init(&colliderDamageWorld_);
-	colliders_[ColliderNumber::WeekPoint].SetSize({ 1.0f,1.0f,1.0f });
-	colliders_[ColliderNumber::WeekPoint].OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	colliders_[ColliderNumber::WeekPoint].SetcollitionAttribute(ColliderTag::EnemyCore);
-	colliders_[ColliderNumber::WeekPoint].SetcollisionMask(~ColliderTag::EnemyAttack & ~ColliderTag::EnemyAttackFront);
-	colliders_[ColliderNumber::WeekPoint].IsUsing = true;
+	colliders_[Boss::ColliderType::WeekPoint].Init(&colliderDamageWorld_);
+	colliders_[Boss::ColliderType::WeekPoint].SetSize({ 1.0f,1.0f,1.0f });
+	colliders_[Boss::ColliderType::WeekPoint].OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
+	colliders_[Boss::ColliderType::WeekPoint].SetcollitionAttribute(Collider::Tag::EnemyCore);
+	colliders_[Boss::ColliderType::WeekPoint].SetcollisionMask(~Collider::Tag::EnemyAttack & ~Collider::Tag::EnemyAttackFront);
+	colliders_[Boss::ColliderType::WeekPoint].IsUsing = true;
 }
 void Boss::OnCollision(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == ColliderTag::Weapon) {
+	if (collider.GetcollitionAttribute() == Collider::Tag::Weapon) {
 		HP_ -= 1;
 		hitCount += 1;
 		if (HP_ <= 0) {
@@ -172,10 +172,10 @@ void Boss::OnCollision(const ICollider& collider)
 		}
 		isDamege = true;
 		damegeInterval = 0;
-		colliders_[ColliderNumber::WeekPoint].IsUsing = false;
+		colliders_[Boss::ColliderType::WeekPoint].IsUsing = false;
 	}
 	if (state_->GetStateType() == BossState::AttackThrowball) {
-		if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
+		if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 			ball->Reset(player_->GetWorld().transform.translate);
 			if (hitCount < 3) {
 				Audio::Stop(SEthrowBall, true, false);
@@ -192,25 +192,25 @@ void Boss::ColliderAttackInit()
 {
 	//腕側の攻撃判定
 	colliderAttackWorld_.SetParent(&world_);
-	colliders_[ColliderNumber::Arm].Init(&world_);
-	colliders_[ColliderNumber::Arm].SetSize({ 1.0f,1.0f,7.0f });
-	colliders_[ColliderNumber::Arm].SetOffset({ 0.0f,0.0f,-2.0f });
-	colliders_[ColliderNumber::Arm].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
-	colliders_[ColliderNumber::Arm].SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliders_[ColliderNumber::Arm].SetcollisionMask(~ColliderTag::EnemyCore & ~ColliderTag::EnemyAttackFront);
+	colliders_[Boss::ColliderType::Arm].Init(&world_);
+	colliders_[Boss::ColliderType::Arm].SetSize({ 1.0f,1.0f,7.0f });
+	colliders_[Boss::ColliderType::Arm].SetOffset({ 0.0f,0.0f,-2.0f });
+	colliders_[Boss::ColliderType::Arm].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
+	colliders_[Boss::ColliderType::Arm].SetcollitionAttribute(Collider::Tag::EnemyAttack);
+	colliders_[Boss::ColliderType::Arm].SetcollisionMask(~Collider::Tag::EnemyCore & ~Collider::Tag::EnemyAttackFront);
 	//指側の攻撃判定
-	colliders_[ColliderNumber::Hund].Init(&world_);
-	colliders_[ColliderNumber::Hund].SetSize({ 2.0f,0.5f,1.0f });
-	colliders_[ColliderNumber::Hund].SetOffset({ 0.0f,0.0f,-6.25f });
-	colliders_[ColliderNumber::Hund].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
-	colliders_[ColliderNumber::Hund].SetcollitionAttribute(ColliderTag::EnemyAttack);
-	colliders_[ColliderNumber::Hund].SetcollisionMask(~ColliderTag::EnemyCore);
+	colliders_[Boss::ColliderType::Hund].Init(&world_);
+	colliders_[Boss::ColliderType::Hund].SetSize({ 2.0f,0.5f,1.0f });
+	colliders_[Boss::ColliderType::Hund].SetOffset({ 0.0f,0.0f,-6.25f });
+	colliders_[Boss::ColliderType::Hund].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
+	colliders_[Boss::ColliderType::Hund].SetcollitionAttribute(Collider::Tag::EnemyAttack);
+	colliders_[Boss::ColliderType::Hund].SetcollisionMask(~Collider::Tag::EnemyCore);
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == ColliderTag::Player && state_->GetStateType() == BossState::AttackSlam) {
-		colliders_[ColliderNumber::Arm].IsUsing = false;
-		colliders_[ColliderNumber::Hund].IsUsing = false;
+	if (collider.GetcollitionAttribute() == Collider::Tag::Player && state_->GetStateType() == BossState::AttackSlam) {
+		colliders_[Boss::ColliderType::Arm].IsUsing = false;
+		colliders_[Boss::ColliderType::Hund].IsUsing = false;
 		Audio::Play(SEHitattack, 1.0f);
 	}
 }

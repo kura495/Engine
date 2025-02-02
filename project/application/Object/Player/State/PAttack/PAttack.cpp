@@ -14,10 +14,9 @@ PAttack::PAttack()
 void PAttack::Init(Player* p)
 {
 	attackAnimation->AnimeInit(*p->Getmodels()[0], true);
-	p->colliderAttack.IsUsing = true;
-	p->animationTime_ = 0.0f;
+	p->SetColliderUse(Player::ColliderType::Attack,true);
+	animationTime_ = 0.0f;
 	attackPosture = p->GetWorld().transform.quaternion;
-	p->isMovedFlag = false;
 	Audio::Play(SEattack, 0.5f);
 	Audio::Stop(SEHitattack, true, false);
 }
@@ -30,13 +29,13 @@ void PAttack::Update(Player* p)
 	p->GetWorld().transform.quaternion = attackPosture;
 	//アニメーション再生
 	attackAnimation->PlayAnimation();
-	p->animationTime_ += 1.0f / 60.0f;
+	animationTime_ += kDeltaTime;
 	//重力
 	p->GetWorld().transform.translate.y -= p->gravity;
 
-	if (p->animationTime_ > attackAnimation->duration) {
-		p->animationTime_ = 0.0f;
-		p->colliderAttack.IsUsing = false;
+	if (animationTime_ > attackAnimation->duration) {
+		animationTime_ = 0.0f;
+		p->SetColliderUse(Player::ColliderType::Attack, false);
 
 		attackAnimation->Reset();
 		Audio::Stop(SEattack, true, false);		

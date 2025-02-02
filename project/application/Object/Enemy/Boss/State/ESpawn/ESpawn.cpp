@@ -3,8 +3,8 @@
 void ESpawn::Init(Boss* Boss)
 {
 	//当たり判定を通常に変更
-	Boss->SetColliderAttribute(ColliderNumber::Arm, ColliderTag::Enemy);
-	Boss->SetColliderAttribute(ColliderNumber::Hund, ColliderTag::Enemy);
+	Boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 }
 
 void ESpawn::Update(Boss* Boss)

@@ -15,7 +15,7 @@ void Enemy::ImGui()
 void Enemy::OnCollision(const ICollider& ICollider)
 {
 	//Weaponと接触していたら
-	if (ICollider.GetcollitionAttribute() == ColliderTag::Weapon) {
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::Weapon) {
 		HP_ -= 1;
 		isDamege = true;
 		damegeInterval = 0;

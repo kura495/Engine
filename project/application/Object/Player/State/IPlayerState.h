@@ -2,6 +2,7 @@
 #include <string>
 #include "Quaternion/Quaternion.h"
 #include "Animation/Animation.h"
+#include "Utility/GlobalTime.h"
 class Player;
 enum class PlayerState {
 	kRoot,
@@ -23,4 +24,6 @@ public:
 	virtual std::string ShowState() { return "default"; };
 	PlayerState stateType;
 protected:
+	float animationTime_ = 0.0f;
+
 };

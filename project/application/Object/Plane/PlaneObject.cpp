@@ -7,8 +7,8 @@ void PlaneObject::Init(std::vector<Model*> models)
 	world_.Update();
 	collider.Init(&world_);
 	collider.SetSize({ 5.0f,0.0f,5.0f });
-	collider.SetcollitionAttribute(ColliderTag::Floor);
-	collider.SetcollisionMask(~ColliderTag::Floor);
+	collider.SetcollitionAttribute(Collider::Tag::Floor);
+	collider.SetcollisionMask(~Collider::Tag::Floor);
 	collider.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 }
 
@@ -45,7 +45,7 @@ void PlaneObject::ImGui()
 
 void PlaneObject::OnCollision(const ICollider& Collider)
 {
-	if (Collider.GetcollitionAttribute() == (ColliderTag::EnemyAttackFront | ColliderTag::EnemyAttack)) {
+	if (Collider.GetcollitionAttribute() == (Collider::Tag::EnemyAttackFront | Collider::Tag::EnemyAttack)) {
 		isCrash = true;
 		return;
 	}

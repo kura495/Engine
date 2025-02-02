@@ -68,13 +68,13 @@ void Ball::ColliderInit()
 	collider.Init(&world_);
 	collider.SetSize({ 1.0f,1.0f,1.0f });
 	collider.OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	collider.SetcollitionAttribute(ColliderTag::EnemyBall);
+	collider.SetcollitionAttribute(Collider::Tag::EnemyBall);
 	collider.IsUsing = false;
 }
 
 void Ball::OnCollision(const ICollider& colliderA)
 {
-	if (colliderA.GetcollitionAttribute() == ColliderTag::Weapon) {
+	if (colliderA.GetcollitionAttribute() == Collider::Tag::Weapon) {
 		if (isHit) {
 			//方向を決める
 			Vector3 playerToBomb = stertPos - world_.transform.translate;
@@ -88,13 +88,13 @@ void Ball::OnCollision(const ICollider& colliderA)
 			PrePos = world_.transform.translate;*/
 		}
 	}
-	if (colliderA.GetcollitionAttribute() == ColliderTag::EnemyCore){
+	if (colliderA.GetcollitionAttribute() == Collider::Tag::EnemyCore){
 		if (isHit == false) {
 			forTargetVector *= -1.0f;
 			isHit = true;
 		}
 	}
-	if (colliderA.GetcollitionAttribute() == ColliderTag::Player) {
+	if (colliderA.GetcollitionAttribute() == Collider::Tag::Player) {
 		collider.IsUsing = false;
 	}
 }

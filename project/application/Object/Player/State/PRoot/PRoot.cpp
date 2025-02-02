@@ -2,25 +2,17 @@
 #include "../../Player.h"
 void PRoot::Init(Player* p)
 {
-	p->colliderPlayer.IsUsing = true;
-	p->animationTime_ = 0.0f;
-	p->walkanimation->Reset();
-	p->isMovedFlag = false;
+	p->SetColliderUse(Player::ColliderType::pCollider, true);
+	walkanimation->Reset();
+	walkanimation->AnimeInit(*p->Getmodels()[0], true);
 }
 
 void PRoot::Update(Player* p)
 {
-	p->Move();
 	//動いていたら
-	if (p->isMovedFlag) {
+	if (p->Move()) {
 		//動いていたら歩きモーションを再生
-		p->walkanimation->PlayAnimation();
-
-		p->animationTime_ += 1.0f / 60.0f;
-		if (p->animationTime_ > p->deadAnimation->duration) {
-			p->animationTime_ = 0.0f;
-			p->isMovedFlag = false;
-		}
+		walkanimation->PlayAnimation();
 	}
 	//重力
 	p->GetWorld().transform.translate.y -= p->gravity;
@@ -36,7 +28,7 @@ void PRoot::Update(Player* p)
 
 void PRoot::Draw(Player* p)
 {
-	p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), p->walkanimation->GetSkinCluster());
+	p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), walkanimation->GetSkinCluster());
 }
 
 std::string PRoot::ShowState()

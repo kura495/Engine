@@ -18,17 +18,10 @@ void Player::Init(std::vector<Model*> models)
 	AttackColliderInit();
 	//アニメーション設定
 #pragma region
-	walkanimation = new Animation();
-	walkanimation = Animation::LoadAnimationFile("project/resources/Player", "player_walk.gltf");
-	walkanimation->Init();
-	walkanimation->AnimeInit(*models_[0], true);
-
 	deadAnimation = new Animation();
 	deadAnimation = Animation::LoadAnimationFile("project/resources/Player", "player_dead.gltf");
 	deadAnimation->Init();
 	deadAnimation->AnimeInit(*models_[0], true);
-	
-
 #pragma endregion Anime
 	//パーティクル設定
 #pragma region
@@ -105,35 +98,43 @@ void Player::Draw()
 	attackHitParticle_->RendererDraw();
 	attackHitBombParticle_->RendererDraw();
 }
+void Player::SetColliderUse(int number, bool flag)
+{
+	colliders_[number].IsUsing = flag;
+}
+void Player::SetColliderAttribute(int number, uint32_t collisionAttribute)
+{
+	colliders_[number].SetcollitionAttribute(collisionAttribute);
+}
 #pragma region
 void Player::ColliderInit()
 {
-	colliderPlayer.Init(&world_);
-	colliderPlayer.SetSize({ 0.5f,0.7f,0.5f });
-	colliderPlayer.SetOffset({ 0.0f,0.7f,0.0f });
-	colliderPlayer.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
-	colliderPlayer.SetcollitionAttribute(ColliderTag::Player);
-	colliderPlayer.SetcollisionMask(~ColliderTag::Player & ~ColliderTag::Weapon);
+	colliders_[ColliderType::pCollider].Init(&world_);
+	colliders_[ColliderType::pCollider].SetSize({ 0.5f,0.7f,0.5f });
+	colliders_[ColliderType::pCollider].SetOffset({ 0.0f,0.7f,0.0f });
+	colliders_[ColliderType::pCollider].OnCollision = [this](ICollider& collider) { OnCollision(collider); };
+	colliders_[ColliderType::pCollider].SetcollitionAttribute(Collider::Tag::Player);
+	colliders_[ColliderType::pCollider].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon);
 }
 void Player::OnCollision(const ICollider& ICollider)
 {
-	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyAttack) {
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyAttack) {
 		isDamege = true;
 		return;
 	}
-	if (ICollider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		isDamege = true;
 		return;
 	}
-	if (ICollider.GetcollitionAttribute() == ColliderTag::Enemy) {
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
 		world_.transform.translate -= move;
 		world_.Update();
 		return;
 	}
-	if (ICollider.GetcollitionAttribute() == ColliderTag::Weapon) {
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::Weapon) {
 		return;
 	}
-	if (ICollider.GetcollitionAttribute() == ColliderTag::Floor) {
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		if (state_->GetStateType() == PlayerState::kJump) {
 			if (world_.transform.translate.y <= ICollider.GetCenter().y && jumpForce <= 0) {
 				world_.transform.translate.y = ICollider.GetCenter().y;
@@ -159,19 +160,19 @@ void Player::OnCollision(const ICollider& ICollider)
 void Player::AttackColliderInit()
 {
 	attackColliderWorld_.SetParent(&world_);
-	colliderAttack.Init(&attackColliderWorld_);
-	colliderAttack.SetSize({ 1.0f,1.0f,1.0f });
-	colliderAttack.SetOffset({ 0.0f,0.5f,1.0f });
-	colliderAttack.OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
-	colliderAttack.SetcollitionAttribute(ColliderTag::Weapon);
-	colliderAttack.SetcollisionMask(~ColliderTag::Player & ~ColliderTag::Weapon & ~ColliderTag::Floor);
+	colliders_[ColliderType::Attack].Init(&attackColliderWorld_);
+	colliders_[ColliderType::Attack].SetSize({ 1.0f,1.0f,1.0f });
+	colliders_[ColliderType::Attack].SetOffset({ 0.0f,0.5f,1.0f });
+	colliders_[ColliderType::Attack].OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
+	colliders_[ColliderType::Attack].SetcollitionAttribute(Collider::Tag::Weapon);
+	colliders_[ColliderType::Attack].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon & ~Collider::Tag::Floor);
 
-	colliderAttack.IsUsing = false;
+	colliders_[ColliderType::Attack].IsUsing = false;
 }
 void Player::AttackOnCollision(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == ColliderTag::EnemyCore) {
-		colliderAttack.IsUsing = false;
+	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyCore) {
+		colliders_[ColliderType::Attack].IsUsing = false;
 		//パーティクル用のベクトル
 		attackVector = TransformNormal({0.0f,0.0f,1.0f},Matrix4x4 (MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
@@ -188,8 +189,8 @@ void Player::AttackOnCollision(const ICollider& collider)
 		Audio::Play(SEHitattack, 1.0f);
 
 	}
-	if (collider.GetcollitionAttribute() == ColliderTag::EnemyBall) {
-		colliderAttack.IsUsing = false;
+	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
+		colliders_[ColliderType::Attack].IsUsing = false;
 		//パーティクル用のベクトル
 		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
@@ -203,8 +204,8 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);
 	}
-	if (collider.GetcollitionAttribute() == ColliderTag::FakeEnemyBall) {
-		colliderAttack.IsUsing = false;
+	if (collider.GetcollitionAttribute() == Collider::Tag::FakeEnemyBall) {
+		colliders_[ColliderType::Attack].IsUsing = false;
 		//パーティクル用のベクトル
 		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
@@ -282,14 +283,14 @@ void Player::ImGui()
 	ImGui::Text(state_->ShowState().c_str());
 	ImGui::End();
 }
-void Player::Move()
+bool Player::Move()
 {
 	//加算量を0に戻す
 	move = {0.0f,0.0f,0.0f };
 	//移動量
 	if (joyState.Gamepad.sThumbLX != 0 && joyState.Gamepad.sThumbLY != 0) {
 
-#pragma region
+	#pragma region
 		//スティックから移動量を計算
 		move = {
 		(float)joyState.Gamepad.sThumbLX / SHRT_MAX, 0.0f,
@@ -308,8 +309,8 @@ void Player::Move()
 		//移動
 		world_.transform.translate = world_.transform.translate + move;
 
-#pragma endregion 移動
-#pragma region
+	#pragma endregion 移動
+	#pragma region
 		//移動ベクトルをカメラの角度だけ回転
 		//追従対象からロックオン対象へのベクトル
 		Vector3 sub = move;
@@ -323,12 +324,9 @@ void Player::Move()
 		//行きたい方向のQuaternionの作成
 		world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
 
-#pragma endregion プレイヤーの回転
+	#pragma endregion プレイヤーの回転
 
-		isMovedFlag = true;
-
-		return;
+		return true;
 	}
-
-
+	return false;
 }

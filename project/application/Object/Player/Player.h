@@ -22,13 +22,21 @@
 class Player : public IObject
 {
 public:
-
+	enum ColliderType {
+		pCollider,//プレイヤーの当たり判定
+		Attack,//攻撃判定
+		END,
+	};
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
 
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
+
+
+	void SetColliderUse(int number, bool flag);
+	void SetColliderAttribute(int number, uint32_t collisionAttribute);
 
 	PlayerState GetState() const { return state_->GetStateType(); };
 	/// <summary>
@@ -41,17 +49,11 @@ public:
 		//ステートが変わって後の処理が出来なくなってエラーが出る
 		state_->Init(this);
 	}
-	OBBoxCollider colliderPlayer;
-	OBBoxCollider colliderAttack;
-	WorldTransform attackColliderWorld_;
 	//kRoot
 	//スティック入力で移動させる関数
-	void Move();
-	Animation* walkanimation;
-	//動いていたかどうか
-	bool isMovedFlag = false;
+	bool Move();
+
 	//アニメーション
-	float animationTime_ = 0.0f;
 	const float kgravity = 0.03f;
 	float gravity = 0.03f;
 	Animation* deadAnimation;
@@ -85,6 +87,8 @@ private:
 	std::unique_ptr<IPlayerState> state_;
 #pragma endregion State
 
+	std::array<OBBoxCollider, ColliderType::END> colliders_;
+	WorldTransform attackColliderWorld_;
 	//プレイヤーキャラ事態の当たり判定
 	void ColliderInit();
 	void OnCollision(const ICollider& collider);

@@ -20,6 +20,7 @@ void OBBoxCollider::Init(WorldTransform* world)
 
 void OBBoxCollider::CollisionUpdate()
 {
+	//center_がnullの時、設定していないSetWorldしていない可能性大
 	Vector3 Pos = center_->transform.translate;
 	Vector3 offsetVec = offset;
 	Quaternion qua = center_->transform.quaternion;

@@ -5,12 +5,12 @@ void ERoot::Init(Boss* Boss)
 {
 	easeT = 0.0f;
 	//当たり判定を有効か
-	Boss->SetColliderUse(ColliderNumber::WeekPoint,true);
-	Boss->SetColliderUse(ColliderNumber::Arm, true);
-	Boss->SetColliderUse(ColliderNumber::Hund, true);
+	Boss->SetColliderUse(Boss::ColliderType::WeekPoint,true);
+	Boss->SetColliderUse(Boss::ColliderType::Arm, true);
+	Boss->SetColliderUse(Boss::ColliderType::Hund, true);
 	//当たり判定を通常に変更
-	Boss->SetColliderAttribute(ColliderNumber::Arm, ColliderTag::Enemy);
-	Boss->SetColliderAttribute(ColliderNumber::Hund, ColliderTag::Enemy);
+	Boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 }
 
 void ERoot::Update(Boss* Boss)

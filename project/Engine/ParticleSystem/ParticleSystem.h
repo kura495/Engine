@@ -1,4 +1,5 @@
 #pragma once
+/*パーティクルシステムクラス*/
 #include <random>
 #include <numbers>
 
@@ -15,8 +16,7 @@
 #include "Collider/Box/BoxCollider.h"
 #include "PipeLine/ParticlePipeLine.h"
 #include "Emitter/Emitter.h"
-/*パーティクルシステムクラス*/
-static const float kDeltaTime = 1.0f / 60.0f;
+#include "GlobalTime.h"
 
 struct Particle {
 	Matrix4x4 matWorld;

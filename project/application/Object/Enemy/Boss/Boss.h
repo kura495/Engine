@@ -20,25 +20,15 @@
 #include "State/ESpawn/ESpawn.h"
 
 #pragma endregion State
-enum class BossBehavior {
-	Root,
-	ReturnPosition,//元の位置に戻る
-	AttackSlamPlayer,//叩きつけ攻撃
-	AttackThrowball,//爆弾を投げる攻撃
-	Spawn,//出現時
-	Dead,//死亡時
-	Down,//ダウン時
-};
-enum ColliderNumber {
-	WeekPoint,//弱点の当たり判定
-	Arm,//腕の当たり判定
-	Hund,//手の当たり判定
-	END,
-};
 class Boss : public Enemy
 {
 public:
-
+	enum ColliderType {
+		WeekPoint,//弱点の当たり判定
+		Arm,//腕の当たり判定
+		Hund,//手の当たり判定
+		END,
+	};
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
@@ -93,18 +83,12 @@ public:
 	void SleepUpdateParticle(Particle& particle);
 	float sleepParticleValue = 2.0f;
 	//Dead
-	void DeadInit();
-	void DeadUpdate();
-	void DeadDraw();
 	//死亡パーティクル
 	ParticleSystem* deadParticle_;
 	Emitter deadEnemyParticleEmitter;
 	void UpdateParticle(Particle& particle);
 	Particle CustomParticle();
 	//Down
-	void DownInit();
-	void DownUpdate();
-	void DownDraw();
 	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
 	bool isDownStert;
 	int hitCount = 0;
@@ -120,7 +104,7 @@ private:
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
 	void OnCollision(const ICollider& colliderA)override;
-	std::array<OBBoxCollider,3> colliders_;
+	std::array<OBBoxCollider,Boss::ColliderType::END> colliders_;
 	WorldTransform colliderDamageWorld_;
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
