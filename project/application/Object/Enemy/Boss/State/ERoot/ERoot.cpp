@@ -22,13 +22,13 @@ void ERoot::Update(Boss* Boss)
 	//攻撃をする
 	if (Boss->isAttackSelect) {
 		//ボールを投げる攻撃
-		Boss->ChangeState<EAttackThrowball>();
 		Boss->isAttackSelect = false;
+		Boss->ChangeState<EAttackThrowball>();
 	}
 	else if (Boss->FollowPlayer()) {
 		//叩きつけ攻撃
-		Boss->ChangeState<EAttackSlam>();
 		Boss->isAttackSelect = true;
+		Boss->ChangeState<EAttackSlam>();
 	}
 }
 

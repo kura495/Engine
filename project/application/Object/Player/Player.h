@@ -61,12 +61,8 @@ public:
 	int SEattack;
 	int SEHitattack;
 	//kJump
-	//ジャンプの強さ
-	const float kJumpForce = 0.5f;
 	//ジャンプに使う実数値
 	float jumpForce = 0.0f;
-	//ジャンプした時の減算
-	const float kJumpSubValue = 0.03f;
 	//kDead
 		//生きているか死んでいるかのフラグ
 	bool isDead = false;
@@ -75,8 +71,6 @@ public:
 	//TODO:準備中
 	Emitter deadParticleEmitter;
 	bool isDamege = false;
-	//死んだときにモデルを描画するか
-	bool isDeadModelDraw = true;
 	//地面にいるかどうか
 	bool isOnFloorFlag = true;
 private:

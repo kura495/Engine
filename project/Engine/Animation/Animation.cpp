@@ -121,7 +121,7 @@ void Animation::PlayAnimation(bool LoopFlag)
 		animationTime_ = duration;
 	}
 	else {
-		animationTime_ += 1.0f / 60.0f;
+		animationTime_ += kDeltaTime;
 		animationTime_ = std::fmod(animationTime_, duration);
 	}
 	ApplyAnimation(animationTime_);

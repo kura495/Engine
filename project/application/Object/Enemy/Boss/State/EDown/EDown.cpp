@@ -19,10 +19,10 @@ void EDown::Update(Boss* Boss)
 {
 	if (Boss->isDownStert) {
 		Boss->GetAnime()->PlayAnimation();
-		animationTime_ += 1.0f / 60.0f;
+		animationTime_ += kDeltaTime;
 		if (animationTime_ > Boss->GetAnime()->duration) {
 			Boss->isDownStert = false;
-			animationTime_ = 0.0f;
+			animationTime_ = kDeltaTime;
 		}
 	}
 

@@ -2,7 +2,8 @@
 #include "../../Player.h"
 void PJump::Init(Player* p)
 {
-	p->jumpForce = p->kJumpForce;
+	p;
+	p->jumpForce = kJumpForce;
 }
 
 void PJump::Update(Player* p)
@@ -11,7 +12,7 @@ void PJump::Update(Player* p)
 	p->Move();
 	//ジャンプの処理
 	p->GetWorld().transform.translate.y += p->jumpForce;
-	p->jumpForce -= p->kJumpSubValue;
+	p->jumpForce -= kJumpSubValue;
 }
 
 void PJump::Draw(Player* p)

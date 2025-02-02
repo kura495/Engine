@@ -64,10 +64,10 @@ void Boss::Update()
 	//ダメージを受けた時
 	if (isDamege) {
 		animationArmLDamage->PlayAnimation();
-		animationTime_ += 1.0f / 60.0f;
+		animationTime_ += kDeltaTime;
 		if (animationTime_ > animationArmLDamage->duration) {
 			isDamege = false;
-			animationTime_ = 0.0f;
+			animationTime_ = kDeltaTime;
 			colliders_[Boss::ColliderType::WeekPoint].IsUsing = true;
 
 		}

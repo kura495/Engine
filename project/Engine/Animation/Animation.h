@@ -11,6 +11,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
 #include "Object/Model/Model.h"
+#include"GlobalTime.h"
 using namespace Math;
 class Animation {
 public:

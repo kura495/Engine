@@ -10,7 +10,7 @@ void PDead::Init(Player* p)
 
 void PDead::Update(Player* p)
 {
-	p->isOnFloorFlag = true;
+	//p->isOnFloorFlag = true;
 	//死亡アニメーション更新
 
 	animationTime_ += kDeltaTime;
@@ -18,10 +18,10 @@ void PDead::Update(Player* p)
 	if (animationTime_ >= p->deadAnimation->duration) {
 		p->isDamege = false;
 		animationTime_ = 0.0f;
-		p->isDeadModelDraw = false;
+		isDeadModelDraw = false;
 		p->isDead = true;
 	}
-	if (p->isDeadModelDraw == false) {
+	if (isDeadModelDraw == false) {
 		//パーティクル生成
 		ParticleSystem::ParticleSpawn(*p->deadParticle_, p->deadParticleEmitter);
 		p->deadParticle_->Update();
@@ -30,7 +30,7 @@ void PDead::Update(Player* p)
 
 void PDead::Draw(Player* p)
 {
-	if (p->isDeadModelDraw) {
+	if (isDeadModelDraw) {
 		p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), p->deadAnimation->GetSkinCluster());
 	}
 	else {
