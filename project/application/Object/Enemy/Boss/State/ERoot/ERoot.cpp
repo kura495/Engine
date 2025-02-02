@@ -19,15 +19,20 @@ void ERoot::Update(Boss* Boss)
 		return;
 	}
 	//攻撃をする
-	if (Boss->isAttackSelect) {
+	if (Boss->isAttackSelect == Boss::AttackState::Throw) {
 		//ボールを投げる攻撃
-		Boss->isAttackSelect = false;
+		Boss->isAttackSelect = Boss::AttackState::Slam;
 		Boss->ChangeState<EAttackThrowball>();
 	}
-	else if (Boss->FollowPlayer()) {
+	else if (Boss->isAttackSelect == Boss::AttackState::Slam) {
+		Boss->FollowPlayer();
 		//叩きつけ攻撃
-		Boss->isAttackSelect = true;
+		Boss->isAttackSelect = Boss::AttackState::RocketPunch;
 		Boss->ChangeState<EAttackSlam>();
+	}
+	else if (Boss->isAttackSelect == Boss::AttackState::RocketPunch) {
+		Boss->isAttackSelect = Boss::AttackState::Throw;
+		Boss->ChangeState<EAttackRocketPunch>();
 	}
 }
 

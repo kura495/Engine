@@ -171,7 +171,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\ERocketPunch\ERocketPunch.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PAttack\PAttack.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PDead\PDead.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PJump\PJump.cpp" />
@@ -280,7 +280,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\ERocketPunch\ERocketPunch.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.h" />
     <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />
     <ClInclude Include="project\application\Object\Player\State\PDead\PDead.h" />
     <ClInclude Include="project\application\Object\Player\State\PJump\PJump.h" />

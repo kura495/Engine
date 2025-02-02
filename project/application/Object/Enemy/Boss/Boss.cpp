@@ -96,44 +96,6 @@ void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 	colliders_[number].SetcollitionAttribute(collisionAttribute);
 }
 #pragma region
-
-void Boss::RocketPunchInit()
-{
-	/*colliders_[Boss::ColliderType::Arm].SetcollitionAttribute(Collider::Tag::EnemyAttack);
-	colliders_[Boss::ColliderType::Hund].SetcollitionAttribute(Collider::Tag::EnemyAttack);
-	easeT = 0.0f;*/
-}
-void Boss::RocketPunchUpdate()
-{
-	//if (easeT != 1.0f) {
-	//	//方向を決める
-	//	Vector3 playerToBomb = player_->GetWorld().transform.translate - world_.transform.translate;
-
-	//	easeT = (std::max)(easeT + addEaseT,1.0f);
-	//	if (easeT == 1.0f) {
-	//		//ノーマライズする
-	//		forTargetVector = playerToBomb.Normalize();
-	//	}
-
-	//	//ランダム生成用
-	//	std::random_device seedGenerator;
-	//	std::mt19937 randomEngine(seedGenerator());
-	//	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
-	//	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
-
-	//	world_.transform.translate.x += ramdomTranslate.x;
-	//	world_.transform.translate.y += ramdomTranslate.y;
-	//	world_.transform.translate.z += ramdomTranslate.z;
-	//}
-	//else {
-
-	//}
-
-}
-void Boss::RocketPunchDraw()
-{
-	//models_[0]->RendererSkinDraw(world_, animationArmLDamage->GetSkinCluster());
-}
 #pragma endregion Behavior
 bool Boss::FollowPlayer()
 {
@@ -192,14 +154,14 @@ void Boss::ColliderAttackInit()
 {
 	//腕側の攻撃判定
 	colliderAttackWorld_.SetParent(&world_);
-	colliders_[Boss::ColliderType::Arm].Init(&world_);
+	colliders_[Boss::ColliderType::Arm].Init(&colliderAttackWorld_);
 	colliders_[Boss::ColliderType::Arm].SetSize({ 1.0f,1.0f,7.0f });
 	colliders_[Boss::ColliderType::Arm].SetOffset({ 0.0f,0.0f,-2.0f });
 	colliders_[Boss::ColliderType::Arm].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliders_[Boss::ColliderType::Arm].SetcollitionAttribute(Collider::Tag::EnemyAttack);
 	colliders_[Boss::ColliderType::Arm].SetcollisionMask(~Collider::Tag::EnemyCore & ~Collider::Tag::EnemyAttackFront);
 	//指側の攻撃判定
-	colliders_[Boss::ColliderType::Hund].Init(&world_);
+	colliders_[Boss::ColliderType::Hund].Init(&colliderAttackWorld_);
 	colliders_[Boss::ColliderType::Hund].SetSize({ 2.0f,0.5f,1.0f });
 	colliders_[Boss::ColliderType::Hund].SetOffset({ 0.0f,0.0f,-6.25f });
 	colliders_[Boss::ColliderType::Hund].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };

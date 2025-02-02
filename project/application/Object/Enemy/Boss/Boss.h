@@ -13,6 +13,7 @@
 
 #include "State/EAttackSlam/EAttackSlam.h"
 #include "State/EAttackThrowball/EAttackThrowball.h"
+#include "State/EAttackRocketPunch/EAttackRocketPunch.h"
 #include "State/EDead/EDead.h"
 #include "State/EDown/EDown.h"
 #include "State/EReturnPosition/EReturnPosition.h"
@@ -28,6 +29,11 @@ public:
 		Arm,//腕の当たり判定
 		Hund,//手の当たり判定
 		END,
+	};
+	enum AttackState {
+		Slam,//叩きつけ
+		Throw,//物を投げる
+		RocketPunch,//ロケットパンチ！
 	};
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
@@ -49,7 +55,7 @@ public:
 	#pragma region
 	//Root
 	//攻撃の選択をする
-	bool isAttackSelect = true;
+	uint32_t isAttackSelect = AttackState::RocketPunch;
 	//プレイヤーを追いかける関数
 	bool FollowPlayer();
 	//ReturnPosition
@@ -70,12 +76,7 @@ public:
 	bool isThrowdummyBallFlag = false;
 	//SEハンドル
 	int SEthrowBall;
-	//AttackRocketPunch
-	void RocketPunchInit();
-	void RocketPunchUpdate();
-	void RocketPunchDraw();
-	//ターゲットに向かうベクトル
-	Vector3 forTargetVector;
+
 	//Spawn
 	//寝てる演出パーティクル
 	ParticleSystem* sleepParticle_;
