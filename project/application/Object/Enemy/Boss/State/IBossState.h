@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Vector/Vector3.h"
+#include "Quaternion/Quaternion.h"
 //前方宣言
 class Boss;
 enum class BossState {

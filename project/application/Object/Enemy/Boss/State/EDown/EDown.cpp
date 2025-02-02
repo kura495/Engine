@@ -1,43 +1,43 @@
 #include "EDown.h"
 #include "../../Boss.h"
-void EDown::Init(Boss* Boss)
+void EDown::Init(Boss* boss)
 {
-	Boss->SetColliderUse(Boss::ColliderType::Arm, true);
-	Boss->SetColliderUse(Boss::ColliderType::Hund, true);
+	boss->SetColliderUse(Boss::ColliderType::Arm, true);
+	boss->SetColliderUse(Boss::ColliderType::Hund, true);
 	//当たり判定を通常に変更
-	Boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 
-	Boss->isDownStert = true;
+	boss->isDownStert = true;
 	easeT = 0.0f;
 	addEaseT = 0.02f;
-	PrePos = Boss->GetWorld().transform.translate;
-	Boss->hitCount = 0;
+	PrePos = boss->GetWorld().transform.translate;
+	boss->hitCount = 0;
 }
 
-void EDown::Update(Boss* Boss)
+void EDown::Update(Boss* boss)
 {
-	if (Boss->isDownStert) {
-		Boss->GetAnime()->PlayAnimation();
+	if (boss->isDownStert) {
+		boss->GetAnime()->PlayAnimation();
 		animationTime_ += kDeltaTime;
-		if (animationTime_ > Boss->GetAnime()->duration) {
-			Boss->isDownStert = false;
+		if (animationTime_ > boss->GetAnime()->duration) {
+			boss->isDownStert = false;
 			animationTime_ = kDeltaTime;
 		}
 	}
 
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	Boss->GetWorld().transform.translate = Vector3::Lerp(PrePos, Boss->DownPosition, easeT);
+	boss->GetWorld().transform.translate = Vector3::Lerp(PrePos, boss->DownPosition, easeT);
 	//3回攻撃を受けると元の位置に戻す
-	if (Boss->hitCount == 3) {
-		Boss->ChangeState<EReturnPosition>();
-		Boss->SetColliderUse(Boss::ColliderType::WeekPoint, false);
+	if (boss->hitCount == 3) {
+		boss->ChangeState<EReturnPosition>();
+		boss->SetColliderUse(Boss::ColliderType::WeekPoint, false);
 	}
 }
 
-void EDown::Draw(Boss* Boss)
+void EDown::Draw(Boss* boss)
 {
-	Boss->Getmodels()[0]->RendererSkinDraw(Boss->GetWorld(), Boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
 std::string EDown::ShowState()
 {

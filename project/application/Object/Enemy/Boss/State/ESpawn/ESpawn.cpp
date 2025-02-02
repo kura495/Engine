@@ -1,27 +1,27 @@
 #include "ESpawn.h"
 #include "../../Boss.h"
-void ESpawn::Init(Boss* Boss)
+void ESpawn::Init(Boss* boss)
 {
 	//当たり判定を通常に変更
-	Boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 }
 
-void ESpawn::Update(Boss* Boss)
+void ESpawn::Update(Boss* boss)
 {
 	//パーティクル生成
-	ParticleSystem::ParticleCustumSpawn(*Boss->sleepParticle_, Boss->sleepParticleEmitter);
+	ParticleSystem::ParticleCustumSpawn(*boss->sleepParticle_, boss->sleepParticleEmitter);
 	//パーティクル更新
-	Boss->sleepParticle_->Update();
-	if (Boss->GetHP() <= 9) {
-		Boss->ChangeState<EReturnPosition>();
+	boss->sleepParticle_->Update();
+	if (boss->GetHP() <= 9) {
+		boss->ChangeState<EReturnPosition>();
 	}
 }
 
-void ESpawn::Draw(Boss* Boss)
+void ESpawn::Draw(Boss* boss)
 {
-	Boss->Getmodels()[0]->RendererSkinDraw(Boss->GetWorld(), Boss->GetAnime()->GetSkinCluster());
-	Boss->sleepParticle_->RendererDraw();
+	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->sleepParticle_->RendererDraw();
 }
 std::string ESpawn::ShowState()
 {

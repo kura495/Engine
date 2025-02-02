@@ -1,44 +1,45 @@
 #include "ERoot.h"
 #include "../../Boss.h"
 #include "application/Object/Player/Player.h"
-void ERoot::Init(Boss* Boss)
+void ERoot::Init(Boss* boss)
 {
 	easeT = 0.0f;
 	//当たり判定を有効か
-	Boss->SetColliderUse(Boss::ColliderType::WeekPoint,true);
-	Boss->SetColliderUse(Boss::ColliderType::Arm, true);
-	Boss->SetColliderUse(Boss::ColliderType::Hund, true);
+	boss->SetColliderUse(Boss::ColliderType::WeekPoint,true);
+	boss->SetColliderUse(Boss::ColliderType::Arm, true);
+	boss->SetColliderUse(Boss::ColliderType::Hund, true);
 	//当たり判定を通常に変更
-	Boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 }
 
-void ERoot::Update(Boss* Boss)
+void ERoot::Update(Boss* boss)
 {
-	if (Boss->GetPlayer()->GetState() == PlayerState::kDead) {
+	if (boss->GetPlayer()->GetState() == PlayerState::kDead) {
 		return;
 	}
 	//攻撃をする
-	if (Boss->isAttackSelect == Boss::AttackState::Throw) {
+	if (boss->isAttackSelect == Boss::AttackState::Throw) {
 		//ボールを投げる攻撃
-		Boss->isAttackSelect = Boss::AttackState::Slam;
-		Boss->ChangeState<EAttackThrowball>();
+		boss->isAttackSelect = Boss::AttackState::Slam;
+		boss->ChangeState<EAttackThrowball>();
 	}
-	else if (Boss->isAttackSelect == Boss::AttackState::Slam) {
-		Boss->FollowPlayer();
-		//叩きつけ攻撃
-		Boss->isAttackSelect = Boss::AttackState::RocketPunch;
-		Boss->ChangeState<EAttackSlam>();
+	else if (boss->isAttackSelect == Boss::AttackState::Slam) {
+		if (boss->FollowPlayer()) {
+			//叩きつけ攻撃
+			boss->isAttackSelect = Boss::AttackState::RocketPunch;
+			boss->ChangeState<EAttackSlam>();
+		}
 	}
-	else if (Boss->isAttackSelect == Boss::AttackState::RocketPunch) {
-		Boss->isAttackSelect = Boss::AttackState::Throw;
-		Boss->ChangeState<EAttackRocketPunch>();
+	else if (boss->isAttackSelect == Boss::AttackState::RocketPunch) {
+		boss->isAttackSelect = Boss::AttackState::Throw;
+		boss->ChangeState<EAttackRocketPunch>();
 	}
 }
 
-void ERoot::Draw(Boss* Boss)
+void ERoot::Draw(Boss* boss)
 {
-	Boss->Getmodels()[0]->RendererSkinDraw(Boss->GetWorld(),Boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
 std::string ERoot::ShowState()
 {

@@ -1,57 +1,57 @@
 #include "EAttackSlam.h"
 #include "../../Boss.h"
-void EAttackSlam::Init(Boss* Boss)
+void EAttackSlam::Init(Boss* boss)
 {
 	addEaseT = 0.02f;
-	Boss->SetColliderUse(Boss::ColliderType::Arm,true);
-	Boss->SetColliderUse(Boss::ColliderType::Hund,true);
-	Boss->IsAttackFlag = true;
+	boss->SetColliderUse(Boss::ColliderType::Arm,true);
+	boss->SetColliderUse(Boss::ColliderType::Hund,true);
+	boss->IsAttackFlag = true;
 	easeT = 0.0f;
 	//当たり判定を攻撃に変更
-	Boss->SetColliderAttribute(Boss::ColliderType::Arm,Collider::Tag::EnemyAttack);
-	Boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::EnemyAttack | Collider::Tag::EnemyAttackFront);
+	boss->SetColliderAttribute(Boss::ColliderType::Arm,Collider::Tag::EnemyAttack);
+	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::EnemyAttack | Collider::Tag::EnemyAttackFront);
 }
 
-void EAttackSlam::Update(Boss* Boss)
+void EAttackSlam::Update(Boss* boss)
 {
-	if (Boss->IsAttackFlag) {
+	if (boss->IsAttackFlag) {
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
 
-		Boss->GetWorld().transform.translate.y -= Ease::InBack(easeT);
+		boss->GetWorld().transform.translate.y -= Ease::InBack(easeT);
 		float newPoint = Ease::InBack(easeT);
 
 		if (newPoint > 0) {
 			addEaseT = 0.06f;
 		}
 		//位置が0になったら
-		if (Boss->GetWorld().transform.translate.y <= 0) {
-			Boss->isSlamFlag = true;
+		if (boss->GetWorld().transform.translate.y <= 0) {
+			boss->isSlamFlag = true;
 			addEaseT = 0.01f;
-			Boss->SetColliderUse(Boss::ColliderType::Arm, false);
-			Boss->SetColliderUse(Boss::ColliderType::Hund, false);
-			Boss->GetWorld().transform.translate.y = 0.5f;
+			boss->SetColliderUse(Boss::ColliderType::Arm, false);
+			boss->SetColliderUse(Boss::ColliderType::Hund, false);
+			boss->GetWorld().transform.translate.y = 0.5f;
 			easeT = 0.0f;
-			Boss->IsAttackFlag = false;
+			boss->IsAttackFlag = false;
 		}
 	}
 	else {
 		//2回目移行かつHPが低くなった時に処理を実行
-		if (Boss->isSlam2ndFlag && Boss->GetHP() <= 3) {
+		if (boss->isSlam2ndFlag && boss->GetHP() <= 3) {
 			//falseにすることで2回連続で叩きつけをするようにする
-			Boss->isAttackSelect = false;
-			Boss->isSlam2ndFlag = false;
+			boss->isAttackSelect = false;
+			boss->isSlam2ndFlag = false;
 		}
-		else if (Boss->isSlam2ndFlag == false) {
-			Boss->isSlam2ndFlag = true;
+		else if (boss->isSlam2ndFlag == false) {
+			boss->isSlam2ndFlag = true;
 		}
 		//初期位置に戻す
-		Boss->ChangeState<EReturnPosition>();
+		boss->ChangeState<EReturnPosition>();
 	}
 }
 
-void EAttackSlam::Draw(Boss* Boss)
+void EAttackSlam::Draw(Boss* boss)
 {
-	Boss->Getmodels()[0]->RendererSkinDraw(Boss->GetWorld(), Boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
 std::string EAttackSlam::ShowState()
 {

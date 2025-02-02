@@ -113,6 +113,9 @@ void Player::OnCollision(const ICollider& ICollider)
 		return;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
+		if (state_->GetStateType() == PlayerState::kDead) {
+			return;
+		}
 		world_.transform.translate -= move;
 		world_.Update();
 		return;

@@ -1,43 +1,44 @@
 #include "EAttackThrowball.h"
 #include "../../Boss.h"
 #include "application/Object/Player/Player.h"
-void EAttackThrowball::Init(Boss* Boss)
+void EAttackThrowball::Init(Boss* boss)
 {
 	easeT = 0.0f;
 	addEaseT = 0.05f;
-	Boss->ball->ThrowBall(Boss->GetWorld().transform.translate, Boss->GetPlayer()->GetWorld().transform.translate);
-	Audio::Play(Boss->SEthrowBall, 0.2f);
-	Boss->isThrowdummyBallFlag = false;
-	Boss->countHitBall = 0;
+	boss->ball->ThrowBall(boss->GetWorld().transform.translate, boss->GetPlayer()->GetWorld().transform.translate);
+	Audio::Reset(boss->SEthrowBall, false);
+	Audio::Play(boss->SEthrowBall, 0.2f);
+	boss->isThrowdummyBallFlag = false;
+	boss->countHitBall = 0;
 }
 
-void EAttackThrowball::Update(Boss* Boss)
+void EAttackThrowball::Update(Boss* boss)
 {
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	Boss->ball->Update();
-	Boss->dummyBall->Update();
+	boss->ball->Update();
+	boss->dummyBall->Update();
 	//跳ね返しのタイミングでもう一つの球を出す
-	if (Boss->countHitBall == 1 && Boss->isThrowdummyBallFlag == false) {
-		Boss->dummyBall->ThrowBall(Boss->GetWorld().transform.translate, { Boss->GetWorld().transform.translate.x + 5.0f,Boss->GetWorld().transform.translate.y,Boss->GetWorld().transform.translate.z}, Boss->GetPlayer()->GetWorld().transform.translate);
-		Boss->isThrowdummyBallFlag = true;
+	if (boss->countHitBall == 1 && boss->isThrowdummyBallFlag == false) {
+		boss->dummyBall->ThrowBall(boss->GetWorld().transform.translate, { boss->GetWorld().transform.translate.x + 5.0f,boss->GetWorld().transform.translate.y,boss->GetWorld().transform.translate.z}, boss->GetPlayer()->GetWorld().transform.translate);
+		boss->isThrowdummyBallFlag = true;
 	}
 	//3回球に当たったらやられ状態にする
-	if (Boss->countHitBall >= 3) {
-		Boss->dummyBall->Reset();
-		Boss->ChangeState<EDown>();
+	if (boss->countHitBall >= 3) {
+		boss->dummyBall->Reset();
+		boss->ChangeState<EDown>();
 	}
 	//ボールが一定のラインを超えたらルートビヘイビアーに戻す
-	if (Boss->ball->GetIsOverline()) {
-		Boss->dummyBall->Reset();
-		Boss->ChangeState<ERoot>();
+	if (boss->ball->GetIsOverline()) {
+		boss->dummyBall->Reset();
+		boss->ChangeState<ERoot>();
 	}
 }
 
-void EAttackThrowball::Draw(Boss* Boss)
+void EAttackThrowball::Draw(Boss* boss)
 {
-	Boss->Getmodels()[0]->RendererSkinDraw(Boss->GetWorld(), Boss->GetAnime()->GetSkinCluster());
-	Boss->ball->Draw();
-	Boss->dummyBall->Draw();
+	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->ball->Draw();
+	boss->dummyBall->Draw();
 }
 std::string EAttackThrowball::ShowState()
 {
