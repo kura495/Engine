@@ -3,6 +3,7 @@
 #include "Quaternion/Quaternion.h"
 #include "Animation/Animation.h"
 #include "Utility/GlobalTime.h"
+#include "ParticleSystem/ParticleSystem.h"
 class Player;
 enum class PlayerState {
 	kRoot,

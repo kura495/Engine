@@ -15,7 +15,6 @@ void ERoot::Init(Boss* Boss)
 
 void ERoot::Update(Boss* Boss)
 {
-	//Boss->RootUpdate();
 	if (Boss->GetPlayer()->GetState() == PlayerState::kDead) {
 		return;
 	}
@@ -34,7 +33,7 @@ void ERoot::Update(Boss* Boss)
 
 void ERoot::Draw(Boss* Boss)
 {
-	Boss->Getmodels()[0]->RendererDraw(Boss->GetWorld());
+	Boss->Getmodels()[0]->RendererSkinDraw(Boss->GetWorld(),Boss->GetAnime()->GetSkinCluster());
 }
 std::string ERoot::ShowState()
 {

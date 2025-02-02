@@ -122,6 +122,6 @@ private:
 	void AddImGui()override;
 #pragma region
 	Animation* animationArmLDamage;
-	float animationTime_ = 0.0f;
+	float animationTime_ = kDeltaTime;
 #pragma endregion Animation
 };

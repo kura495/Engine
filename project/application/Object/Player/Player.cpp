@@ -18,24 +18,12 @@ void Player::Init(std::vector<Model*> models)
 	AttackColliderInit();
 	//アニメーション設定
 #pragma region
-	deadAnimation = new Animation();
-	deadAnimation = Animation::LoadAnimationFile("project/resources/Player", "player_dead.gltf");
-	deadAnimation->Init();
-	deadAnimation->AnimeInit(*models_[0], true);
+
 #pragma endregion Anime
 	//パーティクル設定
 #pragma region
-	deadParticle_ = new ParticleSystem();
-	deadParticle_->Init("project/resources/circle2.dds");
-	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 
-	deadParticleEmitter.count = 5;
-	deadParticleEmitter.frequency = 0.5f;
-	deadParticleEmitter.particleRadius = {0.5f,0.5f,1.0f};
-	deadParticleEmitter.color = { 0.0f,0.0f,0.0f };
-	deadParticleEmitter.speed = { 1.0f,1.0f,1.0f };
-
-	attackHitParticle_ = new ParticleSystem();
+	attackHitParticle_ = std::make_unique<ParticleSystem>();
 	attackHitParticle_->Init("project/resources/circle2.dds");
 	attackHitParticle_->UpdateFunc = [this](Particle& particle) {return UpdateAttackHitParticle(particle); };
 	AttackHitParticleEmitter.count = 20;
@@ -44,7 +32,7 @@ void Player::Init(std::vector<Model*> models)
 	AttackHitParticleEmitter.color = { 1.0f,0.5f,0.5f };
 	AttackHitParticleEmitter.speed = { 5.0f,3.5f,5.0f };
 
-	attackHitBombParticle_ = new ParticleSystem();
+	attackHitBombParticle_ = std::make_unique<ParticleSystem>();
 	attackHitBombParticle_->Init("project/resources/circle2.dds");
 	attackHitBombParticle_->UpdateFunc = [this](Particle& particle) {return UpdateAttackHitBombParticle(particle); };
 	AttackHitBombParticleEmitter.count = 5;
@@ -79,7 +67,7 @@ void Player::Update()
 	//パーティクルアップデート
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
-	deadParticle_->Update();
+
 
 #ifdef USE_IMGUI
 	ImGui();
@@ -87,8 +75,6 @@ void Player::Update()
 	world_.Update();
 
 	isOnFloorFlag = false;
-	//前フレームのゲームパッドの状態を保存
-	joyStatePre = joyState;
 }
 void Player::Draw()
 {
@@ -221,23 +207,7 @@ void Player::AttackOnCollision(const ICollider& collider)
 	}
 }
 #pragma endregion Collider
-void Player::UpdatedeadParticle(Particle& particle)
-{
-	//速度を1/60にする
-	Vector3 velcity = particle.velocity * kDeltaTime;
-	particle.transform.translate += velcity * deadParticleEmitter.speed;
-	//エミッターがパーティクルの半径を決める
-	particle.transform.scale = deadParticleEmitter.particleRadius;
-	Vector3 translate = particle.transform.translate;
-	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
-	//色をセット
-	particle.color.w = alpha;
-	particle.color.x = deadParticleEmitter.color.x;
-	particle.color.y = deadParticleEmitter.color.y;
-	particle.color.z = deadParticleEmitter.color.z;
-	particle.currentTime += kDeltaTime;
-	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
-}
+
 void Player::UpdateAttackHitParticle(Particle& particle)
 {
 	//速度を1/60にする

@@ -56,31 +56,27 @@ public:
 	//アニメーション
 	const float kgravity = 0.03f;
 	float gravity = 0.03f;
-	Animation* deadAnimation;
-	//kAttack
-	int SEattack;
-	int SEHitattack;
+
 	//kJump
 	//ジャンプに使う実数値
 	float jumpForce = 0.0f;
 	//kDead
-		//生きているか死んでいるかのフラグ
+	//生きているか死んでいるかのフラグ
 	bool isDead = false;
-	ParticleSystem* deadParticle_;
-	void UpdatedeadParticle(Particle& particle);
-	//TODO:準備中
-	Emitter deadParticleEmitter;
+
 	bool isDamege = false;
 	//地面にいるかどうか
 	bool isOnFloorFlag = true;
 private:
 	void ImGui();
 
-#pragma region 
 #pragma region
 	std::unique_ptr<IPlayerState> state_;
 #pragma endregion State
 
+#pragma region 
+
+	//当たり判定
 	std::array<OBBoxCollider, ColliderType::END> colliders_;
 	WorldTransform attackColliderWorld_;
 	//プレイヤーキャラ事態の当たり判定
@@ -91,6 +87,7 @@ private:
 	void AttackOnCollision(const ICollider& collider);
 
 #pragma endregion Collider
+
 #pragma region
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
@@ -103,23 +100,24 @@ private:
 
 #pragma region
 
-	ParticleSystem* attackHitParticle_;
+	std::unique_ptr<ParticleSystem> attackHitParticle_;
 	void UpdateAttackHitParticle(Particle& particle);
 	Emitter AttackHitParticleEmitter;
 	Vector3 attackVector;
 
-	ParticleSystem* attackHitBombParticle_;
+	std::unique_ptr<ParticleSystem> attackHitBombParticle_;
 	void UpdateAttackHitBombParticle(Particle& particle);
 	Emitter AttackHitBombParticleEmitter;
 
 #pragma endregion Particle
 
 #pragma region
-
+	//音声
+	int SEattack;
+	int SEHitattack;
 #pragma endregion 音声
 
 	XINPUT_STATE joyState;
-	XINPUT_STATE joyStatePre;
 
 	//死亡
 	bool isDeadFlag = false;
