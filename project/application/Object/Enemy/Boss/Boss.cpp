@@ -136,8 +136,9 @@ void Boss::OnCollision(const ICollider& collider)
 		damegeInterval = 0;
 		colliders_[Boss::ColliderType::WeekPoint].IsUsing = false;
 	}
-	if (state_->GetStateType() == BossState::AttackThrowball) {
-		if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
+
+	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
+		if (state_->GetStateType() == BossState::AttackThrowball) {
 			ball->Reset(player_->GetWorld().transform.translate);
 			if (hitCount < 3) {
 				Audio::Stop(SEthrowBall, true, false);
