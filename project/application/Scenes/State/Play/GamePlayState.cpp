@@ -78,9 +78,16 @@ void GamePlayState::Initialize()
 	woodenBoxWorld_.transform.scale.y = stertCount + 1.0f;
 	woodenBoxWorld_.transform.scale.z = stertCount + 1.0f;
 	woodenBoxWorld_.Update();
+
+	pauseManu_ = std::make_unique<PauseManu>();
+	pauseManu_->Init();
 }
 void GamePlayState::Update()
 {
+	if (pauseManu_->Update()) {
+		return;
+	}
+
 	BehaviorUpdate();
 
 	Renderer::viewProjection = followCamera->GetViewProjection();
@@ -136,6 +143,7 @@ void GamePlayState::Draw()
 
 	collisionManager->Draw();
 
+	pauseManu_->Draw();
 }
 #pragma region
 void GamePlayState::BehaviorUpdate()

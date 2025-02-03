@@ -365,6 +365,9 @@
     <Filter Include="project\application\Object\Enemy\Boss\State\ERocketPunch">
       <UniqueIdentifier>{d8873748-2b29-45f1-9b9a-ec22d20e0814}</UniqueIdentifier>
     </Filter>
+    <Filter Include="project\application\Scenes\State\Play\PauseManu">
+      <UniqueIdentifier>{136960c2-7ed6-4dd1-b6bb-d9d7eb23bd43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp">
@@ -684,6 +687,9 @@
     </ClCompile>
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\ERocketPunch</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Play\PauseManu\PauseManu.cpp">
+      <Filter>project\application\Scenes\State\Play\PauseManu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1307,6 +1313,9 @@
     </ClInclude>
     <ClInclude Include="project\Engine\Utility\GlobalTime.h">
       <Filter>project\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\PauseManu\PauseManu.h">
+      <Filter>project\application\Scenes\State\Play\PauseManu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
