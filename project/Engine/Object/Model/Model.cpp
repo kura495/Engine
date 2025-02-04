@@ -177,7 +177,7 @@ void Model::WireFrameDraw(WorldTransform& transform)
 
 Model* Model::CreateModelFromObj(const std::string& directoryPath, const std::string& filename)
 {
-	Model* model=new Model();
+	Model* model = new Model();
 	model->Initialize(directoryPath,filename);
 	return model;
 }
