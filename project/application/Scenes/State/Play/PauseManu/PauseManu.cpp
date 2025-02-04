@@ -8,7 +8,7 @@ void PauseManu::Init()
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,0.7f });
 	world_.Init();
 }
-
+ 
 bool PauseManu::Update()
 {
 	//ボタンを押すとtrueとfalseが切り替わる
