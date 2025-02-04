@@ -29,8 +29,6 @@ public:
 			) {
 			world_.transform.scale += models_[0]->GetModelData().rootNode.localMatrix.GetScale();
 		}
-		//TODO : levelEditerとの兼ね合いでいったんコメントアウト
-		//world_.transform.quaternion = Quaternion::Normalize(models_[0]->GetModelData().rootNode.localMatrix.GetRotation());
 		world_.Update();
 	};
 
