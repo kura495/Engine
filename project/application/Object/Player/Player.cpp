@@ -8,7 +8,7 @@ void Player::Init(std::vector<Model*> models)
 
 	models_ = models;
 	//ワールド設定
-	world_.Initialize();
+	world_.Init();
 	world_.transform.translate.z = -3.0f;
 	world_.Update();
 	//ライトの設定

@@ -7,7 +7,7 @@ void GameClearState::Initialize()
 	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
-	texture_world_.Initialize();
+	texture_world_.Init();
 	
 	texture = std::make_unique<Sprite>();
 	texture->TextureHandle = textureManager_->LoadTexture("project/resources/Clear.png");

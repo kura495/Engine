@@ -29,7 +29,7 @@ struct WorldTransform {
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Init();
 	/// <summary>
 	/// 定数バッファ生成
 	/// </summary>

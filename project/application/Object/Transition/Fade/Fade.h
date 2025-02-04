@@ -22,7 +22,7 @@ private:
 		sprite_ = new Sprite;
 		sprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 		sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/BlackTexture.png");
-		world_.Initialize();
+		world_.Init();
 	}
 	~Fade() = default;
 	Fade(const Fade& obj) = delete;

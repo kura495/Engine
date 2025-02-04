@@ -106,8 +106,6 @@ private:
 	std::unique_ptr<EnemyManager> enemyManager;
 	std::unique_ptr<SkyDome> skyDome_;
 
-	std::unique_ptr<ParticleSystem> particle;
-
 	std::unique_ptr<FloorManager> floorManager;
 
 	std::vector<Model*> woodenBox;

@@ -58,12 +58,7 @@ private:
 	std::unique_ptr<IGameState>state[GameStateMax];
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
-	PPNormal* renderTextrue = nullptr;
-	PPNormal* renderTextrue2 = nullptr;
-	PPNormal* renderTextrue3 = nullptr;
-	PPNormal* renderTextrue4 = nullptr;
-	PPNormal* renderTextrue5 = nullptr;
-	PPNormal* renderTextrue6 = nullptr;
+	std::unique_ptr<PPNormal> renderTextrue;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

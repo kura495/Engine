@@ -1,7 +1,7 @@
 ﻿#include "WorldTransform.h"
 #include "Object/Model/Model.h"
 
-void WorldTransform::Initialize()
+void WorldTransform::Init()
 {
 	matWorld_ = Matrix4x4::CreateIdentity();
 	CreateConstBuffer();

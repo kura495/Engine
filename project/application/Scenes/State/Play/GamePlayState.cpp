@@ -23,7 +23,7 @@ void GamePlayState::Initialize()
 	titleSprite = std::make_unique<Sprite>();
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/Title.png");
-	title.Initialize();
+	title.Init();
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
@@ -36,16 +36,9 @@ void GamePlayState::Initialize()
 	followCamera->Update();
 	//Renderer
 	renderer_ = Renderer::GetInstance();
-
-	particle = std::make_unique<ParticleSystem>();
-	particle->Init("project/resources/circle2.png");
-
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();
 	enemyManager->Init(player_.get());
-
-	input = Input::GetInstance();
-
 	//天球
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
@@ -64,12 +57,12 @@ void GamePlayState::Initialize()
 
 	woodenBox.push_back(Model::CreateModelFromObj("project/resources/Box", "Box.gltf"));
 
-	woodenBoxWorld_.Initialize();
+	woodenBoxWorld_.Init();
 	woodenBoxWorld_.transform.translate.z = -3.0f;
 	woodenBoxWorld_.Update();
 
 	tutorialModel.push_back(Model::CreateModelFromObj("project/resources/Tutorial", "Tutorial.obj"));
-	tutorialWorld_.Initialize();
+	tutorialWorld_.Init();
 	tutorialWorld_.transform.translate.z = -3.0f;
 	tutorialWorld_.transform.translate.x = -2.0f;
 	tutorialWorld_.Update();
@@ -211,7 +204,7 @@ void GamePlayState::TitleUpdate()
 	ImGui::End();
 #endif
 
-	if (input->GetPadPrecede(XINPUT_GAMEPAD_X,20) || input->IsTriggerKey(DIK_SPACE)) {
+	if (Input::GetPadPrecede(XINPUT_GAMEPAD_X,20)) {
 		stertCount += 0.3f;
 
 	}

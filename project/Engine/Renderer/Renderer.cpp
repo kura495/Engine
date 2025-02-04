@@ -28,7 +28,7 @@ void Renderer::Initalize()
 	skyBox.Init();
 	Texture = TextureManager::GetInstance()->LoadTexture("project/resources/rostock_laage_airport_4k.dds");
 	skyBox.TextureHandle = Texture;
-	cubeWorld_.Initialize();
+	cubeWorld_.Init();
 	cubeWorld_.transform.scale *= 100;
 	cubeWorld_.Update();
 

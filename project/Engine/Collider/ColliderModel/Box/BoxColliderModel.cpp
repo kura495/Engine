@@ -2,7 +2,7 @@
 
 void BoxColliderModel::Init()
 {
-	world_.Initialize();
+	world_.Init();
 	model = Model::CreateModelFromObj("project/resources/ColliderModel/Box", "Box.obj");
 }
 

@@ -5,12 +5,12 @@ void Boss::Init(std::vector<Model*> models)
 {
 	models_ = models;
 	//ワールド初期化
-	world_.Initialize();
+	world_.Init();
 	world_.transform.translate = DownPosition;
 	world_.Update();
 	//当たり判定
-	colliderDamageWorld_.Initialize();
-	colliderAttackWorld_.Initialize();
+	colliderDamageWorld_.Init();
+	colliderAttackWorld_.Init();
 	ColliderDamageInit();
 	ColliderAttackInit();
 	//アニメーション
@@ -95,8 +95,6 @@ void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 {
 	colliders_[number].SetcollitionAttribute(collisionAttribute);
 }
-#pragma region
-#pragma endregion Behavior
 bool Boss::FollowPlayer()
 {
 	//TODO:命名仮

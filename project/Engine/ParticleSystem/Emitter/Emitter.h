@@ -5,7 +5,7 @@ class Emitter
 {
 public:
 	Emitter() {
-		world_.Initialize();
+		world_.Init();
 	}
 
 	WorldTransform world_;//エミッタのTransform

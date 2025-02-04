@@ -3,7 +3,7 @@
 void SkyDome::Init()
 {
 	models_.push_back(Model::CreateModelFromObj("project/resources/SkyDome", "SkyDome.obj"));
-	world_.Initialize();
+	world_.Init();
 }
 
 void SkyDome::Update()

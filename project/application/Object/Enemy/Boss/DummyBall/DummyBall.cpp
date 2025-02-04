@@ -3,7 +3,7 @@
 void DummyBall::Init(std::vector<Model*> models)
 {
 	models_ = models;
-	world_.Initialize();
+	world_.Init();
 	ColliderInit();
 	//パーティクル設定
 	particle_ = std::make_unique<ParticleSystem>();

@@ -3,7 +3,7 @@
 void PlaneObject::Init(std::vector<Model*> models)
 {
 	models_ = models;
-	world_.Initialize();
+	world_.Init();
 	world_.Update();
 	collider.Init(&world_);
 	collider.SetSize({ 5.0f,0.0f,5.0f });

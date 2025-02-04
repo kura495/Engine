@@ -48,25 +48,10 @@ void GameManager::Initialize()
 	state[GAMEOVER] = std::make_unique<GameOverState>();
 	currentSceneNum_ = 1;
 	state[currentSceneNum_]->Initialize();
-	//TODO : ちゃんとユニポとかにする
-	renderTextrue = new PPNormal();
+
+	renderTextrue = std::make_unique<PPNormal>();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
-	renderTextrue2 = new PPNormal();
-	renderTextrue2->Init();
-	renderTextrue2->Create(2);
-	renderTextrue3 = new PPNormal();
-	renderTextrue3->Init();
-	renderTextrue3->Create(3);
-	renderTextrue4 = new PPNormal();
-	renderTextrue4->Init();
-	renderTextrue4->Create(4);
-	renderTextrue5 = new PPNormal();
-	renderTextrue5->Init();
-	renderTextrue5->Create(5);
-	renderTextrue6 = new PPNormal();
-	renderTextrue6->Init();
-	renderTextrue6->Create(6);
 }
 void GameManager::Gameloop(){
 	while (msg.message != WM_QUIT) {
@@ -81,7 +66,7 @@ void GameManager::Gameloop(){
 				state[currentSceneNum_]->Initialize();
 			}
 			imGuiManager->BeginFrame();
-		#pragma region Update
+#pragma region Update
 			editer->Update();
 			objectManager->Update();
 			input->Update();
@@ -89,62 +74,23 @@ void GameManager::Gameloop(){
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
 			renderTextrue->Update();
-			renderTextrue2->Update();
 
 #pragma endregion
-		#pragma region Draw
+#pragma region Draw
 			//renderTextureに色々書き込んでいく
 			renderTextrue->PreDraw();
-
 			state[currentSceneNum_]->Draw();
 			renderer_->Draw();
 #pragma endregion
 			directX->PreView();
-			////renderTargetを変更
-			//renderTextrue2->PreDraw();
-			////レンダーターゲットから画像に変更
+			//renderTargetを変更
+			//レンダーターゲットから画像に変更
 			renderTextrue->PreCopy();
-			//// TODO : ここにPipelineとDrawを書き込んでいく
-		renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			//ここにPipelineとDrawを書き込んでいく
+			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			renderTextrue->Draw();
-			//renderer_->PostProsessDraw();
-			////画像からレンダーターゲット
-		renderTextrue->PostCopy();
-
-			//renderTextrue3->PreDraw();
-			//renderTextrue2->PreCopy();
-			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			//renderTextrue2->Draw();
-			////renderer_->PostProsessDraw();
-			//renderTextrue2->PostCopy();
-
-			//renderTextrue4->PreDraw();
-			//renderTextrue3->PreCopy();
-			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			//renderTextrue3->Draw();
-			////renderer_->PostProsessDraw();
-			//renderTextrue3->PostCopy();
-			//
-			//renderTextrue5->PreDraw();
-			//renderTextrue4->PreCopy();
-			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			//renderTextrue4->Draw();
-			////renderer_->PostProsessDraw();
-			//renderTextrue4->PostCopy();
-
-			//renderTextrue6->PreDraw();
-			//renderTextrue5->PreCopy();
-			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			//renderTextrue5->Draw();
-			////renderer_->PostProsessDraw();
-			//renderTextrue5->PostCopy();
-
-			//
-			////renderTargetを変更
-			//renderTextrue6->PreCopy();
-			//renderer_->ChangePipeline(PipelineType::PostProsessPSO);
-			//renderTextrue6->Draw();
-			//renderTextrue6->PostCopy();
+			//画像からレンダーターゲット
+			renderTextrue->PostCopy();
 
 			editer->Draw();
 			imGuiManager->EndFrame();

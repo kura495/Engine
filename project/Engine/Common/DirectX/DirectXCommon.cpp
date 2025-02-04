@@ -14,7 +14,6 @@ void DirectXCommon::Initialize(WinApp* winApp)
 		debugController->EnableDebugLayer();
 		//GPU側のチェック
 		debugController->SetEnableGPUBasedValidation(TRUE);
-
 	}
 #endif
 	//FPS固定初期化
@@ -138,13 +137,6 @@ void DirectXCommon::Release()
 #ifdef USE_IMGUI
 	debugController->Release();
 
-	Microsoft::WRL::ComPtr<IDXGIDebug1> debug;
-	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
-		//TODO:今は無視　あとでちゃんと直そう
-		/*debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
-		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);*/
-	}
 #endif
 	CloseWindow(winApp_->GetHWND());
 }

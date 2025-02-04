@@ -3,7 +3,7 @@
 void IObject::Init(std::vector<Model*> models)
 {
 	models_ = models;
-	world_.Initialize();
+	world_.Init();
 }
 
 void IObject::Update()
