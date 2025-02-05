@@ -2,6 +2,7 @@
 #include <string>
 #include "Vector/Vector3.h"
 #include "Quaternion/Quaternion.h"
+#include "ParticleSystem/ParticleSystem.h"
 //前方宣言
 class Boss;
 enum class BossState {
@@ -24,6 +25,10 @@ public:
 	virtual void Init(Boss* p) = 0;
 	virtual void Update(Boss* p) = 0;
 	virtual void Draw(Boss* p) = 0;
+
+	//virtual void OnCollision(Boss* p);
+	//virtual void OnCollisionAttack(Boss* p);
+
 	BossState GetStateType() { return stateType; };
 	virtual std::string ShowState() { return "default"; };
 

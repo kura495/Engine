@@ -46,14 +46,12 @@ void GamePlayState::Initialize()
 	floorManager = std::make_unique<FloorManager>();
 	floorManager->Init();
 
-	fade = Fade::GetInstance();
-	fade->OutInit();
+	fade.OutInit();
 
 	behaviorRequest_ = StageBehavior::kTitle;
 
-	BGMPlayer = Audio::GetInstance();
-	BGMHundle = BGMPlayer->LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3",true);
-	BGMPlayer->Play(BGMHundle, audioValue);
+	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3",true);
+	Audio::Play(BGMHundle, audioValue);
 
 	woodenBox.push_back(Model::CreateModelFromObj("project/resources/Box", "Box.gltf"));
 
@@ -193,8 +191,8 @@ void GamePlayState::TitleInit()
 void GamePlayState::TitleUpdate()
 {
 	audioValue = (std::min)(audioValue + 0.001f, kMaxaudioValue);
-	BGMPlayer->Play(BGMHundle, audioValue);
-	if (fade->Out() == false) {
+	Audio::Play(BGMHundle, audioValue);
+	if (fade.Out() == false) {
 		return;
 	}
 	followCamera->Update();
@@ -229,7 +227,7 @@ void GamePlayState::TitleDraw()
 	woodenBox[0]->RendererDraw(woodenBoxWorld_);
 	tutorialModel[0]->RendererDraw(tutorialWorld_);
 
-	fade->Draw();
+	fade.Draw();
 }
 #pragma endregion Title
 #pragma region
@@ -257,16 +255,16 @@ void GamePlayState::ClearInit()
 void GamePlayState::ClearUpdate()
 {
 	audioValue = (std::max)(audioValue - 0.001f,0.0f);
-	BGMPlayer->Play(BGMHundle, audioValue);
-	//player_->Update();
-	if (fade->In()) {
+	Audio::Play(BGMHundle, audioValue);
+
+	if (fade.In()) {
 		StateNo = 2;
 	}
 }
 void GamePlayState::ClearDraw()
 {
 	player_->Draw();
-	fade->Draw();
+	fade.Draw();
 }
 #pragma endregion Clear
 #pragma region
@@ -278,15 +276,15 @@ void GamePlayState::OverUpdate()
 {
 	player_->Update();
 	audioValue = (std::max)(audioValue - 0.001f, 0.0f);
-	BGMPlayer->Play(BGMHundle, audioValue);
-	if (fade->In()) {
+	Audio::Play(BGMHundle, audioValue);
+	if (fade.In()) {
 		StateNo = 3;
 	}
 }
 void GamePlayState::OverDraw()
 {
 	player_->Draw();
-	fade->Draw();
+	fade.Draw();
 }
 #pragma endregion Over
 #pragma endregion Behavior

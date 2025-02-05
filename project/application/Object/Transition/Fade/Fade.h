@@ -5,8 +5,9 @@
 #include "Sprite/Sprite.h"
 class Fade
 {
-public:
-	static Fade* GetInstance();
+public:	
+	//初期化
+	void Init();
 	//フェードインをする時の初期化
 	void InInit();
 	//フェードアウトをする時の初期化
@@ -18,18 +19,8 @@ public:
 	void Draw();
 
 private:
-	Fade() {
-		sprite_ = new Sprite;
-		sprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
-		sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/BlackTexture.png");
-		world_.Init();
-	}
-	~Fade() = default;
-	Fade(const Fade& obj) = delete;
-	Fade& operator=(const Fade& obj) = delete;
 
-
-	Sprite* sprite_;
+	std::unique_ptr<Sprite> sprite_;
 	WorldTransform world_;
 
 	float alpha_ = 0.0f;

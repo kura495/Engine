@@ -43,7 +43,7 @@ enum class StageBehavior {
 	kOver,
 };
 
-class GamePlayState :public IGameState
+class GamePlayState : public IGameState
 {
 public:
 
@@ -82,7 +82,6 @@ private:
 
 #pragma endregion Behavior
 #pragma region
-	Audio* BGMPlayer;
 	int BGMHundle;
 	float audioValue = 0.0f;
 	float kMaxaudioValue = 0.04f;
@@ -115,7 +114,7 @@ private:
 	WorldTransform tutorialWorld_;
 
 	std::unique_ptr<PauseManu>pauseManu_;
-	Input* input;
+
 	//ボタンを押したときに加算する。一定値を超えたらプレイステートに移行する
 	float stertCount = 0.0f;
 	const float subStertCount = 0.005f;
@@ -123,6 +122,6 @@ private:
 	std::unique_ptr<Sprite> titleSprite;
 	WorldTransform title;
 
-	Fade* fade;
+	Fade fade;
 
 };

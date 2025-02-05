@@ -84,10 +84,7 @@ public:
 	void SleepUpdateParticle(Particle& particle);
 	float sleepParticleValue = 2.0f;
 	//Dead
-	//死亡パーティクル
-	ParticleSystem* deadParticle_;
-	Emitter deadEnemyParticleEmitter;
-	void UpdateParticle(Particle& particle);
+
 	Particle CustomParticle();
 	//Down
 	Vector3 DownPosition{ 0.0f,0.5f,20.0f };

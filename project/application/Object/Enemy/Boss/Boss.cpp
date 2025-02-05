@@ -18,15 +18,7 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[0], false);
 #pragma region 
-	deadParticle_ = new ParticleSystem();
-	deadParticle_->Init("project/resources/circle2.dds");
-	deadParticle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 
-	deadEnemyParticleEmitter.count = 50;
-	deadEnemyParticleEmitter.frequency = 0.1f;
-	deadEnemyParticleEmitter.particleRadius = { 1.0f,1.0f,1.0f };
-	deadEnemyParticleEmitter.color = { 1.0f,1.0f,1.0f };
-	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 
 	sleepParticle_ = new ParticleSystem();
 	sleepParticle_->Init("project/resources/sleepParticle.png");
@@ -37,7 +29,7 @@ void Boss::Init(std::vector<Model*> models)
 	sleepParticleEmitter.frequency = 1.0f;
 	sleepParticleEmitter.frequencyTime = 0.5f;
 	sleepParticleEmitter.particleRadius = { 0.2f,0.2f,0.2f };
-	sleepParticleEmitter.world_.transform.translate = {-1.0f,1.0f,12.0f};
+	sleepParticleEmitter.world_.transform.translate = { -1.0f,1.0f,12.0f };
 	sleepParticleEmitter.color = { 1.0f,1.0f,1.0f };
 	sleepParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 #pragma endregion パーティクル
@@ -74,7 +66,8 @@ void Boss::Update()
 	}
 	if (state_->GetStateType() == BossState::AttackThrowball) {
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
-	}else {
+	}
+	else {
 		easeT = 0.0f;
 	}
 
@@ -84,7 +77,7 @@ void Boss::Update()
 	world_.Update();
 }
 void Boss::Draw()
-{	
+{
 	state_->Draw(this);
 }
 void Boss::SetColliderUse(int number, bool flag)
@@ -137,6 +130,8 @@ void Boss::OnCollision(const ICollider& collider)
 
 	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		if (state_->GetStateType() == BossState::AttackThrowball) {
+			//state_->OnCollision(this);
+
 			ball->Reset(player_->GetWorld().transform.translate);
 			if (hitCount < 3) {
 				Audio::Stop(SEthrowBall, true, false);
@@ -169,11 +164,16 @@ void Boss::ColliderAttackInit()
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {
-	if (collider.GetcollitionAttribute() == Collider::Tag::Player && state_->GetStateType() == BossState::AttackSlam) {
-		colliders_[Boss::ColliderType::Arm].IsUsing = false;
-		colliders_[Boss::ColliderType::Hund].IsUsing = false;
-		Audio::Play(SEHitattack, 1.0f);
+	if (state_->GetStateType() == BossState::AttackSlam) {
+		//state_->OnCollisionAttack(this);
+
+		if (collider.GetcollitionAttribute() == Collider::Tag::Player) {
+			colliders_[Boss::ColliderType::Arm].IsUsing = false;
+			colliders_[Boss::ColliderType::Hund].IsUsing = false;
+			Audio::Play(SEHitattack, 1.0f);
+		}
 	}
+
 }
 #pragma endregion Collider
 void Boss::AddImGui()
@@ -183,21 +183,6 @@ void Boss::AddImGui()
 	}
 	ImGui::Text(state_->ShowState().c_str());
 }
-void Boss::UpdateParticle(Particle& particle)
-{
-	Vector3 velcity = particle.velocity * kDeltaTime;
-	particle.transform.translate += velcity * deadEnemyParticleEmitter.speed;
-	//エミッターがパーティクルの半径を決める
-	particle.transform.scale = deadEnemyParticleEmitter.particleRadius;
-	Vector3 translate = particle.transform.translate + deadEnemyParticleEmitter.world_.transform.translate;
-	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
-	particle.color.w = alpha;
-	particle.color.x = deadEnemyParticleEmitter.color.x;
-	particle.color.y = deadEnemyParticleEmitter.color.y;
-	particle.color.z = deadEnemyParticleEmitter.color.z;
-	particle.currentTime += kDeltaTime;
-	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
-}
 Particle Boss::CustomParticle()
 {
 	Particle particle{};
@@ -206,7 +191,7 @@ Particle Boss::CustomParticle()
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
 
-	particle.lifeTime = ParticleSystem::SetParticleLifeTime(randomEngine,1.0f,3.0f);
+	particle.lifeTime = ParticleSystem::SetParticleLifeTime(randomEngine, 1.0f, 3.0f);
 	particle.transform.scale = sleepParticleEmitter.particleRadius;
 	particle.transform.translate = sleepParticleEmitter.world_.transform.translate;
 
@@ -216,7 +201,7 @@ void Boss::SleepUpdateParticle(Particle& particle)
 {
 	particle.transform.translate.y += sleepParticleValue * kDeltaTime;
 	if (particle.transform.translate.y <= 10.0f) {
-		particle.transform.translate.x += std::sin(std::clamp(particle.transform.translate.y,0.0f,1.0f)) * kDeltaTime * -1.0f;
+		particle.transform.translate.x += std::sin(std::clamp(particle.transform.translate.y, 0.0f, 1.0f)) * kDeltaTime * -1.0f;
 	}
 	//エミッターがパーティクルの半径を決める
 	particle.transform.scale = sleepParticleEmitter.particleRadius;

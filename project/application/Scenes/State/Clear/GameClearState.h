@@ -20,12 +20,10 @@ private:
 	std::unique_ptr<Sprite>texture;
 	uint32_t textureHundle;
 	WorldTransform texture_world_;
-
-	Input* input;
 	XINPUT_STATE joyState;
 
 	bool IsCanPush = false;
 	int time = 0;
 
-	Fade* fade;
+	Fade fade;
 };

@@ -1,19 +1,23 @@
 #include "Fade.h"
 
-Fade* Fade::GetInstance()
+void Fade::Init()
 {
-	static Fade instance;
-	return &instance;
+	sprite_ = std::make_unique<Sprite>();
+	sprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
+	sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/BlackTexture.png");
+	world_.Init();
 }
 
 void Fade::InInit()
 {
+	Init();
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,0.0f });
 	alpha_ = 0.0f;
 }
 
 void Fade::OutInit()
 {
+	Init();
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	alpha_ = 1.0f;
 }
