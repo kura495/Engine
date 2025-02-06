@@ -20,18 +20,6 @@ public:
 	virtual void Update();
 	virtual void Draw();
 
-	void SetTransform(TransformQua transFormQua) {
-		world_.transform = transFormQua;
-		world_.transform.translate += models_[0]->GetModelData().rootNode.localMatrix.GetTransform();
-		if (models_[0]->GetModelData().rootNode.localMatrix.GetScale().x != 1.0f &&
-			models_[0]->GetModelData().rootNode.localMatrix.GetScale().y != 1.0f &&
-			models_[0]->GetModelData().rootNode.localMatrix.GetScale().z != 1.0f
-			) {
-			world_.transform.scale += models_[0]->GetModelData().rootNode.localMatrix.GetScale();
-		}
-		world_.Update();
-	};
-
 #pragma region
 	uint32_t GetNumber()const { return objectNumber_; };
 

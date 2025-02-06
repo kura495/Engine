@@ -156,10 +156,10 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 		AddBox(ObjTransform);
 	}
 	if (name.compare("Enemy") == 0) {
-		AddEnemy(ObjTransform);
+		AddEnemy();
 	}
 	if (name.compare("Plane") == 0) {
-		AddPlane(ObjTransform);
+		AddPlane();
 	}
 
 }
@@ -174,8 +174,6 @@ void ObjectManager::AddBox()
 	std::string Name = "Box" + Number;
 	globalVariables->AddItem("Editer", Name, box->GetWorld().transform);
 
-	box->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
-
 	object_.push_back(box);
 }
 
@@ -183,8 +181,6 @@ void ObjectManager::AddBox(ObjectData input)
 {
 	BoxObject* box = new BoxObject;
 	box->Init(boxModel_);
-
-	box->SetTransform(input.object.transform);
 
 	box->SetSize(input.object.colloder.size);
 	box->SetOffset(input.object.colloder.center);
@@ -202,30 +198,13 @@ void ObjectManager::AddPlane()
 	std::string Name = "Plane" + Number;
 	globalVariables->AddItem("Editer", Name, plane->GetWorld().transform);
 
-	plane->SetTransform(globalVariables->GetTransformQuaValue("Editer", Name));
-
 	object_.push_back(plane);
 }
 
-void ObjectManager::AddPlane(ObjectData input)
-{
-	PlaneObject* plane = new PlaneObject;
-	plane->Init(planeModel_);
-
-	plane->SetTransform(input.object.transform);
-
-	//plane->SetSize(input.object.colloder.size);
-	//plane->SetOffset(input.object.colloder.center);
-
-	object_.push_back(plane);
-}
-
-void ObjectManager::AddEnemy(ObjectData input)
+void ObjectManager::AddEnemy()
 {
 	IObject* Enemy = new IObject;
 	Enemy->Init(enemyModel_);
-
-	Enemy->SetTransform(input.object.transform);
 
 	object_.push_back(Enemy);
 }

@@ -42,7 +42,6 @@ protected://関数
 
 	int32_t HP_;
 
-
 	Player* player_ = nullptr;
 	//識別用の名前　変えることでImGuiのタブネームを変えることができる
 	std::string name = "Enemy";

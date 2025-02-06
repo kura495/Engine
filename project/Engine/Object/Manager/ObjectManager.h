@@ -48,8 +48,7 @@ private:
 	void AddBox();
 	void AddBox(ObjectData input);
 	void AddPlane();
-	void AddPlane(ObjectData input);
-	void AddEnemy(ObjectData input);
+	void AddEnemy();
 	void addModel(ObjectData input, std::string path);
 #pragma endregion 読み込んだjson
 
