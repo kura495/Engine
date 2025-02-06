@@ -3,7 +3,7 @@
 #include "Texture/TextureManager.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Sprite/Sprite.h"
-class PauseManu {
+class PauseMenu {
 public:
 	void Init();
 	bool Update();

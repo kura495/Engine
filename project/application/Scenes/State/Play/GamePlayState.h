@@ -34,7 +34,7 @@
 #include "Object/SkyDome/SkyDome.h"
 #include "Object/Transition/Fade/Fade.h"
 #include "Object/FloorManager/FloorManager.h"
-#include "PauseManu/PauseManu.h"
+#include "PauseMenu/PauseMenu.h"
 
 enum class StageBehavior {
 	kTitle,
@@ -113,7 +113,7 @@ private:
 	std::vector<Model*> tutorialModel;
 	WorldTransform tutorialWorld_;
 
-	std::unique_ptr<PauseManu>pauseManu_;
+	std::unique_ptr<PauseMenu>pauseMenu_;
 
 	//ボタンを押したときに加算する。一定値を超えたらプレイステートに移行する
 	float stertCount = 0.0f;

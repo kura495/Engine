@@ -36,9 +36,9 @@ protected://関数
 	//当たり判定用
 	virtual void OnCollision(const ICollider& ICollider);
 
-	bool isDamege = false;
-	int damegeInterval = 0;
-	const int kDamegeInterval = 60;
+	bool isDamage = false;
+	int damageInterval = 0;
+	const int kDamageInterval = 60;
 
 	int32_t HP_;
 

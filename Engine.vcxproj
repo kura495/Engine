@@ -200,7 +200,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\State\Clear\GameClearState.cpp" />
     <ClCompile Include="project\application\Scenes\State\GameOver\GameOverState.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp" />
-    <ClCompile Include="project\application\Scenes\State\Play\PauseManu\PauseManu.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp" />
     <ClCompile Include="project\application\Scenes\State\Title\GameTitleState.cpp" />
     <ClCompile Include="project\Engine\Animation\Animation.cpp" />
     <ClCompile Include="project\Engine\Audio\Audio.cpp" />
@@ -280,7 +280,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Object\Player\State\PRoot\PRoot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="project\application\Scenes\State\Play\PauseManu\PauseManu.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
     <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.h" />
     <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />

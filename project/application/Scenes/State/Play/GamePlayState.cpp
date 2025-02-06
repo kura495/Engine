@@ -70,12 +70,12 @@ void GamePlayState::Initialize()
 	woodenBoxWorld_.transform.scale.z = stertCount + 1.0f;
 	woodenBoxWorld_.Update();
 
-	pauseManu_ = std::make_unique<PauseManu>();
-	pauseManu_->Init();
+	pauseMenu_ = std::make_unique<PauseMenu>();
+	pauseMenu_->Init();
 }
 void GamePlayState::Update()
 {
-	if (pauseManu_->Update()) {
+	if (pauseMenu_->Update()) {
 		return;
 	}
 
@@ -134,7 +134,7 @@ void GamePlayState::Draw()
 
 	collisionManager->Draw();
 
-	pauseManu_->Draw();
+	pauseMenu_->Draw();
 }
 #pragma region
 void GamePlayState::BehaviorUpdate()

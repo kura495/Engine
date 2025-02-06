@@ -27,7 +27,7 @@ void ObjectManager::Update()
 			if (ImGui::Button("Add Box")) {
 				AddBox();
 				boxObjectCount++;
-				globalVariables->Updateint32_tItem("Editer", "BoxCount", boxObjectCount);
+				globalVariables->Updateint32_tItem("Editor", "BoxCount", boxObjectCount);
 			}
 			ImGui::EndMenu();
 		}
@@ -36,7 +36,7 @@ void ObjectManager::Update()
 			if (ImGui::Button("Add Plane")) {
 				AddPlane();
 				PlaneObjectCount++;
-				globalVariables->Updateint32_tItem("Editer", "PlaneCount", PlaneObjectCount);
+				globalVariables->Updateint32_tItem("Editor", "PlaneCount", PlaneObjectCount);
 			}
 			ImGui::EndMenu();
 		}
@@ -59,15 +59,15 @@ void ObjectManager::Draw()
 
 void ObjectManager::LordFile(std::string fileName)
 {
-	globalVariables->CreateGroup("Editer");
+	globalVariables->CreateGroup("Editor");
 #pragma region
-	globalVariables->AddItem("Editer", "BoxCount", boxObjectCount);
-	boxObjectCount = globalVariables->GetIntValue("Editer", "BoxCount");
+	globalVariables->AddItem("Editor", "BoxCount", boxObjectCount);
+	boxObjectCount = globalVariables->GetIntValue("Editor", "BoxCount");
 	for (int32_t boxit = 0; boxit < boxObjectCount; boxit++) {
 		AddBox();
 	}
-	globalVariables->AddItem("Editer", "PlaneCount", PlaneObjectCount);
-	PlaneObjectCount = globalVariables->GetIntValue("Editer", "PlaneCount");
+	globalVariables->AddItem("Editor", "PlaneCount", PlaneObjectCount);
+	PlaneObjectCount = globalVariables->GetIntValue("Editor", "PlaneCount");
 	for (int32_t Pleneit = 0; Pleneit < PlaneObjectCount; Pleneit++) {
 		AddPlane();
 	}
@@ -155,9 +155,6 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	if (name.compare("Cube") == 0) {
 		AddBox(ObjTransform);
 	}
-	if (name.compare("Enemy") == 0) {
-		AddEnemy();
-	}
 	if (name.compare("Plane") == 0) {
 		AddPlane();
 	}
@@ -172,7 +169,7 @@ void ObjectManager::AddBox()
 	std::string Number = std::to_string(box->GetNumber());
 
 	std::string Name = "Box" + Number;
-	globalVariables->AddItem("Editer", Name, box->GetWorld().transform);
+	globalVariables->AddItem("Editor", Name, box->GetWorld().transform);
 
 	object_.push_back(box);
 }
@@ -196,15 +193,7 @@ void ObjectManager::AddPlane()
 	std::string Number = std::to_string(plane->GetNumber());
 
 	std::string Name = "Plane" + Number;
-	globalVariables->AddItem("Editer", Name, plane->GetWorld().transform);
+	globalVariables->AddItem("Editor", Name, plane->GetWorld().transform);
 
 	object_.push_back(plane);
-}
-
-void ObjectManager::AddEnemy()
-{
-	IObject* Enemy = new IObject;
-	Enemy->Init(enemyModel_);
-
-	object_.push_back(Enemy);
 }

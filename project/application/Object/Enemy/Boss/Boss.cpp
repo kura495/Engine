@@ -54,11 +54,11 @@ void Boss::Init(std::vector<Model*> models)
 void Boss::Update()
 {
 	//ダメージを受けた時
-	if (isDamege) {
+	if (isDamage) {
 		animationArmLDamage->PlayAnimation();
 		animationTime_ += kDeltaTime;
 		if (animationTime_ > animationArmLDamage->duration) {
-			isDamege = false;
+			isDamage = false;
 			animationTime_ = kDeltaTime;
 			colliders_[Boss::ColliderType::WeekPoint].IsUsing = true;
 
@@ -123,8 +123,8 @@ void Boss::OnCollision(const ICollider& collider)
 		if (HP_ <= 0) {
 			ChangeState<EDead>();
 		}
-		isDamege = true;
-		damegeInterval = 0;
+		isDamage = true;
+		damageInterval = 0;
 		colliders_[Boss::ColliderType::WeekPoint].IsUsing = false;
 	}
 

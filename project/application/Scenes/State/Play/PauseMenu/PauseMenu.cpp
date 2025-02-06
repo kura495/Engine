@@ -1,6 +1,6 @@
-#include "PauseManu.h"
+#include "PauseMenu.h"
 
-void PauseManu::Init()
+void PauseMenu::Init()
 {
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
@@ -8,7 +8,7 @@ void PauseManu::Init()
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,0.7f });
 	world_.Init();
 }
-bool PauseManu::Update()
+bool PauseMenu::Update()
 {
 	//ボタンを押すとtrueとfalseが切り替わる
 	if (IsPause) {
@@ -27,7 +27,7 @@ bool PauseManu::Update()
 	}
 	return false;
 }
-void PauseManu::Draw()
+void PauseMenu::Draw()
 {
 	if (IsPause) {
 		sprite_->RendererDraw(world_);
