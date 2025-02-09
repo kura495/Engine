@@ -14,13 +14,14 @@ void Boss::Init(std::vector<Model*> models)
 	ColliderDamageInit();
 	ColliderAttackInit();
 	//アニメーション
-	animationArmLDamage = Animation::LoadAnimationFile("project/resources/Enemy", "Arm.gltf");
+	animationArmLDamage = std::make_unique<Animation>();
+	animationArmLDamage.reset(Animation::LoadAnimationFile("project/resources/Enemy", "Arm.gltf"));
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[0], false);
 #pragma region 
 
 
-	sleepParticle_ = new ParticleSystem();
+	sleepParticle_ = std::make_unique<ParticleSystem>();
 	sleepParticle_->Init("project/resources/sleepParticle.png");
 	sleepParticle_->UpdateFunc = [this](Particle& particle) { SleepUpdateParticle(particle); };
 	sleepParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
@@ -90,16 +91,15 @@ void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 }
 bool Boss::FollowPlayer()
 {
-	//TODO:命名仮
 	Vector3 temp = player_->GetWorld().transform.translate - world_.transform.translate;
 	//モデルの中心から手のひらへ
 	temp.z += 5.0f;
 	temp.y = 0.0f;
 	float playerToEnemyLngth = temp.Length();
 	temp = temp.Normalize();
-	world_.transform.translate += temp * 0.5f;
-	//TODO:命名仮
-	if (playerToEnemyLngth <= 0.2f) {
+	world_.transform.translate += temp * kFollowPlayerSpeed;
+	//一定の距離になったら処理を終わる
+	if (playerToEnemyLngth <= kConstantDistance) {
 		return true;
 	}
 	return false;
@@ -133,7 +133,7 @@ void Boss::OnCollision(const ICollider& collider)
 			//state_->OnCollision(this);
 
 			ball->Reset(player_->GetWorld().transform.translate);
-			if (hitCount < 3) {
+			if (hitCount < hitCountMax) {
 				Audio::Stop(SEthrowBall, true, false);
 				Audio::Play(SEthrowBall, 0.2f);
 			}

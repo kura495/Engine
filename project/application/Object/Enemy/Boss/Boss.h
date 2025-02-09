@@ -43,7 +43,7 @@ public:
 
 	void SetColliderUse(int number,bool flag);
 	void SetColliderAttribute(int number, uint32_t collisionAttribute);
-	Animation* GetAnime() { return animationArmLDamage; };
+	Animation* GetAnime() { return animationArmLDamage.get(); };
 	/// <summary>
 	/// ステートを切り替える
 	/// </summary>
@@ -79,7 +79,7 @@ public:
 
 	//Spawn
 	//寝てる演出パーティクル
-	ParticleSystem* sleepParticle_;
+	std::unique_ptr<ParticleSystem> sleepParticle_;
 	Emitter sleepParticleEmitter;
 	void SleepUpdateParticle(Particle& particle);
 	float sleepParticleValue = 2.0f;
@@ -90,6 +90,7 @@ public:
 	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
 	bool isDownStert;
 	int hitCount = 0;
+	const int hitCountMax = 3;
 	#pragma endregion State
 private:
 
@@ -119,7 +120,11 @@ private:
 
 	void AddImGui()override;
 #pragma region
-	Animation* animationArmLDamage;
+	std::unique_ptr<Animation> animationArmLDamage;
 	float animationTime_ = kDeltaTime;
 #pragma endregion Animation
+	//FollowPlayerの速度の定数
+	const float kFollowPlayerSpeed = 0.5f;
+	//FollowPlayerがtrueを返す一定距離
+	const float kConstantDistance = 0.2f;
 };
