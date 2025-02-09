@@ -17,7 +17,7 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage = std::make_unique<Animation>();
 	animationArmLDamage.reset(Animation::LoadAnimationFile("project/resources/Enemy", "Arm.gltf"));
 	animationArmLDamage->Init();
-	animationArmLDamage->AnimeInit(*models_[0], false);
+	animationArmLDamage->AnimeInit(*models_[BossModel::MainBody], false);
 #pragma region 
 
 

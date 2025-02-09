@@ -36,7 +36,7 @@ void EAttackThrowball::Update(Boss* boss)
 
 void EAttackThrowball::Draw(Boss* boss)
 {
-	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 	boss->ball->Draw();
 	boss->dummyBall->Draw();
 }

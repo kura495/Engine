@@ -16,6 +16,14 @@ struct ObjectData {
 	Object object;
 	Object childlen;
 };
+//自キャラの生成データ
+struct PlayerSpawnData {
+	//平行移動
+	Math::Vector3 translation;
+	//回転角
+	Math::Vector3 rotation;
+
+};
 
 class ObjectManager
 {

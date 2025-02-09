@@ -25,7 +25,11 @@ public:
 	enum ColliderType {
 		pCollider,//プレイヤーの当たり判定
 		Attack,//攻撃判定
-		END,
+		ColliderTypeEND,
+	};
+	enum PlayerModel {
+		MainBody,//プレイヤーのメインモデル
+		PlayerModelEND,
 	};
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
@@ -77,7 +81,7 @@ private:
 #pragma region 
 
 	//当たり判定
-	std::array<OBBoxCollider, ColliderType::END> colliders_;
+	std::array<OBBoxCollider, ColliderType::ColliderTypeEND> colliders_;
 	WorldTransform attackColliderWorld_;
 	//プレイヤーキャラ事態の当たり判定
 	void ColliderInit();

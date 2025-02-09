@@ -4,7 +4,7 @@ void PRoot::Init(Player* p)
 {
 	p->SetColliderUse(Player::ColliderType::pCollider, true);
 	walkanimation->Reset();
-	walkanimation->AnimeInit(*p->Getmodels()[0], true);
+	walkanimation->AnimeInit(*p->Getmodels()[Player::PlayerModel::MainBody], true);
 }
 
 void PRoot::Update(Player* p)
@@ -28,7 +28,7 @@ void PRoot::Update(Player* p)
 
 void PRoot::Draw(Player* p)
 {
-	p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), walkanimation->GetSkinCluster());
+	p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), walkanimation->GetSkinCluster());
 }
 
 std::string PRoot::ShowState()

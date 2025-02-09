@@ -21,6 +21,9 @@ public:
 	virtual void Init(Player* p) = 0;
 	virtual void Update(Player* p) = 0;
 	virtual void Draw(Player* p) = 0;
+	virtual void OnCollision(const ICollider& collider);
+	virtual void OnCollisionAttack(const ICollider& collider);
+
 	PlayerState GetStateType() { return stateType; };
 	virtual std::string ShowState() { return "default"; };
 

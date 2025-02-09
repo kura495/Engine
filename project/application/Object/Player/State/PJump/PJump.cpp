@@ -2,7 +2,6 @@
 #include "../../Player.h"
 void PJump::Init(Player* p)
 {
-	p;
 	p->jumpForce = kJumpForce;
 }
 
@@ -17,7 +16,7 @@ void PJump::Update(Player* p)
 
 void PJump::Draw(Player* p)
 {
-	p->Getmodels()[0]->RendererDraw(p->GetWorld());
+	p->Getmodels()[Player::PlayerModel::MainBody]->RendererDraw(p->GetWorld());
 }
 
 std::string PJump::ShowState()

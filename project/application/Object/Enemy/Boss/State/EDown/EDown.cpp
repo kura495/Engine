@@ -37,7 +37,7 @@ void EDown::Update(Boss* boss)
 
 void EDown::Draw(Boss* boss)
 {
-	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
 std::string EDown::ShowState()
 {

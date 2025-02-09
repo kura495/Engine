@@ -20,7 +20,7 @@ void ESpawn::Update(Boss* boss)
 
 void ESpawn::Draw(Boss* boss)
 {
-	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 	boss->sleepParticle_->RendererDraw();
 }
 std::string ESpawn::ShowState()

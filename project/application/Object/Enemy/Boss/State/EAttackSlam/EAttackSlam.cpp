@@ -51,7 +51,7 @@ void EAttackSlam::Update(Boss* boss)
 
 void EAttackSlam::Draw(Boss* boss)
 {
-	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
 std::string EAttackSlam::ShowState()
 {

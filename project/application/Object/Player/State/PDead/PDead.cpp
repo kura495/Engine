@@ -25,7 +25,7 @@ void PDead::Init(Player* p)
 	deadParticleEmitter.frequencyTime = deadParticleEmitter.frequency;
 	animationTime_ = kDeltaTime;
 	//アニメーション設定
-	deadAnimation->AnimeInit(*p->Getmodels()[0], true);
+	deadAnimation->AnimeInit(*p->Getmodels()[Player::PlayerModel::MainBody], true);
 }
 void PDead::Update(Player* p)
 {
@@ -46,7 +46,7 @@ void PDead::Update(Player* p)
 void PDead::Draw(Player* p)
 {
 	if (isDeadModelDraw) {
-		p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), deadAnimation->GetSkinCluster());
+		p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), deadAnimation->GetSkinCluster());
 	}
 	else {
 		deadParticle_->RendererDraw();

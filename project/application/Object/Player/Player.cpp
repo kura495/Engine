@@ -12,7 +12,7 @@ void Player::Init(std::vector<Model*> models)
 	world_.transform.translate.z = -3.0f;
 	world_.Update();
 	//ライトの設定
-	models_[0]->GetMaterial()->enableLighting = Lighting::NotDo;
+	models_[PlayerModel::MainBody]->GetMaterial()->enableLighting = Lighting::NotDo;
 	//コライダー設定
 	ColliderInit();
 	AttackColliderInit();

@@ -28,12 +28,16 @@ public:
 		WeekPoint,//弱点の当たり判定
 		Arm,//腕の当たり判定
 		Hund,//手の当たり判定
-		END,
+		ColliderTypeEND,
 	};
 	enum AttackState {
 		Slam,//叩きつけ
 		Throw,//物を投げる
 		RocketPunch,//ロケットパンチ！
+	};
+	enum BossModel {
+		MainBody,//ボスのメインモデル
+		PlayerModelEND,
 	};
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
@@ -103,7 +107,7 @@ private:
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
 	void OnCollision(const ICollider& colliderA)override;
-	std::array<OBBoxCollider,Boss::ColliderType::END> colliders_;
+	std::array<OBBoxCollider,Boss::ColliderType::ColliderTypeEND> colliders_;
 	WorldTransform colliderDamageWorld_;
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
