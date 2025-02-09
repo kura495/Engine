@@ -5,6 +5,7 @@
 #include "Utility/GlobalTime.h"
 #include "ParticleSystem/ParticleSystem.h"
 class Player;
+class ICollider;
 enum class PlayerState {
 	kRoot,
 	kJump,
@@ -21,8 +22,8 @@ public:
 	virtual void Init(Player* p) = 0;
 	virtual void Update(Player* p) = 0;
 	virtual void Draw(Player* p) = 0;
-	virtual void OnCollision(const ICollider& collider);
-	virtual void OnCollisionAttack(const ICollider& collider);
+	virtual void OnCollision(Player* p, const ICollider& collider) { p; collider; };
+	virtual void OnCollisionAttack(Player* p, const ICollider& collider) { p; collider; };
 
 	PlayerState GetStateType() { return stateType; };
 	virtual std::string ShowState() { return "default"; };

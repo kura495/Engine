@@ -8,28 +8,28 @@ void EDown::Init(Boss* boss)
 	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
 	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 
-	boss->isDownStert = true;
+	isDownStert = true;
 	easeT = 0.0f;
 	addEaseT = 0.02f;
 	PrePos = boss->GetWorld().transform.translate;
-	boss->hitCount = 0;
+	hitCount = 0;
 }
 
 void EDown::Update(Boss* boss)
 {
-	if (boss->isDownStert) {
+	if (isDownStert) {
 		boss->GetAnime()->PlayAnimation();
 		animationTime_ += kDeltaTime;
 		if (animationTime_ > boss->GetAnime()->duration) {
-			boss->isDownStert = false;
+			isDownStert = false;
 			animationTime_ = kDeltaTime;
 		}
 	}
 
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	boss->GetWorld().transform.translate = Vector3::Lerp(PrePos, boss->DownPosition, easeT);
+	boss->GetWorld().transform.translate = Vector3::Lerp(PrePos, DownPosition, easeT);
 	//3回攻撃を受けると元の位置に戻す
-	if (boss->hitCount == 3) {
+	if (hitCount == 3) {
 		boss->ChangeState<EReturnPosition>();
 		boss->SetColliderUse(Boss::ColliderType::WeekPoint, false);
 	}
@@ -38,6 +38,13 @@ void EDown::Update(Boss* boss)
 void EDown::Draw(Boss* boss)
 {
 	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+}
+void EDown::OnCollision(Boss* boss, const ICollider& collider)
+{
+	boss;
+	if (collider.GetcollitionAttribute() == Collider::Tag::Weapon) {
+		hitCount += 1;
+	}
 }
 std::string EDown::ShowState()
 {

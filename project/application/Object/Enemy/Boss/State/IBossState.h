@@ -3,8 +3,10 @@
 #include "Vector/Vector3.h"
 #include "Quaternion/Quaternion.h"
 #include "ParticleSystem/ParticleSystem.h"
+
 //前方宣言
 class Boss;
+class ICollider;
 enum class BossState {
 	Root,
 	ReturnPosition,//元の位置に戻る
@@ -26,8 +28,8 @@ public:
 	virtual void Update(Boss* p) = 0;
 	virtual void Draw(Boss* p) = 0;
 
-	//virtual void OnCollision(Boss* p);
-	//virtual void OnCollisionAttack(Boss* p);
+	virtual void OnCollision(Boss* boss, const ICollider& collider) { boss; collider; };
+	virtual void OnCollisionAttack(Boss* boss, const ICollider& collider) { boss; collider; };
 
 	BossState GetStateType() { return stateType; };
 	virtual std::string ShowState() { return "default"; };

@@ -38,7 +38,6 @@ public:
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
 
-
 	void SetColliderUse(int number, bool flag);
 	void SetColliderAttribute(int number, uint32_t collisionAttribute);
 

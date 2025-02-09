@@ -5,31 +5,42 @@ void EAttackThrowball::Init(Boss* boss)
 {
 	easeT = 0.0f;
 	addEaseT = 0.05f;
-	boss->ball->ThrowBall(boss->GetWorld().transform.translate, boss->GetPlayer()->GetWorld().transform.translate);
-	Audio::Reset(boss->SEthrowBall, false);
-	Audio::Play(boss->SEthrowBall, 0.2f);
-	boss->isThrowdummyBallFlag = false;
-	boss->countHitBall = 0;
+
+	ball = std::make_unique<Ball>();
+	std::vector<Model*> ballmodels;
+	ballmodels.push_back(Model::CreateModelFromObj("project/resources/Cube", "Cube.obj"));
+	ball->Init(ballmodels);
+	dummyBall = std::make_unique<DummyBall>();
+	dummyBall->Init(ballmodels);
+
+	ball->ThrowBall(boss->GetWorld().transform.translate, boss->GetPlayer()->GetWorld().transform.translate);
+	//音
+	SEthrowBall = Audio::LoadAudioMP3("project/resources/sound/Boss/throwBall.mp3", false);
+	Audio::Reset(SEthrowBall, false);
+	Audio::Play(SEthrowBall, 0.2f);
+	isThrowdummyBallFlag = false;
+	countHitBall = 0;
 }
 
 void EAttackThrowball::Update(Boss* boss)
 {
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
-	boss->ball->Update();
-	boss->dummyBall->Update();
+	ball->Update();
+	dummyBall->Update();
 	//跳ね返しのタイミングでもう一つの球を出す
-	if (boss->countHitBall == 1 && boss->isThrowdummyBallFlag == false) {
-		boss->dummyBall->ThrowBall(boss->GetWorld().transform.translate, { boss->GetWorld().transform.translate.x + 5.0f,boss->GetWorld().transform.translate.y,boss->GetWorld().transform.translate.z}, boss->GetPlayer()->GetWorld().transform.translate);
-		boss->isThrowdummyBallFlag = true;
+	if (countHitBall == 1 && isThrowdummyBallFlag == false) {
+		dummyBall->ThrowBall(boss->GetWorld().transform.translate, { boss->GetWorld().transform.translate.x + 5.0f,boss->GetWorld().transform.translate.y,boss->GetWorld().transform.translate.z}, boss->GetPlayer()->GetWorld().transform.translate);
+		isThrowdummyBallFlag = true;
 	}
 	//3回球に当たったらやられ状態にする
-	if (boss->countHitBall >= 3) {
-		boss->dummyBall->Reset();
+	if (countHitBall >= 3) {
+		dummyBall->Reset();
 		boss->ChangeState<EDown>();
+		return;
 	}
 	//ボールが一定のラインを超えたらルートビヘイビアーに戻す
-	if (boss->ball->GetIsOverline()) {
-		boss->dummyBall->Reset();
+	if (ball->GetIsOverline()) {
+		dummyBall->Reset();
 		boss->ChangeState<ERoot>();
 	}
 }
@@ -37,8 +48,22 @@ void EAttackThrowball::Update(Boss* boss)
 void EAttackThrowball::Draw(Boss* boss)
 {
 	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
-	boss->ball->Draw();
-	boss->dummyBall->Draw();
+	ball->Draw();
+	dummyBall->Draw();
+}
+void EAttackThrowball::OnCollision(Boss* boss, const ICollider& collider)
+{
+	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
+		ball->Reset(boss->GetPlayer()->GetWorld().transform.translate);
+		
+		Audio::Stop(SEthrowBall, true, false);
+		Audio::Play(SEthrowBall, 0.2f);
+		
+		if (easeT == 1.0f) {
+			countHitBall += 1;
+			easeT = 0.0f;
+		}
+	}
 }
 std::string EAttackThrowball::ShowState()
 {

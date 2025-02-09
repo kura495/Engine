@@ -6,8 +6,7 @@
 #include "Animation/Animation.h"
 #include "Utility/Ease/Ease.h"
 #include "ParticleSystem/ParticleSystem.h"
-#include "Ball/Ball.h"
-#include "DummyBall/DummyBall.h"
+
 #include "Engine/Audio/Audio.h"
 #pragma region
 
@@ -51,6 +50,8 @@ public:
 	/// <summary>
 	/// ステートを切り替える
 	/// </summary>
+	/// ステートを切り替えたタイミングで前が破棄されてしまうため、タイミングは注意。
+	/// ChangeStateの後に更新を入れない、もしくはreturnで返す
 	template <typename T>
 	void ChangeState() {
 		state_ = std::make_unique<T>();
@@ -62,39 +63,10 @@ public:
 	uint32_t isAttackSelect = AttackState::RocketPunch;
 	//プレイヤーを追いかける関数
 	bool FollowPlayer();
-	//ReturnPosition
-	//AttackSlamPlayer
-	bool IsAttackFlag = false;
+	//AttackSlam
 	//叩きつけ攻撃時のカメラシェイク用のフラグ
 	bool isSlamFlag = false;
-	//叩きつけを一回以上しているか
-	bool isSlam2ndFlag = false;
-	//SEハンドル
-	int SEHitattack;
-	//AttackThrowBomb
-	std::unique_ptr<Ball> ball;
-	std::unique_ptr<DummyBall> dummyBall;
-	//ボールに当たった回数
-	int countHitBall;
-	//ダミーを発射したかどうか
-	bool isThrowdummyBallFlag = false;
-	//SEハンドル
-	int SEthrowBall;
 
-	//Spawn
-	//寝てる演出パーティクル
-	std::unique_ptr<ParticleSystem> sleepParticle_;
-	Emitter sleepParticleEmitter;
-	void SleepUpdateParticle(Particle& particle);
-	float sleepParticleValue = 2.0f;
-	//Dead
-
-	Particle CustomParticle();
-	//Down
-	Vector3 DownPosition{ 0.0f,0.5f,20.0f };
-	bool isDownStert;
-	int hitCount = 0;
-	const int hitCountMax = 3;
 	#pragma endregion State
 private:
 
