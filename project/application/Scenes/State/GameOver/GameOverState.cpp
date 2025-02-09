@@ -5,7 +5,6 @@ void GameOverState::Initialize()
 	StateNo = GameStateNo::GAMEOVER;
 
 	Editer::GetInstance()->IsEnable(false);
-	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 	texture_world_.Init();
 
@@ -21,7 +20,7 @@ void GameOverState::Update()
 	if (time > 60) {
 		IsCanPush = true;
 	}
-	if (input->GetPadPrecede(XINPUT_GAMEPAD_A, 10)) {
+	if (Input::GetPadPrecede(XINPUT_GAMEPAD_A, 10)) {
 		if (IsCanPush) {
 			StateNo = 1;
 		}
