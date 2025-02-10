@@ -59,10 +59,6 @@ public:
 	//アニメーション
 	const float kgravity = 0.03f;
 	float gravity = 0.03f;
-
-	//kJump
-	//ジャンプに使う実数値
-	float jumpForce = 0.0f;
 	//kDead
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;

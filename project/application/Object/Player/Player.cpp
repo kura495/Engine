@@ -49,7 +49,6 @@ void Player::Init(std::vector<Model*> models)
 }
 void Player::Update()
 {
-	gravity += kgravity;
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
 	
@@ -67,14 +66,20 @@ void Player::Update()
 	//パーティクルアップデート
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
-
+	//重力を加える
+	if (state_->GetStateType() != PlayerState::kDead && state_->GetStateType() != PlayerState::kJump) {
+		world_.transform.translate.y -= gravity;
+	}
+	//地面にいないなら落ちるスピードが加速する
+	if (isOnFloorFlag == false) {
+		gravity = std::min(gravity + kgravity,0.98f);
+	}
+	isOnFloorFlag = false;
 
 #ifdef USE_IMGUI
 	ImGui();
 #endif
 	world_.Update();
-
-	isOnFloorFlag = false;
 }
 void Player::Draw()
 {
@@ -106,44 +111,24 @@ void Player::OnCollision(const ICollider& ICollider)
 {
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyAttack) {
 		isDamege = true;
-		return;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		isDamege = true;
-		return;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
-		if (state_->GetStateType() == PlayerState::kDead) {
-			return;
-		}
 		world_.transform.translate -= move;
 		world_.Update();
-		return;
-	}
+	} 
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Weapon) {
-		return;
+
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
-		if (state_->GetStateType() == PlayerState::kJump) {
-			if (world_.transform.translate.y <= ICollider.GetCenter().y && jumpForce <= 0) {
-				world_.transform.translate.y = ICollider.GetCenter().y;
-				world_.Update();
-				gravity = 0.0f;
-				ChangeState<PRoot>();
-			}
-		}
-		else {
-			if (isOnFloorFlag) {
-				return;
-			}
-			world_.transform.translate.y += gravity;
-			isOnFloorFlag = true;
-			gravity = kgravity;
-			world_.Update();
-		}
-		//重力分
-		return;
+		world_.transform.translate.y = ICollider.GetCenter().y;
+		world_.Update();
+		gravity = kgravity;
+		isOnFloorFlag = true;
 	}
+	state_->OnCollision(this,ICollider);
 	return;
 }
 void Player::AttackColliderInit()
