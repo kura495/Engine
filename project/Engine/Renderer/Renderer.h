@@ -43,7 +43,7 @@ class Renderer
 public:
 	static Renderer* GetInstance();
 	void Initalize();
-	//void Update();
+	void Update();
 	void Draw();
 	void PostProsessDraw();
 	/// <summary>
@@ -96,12 +96,17 @@ public:
 	 /// <param name="Type"></param>
 	 void ChangePipeline(PipelineType Type);
 
-	static ViewProjection viewProjection;
+	 static void SetViewProj(CameraParameter parameter) {
+		 viewProjection.parameter = parameter;
+	 };
+	 static ViewProjection& GetViewProjection() { return viewProjection; }
 private:
 	Renderer() = default;
 	~Renderer() = default;
 	Renderer(const Renderer& obj) = delete;
 	Renderer& operator=(const Renderer& obj) = delete;
+
+	static ViewProjection viewProjection;
 
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>commandList = nullptr;
 	std::unique_ptr<PSOManager> PSOManager_ = nullptr;
@@ -119,6 +124,4 @@ private:
 	int Texture;
 	int dissolveTexture;
 	WorldTransform cubeWorld_;
-
-	ViewProjection viewproj;
 };

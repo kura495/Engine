@@ -25,8 +25,8 @@ void Line::Draw(const WorldTransform& transform){
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(2, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(2, Renderer::GetViewProjection().constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, Renderer::GetViewProjection().constBuff_PS->GetGPUVirtualAddress());
 
 	directX_->GetcommandList()->DrawInstanced(UINT(debugVertices_.size()), 1,0,0);
 }

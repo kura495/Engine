@@ -25,12 +25,12 @@ void ViewProjection::Update(){
 void ViewProjection::TransferMatrix(){
 	constMap_VS->view = matView;
 	constMap_VS->projection = matProjection;
-	constMap_PS->worldPosition = translation_;
+	constMap_PS->worldPosition = parameter.translation_;
 }
 
 void ViewProjection::UpdateViewMatrix(){
-	rotation_ = rotation_.Normalize();
-	CameraMatrix = MakeAffineMatrix(Vector3{ 1.0f,1.0f,1.0f }, rotation_, translation_);
+	parameter.rotation_ = parameter.rotation_.Normalize();
+	CameraMatrix = MakeAffineMatrix(Vector3{ 1.0f,1.0f,1.0f }, parameter.rotation_, parameter.translation_);
 	matView = Matrix4x4::Inverse(CameraMatrix);
 }
 

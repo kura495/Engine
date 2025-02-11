@@ -4,7 +4,7 @@ void GameTitleState::Initialize()
 {
 	StateNo = GameStateNo::TITLE;
 
-	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
+	Editer::GetInstance()->SetViewProjection(&Renderer::GetViewProjection());
 	Editer::GetInstance()->IsEnable(false);
 	input = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();

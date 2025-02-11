@@ -2,9 +2,7 @@
 
 void DebugCamera::Initialize()
 {
-	viewProj.Initialize();
-	viewProj.translation_ = {0.0f,0.0f,-10.0f};
-	viewProj.Update();
+	parameter.translation_ = {0.0f,0.0f,-10.0f};
 }
 
 void DebugCamera::Update()
@@ -28,35 +26,33 @@ void DebugCamera::Update()
 		rotate_.y += rotSpeed;
 	}
 	Vector3 EulerRot;
-	EulerRot.x = LerpShortAngle(viewProj.rotation_.x, rotate_.x, 1.0f);
-	EulerRot.y = LerpShortAngle(viewProj.rotation_.y, rotate_.y, 1.0f);
-	EulerRot.z = LerpShortAngle(viewProj.rotation_.z, rotate_.z, 1.0f);
+	EulerRot.x = LerpShortAngle(parameter.rotation_.x, rotate_.x, 1.0f);
+	EulerRot.y = LerpShortAngle(parameter.rotation_.y, rotate_.y, 1.0f);
+	EulerRot.z = LerpShortAngle(parameter.rotation_.z, rotate_.z, 1.0f);
 
-	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
+	parameter.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 #pragma endregion 回転
 	//キー入力でカメラ移動
 #pragma region translation_
 	const float translateSpeed = 0.5f;
 	if (Input::GetInstance()->TriggerKey(DIK_A)) {
-		viewProj.translation_.x -= translateSpeed;
+		parameter.translation_.x -= translateSpeed;
 	}
 	else if (Input::GetInstance()->TriggerKey(DIK_D)) {
-		viewProj.translation_.x += translateSpeed;
+		parameter.translation_.x += translateSpeed;
 	}
 	if (Input::GetInstance()->TriggerKey(DIK_W)) {
-		viewProj.translation_.y += translateSpeed;
+		parameter.translation_.y += translateSpeed;
 	}
 	else if (Input::GetInstance()->TriggerKey(DIK_S)) {
-		viewProj.translation_.y -= translateSpeed;
+		parameter.translation_.y -= translateSpeed;
 	}
 	if (Input::GetInstance()->TriggerKey(DIK_E)) {
-		viewProj.translation_.z -= translateSpeed;
+		parameter.translation_.z -= translateSpeed;
 	}
 	else if (Input::GetInstance()->TriggerKey(DIK_Q)) {
-		viewProj.translation_.z += translateSpeed;
+		parameter.translation_.z += translateSpeed;
 	}
 #pragma endregion 移動
 	}
-	viewProj.Update();
-
 }

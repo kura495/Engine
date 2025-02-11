@@ -281,6 +281,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\State\GamePlayState.h" />
     <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.h" />
     <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />

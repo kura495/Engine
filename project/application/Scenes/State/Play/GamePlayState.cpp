@@ -7,7 +7,7 @@ void GamePlayState::Initialize()
 	//基本機能生成
 	debugcamera_ = std::make_unique<DebugCamera>();
 	debugcamera_->Initialize();
-	Editer::GetInstance()->SetViewProjection(&Renderer::viewProjection);
+	Editer::GetInstance()->SetViewProjection(&Renderer::GetViewProjection());
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
 
@@ -81,7 +81,7 @@ void GamePlayState::Update()
 
 	BehaviorUpdate();
 
-	Renderer::viewProjection = followCamera->GetViewProjection();
+	Renderer::SetViewProj(followCamera->GetParameter());
 
 	if (enemyManager->GetSlamFlag()) {
 		followCamera->isShake = true;

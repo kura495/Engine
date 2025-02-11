@@ -1317,6 +1317,7 @@
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h">
       <Filter>project\application\Scenes\State\Play\PauseManu</Filter>
     </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\State\GamePlayState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

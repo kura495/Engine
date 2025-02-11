@@ -74,7 +74,7 @@ void GameManager::Gameloop(){
 			GlobalVariables::GetInstance()->Update();
 			state[currentSceneNum_]->Update();
 			renderTextrue->Update();
-
+			renderer_->Update();
 #pragma endregion
 #pragma region Draw
 			//renderTextureに色々書き込んでいく

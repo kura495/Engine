@@ -16,10 +16,7 @@ void Player::Init(std::vector<Model*> models)
 	//コライダー設定
 	ColliderInit();
 	AttackColliderInit();
-	//アニメーション設定
-#pragma region
 
-#pragma endregion Anime
 	//パーティクル設定
 #pragma region
 
@@ -259,7 +256,7 @@ bool Player::Move()
 		move.z = move.z * kMoveSpeed_;
 		//カメラの正面方向に移動するようにする
 		//回転行列を作る
-		Matrix4x4 rotateMatrix = MakeRotateMatrix(Renderer::viewProjection.rotation_);
+		Matrix4x4 rotateMatrix = MakeRotateMatrix(Renderer::GetViewProjection().parameter.rotation_);
 		//移動ベクトルをカメラの角度だけ回転
 		move = TransformNormal(move, rotateMatrix);
 		move.y = 0.0f;
