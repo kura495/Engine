@@ -1317,11 +1317,11 @@
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h">
       <Filter>project\application\Scenes\State\Play\PauseManu</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayState\GamePlayStateState.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayState\TitleState\GamePlayTitleState.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayState\PlayState\GamePlayPlayState.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayState\GameOverState\GamePlayOverState.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayState\GameClearState\GamePlayClearState.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">
