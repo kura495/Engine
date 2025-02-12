@@ -139,6 +139,7 @@ void GamePlayState::Draw()
 #pragma region
 void GamePlayState::BehaviorUpdate()
 {
+
 #pragma region
 	//初期化
 	if (behaviorRequest_) {
