@@ -72,6 +72,7 @@ void GamePlayState::Init()
 
 	pauseMenu_ = std::make_unique<PauseMenu>();
 	pauseMenu_->Init();
+
 }
 void GamePlayState::Update()
 {

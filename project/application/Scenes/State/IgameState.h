@@ -18,7 +18,7 @@ public:
 	int GetSceneNum() { return StateNo; }
 
 	virtual ~IGameState() {};
+	static int StateNo;
 protected:
 
-	static int StateNo;
 };

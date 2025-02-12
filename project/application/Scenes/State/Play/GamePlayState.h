@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 //ゲームプレイシーン//
 #include "Scenes/State/IgameState.h"
 #include "Common/Engine/MyEngine.h"
@@ -36,6 +36,11 @@
 #include "Object/FloorManager/FloorManager.h"
 #include "PauseMenu/PauseMenu.h"
 
+#include "GamePlayPhase/TitlePhase/TitlePhase.h"
+#include "GamePlayPhase/PlayPhase/PlayPhase.h"
+#include "GamePlayPhase/ClearPhase/ClearPhase.h"
+#include "GamePlayPhase/GameOverPhase/GameOverPhase.h"
+
 enum class StageBehavior {
 	kTitle,
 	kPlay,
@@ -51,7 +56,48 @@ public:
 	void Update()override;
 	void BehaviorUpdate();
 	void Draw()override;
+	/// <summary>
+	/// フェーズを切り替える
+	/// </summary>
+	template <typename T>
+	void ChangePhase() {
+		phase_ = std::make_unique<T>();
+		//フェーズのすべての処理が終わる前にフェーズを切り替えてしまうと、
+		//フェーズが変わって後の処理が出来なくなってエラーが出る
+		phase_->Init(this);
+	}
+	std::unique_ptr<GamePlayStatePhase> phase_;
+	//title
+	int BGMHundle;
+	float audioValue = 0.0f;
+	float kMaxaudioValue = 0.04f;
+	//ボタンを押したときに加算する。一定値を超えたらプレイフェーズに移行する
+	float stertCount = 0.0f;
+	const float subStertCount = 0.005f;
+	//タイトル用画像
+	std::unique_ptr<Sprite> titleSprite;
+	WorldTransform title;
+	//画面遷移演出
+	Fade fade;
+	//木箱のモデル
+	std::vector<Model*> woodenBox;
+	WorldTransform woodenBoxWorld_;
+	//チュートリアル的なボタン表示
+	std::vector<Model*> tutorialModel;
+	WorldTransform tutorialWorld_;
+	//play
+	std::unique_ptr<CollisionManager> collisionManager;
+	std::unique_ptr<EnemyManager> enemyManager;
+	//over
 
+	//clear
+
+	//common
+	//タイトルへ遷移するときのフラグ
+	bool IsTitleToGameFlag = false;
+	std::unique_ptr<Player>player_;
+	std::vector<Model*> playerModel_;
+	std::unique_ptr<FollowCamera>followCamera;
 private:
 #pragma region 
 	//ふるまい
@@ -62,7 +108,7 @@ private:
 	void TitleInit();
 	void TitleUpdate();
 	void TitleDraw();
-	bool IsTitleToGameFlag = false;
+
 #pragma endregion Title
 #pragma region
 	void PlayInit();
@@ -81,47 +127,26 @@ private:
 #pragma endregion Over
 
 #pragma endregion Behavior
-#pragma region
-	int BGMHundle;
-	float audioValue = 0.0f;
-	float kMaxaudioValue = 0.04f;
-#pragma endregion BGM
+
 	//基本機能ズ
 	std::unique_ptr<DebugCamera> debugcamera_;
 	ObjectManager* objectManager = nullptr;
-	std::unique_ptr<CollisionManager> collisionManager;
+
 	Renderer* renderer_ = nullptr;
 
 	bool IsDebugCamera = false;
 
-	std::unique_ptr<Player>player_;
-	std::vector<Model*> playerModel_;
-	std::unique_ptr<FollowCamera>followCamera;
+
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
 	std::vector<Model*> glTFplaneModel_;
 
-	std::unique_ptr<EnemyManager> enemyManager;
 	std::unique_ptr<SkyDome> skyDome_;
 
 	std::unique_ptr<FloorManager> floorManager;
 
-	std::vector<Model*> woodenBox;
-	WorldTransform woodenBoxWorld_;
-	
-	std::vector<Model*> tutorialModel;
-	WorldTransform tutorialWorld_;
 
 	std::unique_ptr<PauseMenu>pauseMenu_;
-
-	//ボタンを押したときに加算する。一定値を超えたらプレイステートに移行する
-	float stertCount = 0.0f;
-	const float subStertCount = 0.005f;
-
-	std::unique_ptr<Sprite> titleSprite;
-	WorldTransform title;
-
-	Fade fade;
 
 };
