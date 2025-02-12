@@ -46,7 +46,7 @@ void GameManager::Initialize()
 	state[PLAY] = std::make_unique<GamePlayState>();
 	state[CLEAR] = std::make_unique<GameClearState>();
 	state[GAMEOVER] = std::make_unique<GameOverState>();
-	currentSceneNum_ = 1;
+	currentSceneNum_ = PLAY;
 	state[currentSceneNum_]->Initialize();
 
 	renderTextrue = std::make_unique<PPNormal>();
