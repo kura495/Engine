@@ -7,6 +7,7 @@ enum GameStateNo {
 	GAMEOVER,
 	GameStateMax
 };
+
 class IGameState
 {
 public:
