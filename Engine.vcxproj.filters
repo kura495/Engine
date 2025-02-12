@@ -691,6 +691,10 @@
     <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp">
       <Filter>project\application\Scenes\State\Play\PauseManu</Filter>
     </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">

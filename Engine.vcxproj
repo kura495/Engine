@@ -199,6 +199,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="project\application\Scenes\State\Clear\GameClearState.cpp" />
     <ClCompile Include="project\application\Scenes\State\GameOver\GameOverState.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp" />
     <ClCompile Include="project\application\Scenes\State\Title\GameTitleState.cpp" />
