@@ -1,6 +1,6 @@
 #include"Scenes/State/GameOver/GameOverState.h"
 
-void GameOverState::Initialize()
+void GameOverState::Init()
 {
 	StateNo = GameStateNo::GAMEOVER;
 

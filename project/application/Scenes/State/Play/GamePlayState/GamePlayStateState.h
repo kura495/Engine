@@ -1,6 +1,6 @@
 #pragma once
 class GamePlayState;
-enum class GamePlayState {
+enum class GamePlayStateNumber {
 	kTitle,
 	kPlay,
 	kClear,

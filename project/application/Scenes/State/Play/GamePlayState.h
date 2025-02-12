@@ -47,7 +47,7 @@ class GamePlayState : public IGameState
 {
 public:
 
-	void Initialize()override;
+	void Init()override;
 	void Update()override;
 	void BehaviorUpdate();
 	void Draw()override;

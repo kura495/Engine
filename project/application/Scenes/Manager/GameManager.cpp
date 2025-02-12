@@ -42,12 +42,9 @@ void GameManager::Initialize()
 	//グローバル変数読み込み
 	GlobalVariables::GetInstance()->LoadFiles();
 	//State
-	state[TITLE] = std::make_unique<GameTitleState>();
-	state[PLAY] = std::make_unique<GamePlayState>();
-	state[CLEAR] = std::make_unique<GameClearState>();
-	state[GAMEOVER] = std::make_unique<GameOverState>();
+	state_ = std::make_unique<GamePlayState>();
 	currentSceneNum_ = PLAY;
-	state[currentSceneNum_]->Initialize();
+	state_->Init();
 
 	renderTextrue = std::make_unique<PPNormal>();
 	renderTextrue->Init();
@@ -61,9 +58,18 @@ void GameManager::Gameloop(){
 		}
 		else {
 			prevSceneNum_ = currentSceneNum_;
-			currentSceneNum_ = state[currentSceneNum_]->GetSceneNum();
+			currentSceneNum_ = state_->GetSceneNum();
 			if (prevSceneNum_ != currentSceneNum_) {
-				state[currentSceneNum_]->Initialize();
+				if (currentSceneNum_ == GameStateNo::PLAY) {
+					state_ = std::make_unique<GamePlayState>();
+				}
+				if (currentSceneNum_ == GameStateNo::GAMEOVER) {
+					state_ = std::make_unique<GameOverState>();
+				}
+				if (currentSceneNum_ == GameStateNo::CLEAR) {
+					state_ = std::make_unique<GameClearState>();
+				}
+				state_->Init();
 			}
 			imGuiManager->BeginFrame();
 #pragma region Update
@@ -72,14 +78,14 @@ void GameManager::Gameloop(){
 			input->Update();
 			light->Update();
 			GlobalVariables::GetInstance()->Update();
-			state[currentSceneNum_]->Update();
+			state_->Update();
 			renderTextrue->Update();
 			renderer_->Update();
 #pragma endregion
 #pragma region Draw
 			//renderTextureに色々書き込んでいく
 			renderTextrue->PreDraw();
-			state[currentSceneNum_]->Draw();
+			state_->Draw();
 			renderer_->Draw();
 #pragma endregion
 			directX->PreView();

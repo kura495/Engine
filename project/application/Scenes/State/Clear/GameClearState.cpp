@@ -1,6 +1,6 @@
 #include"Scenes/State/Clear/GameClearState.h"
 
-void GameClearState::Initialize()
+void GameClearState::Init()
 {
 	StateNo = GameStateNo::CLEAR;
 

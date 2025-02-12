@@ -1,6 +1,6 @@
 #include"Scenes/State/Title/GameTitleState.h"
 
-void GameTitleState::Initialize()
+void GameTitleState::Init()
 {
 	StateNo = GameStateNo::TITLE;
 

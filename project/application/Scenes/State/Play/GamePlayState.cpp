@@ -1,6 +1,6 @@
 #include "Scenes/State/Play/GamePlayState.h"
 
-void GamePlayState::Initialize()
+void GamePlayState::Init()
 {
 	StateNo = GameStateNo::PLAY;
 
