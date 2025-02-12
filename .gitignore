@@ -358,6 +358,5 @@ DirectXGame/DirectXGame.exe
 DirectXGame/imgui.ini
 
 #other Files
-*dxcompiler.dll
-*dxil.dll
+*.dll
 *imgui.ini
