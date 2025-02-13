@@ -54,7 +54,6 @@ public:
 
 	void Init()override;
 	void Update()override;
-	void BehaviorUpdate();
 	void Draw()override;
 	/// <summary>
 	/// フェーズを切り替える
@@ -99,34 +98,6 @@ public:
 	std::vector<Model*> playerModel_;
 	std::unique_ptr<FollowCamera>followCamera;
 private:
-#pragma region 
-	//ふるまい
-	StageBehavior behavior_ = StageBehavior::kTitle;
-	//次のふるまいリクエスト
-	std::optional<StageBehavior> behaviorRequest_ = std::nullopt;
-#pragma region
-	void TitleInit();
-	void TitleUpdate();
-	void TitleDraw();
-
-#pragma endregion Title
-#pragma region
-	void PlayInit();
-	void PlayUpdate();
-	void PlayDraw();
-#pragma endregion Play
-#pragma region
-	void ClearInit();
-	void ClearUpdate();
-	void ClearDraw();
-#pragma endregion Clear
-#pragma region
-	void OverInit();
-	void OverUpdate();
-	void OverDraw();
-#pragma endregion Over
-
-#pragma endregion Behavior
 
 	//基本機能ズ
 	std::unique_ptr<DebugCamera> debugcamera_;
@@ -135,8 +106,6 @@ private:
 	Renderer* renderer_ = nullptr;
 
 	bool IsDebugCamera = false;
-
-
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;
