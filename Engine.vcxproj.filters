@@ -80,9 +80,6 @@
     <Filter Include="project\application\Scenes\State\Play">
       <UniqueIdentifier>{6edb7336-f625-4c01-b2ca-e28527af891d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="project\application\Scenes\State\Title">
-      <UniqueIdentifier>{cfe2b814-6cd0-43be-9fdf-b83444081975}</UniqueIdentifier>
-    </Filter>
     <Filter Include="project\externals">
       <UniqueIdentifier>{7264af4d-944d-4f28-b21b-89d473732c8f}</UniqueIdentifier>
     </Filter>
@@ -368,6 +365,21 @@
     <Filter Include="project\application\Scenes\State\Play\PauseManu">
       <UniqueIdentifier>{136960c2-7ed6-4dd1-b6bb-d9d7eb23bd43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="project\application\Scenes\State\Play\GamePlayPhase">
+      <UniqueIdentifier>{2c746b7b-5046-4500-bf35-79737b70ec89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase">
+      <UniqueIdentifier>{6175a854-a02c-498b-8cb0-47edb2a32c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase">
+      <UniqueIdentifier>{bf53c772-4a25-412b-a2a7-c9745280bbf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase">
+      <UniqueIdentifier>{fbf5a495-d65b-462a-9e9a-ef9502649818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase">
+      <UniqueIdentifier>{3b770a32-431a-453d-b1fe-cd471a536774}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp">
@@ -441,9 +453,6 @@
     </ClCompile>
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp">
       <Filter>project\application\Scenes\State\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="project\application\Scenes\State\Title\GameTitleState.cpp">
-      <Filter>project\application\Scenes\State\Title</Filter>
     </ClCompile>
     <ClCompile Include="project\application\main.cpp">
       <Filter>project\application</Filter>
@@ -691,10 +700,18 @@
     <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp">
       <Filter>project\application\Scenes\State\Play\PauseManu</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp" />
-    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.cpp" />
-    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.cpp" />
-    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\TitlePhase</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.cpp">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\PlayPhase</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.cpp">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.cpp">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\ClearPhase</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -774,9 +791,6 @@
     </ClInclude>
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayState.h">
       <Filter>project\application\Scenes\State\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="project\application\Scenes\State\Title\GameTitleState.h">
-      <Filter>project\application\Scenes\State\Title</Filter>
     </ClInclude>
     <ClInclude Include="project\externals\imgui\ImGuizmo.h">
       <Filter>project\externals\imguizmo</Filter>
@@ -1321,11 +1335,21 @@
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h">
       <Filter>project\application\Scenes\State\Play\PauseManu</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.h">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\TitlePhase</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.h">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\PlayPhase</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.h">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\ClearPhase</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

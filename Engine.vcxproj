@@ -205,7 +205,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp" />
-    <ClCompile Include="project\application\Scenes\State\Title\GameTitleState.cpp" />
     <ClCompile Include="project\Engine\Animation\Animation.cpp" />
     <ClCompile Include="project\Engine\Audio\Audio.cpp" />
     <ClCompile Include="project\Engine\Camera\DebugCamera\DebugCamera.cpp" />
@@ -322,7 +321,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\application\Scenes\State\GameOver\GameOverState.h" />
     <ClInclude Include="project\application\Scenes\State\IgameState.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayState.h" />
-    <ClInclude Include="project\application\Scenes\State\Title\GameTitleState.h" />
     <ClInclude Include="project\Engine\Animation\Animation.h" />
     <ClInclude Include="project\Engine\Animation\KeyFrame\Struct\KeyFrame_Struct.h" />
     <ClInclude Include="project\Engine\Audio\Audio.h" />
