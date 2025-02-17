@@ -6,8 +6,8 @@
 #include"Object/Mesh/Mesh.h"
 #include"Texture/TextureManager.h"
 #include"Light/Light.h"
-#include"ImGuiManager.h"
-#include"Scenes/State/Title/GameTitleState.h"
+#include"ImGuiManager.h"　
+
 #include"Scenes/State/Play/GamePlayState.h"
 #include"Scenes/State/Clear/GameClearState.h"
 #include"Scenes/State/GameOver/GameOverState.h"
