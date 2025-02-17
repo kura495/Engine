@@ -5,8 +5,6 @@ void GamePlayState::Init()
 	StateNo = GameStateNo::PLAY;
 
 	//基本機能生成
-	debugcamera_ = std::make_unique<DebugCamera>();
-	debugcamera_->Initialize();
 	Editer::GetInstance()->SetViewProjection(&Renderer::GetViewProjection());
 	Editer::GetInstance()->IsEnable(true);
 	objectManager = ObjectManager::GetInstance();
@@ -20,10 +18,6 @@ void GamePlayState::Init()
 	playerModel_.push_back(Model::CreateModelFromObj("project/resources/Player", "player.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("project/resources/Weapon", "Weapon.obj"));
 
-	titleSprite = std::make_unique<Sprite>();
-	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
-	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/Title.png");
-	title.Init();
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
@@ -34,8 +28,6 @@ void GamePlayState::Init()
 	
 	followCamera->SetTarget(&player_->GetWorld());
 	followCamera->Update();
-	//Renderer
-	renderer_ = Renderer::GetInstance();
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();
 	enemyManager->Init(player_.get());
@@ -46,27 +38,7 @@ void GamePlayState::Init()
 	floorManager = std::make_unique<FloorManager>();
 	floorManager->Init();
 
-	fade.OutInit();
-
-	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3",true);
-	Audio::Play(BGMHundle, audioValue);
-
-	woodenBox.push_back(Model::CreateModelFromObj("project/resources/Box", "Box.gltf"));
-
-	woodenBoxWorld_.Init();
-	woodenBoxWorld_.transform.translate.z = -3.0f;
-	woodenBoxWorld_.Update();
-
-	tutorialModel.push_back(Model::CreateModelFromObj("project/resources/Tutorial", "Tutorial.obj"));
-	tutorialWorld_.Init();
-	tutorialWorld_.transform.translate.z = -3.0f;
-	tutorialWorld_.transform.translate.x = -2.0f;
-	tutorialWorld_.Update();
-	stertCount = 0.0f;
-	woodenBoxWorld_.transform.scale.x = stertCount + 1.0f;
-	woodenBoxWorld_.transform.scale.y = stertCount + 1.0f;
-	woodenBoxWorld_.transform.scale.z = stertCount + 1.0f;
-	woodenBoxWorld_.Update();
+	
 
 	pauseMenu_ = std::make_unique<PauseMenu>();
 	pauseMenu_->Init();
@@ -93,13 +65,6 @@ void GamePlayState::Update()
 	floorManager->Update();
 
 	skyDome_->Update();
-
-	if (enemyManager->GetisClear()) {
-		ChangePhase<ClearPhase>();
-	}
-	if (player_->GetisDead()) {
-		ChangePhase<GameOverPhase>();
-	}
 }
 void GamePlayState::Draw()
 {

@@ -10,14 +10,11 @@
 #include "Light/Light.h"
 #include "Object/Sphere/Sphere.h"
 #include "Texture/TextureManager.h"
-#include "Object/Model/Model.h"
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
-#include "Camera/DebugCamera/DebugCamera.h"
-#include "WorldTransform/WorldTransform.h"
 #include "ViewProj/ViewProjection.h"
 #include "Math_Structs.h"
 #include "ParticleSystem/ParticleSystem.h"
@@ -32,7 +29,7 @@
 #include "Object/Camera/FollowCamera.h"
 #include "Object/Enemy/Manager/EnemyManager.h"
 #include "Object/SkyDome/SkyDome.h"
-#include "Object/Transition/Fade/Fade.h"
+
 #include "Object/FloorManager/FloorManager.h"
 #include "PauseMenu/PauseMenu.h"
 
@@ -65,47 +62,21 @@ public:
 		//フェーズが変わって後の処理が出来なくなってエラーが出る
 		phase_->Init(this);
 	}
-	std::unique_ptr<GamePlayStatePhase> phase_;
-	//title
-	int BGMHundle;
-	float audioValue = 0.0f;
-	float kMaxaudioValue = 0.04f;
-	//ボタンを押したときに加算する。一定値を超えたらプレイフェーズに移行する
-	float stertCount = 0.0f;
-	const float subStertCount = 0.005f;
-	//タイトル用画像
-	std::unique_ptr<Sprite> titleSprite;
-	WorldTransform title;
-	//画面遷移演出
-	Fade fade;
-	//木箱のモデル
-	std::vector<Model*> woodenBox;
-	WorldTransform woodenBoxWorld_;
-	//チュートリアル的なボタン表示
-	std::vector<Model*> tutorialModel;
-	WorldTransform tutorialWorld_;
+
+
 	//play
 	std::unique_ptr<CollisionManager> collisionManager;
 	std::unique_ptr<EnemyManager> enemyManager;
-	//over
 
-	//clear
-
-	//common
-	//タイトルへ遷移するときのフラグ
-	bool IsTitleToGameFlag = false;
 	std::unique_ptr<Player>player_;
-	std::vector<Model*> playerModel_;
+
 	std::unique_ptr<FollowCamera>followCamera;
 private:
 
+	std::unique_ptr<GamePlayStatePhase> phase_;
+	std::vector<Model*> playerModel_;
 	//基本機能ズ
-	std::unique_ptr<DebugCamera> debugcamera_;
 	ObjectManager* objectManager = nullptr;
-
-	Renderer* renderer_ = nullptr;
-
-	bool IsDebugCamera = false;
 
 	std::vector<Model*> boxModel_;
 	std::vector<Model*> planeModel_;

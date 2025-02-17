@@ -1,4 +1,7 @@
 #pragma once
+#include "Object/Model/Model.h"
+#include "WorldTransform/WorldTransform.h"
+#include "Object/Transition/Fade/Fade.h"
 class GamePlayState;
 class GamePlayStatePhase {
 public:
