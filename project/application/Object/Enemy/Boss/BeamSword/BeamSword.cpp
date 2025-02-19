@@ -6,7 +6,7 @@ void BeamSword::Init()
 	world_.Update();
 	colliderWorld_.Init();
 	colliderWorld_.SetParent(&world_);
-	collider_.Init(&colliderWorld_);
+	collider_.Init(&world_);
 	collider_.SetSize({ 1.0f,0.5f,5.0f });
 	collider_.SetOffset({ 0.0f,0.0f,4.0f });
 	//collider_.SetcollitionAttribute(Collider::Tag::EnemyAttack);

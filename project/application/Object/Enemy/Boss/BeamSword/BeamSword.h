@@ -9,6 +9,7 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+	void SetParent(WorldTransform* parent) { world_.parent_ = parent; };
 private:
 	void Shot();
 	//FollowPlayerの速度の定数

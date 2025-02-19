@@ -12,4 +12,5 @@ public:
 	std::string ShowState()override;
 private:
 	std::unique_ptr<BeamSword> beamSword_;
+	Math::Vector3 angle_;
 };
