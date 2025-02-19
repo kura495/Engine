@@ -7,7 +7,8 @@ ESpawn::ESpawn()
 	sleepParticle_->Init("project/resources/sleepParticle.png");
 	sleepParticle_->UpdateFunc = [this](Particle& particle) { SleepUpdateParticle(particle); };
 	sleepParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
-
+	//攻撃の選択肢を初期化する
+	isAttackSelect = AttackState::RocketPunch;
 }
 void ESpawn::Init(Boss* boss)
 {

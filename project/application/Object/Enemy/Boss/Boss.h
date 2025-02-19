@@ -1,15 +1,12 @@
 #pragma once
 /*ボスクラス*/
 #include <vector>
-
 #include "Object/Enemy/Enemy.h"
 #include "Animation/Animation.h"
 #include "Utility/Ease/Ease.h"
 #include "ParticleSystem/ParticleSystem.h"
-
 #include "Engine/Audio/Audio.h"
 #pragma region
-
 #include "State/EAttackSlam/EAttackSlam.h"
 #include "State/EAttackThrowball/EAttackThrowball.h"
 #include "State/EAttackRocketPunch/EAttackRocketPunch.h"
@@ -18,7 +15,7 @@
 #include "State/EReturnPosition/EReturnPosition.h"
 #include "State/ERoot/ERoot.h"
 #include "State/ESpawn/ESpawn.h"
-
+#include "State/ESwingSword/ESwingSword.h"
 #pragma endregion State
 class Boss : public Enemy
 {
@@ -28,11 +25,6 @@ public:
 		Arm,//腕の当たり判定
 		Hund,//手の当たり判定
 		ColliderTypeEND,
-	};
-	enum AttackState {
-		Slam,//叩きつけ
-		Throw,//物を投げる
-		RocketPunch,//ロケットパンチ！
 	};
 	enum BossModel {
 		MainBody,//ボスのメインモデル
@@ -58,11 +50,7 @@ public:
 		state_->Init(this);
 	}
 	#pragma region
-	//Root
-	//攻撃の選択をする
-	uint32_t isAttackSelect = AttackState::RocketPunch;
-	//プレイヤーを追いかける関数
-	bool FollowPlayer();
+
 	//AttackSlam
 	//叩きつけ攻撃時のカメラシェイク用のフラグ
 	bool isSlamFlag = false;
@@ -88,19 +76,11 @@ private:
 	WorldTransform colliderAttackWorld_;
 
 #pragma endregion Collider
-
-	//現在のTの値
-	float easeT = 0.0f;
-	//raseTに毎フレーム加算する値
-	float addEaseT = 0.05f;
-
 	void AddImGui()override;
 #pragma region
 	std::unique_ptr<Animation> animationArmLDamage;
 	float animationTime_ = kDeltaTime;
 #pragma endregion Animation
-	//FollowPlayerの速度の定数
-	const float kFollowPlayerSpeed = 0.5f;
-	//FollowPlayerがtrueを返す一定距離
-	const float kConstantDistance = 0.2f;
+	std::vector<float> items;
+	std::string name;
 };

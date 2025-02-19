@@ -13,7 +13,6 @@ void EAttackSlam::Init(Boss* boss)
 
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
 }
-
 void EAttackSlam::Update(Boss* boss)
 {
 	if (IsAttackFlag) {
@@ -39,18 +38,14 @@ void EAttackSlam::Update(Boss* boss)
 	else {
 		//2回目移行かつHPが低くなった時に処理を実行
 		if (isSlam2ndFlag && boss->GetHP() <= 3) {
-			//falseにすることで2回連続で叩きつけをするようにする
-			boss->isAttackSelect = false;
 			isSlam2ndFlag = false;
 		}
-		else if (isSlam2ndFlag == false) {
-			isSlam2ndFlag = true;
+		else {
+			//初期位置に戻す
+			boss->ChangeState<EReturnPosition>();
 		}
-		//初期位置に戻す
-		boss->ChangeState<EReturnPosition>();
 	}
 }
-
 void EAttackSlam::Draw(Boss* boss)
 {
 	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());

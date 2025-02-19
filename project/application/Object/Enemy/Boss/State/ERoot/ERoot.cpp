@@ -1,9 +1,9 @@
 #include "ERoot.h"
 #include "../../Boss.h"
 #include "application/Object/Player/Player.h"
+
 void ERoot::Init(Boss* boss)
 {
-	easeT = 0.0f;
 	//当たり判定を有効か
 	boss->SetColliderUse(Boss::ColliderType::WeekPoint,true);
 	boss->SetColliderUse(Boss::ColliderType::Arm, true);
@@ -19,20 +19,20 @@ void ERoot::Update(Boss* boss)
 		return;
 	}
 	//攻撃をする
-	if (boss->isAttackSelect == Boss::AttackState::Throw) {
+	if (isAttackSelect == AttackState::Throw) {
 		//ボールを投げる攻撃
-		boss->isAttackSelect = Boss::AttackState::Slam;
+		isAttackSelect = AttackState::Slam;
 		boss->ChangeState<EAttackThrowball>();
 	}
-	else if (boss->isAttackSelect == Boss::AttackState::Slam) {
-		if (boss->FollowPlayer()) {
+	else if (isAttackSelect == AttackState::Slam) {
+		if (FollowPlayer(boss)) {
 			//叩きつけ攻撃
-			boss->isAttackSelect = Boss::AttackState::RocketPunch;
+			isAttackSelect = AttackState::RocketPunch;
 			boss->ChangeState<EAttackSlam>();
 		}
 	}
-	else if (boss->isAttackSelect == Boss::AttackState::RocketPunch) {
-		boss->isAttackSelect = Boss::AttackState::Throw;
+	else if (isAttackSelect == AttackState::RocketPunch) {
+		isAttackSelect = AttackState::Throw;
 		boss->ChangeState<EAttackRocketPunch>();
 	}
 }
@@ -44,4 +44,19 @@ void ERoot::Draw(Boss* boss)
 std::string ERoot::ShowState()
 {
 	return "ERoot";
+}
+bool ERoot::FollowPlayer(Boss* boss)
+{
+	Vector3 temp = boss->GetPlayer()->GetWorld().transform.translate - boss->GetWorld().transform.translate;
+	//モデルの中心から手のひらへ
+	temp.z += 5.0f;
+	temp.y = 0.0f;
+	float playerToEnemyLngth = temp.Length();
+	temp = temp.Normalize();
+	boss->GetWorld().transform.translate += temp * kFollowPlayerSpeed;
+	//一定の距離になったら処理を終わる
+	if (playerToEnemyLngth <= kConstantDistance) {
+		return true;
+	}
+	return false;
 }

@@ -16,10 +16,6 @@ void Boss::Init(std::vector<Model*> models)
 	animationArmLDamage.reset(Animation::LoadAnimationFile("project/resources/Enemy", "Arm.gltf"));
 	animationArmLDamage->Init();
 	animationArmLDamage->AnimeInit(*models_[BossModel::MainBody], false);
-#pragma region
-
-#pragma endregion ボール
-
 	//ビヘイビアーを初期化
 	ChangeState<ESpawn>();
 	name = "Boss";
@@ -39,13 +35,6 @@ void Boss::Update()
 
 		}
 	}
-	if (state_->GetStateType() == BossState::AttackThrowball) {
-		easeT = (std::min)(easeT + addEaseT, 1.0f);
-	}
-	else {
-		easeT = 0.0f;
-	}
-
 
 	state_->Update(this);
 
@@ -62,21 +51,6 @@ void Boss::SetColliderUse(int number, bool flag)
 void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 {
 	colliders_[number].SetcollitionAttribute(collisionAttribute);
-}
-bool Boss::FollowPlayer()
-{
-	Vector3 temp = player_->GetWorld().transform.translate - world_.transform.translate;
-	//モデルの中心から手のひらへ
-	temp.z += 5.0f;
-	temp.y = 0.0f;
-	float playerToEnemyLngth = temp.Length();
-	temp = temp.Normalize();
-	world_.transform.translate += temp * kFollowPlayerSpeed;
-	//一定の距離になったら処理を終わる
-	if (playerToEnemyLngth <= kConstantDistance) {
-		return true;
-	}
-	return false;
 }
 #pragma region
 void Boss::ColliderDamageInit()
@@ -129,8 +103,8 @@ void Boss::OnCollisionAttack(const ICollider& collider)
 #pragma endregion Collider
 void Boss::AddImGui()
 {
-	if (ImGui::Button("AttackMove")) {
-		ChangeState<EAttackSlam>();
+	if (ImGui::Button("Sword")) {
+		ChangeState<ESwingSword>();
 	}
 	ImGui::Text(state_->ShowState().c_str());
 }

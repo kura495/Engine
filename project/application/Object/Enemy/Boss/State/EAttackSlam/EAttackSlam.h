@@ -13,9 +13,8 @@ public:
 private:
 	//AttackSlamPlayer
 	bool IsAttackFlag = false;
-
 	//叩きつけを一回以上しているか
-	bool isSlam2ndFlag = false;
+	bool isSlam2ndFlag = true;
 	//SEハンドル
 	int SEHitattack;
 
