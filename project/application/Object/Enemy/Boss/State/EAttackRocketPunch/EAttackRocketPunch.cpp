@@ -55,7 +55,7 @@ void EAttackRocketPunch::Update(Boss* boss)
 }
 void EAttackRocketPunch::Draw(Boss* boss)
 {
-	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
 std::string EAttackRocketPunch::ShowState()
 {

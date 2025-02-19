@@ -11,7 +11,7 @@
 class GameClearState :public IGameState
 {
 public:
-	void Initialize()override;
+	void Init()override;
 	void Update()override;
 	void Draw()override;
 private:

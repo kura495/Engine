@@ -38,7 +38,6 @@ public:
 
 	static WorkInterpolation workInter;
 
-	
 #pragma region
 	void Shake();
 	bool isShake = false;
@@ -60,8 +59,6 @@ private:
 	Vector3 resetTransform;
 	Quaternion resetRotate;
 #pragma endregion PlaySceneInit用
-
-
 
 	//追従対象
 	const WorldTransform* target_ = nullptr;

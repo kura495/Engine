@@ -15,7 +15,12 @@ struct ConstBufferDataViewProjection {
 struct ConstBufferCameraPos {
 	Vector3 worldPosition;
 };
-
+struct CameraParameter {
+	// X,Y,Z軸回りのローカル回転角
+	Quaternion rotation_ = { 0, 0, 0, 1 };
+	// ローカル座標
+	Vector3 translation_ = { 0.0f, 0.0f, 0.0f };
+};
 /// <summary>
 /// ビュープロジェクション変換データ
 /// </summary>
@@ -28,10 +33,7 @@ struct ViewProjection {
 	ConstBufferCameraPos* constMap_PS = nullptr;
 
 #pragma region ビュー行列の設定
-	// X,Y,Z軸回りのローカル回転角
-	Quaternion rotation_ = { 0, 0, 0, 1 };
-	// ローカル座標
-	Vector3 translation_ = { 0.0f, 0.0f, 0.0f };
+	CameraParameter parameter;
 #pragma endregion
 
 #pragma region 射影行列の設定

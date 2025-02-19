@@ -3,8 +3,6 @@
 WorkInterpolation FollowCamera::workInter;
 
 void FollowCamera::Initialize() {
-	viewProj.Initialize();
-
 	workInter.interTarget_ = { 0.0f,0.0f,0.0f };
 	PlaySceneReset();
 	workInter.interParameter_.x = 0.7f;
@@ -36,7 +34,7 @@ void FollowCamera::Update() {
 	EulerRot.x = rotate_.x;
 	EulerRot.y = rotate_.y;
 	EulerRot.z = rotate_.z;
-	viewProj.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
+	parameter.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {
 		prePos_ = currentPos_;
@@ -60,15 +58,13 @@ void FollowCamera::Update() {
 
 		Vector3 offset = OffsetCalc();
 		//オフセット分と追従座標の補間分ずらす
-		viewProj.translation_ = workInter.interTarget_ + offset;
+		parameter.translation_ = workInter.interTarget_ + offset;
 	}
 
 	//画面を揺らす
 	if (isShake) {
 		Shake();
 	}
-
-	viewProj.Update();
 }
 
 void FollowCamera::Shake()
@@ -79,9 +75,9 @@ void FollowCamera::Shake()
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 
-	viewProj.translation_.x += ramdomTranslate.x;
-	viewProj.translation_.y += ramdomTranslate.y;
-	viewProj.translation_.z += ramdomTranslate.z;
+	parameter.translation_.x += ramdomTranslate.x;
+	parameter.translation_.y += ramdomTranslate.y;
+	parameter.translation_.z += ramdomTranslate.z;
 }
 
 void FollowCamera::ImGui()
@@ -110,8 +106,8 @@ bool FollowCamera::PlaySceneInit(const WorldTransform* target)
 {
 
 	if (lerpTTitle == 0.0f) {
-		resetTransform = viewProj.translation_;
-		resetRotate = viewProj.rotation_;
+		resetTransform = parameter.translation_;
+		resetRotate = parameter.rotation_;
 		rotate_ = { 0.0f,0.0f,0.0f };
 		target_ = target;
 		resetFlag_ = true;
@@ -133,12 +129,12 @@ void FollowCamera::PlaySceneReset()
 	if (target_) {
 		//追従座標・角度の初期化
 		workInter.interTarget_ = Vector3::Lerp(resetTransform, target_->transform.translate + offsetPos, lerpTTitle);
-		viewProj.rotation_ = Quaternion::Slerp(resetRotate, target_->transform.quaternion, lerpTTitle);
+		parameter.rotation_ = Quaternion::Slerp(resetRotate, target_->transform.quaternion, lerpTTitle);
 	}
 
 	//追従大賞からのオフセット
 	Vector3 offset = OffsetCalc();
-	viewProj.translation_ = workInter.interTarget_;
+	parameter.translation_ = workInter.interTarget_;
 }
 void FollowCamera::Reset()
 {
@@ -146,20 +142,20 @@ void FollowCamera::Reset()
 	if (target_) {
 		//追従座標・角度の初期化
 		workInter.interTarget_ = target_->transform.translate;
-		viewProj.rotation_.y = LerpShortAngle(viewProj.rotation_.y, target_->transform.quaternion.y, 1.0f);
+		parameter.rotation_.y = LerpShortAngle(parameter.rotation_.y, target_->transform.quaternion.y, 1.0f);
 	}
-	workInter.targetAngleY_ = viewProj.rotation_.y;
+	workInter.targetAngleY_ = parameter.rotation_.y;
 
 	//追従大賞からのオフセット
 	Vector3 offset = OffsetCalc();
-	viewProj.translation_ = workInter.interTarget_ + offset;
+	parameter.translation_ = workInter.interTarget_ + offset;
 }
 
 Vector3 FollowCamera::OffsetCalc()
 {
 	Vector3 offset = offsetPos;
 	//回転行列の合成
-	Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProj.rotation_);
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(parameter.rotation_);
 
 	// オフセットをカメラの回転に合わせて回転
 	offset = TransformNormal(offset, rotateMatrix);

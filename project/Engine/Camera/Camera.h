@@ -7,11 +7,8 @@ class Camera
 public:
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
-	ViewProjection& GetViewProjection() { return viewProj; }
-
+	CameraParameter GetParameter() const { return parameter; }
 protected:
-
-	ViewProjection viewProj;
-
+	CameraParameter parameter;
 };
 

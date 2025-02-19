@@ -3,14 +3,22 @@
 #include "Vector/Vector3.h"
 #include "Quaternion/Quaternion.h"
 #include "ParticleSystem/ParticleSystem.h"
+enum AttackState {
+	Slam,//叩きつけ
+	Throw,//物を投げる
+	RocketPunch,//ロケットパンチ！
+	END,//最後
+};
 //前方宣言
 class Boss;
+class ICollider;
 enum class BossState {
 	Root,
 	ReturnPosition,//元の位置に戻る
 	AttackSlam,//叩きつけ攻撃
 	AttackThrowball,//爆弾を投げる攻撃
 	RocketPunth,//ロケットパンチをする攻撃
+	SwingSword,//剣を振る攻撃
 	Spawn,//出現時
 	Dead,//死亡時
 	Down,//ダウン時
@@ -26,8 +34,8 @@ public:
 	virtual void Update(Boss* p) = 0;
 	virtual void Draw(Boss* p) = 0;
 
-	//virtual void OnCollision(Boss* p);
-	//virtual void OnCollisionAttack(Boss* p);
+	virtual void OnCollision(Boss* boss, const ICollider& collider) { boss; collider; };
+	virtual void OnCollisionAttack(Boss* boss, const ICollider& collider) { boss; collider; };
 
 	BossState GetStateType() { return stateType; };
 	virtual std::string ShowState() { return "default"; };
@@ -35,6 +43,8 @@ public:
 protected:
 	BossState stateType;
 
+	//攻撃の選択をする
+	static uint32_t isAttackSelect;
 	//現在のTの値
 	float easeT = 0.0f;
 	//raseTに毎フレーム加算する値

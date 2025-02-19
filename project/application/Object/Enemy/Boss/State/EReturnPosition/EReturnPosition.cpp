@@ -27,7 +27,7 @@ void EReturnPosition::Update(Boss* boss)
 
 void EReturnPosition::Draw(Boss* boss)
 {
-	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
 std::string EReturnPosition::ShowState()
 {

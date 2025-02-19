@@ -30,7 +30,7 @@ void ParticleSystem::Update(bool billboardFlag)
 	//ビルボード
 	Matrix4x4 billboardMatrix = Matrix4x4::CreateIdentity();
 	if (billboardFlag) {
-		billboardMatrix = Renderer::viewProjection.CameraMatrix;
+		billboardMatrix = Renderer::GetViewProjection().CameraMatrix;
 		billboardMatrix.m[3][0] = 0.0f;
 		billboardMatrix.m[3][1] = 0.0f;
 		billboardMatrix.m[3][2] = 0.0f;

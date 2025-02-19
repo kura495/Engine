@@ -108,6 +108,15 @@ void ObjectManager::LordBlenderScene(std::string fileName)
 
 void ObjectManager::LoadjsonObject(nlohmann::json& object)
 {
+	if (object["disabled"].contains("disabled")) {
+		//有効無効フラグ
+		bool disabled = object["disabled"].get<bool>();
+		if (disabled) {
+			//配置しない(スキップする)
+			return;
+		}
+	}
+
 	assert(object.contains("type"));
 
 	std::string type = object["type"].get<std::string>();
@@ -157,6 +166,10 @@ void ObjectManager::LoadjsonObject(nlohmann::json& object)
 	}
 	if (name.compare("Plane") == 0) {
 		AddPlane();
+	}
+	if (name.compare("PlayerSpawn") == 0) {
+		//TODO:授業課題で制作。今後対応予定
+		//PlayerSpawnDataの情報をPlayerに反映
 	}
 
 }

@@ -15,7 +15,9 @@ private:
 		Attack = 1,//攻撃
 		Stay = 2,//隙
 	};
+	//ボスの待機関数
 	void PreparationFunc(Boss* boss);
+	//ボスの攻撃関数
 	void AttackFunc(Boss* boss);
 
 	//ターゲットに向かうベクトル

@@ -12,14 +12,11 @@ void Player::Init(std::vector<Model*> models)
 	world_.transform.translate.z = -3.0f;
 	world_.Update();
 	//ライトの設定
-	models_[0]->GetMaterial()->enableLighting = Lighting::NotDo;
+	models_[PlayerModel::MainBody]->GetMaterial()->enableLighting = Lighting::NotDo;
 	//コライダー設定
 	ColliderInit();
 	AttackColliderInit();
-	//アニメーション設定
-#pragma region
 
-#pragma endregion Anime
 	//パーティクル設定
 #pragma region
 
@@ -49,7 +46,6 @@ void Player::Init(std::vector<Model*> models)
 }
 void Player::Update()
 {
-	gravity += kgravity;
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
 	
@@ -67,14 +63,20 @@ void Player::Update()
 	//パーティクルアップデート
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
-
+	//重力を加える
+	if (state_->GetStateType() != PlayerState::kDead && state_->GetStateType() != PlayerState::kJump) {
+		world_.transform.translate.y -= gravity;
+	}
+	//地面にいないなら落ちるスピードが加速する
+	if (isOnFloorFlag == false) {
+		gravity = std::min(gravity + kgravity,0.98f);
+	}
+	isOnFloorFlag = false;
 
 #ifdef USE_IMGUI
 	ImGui();
 #endif
 	world_.Update();
-
-	isOnFloorFlag = false;
 }
 void Player::Draw()
 {
@@ -106,44 +108,24 @@ void Player::OnCollision(const ICollider& ICollider)
 {
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyAttack) {
 		isDamege = true;
-		return;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		isDamege = true;
-		return;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
-		if (state_->GetStateType() == PlayerState::kDead) {
-			return;
-		}
 		world_.transform.translate -= move;
 		world_.Update();
-		return;
-	}
+	} 
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Weapon) {
-		return;
+
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
-		if (state_->GetStateType() == PlayerState::kJump) {
-			if (world_.transform.translate.y <= ICollider.GetCenter().y && jumpForce <= 0) {
-				world_.transform.translate.y = ICollider.GetCenter().y;
-				world_.Update();
-				gravity = 0.0f;
-				ChangeState<PRoot>();
-			}
-		}
-		else {
-			if (isOnFloorFlag) {
-				return;
-			}
-			world_.transform.translate.y += gravity;
-			isOnFloorFlag = true;
-			gravity = kgravity;
-			world_.Update();
-		}
-		//重力分
-		return;
+		world_.transform.translate.y = ICollider.GetCenter().y;
+		world_.Update();
+		gravity = kgravity;
+		isOnFloorFlag = true;
 	}
+	state_->OnCollision(this,ICollider);
 	return;
 }
 void Player::AttackColliderInit()
@@ -274,7 +256,7 @@ bool Player::Move()
 		move.z = move.z * kMoveSpeed_;
 		//カメラの正面方向に移動するようにする
 		//回転行列を作る
-		Matrix4x4 rotateMatrix = MakeRotateMatrix(Renderer::viewProjection.rotation_);
+		Matrix4x4 rotateMatrix = MakeRotateMatrix(Renderer::GetViewProjection().parameter.rotation_);
 		//移動ベクトルをカメラの角度だけ回転
 		move = TransformNormal(move, rotateMatrix);
 		move.y = 0.0f;

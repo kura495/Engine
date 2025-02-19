@@ -59,7 +59,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/project/;$(SolutionDir)/project/Engine;$(SolutionDir)/project/Engine/Audio;$(SolutionDir)/project/Engine/Input;$(SolutionDir)/project/Engine/Math;$(SolutionDir)/project/Engine/Utility;$(SolutionDir)/project/Engine/Model_Struct;$(SolutionDir)/project/Engine/Object;$(SolutionDir)/project/Engine/Animation;$(SolutionDir)/project/application/;$(SolutionDir)/project/application/Object;$(SolutionDir)/project/application/Scenes;$(SolutionDir)/project/externals</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/project/;$(SolutionDir)/project/Engine;$(SolutionDir)/project/Engine/Audio;$(SolutionDir)/project/Engine/Input;$(SolutionDir)/project/Engine/Math;$(SolutionDir)/project/Engine/Utility;$(SolutionDir)/project/Engine/Model_Struct;$(SolutionDir)/project/Engine/Object;$(SolutionDir)/project/Engine/Animation;$(SolutionDir)/project/application/;$(SolutionDir)/project/application/Object;$(SolutionDir)/project/application/Scenes;$(SolutionDir)/project/externals;$(SolutionDir)/project/application/Object/Enemy;$(SolutionDir)/project/application/Object/Enemy/Boss</ExternalIncludePath>
     <IncludePath>$(ProjectDir)..\externals\nlohmann;$(SolutionDir)/project/externals;$(IncludePath)</IncludePath>
     <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -172,6 +172,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ESwingSword\ESwingSword.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\IBossState.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PAttack\PAttack.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PDead\PDead.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PJump\PJump.cpp" />
@@ -199,9 +201,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="project\application\Scenes\State\Clear\GameClearState.cpp" />
     <ClCompile Include="project\application\Scenes\State\GameOver\GameOverState.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp" />
-    <ClCompile Include="project\application\Scenes\State\Title\GameTitleState.cpp" />
     <ClCompile Include="project\Engine\Animation\Animation.cpp" />
     <ClCompile Include="project\Engine\Audio\Audio.cpp" />
     <ClCompile Include="project\Engine\Camera\DebugCamera\DebugCamera.cpp" />
@@ -278,9 +283,16 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="project\externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PRoot\PRoot.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\Sword\Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwingSword\ESwingSword.h" />
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.h" />
     <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.h" />
     <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />
@@ -313,7 +325,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\application\Scenes\State\GameOver\GameOverState.h" />
     <ClInclude Include="project\application\Scenes\State\IgameState.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayState.h" />
-    <ClInclude Include="project\application\Scenes\State\Title\GameTitleState.h" />
     <ClInclude Include="project\Engine\Animation\Animation.h" />
     <ClInclude Include="project\Engine\Animation\KeyFrame\Struct\KeyFrame_Struct.h" />
     <ClInclude Include="project\Engine\Audio\Audio.h" />
@@ -488,6 +499,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="project\externals\imgui\imstb_truetype.h" />
     <ClInclude Include="project\application\Object\Player\State\PRoot\PRoot.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\Sword\Sword.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project\externals\assimp\include\assimp\.editorconfig" />

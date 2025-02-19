@@ -45,8 +45,8 @@ void Model::Draw(const WorldTransform& transform,int DDSTexHandle)
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::GetViewProjection().constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::GetViewProjection().constBuff_PS->GetGPUVirtualAddress());
 	//色とuvTransform
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//テクスチャ
@@ -71,8 +71,8 @@ void Model::WireFlameDraw(const WorldTransform& transform)
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::GetViewProjection().constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::GetViewProjection().constBuff_PS->GetGPUVirtualAddress());
 	//色とuvTransform
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//テクスチャ
@@ -105,8 +105,8 @@ void Model::SkinDraw(const WorldTransform& transform, const SkinCluster& skinClu
 	//Light
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(3, light_->GetDirectionalLight()->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::GetViewProjection().constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::GetViewProjection().constBuff_PS->GetGPUVirtualAddress());
 	//StructuredBuffer
 	directX_->GetcommandList()->SetGraphicsRootDescriptorTable(6, skinCluster.paletteSRVHandle.GPU);
 
@@ -131,8 +131,8 @@ void Model::SkinDissolveDraw(const WorldTransform& transform, const SkinCluster&
 	//matWorld
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(1, transform.constBuff_->GetGPUVirtualAddress());
 	//ViewProjection
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::viewProjection.constBuff_VS->GetGPUVirtualAddress());
-	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::viewProjection.constBuff_PS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(4, Renderer::GetViewProjection().constBuff_VS->GetGPUVirtualAddress());
+	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(5, Renderer::GetViewProjection().constBuff_PS->GetGPUVirtualAddress());
 	//色とuvTransform
 	directX_->GetcommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//テクスチャ

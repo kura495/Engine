@@ -23,8 +23,8 @@ void EDead::Update(Boss* boss)
 {
 	easeT = (std::min)(easeT + 0.1f, 1.0f);
 
-	boss->Getmodels()[0]->color_.w = (std::max)(boss->Getmodels()[0]->color_.w - 0.01f, 0.0f);
-	if (boss->Getmodels()[0]->color_.w == 0.0f) {
+	boss->Getmodels()[Boss::BossModel::MainBody]->color_.w = (std::max)(boss->Getmodels()[Boss::BossModel::MainBody]->color_.w - 0.01f, 0.0f);
+	if (boss->Getmodels()[Boss::BossModel::MainBody]->color_.w == 0.0f) {
 		boss->IsAlive = false;
 	}
 	//パーティクル生成
@@ -35,7 +35,7 @@ void EDead::Update(Boss* boss)
 
 void EDead::Draw(Boss* boss)
 {
-	boss->Getmodels()[0]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 	deadParticle_->RendererDraw();
 }
 std::string EDead::ShowState()

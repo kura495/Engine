@@ -10,7 +10,7 @@
 class GameOverState :public IGameState
 {
 public:
-	void Initialize()override;
+	void Init()override;
 	void Update()override;
 	void Draw()override;
 private:
@@ -19,9 +19,6 @@ private:
 	std::unique_ptr<Sprite>texture;
 	uint32_t textureHundle;
 	WorldTransform texture_world_;
-
-	Input* input;
-	XINPUT_STATE joyState;
 
 	bool IsCanPush = false;
 	int time = 0;

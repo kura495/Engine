@@ -7,17 +7,18 @@ enum GameStateNo {
 	GAMEOVER,
 	GameStateMax
 };
+
 class IGameState
 {
 public:
-	virtual void Initialize() = 0;
+	virtual void Init() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
 	int GetSceneNum() { return StateNo; }
 
 	virtual ~IGameState() {};
+	static int StateNo;
 protected:
 
-	static int StateNo;
 };

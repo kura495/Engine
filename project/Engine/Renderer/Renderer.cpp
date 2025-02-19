@@ -22,8 +22,7 @@ void Renderer::Initalize()
 	PSOManager_ = std::make_unique<PSOManager>();
 	PSOManager_->Initalize();
 
-	viewproj.Initialize();
-	viewProjection = viewproj;
+	viewProjection.Initialize();
 
 	skyBox.Init();
 	Texture = TextureManager::GetInstance()->LoadTexture("project/resources/rostock_laage_airport_4k.dds");
@@ -36,8 +35,14 @@ void Renderer::Initalize()
 
 }
 
+void Renderer::Update()
+{	
+	viewProjection.Update();
+}
+
 void Renderer::Draw()
 {
+
 	//CubeMap
 	ChangePipeline(PipelineType::CubeMap);
 	//skyBox.Draw(cubeWorld_);

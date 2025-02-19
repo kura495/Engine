@@ -13,7 +13,7 @@ PAttack::PAttack()
 }
 void PAttack::Init(Player* p)
 {
-	attackAnimation->AnimeInit(*p->Getmodels()[0], true);
+	attackAnimation->AnimeInit(*p->Getmodels()[Player::PlayerModel::MainBody], true);
 	p->SetColliderUse(Player::ColliderType::Attack,true);
 	animationTime_ = 0.0f;
 	attackPosture = p->GetWorld().transform.quaternion;
@@ -46,7 +46,7 @@ void PAttack::Update(Player* p)
 
 void PAttack::Draw(Player* p)
 {
-	p->Getmodels()[0]->RendererSkinDraw(p->GetWorld(), attackAnimation->GetSkinCluster());
+	p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), attackAnimation->GetSkinCluster());
 }
 
 std::string PAttack::ShowState()
