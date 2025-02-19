@@ -721,10 +721,10 @@
     <ClCompile Include="project\application\Object\Enemy\Boss\State\IBossState.cpp">
       <Filter>project\application\Object\Enemy\Boss\State</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\ESwingSword\ESwingSword.cpp">
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\ESwingSword</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\Sword\Sword.cpp">
+    <ClCompile Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.cpp">
       <Filter>project\application\Object\Enemy\Boss\Sword</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1365,10 +1365,10 @@
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h">
       <Filter>project\application\Scenes\State\Play\GamePlayPhase</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwingSword\ESwingSword.h">
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.h">
       <Filter>project\application\Object\Enemy\Boss\State\ESwingSword</Filter>
     </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\Sword\Sword.h">
+    <ClInclude Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.h">
       <Filter>project\application\Object\Enemy\Boss\Sword</Filter>
     </ClInclude>
   </ItemGroup>

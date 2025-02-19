@@ -104,7 +104,7 @@ void Boss::OnCollisionAttack(const ICollider& collider)
 void Boss::AddImGui()
 {
 	if (ImGui::Button("Sword")) {
-		ChangeState<ESwingSword>();
+		ChangeState<ESwordAttack>();
 	}
 	ImGui::Text(state_->ShowState().c_str());
 }

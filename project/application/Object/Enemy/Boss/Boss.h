@@ -15,7 +15,7 @@
 #include "State/EReturnPosition/EReturnPosition.h"
 #include "State/ERoot/ERoot.h"
 #include "State/ESpawn/ESpawn.h"
-#include "State/ESwingSword/ESwingSword.h"
+#include "State/ESwordAttack/ESwordAttack.h"
 #pragma endregion State
 class Boss : public Enemy
 {

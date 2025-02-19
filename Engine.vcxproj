@@ -172,7 +172,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\ESwingSword\ESwingSword.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\IBossState.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PAttack\PAttack.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PDead\PDead.cpp" />
@@ -283,10 +283,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="project\externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PRoot\PRoot.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\Sword\Sword.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwingSword\ESwingSword.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.h" />
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.h" />
@@ -499,7 +499,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="project\externals\imgui\imstb_truetype.h" />
     <ClInclude Include="project\application\Object\Player\State\PRoot\PRoot.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\Sword\Sword.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project\externals\assimp\include\assimp\.editorconfig" />
