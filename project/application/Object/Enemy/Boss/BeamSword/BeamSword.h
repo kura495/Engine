@@ -19,7 +19,6 @@ private:
 
 	std::unique_ptr<Model>model_;
 	WorldTransform world_;
-	WorldTransform colliderWorld_;
 	OBBoxCollider collider_;
 
 	void OnCollision(ICollider& Collider);
