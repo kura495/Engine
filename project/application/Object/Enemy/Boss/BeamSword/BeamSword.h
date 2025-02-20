@@ -11,7 +11,6 @@ public:
 	void Draw();
 	void SetParent(WorldTransform* parent) { world_.parent_ = parent; };
 private:
-	void Shot();
 	//FollowPlayerの速度の定数
 	const float kFollowPlayerSpeed = 0.5f;
 	//FollowPlayerがtrueを返す一定距離

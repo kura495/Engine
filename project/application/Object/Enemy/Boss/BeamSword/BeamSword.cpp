@@ -16,17 +16,12 @@ void BeamSword::Init()
 }
 void BeamSword::Update()
 {
-	Shot();
 	world_.Update();
 
 }
 void BeamSword::Draw()
 {
 	model_->RendererDraw(world_);
-}
-void BeamSword::Shot()
-{
-
 }
 void BeamSword::OnCollision(ICollider& Collider)
 {
