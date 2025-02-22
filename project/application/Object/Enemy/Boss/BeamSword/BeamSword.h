@@ -10,6 +10,7 @@ public:
 	void Update();
 	void Draw();
 	void SetParent(WorldTransform* parent) { world_.parent_ = parent; };
+	void SetModelSize(Vector3 size);
 private:
 	//FollowPlayerの速度の定数
 	const float kFollowPlayerSpeed = 0.5f;
@@ -25,5 +26,8 @@ private:
 	Math::Vector3 angle;
 
 	bool IsAttack = false;
+
+	Math::Vector3 Csize = { 1.0f,0.5f,25.0f };
+	Math::Vector3 Coffset = { 0.0f,0.0f,-24.0f };
 };
 

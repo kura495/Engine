@@ -7,6 +7,7 @@ enum AttackState {
 	Slam,//叩きつけ
 	Throw,//物を投げる
 	RocketPunch,//ロケットパンチ！
+	SwordSlash,//斬る攻撃
 	END,//最後
 };
 //前方宣言
