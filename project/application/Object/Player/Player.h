@@ -55,10 +55,6 @@ public:
 	//kRoot
 	//スティック入力で移動させる関数
 	bool Move();
-
-	//アニメーション
-	const float kgravity = 0.03f;
-	float gravity = 0.03f;
 	//kDead
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
@@ -72,6 +68,9 @@ private:
 #pragma region
 	std::unique_ptr<IPlayerState> state_;
 #pragma endregion State
+
+	const float kgravity = 0.03f;
+	float gravity = 0.03f;
 
 #pragma region 
 

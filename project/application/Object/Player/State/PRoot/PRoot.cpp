@@ -14,8 +14,6 @@ void PRoot::Update(Player* p)
 		//動いていたら歩きモーションを再生
 		walkanimation->PlayAnimation();
 	}
-	//重力
-	p->GetWorld().transform.translate.y -= p->gravity;
 	//ボタンを押したら攻撃
 	if (Input::GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
 		p->ChangeState<PAttack>();

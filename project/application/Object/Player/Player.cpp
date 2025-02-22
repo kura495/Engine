@@ -115,9 +115,6 @@ void Player::OnCollision(const ICollider& ICollider)
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
 		world_.transform.translate -= move;
 		world_.Update();
-	} 
-	if (ICollider.GetcollitionAttribute() == Collider::Tag::Weapon) {
-
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
@@ -190,9 +187,9 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);
 	}
+
 }
 #pragma endregion Collider
-
 void Player::UpdateAttackHitParticle(Particle& particle)
 {
 	//速度を1/60にする

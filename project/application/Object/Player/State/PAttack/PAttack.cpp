@@ -30,8 +30,6 @@ void PAttack::Update(Player* p)
 	//アニメーション再生
 	attackAnimation->PlayAnimation();
 	animationTime_ += kDeltaTime;
-	//重力
-	p->GetWorld().transform.translate.y -= p->gravity;
 
 	if (animationTime_ > attackAnimation->duration) {
 		animationTime_ = 0.0f;
