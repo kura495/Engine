@@ -59,12 +59,13 @@ public:
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
 
-	bool isDamege = false;
-	//地面にいるかどうか
-	bool isOnFloorFlag = true;
 private:
 	void ImGui();
 
+	bool isDamege = false;
+
+	//地面にいるかどうか
+	bool isOnFloorFlag = true;
 #pragma region
 	std::unique_ptr<IPlayerState> state_;
 #pragma endregion State
