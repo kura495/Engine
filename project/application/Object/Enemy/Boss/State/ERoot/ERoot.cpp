@@ -32,7 +32,7 @@ void ERoot::Update(Boss* boss)
 		}
 	}
 	else if (isAttackSelect == AttackState::RocketPunch) {
-		isAttackSelect = AttackState::Throw;
+		isAttackSelect = AttackState::RocketPunch;
 		boss->ChangeState<EAttackRocketPunch>();
 	}
 }

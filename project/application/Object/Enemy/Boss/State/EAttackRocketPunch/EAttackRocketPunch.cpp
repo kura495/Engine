@@ -3,8 +3,8 @@
 #include "application/Object/Player/Player.h"
 void EAttackRocketPunch::Init(Boss* boss)
 {
-	boss->SetColliderAttribute(Boss::ColliderType::Arm,Collider::Tag::EnemyAttack);
-	boss->SetColliderAttribute(Boss::ColliderType::Hund,Collider::Tag::EnemyAttack);
+	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 
 	easeT = 0.0f;
 	PrePos = boss->GetWorld().transform.translate;
@@ -23,16 +23,22 @@ void EAttackRocketPunch::Update(Boss* boss)
 	}
 	if (modeFlag == mode::Attack) {
 		AttackFunc(boss);
-		if (easeT == 1.0f) {
-			//条件でモード移行
-			easeT = 0.0f;
-			//当たり判定を通常に変更
-			boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-			boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+		boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::EnemyAttack);
+		boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::EnemyAttack);
+		addEaseT = 0.02f;
+		if (boss->GetWorld().transform.translate.y <= 0.0f) {
+			boss->GetWorld().transform.translate.y = 0.0f;
+		}
+		if (easeT >= 1.0f) {
 			modeFlag = mode::Stay;
+			easeT = 0.0f;
+			addEaseT = 0.01f;
 		}
 	}
 	if (modeFlag == mode::Stay) {
+		//当たり判定を通常に変更
+		boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
+		boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
 		if (easeT == 1.0f) {
 			boss->ChangeState<EReturnPosition>();
@@ -60,6 +66,16 @@ void EAttackRocketPunch::Draw(Boss* boss)
 std::string EAttackRocketPunch::ShowState()
 {
 	return "ERocketPunch";
+}
+void EAttackRocketPunch::OnCollisionAttack(Boss* boss, const ICollider& collider)
+{
+	boss;
+	if (collider.GetcollitionAttribute() == Collider::Tag::Floor) {
+		if (modeFlag == mode::Attack) {
+			easeT = (std::min)(easeT + addEaseT, 1.0f);
+		}
+
+	}
 }
 void EAttackRocketPunch::PreparationFunc(Boss* boss)
 {
@@ -90,5 +106,5 @@ void EAttackRocketPunch::AttackFunc(Boss* boss)
 		boss->GetWorld().transform.translate.y = 0;
 	}
 	speedValue_ = (std::min)(speedValue_ + addSpeedValue_, 1.0f);
-	easeT = (std::min)(easeT + addEaseT, 1.0f);
+
 }

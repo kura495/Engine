@@ -9,6 +9,7 @@ public:
 	void Update(Boss* boss)override;
 	void Draw(Boss* boss)override;
 	std::string ShowState()override;
+	void OnCollisionAttack(Boss* boss, const ICollider& collider)override;
 private:
 	enum mode {
 		Preparation = 0,//準備
