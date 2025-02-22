@@ -14,6 +14,7 @@ void EAttackRocketPunch::Update(Boss* boss)
 {
 	if (modeFlag == mode::Preparation) {
 		PreparationFunc(boss);
+
 		if (easeT == 1.0f) {
 			//条件でモード移行
 			modeFlag = mode::Attack;
@@ -98,7 +99,8 @@ void EAttackRocketPunch::PreparationFunc(Boss* boss)
 	Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,-1.0f }, forTargetVector));
 	float dot = Vector3::Dot({ 0.0f,0.0f,-1.0f }, forTargetVector);
 	//行きたい方向のQuaternionの作成
-	boss->GetWorld().transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+	Quaternion qua = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
+	boss->GetWorld().transform.quaternion = Quaternion::Slerp(Quaternion::IdentityQuaternion(), qua,easeT);
 }
 void EAttackRocketPunch::AttackFunc(Boss* boss)
 {

@@ -2,12 +2,12 @@
 void BeamSword::Init()
 {
 	world_.Init();
-	world_.transform.translate.y = 1.0f;
+	world_.transform.translate.z = -10.0f;
 	world_.Update();
 	collider_.Init(&world_);
 	collider_.SetSize(Csize);
 	collider_.SetOffset(Coffset);
-	//collider_.SetcollitionAttribute(Collider::Tag::EnemyAttack);
+	collider_.SetcollitionAttribute(Collider::Tag::EnemyAttack);
 	collider_.SetcollisionMask(~Collider::Tag::Enemy);
 	collider_.OnCollision = [this](ICollider& Collider) { OnCollision(Collider); };
 

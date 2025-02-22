@@ -8,6 +8,7 @@ public:
 		Move,//移動
 		MakeSword,//剣を作る
 		Attack,//攻撃
+		standby,//次のステートまで待機
 		END,
 	};
 
@@ -19,14 +20,10 @@ public:
 	std::string ShowState()override;
 private:
 	std::unique_ptr<BeamSword> beamSword_;
-	Math::Vector3 angle_;
 
-	Math::Vector3 startPos = {0.0f,0.5f,35.0f};
+	Math::Vector3 startPos = {-30.0f,0.5f,35.0f};
+	Math::Vector3 endPos = {30.0f,0.5f,35.0f};
 	Math::Vector3 prePos;
-
-	Math::Quaternion startQua;
-	Math::Quaternion endQua;
-	Math::Quaternion preQua;
 
 	int phase_ = Phase::Move;
 };
