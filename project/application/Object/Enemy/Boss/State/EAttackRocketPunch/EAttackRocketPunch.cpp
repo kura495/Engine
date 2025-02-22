@@ -8,6 +8,7 @@ void EAttackRocketPunch::Init(Boss* boss)
 
 	easeT = 0.0f;
 	PrePos = boss->GetWorld().transform.translate;
+	addEaseT = 0.02f;
 }
 void EAttackRocketPunch::Update(Boss* boss)
 {
@@ -17,7 +18,6 @@ void EAttackRocketPunch::Update(Boss* boss)
 			//条件でモード移行
 			modeFlag = mode::Attack;
 			easeT = 0.0f;
-			addEaseT = 0.02f;
 			playerToEnemy = playerToEnemy.Normalize();
 		}
 	}
@@ -25,17 +25,17 @@ void EAttackRocketPunch::Update(Boss* boss)
 		AttackFunc(boss);
 		boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::EnemyAttack);
 		boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::EnemyAttack);
-		addEaseT = 0.02f;
+		addEaseT = 0.05f;
 		if (boss->GetWorld().transform.translate.y <= 0.0f) {
 			boss->GetWorld().transform.translate.y = 0.0f;
 		}
-		if (easeT >= 1.0f) {
+		if (easeT == 1.0f || boss->GetWorld().transform.translate.z < -25.0f) {
 			modeFlag = mode::Stay;
 			easeT = 0.0f;
-			addEaseT = 0.01f;
 		}
 	}
 	if (modeFlag == mode::Stay) {
+		addEaseT = 0.02f;
 		//当たり判定を通常に変更
 		boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
 		boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
@@ -88,6 +88,7 @@ void EAttackRocketPunch::PreparationFunc(Boss* boss)
 	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 	//ランダムに動かして揺らす
 	boss->GetWorld().transform.translate = PrePos + ramdomTranslate;
+
 	//方向を決める
 	playerToEnemy = boss->GetPlayer()->GetWorld().transform.translate - boss->GetWorld().transform.translate;
 	//移動ベクトルをカメラの角度だけ回転
@@ -105,6 +106,6 @@ void EAttackRocketPunch::AttackFunc(Boss* boss)
 	if (boss->GetWorld().transform.translate.y < 0) {
 		boss->GetWorld().transform.translate.y = 0;
 	}
-	speedValue_ = (std::min)(speedValue_ + addSpeedValue_, 1.0f);
+	speedValue_ = (std::min)(speedValue_ + addSpeedValue_, 2.0f);
 
 }

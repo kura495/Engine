@@ -24,9 +24,9 @@ private:
 	//ターゲットに向かうベクトル
 	Math::Vector3 forTargetVector = {0.0f,0.0f,0.0f};
 	//もともとの位置
-	Math::Vector3 PrePos = { 0.0f,0.0f,0.0f };;
+	Math::Vector3 PrePos = { 0.0f,0.0f,0.0f };
 	//プレイヤーへのベクトル
-	Math::Vector3 playerToEnemy = { 0.0f,0.0f,0.0f };;
+	Math::Vector3 playerToEnemy = { 0.0f,0.0f,0.0f };
 	//ランダムに動かす値
 	const float ramdomvalue = 0.1f;
 	//準備
@@ -34,5 +34,5 @@ private:
 	//AttackModeの速さの倍率
 	float speedValue_ = 0.1f;
 	//AttackModeの速さの倍率
-	float addSpeedValue_ = 0.05f;
+	float addSpeedValue_ = 0.1f;
 };
