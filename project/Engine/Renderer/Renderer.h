@@ -95,6 +95,11 @@ public:
 	 /// </summary>
 	 /// <param name="Type"></param>
 	 void ChangePipeline(PipelineType Type);
+	 /// <summary>
+	 /// パイプラインを変更(ポストプロセス)
+	 /// </summary>
+	 /// <param name="Type"></param>
+	 void ChangePipeline(PostProsessType Type);
 
 	 static void SetViewProj(CameraParameter parameter) {
 		 viewProjection.parameter = parameter;

@@ -173,3 +173,8 @@ void Renderer::ChangePipeline(PipelineType Type)
 	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(Type).Get());
 	commandList->SetPipelineState(PSOManager_->GetPipelineState(Type).Get());
 }
+void Renderer::ChangePipeline(PostProsessType Type)
+{
+	commandList->SetGraphicsRootSignature(PSOManager_->GetRootSignature(Type).Get());
+	commandList->SetPipelineState(PSOManager_->GetPipelineState(Type).Get());
+}

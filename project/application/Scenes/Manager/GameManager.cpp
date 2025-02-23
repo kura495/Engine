@@ -91,7 +91,7 @@ void GameManager::Gameloop(){
 			//directXのSRVに書き込む設定に変更
 			directX->PreDraw();
 			//ここにPipelineとDrawを書き込んでいく
-			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
+			renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
 			renderTextrue->Draw();
 
 			editer->Draw();

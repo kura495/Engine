@@ -48,12 +48,14 @@ void PSOManager::Initalize()
 	AddPipeline(sprite.GetPSO(), PipelineType::Sprite);
 	AddPipeline(drawLinePSO.GetPSO(),PipelineType::DrawLine);
 	AddPipeline(wireFlame.GetPSO(),PipelineType::WireFlame);
-	AddPipeline(postProsessPSO.GetPSO(),PipelineType::PostProsessPSO);
-	AddPipeline(gaussianFilter.GetPSO(),PipelineType::GaussianFilter);
-	AddPipeline(grayScale.GetPSO(),PipelineType::GrayScale);
-	AddPipeline(vinette.GetPSO(),PipelineType::Vinette);
-	AddPipeline(luminanceBasedOutline.GetPSO(),PipelineType::LuminanceBasedOutline);
-	AddPipeline(rGBtoHSV.GetPSO(),PipelineType::RGBtoHSV);
 	AddPipeline(cubeMap.GetPSO(),PipelineType::CubeMap);
+
+	AddPipeline(postProsessPSO.GetPSO(), PostProsessType::PostProsessPSO);
+	AddPipeline(gaussianFilter.GetPSO(), PostProsessType::GaussianFilter);
+	AddPipeline(grayScale.GetPSO(), PostProsessType::GrayScale);
+	AddPipeline(vinette.GetPSO(), PostProsessType::Vinette);
+	AddPipeline(luminanceBasedOutline.GetPSO(), PostProsessType::LuminanceBasedOutline);
+	AddPipeline(rGBtoHSV.GetPSO(), PostProsessType::RGBtoHSV);
+
 
 }

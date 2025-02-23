@@ -26,7 +26,7 @@ public:
 	/// <param name="Index">RTVの個数を代入</param>
 	void Create(int Index);
 	virtual void CreateBuffer();
-	virtual void Update() = 0;
+	virtual void Update() {};
 	void PreDraw();
 
 

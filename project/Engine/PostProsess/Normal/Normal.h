@@ -4,7 +4,6 @@
 class PPNormal : public PostProsess
 {
 public:
-	void Update()override;
 
 private:
 

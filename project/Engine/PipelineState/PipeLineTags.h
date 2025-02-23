@@ -8,11 +8,13 @@ enum class PipelineType {
 	Sprite,
 	DrawLine,
 	WireFlame,
+	CubeMap
+};
+enum class PostProsessType {
 	PostProsessPSO,
 	GaussianFilter,
 	GrayScale,
 	Vinette,
 	LuminanceBasedOutline,
 	RGBtoHSV,
-	CubeMap
 };
