@@ -14,6 +14,8 @@ void PostProsess::addInit()
 
 void PostProsess::Draw()
 {
+	PreCopy();
+
 	DirectX->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//テクスチャ
 	DirectX->GetcommandList()->SetGraphicsRootDescriptorTable(0, SRVhandle.GPU);
@@ -23,6 +25,8 @@ void PostProsess::Draw()
 	addDraw();
 
 	DirectX->GetcommandList()->DrawInstanced(3, 1, 0, 0);
+	//画像からレンダーターゲット
+	PostCopy();
 }
 
 void PostProsess::addDraw()

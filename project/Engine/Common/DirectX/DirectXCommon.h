@@ -32,9 +32,9 @@ public:
 	static DirectXCommon* GetInstance();
 	void Initialize(WinApp* winApp);
 
-	void PreView();
+	void PreDraw();
 
-	void PostView();
+	void PostDraw();
 
 	void Release();
 #pragma region Getter関数

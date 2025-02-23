@@ -66,7 +66,7 @@ void DirectXCommon::Initialize(WinApp* winApp)
 
 }
 
-void DirectXCommon::PreView()
+void DirectXCommon::PreDraw()
 {
 	//コマンドを積む
 	//バックバッファのインデックス取得
@@ -98,7 +98,7 @@ void DirectXCommon::PreView()
 
 }
 
-void DirectXCommon::PostView()
+void DirectXCommon::PostDraw()
 {
 	//実際のCommandListのImGuiの描画コマンドを進む
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList.Get());

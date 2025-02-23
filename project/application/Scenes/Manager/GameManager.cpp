@@ -83,24 +83,22 @@ void GameManager::Gameloop(){
 			renderer_->Update();
 #pragma endregion
 #pragma region Draw
-			//renderTextureに色々書き込んでいく
+			//renderTextureに書き込む設定に変更
 			renderTextrue->PreDraw();
 			state_->Draw();
 			renderer_->Draw();
-#pragma endregion
-			directX->PreView();
-			//renderTargetを変更
-			//レンダーターゲットから画像に変更
-			renderTextrue->PreCopy();
+
+			//directXのSRVに書き込む設定に変更
+			directX->PreDraw();
 			//ここにPipelineとDrawを書き込んでいく
 			renderer_->ChangePipeline(PipelineType::PostProsessPSO);
 			renderTextrue->Draw();
-			//画像からレンダーターゲット
-			renderTextrue->PostCopy();
 
 			editer->Draw();
 			imGuiManager->EndFrame();
-			directX->PostView();
+			directX->PostDraw();
+
+#pragma endregion
 		}
 	}
 }

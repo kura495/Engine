@@ -28,13 +28,17 @@ public:
 	virtual void CreateBuffer();
 	virtual void Update() = 0;
 	void PreDraw();
-	void PreCopy();
-	void PostCopy();
+
 
 protected:
 	Vector3* materialData = nullptr;
 
 protected:
+	///レンダーターゲットからシェーダーリソースに変更
+	void PreCopy();
+	///シェーダーリソースからレンダーターゲットに変更
+	void PostCopy();
+
 	ComPtr<ID3D12Resource> CreateRenderTextureResource(ComPtr<ID3D12Device> device, uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& clearColor);
 
 	void CreateRTV(int Index);
