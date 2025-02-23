@@ -595,7 +595,7 @@
     <ClCompile Include="project\Engine\PipelineState\Dissolve\Dissolve.cpp">
       <Filter>project\Engine\PipeLineState\Dissolve</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\DrawLine\DrawLinePSO.cpp">
+    <ClCompile Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.cpp">
       <Filter>project\Engine\PipeLineState\DrawLine</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PipelineState\GaussianFilter\GaussianFilter.cpp">
@@ -622,7 +622,7 @@
     <ClCompile Include="project\Engine\PipelineState\Sprite\SpritePSO.cpp">
       <Filter>project\Engine\PipeLineState\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\Standard\Standard.cpp">
+    <ClCompile Include="project\Engine\Object\Model\PipeLine\ModelPSO.cpp">
       <Filter>project\Engine\PipeLineState\Standard</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PipelineState\Vignetting\Vignetting.cpp">
@@ -1227,7 +1227,7 @@
     <ClInclude Include="project\Engine\PipelineState\Dissolve\Dissolve.h">
       <Filter>project\Engine\PipeLineState\Dissolve</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\DrawLine\DrawLinePSO.h">
+    <ClInclude Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.h">
       <Filter>project\Engine\PipeLineState\DrawLine</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PipelineState\GaussianFilter\GaussianFilter.h">
@@ -1254,7 +1254,7 @@
     <ClInclude Include="project\Engine\PipelineState\Sprite\SpritePSO.h">
       <Filter>project\Engine\PipeLineState\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\Standard\Standard.h">
+    <ClInclude Include="project\Engine\Object\Model\PipeLine\ModelPSO.h">
       <Filter>project\Engine\PipeLineState\Standard</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PipelineState\Vignetting\Vignetting.h">

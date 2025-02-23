@@ -1,13 +1,13 @@
-#include "Standard.h"
+#include "ModelPSO.h"
 
-void Standard::ShaderCompile()
+void ModelPSO::ShaderCompile()
 {
 	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/Object3D/Object3d.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
 	pixelShaderBlob =  ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/Object3D/Object3d.PS.hlsl", L"ps_6_0");
 }
 
-void Standard::CreateRootSignature()
+void ModelPSO::CreateRootSignature()
 {
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -86,7 +86,7 @@ void Standard::CreateRootSignature()
 	assert(SUCCEEDED(hr));
 }
 
-void Standard::CreateInputLayOut()
+void ModelPSO::CreateInputLayOut()
 {
 	//頂点レイアウト
 	inputElementDescs[0].SemanticName = "POSITION";
@@ -108,7 +108,7 @@ void Standard::CreateInputLayOut()
 	inputLayoutDesc.NumElements = _countof(inputElementDescs);
 }
 
-void Standard::CreateBlendState()
+void ModelPSO::CreateBlendState()
 {
 	//NormalBlendに設定
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
@@ -121,13 +121,13 @@ void Standard::CreateBlendState()
 	blendDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
 }
 
-void Standard::CreateRasterizarState()
+void ModelPSO::CreateRasterizarState()
 {
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 }
 
-void Standard::CreatePipelineStateObject()
+void ModelPSO::CreatePipelineStateObject()
 {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	graphicsPipelineStateDesc.pRootSignature = PipelineStateObject_.rootSignature.Get();

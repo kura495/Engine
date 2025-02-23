@@ -12,8 +12,8 @@ void PSOManager::Initalize()
 	ShaderCompiler* shaderCompiler = ShaderCompiler::GetInstance();
 	shaderCompiler->Initalize();
 	//PSOの初期化
-	Standard standard;
-	standard.Initalize();
+	ModelPSO modelPSO;
+	modelPSO.Initalize();
 	Skinning skinning;
 	skinning.Initalize();
 	Dissolve dissolve;
@@ -41,7 +41,7 @@ void PSOManager::Initalize()
 	SpritePSO sprite;
 	sprite.Initalize();
 	//PSOをリストに追加
-	AddPipeline(standard.GetPSO(),PipelineType::Model);
+	AddPipeline(modelPSO.GetPSO(),PipelineType::Model);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
 	AddPipeline(dissolve.GetPSO(),PipelineType::SkinningDissolve);
 	AddPipeline(particlePipeLine.GetPSO(),PipelineType::Particle);

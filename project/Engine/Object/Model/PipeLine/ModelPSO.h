@@ -2,7 +2,7 @@
 #include "PipelineState/IPipelineStateObject.h"
 #include "Manager/PSO/PSOManager.h"
 
-class Standard : public IPipelineStateObject
+class ModelPSO : public IPipelineStateObject
 {
 public:
 

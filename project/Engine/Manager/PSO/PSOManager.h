@@ -4,11 +4,12 @@
 
 #include "Common/DirectX/DirectXCommon.h"
 
-#include "PipelineState/Standard/Standard.h"
-#include "PipelineState/PostProsess/PostProsessPSO.h"
+#include "Object/Model/PipeLine/ModelPSO.h"
 #include "PipelineState/Skinning/Skinning.h"
-#include "PipelineState/DrawLine/DrawLinePSO.h"
+#include "Object/Line/PipeLine/DrawLinePSO.h"
 #include "PipelineState/WireFlame/WireFlame.h"
+
+#include "PipelineState/PostProsess/PostProsessPSO.h"
 #include "PipelineState/GaussianFilter/GaussianFilter.h"
 #include "PipelineState/GrayScale/GrayScale.h"
 #include "PipelineState/Vignetting/Vignetting.h"
