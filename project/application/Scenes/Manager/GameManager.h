@@ -25,7 +25,7 @@
 #include "PostProsess/Normal/Normal.h"
 #include "PostProsess/LuminanceBasedOutline/PPLuminanceBasedOutline.h"
 #include "PostProsess/RGBtoHSV/PPRGBtoHSV.h"
-#include "PostProsess/CubeMap/PPCubeMap.h"
+#include "Object/CubeMap/renderTextrue/PPCubeMap.h"
 
 class GameManager
 {

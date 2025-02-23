@@ -240,7 +240,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\Engine\Object\Sphere\Sphere.cpp" />
     <ClCompile Include="project\Engine\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="project\Engine\ParticleSystem\PipeLine\ParticlePipeLine.cpp" />
-    <ClCompile Include="project\Engine\PipelineState\CubeMap\CubeMap.cpp" />
+    <ClCompile Include="project\Engine\Object\CubeMap\Pipeline\CubeMap.cpp" />
     <ClCompile Include="project\Engine\PipelineState\Dissolve\Dissolve.cpp" />
     <ClCompile Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.cpp" />
     <ClCompile Include="project\Engine\PipelineState\GaussianFilter\GaussianFilter.cpp" />
@@ -254,7 +254,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\Engine\Object\Model\PipeLine\ModelPSO.cpp" />
     <ClCompile Include="project\Engine\PipelineState\Vignetting\Vignetting.cpp" />
     <ClCompile Include="project\Engine\Object\Model\PipeLine\WireFlame\WireFlame.cpp" />
-    <ClCompile Include="project\Engine\PostProsess\CubeMap\PPCubeMap.cpp" />
+    <ClCompile Include="project\Engine\Object\CubeMap\renderTextrue\PPCubeMap.cpp" />
     <ClCompile Include="project\Engine\PostProsess\Dissolve\PPDissolve.cpp" />
     <ClCompile Include="project\Engine\PostProsess\Filter\Filter.cpp" />
     <ClCompile Include="project\Engine\PostProsess\GrayScale\PPGrayScale.cpp" />
@@ -370,7 +370,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\Engine\ParticleSystem\Emitter\Emitter.h" />
     <ClInclude Include="project\Engine\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="project\Engine\ParticleSystem\PipeLine\ParticlePipeLine.h" />
-    <ClInclude Include="project\Engine\PipelineState\CubeMap\CubeMap.h" />
+    <ClInclude Include="project\Engine\Object\CubeMap\Pipeline\CubeMap.h" />
     <ClInclude Include="project\Engine\PipelineState\Dissolve\Dissolve.h" />
     <ClInclude Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.h" />
     <ClInclude Include="project\Engine\PipelineState\GaussianFilter\GaussianFilter.h" />
@@ -386,7 +386,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\Engine\Object\Model\PipeLine\ModelPSO.h" />
     <ClInclude Include="project\Engine\PipelineState\Vignetting\Vignetting.h" />
     <ClInclude Include="project\Engine\Object\Model\PipeLine\WireFlame\WireFlame.h" />
-    <ClInclude Include="project\Engine\PostProsess\CubeMap\PPCubeMap.h" />
+    <ClInclude Include="project\Engine\Object\CubeMap\renderTextrue\PPCubeMap.h" />
     <ClInclude Include="project\Engine\PostProsess\Dissolve\PPDissolve.h" />
     <ClInclude Include="project\Engine\PostProsess\Filter\Filter.h" />
     <ClInclude Include="project\Engine\PostProsess\GrayScale\PPGrayScale.h" />

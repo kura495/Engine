@@ -9,7 +9,7 @@
 #include "Object/Line/PipeLine/DrawLinePSO.h"
 #include "Object/Model/PipeLine/WireFlame/WireFlame.h"
 #include "Object/Sprite/PipeLine/SpritePSO.h"
-#include "PipelineState/CubeMap/CubeMap.h"
+#include "Object/CubeMap/Pipeline/CubeMap.h"
 
 #include "PipelineState/PostProsess/PostProsessPSO.h"
 #include "PipelineState/GaussianFilter/GaussianFilter.h"

@@ -589,7 +589,7 @@
     <ClCompile Include="project\Engine\ParticleSystem\ParticleSystem.cpp">
       <Filter>project\Engine\ParticleSystem</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\CubeMap\CubeMap.cpp">
+    <ClCompile Include="project\Engine\Object\CubeMap\Pipeline\CubeMap.cpp">
       <Filter>project\Engine\PipeLineState\CubeMap</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PipelineState\Dissolve\Dissolve.cpp">
@@ -652,7 +652,7 @@
     <ClCompile Include="project\Engine\PostProsess\PostProsess.cpp">
       <Filter>project\Engine\PostProsess</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\CubeMap\PPCubeMap.cpp">
+    <ClCompile Include="project\Engine\Object\CubeMap\renderTextrue\PPCubeMap.cpp">
       <Filter>project\Engine\PostProsess\CubeMap</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PostProsess\Dissolve\PPDissolve.cpp">
@@ -1221,7 +1221,7 @@
     <ClInclude Include="project\Engine\ParticleSystem\ParticleSystem.h">
       <Filter>project\Engine\ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\CubeMap\CubeMap.h">
+    <ClInclude Include="project\Engine\Object\CubeMap\Pipeline\CubeMap.h">
       <Filter>project\Engine\PipeLineState\CubeMap</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PipelineState\Dissolve\Dissolve.h">
@@ -1290,7 +1290,7 @@
     <ClInclude Include="project\Engine\PostProsess\PostProsess.h">
       <Filter>project\Engine\PostProsess</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\CubeMap\PPCubeMap.h">
+    <ClInclude Include="project\Engine\Object\CubeMap\renderTextrue\PPCubeMap.h">
       <Filter>project\Engine\PostProsess\CubeMap</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PostProsess\Dissolve\PPDissolve.h">
