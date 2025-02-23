@@ -14,7 +14,6 @@ void PostProsess::addInit()
 
 void PostProsess::Draw()
 {
-	PreCopy();
 
 	DirectX->GetcommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//テクスチャ
@@ -70,7 +69,7 @@ void PostProsess::PreDraw()
 	DirectX->GetcommandList()->RSSetScissorRects(1, &scissorRect);
 }
 
-void PostProsess::PreCopy()
+void PostProsess::PostDraw()
 {
 	//今回のバリアはTransition
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;

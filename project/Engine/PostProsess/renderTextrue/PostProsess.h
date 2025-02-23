@@ -20,6 +20,8 @@ public:
 	/// 追加の描画処理を行う場合にオーバーライド
 	/// </summary>
 	virtual void addDraw();
+	///レンダーターゲットからシェーダーリソースに変更
+	void PostDraw();
 	/// <summary>
 	/// RTVやSRVなど、必要な物を作成
 	/// </summary>
@@ -34,8 +36,7 @@ protected:
 	Vector3* materialData = nullptr;
 
 protected:
-	///レンダーターゲットからシェーダーリソースに変更
-	void PreCopy();
+
 	///シェーダーリソースからレンダーターゲットに変更
 	void PostCopy();
 
