@@ -28,7 +28,7 @@ void PSOManager::Initalize()
 	wireFlame.Initalize();
 	GrayScale grayScale;
 	grayScale.Initalize();
-	Vignetting vinette;
+	Vinette vinette;
 	vinette.Initalize();
 	LuminanceBasedOutline luminanceBasedOutline;
 	luminanceBasedOutline.Initalize();

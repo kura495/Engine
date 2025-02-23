@@ -14,9 +14,9 @@
 #include "PostProsess/Pipeline/PostProsessPSO.h"
 #include "PostProsess/GaussianFilter/Pipeline/GaussianFilter.h"
 #include "PostProsess/GrayScale/Pipeline/GrayScale.h"
-#include "PipelineState/Vignetting/Vignetting.h"
-#include "PipelineState/LuminanceBasedOutline/LuminanceBasedOutline.h"
-#include "PipelineState/RGBtoHSV/RGBtoHSV.h"
+#include "PostProsess/Vinette/Pipeline/Vinette.h"
+#include "PostProsess/LuminanceBasedOutline/Pipeline/LuminanceBasedOutline.h"
+#include "PostProsess/RGBtoHSV/Pipeline/RGBtoHSV.h"
 #include "PostProsess/Dissolve/Pipeline/Dissolve.h"
 
 #include "Engine/ParticleSystem/PipeLine/ParticlePipeLine.h"

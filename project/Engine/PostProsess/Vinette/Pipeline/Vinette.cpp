@@ -1,13 +1,13 @@
-#include "Vignetting.h"
+#include "Vinette.h"
 
-void Vignetting::ShaderCompile()
+void Vinette::ShaderCompile()
 {
 	vertexShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/Vinette/Vinette.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
 	pixelShaderBlob = ShaderCompiler::GetInstance()->CompileShader(L"project/resources/hlsl/Vinette/Vinette.PS.hlsl", L"ps_6_0");
 }
 
-void Vignetting::CreateRootSignature()
+void Vinette::CreateRootSignature()
 {
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -55,13 +55,13 @@ void Vignetting::CreateRootSignature()
 	assert(SUCCEEDED(hr));
 }
 
-void Vignetting::CreateInputLayOut()
+void Vinette::CreateInputLayOut()
 {
 	inputLayoutDesc.pInputElementDescs = nullptr;
 	inputLayoutDesc.NumElements = 0;
 }
 
-void Vignetting::CreateBlendState()
+void Vinette::CreateBlendState()
 {
 	//NormalBlendに設定
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
@@ -74,13 +74,13 @@ void Vignetting::CreateBlendState()
 	blendDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
 }
 
-void Vignetting::CreateRasterizarState()
+void Vinette::CreateRasterizarState()
 {
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 }
 
-void Vignetting::CreatePipelineStateObject()
+void Vinette::CreatePipelineStateObject()
 {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	graphicsPipelineStateDesc.pRootSignature = PipelineStateObject_.rootSignature.Get();

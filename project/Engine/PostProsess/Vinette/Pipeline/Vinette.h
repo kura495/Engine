@@ -2,7 +2,7 @@
 #include "PipelineState/IPipelineStateObject.h"
 #include "Manager/PSO/PSOManager.h"
 
-class Vignetting : public IPipelineStateObject
+class Vinette : public IPipelineStateObject
 {
 public:
 

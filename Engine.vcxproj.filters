@@ -604,16 +604,13 @@
     <ClCompile Include="project\Engine\PostProsess\GrayScale\Pipeline\GrayScale.cpp">
       <Filter>project\Engine\PipeLineState\GrayScale</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp">
+    <ClCompile Include="project\Engine\PostProsess\LuminanceBasedOutline\Pipeline\LuminanceBasedOutline.cpp">
       <Filter>project\Engine\PipeLineState\LuminanceBasedOutline</Filter>
-    </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\MotionBlur\MotionBlur.cpp">
-      <Filter>project\Engine\PipeLineState\MotionBlur</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PostProsess\Pipeline\PostProsessPSO.cpp">
       <Filter>project\Engine\PipeLineState\PostProsess</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\RGBtoHSV\RGBtoHSV.cpp">
+    <ClCompile Include="project\Engine\PostProsess\RGBtoHSV\Pipeline\RGBtoHSV.cpp">
       <Filter>project\Engine\PipeLineState\RGBtoHSV</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\Object\Model\PipeLine\Skinning\Skinning.cpp">
@@ -625,7 +622,7 @@
     <ClCompile Include="project\Engine\Object\Model\PipeLine\ModelPSO.cpp">
       <Filter>project\Engine\PipeLineState\Standard</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\Vignetting\Vignetting.cpp">
+    <ClCompile Include="project\Engine\PostProsess\Vinette\Pipeline\Vinette.cpp">
       <Filter>project\Engine\PipeLineState\Vignetting</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\Object\Model\PipeLine\WireFlame\WireFlame.cpp">
@@ -645,9 +642,6 @@
     </ClCompile>
     <ClCompile Include="project\Engine\PostProsess\GaussianFilter\renderTextrue\Filter.cpp">
       <Filter>project\Engine\PostProsess\Filter</Filter>
-    </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\Normal\Normal.cpp">
-      <Filter>project\Engine\PostProsess\Normal</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PostProsess\renderTextrue\PostProsess.cpp">
       <Filter>project\Engine\PostProsess</Filter>
@@ -1236,16 +1230,13 @@
     <ClInclude Include="project\Engine\PostProsess\GrayScale\Pipeline\GrayScale.h">
       <Filter>project\Engine\PipeLineState\GrayScale</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.h">
+    <ClInclude Include="project\Engine\PostProsess\LuminanceBasedOutline\Pipeline\LuminanceBasedOutline.h">
       <Filter>project\Engine\PipeLineState\LuminanceBasedOutline</Filter>
-    </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\MotionBlur\MotionBlur.h">
-      <Filter>project\Engine\PipeLineState\MotionBlur</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PostProsess\Pipeline\PostProsessPSO.h">
       <Filter>project\Engine\PipeLineState\PostProsess</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\RGBtoHSV\RGBtoHSV.h">
+    <ClInclude Include="project\Engine\PostProsess\RGBtoHSV\Pipeline\RGBtoHSV.h">
       <Filter>project\Engine\PipeLineState\RGBtoHSV</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\Object\Model\PipeLine\Skinning\Skinning.h">
@@ -1257,7 +1248,7 @@
     <ClInclude Include="project\Engine\Object\Model\PipeLine\ModelPSO.h">
       <Filter>project\Engine\PipeLineState\Standard</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\Vignetting\Vignetting.h">
+    <ClInclude Include="project\Engine\PostProsess\Vinette\Pipeline\Vinette.h">
       <Filter>project\Engine\PipeLineState\Vignetting</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\Object\Model\PipeLine\WireFlame\WireFlame.h">
@@ -1283,9 +1274,6 @@
     </ClInclude>
     <ClInclude Include="project\Engine\PostProsess\GaussianFilter\renderTextrue\Filter.h">
       <Filter>project\Engine\PostProsess\Filter</Filter>
-    </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\Normal\Normal.h">
-      <Filter>project\Engine\PostProsess\Normal</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PostProsess\renderTextrue\PostProsess.h">
       <Filter>project\Engine\PostProsess</Filter>
