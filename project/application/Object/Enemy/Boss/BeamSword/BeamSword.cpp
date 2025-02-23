@@ -3,6 +3,7 @@ void BeamSword::Init()
 {
 	world_.Init();
 	world_.transform.translate.z = -10.0f;
+	world_.transform.scale = {0.0f,0.0f,0.0f};
 	world_.Update();
 	collider_.Init(&world_);
 	collider_.SetSize(Csize);
