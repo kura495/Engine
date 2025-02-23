@@ -41,7 +41,7 @@ void PSOManager::Initalize()
 	SpritePSO sprite;
 	sprite.Initalize();
 	//PSOをリストに追加
-	AddPipeline(standard.GetPSO(),PipelineType::Standerd);
+	AddPipeline(standard.GetPSO(),PipelineType::Model);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
 	AddPipeline(dissolve.GetPSO(),PipelineType::SkinningDissolve);
 	AddPipeline(particlePipeLine.GetPSO(),PipelineType::Particle);

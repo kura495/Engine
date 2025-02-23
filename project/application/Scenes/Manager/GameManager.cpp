@@ -46,7 +46,7 @@ void GameManager::Initialize()
 	currentSceneNum_ = PLAY;
 	state_->Init();
 
-	renderTextrue = std::make_unique<PPNormal>();
+	renderTextrue = std::make_unique<PostProsess>();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
 }

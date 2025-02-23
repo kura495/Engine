@@ -47,7 +47,7 @@ void Renderer::Draw()
 	ChangePipeline(PipelineType::CubeMap);
 	//skyBox.Draw(cubeWorld_);
 	//標準描画
-	ChangePipeline(PipelineType::Standerd);
+	ChangePipeline(PipelineType::Model);
 	///描画
 	for (DrawModelData model : drawModelData_) {
 		model.modelData->Draw(*model.world_,Texture);
