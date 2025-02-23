@@ -18,14 +18,7 @@
 #include "Renderer/Renderer.h"
 #include "Editer/Editer.h"
 #include "Object/Manager/ObjectManager.h"
-#include "PostProsess/PostProsess.h"
-#include "PostProsess/Filter/Filter.h"
-#include "PostProsess/GrayScale/PPGrayScale.h"
-#include "PostProsess/Vinette/PPVinette.h"
-#include "PostProsess/Normal/Normal.h"
-#include "PostProsess/LuminanceBasedOutline/PPLuminanceBasedOutline.h"
-#include "PostProsess/RGBtoHSV/PPRGBtoHSV.h"
-#include "Object/CubeMap/renderTextrue/PPCubeMap.h"
+#include "PostProsess/renderTextrue/PostProsess.h"
 
 class GameManager
 {

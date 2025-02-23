@@ -592,16 +592,16 @@
     <ClCompile Include="project\Engine\Object\CubeMap\Pipeline\CubeMap.cpp">
       <Filter>project\Engine\PipeLineState\CubeMap</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\Dissolve\Dissolve.cpp">
+    <ClCompile Include="project\Engine\PostProsess\Dissolve\Pipeline\Dissolve.cpp">
       <Filter>project\Engine\PipeLineState\Dissolve</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.cpp">
       <Filter>project\Engine\PipeLineState\DrawLine</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\GaussianFilter\GaussianFilter.cpp">
+    <ClCompile Include="project\Engine\PostProsess\GaussianFilter\Pipeline\GaussianFilter.cpp">
       <Filter>project\Engine\PipeLineState\GaussianFilter</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\GrayScale\GrayScale.cpp">
+    <ClCompile Include="project\Engine\PostProsess\GrayScale\Pipeline\GrayScale.cpp">
       <Filter>project\Engine\PipeLineState\GrayScale</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.cpp">
@@ -610,7 +610,7 @@
     <ClCompile Include="project\Engine\PipelineState\MotionBlur\MotionBlur.cpp">
       <Filter>project\Engine\PipeLineState\MotionBlur</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PipelineState\PostProsess\PostProsessPSO.cpp">
+    <ClCompile Include="project\Engine\PostProsess\Pipeline\PostProsessPSO.cpp">
       <Filter>project\Engine\PipeLineState\PostProsess</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PipelineState\RGBtoHSV\RGBtoHSV.cpp">
@@ -643,31 +643,31 @@
     <ClCompile Include="project\Engine\Utility\Log.cpp">
       <Filter>project\Engine\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\Filter\Filter.cpp">
+    <ClCompile Include="project\Engine\PostProsess\GaussianFilter\renderTextrue\Filter.cpp">
       <Filter>project\Engine\PostProsess\Filter</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\PostProsess\Normal\Normal.cpp">
       <Filter>project\Engine\PostProsess\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\PostProsess.cpp">
+    <ClCompile Include="project\Engine\PostProsess\renderTextrue\PostProsess.cpp">
       <Filter>project\Engine\PostProsess</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\Object\CubeMap\renderTextrue\PPCubeMap.cpp">
       <Filter>project\Engine\PostProsess\CubeMap</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\Dissolve\PPDissolve.cpp">
+    <ClCompile Include="project\Engine\PostProsess\Dissolve\renderTextrue\PPDissolve.cpp">
       <Filter>project\Engine\PostProsess\Dissolve</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\GrayScale\PPGrayScale.cpp">
+    <ClCompile Include="project\Engine\PostProsess\GrayScale\renderTextrue\PPGrayScale.cpp">
       <Filter>project\Engine\PostProsess\GrayScale</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.cpp">
+    <ClCompile Include="project\Engine\PostProsess\LuminanceBasedOutline\renderTextrue\PPLuminanceBasedOutline.cpp">
       <Filter>project\Engine\PostProsess\LuminanceBasedOutline</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\RGBtoHSV\PPRGBtoHSV.cpp">
+    <ClCompile Include="project\Engine\PostProsess\RGBtoHSV\renderTextrue\PPRGBtoHSV.cpp">
       <Filter>project\Engine\PostProsess\RGBtoHSV</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\Vinette\PPVinette.cpp">
+    <ClCompile Include="project\Engine\PostProsess\Vinette\renderTextrue\PPVinette.cpp">
       <Filter>project\Engine\PostProsess\Vinette</Filter>
     </ClCompile>
     <ClCompile Include="project\Engine\Renderer\Renderer.cpp">
@@ -1224,16 +1224,16 @@
     <ClInclude Include="project\Engine\Object\CubeMap\Pipeline\CubeMap.h">
       <Filter>project\Engine\PipeLineState\CubeMap</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\Dissolve\Dissolve.h">
+    <ClInclude Include="project\Engine\PostProsess\Dissolve\Pipeline\Dissolve.h">
       <Filter>project\Engine\PipeLineState\Dissolve</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.h">
       <Filter>project\Engine\PipeLineState\DrawLine</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\GaussianFilter\GaussianFilter.h">
+    <ClInclude Include="project\Engine\PostProsess\GaussianFilter\Pipeline\GaussianFilter.h">
       <Filter>project\Engine\PipeLineState\GaussianFilter</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\GrayScale\GrayScale.h">
+    <ClInclude Include="project\Engine\PostProsess\GrayScale\Pipeline\GrayScale.h">
       <Filter>project\Engine\PipeLineState\GrayScale</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PipelineState\LuminanceBasedOutline\LuminanceBasedOutline.h">
@@ -1242,7 +1242,7 @@
     <ClInclude Include="project\Engine\PipelineState\MotionBlur\MotionBlur.h">
       <Filter>project\Engine\PipeLineState\MotionBlur</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PipelineState\PostProsess\PostProsessPSO.h">
+    <ClInclude Include="project\Engine\PostProsess\Pipeline\PostProsessPSO.h">
       <Filter>project\Engine\PipeLineState\PostProsess</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PipelineState\RGBtoHSV\RGBtoHSV.h">
@@ -1281,31 +1281,31 @@
     <ClInclude Include="project\Engine\Utility\Log.h">
       <Filter>project\Engine\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\Filter\Filter.h">
+    <ClInclude Include="project\Engine\PostProsess\GaussianFilter\renderTextrue\Filter.h">
       <Filter>project\Engine\PostProsess\Filter</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\PostProsess\Normal\Normal.h">
       <Filter>project\Engine\PostProsess\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\PostProsess.h">
+    <ClInclude Include="project\Engine\PostProsess\renderTextrue\PostProsess.h">
       <Filter>project\Engine\PostProsess</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\Object\CubeMap\renderTextrue\PPCubeMap.h">
       <Filter>project\Engine\PostProsess\CubeMap</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\Dissolve\PPDissolve.h">
+    <ClInclude Include="project\Engine\PostProsess\Dissolve\renderTextrue\PPDissolve.h">
       <Filter>project\Engine\PostProsess\Dissolve</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\GrayScale\PPGrayScale.h">
+    <ClInclude Include="project\Engine\PostProsess\GrayScale\renderTextrue\PPGrayScale.h">
       <Filter>project\Engine\PostProsess\GrayScale</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\LuminanceBasedOutline\PPLuminanceBasedOutline.h">
+    <ClInclude Include="project\Engine\PostProsess\LuminanceBasedOutline\renderTextrue\PPLuminanceBasedOutline.h">
       <Filter>project\Engine\PostProsess\LuminanceBasedOutline</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\RGBtoHSV\PPRGBtoHSV.h">
+    <ClInclude Include="project\Engine\PostProsess\RGBtoHSV\renderTextrue\PPRGBtoHSV.h">
       <Filter>project\Engine\PostProsess\RGBtoHSV</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\Vinette\PPVinette.h">
+    <ClInclude Include="project\Engine\PostProsess\Vinette\renderTextrue\PPVinette.h">
       <Filter>project\Engine\PostProsess\Vinette</Filter>
     </ClInclude>
     <ClInclude Include="project\Engine\Renderer\Renderer.h">

@@ -11,13 +11,13 @@
 #include "Object/Sprite/PipeLine/SpritePSO.h"
 #include "Object/CubeMap/Pipeline/CubeMap.h"
 
-#include "PipelineState/PostProsess/PostProsessPSO.h"
-#include "PipelineState/GaussianFilter/GaussianFilter.h"
-#include "PipelineState/GrayScale/GrayScale.h"
+#include "PostProsess/Pipeline/PostProsessPSO.h"
+#include "PostProsess/GaussianFilter/Pipeline/GaussianFilter.h"
+#include "PostProsess/GrayScale/Pipeline/GrayScale.h"
 #include "PipelineState/Vignetting/Vignetting.h"
 #include "PipelineState/LuminanceBasedOutline/LuminanceBasedOutline.h"
 #include "PipelineState/RGBtoHSV/RGBtoHSV.h"
-#include "PipelineState/Dissolve/Dissolve.h"
+#include "PostProsess/Dissolve/Pipeline/Dissolve.h"
 
 #include "Engine/ParticleSystem/PipeLine/ParticlePipeLine.h"
 
