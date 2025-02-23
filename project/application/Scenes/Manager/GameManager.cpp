@@ -49,7 +49,7 @@ void GameManager::Initialize()
 	renderTextrue = std::make_unique<PostProsess>();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
-	renderTextrue2 = std::make_unique<PostProsess>();
+	renderTextrue2 = std::make_unique<RGBshift>();
 	renderTextrue2->Init();
 	renderTextrue2->Create(2);
 }
@@ -100,7 +100,7 @@ void GameManager::Gameloop(){
 			//directXのSRVに書き込む設定に変更
 			directX->PreDraw();
 			//ここにPipelineとDrawを書き込んでいく
-			renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
+			renderer_->ChangePipeline(PostProsessType::RGBshift);
 			renderTextrue2->Draw();
 			editer->Draw();
 			imGuiManager->EndFrame();

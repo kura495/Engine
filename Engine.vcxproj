@@ -282,6 +282,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="project\application\Object\Player\State\PRoot\PRoot.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.cpp" />
+    <ClCompile Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.cpp" />
+    <ClCompile Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.h" />
@@ -496,6 +498,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\externals\imgui\imstb_truetype.h" />
     <ClInclude Include="project\application\Object\Player\State\PRoot\PRoot.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.h" />
+    <ClInclude Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.h" />
+    <ClInclude Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project\externals\assimp\include\assimp\.editorconfig" />

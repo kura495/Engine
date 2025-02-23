@@ -18,6 +18,7 @@
 #include "PostProsess/LuminanceBasedOutline/Pipeline/LuminanceBasedOutline.h"
 #include "PostProsess/RGBtoHSV/Pipeline/RGBtoHSV.h"
 #include "PostProsess/Dissolve/Pipeline/Dissolve.h"
+#include "PostProsess/RGBshift/Pipeline/RGBshiftPSO.h"
 
 #include "Engine/ParticleSystem/PipeLine/ParticlePipeLine.h"
 

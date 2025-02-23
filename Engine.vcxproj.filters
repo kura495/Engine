@@ -721,6 +721,8 @@
     <ClCompile Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.cpp">
       <Filter>project\application\Object\Enemy\Boss\Sword</Filter>
     </ClCompile>
+    <ClCompile Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.cpp" />
+    <ClCompile Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1359,6 +1361,8 @@
     <ClInclude Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.h">
       <Filter>project\application\Object\Enemy\Boss\Sword</Filter>
     </ClInclude>
+    <ClInclude Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.h" />
+    <ClInclude Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

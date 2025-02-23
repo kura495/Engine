@@ -18,7 +18,9 @@
 #include "Renderer/Renderer.h"
 #include "Editer/Editer.h"
 #include "Object/Manager/ObjectManager.h"
+
 #include "PostProsess/renderTextrue/PostProsess.h"
+#include "PostProsess/RGBshift/renderTextrue/RGBshift.h"
 
 class GameManager
 {
@@ -52,7 +54,7 @@ private:
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
 	std::unique_ptr<PostProsess> renderTextrue;
-	std::unique_ptr<PostProsess> renderTextrue2;
+	std::unique_ptr<RGBshift> renderTextrue2;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

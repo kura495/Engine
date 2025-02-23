@@ -17,4 +17,5 @@ enum class PostProsessType {
 	Vinette,
 	LuminanceBasedOutline,
 	RGBtoHSV,
+	RGBshift,
 };
