@@ -89,11 +89,8 @@ void ParticleSystem::ParticleSpawn(ParticleSystem& particle, Emitter& emitter)
 {
 	emitter.frequencyTime += kDeltaTime;
 	if (emitter.frequency <= emitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
 
-		particle.SpawnParticle(emitter, randomEngine);
+		particle.SpawnParticle(emitter);
 
 		emitter.frequencyTime -= emitter.frequency;
 	}
@@ -109,9 +106,9 @@ void ParticleSystem::ParticleCustumSpawn(ParticleSystem& particle, Emitter& emit
 	}
 }
 
-void ParticleSystem::SpawnParticle(Emitter& emitter, std::mt19937& randomEngine)
+void ParticleSystem::SpawnParticle(Emitter& emitter)
 {
-	particles.splice(particles.end(), Emit(emitter, randomEngine));
+	particles.splice(particles.end(), Emit(emitter));
 }
 
 void ParticleSystem::CustumSpawnParticle(Emitter& emitter)
@@ -128,11 +125,11 @@ std::list<Particle> ParticleSystem::CustumEmit(Emitter& emitter)
 	return Emitparticles;
 }
 
-std::list<Particle> ParticleSystem::Emit(Emitter& emitter, std::mt19937& randomEngine)
+std::list<Particle> ParticleSystem::Emit(Emitter& emitter)
 {
 	std::list<Particle> Emitparticles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		Emitparticles.push_back(MakeNewParticle(emitter,randomEngine));
+		Emitparticles.push_back(MakeNewParticle(emitter));
 	}
 	return Emitparticles;
 }
@@ -197,26 +194,21 @@ void ParticleSystem::CreateSRV()
 	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, textureSrvHandle.CPU);
 }
 
-Particle ParticleSystem::MakeNewParticle(Emitter& emitter,std::mt19937& randomEngine)
+Particle ParticleSystem::MakeNewParticle(Emitter& emitter)
 {
-	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	Particle particle;
-	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
+	Vector3 ramdomTranslate = { random::Generate<float>(-1.0f, 1.0f),random::Generate<float>(-1.0f, 1.0f),random::Generate<float>(-1.0f, 1.0f) };
 	particle.transform.translate = ramdomTranslate + emitter.world_.transform.translate;
-	particle.velocity = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
-	particle.color = SetParticleColor(randomEngine);
-	particle.lifeTime = SetParticleLifeTime(randomEngine,1.0f,3.0f);
+	particle.velocity = { random::Generate<float>(-1.0f, 1.0f),random::Generate<float>(-1.0f, 1.0f) ,random::Generate<float>(-1.0f, 1.0f) };
+	particle.color = SetParticleColor();
+	particle.lifeTime = random::Generate<float>(1.0f, 3.0f);
 	particle.currentTime = 0;
 	return particle;
 }
-Vector4 ParticleSystem::SetParticleColor(std::mt19937& randomEngine)
+Vector4 ParticleSystem::SetParticleColor()
 {
+
 	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
-	return { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) 
-	,distribution(randomEngine) };
-}
-float ParticleSystem::SetParticleLifeTime(std::mt19937& randomEngine,float min,float max)
-{
-	std::uniform_real_distribution<float> distribution(min, max);
-	return distribution(randomEngine);
+	return { random::Generate<float>(0.0f, 1.0f),random::Generate<float>(0.0f, 1.0f) ,random::Generate<float>(0.0f, 1.0f)
+	,random::Generate<float>(0.0f, 1.0f) };
 }

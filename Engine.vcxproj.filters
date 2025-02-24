@@ -723,6 +723,7 @@
     </ClCompile>
     <ClCompile Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.cpp" />
     <ClCompile Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.cpp" />
+    <ClCompile Include="project\Engine\Utility\random\random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1363,6 +1364,7 @@
     </ClInclude>
     <ClInclude Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.h" />
     <ClInclude Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.h" />
+    <ClInclude Include="project\Engine\Utility\random\random.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

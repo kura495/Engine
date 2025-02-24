@@ -82,11 +82,8 @@ void EAttackRocketPunch::PreparationFunc(Boss* boss)
 {
 	easeT = (std::min)(easeT + addEaseT, 1.0f);
 
-	//ランダム生成用
-	std::random_device seedGenerator;
-	std::mt19937 randomEngine(seedGenerator());
-	std::uniform_real_distribution<float> distribution(-ramdomvalue, ramdomvalue);
-	Vector3 ramdomTranslate = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
+
+	Vector3 ramdomTranslate = { random::Generate<float>(-1.0f, 1.0f),random::Generate<float>(-1.0f, 1.0f) ,random::Generate<float>(-1.0f, 1.0f) };
 	//ランダムに動かして揺らす
 	boss->GetWorld().transform.translate = PrePos + ramdomTranslate;
 

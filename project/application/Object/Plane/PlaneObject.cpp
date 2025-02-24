@@ -57,11 +57,8 @@ void PlaneObject::CrashEffect()
 	world_.transform.translate.y -= 0.02f;
 	//前のフレームのランダム加算を打ち消す
 	world_.transform.translate += saveramdomTranslate;
-	//ランダム生成用
-	std::random_device seedGenerator;
-	std::mt19937 randomEngine(seedGenerator());
-	std::uniform_real_distribution<float> distribution(-0.1f, 0.1f);
-	Vector3 ramdomTranslate = { distribution(randomEngine),0.0f ,distribution(randomEngine) };
+
+	Vector3 ramdomTranslate = { random::Generate<float>(-0.1f, 0.1f),0.0f ,random::Generate<float>(-0.1f, 0.1f) };
 	world_.transform.translate += ramdomTranslate;
 	saveramdomTranslate = ramdomTranslate;
 	if (easeT == 1.0f) {

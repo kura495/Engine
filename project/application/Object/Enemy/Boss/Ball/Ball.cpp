@@ -24,9 +24,6 @@ void Ball::Update()
 	//パーティクル生成
 	emitter.frequencyTime += kDeltaTime;
 	if (emitter.frequency <= emitter.frequencyTime) {
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
 
 		particle_->CustumSpawnParticle(emitter);
 

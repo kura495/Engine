@@ -8,6 +8,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "Math/Matrix/MatrixCalc.h"
 #include "Calc.h"
+#include "Utility/random/random.h"
 
 //カメラ補間用ワーク
 struct WorkInterpolation {

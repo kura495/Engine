@@ -5,7 +5,7 @@ void RGBshift::Update()
 		materialData->w = 1.0f;
 	}
 	else {
-		materialData->x = 0.0f;
+		materialData->w = 0.0f;
 	}
 #ifdef _DEBUG
 	ImGui::Begin("PostProsess");

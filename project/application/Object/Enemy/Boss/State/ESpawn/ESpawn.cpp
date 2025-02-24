@@ -53,11 +53,8 @@ Particle ESpawn::CustomParticle()
 {
 	Particle particle{};
 	particle.color = { 1.0f,1.0f,1.0f };
-	//ランダム生成用
-	std::random_device seedGenerator;
-	std::mt19937 randomEngine(seedGenerator());
 
-	particle.lifeTime = ParticleSystem::SetParticleLifeTime(randomEngine, 1.0f, 3.0f);
+	particle.lifeTime = random::Generate<float>(1.0f, 3.0f);
 	particle.transform.scale = sleepParticleEmitter.particleRadius;
 	particle.transform.translate = sleepParticleEmitter.world_.transform.translate;
 

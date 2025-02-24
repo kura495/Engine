@@ -106,5 +106,8 @@ void Boss::AddImGui()
 	if (ImGui::Button("Sword")) {
 		ChangeState<ESwordAttack>();
 	}
+	if (ImGui::Button("Slam")) {
+		ChangeState<EAttackSlam>();
+	}
 	ImGui::Text(state_->ShowState().c_str());
 }

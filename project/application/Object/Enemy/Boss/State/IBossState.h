@@ -3,6 +3,7 @@
 #include "Vector/Vector3.h"
 #include "Quaternion/Quaternion.h"
 #include "ParticleSystem/ParticleSystem.h"
+#include "Utility/random/random.h"
 enum AttackState {
 	Slam,//叩きつけ
 	Throw,//物を投げる

@@ -25,9 +25,6 @@ void DummyBall::Update()
 	emitter.frequencyTime += kDeltaTime;
 	if (isThrowFlag) {
 		if (emitter.frequency <= emitter.frequencyTime) {
-			//ランダム生成用
-			std::random_device seedGenerator;
-			std::mt19937 randomEngine(seedGenerator());
 
 			particle_->CustumSpawnParticle(emitter);
 

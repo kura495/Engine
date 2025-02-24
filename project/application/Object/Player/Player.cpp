@@ -145,13 +145,10 @@ void Player::AttackOnCollision(const ICollider& collider)
 		attackVector = TransformNormal({0.0f,0.0f,1.0f},Matrix4x4 (MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
 		attackVector *= -1;
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
 		//パーティクル生成
 		AttackHitParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitParticleEmitter.world_.transform.translate.y += 1.0f;
-		attackHitParticle_->SpawnParticle(AttackHitParticleEmitter, randomEngine);
+		attackHitParticle_->SpawnParticle(AttackHitParticleEmitter);
 		//音関連
 		Audio::Stop(SEattack, true,false);
 		Audio::Play(SEHitattack, 1.0f);
@@ -163,14 +160,11 @@ void Player::AttackOnCollision(const ICollider& collider)
 		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
 		attackVector *= -1;
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
 		//パーティクル生成
 		AttackHitBombParticleEmitter.color = { 0.5f,0.5f,1.0f };
 		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
-		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);
+		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
 	}
 	if (collider.GetcollitionAttribute() == Collider::Tag::FakeEnemyBall) {
 		colliders_[ColliderType::Attack].IsUsing = false;
@@ -178,14 +172,11 @@ void Player::AttackOnCollision(const ICollider& collider)
 		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
 		attackVector.Normalize();
 		attackVector *= -1;
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
 		//パーティクル生成
 		AttackHitBombParticleEmitter.color = { 1.0f,1.0f,1.0f };
 		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
-		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter, randomEngine);
+		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
 	}
 
 }

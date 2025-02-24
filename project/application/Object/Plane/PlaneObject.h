@@ -5,6 +5,7 @@
 #include "Collider/OBB/OBBoxCollider.h"
 #include <random>
 #include <numbers>
+#include "Utility/random/random.h"
 
 static uint32_t PlaneObjectNumber = 0;
 

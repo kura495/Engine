@@ -17,6 +17,7 @@
 #include "PipeLine/ParticlePipeLine.h"
 #include "Emitter/Emitter.h"
 #include "GlobalTime.h"
+#include "Utility/random/random.h"
 
 struct Particle {
 	Matrix4x4 matWorld;
@@ -74,14 +75,14 @@ public:
 	/// パーティクルを生成
 	/// </summary>
 	/// <param name="emitter"></param>
-	void SpawnParticle(Emitter& emitter, std::mt19937& randomEngine);
+	void SpawnParticle(Emitter& emitter);
 	/// <summary>
 	/// カスタムスポーンを使ってパーティクルを生成
 	/// </summary>
 	/// <param name="emitter"></param>
 	void CustumSpawnParticle(Emitter& emitter);
 	//ランダム
-	Particle MakeNewParticle(Emitter& emitter, std::mt19937& randomEngine);
+	Particle MakeNewParticle(Emitter& emitter);
 	/// <summary>
 	/// パーティクルの位置をランダムに設定
 	/// </summary>
@@ -93,15 +94,9 @@ public:
 	/// </summary>
 	/// <param name="randomEngine"></param>
 	/// <returns></returns>
-	Vector4 SetParticleColor(std::mt19937& randomEngine);
-	/// <summary>
-	/// パーティクルの生存時間をランダムに設定
-	/// </summary>
-	/// <param name="randomEngine"></param>
-	/// <returns></returns>
-	static float SetParticleLifeTime(std::mt19937& randomEngine, float min, float max);
+	Vector4 SetParticleColor();
 private:
-	std::list<Particle> Emit(Emitter& emitter, std::mt19937& randomEngine);
+	std::list<Particle> Emit(Emitter& emitter);
 	std::list<Particle> CustumEmit(Emitter& emitter);
 	
 	bool IsCollision(const AABBData& aabb, const Vector3& point);
