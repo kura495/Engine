@@ -2,7 +2,7 @@
 void RGBshift::Update()
 {
 	if (CheckBox) {
-		materialData->x = 1.0f;
+		materialData->w = 1.0f;
 	}
 	else {
 		materialData->x = 0.0f;
@@ -10,6 +10,7 @@ void RGBshift::Update()
 #ifdef _DEBUG
 	ImGui::Begin("PostProsess");
 	ImGui::Checkbox("RGBshift", &CheckBox);
+	ImGui::DragFloat3("RGBpos", &materialData->x,0.01f);
 	ImGui::End();
 #endif
 }

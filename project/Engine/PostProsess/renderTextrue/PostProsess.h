@@ -33,7 +33,7 @@ public:
 
 
 protected:
-	Vector3* materialData = nullptr;
+	Vector4* materialData = nullptr;
 
 protected:
 

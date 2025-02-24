@@ -83,6 +83,7 @@ void GameManager::Gameloop(){
 			GlobalVariables::GetInstance()->Update();
 			state_->Update();
 			renderTextrue->Update();
+			renderTextrue2->Update();
 			renderer_->Update();
 #pragma endregion
 #pragma region Draw
@@ -91,20 +92,37 @@ void GameManager::Gameloop(){
 			state_->Draw();
 			renderer_->Draw();
 			renderTextrue->PostDraw();
-			renderTextrue2->PreDraw();
-			//パイプラインの変更
-			renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
-			//レンダーテクスチャの内容を書き込み
-			renderTextrue->Draw();
-			renderTextrue2->PostDraw();
-			//directXのSRVに書き込む設定に変更
-			directX->PreDraw();
-			//ここにPipelineとDrawを書き込んでいく
-			renderer_->ChangePipeline(PostProsessType::RGBshift);
-			renderTextrue2->Draw();
-			editer->Draw();
-			imGuiManager->EndFrame();
-			directX->PostDraw();
+			bool PostEffect = true;
+			if (PostEffect) {
+				renderTextrue2->PreDraw();
+				//パイプラインの変更
+				renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
+				//レンダーテクスチャの内容を書き込み
+				renderTextrue->Draw();
+				renderTextrue2->PostDraw();
+				//directXのSRVに書き込む設定に変更
+				directX->PreDraw();
+				//ここにPipelineとDrawを書き込んでいく
+				renderer_->ChangePipeline(PostProsessType::RGBshift);
+				renderTextrue2->Draw();
+				editer->Draw();
+				imGuiManager->EndFrame();
+				directX->PostDraw();
+			}
+			else {
+				//directXのSRVに書き込む設定に変更
+				directX->PreDraw();
+				//ここにPipelineとDrawを書き込んでいく
+				renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
+				renderTextrue->Draw();
+				editer->Draw();
+				imGuiManager->EndFrame();
+				directX->PostDraw();
+			}
+			
+
+			
+
 			//流れと使い方
 			//描画先A->PreDraw();
 			//描画したい物->Draw();

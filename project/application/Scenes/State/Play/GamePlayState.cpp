@@ -38,8 +38,6 @@ void GamePlayState::Init()
 	floorManager = std::make_unique<FloorManager>();
 	floorManager->Init();
 
-	
-
 	pauseMenu_ = std::make_unique<PauseMenu>();
 	pauseMenu_->Init();
 

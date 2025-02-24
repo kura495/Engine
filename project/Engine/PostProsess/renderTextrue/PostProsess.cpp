@@ -40,7 +40,7 @@ void PostProsess::Create(int Index)
 	CreateViewport();
 	CreateScissor();
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, SRVhandle.CPU);
-	materialResource = DirectX->CreateBufferResource(sizeof(Vector3));
+	materialResource = DirectX->CreateBufferResource(sizeof(Vector4));
 	materialResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 
 	CreateBuffer();

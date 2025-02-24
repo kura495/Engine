@@ -5,7 +5,7 @@ struct VertexShaderOutput
 };
 struct Material
 {
-    float32_t3 color; //元の色
+    float32_t4 color; //元の色
 };
 struct PixelShaderOutput
 {
@@ -32,7 +32,22 @@ ConstantBuffer<Material> gMaterial : register(b0);
 PixelShaderOutput main(VertexShaderOutput input)
 {
     PixelShaderOutput output;
-    output.color = gTexture.Sample(gSampler, input.texcoord);
+    if (gMaterial.color.a == 0)
+    {
+        output.color = gTexture.Sample(gSampler, input.texcoord);
+    }
+    else
+    {
+        output.color = 0.0f;
+        float32_t2 aaaaa = input.texcoord;
+        aaaaa.x += gMaterial.color.r;
+        output.color.r = gTexture.Sample(gSampler, aaaaa).r;
+        aaaaa.x += gMaterial.color.g;
+        output.color.g = gTexture.Sample(gSampler, aaaaa).g;
+        aaaaa.x += gMaterial.color.b;
+        output.color.b = gTexture.Sample(gSampler, aaaaa).b;
+    }
+
     
-    return output;
-}
+        return output;
+    }
