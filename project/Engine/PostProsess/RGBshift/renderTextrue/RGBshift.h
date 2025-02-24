@@ -5,8 +5,15 @@ class RGBshift : public PostProsess
 {
 public:
 	void Update()override;
-
+	static bool isEnableFlag;
 private:
-	bool CheckBox = false;
+
+
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float addEaseT = 0.0002f;
+
+	const float kEaseTMax = 0.005f;
 };
 

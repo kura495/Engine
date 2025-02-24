@@ -40,11 +40,11 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         output.color = 0.0f;
         float32_t2 aaaaa = input.texcoord;
-        aaaaa.x += gMaterial.color.r;
+        aaaaa.x = gMaterial.color.r + input.texcoord.x;
         output.color.r = gTexture.Sample(gSampler, aaaaa).r;
-        aaaaa.x += gMaterial.color.g;
+        aaaaa.x = gMaterial.color.g + input.texcoord.x;
         output.color.g = gTexture.Sample(gSampler, aaaaa).g;
-        aaaaa.x += gMaterial.color.b;
+        aaaaa.x = gMaterial.color.b + input.texcoord.x;
         output.color.b = gTexture.Sample(gSampler, aaaaa).b;
     }
 

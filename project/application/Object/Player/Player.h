@@ -37,6 +37,7 @@ public:
 
 	//HPが0になっているとtrue
 	bool GetisDead() { return isDead; };
+	bool GetisDying() { return isDyingFlag; };
 
 	void SetColliderUse(int number, bool flag);
 	void SetColliderAttribute(int number, uint32_t collisionAttribute);
@@ -119,7 +120,7 @@ private:
 	XINPUT_STATE joyState;
 
 	//死亡
-	bool isDeadFlag = false;
+	bool isDyingFlag = false;
 
 	Vector3 move;
 };

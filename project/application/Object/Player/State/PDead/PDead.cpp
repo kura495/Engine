@@ -1,5 +1,6 @@
 #include "PDead.h"
 #include "../../Player.h"
+#include "PostProsess/RGBshift/renderTextrue/RGBshift.h"
 PDead::PDead()
 {
 	stateType = PlayerState::kDead;
@@ -17,6 +18,7 @@ PDead::PDead()
 	deadAnimation = std::make_unique<Animation>();
 	deadAnimation.reset(Animation::LoadAnimationFile("project/resources/Player", "player_dead.gltf"));
 	deadAnimation->Init();
+	RGBshift::isEnableFlag = true;
 }
 void PDead::Init(Player* p)
 {
@@ -36,6 +38,7 @@ void PDead::Update(Player* p)
 		animationTime_ = 0.0f;
 		isDeadModelDraw = false;
 		p->isDead = true;
+		RGBshift::isEnableFlag = false;
 	}
 	if (isDeadModelDraw == false) {
 		//パーティクル生成

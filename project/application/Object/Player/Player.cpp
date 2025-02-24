@@ -49,10 +49,10 @@ void Player::Update()
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
 	
-	if (isDeadFlag == false) {
+	if (isDyingFlag == false) {
 		//ダメージを受けた時、落っこちた時の処理
 		if (isDamege && HP_ >= 1 || world_.transform.translate.y <= -10.0f) {
-			isDeadFlag = true;
+			isDyingFlag = true;
 			ChangeState<PDead>();
 			isDamege = false;
 			HP_ -= 1;
