@@ -19,7 +19,7 @@ void GameClearState::Init()
 void GameClearState::Update()
 {
 	time++;
-	if (IsCanPush == false && fade.Out(kDeltaTime, 1.0f) == false) {
+	if (IsCanPush == false && fade.Out(1.0f) == false) {
 		return;
 	}
 
@@ -29,7 +29,7 @@ void GameClearState::Update()
 	}
 
 	if (IsCanPush) {
-		if (fade.In(kDeltaTime, 1.0f)) {
+		if (fade.In(1.0f)) {
 			StateNo = 1;
 			IsCanPush = false;
 		}

@@ -8,15 +8,15 @@ void Fade::Init()
 	world_.Init();
 }
 
-bool Fade::In(float addFlame, float endFlame)
+bool Fade::In(float second)
 {
 	//アルファを徐々に上げていく
-	timeCount_ += addFlame;
-	alpha_ = timeCount_;
+	timeCount_ += kDeltaTime;
+	alpha_ = (1.0f / second) * timeCount_;
 
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,alpha_ });
 
-	if (timeCount_ >= endFlame) {
+	if (timeCount_ >= second) {
 		return true;
 	}
 	else {
@@ -24,15 +24,15 @@ bool Fade::In(float addFlame, float endFlame)
 	}
 }
 
-bool Fade::Out(float addFlame, float endFlame)
+bool Fade::Out(float second)
 {
 	//アルファを徐々に下げていく
-	timeCount_ += addFlame;
-	alpha_ = 1.0f - timeCount_;
+	timeCount_ += kDeltaTime * second;
+	alpha_ = 1.0f - (1.0f / second) * timeCount_;
 
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,alpha_ });
 
-	if (timeCount_ >= endFlame) {
+	if (timeCount_ >= second) {
 		return true;
 	}
 	else {

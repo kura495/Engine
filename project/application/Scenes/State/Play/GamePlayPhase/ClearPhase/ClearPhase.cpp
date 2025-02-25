@@ -12,7 +12,7 @@ void ClearPhase::Update(GamePlayState* playState)
 	audioValue = (std::max)(audioValue - 0.001f, 0.0f);
 	Audio::Play(BGMHundle, audioValue);
 
-	if (fade.In(kDeltaTime,1.0f)) {
+	if (fade.In(1.0f)) {
 		playState->StateNo = 2;
 	}
 }

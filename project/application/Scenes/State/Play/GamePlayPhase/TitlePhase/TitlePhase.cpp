@@ -35,7 +35,7 @@ void TitlePhase::Update(GamePlayState* playState)
 {
 	audioValue = (std::min)(audioValue + 0.001f, kMaxaudioValue);
 	Audio::Play(BGMHundle, audioValue);
-	if (fade.Out(kDeltaTime, 1.0f) == false) {
+	if (fade.Out(1.0f) == false) {
 		return;
 	}
 	playState->followCamera->Update();

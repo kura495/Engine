@@ -12,7 +12,7 @@ void GameOverPhase::Update(GamePlayState* playState)
 	playState->player_->Update();
 	audioValue = (std::max)(audioValue - 0.001f, 0.0f);
 	Audio::Play(BGMHundle, audioValue);
-	if (fade.In(kDeltaTime,1.0f)) {
+	if (fade.In(1.0f)) {
 		playState->StateNo = 3;
 	}
 }
