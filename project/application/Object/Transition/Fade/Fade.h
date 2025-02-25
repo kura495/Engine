@@ -8,14 +8,23 @@ class Fade
 public:	
 	//初期化
 	void Init();
-	//フェードインをする時の初期化
-	void InInit();
-	//フェードアウトをする時の初期化
-	void OutInit();
-	//フェードイン用更新処理　終了するとtrueを返す
-	bool In();
-	//フェードアウト用更新処理　終了するとtrueを返す
-	bool Out();
+	/// <summary>
+	/// フェードイン用更新処理　カウントがendFlameに達するとtrueを返す
+	/// 0から1へ向かう
+	/// </summary>
+	/// <param name="addFlame">1フレームごとの加算量</param>
+	/// <param name="endFlame">秒数</param>
+	/// <returns></returns>
+	bool In(float addFlame,float endFlame);
+	/// <summary>
+	/// フェードアウト用更新処理　カウントがendFlameに達するとtrueを返す
+	/// 1から0へ向かう
+	/// </summary>
+	/// <param name="addFlame">1フレームごとの加算量</param>
+	/// <param name="endFlame">秒数</param>
+	/// <returns></returns>
+	bool Out(float addFlame, float endFlame);
+
 	void Draw();
 
 private:
@@ -24,5 +33,5 @@ private:
 	WorldTransform world_;
 
 	float alpha_ = 0.0f;
-
+	float timeCount_ = 0.0f;
 };

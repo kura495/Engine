@@ -15,5 +15,6 @@ private:
 	float addEaseT = 0.0005f;
 
 	const float kEaseTMax = 0.04f;
+	const float kEaseTMin = 0.0f;
 };
 

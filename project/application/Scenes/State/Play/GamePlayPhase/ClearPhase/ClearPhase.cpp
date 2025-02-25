@@ -3,7 +3,7 @@
 void ClearPhase::Init(GamePlayState* playState)
 {
 	playState;
-	fade.InInit();
+	fade.Init();
 	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3", true);
 }
 
@@ -12,7 +12,7 @@ void ClearPhase::Update(GamePlayState* playState)
 	audioValue = (std::max)(audioValue - 0.001f, 0.0f);
 	Audio::Play(BGMHundle, audioValue);
 
-	if (fade.In()) {
+	if (fade.In(kDeltaTime,1.0f)) {
 		playState->StateNo = 2;
 	}
 }

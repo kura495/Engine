@@ -13,13 +13,13 @@ void GameClearState::Init()
 	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 
 	
-	fade.OutInit();
+	fade.Init();
 }
 
 void GameClearState::Update()
 {
 	time++;
-	if (IsCanPush == false && fade.Out() == false) {
+	if (IsCanPush == false && fade.Out(kDeltaTime, 1.0f) == false) {
 		return;
 	}
 
@@ -29,7 +29,7 @@ void GameClearState::Update()
 	}
 
 	if (IsCanPush) {
-		if (fade.In()) {
+		if (fade.In(kDeltaTime, 1.0f)) {
 			StateNo = 1;
 			IsCanPush = false;
 		}

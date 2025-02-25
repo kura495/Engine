@@ -3,7 +3,7 @@
 void TitlePhase::Init(GamePlayState* playState)
 {
 	playState;
-	fade.OutInit();
+	fade.Init();
 
 	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3", true);
 	Audio::Play(BGMHundle, audioValue);
@@ -35,7 +35,7 @@ void TitlePhase::Update(GamePlayState* playState)
 {
 	audioValue = (std::min)(audioValue + 0.001f, kMaxaudioValue);
 	Audio::Play(BGMHundle, audioValue);
-	if (fade.Out() == false) {
+	if (fade.Out(kDeltaTime, 1.0f) == false) {
 		return;
 	}
 	playState->followCamera->Update();

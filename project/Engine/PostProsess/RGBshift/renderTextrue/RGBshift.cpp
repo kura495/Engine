@@ -12,12 +12,15 @@ void RGBshift::Update()
 		easeT = (std::min)(easeT + addEaseT, kEaseTMax);
 	}
 	else {
-		//materialData->w = 1.0f;
 		addEaseT = 0.001f;
 		materialData->x = 0.0f;
 		materialData->y = materialData->x - easeT;
 		materialData->z = materialData->y - easeT;
-		easeT = (std::max)(easeT - addEaseT, 0.0f);
+		easeT = (std::max)(easeT - addEaseT, kEaseTMin);
+
+		if (easeT == kEaseTMin) {
+			materialData->w = 0.0f;
+		}
 	}
 
 #ifdef _DEBUG
