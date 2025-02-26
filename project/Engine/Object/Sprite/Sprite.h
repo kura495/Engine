@@ -1,6 +1,7 @@
 ﻿#pragma once
 /*スプライトクラス*/
 #include "Common/DirectX/DirectXCommon.h"
+#include "Common/WinApp/WinApp.h"
 #include "Texture/TextureManager.h"
 #include "Transform.h"
 #include "VertexData.h"
@@ -15,6 +16,13 @@
 class Sprite
 {
 public:
+	struct TextureSize{
+		//スクリーン座標系でテクスチャのサイズを自動でウィンドウサイズにする
+		Vector2 LeftTop = { 0.0f,0.0f };
+		Vector2 LeftBottom = { 0.0f,WinApp::kClientHeight };
+		Vector2 RightTop = { WinApp::kClientWidth,0.0f };
+		Vector2 RightBottom = { WinApp::kClientWidth,WinApp::kClientHeight };
+	};
 	void Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const Vector2& RightTop, const Vector2& RightBottom);
 	void Initialize(const Vector2& anchorPoint, const Vector2& TextureSize);
 	void RendererDraw(WorldTransform& transform);

@@ -17,7 +17,9 @@ void GamePlayState::Init()
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
-
+	//コリジョンマネージャー
+	collisionManager = std::make_unique<CollisionManager>();
+	collisionManager->Init();
 
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
@@ -76,6 +78,8 @@ void GamePlayState::Draw()
 #pragma endregion
 
 	skyDome_->Draw();
+
+	collisionManager->Draw();
 
 	pauseMenu_->Draw();
 }

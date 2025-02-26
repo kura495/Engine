@@ -30,7 +30,7 @@ void GameClearState::Update()
 
 	if (IsCanPush) {
 		if (fade.In(1.0f)) {
-			StateNo = 1;
+			StateNo = GameStateNo::PLAY;
 			IsCanPush = false;
 		}
 	}

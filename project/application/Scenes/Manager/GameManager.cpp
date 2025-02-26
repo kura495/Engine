@@ -39,9 +39,6 @@ void GameManager::Initialize()
 	//objectManager
 	objectManager = ObjectManager::GetInstance();
 	objectManager->Initalize();
-	//コリジョンマネージャー
-	collisionManager = std::make_unique<CollisionManager>();
-	collisionManager->Init();
 	//グローバル変数読み込み
 	GlobalVariables::GetInstance()->LoadFiles();
 	//State
@@ -87,14 +84,12 @@ void GameManager::Gameloop(){
 			state_->Update();
 			renderTextrue->Update();
 			renderTextrue2->Update();
-			collisionManager->Update();
 			renderer_->Update();
 #pragma endregion
 #pragma region Draw
 			//renderTextureに書き込む設定に変更
 			renderTextrue->PreDraw();
 			state_->Draw();
-			collisionManager->Draw();
 			renderer_->Draw();
 			renderTextrue->PostDraw();
 			bool PostEffect = true;

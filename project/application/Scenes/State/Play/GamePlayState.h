@@ -63,17 +63,14 @@ public:
 		phase_->Init(this);
 	}
 
+	EnemyManager* GetEnemyManager() { return enemyManager.get(); }
+	CollisionManager* GetCollisionManager() { return collisionManager.get(); }
+	FollowCamera* GetFollowCamera() { return followCamera.get(); }
 	Player* GetPlayer() { return player_.get(); }
-
-	//play
-
-	std::unique_ptr<EnemyManager> enemyManager;
-
-
-
-	std::unique_ptr<FollowCamera>followCamera;
 private:
-
+	std::unique_ptr<EnemyManager> enemyManager;
+	std::unique_ptr<CollisionManager> collisionManager;
+	std::unique_ptr<FollowCamera>followCamera;
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<GamePlayStatePhase> phase_;

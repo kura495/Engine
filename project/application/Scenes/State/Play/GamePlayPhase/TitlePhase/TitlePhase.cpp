@@ -38,7 +38,7 @@ void TitlePhase::Update(GamePlayState* playState)
 	if (fade.Out(1.0f) == false) {
 		return;
 	}
-	playState->followCamera->Update();
+	playState->GetFollowCamera()->Update();
 #ifdef _DEBUG
 	ImGui::Begin("Title");
 	ImGui::InputFloat("stertCount", &stertCount);

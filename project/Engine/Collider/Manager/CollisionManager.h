@@ -27,21 +27,7 @@ public:
 	/// 保持しているコライダーすべての当たり判定の処理
 	/// </summary>
 	void CheckAllCollisions();
-	/// <summary>
-	/// OBB同士の判定でめり込んでいる分の計算
-	/// </summary>
-	/// <param name="obb1"></param>
-	/// <param name="obb2"></param>
-	/// <returns>Vector3</returns>
-	Vector3 CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2);
-	/// <summary>
-	/// OBB同士の判定でめり込んでいる分の計算(軸ひとつづつ)
-	/// </summary>
-	/// <param name="obb1"></param>
-	/// <param name="obb2"></param>
-	/// <param name="axis"></param>
-	/// <returns>float</returns>
-	float CalculateOverlap(OBBoxCollider* obb1,OBBoxCollider* obb2,Vector3& axis);
+
 private:
 	/// <summary>
 	///　コライダー登録用
@@ -67,4 +53,19 @@ private:
 	/// <param name="e3">方向ベクトル</param>
 	/// <returns>float</returns>
 	float LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3* e2, Vector3* e3 = 0);
+	/// <summary>
+	/// OBB同士の判定でめり込んでいる分の計算
+	/// </summary>
+	/// <param name="obb1"></param>
+	/// <param name="obb2"></param>
+	/// <returns>Vector3</returns>
+	Vector3 CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2);
+	/// <summary>
+	/// OBB同士の判定でめり込んでいる分の計算(軸ひとつづつ)
+	/// </summary>
+	/// <param name="obb1"></param>
+	/// <param name="obb2"></param>
+	/// <param name="axis"></param>
+	/// <returns>float</returns>
+	float CalculateOverlap(OBBoxCollider* obb1,OBBoxCollider* obb2,Vector3& axis);
 };

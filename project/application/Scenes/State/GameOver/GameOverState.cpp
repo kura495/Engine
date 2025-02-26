@@ -22,7 +22,7 @@ void GameOverState::Update()
 	}
 	if (Input::GetPadPrecede(XINPUT_GAMEPAD_A, 10)) {
 		if (IsCanPush) {
-			StateNo = 1;
+			StateNo = GameStateNo::PLAY;
 		}
 	}
 }

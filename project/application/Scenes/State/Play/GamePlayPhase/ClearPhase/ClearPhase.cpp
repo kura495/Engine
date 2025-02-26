@@ -13,7 +13,7 @@ void ClearPhase::Update(GamePlayState* playState)
 	Audio::Play(BGMHundle, audioValue);
 
 	if (fade.In(1.0f)) {
-		playState->StateNo = 2;
+		playState->StateNo = GameStateNo::CLEAR;
 	}
 }
 
