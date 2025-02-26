@@ -11,14 +11,6 @@ void PlayPhase::Update(GamePlayState* playState)
 	playState->GetCollisionManager()->Update();
 	playState->GetEnemyManager()->Update();
 	playState->GetFollowCamera()->Update();
-#ifdef _DEBUG
-	ImGui::Begin("Input Vib Test");
-	ImGui::DragFloat2("Value",&moterValue.x,1.0f,0.0f,VIBRATION_MAX);
-	Input::VibrateController((int)moterValue.x, (int)moterValue.y);
-	ImGui::End();
-#endif // DEBUG
-
-
 
 	if (playState->GetEnemyManager()->GetisClear()) {
 		playState->ChangePhase<ClearPhase>();

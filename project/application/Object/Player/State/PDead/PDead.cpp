@@ -30,10 +30,10 @@ void PDead::Init(Player* p)
 	//アニメーション設定
 	deadAnimation->AnimeInit(*p->Getmodels()[Player::PlayerModel::MainBody], true);
 	if (p->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
-		Input::VibrateController(0, VIBRATION_MAX);
+		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN);
 	}
 	else {
-		Input::VibrateController(1024, 1024);
+		//Input::VibrateController(1024, 1024);
 	}
 
 
@@ -49,7 +49,7 @@ void PDead::Update(Player* p)
 }
 void PDead::Draw(Player* p)
 {
-	if (isModelDraw == true) {
+	if (isModelDraw) {
 		p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), deadAnimation->GetSkinCluster());
 	}
 
@@ -83,6 +83,7 @@ void PDead::SlamDeadUpdate(Player* p)
 	//死亡アニメーション更新
 	animationTime_ += kDeltaTime;
 	if (animationTime_ >= deadAnimation->duration) {
+		Input::VibrateController(VIBRATION_MIN, VIBRATION_MIN);
 		p->isDead = true;
 		RGBshift::isEnableFlag = false;
 	}
