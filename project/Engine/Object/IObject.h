@@ -23,7 +23,7 @@ public:
 #pragma region
 	uint32_t GetNumber()const { return objectNumber_; };
 
-	WorldTransform& GetWorld() { return world_; };
+	const WorldTransform& GetWorld() { return world_; };
 
 	std::vector<Model*> Getmodels() { return models_; }
 #pragma endregion Getter

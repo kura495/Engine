@@ -10,9 +10,6 @@ void GamePlayState::Init()
 	objectManager = ObjectManager::GetInstance();
 
 	objectManager->LordBlenderScene("project/resources/Stage");
-
-	collisionManager = std::make_unique<CollisionManager>();
-	collisionManager->Init();
 	//
 	//3Dオブジェクト生成
 	playerModel_.push_back(Model::CreateModelFromObj("project/resources/Player", "player.gltf"));
@@ -79,8 +76,6 @@ void GamePlayState::Draw()
 #pragma endregion
 
 	skyDome_->Draw();
-
-	collisionManager->Draw();
 
 	pauseMenu_->Draw();
 }

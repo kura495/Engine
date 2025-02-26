@@ -7,8 +7,10 @@
 class Fade
 {
 public:	
-	//初期化
-	void Init();
+	//フェードイン用初期化
+	void InInit();
+	//フェードイン用初期化
+	void OutInit();
 	/// <summary>
 	/// フェードイン用更新処理　カウントが指定した秒数に達するとtrueを返す
 	/// </summary>
@@ -25,6 +27,8 @@ public:
 	void Draw();
 
 private:
+	//初期化
+	void Init();
 
 	std::unique_ptr<Sprite> sprite_;
 	WorldTransform world_;

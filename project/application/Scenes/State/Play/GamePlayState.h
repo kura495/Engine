@@ -63,15 +63,18 @@ public:
 		phase_->Init(this);
 	}
 
+	Player* GetPlayer() { return player_.get(); }
 
 	//play
-	std::unique_ptr<CollisionManager> collisionManager;
+
 	std::unique_ptr<EnemyManager> enemyManager;
 
-	std::unique_ptr<Player>player_;
+
 
 	std::unique_ptr<FollowCamera>followCamera;
 private:
+
+	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<GamePlayStatePhase> phase_;
 	std::vector<Model*> playerModel_;

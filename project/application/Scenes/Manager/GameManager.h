@@ -48,6 +48,8 @@ private:
 
 	ObjectManager* objectManager = nullptr;
 
+	std::unique_ptr<CollisionManager> collisionManager;
+
 	MSG msg{};
 	//State
 	std::unique_ptr<IGameState>state_;

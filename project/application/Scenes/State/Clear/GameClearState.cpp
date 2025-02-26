@@ -13,7 +13,7 @@ void GameClearState::Init()
 	texture->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 
 	
-	fade.Init();
+	fade.InInit();
 }
 
 void GameClearState::Update()
