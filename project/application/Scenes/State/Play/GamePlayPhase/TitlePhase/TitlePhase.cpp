@@ -8,11 +8,12 @@ void TitlePhase::Init(GamePlayState* playState)
 	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3", true);
 	Audio::Play(BGMHundle, audioValue);
 
-	woodenBox.push_back(Model::CreateModelFromObj("project/resources/Box", "Box.gltf"));
+	woodBox = std::make_unique<Model>();
+	woodBox.reset(Model::CreateModelFromObj("project/resources/Box", "Box.gltf"));
 
-	woodenBoxWorld_.Init();
-	woodenBoxWorld_.transform.translate.z = -3.0f;
-	woodenBoxWorld_.Update();
+	woodBoxWorld_.Init();
+	woodBoxWorld_.transform.translate.z = -3.0f;
+	woodBoxWorld_.Update();
 
 	tutorialModel.push_back(Model::CreateModelFromObj("project/resources/Tutorial", "Tutorial.obj"));
 	tutorialWorld_.Init();
@@ -20,10 +21,10 @@ void TitlePhase::Init(GamePlayState* playState)
 	tutorialWorld_.transform.translate.x = -2.0f;
 	tutorialWorld_.Update();
 	stertCount = 0.0f;
-	woodenBoxWorld_.transform.scale.x = stertCount + 1.0f;
-	woodenBoxWorld_.transform.scale.y = stertCount + 1.0f;
-	woodenBoxWorld_.transform.scale.z = stertCount + 1.0f;
-	woodenBoxWorld_.Update();
+	woodBoxWorld_.transform.scale.x = stertCount + 1.0f;
+	woodBoxWorld_.transform.scale.y = stertCount + 1.0f;
+	woodBoxWorld_.transform.scale.z = stertCount + 1.0f;
+	woodBoxWorld_.Update();
 
 	titleSprite = std::make_unique<Sprite>();
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
@@ -49,12 +50,10 @@ void TitlePhase::Update(GamePlayState* playState)
 		stertCount += 0.3f;
 
 	}
-	woodenBoxWorld_.Update();
+	woodBoxWorld_.Update();
 	stertCount = (std::max)(stertCount - subStertCount, 0.0f);
 
-	woodenBoxWorld_.transform.scale.x = stertCount + 1.0f;
-	woodenBoxWorld_.transform.scale.y = stertCount + 1.0f;
-	woodenBoxWorld_.transform.scale.z = stertCount + 1.0f;
+	woodBoxWorld_.transform.scale = stertCount + 1.0f;
 
 	if (stertCount >= 0.7f) {
 		playState->ChangePhase<PlayPhase>();
@@ -66,7 +65,7 @@ void TitlePhase::Draw(GamePlayState* playState)
 	playState;
 	titleSprite->RendererDraw(title);
 
-	woodenBox[0]->RendererDraw(woodenBoxWorld_);
+	woodBox->RendererDraw(woodBoxWorld_);
 	tutorialModel[0]->RendererDraw(tutorialWorld_);
 
 	fade.Draw();

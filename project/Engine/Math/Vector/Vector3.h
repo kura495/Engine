@@ -70,6 +70,10 @@ namespace Math {
 			*this = *this / input;
 			return *this;
 		}
+		Vector3 operator=(const float& input) {
+			return Vector3(this->x = input, this->y = input, this->z = input);
+		}
+
 #pragma endregion 
 	public:
 		/// <summary>

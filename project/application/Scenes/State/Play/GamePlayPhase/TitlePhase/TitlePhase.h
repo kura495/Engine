@@ -19,8 +19,8 @@ private:
 	Fade fade;
 
 	//木箱のモデル
-	std::vector<Model*> woodenBox;
-	WorldTransform woodenBoxWorld_;
+	std::unique_ptr<Model> woodBox;
+	WorldTransform woodBoxWorld_;
 	//チュートリアル的なボタン表示
 	std::vector<Model*> tutorialModel;
 	WorldTransform tutorialWorld_;
