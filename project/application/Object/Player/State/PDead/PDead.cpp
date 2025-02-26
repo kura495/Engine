@@ -35,8 +35,6 @@ void PDead::Init(Player* p)
 	else {
 		//Input::VibrateController(1024, 1024);
 	}
-
-
 }
 void PDead::Update(Player* p)
 {
