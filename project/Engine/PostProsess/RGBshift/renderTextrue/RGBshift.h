@@ -7,14 +7,14 @@ public:
 	void Update()override;
 	static bool isEnableFlag;
 private:
-
+	void Reset();
 
 	//現在のTの値
-	float easeT = 0.0f;
+	float easeT = 0.04f;
 	//raseTに毎フレーム加算する値
 	float addEaseT = 0.0005f;
 
-	const float kEaseTMax = 0.04f;
-	const float kEaseTMin = 0.0f;
+	const float kEaseTMax = 0.08f;
+	const float kEaseTMin = 0.005f;
 };
 

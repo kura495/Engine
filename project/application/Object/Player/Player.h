@@ -31,6 +31,13 @@ public:
 		MainBody,//プレイヤーのメインモデル
 		PlayerModelEND,
 	};
+	enum CauseOfDeath {
+		Normal,//通常の死
+		Slam,//叩きつけられた
+		Ball,//ボールに衝突
+		Slash,//斬られる
+		END,
+	};
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
@@ -41,7 +48,7 @@ public:
 
 	void SetColliderUse(int number, bool flag);
 	void SetColliderAttribute(int number, uint32_t collisionAttribute);
-
+	uint8_t GetCauseOfDeath()const { return causeOfDeath_; }
 	PlayerState GetState() const { return state_->GetStateType(); };
 	/// <summary>
 	/// ステートを切り替える
@@ -53,10 +60,8 @@ public:
 		//ステートが変わって後の処理が出来なくなってエラーが出る
 		state_->Init(this);
 	}
-	//kRoot
 	//スティック入力で移動させる関数
 	bool Move();
-	//kDead
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
 
@@ -92,7 +97,7 @@ private:
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
 	//HP
-	uint32_t HP_ = 1;
+	uint8_t HP_ = 1;
 
 #pragma endregion Parameter
 
@@ -121,6 +126,8 @@ private:
 
 	//死亡
 	bool isDyingFlag = false;
+	//死因
+	uint8_t causeOfDeath_;
 
 	Vector3 move;
 };

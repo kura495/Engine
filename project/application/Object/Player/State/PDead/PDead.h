@@ -10,8 +10,10 @@ public:
 	void Draw(Player* p)override;
 	std::string ShowState()override;
 private:
-	//死んだときにモデルを描画するか
-	bool isDeadModelDraw = true;
+	void NormalDeadUpdate(Player* p);
+	void SlamDeadUpdate(Player* p);
+	//モデルを描画するか
+	bool isModelDraw = true;
 	//パーティクル関連
 	std::unique_ptr<ParticleSystem> deadParticle_;
 	void UpdatedeadParticle(Particle& particle);

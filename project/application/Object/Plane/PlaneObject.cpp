@@ -45,7 +45,7 @@ void PlaneObject::ImGui()
 
 void PlaneObject::OnCollision(const ICollider& Collider)
 {
-	if (Collider.GetcollitionAttribute() == (Collider::Tag::EnemyAttackFront | Collider::Tag::EnemyAttack)) {
+	if (Collider.GetcollitionAttribute() == (Collider::Tag::EnemyAttackFront | Collider::Tag::EnemyAttackSlam)) {
 		isCrash = true;
 		return;
 	}

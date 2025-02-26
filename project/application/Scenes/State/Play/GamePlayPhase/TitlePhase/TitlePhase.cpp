@@ -20,11 +20,6 @@ void TitlePhase::Init(GamePlayState* playState)
 	tutorialWorld_.transform.translate.z = -3.0f;
 	tutorialWorld_.transform.translate.x = -2.0f;
 	tutorialWorld_.Update();
-	stertCount = 0.0f;
-	woodBoxWorld_.transform.scale.x = stertCount + 1.0f;
-	woodBoxWorld_.transform.scale.y = stertCount + 1.0f;
-	woodBoxWorld_.transform.scale.z = stertCount + 1.0f;
-	woodBoxWorld_.Update();
 
 	titleSprite = std::make_unique<Sprite>();
 	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });

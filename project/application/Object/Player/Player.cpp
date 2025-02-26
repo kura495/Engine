@@ -16,7 +16,6 @@ void Player::Init(std::vector<Model*> models)
 	//コライダー設定
 	ColliderInit();
 	AttackColliderInit();
-
 	//パーティクル設定
 #pragma region
 
@@ -106,11 +105,17 @@ void Player::ColliderInit()
 }
 void Player::OnCollision(const ICollider& ICollider)
 {
-	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyAttack) {
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyAttackSlam) {
 		isDamege = true;
+		causeOfDeath_ = CauseOfDeath::Slam;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		isDamege = true;
+		causeOfDeath_ = CauseOfDeath::Normal;
+	}
+	if (ICollider.GetcollitionAttribute() == Collider::Tag::EnemyAttack) {
+		isDamege = true;
+		causeOfDeath_ = CauseOfDeath::Normal;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
 		world_.transform.translate -= move;

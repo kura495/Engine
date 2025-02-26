@@ -18,7 +18,6 @@ public:
 		name = "Plane";
 	}
 
-	OBBoxCollider collider;
 
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
@@ -31,6 +30,7 @@ public:
 private:
 	void ImGui();
 
+	OBBoxCollider collider;
 	void OnCollision(const ICollider& Collider);
 
 	bool isCrash = false;

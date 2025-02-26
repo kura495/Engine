@@ -5,11 +5,10 @@ void EAttackSlam::Init(Boss* boss)
 	addEaseT = 0.02f;
 	boss->SetColliderUse(Boss::ColliderType::Arm,true);
 	boss->SetColliderUse(Boss::ColliderType::Hund,true);
-	IsAttackFlag = true;
 	easeT = 0.0f;
 	//当たり判定を攻撃に変更
-	boss->SetColliderAttribute(Boss::ColliderType::Arm,Collider::Tag::EnemyAttack);
-	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::EnemyAttack | Collider::Tag::EnemyAttackFront);
+	boss->SetColliderAttribute(Boss::ColliderType::Arm,Collider::Tag::EnemyAttackSlam);
+	boss->SetColliderAttribute(Boss::ColliderType::Hund,Collider::Tag::EnemyAttackFront | Collider::Tag::EnemyAttackSlam);
 
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
 }
@@ -33,17 +32,12 @@ void EAttackSlam::Update(Boss* boss)
 			boss->GetWorld().transform.translate.y = 0.5f;
 			easeT = 0.0f;
 			IsAttackFlag = false;
-		}
-	}
-	else {
-		//2回目移行かつHPが低くなった時に処理を実行
-		if (isSlam2ndFlag && boss->GetHP() <= 3) {
-			isSlam2ndFlag = false;
-		}
-		else {
 			//初期位置に戻す
 			boss->ChangeState<EReturnPosition>();
 		}
+	}
+	else if (FollowPlayer(boss)) {
+		IsAttackFlag = true;
 	}
 }
 void EAttackSlam::Draw(Boss* boss)
@@ -61,4 +55,19 @@ void EAttackSlam::OnCollisionAttack(Boss* boss,const ICollider& collider)
 std::string EAttackSlam::ShowState()
 {
 	return "EAttackSlam";
+}
+bool EAttackSlam::FollowPlayer(Boss* boss)
+{
+	Vector3 temp = boss->GetPlayer()->GetWorld().transform.translate - boss->GetWorld().transform.translate;
+	//モデルの中心から手のひらへ
+	temp.z += 5.0f;
+	temp.y = 0.0f;
+	float playerToEnemyLngth = temp.Length();
+	temp = temp.Normalize();
+	boss->GetWorld().transform.translate += temp * kFollowPlayerSpeed;
+	//一定の距離になったら処理を終わる
+	if (playerToEnemyLngth <= kConstantDistance) {
+		return true;
+	}
+	return false;
 }

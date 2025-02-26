@@ -31,33 +31,53 @@ void PDead::Init(Player* p)
 }
 void PDead::Update(Player* p)
 {
+	if (p->GetCauseOfDeath() == Player::CauseOfDeath::Normal) {
+		NormalDeadUpdate(p);
+	}
+	if (p->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
+		SlamDeadUpdate(p);
+	}
+}
+void PDead::Draw(Player* p)
+{
+	if (isModelDraw == true) {
+		p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), deadAnimation->GetSkinCluster());
+	}
+
+	deadParticle_->RendererDraw();
+}
+std::string PDead::ShowState()
+{
+	return "PDead";
+}
+void PDead::NormalDeadUpdate(Player* p)
+{
 	//死亡アニメーション更新
 	animationTime_ += kDeltaTime;
 	deadAnimation->PlayAnimation(false);
 	if (animationTime_ >= deadAnimation->duration) {
 		animationTime_ = 0.0f;
-		isDeadModelDraw = false;
+		isModelDraw = false;
 		p->isDead = true;
 		RGBshift::isEnableFlag = false;
 	}
-	if (isDeadModelDraw == false) {
+	if (isModelDraw == false) {
 		//パーティクル生成
 		ParticleSystem::ParticleSpawn(*deadParticle_, deadParticleEmitter);
 		deadParticle_->Update();
 	}
 }
-void PDead::Draw(Player* p)
+void PDead::SlamDeadUpdate(Player* p)
 {
-	if (isDeadModelDraw) {
-		p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), deadAnimation->GetSkinCluster());
+	//モデルをペシャンコにする
+	p->GetWorld().transform.scale.y = 0.3f;
+	//死亡アニメーション更新
+	animationTime_ += kDeltaTime;
+	if (animationTime_ >= deadAnimation->duration) {
+		p->isDead = true;
+		RGBshift::isEnableFlag = false;
 	}
-	else {
-		deadParticle_->RendererDraw();
-	}
-}
-std::string PDead::ShowState()
-{
-	return "PDead";
+
 }
 void PDead::UpdatedeadParticle(Particle& particle)
 {
