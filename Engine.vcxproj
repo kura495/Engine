@@ -62,15 +62,23 @@
     <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/project/;$(SolutionDir)/project/Engine;$(SolutionDir)/project/Engine/Audio;$(SolutionDir)/project/Engine/Input;$(SolutionDir)/project/Engine/Math;$(SolutionDir)/project/Engine/Utility;$(SolutionDir)/project/Engine/Model_Struct;$(SolutionDir)/project/Engine/Object;$(SolutionDir)/project/Engine/Animation;$(SolutionDir)/project/application/;$(SolutionDir)/project/application/Object;$(SolutionDir)/project/application/Scenes;$(SolutionDir)/project/externals;$(SolutionDir)/project/application/Object/Enemy;$(SolutionDir)/project/application/Object/Enemy/Boss</ExternalIncludePath>
     <IncludePath>$(ProjectDir)..\externals\nlohmann;$(SolutionDir)/project/externals;$(IncludePath)</IncludePath>
     <LibraryPath>C:\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(SolutionName)</TargetName>
+    <OutDir>$(SolutionDir)/Generated/exe/$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)/Generated/obj/$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann;$(SolutionDir)/project/externals;$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/project/;$(SolutionDir)/project/Engine;$(SolutionDir)/project/Engine/Audio;$(SolutionDir)/project/Engine/Input;$(SolutionDir)/project/Engine/Math;$(SolutionDir)/project/Engine/Utility;$(SolutionDir)/project/Engine/Model_Struct;$(SolutionDir)/project/Engine/Object;$(SolutionDir)/project/Engine/Animation;$(SolutionDir)/project/application/;$(SolutionDir)/project/application/Object;$(SolutionDir)/project/application/Scenes;$(SolutionDir)/project/externals;$(SolutionDir)/project/application/Object/Enemy;$(SolutionDir)/project/application/Object/Enemy/Boss</ExternalIncludePath>
-    <TargetName>$(ProjectName)</TargetName>
+    <TargetName>$(SolutionName)</TargetName>
+    <OutDir>$(SolutionDir)/Generated/exe/$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)/Generated/obj/$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">
     <IncludePath>$(ProjectDir)..\externals\nlohmann;$(SolutionDir)/project/externals;$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(SolutionDir)/resources/hlsl;$(SolutionDir)/;$(SolutionDir)/project/;$(SolutionDir)/project/Engine;$(SolutionDir)/project/Engine/Audio;$(SolutionDir)/project/Engine/Input;$(SolutionDir)/project/Engine/Math;$(SolutionDir)/project/Engine/Utility;$(SolutionDir)/project/Engine/Model_Struct;$(SolutionDir)/project/Engine/Object;$(SolutionDir)/project/Engine/Animation;$(SolutionDir)/project/application/;$(SolutionDir)/project/application/Object;$(SolutionDir)/project/application/Scenes;$(SolutionDir)/project/externals;$(SolutionDir)/project/application/Object/Enemy;$(SolutionDir)/project/application/Object/Enemy/Boss</ExternalIncludePath>
+    <TargetName>$(SolutionName)</TargetName>
+    <OutDir>$(SolutionDir)/Generated/exe/$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)/Generated/obj/$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgTriplet>x64-windows</VcpkgTriplet>
