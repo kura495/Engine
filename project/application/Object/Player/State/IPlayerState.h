@@ -4,6 +4,7 @@
 #include "Animation/Animation.h"
 #include "Utility/GlobalTime.h"
 #include "ParticleSystem/ParticleSystem.h"
+#include "Input.h"
 class Player;
 class ICollider;
 enum class PlayerState {

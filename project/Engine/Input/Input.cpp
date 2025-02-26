@@ -7,6 +7,7 @@ const int Input::log_save_frame = 120;
 std::array<int, 16> Input::joy_frame;
 XINPUT_STATE Input::joyState;
 XINPUT_STATE Input::joyStatePre;
+XINPUT_VIBRATION Input::vibration_;
 
 #define XINPUT_GAMEPAD_LEFT_TRIGER    0x0400
 #define XINPUT_GAMEPAD_RIGHT_TRIGER   0x0800
@@ -117,6 +118,14 @@ bool Input::IsTriggerPad(uint32_t buttonNumber)
 	return false;
 }
 
+void Input::VibrateController(int leftMotor, int rightMotor)
+{
+	// Set the vibration levels
+	vibration_.wLeftMotorSpeed = WORD(leftMotor);
+	vibration_.wRightMotorSpeed = WORD(rightMotor);
+
+}
+
 bool Input::pushMouse(uint32_t Mousebutton)
 {
 	if (mouse_.rgbButtons[Mousebutton] != 0) {
@@ -192,6 +201,8 @@ void Input::UpdateJoyState()
 		remove_if(joy_stack.begin(), joy_stack.end(),
 			[](ListData data) { return data.frame >= save_frame; }),
 		joy_stack.end());
+	//バイブレーションの情報
+	XInputSetState(0, &vibration_);
 }
 
 bool Input::GetPadPrecede(uint32_t buttonNumber, int delayTime)

@@ -19,6 +19,7 @@ PDead::PDead()
 	deadAnimation.reset(Animation::LoadAnimationFile("project/resources/Player", "player_dead.gltf"));
 	deadAnimation->Init();
 	RGBshift::isEnableFlag = true;
+
 }
 void PDead::Init(Player* p)
 {
@@ -28,6 +29,14 @@ void PDead::Init(Player* p)
 	animationTime_ = kDeltaTime;
 	//アニメーション設定
 	deadAnimation->AnimeInit(*p->Getmodels()[Player::PlayerModel::MainBody], true);
+	if (p->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
+		Input::VibrateController(0, VIBRATION_MAX);
+	}
+	else {
+		Input::VibrateController(1024, 1024);
+	}
+
+
 }
 void PDead::Update(Player* p)
 {

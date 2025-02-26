@@ -2,6 +2,7 @@
 #include "Object/Model/Model.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Object/Transition/Fade/Fade.h"
+#include "Input.h"
 class GamePlayState;
 class GamePlayStatePhase {
 public:

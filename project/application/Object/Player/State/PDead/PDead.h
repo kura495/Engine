@@ -4,6 +4,7 @@ class PDead : public IPlayerState
 {
 public:
 	PDead();
+	~PDead() { Input::VibrateController(0, 0); };
 
 	void Init(Player* p)override;
 	void Update(Player* p)override;

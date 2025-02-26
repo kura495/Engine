@@ -11,6 +11,9 @@
 #include <list>
 #include "Matrix/MatrixCalc.h"
 
+#define VIBRATION_MIN	0
+#define VIBRATION_MAX	65535
+
 #define MOUSE_BOTTON0	0
 #define MOUSE_BOTTON1	1
 #define MOUSE_BOTTON2	2
@@ -77,6 +80,12 @@ public:
 	/// <returns>bool</returns>
 	static bool IsTriggerPad(uint32_t buttonNumber);
 	/// <summary>
+	/// コントローラーのバイブレーション
+	/// </summary>
+	/// <param name="leftMotor">低周波数ランブルモータ(大きい振動)</param>
+	/// <param name="rightMotor">高周波ランブルモータ(細かい振動)</param>
+	static void VibrateController(int leftMotor, int rightMotor);
+	/// <summary>
 	/// 未完成のため使用不可
 	/// </summary>
 	/// <param name="Mousebutton">MOUSE_BOTTON</param>
@@ -105,7 +114,7 @@ public:
 
 private:
 	Input() = default;
-	~Input() = default;
+	~Input(){ VibrateController(VIBRATION_MIN, VIBRATION_MIN); };
 	Input(const Input& obj) = delete;
 	Input& operator=(const Input& obj) = delete;
 
@@ -149,6 +158,7 @@ private:
 	static std::list<ListData> joy_stacklog;
 	static const int save_frame;
 	static const int log_save_frame;
-
+	//バイブレーション
+	static XINPUT_VIBRATION vibration_;
 };
 
