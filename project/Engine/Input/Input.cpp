@@ -7,7 +7,7 @@ const int Input::log_save_frame = 120;
 std::array<int, 16> Input::joy_frame;
 XINPUT_STATE Input::joyState;
 XINPUT_STATE Input::joyStatePre;
-XINPUT_VIBRATION Input::vibration_;
+VibData Input::vibData_;
 
 #define XINPUT_GAMEPAD_LEFT_TRIGER    0x0400
 #define XINPUT_GAMEPAD_RIGHT_TRIGER   0x0800
@@ -118,12 +118,12 @@ bool Input::IsTriggerPad(uint32_t buttonNumber)
 	return false;
 }
 
-void Input::VibrateController(int leftMotor, int rightMotor)
+void Input::VibrateController(int leftMotor, int rightMotor,float second)
 {
-	// Set the vibration levels
-	vibration_.wLeftMotorSpeed = WORD(leftMotor);
-	vibration_.wRightMotorSpeed = WORD(rightMotor);
-
+	vibData_.leftMotor = leftMotor;
+	vibData_.rightMotor = rightMotor;
+	vibData_.second = second;
+	vibData_.countFrame = 0.0f;
 }
 
 bool Input::pushMouse(uint32_t Mousebutton)
@@ -175,34 +175,10 @@ bool Input::GetJoystickState()
 
 void Input::UpdateJoyState()
 {
-	// スタックされた入力情報の、経過フレームを計算
-	for (auto& data : joy_stack) {
-		data.frame++;
-	}
-	//2のi乗して押されていたらスタック
-	for (int i = 0; i < 16; i++) {
-		if (joy_frame[i] == -1) joy_frame[i]++;
-		int buttonNum = (int)std::pow(2,i);
-		if (joyState.Gamepad.wButtons & buttonNum) {
-			joy_frame[i]++;
-			// 押された瞬間に入力情報をスタック
-			if (joy_frame[i] == 1) {
-				joy_stack.emplace_back(ListData(buttonNum));
-				joy_stacklog.emplace_back(ListData(buttonNum));
-			}
-		}
-		else if (joy_frame[i] > 0) {
-			joy_frame[i] = -1;
-		}
-	}
-	// 一定フレーム経った入力情報を削除
-	// data.frameがsave_frameを超えたら削除
-	joy_stack.erase(
-		remove_if(joy_stack.begin(), joy_stack.end(),
-			[](ListData data) { return data.frame >= save_frame; }),
-		joy_stack.end());
-	//バイブレーションの情報
-	XInputSetState(0, &vibration_);
+	//ボタン入力情報の更新
+	UpdateButtan();
+	//バイブレーション情報の更新
+	UpdateVibration();
 }
 
 bool Input::GetPadPrecede(uint32_t buttonNumber, int delayTime)
@@ -231,6 +207,23 @@ float Input::ScrollMouse()
 	return (float)mouse_.lZ;
 }
 
+void Input::UpdateVibration()
+{
+	if (vibData_.countFrame > vibData_.second) {
+		vibData_.leftMotor = 0;
+		vibData_.rightMotor = 0;
+	}
+	else {
+		//情報の、経過フレームを計算
+		vibData_.countFrame += kDeltaTime;
+	}
+
+	vibration_.wLeftMotorSpeed = WORD(vibData_.leftMotor);
+	vibration_.wRightMotorSpeed = WORD(vibData_.rightMotor);
+	//バイブレーションの情報
+	XInputSetState(0, &vibration_);
+}
+
 void Input::ImGui()
 {
 	ImGui::Begin("Input");
@@ -246,6 +239,36 @@ void Input::ImGui()
 		joy_stacklog.end());
 
 	ImGui::End();
+}
+
+void Input::UpdateButtan()
+{
+	// スタックされた入力情報の、経過フレームを計算
+	for (auto& data : joy_stack) {
+		data.frame++;
+	}
+	//2のi乗して押されていたらスタック
+	for (int i = 0; i < 16; i++) {
+		if (joy_frame[i] == -1) joy_frame[i]++;
+		int buttonNum = (int)std::pow(2, i);
+		if (joyState.Gamepad.wButtons & buttonNum) {
+			joy_frame[i]++;
+			// 押された瞬間に入力情報をスタック
+			if (joy_frame[i] == 1) {
+				joy_stack.emplace_back(ListData(buttonNum));
+				joy_stacklog.emplace_back(ListData(buttonNum));
+			}
+		}
+		else if (joy_frame[i] > 0) {
+			joy_frame[i] = -1;
+		}
+	}
+	// 一定フレーム経った入力情報を削除
+	// data.frameがsave_frameを超えたら削除
+	joy_stack.erase(
+		remove_if(joy_stack.begin(), joy_stack.end(),
+			[](ListData data) { return data.frame >= save_frame; }),
+		joy_stack.end());
 }
 
 std::string Input::PadButtonList(uint32_t Number)

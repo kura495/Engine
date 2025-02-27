@@ -108,7 +108,7 @@ public:
 #pragma endregion オーディオコントロール
 private:
 	Audio() = default;
-	~Audio() = default;
+	~Audio() { Release(); };
 	Audio(const Audio& obj) = delete;
 	Audio& operator=(const Audio& obj) = delete;
 

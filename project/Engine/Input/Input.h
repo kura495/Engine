@@ -10,6 +10,7 @@
 #include <XInput.h>
 #include <list>
 #include "Matrix/MatrixCalc.h"
+#include "Utility/GlobalTime.h"
 
 #define VIBRATION_MIN	0
 #define VIBRATION_MAX	65535
@@ -30,6 +31,13 @@ struct ListData {
 		this->code = code;
 		frame = 0;
 	}
+};
+struct VibData {
+	int leftMotor;
+	int rightMotor;
+	float second = 0;
+	float countFrame = 0;
+	VibData() {};
 };
 
 struct MousePosition {
@@ -84,7 +92,8 @@ public:
 	/// </summary>
 	/// <param name="leftMotor">低周波数ランブルモータ(大きい振動)</param>
 	/// <param name="rightMotor">高周波ランブルモータ(細かい振動)</param>
-	static void VibrateController(int leftMotor, int rightMotor);
+	/// <param name="second">振動させる秒数</param>
+	static void VibrateController(int leftMotor, int rightMotor, float second);
 	/// <summary>
 	/// 未完成のため使用不可
 	/// </summary>
@@ -96,14 +105,11 @@ public:
 	/// ゲームパッドを取得
 	/// </summary>
 	bool GetJoystickState(XINPUT_STATE& joy);
-	bool GetJoystickState();
 
 	MousePosition GetMousePosition() {
 		return m_Position;
 	}
 
-	static void UpdateJoyState();
-	
 	/// <summary>
 	/// ゲームパッドの先行入力に対応した
 	/// </summary>
@@ -114,11 +120,9 @@ public:
 
 private:
 	Input() = default;
-	~Input(){ VibrateController(VIBRATION_MIN, VIBRATION_MIN); };
+	~Input() { VibrateController(VIBRATION_MIN, VIBRATION_MIN, 0.0f); };
 	Input(const Input& obj) = delete;
 	Input& operator=(const Input& obj) = delete;
-
-
 	/// <summary>
 	/// マウスの位置をVector2にする
 	/// </summary>
@@ -126,10 +130,24 @@ private:
 	Vector2 PositionMouse();
 
 	float ScrollMouse();
-
+	/// <summary>
+	/// ゲームパッドの情報を取得
+	/// </summary>
+	bool GetJoystickState();
+	/// <summary>
+	/// コントローラーに関する更新をまとめたもの
+	/// </summary>
+	void UpdateJoyState();
+	/// <summary>
+	/// コントローラーのボタン入力に関する更新
+	/// </summary>
+	void UpdateButtan();
+	/// <summary>
+	/// コントローラーのバイブレーションに関する更新
+	/// </summary>
+	void UpdateVibration();
 	//ImGui
 	void ImGui();
-
 	/// <summary>
 	/// パッドで押されているボタンを識別して、押されているボタン対応の文字列を返す
 	/// </summary>
@@ -159,6 +177,7 @@ private:
 	static const int save_frame;
 	static const int log_save_frame;
 	//バイブレーション
-	static XINPUT_VIBRATION vibration_;
+	XINPUT_VIBRATION vibration_;
+	static VibData vibData_;
 };
 
