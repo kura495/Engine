@@ -44,6 +44,10 @@ void Boss::Draw()
 {
 	state_->Draw(this);
 }
+void Boss::ReStert()
+{
+	ChangeState<EReStert>();
+}
 void Boss::SetColliderUse(int number, bool flag)
 {
 	colliders_[number].IsUsing = flag;

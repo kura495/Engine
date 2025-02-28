@@ -11,7 +11,6 @@ void EnemyManager::Init(Player* player)
 	bossEnemy_->Init(enemyModel_);
 	bossEnemy_->SetPlayer(player_);
 }
-
 void EnemyManager::Update()
 {
 	ClearJudge();
@@ -36,7 +35,6 @@ void EnemyManager::Update()
 	ImGui();
 #endif
 }
-
 void EnemyManager::Draw()
 {
 	bossEnemy_->Draw();
@@ -45,7 +43,9 @@ void EnemyManager::Draw()
 		enemy->Draw();
 	}
 }
-
+void EnemyManager::ReStert(){
+	bossEnemy_->ReStert();
+}
 void EnemyManager::ImGui()
 {
 	bossEnemy_->ImGui();
@@ -53,7 +53,6 @@ void EnemyManager::ImGui()
 		enemy->ImGui();
 	}
 }
-
 void EnemyManager::ClearJudge()
 {
 	if (bossEnemy_->GetIsAlive() == false) {

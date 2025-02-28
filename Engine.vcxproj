@@ -179,6 +179,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\IBossState.cpp" />
@@ -293,8 +294,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.cpp" />
     <ClCompile Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.cpp" />
     <ClCompile Include="project\Engine\Utility\random\random.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.h" />
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />
@@ -510,6 +513,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.h" />
     <ClInclude Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.h" />
     <ClInclude Include="project\Engine\Utility\random\random.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project\externals\assimp\include\assimp\.editorconfig" />

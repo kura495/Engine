@@ -43,6 +43,7 @@ public:
 	void Draw()override;
 
 	//HPが0になっているとtrue
+	int GetHP() { return HP_; }
 	bool GetisDead() { return isDead; };
 	bool GetisDying() { return isDyingFlag; };
 
@@ -65,6 +66,7 @@ public:
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
 
+	void ReStert();
 private:
 	void ImGui();
 
@@ -97,7 +99,7 @@ private:
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
 	//HP
-	uint8_t HP_ = 1;
+	uint8_t HP_ = 3;
 
 #pragma endregion Parameter
 

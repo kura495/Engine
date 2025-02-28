@@ -24,6 +24,7 @@ enum class BossState {
 	Spawn,//出現時
 	Dead,//死亡時
 	Down,//ダウン時
+	ReStert,//再スタート
 	End,
 };
 class IBossState

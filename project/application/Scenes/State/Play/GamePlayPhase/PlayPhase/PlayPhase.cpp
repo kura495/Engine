@@ -2,7 +2,7 @@
 #include "State/Play/GamePlayState.h"
 void PlayPhase::Init(GamePlayState* playState)
 {
-	playState->GetPlayer()->ChangeState<PJump>();
+	playState;
 }
 
 void PlayPhase::Update(GamePlayState* playState)

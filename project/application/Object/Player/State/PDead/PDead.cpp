@@ -48,7 +48,6 @@ void PDead::Draw(Player* p)
 	if (isModelDraw) {
 		p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), deadAnimation->GetSkinCluster());
 	}
-
 	deadParticle_->RendererDraw();
 }
 std::string PDead::ShowState()
@@ -61,7 +60,6 @@ void PDead::NormalDeadUpdate(Player* p)
 	animationTime_ += kDeltaTime;
 	deadAnimation->PlayAnimation();
 	if (animationTime_ >= deadAnimation->duration) {
-		//animationTime_ = 0.0f;
 		isModelDraw = false;
 		p->isDead = true;
 		RGBshift::isEnableFlag = false;
@@ -78,12 +76,10 @@ void PDead::SlamDeadUpdate(Player* p)
 	p->GetWorld().transform.scale.y = 0.3f;
 	//死亡アニメーション更新
 	animationTime_ += kDeltaTime;
-
 	if (animationTime_ >= deadAnimation->duration) {
 		p->isDead = true;
 		RGBshift::isEnableFlag = false;
 	}
-
 }
 void PDead::UpdatedeadParticle(Particle& particle)
 {
@@ -95,10 +91,8 @@ void PDead::UpdatedeadParticle(Particle& particle)
 	Vector3 translate = particle.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
 	//色をセット
-	particle.color.w = alpha;
-	particle.color.x = deadParticleEmitter.color.x;
-	particle.color.y = deadParticleEmitter.color.y;
-	particle.color.z = deadParticleEmitter.color.z;
+	deadParticleEmitter.color.w = alpha;
+	particle.color = deadParticleEmitter.color;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }

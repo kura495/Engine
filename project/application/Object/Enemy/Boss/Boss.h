@@ -16,6 +16,7 @@
 #include "State/ERoot/ERoot.h"
 #include "State/ESpawn/ESpawn.h"
 #include "State/ESwordAttack/ESwordAttack.h"
+#include "State/EReStert/EReStert.h"
 #pragma endregion State
 class Boss : public Enemy
 {
@@ -33,6 +34,7 @@ public:
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
+	void ReStert();
 
 	bool GetSlamFlag() { return isSlamFlag; };
 

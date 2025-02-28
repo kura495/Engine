@@ -102,10 +102,8 @@ void DummyBall::UpdateParticle(Particle& particle)
 	particle.transform.scale = emitter.particleRadius;
 	particle.transform.translate = world_.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
-	particle.color.w = alpha;
-	particle.color.x = emitter.color.x;
-	particle.color.y = emitter.color.y;
-	particle.color.z = emitter.color.z;
+	emitter.color.w = alpha;
+	particle.color = emitter.color;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, particle.transform.translate);
 }

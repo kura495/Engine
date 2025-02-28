@@ -83,3 +83,10 @@ void GamePlayState::Draw()
 
 	pauseMenu_->Draw();
 }
+
+void GamePlayState::ReStert()
+{
+	player_->ReStert();
+	floorManager->ReStert();
+	enemyManager->ReStert();
+}

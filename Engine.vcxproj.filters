@@ -724,6 +724,8 @@
     <ClCompile Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.cpp" />
     <ClCompile Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.cpp" />
     <ClCompile Include="project\Engine\Utility\random\random.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1365,6 +1367,8 @@
     <ClInclude Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.h" />
     <ClInclude Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.h" />
     <ClInclude Include="project\Engine\Utility\random\random.h" />
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

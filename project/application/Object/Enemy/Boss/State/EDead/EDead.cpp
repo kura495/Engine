@@ -51,10 +51,8 @@ void EDead::UpdateParticle(Particle& particle)
 	particle.transform.scale = deadEnemyParticleEmitter.particleRadius;
 	Vector3 translate = particle.transform.translate + deadEnemyParticleEmitter.world_.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
-	particle.color.w = alpha;
-	particle.color.x = deadEnemyParticleEmitter.color.x;
-	particle.color.y = deadEnemyParticleEmitter.color.y;
-	particle.color.z = deadEnemyParticleEmitter.color.z;
+	deadEnemyParticleEmitter.color.w = alpha;
+	particle.color = deadEnemyParticleEmitter.color;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }

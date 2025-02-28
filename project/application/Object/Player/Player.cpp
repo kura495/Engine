@@ -196,10 +196,8 @@ void Player::UpdateAttackHitParticle(Particle& particle)
 	Vector3 translate = particle.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
 	//色をセット
-	particle.color.w = alpha;
-	particle.color.x = AttackHitParticleEmitter.color.x;
-	particle.color.y = AttackHitParticleEmitter.color.y;
-	particle.color.z = AttackHitParticleEmitter.color.z;
+	AttackHitParticleEmitter.color.w = alpha;
+	particle.color = AttackHitParticleEmitter.color;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }
@@ -213,12 +211,18 @@ void Player::UpdateAttackHitBombParticle(Particle& particle)
 	Vector3 translate = particle.transform.translate;
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
 	//色をセット
-	particle.color.w = alpha;
-	particle.color.x = AttackHitBombParticleEmitter.color.x;
-	particle.color.y = AttackHitBombParticleEmitter.color.y;
-	particle.color.z = AttackHitBombParticleEmitter.color.z;
+	AttackHitBombParticleEmitter.color.w = alpha;
+	particle.color = AttackHitBombParticleEmitter.color;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+}
+void Player::ReStert()
+{
+	isDead = false;
+	isDyingFlag = false;
+	world_.transform.translate = { 0.0f,0.0f,-3.0f };
+	ChangeState<PRoot>();
+	
 }
 void Player::ImGui()
 {
