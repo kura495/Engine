@@ -110,52 +110,42 @@ Quaternion Animation::CalculateValue(const std::vector<KeyFrameQuaternion>& keyf
 	return (*keyframes.rbegin()).value;
 }
 
-void Animation::PlayAnimation(bool LoopFlag)
+void Animation::PlayAnimation()
 {
-	if (animationTime_ > duration && LoopFlag == false) {
-		isFin = true;
-	}
+	animationTime_ += kDeltaTime;
+	animationTime_ = std::fmod(animationTime_, duration);
 
-	//時間の加算
-	if (isFin == true) {
-		animationTime_ = duration;
-	}
-	else {
-		animationTime_ += kDeltaTime;
-		animationTime_ = std::fmod(animationTime_, duration);
-	}
 	ApplyAnimation(animationTime_);
 
 	SkeletonUpdate();
 	SkinClusterUpdate();
 	if (IsDebugLine) {
 		UpdateLine();
-
 	}
 }
 
-void Animation::PlayAnimation(float FlemeSpeed,bool LoopFlag)
-{
-	if (FlemeSpeed > duration) {
-		isFin = true;
-	}
-	//時間の加算
-	if (isFin == true && LoopFlag == false) {
-		FlemeSpeed = duration;
-	}
-	else {
-		FlemeSpeed = FlemeSpeed / 60.0f;
-
-		animationTime_ = std::fmod(FlemeSpeed, duration);
-	}
-	ApplyAnimation(FlemeSpeed);
-	SkeletonUpdate();
-	SkinClusterUpdate();
-	if (IsDebugLine) {
-		UpdateLine();
-
-	}
-}
+//void Animation::PlayAnimation(float FlemeSpeed,bool LoopFlag)
+//{
+//	if (FlemeSpeed > duration) {
+//		isFin = true;
+//	}
+//	//時間の加算
+//	if (isFin == true && LoopFlag == false) {
+//		FlemeSpeed = duration;
+//	}
+//	else {
+//		FlemeSpeed = FlemeSpeed / 60.0f;
+//
+//		animationTime_ = std::fmod(FlemeSpeed, duration);
+//	}
+//	ApplyAnimation(FlemeSpeed);
+//	SkeletonUpdate();
+//	SkinClusterUpdate();
+//	if (IsDebugLine) {
+//		UpdateLine();
+//
+//	}
+//}
 
 void Animation::AnimationLerp(Animation* animeA, Animation* animeB, float t)
 {
