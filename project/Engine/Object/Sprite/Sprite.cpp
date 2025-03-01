@@ -39,10 +39,7 @@ void Sprite::Initialize(const Vector2& LeftTop, const Vector2& LeftBottom, const
 	viewProjection_.Initialize();
 	viewProjection_.constMap_VS->view = Matrix4x4::CreateIdentity();
 	viewProjection_.constMap_VS->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
-	
-
 }
-
 void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 {
 	directX_ = DirectXCommon::GetInstance();
@@ -82,11 +79,9 @@ void Sprite::Initialize(const Vector2& anchorPoint,const Vector2& textureSize)
 	viewProjection_.constMap_VS->view = Matrix4x4::CreateIdentity();
 	viewProjection_.constMap_VS->projection = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::kClientWidth), float(WinApp::kClientHeight), 0.0f, 100.0f);
 }
-
 void Sprite::RendererDraw(WorldTransform& transform) {
 	Renderer::AddSpriteData(*this, transform);
 }
-
 void Sprite::Draw(const WorldTransform& transform)
 {
 
@@ -117,12 +112,10 @@ void Sprite::Draw(const WorldTransform& transform)
 
 	directX_->GetcommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
-
 void Sprite::SetColor(const Vector4& color)
 {
 	color_ = color;
 }
-
 void Sprite::MakeVertexBufferView()
 {
 	//リソースの先頭のアドレス

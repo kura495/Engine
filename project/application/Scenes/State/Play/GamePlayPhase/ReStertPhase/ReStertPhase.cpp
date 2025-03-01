@@ -12,7 +12,7 @@ void ReStertPhase::Update(GamePlayState* playState)
 {
 	audioValue = (std::min)(audioValue + 0.001f, kMaxaudioValue);
 	Audio::Play(BGMHundle, audioValue);
-	if (audioValue == kMaxaudioValue) {
+	if (fade.Out(1.0f)) {
 		playState->ReStert();
 		playState->ChangePhase<PlayPhase>();
 	}
