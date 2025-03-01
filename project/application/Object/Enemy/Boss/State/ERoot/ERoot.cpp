@@ -15,7 +15,7 @@ void ERoot::Init(Boss* boss)
 
 void ERoot::Update(Boss* boss)
 {
-	if (boss->GetPlayer()->GetState() == PlayerState::kDead) {
+	if (boss->GetPlayer()->GetState() == PlayerState::Dead) {
 		return;
 	}
 	//攻撃をする

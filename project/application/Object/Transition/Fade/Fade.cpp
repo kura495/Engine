@@ -32,7 +32,7 @@ bool Fade::In(float second)
 bool Fade::Out(float second)
 {
 	//アルファを徐々に下げていく
-	timeCount_ += kDeltaTime * second;
+	timeCount_ += kDeltaTime;
 	alpha_ = 1.0f - (1.0f / second) * timeCount_;
 
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,alpha_ });

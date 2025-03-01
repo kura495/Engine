@@ -3,7 +3,7 @@
 class PJump : public IPlayerState
 {
 public:
-	PJump() { stateType = PlayerState::kJump; };
+	PJump() { stateType = PlayerState::Jump; };
 
 	void Init(Player* p)override;
 	void Update(Player* p)override;

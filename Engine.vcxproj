@@ -204,6 +204,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Object\FloorManager\FloorManager.cpp" />
     <ClCompile Include="project\application\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="project\application\Object\Player\Player.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\PReStert\PReStert.cpp" />
     <ClCompile Include="project\application\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="project\application\Object\SkyDome\SkyDome.cpp" />
     <ClCompile Include="project\application\Object\Transition\Fade\Fade.cpp" />
@@ -300,6 +301,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.h" />
+    <ClInclude Include="project\application\Object\Player\State\PReStert\PReStert.h" />
     <ClInclude Include="project\application\Object\UI\Life\Life.h" />
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />

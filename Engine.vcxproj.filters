@@ -727,6 +727,7 @@
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.cpp" />
     <ClCompile Include="project\application\Object\UI\Life\Life.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\PReStert\PReStert.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1371,6 +1372,7 @@
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h" />
     <ClInclude Include="project\application\Object\UI\Life\Life.h" />
+    <ClInclude Include="project\application\Object\Player\State\PReStert\PReStert.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

@@ -63,7 +63,7 @@ void Player::Update()
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
 	//重力を加える
-	if (state_->GetStateType() != PlayerState::kDead && state_->GetStateType() != PlayerState::kJump) {
+	if (state_->GetStateType() != PlayerState::Dead && state_->GetStateType() != PlayerState::Jump) {
 		world_.transform.translate.y -= gravity;
 	}
 	//地面にいないなら落ちるスピードが加速する
@@ -221,6 +221,7 @@ void Player::ReStert()
 	isDead = false;
 	isDyingFlag = false;
 	world_.transform.translate = { 0.0f,0.0f,-3.0f };
+	world_.Update();
 	ChangeState<PRoot>();
 	
 }

@@ -12,5 +12,9 @@ private:
 	float kMaxaudioValue = 0.04f;
 	//画面遷移演出
 	Fade fade;
+	//現在のTの値
+	float easeT = 0.0f;
+
+	bool fadeOutFlag = false;
 };
 

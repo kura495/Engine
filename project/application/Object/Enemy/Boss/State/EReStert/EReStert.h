@@ -10,6 +10,9 @@ public:
 	void Draw(Boss* boss)override;
 	std::string ShowState()override;
 private:
-
+	//現在のTの値
+	float easeT = 0.0f;
+	//固定の位置
+	Math::Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 };
 
