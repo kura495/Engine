@@ -5,6 +5,7 @@ void ReStertPhase::Init(GamePlayState* playState)
 	playState;
 	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3", true);
 	Audio::Play(BGMHundle, audioValue);
+	fade.OutInit();
 }
 
 void ReStertPhase::Update(GamePlayState* playState)
@@ -20,4 +21,5 @@ void ReStertPhase::Update(GamePlayState* playState)
 void ReStertPhase::Draw(GamePlayState* playState)
 {
 	playState;
+	fade.Draw();
 }

@@ -3,6 +3,7 @@
 #include "application/Object/Player/Player.h"
 void EReStert::Init(Boss* boss)
 {
+	boss;
 }
 
 void EReStert::Update(Boss* boss)
@@ -12,7 +13,7 @@ void EReStert::Update(Boss* boss)
 
 void EReStert::Draw(Boss* boss)
 {
-	boss->Draw();
+	boss;
 }
 
 std::string EReStert::ShowState()
