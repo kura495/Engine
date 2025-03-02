@@ -3,7 +3,7 @@
 #include "PostProsess/RGBshift/renderTextrue/RGBshift.h"
 PDead::PDead()
 {
-	stateType = PlayerState::kDead;
+	stateType = PlayerState::Dead;
 	//パーティクル初期化
 	deadParticle_ = std::make_unique<ParticleSystem>();
 	deadParticle_->Init("project/resources/circle2.dds");

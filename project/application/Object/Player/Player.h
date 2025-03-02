@@ -15,6 +15,7 @@
 #include "State/PDead/PDead.h"
 #include "State/PJump/PJump.h"
 #include "State/PRoot/PRoot.h"
+#include "State/PReStert/PReStert.h"
 #include "State/IPlayerState.h"
 #pragma endregion State
 
@@ -66,6 +67,7 @@ public:
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
 
+	bool isReStertFlag = false;
 	void ReStert();
 private:
 	void ImGui();

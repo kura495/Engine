@@ -7,6 +7,8 @@ void ReStertPhase::Init(GamePlayState* playState)
 	Audio::Play(BGMHundle, audioValue);
 	fade.OutInit();
 	fadeOutFlag = false;
+	playState->ReStert();
+
 }
 
 void ReStertPhase::Update(GamePlayState* playState)
@@ -14,20 +16,23 @@ void ReStertPhase::Update(GamePlayState* playState)
 	easeT = (std::min)(easeT + kDeltaTime, 1.0f);
 	audioValue = (std::min)(audioValue + 0.001f, kMaxaudioValue);
 	Audio::Play(BGMHundle, audioValue);
-	if (easeT == 1.0f && fadeOutFlag == false) {
-		playState->ReStert();
-		fadeOutFlag = true;
-	}
-	if (fadeOutFlag) {
-		if (fade.Out(5.0f)) {
+
+	playState->GetFollowCamera()->Update();
+	playState->GetPlayer()->Update();
+	playState->GetCollisionManager()->Update();
+
+	if (fade.Out(2.0f)) {
+		//playState->GetPlayer()->Update();
+		playState->GetEnemyManager()->Update();
+
+		if (playState->GetPlayer()->isReStertFlag) {
 			playState->ChangePhase<PlayPhase>();
 		}
 	}
-
 }
 
 void ReStertPhase::Draw(GamePlayState* playState)
 {
-	playState;
+	playState->GetPlayer()->Draw();
 	fade.Draw();
 }

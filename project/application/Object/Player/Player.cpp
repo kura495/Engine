@@ -220,9 +220,7 @@ void Player::ReStert()
 {
 	isDead = false;
 	isDyingFlag = false;
-	world_.transform.translate = { 0.0f,0.0f,-3.0f };
-	world_.Update();
-	ChangeState<PRoot>();
+	ChangeState<PReStert>();
 	
 }
 void Player::ImGui()

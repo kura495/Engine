@@ -87,6 +87,13 @@ void GamePlayState::Draw()
 void GamePlayState::ReStert()
 {
 	player_->ReStert();
+	player_->Update();
+
 	floorManager->ReStert();
+	followCamera->Update();
+
 	enemyManager->ReStert();
+	enemyManager->Update();
+
+	collisionManager->Update();
 }

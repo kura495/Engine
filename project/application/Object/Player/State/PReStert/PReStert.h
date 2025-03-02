@@ -9,4 +9,6 @@ public:
 	void Draw(Player* p)override;
 	std::string ShowState()override;
 private:
+	//現在のTの値
+	float easeT = 0.0f;
 };
