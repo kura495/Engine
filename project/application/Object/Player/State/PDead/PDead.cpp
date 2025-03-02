@@ -19,7 +19,8 @@ PDead::PDead()
 	deadAnimation.reset(Animation::LoadAnimationFile("project/resources/Player", "player_dead.gltf"));
 	deadAnimation->Init();
 	RGBshift::isEnableFlag = true;
-
+	//再生位置を合わせるために1フレーム分だけ加算
+	animationTime_ += kDeltaTime;
 }
 void PDead::Init(Player* p)
 {
