@@ -3,6 +3,7 @@
 #include "application/Object/Player/Player.h"
 void EReStert::Init(Boss* boss)
 {
+	boss;
 }
 
 void EReStert::Update(Boss* boss)
