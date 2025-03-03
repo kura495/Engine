@@ -20,11 +20,19 @@ void EAttackThrowball::Init(Boss* boss)
 	Audio::Play(SEthrowBall, 0.2f);
 	isThrowdummyBallFlag = false;
 	countHitBall = 0;
+
+	boss->SetColliderUse(Boss::ColliderType::AttackArm, false);
+	boss->SetColliderUse(Boss::ColliderType::AttackHund, false);
 }
 
 void EAttackThrowball::Update(Boss* boss)
 {
-	easeT = (std::min)(easeT + addEaseT, 1.0f);
+	easeT = (std::min)(easeT + kDeltaTime, 1.0f);
+	if (easeT == 1.0f) {
+		boss->SetColliderUse(Boss::ColliderType::AttackArm, true);
+		boss->SetColliderUse(Boss::ColliderType::AttackHund, true);
+	}
+
 	ball->Update();
 	dummyBall->Update();
 	//跳ね返しのタイミングでもう一つの球を出す
@@ -58,11 +66,12 @@ void EAttackThrowball::OnCollisionAttack(Boss* boss, const ICollider& collider)
 		
 		Audio::Stop(SEthrowBall, true, false);
 		Audio::Play(SEthrowBall, 0.2f);
-		
-		if (easeT == 1.0f) {
-			countHitBall += 1;
-			easeT = 0.0f;
-		}
+
+		countHitBall += 1;
+		easeT = 0.0f;
+
+		boss->SetColliderUse(Boss::ColliderType::AttackArm, false);
+		boss->SetColliderUse(Boss::ColliderType::AttackHund, false);
 	}
 }
 std::string EAttackThrowball::ShowState()
