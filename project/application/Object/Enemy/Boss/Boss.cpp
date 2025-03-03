@@ -7,8 +7,7 @@ void Boss::Init(std::vector<Model*> models)
 	//ワールド初期化
 	world_.Init();
 	//当たり判定
-	colliderDamageWorld_.Init();
-	colliderAttackWorld_.Init();
+	colliderWorld_.Init();
 	ColliderDamageInit();
 	ColliderAttackInit();
 	//アニメーション
@@ -31,7 +30,8 @@ void Boss::Update()
 		if (animationTime_ > animationArmLDamage->duration) {
 			isDamage = false;
 			animationTime_ = kDeltaTime;
-			colliders_[Boss::ColliderType::WeekPoint].IsUsing = true;
+			colliders_[Boss::ColliderType::DamageArm].IsUsing = true;
+			colliders_[Boss::ColliderType::DamageHund].IsUsing = true;
 
 		}
 	}
@@ -59,15 +59,23 @@ void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 #pragma region
 void Boss::ColliderDamageInit()
 {
-	colliderDamageWorld_.SetParent(&world_);
-	colliders_[Boss::ColliderType::WeekPoint].Init(&colliderDamageWorld_);
-	colliders_[Boss::ColliderType::WeekPoint].SetSize({ 1.0f,1.0f,1.0f });
-	colliders_[Boss::ColliderType::WeekPoint].OnCollision = [this](ICollider& colliderA) { OnCollision(colliderA); };
-	colliders_[Boss::ColliderType::WeekPoint].SetcollitionAttribute(Collider::Tag::EnemyCore);
-	colliders_[Boss::ColliderType::WeekPoint].SetcollisionMask(~Collider::Tag::EnemyAttack & ~Collider::Tag::EnemyAttackFront);
-	colliders_[Boss::ColliderType::WeekPoint].IsUsing = true;
+	colliderWorld_.SetParent(&world_);
+	//腕側の攻撃判定
+	colliders_[Boss::ColliderType::DamageArm].Init(&colliderWorld_);
+	colliders_[Boss::ColliderType::DamageArm].SetSize(armColliderSize);
+	colliders_[Boss::ColliderType::DamageArm].SetOffset(armColliderOffset);
+	colliders_[Boss::ColliderType::DamageArm].OnCollision = [this](ICollider& colliderA) { OnCollisionDamage(colliderA); };
+	colliders_[Boss::ColliderType::DamageArm].SetcollitionAttribute(Collider::Tag::EnemyCore);
+	colliders_[Boss::ColliderType::DamageArm].SetcollisionMask(~Collider::Tag::EnemyAttack & ~Collider::Tag::EnemyAttackFront);
+	//指側の攻撃判定
+	colliders_[Boss::ColliderType::DamageHund].Init(&colliderWorld_);
+	colliders_[Boss::ColliderType::DamageHund].SetSize(hundColliderSize);
+	colliders_[Boss::ColliderType::DamageHund].SetOffset(hundColliderOffset);
+	colliders_[Boss::ColliderType::DamageHund].OnCollision = [this](ICollider& colliderA) { OnCollisionDamage(colliderA); };
+	colliders_[Boss::ColliderType::DamageHund].SetcollitionAttribute(Collider::Tag::EnemyCore);
+	colliders_[Boss::ColliderType::DamageHund].SetcollisionMask(~Collider::Tag::EnemyAttack & ~Collider::Tag::EnemyAttackFront);
 }
-void Boss::OnCollision(const ICollider& collider)
+void Boss::OnCollisionDamage(const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == Collider::Tag::Weapon) {
 		HP_ -= 1;
@@ -75,8 +83,8 @@ void Boss::OnCollision(const ICollider& collider)
 			ChangeState<EDead>();
 		}
 		isDamage = true;
-		damageInterval = 0;
-		colliders_[Boss::ColliderType::WeekPoint].IsUsing = false;
+		colliders_[Boss::ColliderType::DamageArm].IsUsing = false;
+		colliders_[Boss::ColliderType::DamageHund].IsUsing = false;
 	}
 
 	state_->OnCollision(this,collider);
@@ -85,20 +93,19 @@ void Boss::OnCollision(const ICollider& collider)
 void Boss::ColliderAttackInit()
 {
 	//腕側の攻撃判定
-	colliderAttackWorld_.SetParent(&world_);
-	colliders_[Boss::ColliderType::Arm].Init(&colliderAttackWorld_);
-	colliders_[Boss::ColliderType::Arm].SetSize({ 1.0f,1.0f,7.0f });
-	colliders_[Boss::ColliderType::Arm].SetOffset({ 0.0f,0.0f,-2.0f });
-	colliders_[Boss::ColliderType::Arm].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
-	colliders_[Boss::ColliderType::Arm].SetcollitionAttribute(Collider::Tag::EnemyAttack);
-	colliders_[Boss::ColliderType::Arm].SetcollisionMask(~Collider::Tag::EnemyCore & ~Collider::Tag::EnemyAttackFront);
+	colliders_[Boss::ColliderType::AttackArm].Init(&colliderWorld_);
+	colliders_[Boss::ColliderType::AttackArm].SetSize(armColliderSize);
+	colliders_[Boss::ColliderType::AttackArm].SetOffset(armColliderOffset);
+	colliders_[Boss::ColliderType::AttackArm].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
+	colliders_[Boss::ColliderType::AttackArm].SetcollitionAttribute(Collider::Tag::EnemyAttack);
+	colliders_[Boss::ColliderType::AttackArm].SetcollisionMask(~Collider::Tag::EnemyCore & ~Collider::Tag::EnemyAttackFront);
 	//指側の攻撃判定
-	colliders_[Boss::ColliderType::Hund].Init(&colliderAttackWorld_);
-	colliders_[Boss::ColliderType::Hund].SetSize({ 2.0f,0.5f,1.0f });
-	colliders_[Boss::ColliderType::Hund].SetOffset({ 0.0f,0.0f,-6.25f });
-	colliders_[Boss::ColliderType::Hund].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
-	colliders_[Boss::ColliderType::Hund].SetcollitionAttribute(Collider::Tag::EnemyAttack);
-	colliders_[Boss::ColliderType::Hund].SetcollisionMask(~Collider::Tag::EnemyCore);
+	colliders_[Boss::ColliderType::AttackHund].Init(&colliderWorld_);
+	colliders_[Boss::ColliderType::AttackHund].SetSize(hundColliderSize);
+	colliders_[Boss::ColliderType::AttackHund].SetOffset(hundColliderOffset);
+	colliders_[Boss::ColliderType::AttackHund].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
+	colliders_[Boss::ColliderType::AttackHund].SetcollitionAttribute(Collider::Tag::EnemyAttack);
+	colliders_[Boss::ColliderType::AttackHund].SetcollisionMask(~Collider::Tag::EnemyCore);
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {

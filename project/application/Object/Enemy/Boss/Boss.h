@@ -22,9 +22,10 @@ class Boss : public Enemy
 {
 public:
 	enum ColliderType {
-		WeekPoint,//弱点の当たり判定
-		Arm,//腕の当たり判定
-		Hund,//手の当たり判定
+		DamageArm,//腕の当たり判定()
+		DamageHund,//手の当たり判定()
+		AttackArm,//腕の当たり判定(攻撃用)
+		AttackHund,//手の当たり判定(攻撃用)
 		ColliderTypeEND,
 	};
 	enum BossModel {
@@ -68,15 +69,20 @@ private:
 #pragma region
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
-	void OnCollision(const ICollider& colliderA)override;
-	std::array<OBBoxCollider,Boss::ColliderType::ColliderTypeEND> colliders_;
-	WorldTransform colliderDamageWorld_;
+	void OnCollisionDamage(const ICollider& collider);
+
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
 	void OnCollisionAttack(const ICollider& collider);
-	//指側の攻撃判定
-	WorldTransform colliderAttackWorld_;
-
+	std::array<OBBoxCollider,Boss::ColliderType::ColliderTypeEND> colliders_;
+	//コライダー共通の座標
+	WorldTransform colliderWorld_;
+	//腕の当たり判定の値
+	Vector3 armColliderSize = { 1.0f,1.0f,7.0f };
+	Vector3 armColliderOffset = { 0.0f,0.0f,-2.0f };
+	//手の当たり判定の値
+	Vector3 hundColliderSize = { 2.0f,0.5f,1.0f };
+	Vector3 hundColliderOffset = { 0.0f,0.0f,-6.25f };
 #pragma endregion Collider
 	void AddImGui()override;
 #pragma region

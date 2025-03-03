@@ -33,11 +33,8 @@ public:
 protected://関数
 	//追加用ImGui overrideするだけで追加可能
 	virtual void AddImGui(){};
-	//当たり判定用
-	virtual void OnCollision(const ICollider& ICollider);
 
 	bool isDamage = false;
-	int damageInterval = 0;
 	const int kDamageInterval = 60;
 
 	int32_t HP_;

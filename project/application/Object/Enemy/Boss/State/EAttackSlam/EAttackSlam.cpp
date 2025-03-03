@@ -3,12 +3,12 @@
 void EAttackSlam::Init(Boss* boss)
 {
 	addEaseT = 0.02f;
-	boss->SetColliderUse(Boss::ColliderType::Arm,true);
-	boss->SetColliderUse(Boss::ColliderType::Hund,true);
+	boss->SetColliderUse(Boss::ColliderType::AttackArm,true);
+	boss->SetColliderUse(Boss::ColliderType::AttackHund,true);
 	easeT = 0.0f;
 	//当たり判定を攻撃に変更
-	boss->SetColliderAttribute(Boss::ColliderType::Arm,Collider::Tag::EnemyAttackSlam);
-	boss->SetColliderAttribute(Boss::ColliderType::Hund,Collider::Tag::EnemyAttackFront | Collider::Tag::EnemyAttackSlam);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackArm,Collider::Tag::EnemyAttackSlam);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackHund,Collider::Tag::EnemyAttackFront | Collider::Tag::EnemyAttackSlam);
 
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
 }
@@ -27,8 +27,8 @@ void EAttackSlam::Update(Boss* boss)
 		if (boss->GetWorld().transform.translate.y <= 0) {
 			boss->isSlamFlag = true;
 			addEaseT = 0.01f;
-			boss->SetColliderUse(Boss::ColliderType::Arm, false);
-			boss->SetColliderUse(Boss::ColliderType::Hund, false);
+			boss->SetColliderUse(Boss::ColliderType::AttackArm, false);
+			boss->SetColliderUse(Boss::ColliderType::AttackHund, false);
 			boss->GetWorld().transform.translate.y = 0.5f;
 			easeT = 0.0f;
 			IsAttackFlag = false;
@@ -47,8 +47,8 @@ void EAttackSlam::Draw(Boss* boss)
 void EAttackSlam::OnCollisionAttack(Boss* boss,const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == Collider::Tag::Player) {
-		boss->SetColliderUse(Boss::ColliderType::Arm,false);
-		boss->SetColliderUse(Boss::ColliderType::Hund,false);
+		boss->SetColliderUse(Boss::ColliderType::AttackArm,false);
+		boss->SetColliderUse(Boss::ColliderType::AttackHund,false);
 		Audio::Play(SEHitattack, 1.0f);
 	}
 }
