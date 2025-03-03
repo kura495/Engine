@@ -7,9 +7,7 @@ void Boss::Init(std::vector<Model*> models)
 	//ワールド初期化
 	world_.Init();
 	//当たり判定
-	colliderWorld_.Init();
-	ColliderDamageInit();
-	ColliderAttackInit();
+	ColliderInit();
 	//アニメーション
 	animationArmLDamage = std::make_unique<Animation>();
 	animationArmLDamage.reset(Animation::LoadAnimationFile("project/resources/Enemy", "Arm.gltf"));
@@ -57,9 +55,15 @@ void Boss::SetColliderAttribute(int number, uint32_t collisionAttribute)
 	colliders_[number].SetcollitionAttribute(collisionAttribute);
 }
 #pragma region
+void Boss::ColliderInit()
+{
+	colliderWorld_.Init();
+	colliderWorld_.SetParent(&world_);
+	ColliderDamageInit();
+	ColliderAttackInit();
+}
 void Boss::ColliderDamageInit()
 {
-	colliderWorld_.SetParent(&world_);
 	//腕側の攻撃判定
 	colliders_[Boss::ColliderType::DamageArm].Init(&colliderWorld_);
 	colliders_[Boss::ColliderType::DamageArm].SetSize(armColliderSize);
@@ -87,7 +91,7 @@ void Boss::OnCollisionDamage(const ICollider& collider)
 		colliders_[Boss::ColliderType::DamageHund].IsUsing = false;
 	}
 
-	state_->OnCollision(this,collider);
+	state_->OnCollisionDamage(this,collider);
 	
 }
 void Boss::ColliderAttackInit()

@@ -11,7 +11,7 @@ public:
 	void Init(Boss* boss)override;
 	void Update(Boss* boss)override;
 	void Draw(Boss* boss)override;
-	void OnCollision(Boss* boss, const ICollider& collider)override;
+	void OnCollisionAttack(Boss* boss, const ICollider& collider)override;
 	std::string ShowState()override;
 
 private:

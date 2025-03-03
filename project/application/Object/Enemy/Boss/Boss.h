@@ -22,15 +22,15 @@ class Boss : public Enemy
 {
 public:
 	enum ColliderType {
-		DamageArm,//腕の当たり判定()
-		DamageHund,//手の当たり判定()
+		DamageArm,//腕の当たり判定(ダメージ用)
+		DamageHund,//手の当たり判定(ダメージ用)
 		AttackArm,//腕の当たり判定(攻撃用)
 		AttackHund,//手の当たり判定(攻撃用)
 		ColliderTypeEND,
 	};
 	enum BossModel {
 		MainBody,//ボスのメインモデル
-		PlayerModelEND,
+		BossModelEND,
 	};
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
@@ -63,14 +63,13 @@ private:
 
 #pragma region
 	std::unique_ptr<IBossState> state_;
-
 #pragma endregion State
 
 #pragma region
+	void ColliderInit();
 	//ボスの弱点の当たり判定
 	void ColliderDamageInit();
 	void OnCollisionDamage(const ICollider& collider);
-
 	//ボスの攻撃の当たり判定
 	void ColliderAttackInit();
 	void OnCollisionAttack(const ICollider& collider);
@@ -84,6 +83,7 @@ private:
 	Vector3 hundColliderSize = { 2.0f,0.5f,1.0f };
 	Vector3 hundColliderOffset = { 0.0f,0.0f,-6.25f };
 #pragma endregion Collider
+
 	void AddImGui()override;
 #pragma region
 	std::unique_ptr<Animation> animationArmLDamage;

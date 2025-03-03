@@ -42,7 +42,7 @@ void EAttackSlam::Update(Boss* boss)
 }
 void EAttackSlam::Draw(Boss* boss)
 {
-	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererDraw(boss->GetWorld());
 }
 void EAttackSlam::OnCollisionAttack(Boss* boss,const ICollider& collider)
 {

@@ -37,7 +37,7 @@ public:
 	virtual void Update(Boss* p) = 0;
 	virtual void Draw(Boss* p) = 0;
 
-	virtual void OnCollision(Boss* boss, const ICollider& collider) { boss; collider; };
+	virtual void OnCollisionDamage(Boss* boss, const ICollider& collider) { boss; collider; };
 	virtual void OnCollisionAttack(Boss* boss, const ICollider& collider) { boss; collider; };
 
 	BossState GetStateType() { return stateType; };

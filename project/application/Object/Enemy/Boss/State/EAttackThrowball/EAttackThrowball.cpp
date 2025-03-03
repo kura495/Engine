@@ -47,11 +47,11 @@ void EAttackThrowball::Update(Boss* boss)
 
 void EAttackThrowball::Draw(Boss* boss)
 {
-	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererDraw(boss->GetWorld());
 	ball->Draw();
 	dummyBall->Draw();
 }
-void EAttackThrowball::OnCollision(Boss* boss, const ICollider& collider)
+void EAttackThrowball::OnCollisionAttack(Boss* boss, const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		ball->Reset(boss->GetPlayer()->GetWorld().transform.translate);

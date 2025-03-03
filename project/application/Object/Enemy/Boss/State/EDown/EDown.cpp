@@ -40,7 +40,7 @@ void EDown::Draw(Boss* boss)
 {
 	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
 }
-void EDown::OnCollision(Boss* boss, const ICollider& collider)
+void EDown::OnCollisionDamage(Boss* boss, const ICollider& collider)
 {
 	boss;
 	if (collider.GetcollitionAttribute() == Collider::Tag::Weapon) {

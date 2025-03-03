@@ -6,7 +6,6 @@ void EReStert::Init(Boss* boss)
 	boss->GetWorld().transform.translate = initialPosition;
 	boss->GetWorld().transform.quaternion = Quaternion::IdentityQuaternion();
 	easeT = 0.0f;
-	
 }
 
 void EReStert::Update(Boss* boss)
@@ -15,12 +14,11 @@ void EReStert::Update(Boss* boss)
 	if (easeT == 3.0f) {
 		boss->ChangeState<ERoot>();
 	}
-
 }
 
 void EReStert::Draw(Boss* boss)
 {
-	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererDraw(boss->GetWorld());
 }
 
 std::string EReStert::ShowState()
