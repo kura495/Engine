@@ -406,9 +406,6 @@
     <ClCompile Include="project\application\Object\Enemy\Boss\Ball\Ball.cpp">
       <Filter>project\application\Object\Enemy\Boss\Ball</Filter>
     </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp">
-      <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
-    </ClCompile>
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EDown\EDown.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\EDown</Filter>
     </ClCompile>
@@ -747,9 +744,6 @@
     </ClInclude>
     <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h">
       <Filter>project\application\Object\Enemy\Boss\Ball</Filter>
-    </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h">
-      <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
     </ClInclude>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EDown\EDown.h">
       <Filter>project\application\Object\Enemy\Boss\State\EDown</Filter>

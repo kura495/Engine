@@ -191,7 +191,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\Ball\Ball.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\Boss.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EDead\EDead.cpp" />
@@ -318,7 +317,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\application\Object\Camera\FollowCamera.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\Boss.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EDead\EDead.h" />
