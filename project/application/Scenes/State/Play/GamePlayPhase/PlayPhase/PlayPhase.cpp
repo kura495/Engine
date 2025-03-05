@@ -16,7 +16,13 @@ void PlayPhase::Update(GamePlayState* playState)
 		playState->ChangePhase<ClearPhase>();
 	}
 	if (playState->GetPlayer()->GetisDead()) {
-		playState->ChangePhase<GameOverPhase>();
+		if (playState->GetPlayer()->GetHP() <= 0) {
+			playState->ChangePhase<GameOverPhase>();
+		}
+		else {
+			playState->ChangePhase<ReStertPhase>();
+		}
+
 	}
 }
 

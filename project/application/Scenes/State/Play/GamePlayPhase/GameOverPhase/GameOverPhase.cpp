@@ -15,9 +15,6 @@ void GameOverPhase::Update(GamePlayState* playState)
 		if (playState->GetPlayer()->GetHP() <= 0) {
 			playState->StateNo = GameStateNo::GAMEOVER;
 		}
-		else {
-			playState->ChangePhase<ReStertPhase>();
-		}
 	}
 }
 

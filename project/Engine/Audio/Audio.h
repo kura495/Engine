@@ -43,7 +43,7 @@ struct SoundData {
 	unsigned int bufferSize;
 	// .data pAudioData
 
- 	std::vector<BYTE> mediaData;
+	std::vector<BYTE> mediaData;
 	// 名前
 	std::string name;
 	// 使っているかどうか
@@ -105,6 +105,9 @@ public:
 	/// </summary>
 	/// <param name="AudioIndex">オーディオファイルの番号</param>
 	static void SoundUnload(uint32_t AudioIndex);
+
+	Microsoft::WRL::ComPtr<IXAudio2> GetIXAudio2() { return XAudioInterface; }
+
 #pragma endregion オーディオコントロール
 private:
 	Audio() = default;
@@ -116,7 +119,7 @@ private:
 	float right = 0;
 	static const int kMaxAudio = 64;
 	HRESULT hr;
-	static Microsoft::WRL::ComPtr<IXAudio2> XAudioInterface;
+	Microsoft::WRL::ComPtr<IXAudio2> XAudioInterface;
 	IXAudio2MasteringVoice* pMasteringVoice = nullptr;
 	//ソースボイス
 	static IXAudio2SourceVoice* pSourceVoice[kMaxAudio];

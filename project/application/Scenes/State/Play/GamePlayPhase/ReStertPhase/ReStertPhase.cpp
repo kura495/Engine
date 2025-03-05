@@ -22,7 +22,6 @@ void ReStertPhase::Update(GamePlayState* playState)
 	playState->GetCollisionManager()->Update();
 
 	if (fade.Out(2.0f)) {
-		//playState->GetPlayer()->Update();
 		playState->GetEnemyManager()->Update();
 
 		if (playState->GetPlayer()->isReStertFlag) {
