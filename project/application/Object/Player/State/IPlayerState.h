@@ -21,11 +21,11 @@ public:
 	IPlayerState() { stateType = PlayerState::End; };
 	virtual ~IPlayerState() {};
 
-	virtual void Init(Player* p) = 0;
-	virtual void Update(Player* p) = 0;
-	virtual void Draw(Player* p) = 0;
-	virtual void OnCollision(Player* p, const ICollider& collider) { p; collider; };
-	virtual void OnCollisionAttack(Player* p, const ICollider& collider) { p; collider; };
+	virtual void Init(Player* player) = 0;
+	virtual void Update(Player* player) = 0;
+	virtual void Draw(Player* player) = 0;
+	virtual void OnCollision(Player* player, const ICollider& collider) { player; collider; };
+	virtual void OnCollisionAttack(Player* player, const ICollider& collider) { player; collider; };
 
 	PlayerState GetStateType() { return stateType; };
 	virtual std::string ShowState() { return "default"; };
