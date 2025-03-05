@@ -9,10 +9,11 @@ PDead::PDead()
 	deadParticle_->Init("project/resources/circle2.dds");
 	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	//エミッター設定
-	deadParticleEmitter.count = 5;
-	deadParticleEmitter.frequency = 0.5f;
+	deadParticleEmitter.count = 50;
+	deadParticleEmitter.frequency = 0.2f;
+	deadParticleEmitter.frequencyTime = 0.2f;
 	deadParticleEmitter.particleRadius = { 0.5f,0.5f,1.0f };
-	deadParticleEmitter.color = { 0.0f,0.0f,0.0f };
+	deadParticleEmitter.color = { 1.0f,0.5f,0.5f };
 	deadParticleEmitter.speed = { 1.0f,1.0f,1.0f };
 	//アニメーション設定
 	deadAnimation = std::make_unique<Animation>();
