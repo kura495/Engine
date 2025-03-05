@@ -1,5 +1,4 @@
 #include"Audio.h"
-Microsoft::WRL::ComPtr<IXAudio2> Audio::XAudioInterface;
 const int Audio::kMaxAudio;
 IXAudio2SourceVoice* Audio::pSourceVoice[kMaxAudio];
 std::array<SoundData, Audio::kMaxAudio> Audio::soundData_;
@@ -56,7 +55,7 @@ uint32_t Audio::LoadAudio(const std::string& filePath, bool LoopFlag) {
 	soundData_.at(index).IsUsed = true;
 #pragma endregion 位置決め
 
-	if (FAILED(XAudioInterface->CreateSourceVoice(&pSourceVoice[index], &soundData_[index].wfex))) {
+	if (FAILED(GetInstance()->GetIXAudio2()->CreateSourceVoice(&pSourceVoice[index], &soundData_[index].wfex))) {
 		SoundUnload(index);
 		assert(false);
 	}
@@ -102,7 +101,7 @@ uint32_t Audio::LoadAudioMP3(const std::string& filePath, bool LoopFlag)
 	soundData_.at(index).IsUsed = true;
 #pragma endregion 位置決め
 
-	if (FAILED(XAudioInterface->CreateSourceVoice(&pSourceVoice[index], &soundData_[index].wfex))) {
+	if (FAILED(GetInstance()->GetIXAudio2()->CreateSourceVoice(&pSourceVoice[index], &soundData_[index].wfex))) {
 		SoundUnload(index);
 		assert(false);
 	}
@@ -132,10 +131,9 @@ void Audio::Release() {
 		pMasteringVoice = nullptr;
 	}
 	if (XAudioInterface) {
-		XAudioInterface->Release();
-		XAudioInterface = nullptr;
+		//XAudioInterface->Release();
+		//XAudioInterface = nullptr;
 	}
-	//soundData_.clear();
 	MFShutdown();
 	CoUninitialize();
 }

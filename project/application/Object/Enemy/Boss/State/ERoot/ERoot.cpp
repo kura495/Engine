@@ -5,17 +5,19 @@
 void ERoot::Init(Boss* boss)
 {
 	//当たり判定を有効か
-	boss->SetColliderUse(Boss::ColliderType::WeekPoint,true);
-	boss->SetColliderUse(Boss::ColliderType::Arm, true);
-	boss->SetColliderUse(Boss::ColliderType::Hund, true);
+	boss->SetColliderUse(Boss::ColliderType::DamageArm,true);
+	boss->SetColliderUse(Boss::ColliderType::DamageHund,true);
+
+	boss->SetColliderUse(Boss::ColliderType::AttackArm, true);
+	boss->SetColliderUse(Boss::ColliderType::AttackHund, true);
 	//当たり判定を通常に変更
-	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackArm, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackHund, Collider::Tag::Enemy);
 }
 
 void ERoot::Update(Boss* boss)
 {
-	if (boss->GetPlayer()->GetState() == PlayerState::kDead) {
+	if (boss->GetPlayer()->GetState() == PlayerState::Dead) {
 		return;
 	}
 	//攻撃をする

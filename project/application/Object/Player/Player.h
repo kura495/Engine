@@ -15,6 +15,7 @@
 #include "State/PDead/PDead.h"
 #include "State/PJump/PJump.h"
 #include "State/PRoot/PRoot.h"
+#include "State/PReStert/PReStert.h"
 #include "State/IPlayerState.h"
 #pragma endregion State
 
@@ -38,11 +39,13 @@ public:
 		Slash,//斬られる
 		END,
 	};
+
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
 
 	//HPが0になっているとtrue
+	int GetHP() { return HP_; }
 	bool GetisDead() { return isDead; };
 	bool GetisDying() { return isDyingFlag; };
 
@@ -64,12 +67,13 @@ public:
 	bool Move();
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
-
+	//リスタート処理が完了したかどうか
+	bool isCompleteReStert = false;
+	void ReStert();
 private:
 	void ImGui();
 
 	bool isDamege = false;
-
 	//地面にいるかどうか
 	bool isOnFloorFlag = true;
 #pragma region
@@ -97,7 +101,7 @@ private:
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
 	//HP
-	uint8_t HP_ = 1;
+	uint8_t HP_ = 3;
 
 #pragma endregion Parameter
 

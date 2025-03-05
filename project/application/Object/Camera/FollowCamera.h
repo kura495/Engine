@@ -30,12 +30,8 @@ public:
 	/// </summary>
 	/// <param name="target">ターゲットのWorldTransform</param>
 	void SetTarget(const WorldTransform* target);
-	/// <summary>
-	/// ゲームプレイシーンがプレイビヘイビアーに移行するときに使用
-	/// </summary>
-	/// <param name="target">ターゲットのWorldTransform</param>
-	bool PlaySceneInit(const WorldTransform* target);
-	void PlaySceneReset();
+
+	void ReStert();
 
 	static WorkInterpolation workInter;
 

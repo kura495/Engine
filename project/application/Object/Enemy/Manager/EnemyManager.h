@@ -13,12 +13,14 @@ public:
 	void Init(Player* player);
 	void Update();
 	void Draw();
+	void ReStert();
 	//敵キャラクターのリスト
 	std::list<Enemy*> GetList() { return enemys_; };
 	//定められた条件(ClearJudge)をクリアしていたならtrue
 	bool GetisClear() { return isClear; };
 
 	bool GetSlamFlag() { return bossEnemy_->GetSlamFlag(); };
+
 private:
 	void ImGui();
 	//ゲームクリアの条件を記載

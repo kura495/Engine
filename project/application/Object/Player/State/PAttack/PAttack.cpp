@@ -2,7 +2,7 @@
 #include "../../Player.h"
 PAttack::PAttack()
 {
-	stateType = PlayerState::kAttack;
+	stateType = PlayerState::Attack;
 	//音声
 	SEattack = Audio::LoadAudioMP3("project/resources/sound/Player/attack.mp3", false);
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Player/Hitattack.mp3", false);

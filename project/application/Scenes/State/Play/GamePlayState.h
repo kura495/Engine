@@ -37,6 +37,7 @@
 #include "GamePlayPhase/PlayPhase/PlayPhase.h"
 #include "GamePlayPhase/ClearPhase/ClearPhase.h"
 #include "GamePlayPhase/GameOverPhase/GameOverPhase.h"
+#include "GamePlayPhase/ReStertPhase/ReStertPhase.h"
 
 enum class StageBehavior {
 	kTitle,
@@ -52,6 +53,7 @@ public:
 	void Init()override;
 	void Update()override;
 	void Draw()override;
+	void ReStert();
 	/// <summary>
 	/// フェーズを切り替える
 	/// </summary>

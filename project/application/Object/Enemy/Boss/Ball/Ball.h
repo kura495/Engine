@@ -24,7 +24,7 @@ public:
 		stertPos = StertPos;
 		world_.transform.translate = stertPos;
 		//方向を決める
-		Vector3 playerToBomb = targetVector - world_.transform.translate;
+		Vector3 playerToBomb = world_.transform.translate - targetVector;
 		//速さの定数を掛ける
 		forTargetVector = playerToBomb.Normalize() * kSpeedValue * accelValue;
 		//コライダーを有効化

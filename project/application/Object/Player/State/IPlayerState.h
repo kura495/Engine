@@ -8,10 +8,11 @@
 class Player;
 class ICollider;
 enum class PlayerState {
-	kRoot,
-	kJump,
-	kAttack,
-	kDead,
+	Root,
+	Jump,
+	Attack,
+	Dead,
+	ReStert,
 	End
 };
 class IPlayerState

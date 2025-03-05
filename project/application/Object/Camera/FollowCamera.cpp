@@ -4,7 +4,6 @@ WorkInterpolation FollowCamera::workInter;
 
 void FollowCamera::Initialize() {
 	workInter.interTarget_ = { 0.0f,0.0f,0.0f };
-	PlaySceneReset();
 	workInter.interParameter_.x = 0.7f;
 	workInter.interParameter_.y = 0.7f;
 	workInter.interParameter_.z = 0.7f;
@@ -95,40 +94,23 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 	target_ = target;
 	Reset();
 }
-
-bool FollowCamera::PlaySceneInit(const WorldTransform* target)
+void FollowCamera::ReStert()
 {
-
-	if (lerpTTitle == 0.0f) {
-		resetTransform = parameter.translation_;
-		resetRotate = parameter.rotation_;
-		rotate_ = { 0.0f,0.0f,0.0f };
-		target_ = target;
-		resetFlag_ = true;
-	}
-
-	PlaySceneReset();
-	lerpTTitle += addValueTitle;
-
-	if (lerpTTitle > 1.0f) {
-		resetFlag_ = false;
-		return true;
-	}
-	return false;
-}
-
-void FollowCamera::PlaySceneReset()
-{
-	//追従対象がいれば
+	rotate_ = { 0.0f,0.0f,0.0f };
+	//回転をしていない状態にリセット
+	parameter.rotation_ = Quaternion::IdentityQuaternion();
+	//ターゲットがあるなら補間をなくす
 	if (target_) {
-		//追従座標・角度の初期化
-		workInter.interTarget_ = Vector3::Lerp(resetTransform, target_->transform.translate + offsetPos, lerpTTitle);
-		parameter.rotation_ = Quaternion::Slerp(resetRotate, target_->transform.quaternion, lerpTTitle);
-	}
+		prePos_ = currentPos_;
 
-	//追従大賞からのオフセット
-	Vector3 offset = OffsetCalc();
-	parameter.translation_ = workInter.interTarget_;
+		currentPos_ = target_->transform.translate;
+		
+		workInter.interTarget_ = currentPos_;
+
+		Vector3 offset = OffsetCalc();
+		//オフセット分と追従座標の補間分ずらす
+		parameter.translation_ = workInter.interTarget_ + offset;
+	}
 }
 void FollowCamera::Reset()
 {
