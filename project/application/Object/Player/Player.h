@@ -39,6 +39,7 @@ public:
 		Slash,//斬られる
 		END,
 	};
+
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
@@ -66,14 +67,13 @@ public:
 	bool Move();
 	//生きているか死んでいるかのフラグ
 	bool isDead = false;
-
-	bool isReStertFlag = false;
+	//リスタート処理が完了したかどうか
+	bool isCompleteReStert = false;
 	void ReStert();
 private:
 	void ImGui();
 
 	bool isDamege = false;
-
 	//地面にいるかどうか
 	bool isOnFloorFlag = true;
 #pragma region

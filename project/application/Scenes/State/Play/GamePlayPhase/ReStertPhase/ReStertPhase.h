@@ -3,6 +3,12 @@
 
 class ReStertPhase : public GamePlayStatePhase{
 public:
+	enum Phase {
+		FadeIn,
+		ReStertFanc,
+		FadeOut,
+		END,
+	};
 	void Init(GamePlayState* playState)override;
 	void Update(GamePlayState* playState)override;
 	void Draw(GamePlayState* playState)override;
@@ -15,6 +21,6 @@ private:
 	//現在のTの値
 	float easeT = 0.0f;
 
-	bool fadeOutFlag = false;
+	uint8_t phase = Phase::FadeIn;
 };
 

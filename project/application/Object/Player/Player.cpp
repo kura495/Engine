@@ -218,6 +218,7 @@ void Player::UpdateAttackHitBombParticle(Particle& particle)
 }
 void Player::ReStert()
 {
+	isCompleteReStert = false;
 	isDead = false;
 	isDyingFlag = false;
 	ChangeState<PReStert>();

@@ -11,7 +11,7 @@ void PReStert::Update(Player* p)
 {
 	easeT = (std::min)(easeT + kDeltaTime, 1.0f);
 	if (easeT == 1.0f) {
-		p->isReStertFlag = true;
+		p->isCompleteReStert = true;
 		p->ChangeState<PRoot>();
 	}
 }

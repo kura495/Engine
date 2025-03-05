@@ -10,8 +10,8 @@ void EReStert::Init(Boss* boss)
 
 void EReStert::Update(Boss* boss)
 {
-	easeT = (std::min)(easeT + kDeltaTime, 3.0f);
-	if (easeT == 3.0f) {
+	easeT = (std::min)(easeT + kDeltaTime, kStateChangeSecond);
+	if (easeT == kStateChangeSecond) {
 		boss->ChangeState<ERoot>();
 	}
 }
