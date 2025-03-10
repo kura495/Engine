@@ -14,7 +14,7 @@ private:
 	float easeT = 0.0f;
 	//ステートを切り替えるまでの時間
 	const float kStateChangeSecond = 2.0f;
-	//固定の位置
+	//初期位置
 	Math::Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 };
 

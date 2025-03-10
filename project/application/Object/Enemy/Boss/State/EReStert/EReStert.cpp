@@ -5,7 +5,9 @@ void EReStert::Init(Boss* boss)
 {
 	boss->GetWorld().transform.translate = initialPosition;
 	boss->GetWorld().transform.quaternion = Quaternion::IdentityQuaternion();
+	boss->GetWorld().Update();
 	easeT = 0.0f;
+	isAttackSelect = AttackState::RocketPunch;
 }
 
 void EReStert::Update(Boss* boss)

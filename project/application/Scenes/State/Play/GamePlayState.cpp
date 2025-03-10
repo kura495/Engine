@@ -90,4 +90,6 @@ void GamePlayState::ReStert()
 	floorManager->ReStert();
 	enemyManager->ReStert();
 	followCamera->ReStert();
+
+	collisionManager->Update();
 }
