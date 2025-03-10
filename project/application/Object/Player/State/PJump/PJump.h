@@ -5,10 +5,10 @@ class PJump : public IPlayerState
 public:
 	PJump() { stateType = PlayerState::Jump; };
 
-	void Init(Player* p)override;
-	void Update(Player* p)override;
-	void Draw(Player* p)override;
-	void OnCollision(Player* p,const ICollider& collider)override;
+	void Init(Player* player)override;
+	void Update(Player* player)override;
+	void Draw(Player* player)override;
+	void OnCollision(Player* player,const ICollider& collider)override;
 	std::string ShowState()override;
 private:
 	//ジャンプに使う実数値

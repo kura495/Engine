@@ -1,24 +1,24 @@
 #include "PReStert.h"
 #include "../../Player.h"
-void PReStert::Init(Player* p)
+void PReStert::Init(Player* player)
 {
-	p->GetWorld().transform.translate = { 0.0f,2.0f,-3.0f };
-	p->GetWorld().transform.quaternion = Quaternion::IdentityQuaternion();
-	p->GetWorld().Update();
+	player->GetWorld().transform.translate = { 0.0f,2.0f,-3.0f };
+	player->GetWorld().transform.quaternion = Quaternion::IdentityQuaternion();
+	player->GetWorld().Update();
 }
 
-void PReStert::Update(Player* p)
+void PReStert::Update(Player* player)
 {
 	easeT = (std::min)(easeT + kDeltaTime, 1.0f);
 	if (easeT == 1.0f) {
-		p->isCompleteReStert = true;
-		p->ChangeState<PRoot>();
+		player->isCompleteReStert = true;
+		player->ChangeState<PRoot>();
 	}
 }
 
-void PReStert::Draw(Player* p)
+void PReStert::Draw(Player* player)
 {
-	p->Getmodels()[Player::PlayerModel::MainBody]->RendererDraw(p->GetWorld());
+	player->Getmodels()[Player::PlayerModel::MainBody]->RendererDraw(player->GetWorld());
 }
 
 std::string PReStert::ShowState()

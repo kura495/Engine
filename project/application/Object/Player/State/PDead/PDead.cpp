@@ -22,32 +22,32 @@ PDead::PDead()
 	//再生位置を合わせるために1フレーム分だけ加算
 	animationTime_ += kDeltaTime;
 }
-void PDead::Init(Player* p)
+void PDead::Init(Player* player)
 {
-	deadParticleEmitter.world_.transform.translate = p->GetWorld().transform.translate;
+	deadParticleEmitter.world_.transform.translate = player->GetWorld().transform.translate;
 	deadParticleEmitter.world_.transform.translate.y += 1.0f;
 	//アニメーション設定
-	deadAnimation->AnimeInit(*p->Getmodels()[Player::PlayerModel::MainBody], true);
-	if (p->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
+	deadAnimation->AnimeInit(*player->Getmodels()[Player::PlayerModel::MainBody], true);
+	if (player->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
 		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN,0.5f);
 	}
 	else {
 		Input::VibrateController(1024, 1024,1.0f);
 	}
 }
-void PDead::Update(Player* p)
+void PDead::Update(Player* player)
 {
-	if (p->GetCauseOfDeath() == Player::CauseOfDeath::Normal) {
-		NormalDeadUpdate(p);
+	if (player->GetCauseOfDeath() == Player::CauseOfDeath::Normal) {
+		NormalDeadUpdate(player);
 	}
-	if (p->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
-		SlamDeadUpdate(p);
+	if (player->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
+		SlamDeadUpdate(player);
 	}
 }
-void PDead::Draw(Player* p)
+void PDead::Draw(Player* player)
 {
 	if (isModelDraw) {
-		p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), deadAnimation->GetSkinCluster());
+		player->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(player->GetWorld(), deadAnimation->GetSkinCluster());
 	}
 	deadParticle_->RendererDraw();
 }
@@ -55,14 +55,14 @@ std::string PDead::ShowState()
 {
 	return "PDead";
 }
-void PDead::NormalDeadUpdate(Player* p)
+void PDead::NormalDeadUpdate(Player* player)
 {
 	//死亡アニメーション更新
 	animationTime_ += kDeltaTime;
 	deadAnimation->PlayAnimation();
 	if (animationTime_ >= deadAnimation->duration) {
 		isModelDraw = false;
-		p->isDead = true;
+		player->isDead = true;
 		RGBshift::isEnableFlag = false;
 	}
 	if (isModelDraw == false) {
@@ -71,14 +71,14 @@ void PDead::NormalDeadUpdate(Player* p)
 		deadParticle_->Update();
 	}
 }
-void PDead::SlamDeadUpdate(Player* p)
+void PDead::SlamDeadUpdate(Player* player)
 {
 	//モデルをペシャンコにする
-	p->GetWorld().transform.scale.y = 0.3f;
+	player->GetWorld().transform.scale.y = 0.3f;
 	//死亡アニメーション更新
 	animationTime_ += kDeltaTime;
 	if (animationTime_ >= deadAnimation->duration) {
-		p->isDead = true;
+		player->isDead = true;
 		RGBshift::isEnableFlag = false;
 	}
 }

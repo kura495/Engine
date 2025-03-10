@@ -11,40 +11,40 @@ PAttack::PAttack()
 	attackAnimation->Init();
 	attackPosture = Quaternion::IdentityQuaternion();
 }
-void PAttack::Init(Player* p)
+void PAttack::Init(Player* player)
 {
-	attackAnimation->AnimeInit(*p->Getmodels()[Player::PlayerModel::MainBody], true);
-	p->SetColliderUse(Player::ColliderType::Attack,true);
+	attackAnimation->AnimeInit(*player->Getmodels()[Player::PlayerModel::MainBody], true);
+	player->SetColliderUse(Player::ColliderType::Attack,true);
 	animationTime_ = 0.0f;
-	attackPosture = p->GetWorld().transform.quaternion;
+	attackPosture = player->GetWorld().transform.quaternion;
 	Audio::Play(SEattack, 0.5f);
 	Audio::Stop(SEHitattack, true, false);
 }
 
-void PAttack::Update(Player* p)
+void PAttack::Update(Player* player)
 {
 	//攻撃中も移動できるように
-	p->Move();
+	player->Move();
 	//攻撃中は一定の方向を向くように固定
-	p->GetWorld().transform.quaternion = attackPosture;
+	player->GetWorld().transform.quaternion = attackPosture;
 	//アニメーション再生
 	attackAnimation->PlayAnimation();
 	animationTime_ += kDeltaTime;
 
 	if (animationTime_ > attackAnimation->duration) {
 		animationTime_ = 0.0f;
-		p->SetColliderUse(Player::ColliderType::Attack, false);
+		player->SetColliderUse(Player::ColliderType::Attack, false);
 
 		attackAnimation->Reset();
 		Audio::Stop(SEattack, true, false);		
 		//kRootに戻す
-		p->ChangeState<PRoot>();
+		player->ChangeState<PRoot>();
 	}
 }
 
-void PAttack::Draw(Player* p)
+void PAttack::Draw(Player* player)
 {
-	p->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(p->GetWorld(), attackAnimation->GetSkinCluster());
+	player->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(player->GetWorld(), attackAnimation->GetSkinCluster());
 }
 
 std::string PAttack::ShowState()

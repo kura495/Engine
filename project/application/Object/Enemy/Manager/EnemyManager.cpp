@@ -24,13 +24,10 @@ void EnemyManager::Update()
 			}
 			return false;
 	});
-
 	bossEnemy_->Update();
-
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
 	}
-
 #ifdef _DEBUG
 	ImGui();
 #endif
