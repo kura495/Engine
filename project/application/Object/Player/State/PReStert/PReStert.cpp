@@ -2,7 +2,6 @@
 #include "../../Player.h"
 void PReStert::Init(Player* player)
 {
-
 	player->GetWorld().transform.translate = initialPosition;
 	//大きさを元に戻す
 	player->GetWorld().transform.scale = { 1.0f,1.0f,1.0f };
