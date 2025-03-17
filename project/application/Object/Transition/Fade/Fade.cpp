@@ -1,15 +1,15 @@
 #include "Fade.h"
 
-void Fade::InInit()
+void Fade::InInit(std::string FilePath)
 {
-	Init();
+	Init(FilePath);
 	alpha_ = 0.0f;
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,alpha_ });
 }
 
-void Fade::OutInit()
+void Fade::OutInit(std::string FilePath)
 {
-	Init();
+	Init(FilePath);
 	alpha_ = 1.0f;
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,alpha_ });
 }
@@ -44,14 +44,18 @@ bool Fade::Out(float second)
 		return false;
 	}
 }
-void Fade::Init()
+void Fade::Init(std::string FilePath)
 {
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
-	sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/BlackTexture.png");
+	sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture(FilePath);
 	world_.Init();
 }
 void Fade::Draw()
 {
 	sprite_->RendererDraw(world_);
+}
+void Fade::Draw(WorldTransform& world)
+{
+	sprite_->RendererDraw(world);
 }

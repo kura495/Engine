@@ -17,7 +17,6 @@ private:
 	TextureManager* textureManager_;
 
 	std::unique_ptr<Sprite>texture;
-	uint32_t textureHundle;
 	WorldTransform texture_world_;
 
 	bool IsCanPush = false;

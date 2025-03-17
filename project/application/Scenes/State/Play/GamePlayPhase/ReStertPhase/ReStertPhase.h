@@ -1,5 +1,6 @@
 #pragma once
 #include "State/Play/GamePlayPhase/GamePlayStatePhase.h"
+#include "application/Object/UI/Life/Life_UI.h"
 
 class ReStertPhase : public GamePlayStatePhase{
 public:
@@ -13,9 +14,12 @@ public:
 	void Update(GamePlayState* playState)override;
 	void Draw(GamePlayState* playState)override;
 private:
+	//BGM
 	int BGMHundle;
 	float audioValue = 0.0f;
 	float kMaxaudioValue = 0.04f;
+	//画像
+	std::unique_ptr<Life_UI> life_UI;
 	//画面遷移演出
 	Fade fade;
 	//現在のTの値

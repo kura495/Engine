@@ -3,6 +3,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "Object/Transition/Fade/Fade.h"
 #include "Input.h"
+#include "Texture/TextureManager.h"
 class GamePlayState;
 class GamePlayStatePhase {
 public:

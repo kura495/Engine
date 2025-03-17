@@ -5,7 +5,10 @@ void ReStertPhase::Init(GamePlayState* playState)
 	playState;
 	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3", true);
 	Audio::Play(BGMHundle, audioValue);
-	fade.InInit();
+	fade.InInit("project/resources/BlackTexture.png");
+
+	life_UI = std::make_unique<Life_UI>();
+	life_UI->Init(1);
 
 	phase = Phase::FadeIn;
 }
@@ -23,14 +26,13 @@ void ReStertPhase::Update(GamePlayState* playState)
 		}
 	}
 	else if (phase == Phase::ReStertFanc) {
-		if (easeT == 1.0f) {
+		if (life_UI->Animation()) {
 			playState->ReStert();
 			phase = Phase::FadeOut;
-			fade.OutInit();
+			fade.OutInit("project/resources/BlackTexture.png");
 		}
 	}
 	else if (phase == Phase::FadeOut) {
-
 		if (fade.Out(3.0f)) {
 			playState->ChangePhase<PlayPhase>();
 		}
@@ -41,4 +43,8 @@ void ReStertPhase::Draw(GamePlayState* playState)
 {
 	playState->GetPlayer()->Draw();
 	fade.Draw();
+
+	if (phase == Phase::ReStertFanc) {
+		life_UI->Draw();
+	}
 }

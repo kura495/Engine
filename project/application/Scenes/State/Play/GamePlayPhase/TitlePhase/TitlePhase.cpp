@@ -3,7 +3,7 @@
 void TitlePhase::Init(GamePlayState* playState)
 {
 	playState;
-	fade.OutInit();
+	fade.OutInit("project/resources/BlackTexture.png");
 
 	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3", true);
 	Audio::Play(BGMHundle, audioValue);
