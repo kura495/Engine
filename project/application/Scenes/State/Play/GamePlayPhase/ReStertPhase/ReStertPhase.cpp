@@ -11,12 +11,14 @@ void ReStertPhase::Init(GamePlayState* playState)
 	life_UI->Init(1);
 
 	phase = Phase::FadeIn;
+
+	audioValue = 0.0f;
 }
 
 void ReStertPhase::Update(GamePlayState* playState)
 {
 	easeT = (std::min)(easeT + kDeltaTime, 1.0f);
-	audioValue = (std::min)(audioValue + 0.001f, kMaxaudioValue);
+
 	Audio::Play(BGMHundle, audioValue);
 
 	if (phase == Phase::FadeIn) {
@@ -33,6 +35,9 @@ void ReStertPhase::Update(GamePlayState* playState)
 		}
 	}
 	else if (phase == Phase::FadeOut) {
+		
+		audioValue = (std::min)(audioValue + 0.01f, kMaxaudioValue);
+		
 		if (fade.Out(3.0f)) {
 			playState->ChangePhase<PlayPhase>();
 		}

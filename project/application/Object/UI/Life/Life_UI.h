@@ -8,13 +8,9 @@ public:
 	void Draw();
 private:
 
-	Fade fade1;
-	Fade fade2;
-	Fade fade3;
+	Fade fade[3];
 
-	WorldTransform sprite_world_1;
-	WorldTransform sprite_world_2;
-	WorldTransform sprite_world_3;
+	WorldTransform sprite_world_[3];
 	//テクスチャ
 	TextureManager* textureManager_;
 	std::unique_ptr<Sprite>sprite;
