@@ -19,7 +19,7 @@ void PRoot::Update(Player* player)
 		player->ChangeState<PAttack>();
 	}
 	//ボタンを押したらジャンプ
-	else if (Input::IsTriggerPad(XINPUT_GAMEPAD_A)) {
+	else if (Input::GetPadPrecede(XINPUT_GAMEPAD_A,20)) {
 		player->ChangeState<PJump>();
 	}
 }
