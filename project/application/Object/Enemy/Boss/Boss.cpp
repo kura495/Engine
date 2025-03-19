@@ -78,6 +78,9 @@ void Boss::ColliderDamageInit()
 	colliders_[Boss::ColliderType::DamageHund].OnCollision = [this](ICollider& colliderA) { OnCollisionDamage(colliderA); };
 	colliders_[Boss::ColliderType::DamageHund].SetcollitionAttribute(Collider::Tag::EnemyCore);
 	colliders_[Boss::ColliderType::DamageHund].SetcollisionMask(~Collider::Tag::EnemyAttack & ~Collider::Tag::EnemyAttackFront);
+
+	colliders_[Boss::ColliderType::DamageArm].colliderName = "ColliderDamageArm";
+	colliders_[Boss::ColliderType::DamageHund].colliderName = "ColliderDamageHund";
 }
 void Boss::OnCollisionDamage(const ICollider& collider)
 {
@@ -110,6 +113,10 @@ void Boss::ColliderAttackInit()
 	colliders_[Boss::ColliderType::AttackHund].OnCollision = [this](ICollider& colliderA) { OnCollisionAttack(colliderA); };
 	colliders_[Boss::ColliderType::AttackHund].SetcollitionAttribute(Collider::Tag::EnemyAttack);
 	colliders_[Boss::ColliderType::AttackHund].SetcollisionMask(~Collider::Tag::EnemyCore);
+
+
+	colliders_[Boss::ColliderType::AttackArm].colliderName = "ColliderAttackArm";
+	colliders_[Boss::ColliderType::AttackHund].colliderName = "ColliderAttackHund";
 }
 void Boss::OnCollisionAttack(const ICollider& collider)
 {

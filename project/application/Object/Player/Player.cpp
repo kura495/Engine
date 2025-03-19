@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Scenes/State/Play/GamePlayPhase/PlayPhase/PlayPhase.h"
 
 void Player::Init(std::vector<Model*> models)
 {
@@ -102,6 +103,7 @@ void Player::ColliderInit()
 	colliders_[ColliderType::pCollider].OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 	colliders_[ColliderType::pCollider].SetcollitionAttribute(Collider::Tag::Player);
 	colliders_[ColliderType::pCollider].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon);
+	colliders_[ColliderType::pCollider].colliderName = "Player";
 }
 void Player::OnCollision(const ICollider& ICollider)
 {
@@ -141,6 +143,7 @@ void Player::AttackColliderInit()
 	colliders_[ColliderType::Attack].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon & ~Collider::Tag::Floor);
 
 	colliders_[ColliderType::Attack].IsUsing = false;
+	colliders_[ColliderType::Attack].colliderName = "PlayerAttack";
 }
 void Player::AttackOnCollision(const ICollider& collider)
 {
@@ -157,6 +160,8 @@ void Player::AttackOnCollision(const ICollider& collider)
 		//音関連
 		Audio::Stop(SEattack, true,false);
 		Audio::Play(SEHitattack, 1.0f);
+		//ヒットストップ
+		PlayPhase::HitStop(0.1f);
 
 	}
 	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
@@ -170,18 +175,8 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
-	}
-	if (collider.GetcollitionAttribute() == Collider::Tag::FakeEnemyBall) {
-		colliders_[ColliderType::Attack].IsUsing = false;
-		//パーティクル用のベクトル
-		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
-		attackVector.Normalize();
-		attackVector *= -1;
-		//パーティクル生成
-		AttackHitBombParticleEmitter.color = { 1.0f,1.0f,1.0f };
-		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
-		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
-		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
+		//ヒットストップ
+		PlayPhase::HitStop(0.1f);
 	}
 
 }

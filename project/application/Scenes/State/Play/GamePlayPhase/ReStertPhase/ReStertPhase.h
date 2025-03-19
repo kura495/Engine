@@ -14,10 +14,6 @@ public:
 	void Update(GamePlayState* playState)override;
 	void Draw(GamePlayState* playState)override;
 private:
-	//BGM
-	int BGMHundle;
-	float audioValue = 0.0f;
-	float kMaxaudioValue = 0.04f;
 	//Life_UI
 	std::unique_ptr<Life_UI> life_UI;
 	//画面遷移演出

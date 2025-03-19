@@ -10,6 +10,7 @@ void PlaneObject::Init(std::vector<Model*> models)
 	collider.SetcollitionAttribute(Collider::Tag::Floor);
 	collider.SetcollisionMask(~Collider::Tag::Floor);
 	collider.OnCollision = [this](ICollider& collider) { OnCollision(collider); };
+	collider.colliderName = "Plane";
 }
 
 void PlaneObject::Update()

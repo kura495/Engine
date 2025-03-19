@@ -8,6 +8,12 @@ public:
 	void Init(GamePlayState* playState)override;
 	void Update(GamePlayState* playState)override;
 	void Draw(GamePlayState* playState)override;
+
+	static void HitStop(float second);
+	static float HitStopCount;
+	static float TargetTime;
 private:
 	Vector2 moterValue;
+	bool HitStopUpdate();
+
 };

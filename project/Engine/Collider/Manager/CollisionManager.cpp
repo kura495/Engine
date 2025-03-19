@@ -68,6 +68,16 @@ void CollisionManager::CheckAllCollisions() {
 			//判定処理
 			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
 				//当たった時の処理呼び出し
+				#ifdef _DEBUG
+				ImGui::Begin("ColliderLog");
+				ImGui::Text("Hit\n");
+				std::string Tex = colliderA->colliderName + " ";
+				Tex = Tex + colliderB->colliderName;
+				ImGui::Text(Tex.c_str());
+				ImGui::End();
+				#endif 
+
+
 				colliderA->OnCollision(*colliderB);
 				colliderB->OnCollision(*colliderA);
 			}

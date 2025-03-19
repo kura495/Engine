@@ -14,7 +14,7 @@ PAttack::PAttack()
 void PAttack::Init(Player* player)
 {
 	attackAnimation->AnimeInit(*player->Getmodels()[Player::PlayerModel::MainBody], true);
-	player->SetColliderUse(Player::ColliderType::Attack,true);
+
 	animationTime_ = 0.0f;
 	attackPosture = player->GetWorld().transform.quaternion;
 	Audio::Play(SEattack, 0.5f);
@@ -30,7 +30,9 @@ void PAttack::Update(Player* player)
 	//アニメーション再生
 	attackAnimation->PlayAnimation();
 	animationTime_ += kDeltaTime;
-
+	if (animationTime_ > attackAnimation->duration / 4.0f) {
+		player->SetColliderUse(Player::ColliderType::Attack, true);
+	}
 	if (animationTime_ > attackAnimation->duration) {
 		animationTime_ = 0.0f;
 		player->SetColliderUse(Player::ColliderType::Attack, false);
