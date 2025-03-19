@@ -2,37 +2,28 @@
 
 void Life_UI::Init(int HP)
 {
-	HP;
+	//配列に合わせるために-1する
+	saveHP = HP - 1;
 
 	textureManager_ = TextureManager::GetInstance();
 
-	fade[0].OutInit("project/resources/Life.png");
-	fade[1].OutInit("project/resources/Life.png");
-	fade[2].OutInit("project/resources/Life.png");
+	for (int i = 0; i <= saveHP; i++) {
+		fade[i].OutInit("project/resources/Life.png");
+	}
+	for (int i = 0; i < 3; i++) {
+		sprite_world_[i].Init();
+		sprite_world_[i].transform.translate = position[i];
+		sprite_world_[i].Update();
+	}
 
-	sprite_world_[0].Init();
-	sprite_world_[0].transform.translate = {-100.0f,0.0f,0.0f};
-	sprite_world_[0].Update();
-
-	sprite_world_[1].Init();
-	sprite_world_[1].transform.translate = { 0.0f,0.0f,0.0f };
-	sprite_world_[1].Update();
-
-	sprite_world_[2].Init();
-	sprite_world_[2].transform.translate = { 100.0f,0.0f,0.0f };
-	sprite_world_[2].Update();
-
-	/*sprite_world_.Init();
 	sprite = std::make_unique<Sprite>();
-	sprite->TextureHandle = textureManager_->LoadTexture("project/resources/Life.png");
-	sprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });*/
+	sprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
+	sprite->TextureHandle = textureManager_->LoadTexture("project/resources/Empty_Life.png");
 }
 
 bool Life_UI::Animation()
 {
-	fade[0].Out(3.0f);
-	fade[1].Out(3.0f);
-	if (fade[2].Out(3.0f)) {
+	if (fade[saveHP].Out(3.0f)) {
 		return true;
 	}
 	return false;
@@ -40,8 +31,10 @@ bool Life_UI::Animation()
 
 void Life_UI::Draw()
 {
-	fade[0].Draw(sprite_world_[0]);
-	fade[1].Draw(sprite_world_[1]);
-	fade[2].Draw(sprite_world_[2]);
-	//sprite->RendererDraw(sprite_world_);
+	for (int i = 0; i < Life_Count::END; i++) {
+		sprite->RendererDraw(sprite_world_[i]);
+	}
+	for (int i = 0; i <= saveHP; i++) {
+		fade[i].Draw(sprite_world_[i]);
+	}
 }

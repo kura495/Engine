@@ -8,7 +8,7 @@ void ReStertPhase::Init(GamePlayState* playState)
 	fade.InInit("project/resources/BlackTexture.png");
 
 	life_UI = std::make_unique<Life_UI>();
-	life_UI->Init(1);
+	life_UI->Init(playState->GetPlayer()->GetHP());
 
 	phase = Phase::FadeIn;
 

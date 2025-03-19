@@ -101,7 +101,7 @@ private:
 	//プレイヤーの移動速度
 	const float kMoveSpeed_ = 0.3f;
 	//HP
-	uint8_t HP_ = 3;
+	uint8_t HP_ = 4;
 
 #pragma endregion Parameter
 
