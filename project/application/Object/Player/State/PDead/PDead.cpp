@@ -7,12 +7,13 @@ PDead::PDead()
 	//パーティクル初期化
 	deadParticle_ = std::make_unique<ParticleSystem>();
 	deadParticle_->Init("project/resources/circle2.dds");
+	deadParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	//エミッター設定
-	deadParticleEmitter.count = 5;
-	deadParticleEmitter.frequency = 0.5f;
-	deadParticleEmitter.particleRadius = { 0.5f,0.5f,1.0f };
-	deadParticleEmitter.color = { 0.0f,0.0f,0.0f };
+	deadParticleEmitter.count = 100;
+	deadParticleEmitter.frequency = 0.1f;
+	deadParticleEmitter.particleRadius = { 0.1f,0.1f,1.0f };
+	deadParticleEmitter.color = { 1.0f,1.0f,1.0f };
 	deadParticleEmitter.speed = { 1.0f,1.0f,1.0f };
 	//アニメーション設定
 	deadAnimation = std::make_unique<Animation>();
@@ -46,8 +47,9 @@ void PDead::Update(Player* player)
 }
 void PDead::Draw(Player* player)
 {
+	player;
 	if (isModelDraw) {
-		player->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(player->GetWorld(), deadAnimation->GetSkinCluster());
+		//player->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(player->GetWorld(), deadAnimation->GetSkinCluster());
 	}
 	deadParticle_->RendererDraw();
 }
@@ -62,13 +64,17 @@ void PDead::NormalDeadUpdate(Player* player)
 	deadAnimation->PlayAnimation();
 	if (animationTime_ >= deadAnimation->duration) {
 		isModelDraw = false;
-		player->isDead = true;
+
 		RGBshift::isEnableFlag = false;
 	}
 	if (isModelDraw == false) {
+		trans = (std::min)(trans + 0.005f, 1.0f);
 		//パーティクル生成
-		ParticleSystem::ParticleSpawn(*deadParticle_, deadParticleEmitter);
+		deadParticle_->CustumSpawnParticle(deadParticleEmitter);
 		deadParticle_->Update();
+		if (trans == 1.0f) {
+			player->isDead = true;
+		}
 	}
 }
 void PDead::SlamDeadUpdate(Player* player)
@@ -81,6 +87,26 @@ void PDead::SlamDeadUpdate(Player* player)
 		player->isDead = true;
 		RGBshift::isEnableFlag = false;
 	}
+}
+Particle PDead::CustomParticle()
+{
+	Particle particle{};
+	
+	particle.color = { 0.5f,0.5f,1.0f };
+	particle.currentTime = 0.0f;
+	particle.lifeTime = 2.0f;
+	Vector3 aaaaa;
+	aaaaa.x = random::Generate<float>(-0.1f,0.1f);
+	aaaaa.y = random::Generate<float>(-0.1f,0.1f);
+	aaaaa.z = random::Generate<float>(-0.1f,0.1f);
+	particle.transform.translate = deadParticleEmitter.world_.transform.translate + aaaaa;
+	particle.transform.scale = deadParticleEmitter.particleRadius;
+	//移動量を決める
+	aaaaa.x = random::Generate<float>(-0.1f, 0.1f);
+	aaaaa.y = random::Generate<float>(-0.1f, 0.1f);
+	aaaaa.z = random::Generate<float>(-0.1f, 0.1f);
+	particle.velocity = aaaaa;
+	return particle;
 }
 void PDead::UpdatedeadParticle(Particle& particle)
 {

@@ -17,8 +17,10 @@ private:
 	bool isModelDraw = true;
 	//パーティクル関連
 	std::unique_ptr<ParticleSystem> deadParticle_;
+	Particle CustomParticle();
 	void UpdatedeadParticle(Particle& particle);
 	Emitter deadParticleEmitter;
+	float trans = 0;
 	//アニメーション
 	std::unique_ptr<Animation> deadAnimation;
 };
