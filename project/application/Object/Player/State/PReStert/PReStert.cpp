@@ -7,6 +7,7 @@ void PReStert::Init(Player* player)
 	player->GetWorld().transform.scale = { 1.0f,1.0f,1.0f };
 	player->GetWorld().transform.quaternion = Quaternion::IdentityQuaternion();
 	player->GetWorld().Update();
+	player->SetColliderUse(Player::ColliderType::pCollider,true);
 }
 void PReStert::Update(Player* player)
 {

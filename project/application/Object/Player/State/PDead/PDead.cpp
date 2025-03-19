@@ -49,7 +49,7 @@ void PDead::Draw(Player* player)
 {
 	player;
 	if (isModelDraw) {
-		//player->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(player->GetWorld(), deadAnimation->GetSkinCluster());
+		player->Getmodels()[Player::PlayerModel::MainBody]->RendererSkinDraw(player->GetWorld(), deadAnimation->GetSkinCluster());
 	}
 	deadParticle_->RendererDraw();
 }

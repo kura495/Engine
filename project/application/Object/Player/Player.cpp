@@ -56,6 +56,7 @@ void Player::Update()
 			ChangeState<PDead>();
 			isDamege = false;
 			HP_ -= 1;
+			colliders_[ColliderType::pCollider].IsUsing = false;
 		}
 	}
 	//ステートのアップデート
