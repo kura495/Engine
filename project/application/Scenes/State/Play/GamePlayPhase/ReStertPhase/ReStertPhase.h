@@ -18,7 +18,7 @@ private:
 	int BGMHundle;
 	float audioValue = 0.0f;
 	float kMaxaudioValue = 0.04f;
-	//画像
+	//Life_UI
 	std::unique_ptr<Life_UI> life_UI;
 	//画面遷移演出
 	Fade fade;

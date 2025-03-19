@@ -3,7 +3,7 @@
 void Life_UI::Init(int HP)
 {
 	//配列に合わせるために-1する
-	saveHP = HP - 1;
+	saveHP = HP;
 
 	textureManager_ = TextureManager::GetInstance();
 
@@ -23,7 +23,7 @@ void Life_UI::Init(int HP)
 
 bool Life_UI::Animation()
 {
-	if (fade[saveHP].Out(3.0f)) {
+	if (fade[saveHP].Out(1.5f)) {
 		return true;
 	}
 	return false;

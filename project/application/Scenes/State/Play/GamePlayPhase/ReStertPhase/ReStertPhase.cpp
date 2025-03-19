@@ -48,7 +48,6 @@ void ReStertPhase::Draw(GamePlayState* playState)
 {
 	playState->GetPlayer()->Draw();
 	fade.Draw();
-
 	if (phase == Phase::ReStertFanc) {
 		life_UI->Draw();
 	}
