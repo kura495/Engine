@@ -20,7 +20,7 @@ private:
 	Particle CustomParticle();
 	void UpdatedeadParticle(Particle& particle);
 	Emitter deadParticleEmitter;
-	float trans = 0;
+	float easeT = 0;
 	//アニメーション
 	std::unique_ptr<Animation> deadAnimation;
 };

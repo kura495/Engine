@@ -68,11 +68,11 @@ void PDead::NormalDeadUpdate(Player* player)
 		RGBshift::isEnableFlag = false;
 	}
 	if (isModelDraw == false) {
-		trans = (std::min)(trans + 0.005f, 1.0f);
+		easeT = (std::min)(easeT + 0.01f, 1.0f);
 		//パーティクル生成
 		deadParticle_->CustumSpawnParticle(deadParticleEmitter);
 		deadParticle_->Update();
-		if (trans == 1.0f) {
+		if (easeT == 1.0f) {
 			player->isDead = true;
 		}
 	}

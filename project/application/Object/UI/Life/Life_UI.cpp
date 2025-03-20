@@ -23,7 +23,7 @@ void Life_UI::Init(int HP)
 
 bool Life_UI::Animation()
 {
-	if (fade[saveHP].Out(1.5f)) {
+	if (fade[saveHP].Out(1.0f)) {
 		return true;
 	}
 	return false;
