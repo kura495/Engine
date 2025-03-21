@@ -14,9 +14,9 @@ void PlayPhase::Update(GamePlayState* playState)
 	}
 
 	playState->GetPlayer()->Update();
-	playState->GetCollisionManager()->Update();
 	playState->GetEnemyManager()->Update();
 	playState->GetFollowCamera()->Update();
+	playState->GetCollisionManager()->Update();
 
 	if (playState->GetEnemyManager()->GetisClear()) {
 		playState->ChangePhase<ClearPhase>();

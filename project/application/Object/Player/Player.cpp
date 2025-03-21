@@ -77,6 +77,7 @@ void Player::Update()
 #ifdef USE_IMGUI
 	ImGui();
 #endif
+
 	world_.Update();
 }
 void Player::Draw()
@@ -121,8 +122,14 @@ void Player::OnCollision(const ICollider& ICollider)
 		causeOfDeath_ = CauseOfDeath::Normal;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
-		world_.transform.translate -= move;
-		world_.Update();
+			if (ICollider.GetCenter().x < world_.transform.translate.x) {
+				world_.transform.translate.x = 1.5f;
+			}
+			if (ICollider.GetCenter().x > world_.transform.translate.x) {
+				world_.transform.translate.x = -1.5f;
+			}
+			
+			world_.Update();
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
@@ -130,6 +137,7 @@ void Player::OnCollision(const ICollider& ICollider)
 		gravity = kgravity;
 		isOnFloorFlag = true;
 	}
+
 	state_->OnCollision(this,ICollider);
 	return;
 }

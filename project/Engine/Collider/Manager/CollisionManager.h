@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 //当たり判定管理クラス//
 #include "Collider/ICollider.h"
 #include "Collider/Box/BoxCollider.h"
@@ -43,7 +43,7 @@ private:
 	bool CheckCollision(BoxCollider* colliderA, BoxCollider* colliderB);
 	bool CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* colliderB);
 	//void CheckCollitionOBBox(OBBoxCollider* colliderA, OBBoxCollider* colliderB);
-
+	void ImGuiDebugText(ICollider* colliderA, ICollider* colliderB);
 	/// <summary>
 	/// 分離軸に投影された軸成分から投影線分長を算出
 	/// </summary>
