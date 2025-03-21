@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Scenes/State/Play/GamePlayPhase/PlayPhase/PlayPhase.h"
 
 void Player::Init(std::vector<Model*> models)
 {
@@ -55,6 +56,7 @@ void Player::Update()
 			ChangeState<PDead>();
 			isDamege = false;
 			HP_ -= 1;
+			colliders_[ColliderType::pCollider].IsUsing = false;
 		}
 	}
 	//ステートのアップデート
@@ -63,7 +65,7 @@ void Player::Update()
 	attackHitParticle_->Update();
 	attackHitBombParticle_->Update();
 	//重力を加える
-	if (state_->GetStateType() != PlayerState::kDead && state_->GetStateType() != PlayerState::kJump) {
+	if (state_->GetStateType() != PlayerState::Dead && state_->GetStateType() != PlayerState::Jump) {
 		world_.transform.translate.y -= gravity;
 	}
 	//地面にいないなら落ちるスピードが加速する
@@ -75,6 +77,7 @@ void Player::Update()
 #ifdef USE_IMGUI
 	ImGui();
 #endif
+
 	world_.Update();
 }
 void Player::Draw()
@@ -102,6 +105,7 @@ void Player::ColliderInit()
 	colliders_[ColliderType::pCollider].OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 	colliders_[ColliderType::pCollider].SetcollitionAttribute(Collider::Tag::Player);
 	colliders_[ColliderType::pCollider].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon);
+	colliders_[ColliderType::pCollider].colliderName = "Player";
 }
 void Player::OnCollision(const ICollider& ICollider)
 {
@@ -118,8 +122,14 @@ void Player::OnCollision(const ICollider& ICollider)
 		causeOfDeath_ = CauseOfDeath::Normal;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
-		world_.transform.translate -= move;
-		world_.Update();
+			if (ICollider.GetCenter().x < world_.transform.translate.x) {
+				world_.transform.translate.x = 1.5f;
+			}
+			if (ICollider.GetCenter().x > world_.transform.translate.x) {
+				world_.transform.translate.x = -1.5f;
+			}
+			
+			world_.Update();
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
@@ -127,6 +137,7 @@ void Player::OnCollision(const ICollider& ICollider)
 		gravity = kgravity;
 		isOnFloorFlag = true;
 	}
+
 	state_->OnCollision(this,ICollider);
 	return;
 }
@@ -141,6 +152,7 @@ void Player::AttackColliderInit()
 	colliders_[ColliderType::Attack].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon & ~Collider::Tag::Floor);
 
 	colliders_[ColliderType::Attack].IsUsing = false;
+	colliders_[ColliderType::Attack].colliderName = "PlayerAttack";
 }
 void Player::AttackOnCollision(const ICollider& collider)
 {
@@ -157,6 +169,8 @@ void Player::AttackOnCollision(const ICollider& collider)
 		//音関連
 		Audio::Stop(SEattack, true,false);
 		Audio::Play(SEHitattack, 1.0f);
+		//ヒットストップ
+		PlayPhase::HitStop(0.1f);
 
 	}
 	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
@@ -170,18 +184,8 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
-	}
-	if (collider.GetcollitionAttribute() == Collider::Tag::FakeEnemyBall) {
-		colliders_[ColliderType::Attack].IsUsing = false;
-		//パーティクル用のベクトル
-		attackVector = TransformNormal({ 0.0f,0.0f,1.0f }, Matrix4x4(MakeRotateMatrix(world_.transform.quaternion)));
-		attackVector.Normalize();
-		attackVector *= -1;
-		//パーティクル生成
-		AttackHitBombParticleEmitter.color = { 1.0f,1.0f,1.0f };
-		AttackHitBombParticleEmitter.world_.transform.translate = attackColliderWorld_.transform.translate + world_.transform.translate;
-		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
-		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
+		//ヒットストップ
+		PlayPhase::HitStop(0.1f);
 	}
 
 }
@@ -218,10 +222,10 @@ void Player::UpdateAttackHitBombParticle(Particle& particle)
 }
 void Player::ReStert()
 {
+	isCompleteReStert = false;
 	isDead = false;
 	isDyingFlag = false;
-	world_.transform.translate = { 0.0f,0.0f,-3.0f };
-	ChangeState<PRoot>();
+	ChangeState<PReStert>();
 	
 }
 void Player::ImGui()

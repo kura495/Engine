@@ -32,9 +32,6 @@
     <Filter Include="project\application\Object\Enemy\Manager">
       <UniqueIdentifier>{e42d649d-a287-410b-a9ca-ac60425a8fa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="project\application\Object\Enemy\Boss\DummyBall">
-      <UniqueIdentifier>{b18b2d78-5397-40c3-9384-2bdc684b83eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="project\application\Object\Enemy\Boss\State">
       <UniqueIdentifier>{46937a93-7587-4b45-b325-8dedf9adff74}</UniqueIdentifier>
     </Filter>
@@ -221,9 +218,6 @@
     <Filter Include="project\Engine\PipeLineState\LuminanceBasedOutline">
       <UniqueIdentifier>{1feda1c9-3c7f-49d4-b77d-46b2b7e0f77f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="project\Engine\PipeLineState\MotionBlur">
-      <UniqueIdentifier>{365dd6bd-4bd0-47cb-bd0e-423abeaa1aa7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="project\Engine\PipeLineState\PostProsess">
       <UniqueIdentifier>{adf6c344-8fbd-4ab5-a19a-3db3115aae50}</UniqueIdentifier>
     </Filter>
@@ -298,9 +292,6 @@
     </Filter>
     <Filter Include="project\Engine\PostProsess\LuminanceBasedOutline">
       <UniqueIdentifier>{8d32dd24-3d26-4339-90ac-0c4ac21a335e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="project\Engine\PostProsess\Normal">
-      <UniqueIdentifier>{d1dbefc6-e367-4b29-8ecc-ac9e316de834}</UniqueIdentifier>
     </Filter>
     <Filter Include="project\Engine\PostProsess\RGBtoHSV">
       <UniqueIdentifier>{cc8255c4-5ea8-4e8d-9154-4148f74dddd7}</UniqueIdentifier>
@@ -386,6 +377,30 @@
     <Filter Include="project\application\Object\Enemy\Boss\Sword">
       <UniqueIdentifier>{ddf75197-f70d-467e-b020-b7fbd5662ab8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="project\application\Object\Enemy\Boss\State\EReStert">
+      <UniqueIdentifier>{0fc63474-326b-4a58-9298-af896b7b52c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\UI">
+      <UniqueIdentifier>{99b8d663-eee6-4c92-b9e0-fd56143f711f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\UI\Life">
+      <UniqueIdentifier>{93c3c99a-edf3-4773-bc48-660a619d77cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\Engine\Utility\random">
+      <UniqueIdentifier>{b5dee0fd-c649-4e59-a2bd-279af2d452d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase">
+      <UniqueIdentifier>{f0e766e8-5e90-4538-a8c8-86cd928da3f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\Engine\PostProsess\RGBShift">
+      <UniqueIdentifier>{d67f3a42-9496-44c9-9a75-27023f51826e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\Engine\PipeLineState\RGBShiftPSO">
+      <UniqueIdentifier>{32885a22-21bf-4fd0-a2d9-1f31d8f48aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\application\Object\Player\State\PReStert">
+      <UniqueIdentifier>{a54ef6d0-f8cc-4ad8-b452-74455a8a5877}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="project\application\Object\Box\BoxObject.cpp">
@@ -405,9 +420,6 @@
     </ClCompile>
     <ClCompile Include="project\application\Object\Enemy\Boss\Ball\Ball.cpp">
       <Filter>project\application\Object\Enemy\Boss\Ball</Filter>
-    </ClCompile>
-    <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp">
-      <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
     </ClCompile>
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EDown\EDown.cpp">
       <Filter>project\application\Object\Enemy\Boss\State\EDown</Filter>
@@ -721,11 +733,27 @@
     <ClCompile Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.cpp">
       <Filter>project\application\Object\Enemy\Boss\Sword</Filter>
     </ClCompile>
-    <ClCompile Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.cpp" />
-    <ClCompile Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.cpp" />
-    <ClCompile Include="project\Engine\Utility\random\random.cpp" />
-    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.cpp" />
+    <ClCompile Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.cpp">
+      <Filter>project\application\Object\Enemy\Boss\State\EReStert</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\UI\Life\Life_UI.cpp">
+      <Filter>project\application\Object\UI\Life</Filter>
+    </ClCompile>
+    <ClCompile Include="project\Engine\Utility\random\random.cpp">
+      <Filter>project\Engine\Utility\random</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.cpp">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase</Filter>
+    </ClCompile>
+    <ClCompile Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.cpp">
+      <Filter>project\Engine\PostProsess\RGBShift</Filter>
+    </ClCompile>
+    <ClCompile Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.cpp">
+      <Filter>project\Engine\PipeLineState\RGBShiftPSO</Filter>
+    </ClCompile>
+    <ClCompile Include="project\application\Object\Player\State\PReStert\PReStert.cpp">
+      <Filter>project\application\Object\Player\State\PReStert</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -745,9 +773,6 @@
     </ClInclude>
     <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h">
       <Filter>project\application\Object\Enemy\Boss\Ball</Filter>
-    </ClInclude>
-    <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h">
-      <Filter>project\application\Object\Enemy\Boss\DummyBall</Filter>
     </ClInclude>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EDown\EDown.h">
       <Filter>project\application\Object\Enemy\Boss\State\EDown</Filter>
@@ -1364,11 +1389,27 @@
     <ClInclude Include="project\application\Object\Enemy\Boss\BeamSword\BeamSword.h">
       <Filter>project\application\Object\Enemy\Boss\Sword</Filter>
     </ClInclude>
-    <ClInclude Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.h" />
-    <ClInclude Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.h" />
-    <ClInclude Include="project\Engine\Utility\random\random.h" />
-    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h" />
+    <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h">
+      <Filter>project\application\Object\Enemy\Boss\State\EReStert</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\UI\Life\Life_UI.h">
+      <Filter>project\application\Object\UI\Life</Filter>
+    </ClInclude>
+    <ClInclude Include="project\Engine\Utility\random\random.h">
+      <Filter>project\Engine\Utility\random</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.h">
+      <Filter>project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase</Filter>
+    </ClInclude>
+    <ClInclude Include="project\Engine\PostProsess\RGBshift\renderTextrue\RGBshift.h">
+      <Filter>project\Engine\PostProsess\RGBShift</Filter>
+    </ClInclude>
+    <ClInclude Include="project\Engine\PostProsess\RGBshift\Pipeline\RGBshiftPSO.h">
+      <Filter>project\Engine\PipeLineState\RGBShiftPSO</Filter>
+    </ClInclude>
+    <ClInclude Include="project\application\Object\Player\State\PReStert\PReStert.h">
+      <Filter>project\application\Object\Player\State\PReStert</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

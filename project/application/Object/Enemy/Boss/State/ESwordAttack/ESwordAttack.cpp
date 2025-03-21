@@ -57,7 +57,7 @@ void ESwordAttack::Update(Boss* boss)
 }
 void ESwordAttack::Draw(Boss* boss)
 {
-	boss->Getmodels()[Boss::BossModel::MainBody]->RendererSkinDraw(boss->GetWorld(), boss->GetAnime()->GetSkinCluster());
+	boss->Getmodels()[Boss::BossModel::MainBody]->RendererDraw(boss->GetWorld());
 	beamSword_->Draw();
 }
 std::string ESwordAttack::ShowState()

@@ -3,8 +3,8 @@
 #include "application/Object/Player/Player.h"
 void EAttackRocketPunch::Init(Boss* boss)
 {
-	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackArm, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackHund, Collider::Tag::Enemy);
 
 	easeT = 0.0f;
 	PrePos = boss->GetWorld().transform.translate;
@@ -24,8 +24,8 @@ void EAttackRocketPunch::Update(Boss* boss)
 	}
 	if (modeFlag == mode::Attack) {
 		AttackFunc(boss);
-		boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::EnemyAttack);
-		boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::EnemyAttack);
+		boss->SetColliderAttribute(Boss::ColliderType::AttackArm, Collider::Tag::EnemyAttack);
+		boss->SetColliderAttribute(Boss::ColliderType::AttackHund, Collider::Tag::EnemyAttack);
 		addEaseT = 0.05f;
 		if (boss->GetWorld().transform.translate.y <= 0.0f) {
 			boss->GetWorld().transform.translate.y = 0.0f;
@@ -38,8 +38,8 @@ void EAttackRocketPunch::Update(Boss* boss)
 	if (modeFlag == mode::Stay) {
 		addEaseT = 0.02f;
 		//当たり判定を通常に変更
-		boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-		boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+		boss->SetColliderAttribute(Boss::ColliderType::AttackArm, Collider::Tag::Enemy);
+		boss->SetColliderAttribute(Boss::ColliderType::AttackHund, Collider::Tag::Enemy);
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
 		if (easeT == 1.0f) {
 			boss->ChangeState<EReturnPosition>();

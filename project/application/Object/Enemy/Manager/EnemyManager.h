@@ -10,7 +10,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="player">プレイヤーのポインタ</param>
-	void Init(Player* player);
+	void Init(Player* playerlayer);
 	void Update();
 	void Draw();
 	void ReStert();

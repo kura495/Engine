@@ -12,7 +12,6 @@ void CollisionManager::Init()
 		{return CheckCollision(dynamic_cast<OBBoxCollider*>(colliderA), dynamic_cast<OBBoxCollider*>(colliderB));};
 
 }
-
 void CollisionManager::Update()
 {
 	Colliders_.remove_if([this](ICollider* Icollider){
@@ -29,7 +28,6 @@ void CollisionManager::Update()
 
 	CheckAllCollisions();
 }
-
 void CollisionManager::Draw()
 {
 #ifdef _DEBUG
@@ -40,7 +38,6 @@ void CollisionManager::Draw()
 	}
 #endif
 }
-
 void CollisionManager::CheckAllCollisions() {
 
 	std::list<ICollider*>::iterator BoxitrA = Colliders_.begin();
@@ -67,6 +64,8 @@ void CollisionManager::CheckAllCollisions() {
 			}
 			//判定処理
 			if (checkCollisions_[colliderA->GetShape()][colliderB->GetShape()](colliderA, colliderB)) {
+				//
+				//ImGuiDebugText(colliderA,colliderB);
 				//当たった時の処理呼び出し
 				colliderA->OnCollision(*colliderB);
 				colliderB->OnCollision(*colliderA);
@@ -74,44 +73,6 @@ void CollisionManager::CheckAllCollisions() {
 		}
 	}
 }
-//void CollisionManager::CheckCollisionCircle(Collider * colliderA, Collider * colliderB) {
-//	// 判定対象AとBの座標
-//	Vector3 posA = { 1.0f,1.0f,1.0f }, posB = {1.0f, 1.0f,1.0f};
-//	//posA = colliderA->GetWorldPosition();
-//	//posB = colliderB->GetWorldPosition();
-//	float Length =(float)sqrt(
-//	    (posB.x - posA.x) * (posB.x - posA.x) +
-//		(posB.y - posA.y) * (posB.y - posA.y) +
-//	    (posB.z - posA.z) * (posB.z - posA.z));
-//	// コライダーのフィルターの値でビット演算
-//	if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0 && (colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
-//		return;
-//	}
-//	else if ((colliderA->GetcollitionAttribute() & colliderB->GetcollisionMask()) == 0) {
-//		if (Length <= colliderA->GetRadius() + colliderB->GetRadius()) {
-//			// コライダーAの衝突時コールバック
-//			colliderA->OnCollision(colliderB->GetcollitionAttribute());
-//		}
-//	}
-//	else if ((colliderB->GetcollitionAttribute() & colliderA->GetcollisionMask()) == 0) {
-//		if (Length <= colliderA->GetRadius() + colliderB->GetRadius()) {
-//			// コライダーBの衝突時コールバック
-//			colliderB->OnCollision(colliderA->GetcollitionAttribute());
-//		}
-//	}
-//	else {
-//		if (Length <= colliderA->GetRadius() + colliderB->GetRadius()) {
-//			// コライダーAの衝突時コールバック
-//			colliderA->OnCollision(colliderB->GetcollitionAttribute());
-//			// コライダーBの衝突時コールバック
-//			colliderB->OnCollision(colliderA->GetcollitionAttribute());
-//		}
-//	}
-//}
-//void CollisionManager::CheckCollitionOBBox(OBBoxCollider* colliderA, OBBoxCollider* colliderB)
-//{
-//	
-//}
 bool CollisionManager::CheckCollision(BoxCollider * colliderA, BoxCollider * colliderB)
 {
 	// 判定対象AとBの座標
@@ -127,7 +88,6 @@ bool CollisionManager::CheckCollision(BoxCollider * colliderA, BoxCollider * col
 	}
 	return false;
 }
-
 bool CollisionManager::CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* colliderB)
 {
 	// 方向ベクトルと方向ベクトルの長さ
@@ -245,13 +205,24 @@ bool CollisionManager::CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* c
 	L = fabs(Vector3::Dot(Interval, Cross));
 	if (L > rA + rB)
 		return false;
-
+	
+	// 分離平面が存在しないので「衝突している」
 	colliderA->pushForce = CalculateMTV(colliderA, colliderB);
 	colliderB->pushForce = colliderA->pushForce;
-	// 分離平面が存在しないので「衝突している」
+
 	return true;
 }
-
+void CollisionManager::ImGuiDebugText(ICollider* colliderA, ICollider* colliderB)
+{
+#ifdef _DEBUG
+	ImGui::Begin("ColliderLog");
+	ImGui::Text("Hit\n");
+	std::string Tex = colliderA->colliderName + " ";
+	Tex = Tex + colliderB->colliderName;
+	ImGui::Text(Tex.c_str());
+	ImGui::End();
+#endif
+}
 float CollisionManager::LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3* e2, Vector3* e3)
 {
 	// 3つの内積の絶対値の和で投影線分長を計算
@@ -261,7 +232,6 @@ float CollisionManager::LenSegOnSeparateAxis(Vector3* Sep, Vector3* e1, Vector3*
 	FLOAT r3 = e3 ? (fabs(Vector3::Dot(*Sep, *e3))) : 0;
 	return r1 + r2 + r3;
 }
-
 Vector3 CollisionManager::CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2) {
 	Vector3 axes[] = {
 		obb1->GetDirect(0), obb1->GetDirect(1), obb1->GetDirect(2),
@@ -295,7 +265,6 @@ Vector3 CollisionManager::CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2)
 
 	return mtvAxis * minOverlap;
 }
-
 float CollisionManager::CalculateOverlap(OBBoxCollider* obb1, OBBoxCollider* obb2,Vector3& axis) {
 	// 軸の正規化
 	Vector3 normalizedAxis = axis.Normalize();

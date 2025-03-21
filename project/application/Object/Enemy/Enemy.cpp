@@ -12,15 +12,4 @@ void Enemy::ImGui()
 #endif
 }
 
-void Enemy::OnCollision(const ICollider& ICollider)
-{
-	//Weaponと接触していたら
-	if (ICollider.GetcollitionAttribute() == Collider::Tag::Weapon) {
-		HP_ -= 1;
-		isDamage = true;
-		damageInterval = 0;
-
-	}
-}
-
 

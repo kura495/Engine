@@ -3,7 +3,7 @@
 void ClearPhase::Init(GamePlayState* playState)
 {
 	playState;
-	fade.InInit();
+	fade.InInit("project/resources/BlackTexture.png");
 	BGMHundle = Audio::LoadAudioMP3("project/resources/sound/BGM/Nisemono_Rock.mp3", true);
 }
 

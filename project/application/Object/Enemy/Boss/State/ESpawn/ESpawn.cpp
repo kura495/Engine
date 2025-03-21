@@ -13,8 +13,8 @@ ESpawn::ESpawn()
 void ESpawn::Init(Boss* boss)
 {
 	//当たり判定を通常に変更
-	boss->SetColliderAttribute(Boss::ColliderType::Arm, Collider::Tag::Enemy);
-	boss->SetColliderAttribute(Boss::ColliderType::Hund, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackArm, Collider::Tag::Enemy);
+	boss->SetColliderAttribute(Boss::ColliderType::AttackHund, Collider::Tag::Enemy);
 
 	boss->GetWorld().transform.translate = SpawnPosition;
 	boss->GetWorld().Update();

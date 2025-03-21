@@ -33,11 +33,11 @@ public:
 	IBossState() { stateType = BossState::End; };
 	virtual ~IBossState() {};
 
-	virtual void Init(Boss* p) = 0;
-	virtual void Update(Boss* p) = 0;
-	virtual void Draw(Boss* p) = 0;
+	virtual void Init(Boss* boss) = 0;
+	virtual void Update(Boss* boss) = 0;
+	virtual void Draw(Boss* boss) = 0;
 
-	virtual void OnCollision(Boss* boss, const ICollider& collider) { boss; collider; };
+	virtual void OnCollisionDamage(Boss* boss, const ICollider& collider) { boss; collider; };
 	virtual void OnCollisionAttack(Boss* boss, const ICollider& collider) { boss; collider; };
 
 	BossState GetStateType() { return stateType; };

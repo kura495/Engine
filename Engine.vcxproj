@@ -191,7 +191,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\Ball\Ball.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\Boss.cpp" />
-    <ClCompile Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EDead\EDead.cpp" />
@@ -204,9 +203,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Object\FloorManager\FloorManager.cpp" />
     <ClCompile Include="project\application\Object\Plane\PlaneObject.cpp" />
     <ClCompile Include="project\application\Object\Player\Player.cpp" />
+    <ClCompile Include="project\application\Object\Player\State\PReStert\PReStert.cpp" />
     <ClCompile Include="project\application\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="project\application\Object\SkyDome\SkyDome.cpp" />
     <ClCompile Include="project\application\Object\Transition\Fade\Fade.cpp" />
+    <ClCompile Include="project\application\Object\UI\Life\Life_UI.cpp" />
     <ClCompile Include="project\application\Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="project\application\Scenes\State\Clear\GameClearState.cpp" />
     <ClCompile Include="project\application\Scenes\State\GameOver\GameOverState.cpp" />
@@ -299,6 +300,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.h" />
+    <ClInclude Include="project\application\Object\Player\State\PReStert\PReStert.h" />
+    <ClInclude Include="project\application\Object\UI\Life\Life_UI.h" />
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GameOverPhase\GameOverPhase.h" />
@@ -314,7 +317,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\application\Object\Camera\FollowCamera.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\Ball\Ball.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\Boss.h" />
-    <ClInclude Include="project\application\Object\Enemy\Boss\DummyBall\DummyBall.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackSlam\EAttackSlam.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackThrowball\EAttackThrowball.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EDead\EDead.h" />

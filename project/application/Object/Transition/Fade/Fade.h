@@ -8,9 +8,9 @@ class Fade
 {
 public:	
 	//フェードイン用初期化
-	void InInit();
+	void InInit(std::string FilePath);
 	//フェードイン用初期化
-	void OutInit();
+	void OutInit(std::string FilePath);
 	/// <summary>
 	/// フェードイン用更新処理　カウントが指定した秒数に達するとtrueを返す
 	/// </summary>
@@ -25,10 +25,11 @@ public:
 	bool Out(float second);
 
 	void Draw();
+	void Draw(WorldTransform& world);
 
 private:
 	//初期化
-	void Init();
+	void Init(std::string FilePath);
 
 	std::unique_ptr<Sprite> sprite_;
 	WorldTransform world_;

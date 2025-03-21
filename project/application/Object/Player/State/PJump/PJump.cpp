@@ -1,34 +1,34 @@
 #include "PJump.h"
 #include "../../Player.h"
-void PJump::Init(Player* p)
+void PJump::Init(Player* player)
 {
-	p;
+	player;
 	jumpForce = kJumpForce;
 }
 
-void PJump::Update(Player* p)
+void PJump::Update(Player* player)
 {
 	//移動関数
-	p->Move();
+	player->Move();
 	//ジャンプの処理
-	p->GetWorld().transform.translate.y += jumpForce;
+	player->GetWorld().transform.translate.y += jumpForce;
 	jumpForce -= kJumpSubValue;
 }
 
-void PJump::Draw(Player* p)
+void PJump::Draw(Player* player)
 {
-	p->Getmodels()[Player::PlayerModel::MainBody]->RendererDraw(p->GetWorld());
+	player->Getmodels()[Player::PlayerModel::MainBody]->RendererDraw(player->GetWorld());
 }
 
-void PJump::OnCollision(Player* p, const ICollider& collider)
+void PJump::OnCollision(Player* player, const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == Collider::Tag::Floor) {
-		p->GetWorld().transform.translate.y = collider.GetCenter().y;
-		p->GetWorld().Update();
-			if (p->GetWorld().transform.translate.y <= collider.GetCenter().y && jumpForce <= 0) {
-				p->GetWorld().transform.translate.y = collider.GetCenter().y;
-				p->GetWorld().Update();
-				p->ChangeState<PRoot>();
+		player->GetWorld().transform.translate.y = collider.GetCenter().y;
+		player->GetWorld().Update();
+			if (player->GetWorld().transform.translate.y <= collider.GetCenter().y && jumpForce <= 0) {
+				player->GetWorld().transform.translate.y = collider.GetCenter().y;
+				player->GetWorld().Update();
+				player->ChangeState<PRoot>();
 			}
 
 	}
