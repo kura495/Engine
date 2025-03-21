@@ -28,8 +28,8 @@ void PlayPhase::Update(GamePlayState* playState)
 		else {
 			playState->ChangePhase<ReStertPhase>();
 		}
-
 	}
+
 }
 
 void PlayPhase::Draw(GamePlayState* playState)

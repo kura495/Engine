@@ -8,12 +8,7 @@ void SkyDome::Init()
 
 void SkyDome::Update()
 {
-#ifdef _DEBUG
-	ImGui::Begin("SkyDome");
-	ImGui::DragFloat3("Scale",&world_.transform.scale.x);
-	ImGui::End();
-	world_.Update();
-#endif 
+
 }
 
 void SkyDome::Draw()

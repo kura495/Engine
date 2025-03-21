@@ -122,14 +122,16 @@ void Player::OnCollision(const ICollider& ICollider)
 		causeOfDeath_ = CauseOfDeath::Normal;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
-			if (ICollider.GetCenter().x < world_.transform.translate.x) {
-				world_.transform.translate.x = 1.5f;
-			}
-			if (ICollider.GetCenter().x > world_.transform.translate.x) {
-				world_.transform.translate.x = -1.5f;
-			}
-			
-			world_.Update();
+
+		/*ImGui::Begin("ColliderLog2");
+		ImGui::DragFloat3("colliderA", &colliders_[ColliderType::pCollider].pushForce.x);
+		if (ImGui::Button("attach")) {
+		}
+		world_.transform.translate += colliders_[ColliderType::pCollider].pushForce;
+		pushForce.push_back(colliders_[ColliderType::pCollider].pushForce);
+		world_.Update();
+
+		ImGui::End();*/
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
@@ -137,7 +139,11 @@ void Player::OnCollision(const ICollider& ICollider)
 		gravity = kgravity;
 		isOnFloorFlag = true;
 	}
-
+	ImGui::Begin("pushForceLog");
+	for (Vector3 aaaaa : pushForce) {
+		ImGui::DragFloat3("colliderA", &aaaaa.x);
+	}
+	ImGui::End();
 	state_->OnCollision(this,ICollider);
 	return;
 }

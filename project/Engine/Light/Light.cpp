@@ -1,4 +1,4 @@
-﻿#include "Light.h"
+#include "Light.h"
 
 Light* Light::GetInstance()
 {
@@ -13,7 +13,7 @@ void Light::Initialize()
 	directionalLightResource = directX_->CreateBufferResource(sizeof(DirectionalLight));
 	directionalLightResource.Get()->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
 	LightData.color = { 1.0f,1.0f,1.0f,1.0f };
-	LightData.direction = { 0.0f,-1.0f,0.0f };
+	LightData.direction = { 0.0f,10.0f,0.0f };
 	LightData.intensity = 1.0f;
 	directionalLightData->color = LightData.color;
 	directionalLightData->direction = LightData.direction;

@@ -12,17 +12,6 @@ void RGBshift::Update()
 	else {
 		Reset();
 	}
-
-
-
-#ifdef _DEBUG
-	ImGui::Begin("PostProsess");
-	ImGui::Checkbox("RGBshift", &isEnableFlag);
-	ImGui::DragFloat3("RGBpos", &materialData->x,0.01f);
-	ImGui::DragFloat("easeT", &easeT,0.01f);
-
-	ImGui::End();
-#endif
 }
 
 void RGBshift::Reset()
