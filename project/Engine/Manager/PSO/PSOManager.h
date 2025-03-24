@@ -19,6 +19,7 @@
 #include "PostProsess/RGBtoHSV/Pipeline/RGBtoHSV.h"
 #include "PostProsess/Dissolve/Pipeline/Dissolve.h"
 #include "PostProsess/RGBshift/Pipeline/RGBshiftPSO.h"
+#include "PostProsess/GlitchNoise/Pipeline/GlitchNoise.h"
 
 #include "Engine/ParticleSystem/PipeLine/ParticlePipeLine.h"
 

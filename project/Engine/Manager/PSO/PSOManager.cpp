@@ -42,6 +42,8 @@ void PSOManager::Initalize()
 	sprite.Initalize();
 	RGBshiftPSO rgbshiftPSO;
 	rgbshiftPSO.Initalize();
+	GlitchNoise glitchNoise;
+	glitchNoise.Initalize();
 	//PSOをリストに追加
 	AddPipeline(modelPSO.GetPSO(),PipelineType::Model);
 	AddPipeline(skinning.GetPSO(),PipelineType::Skinning);
@@ -59,6 +61,7 @@ void PSOManager::Initalize()
 	AddPipeline(luminanceBasedOutline.GetPSO(), PostProsessType::LuminanceBasedOutline);
 	AddPipeline(rGBtoHSV.GetPSO(), PostProsessType::RGBtoHSV);
 	AddPipeline(rgbshiftPSO.GetPSO(), PostProsessType::RGBshift);
+	AddPipeline(glitchNoise.GetPSO(), PostProsessType::GlitchNoise);
 
 
 }
