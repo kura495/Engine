@@ -214,11 +214,11 @@ bool CollisionManager::CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* c
 }
 void CollisionManager::ImGuiDebugText(ICollider* colliderA, ICollider* colliderB)
 {
+	std::string Tex = colliderA->colliderName + " ";
+	Tex = Tex + colliderB->colliderName;
 #ifdef _DEBUG
 	ImGui::Begin("ColliderLog");
 	ImGui::Text("Hit\n");
-	std::string Tex = colliderA->colliderName + " ";
-	Tex = Tex + colliderB->colliderName;
 	ImGui::Text(Tex.c_str());
 	ImGui::End();
 #endif

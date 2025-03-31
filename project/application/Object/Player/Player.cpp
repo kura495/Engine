@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Scenes/State/Play/GamePlayPhase/PlayPhase/PlayPhase.h"
-
+#include "Boss.h"
 void Player::Init(std::vector<Model*> models)
 {
 	name = "Player";
@@ -124,7 +124,7 @@ void Player::OnCollision(const ICollider& ICollider)
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
 		world_.transform.translate.x = colliders_[ColliderType::pCollider].pushForce.x;
 		//world_.transform.translate.y = colliders_[ColliderType::pCollider].pushForce.y;
-		world_.transform.translate.z = colliders_[ColliderType::pCollider].pushForce.z;
+		//world_.transform.translate.z = ICollider.GetCenter().z + colliders_[ColliderType::pCollider].pushForce.z;
 		pushForce.push_back(colliders_[ColliderType::pCollider].pushForce);
 		world_.Update();
 		/*ImGui::Begin("ColliderLog2");
