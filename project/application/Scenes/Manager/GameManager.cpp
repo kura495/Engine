@@ -122,7 +122,7 @@ void GameManager::Gameloop() {
 			
 			directX->PostDraw();
 
-			//流れと使い方
+			//流れと使い方(ポストエフェクト)
 			//描画先A->PreDraw();
 			//描画したい物->Draw();
 			//描画先A->PostDraw();
