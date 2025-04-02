@@ -123,6 +123,8 @@ void Player::OnCollision(const ICollider& ICollider)
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
 
+		world_.transform.translate -= move;
+		world_.Update();
 
 		//TODO:押し戻しをする処理
 		/*if (ICollider.GetCenter().x < world_.transform.translate.x) {
@@ -131,8 +133,6 @@ void Player::OnCollision(const ICollider& ICollider)
 		if (ICollider.GetCenter().x > world_.transform.translate.x) {
 			world_.transform.translate.x = -1.5f;
 		}*/
-			
-		world_.Update();
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
