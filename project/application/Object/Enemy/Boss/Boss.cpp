@@ -17,7 +17,7 @@ void Boss::Init(std::vector<Model*> models)
 	ChangeState<ESpawn>();
 	name = "Boss";
 	//初期値を設定
-	HP_ = 10;
+	HP_ = 6;
 }
 void Boss::Update()
 {
