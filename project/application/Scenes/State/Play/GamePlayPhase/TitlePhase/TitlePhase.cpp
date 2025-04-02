@@ -41,7 +41,7 @@ void TitlePhase::Update(GamePlayState* playState)
 	ImGui::End();
 #endif
 
-	if (Input::GetPadPrecede(XINPUT_GAMEPAD_X, 20)) {
+	if (Input::GetPadPrecede(XINPUT_GAMEPAD_A, 20)) {
 		stertCount += 0.3f;
 
 	}

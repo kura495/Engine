@@ -34,9 +34,9 @@ void ESpawn::Update(Boss* boss)
 	ParticleSystem::ParticleCustumSpawn(*sleepParticle_,sleepParticleEmitter);
 	//パーティクル更新
 	sleepParticle_->Update();
-	if (boss->GetHP() <= 9) {
-		boss->ChangeState<EReturnPosition>();
-	}
+
+	boss->ChangeState<EReturnPosition>();
+
 }
 
 void ESpawn::Draw(Boss* boss)

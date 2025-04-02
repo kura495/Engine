@@ -4,7 +4,7 @@ float PlayPhase::HitStopCount = 0.0f;
 float PlayPhase::TargetTime = 0.0f;
 void PlayPhase::Init(GamePlayState* playState)
 {
-	playState;
+	playState->GetPlayer()->ChangeState<PJump>();
 }
 
 void PlayPhase::Update(GamePlayState* playState)
