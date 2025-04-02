@@ -122,14 +122,17 @@ void Player::OnCollision(const ICollider& ICollider)
 		causeOfDeath_ = CauseOfDeath::Normal;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
-			if (ICollider.GetCenter().x < world_.transform.translate.x) {
-				world_.transform.translate.x = 1.5f;
-			}
-			if (ICollider.GetCenter().x > world_.transform.translate.x) {
-				world_.transform.translate.x = -1.5f;
-			}
+
+
+		//TODO:押し戻しをする処理
+		/*if (ICollider.GetCenter().x < world_.transform.translate.x) {
+			world_.transform.translate.x = 1.5f;
+		}
+		if (ICollider.GetCenter().x > world_.transform.translate.x) {
+			world_.transform.translate.x = -1.5f;
+		}*/
 			
-			world_.Update();
+		world_.Update();
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
