@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 //インプットクラス//
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
@@ -118,6 +118,7 @@ public:
 	/// <returns>bool</returns>
 	static bool GetPadPrecede(uint32_t buttonNumber,int delayTime);
 
+	static Vector2 GetPadTrreger() { return Vector2{ (float)joyState.Gamepad.bLeftTrigger,(float)joyState.Gamepad.bRightTrigger }; };
 private:
 	Input() = default;
 	~Input() { VibrateController(VIBRATION_MIN, VIBRATION_MIN, 0.0f); };

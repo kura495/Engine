@@ -8,6 +8,7 @@
 #include "Light/Light.h"
 #include "Utility/ImGuiManager.h"
 
+#include "Scenes/State/Title/TitleState.h"
 #include "Scenes/State/Play/GamePlayState.h"
 #include "Scenes/State/Clear/GameClearState.h"
 #include "Scenes/State/GameOver/GameOverState.h"

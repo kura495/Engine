@@ -43,7 +43,7 @@ void GameManager::Initialize()
 	GlobalVariables::GetInstance()->LoadFiles();
 	//State
 	state_ = std::make_unique<GamePlayState>();
-	currentSceneNum_ = PLAY;
+	currentSceneNum_ = state_.get()->GetSceneNum();
 	state_->Init();
 
 	renderTextrue = std::make_unique<PostProsess>();

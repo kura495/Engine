@@ -49,7 +49,7 @@ enum class StageBehavior {
 class GamePlayState : public IGameState
 {
 public:
-
+	GamePlayState() { StateNo = GameStateNo::PLAY; };
 	void Init()override;
 	void Update()override;
 	void Draw()override;

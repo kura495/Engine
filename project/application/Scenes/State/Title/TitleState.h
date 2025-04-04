@@ -7,24 +7,20 @@
 #include "WorldTransform/WorldTransform.h"
 #include "Editer/Editer.h"
 #include "Object/Transition/Fade/Fade.h"
+#include "Object/SkyDome/SkyDome.h"
 
-class GameClearState :public IGameState
+class TitleState :public IGameState
 {
-public:
-	GameClearState() { StateNo = GameStateNo::CLEAR; };
+public:	
+	TitleState() { StateNo = GameStateNo::TITLE; };
 	void Init()override;
 	void Update()override;
 	void Draw()override;
 private:
-	TextureManager* textureManager_;
 
-	std::unique_ptr<Sprite>texture;
-	uint32_t textureHundle;
-	WorldTransform texture_world_;
-	XINPUT_STATE joyState;
+	//UFOのモデル
+	std::unique_ptr<Model> UFOmodel_;
+	WorldTransform UFOWorld_;
 
-	bool IsCanPush = false;
-	int time = 0;
-
-	Fade fade;
+	std::unique_ptr<SkyDome> skyDome_;
 };

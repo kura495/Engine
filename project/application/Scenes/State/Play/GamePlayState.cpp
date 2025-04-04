@@ -2,7 +2,7 @@
 
 void GamePlayState::Init()
 {
-	StateNo = GameStateNo::PLAY;
+
 
 	//基本機能生成
 	Editer::GetInstance()->SetViewProjection(&Renderer::GetViewProjection());

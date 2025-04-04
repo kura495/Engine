@@ -217,6 +217,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Title\TitleState.cpp" />
     <ClCompile Include="project\Engine\Animation\Animation.cpp" />
     <ClCompile Include="project\Engine\Audio\Audio.cpp" />
     <ClCompile Include="project\Engine\Camera\DebugCamera\DebugCamera.cpp" />
@@ -310,6 +311,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Title\TitleState.h" />
     <ClInclude Include="project\Engine\PostProsess\GlitchNoise\Pipeline\GlitchNoise.h" />
     <ClInclude Include="project\Engine\PostProsess\GlitchNoise\renderTexture\PPGlitchNoise.h" />
     <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
