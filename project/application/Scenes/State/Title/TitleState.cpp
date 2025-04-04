@@ -4,25 +4,24 @@ void TitleState::Init()
 {
 	StateNo = GameStateNo::TITLE;
 
-	UFOmodel_ = std::make_unique<Model>();
-	UFOmodel_.reset(Model::CreateModelFromObj("project/resources/UFO", "UFO.obj"));
-
-	UFOWorld_.Init();
-	UFOWorld_.transform.translate.z = 10.0f;
-	UFOWorld_.Update();
 
 	//天球
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
+
+	ufo_ = std::make_unique<UFO>();
+	ufo_->Init();
+
 }
 
 void TitleState::Update()
 {
-	//if (Input::GetPadTrreger()) {
-	//	ImGui::Begin("Title");
-	//	ImGui::Text("Push");
-	//	ImGui::End();
-	//}
+	Vector2 test = Input::GetPadTrreger();
+	if (0 < Input::GetPadTrreger().x && 0 < Input::GetPadTrreger().y) {
+		ImGui::Begin("Title");
+		ImGui::Text("Push");
+		ImGui::End();
+	}
 	ImGui::Begin("Title");
 	Vector2 Test = Input::GetPadTrreger();
 	ImGui::Text("%f",Test.x);
@@ -30,12 +29,11 @@ void TitleState::Update()
 	ImGui::End();
 
 	skyDome_->Update();
+	ufo_->Update();
 }
 
 void TitleState::Draw()
 {
 	skyDome_->Draw();
-
-	UFOmodel_->RendererDraw(UFOWorld_);
+	ufo_->Draw();
 }
-

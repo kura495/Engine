@@ -92,7 +92,6 @@ Particle PDead::CustomParticle()
 {
 	Particle particle{};
 	
-
 	particle.currentTime = 0.0f;
 	particle.lifeTime = 2.0f;
 	Vector3 randomValue;

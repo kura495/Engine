@@ -2,25 +2,29 @@
 //ゲームクリアシーン//
 #include"Scenes/State/IgameState.h"
 #include "Input/Input.h"
-#include "Texture/TextureManager.h"
-#include "Sprite/Sprite.h"
 #include "WorldTransform/WorldTransform.h"
 #include "Editer/Editer.h"
 #include "Object/Transition/Fade/Fade.h"
 #include "Object/SkyDome/SkyDome.h"
+#include "ParticleSystem/ParticleSystem.h"
+#include "UFO/UFO.h"
 
 class TitleState :public IGameState
 {
 public:	
+	enum UFOState {
+		Idle,//停止状態
+		Normal,//通常速度
+		Boost,//最高速度の状態
+	};
 	TitleState() { StateNo = GameStateNo::TITLE; };
 	void Init()override;
 	void Update()override;
 	void Draw()override;
 private:
 
-	//UFOのモデル
-	std::unique_ptr<Model> UFOmodel_;
-	WorldTransform UFOWorld_;
-
+	std::unique_ptr<UFO> ufo_;
+	//天球
 	std::unique_ptr<SkyDome> skyDome_;
+
 };

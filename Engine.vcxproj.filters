@@ -757,6 +757,10 @@
     <ClCompile Include="project\Engine\PostProsess\GlitchNoise\renderTexture\PPGlitchNoise.cpp" />
     <ClCompile Include="project\Engine\PostProsess\GlitchNoise\Pipeline\GlitchNoise.cpp" />
     <ClCompile Include="project\application\Scenes\State\Title\TitleState.cpp" />
+    <ClCompile Include="project\application\Object\UFO\UFO.cpp" />
+    <ClCompile Include="project\application\Object\UFO\state\Boost\Boost.cpp" />
+    <ClCompile Include="project\application\Object\UFO\state\Idle\Idle.cpp" />
+    <ClCompile Include="project\application\Object\UFO\state\Normal\Normal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1416,6 +1420,11 @@
     <ClInclude Include="project\Engine\PostProsess\GlitchNoise\renderTexture\PPGlitchNoise.h" />
     <ClInclude Include="project\Engine\PostProsess\GlitchNoise\Pipeline\GlitchNoise.h" />
     <ClInclude Include="project\application\Scenes\State\Title\TitleState.h" />
+    <ClInclude Include="project\application\Object\UFO\UFO.h" />
+    <ClInclude Include="project\application\Object\UFO\state\Boost\Boost.h" />
+    <ClInclude Include="project\application\Object\UFO\state\Idle\Idle.h" />
+    <ClInclude Include="project\application\Object\UFO\state\Normal\Normal.h" />
+    <ClInclude Include="project\application\Object\UFO\state\IUFOState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">
