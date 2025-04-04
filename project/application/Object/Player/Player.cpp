@@ -239,6 +239,7 @@ void Player::ImGui()
 	ImGui::DragFloat3("Translate", &world_.transform.translate.x, 0.1f);
 	ImGui::Text("%d", HP_);
 	ImGui::Text(state_->ShowState().c_str());
+
 	ImGui::End();
 }
 bool Player::Move()

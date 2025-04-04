@@ -11,4 +11,6 @@ public:
 
 private:
 	void ImGui();
+	Vector3 uvT;
+	Vector3 color;
 };

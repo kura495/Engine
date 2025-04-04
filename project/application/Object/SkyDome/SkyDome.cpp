@@ -10,10 +10,13 @@ void SkyDome::Update()
 {
 #ifdef _DEBUG
 	ImGui::Begin("SkyDome");
-	ImGui::DragFloat3("Scale",&world_.transform.scale.x);
+	ImGui::DragFloat3("uvTransform",&uvT.x,0.1f);
+	ImGui::DragFloat3("color",&color.x);
 	ImGui::End();
 	world_.Update();
-#endif 
+#endif
+	uvT.x += 0.001f;
+	models_[0]->GetMaterial()->uvTransform = MakeTranslateMatrix(uvT);
 }
 
 void SkyDome::Draw()

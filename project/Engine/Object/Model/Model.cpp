@@ -1,4 +1,4 @@
-﻿#include "Model.h"
+#include "Model.h"
 #include "Renderer/Renderer.h"
 void Model::Initialize(const std::string& directoryPath, const std::string& filename)
 {
@@ -154,19 +154,16 @@ void Model::SkinDissolveDraw(const WorldTransform& transform, const SkinCluster&
 
 void Model::RendererDraw(WorldTransform& transform)
 {
-	materialData->color = color_;
 	Renderer::AddModelData(*this,transform);
 }
 
 void Model::RendererSkinDraw(WorldTransform& transform, SkinCluster& skinCluster)
 {
-	materialData->color = color_;
 	Renderer::AddModelSkinningData(*this, transform, skinCluster);
 }
 
 void Model::RendererSkinDissolveDraw(WorldTransform& transform, SkinCluster& skinCluster,float DissolveValue)
 {
-	materialData->color = color_;
 	Renderer::AddModelSkinningDissolveData(*this, transform, skinCluster, DissolveValue);
 }
 

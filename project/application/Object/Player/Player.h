@@ -71,6 +71,8 @@ public:
 	bool isCompleteReStert = false;
 	void ReStert();
 private:
+	Vector3 uvT;
+
 	void ImGui();
 
 	bool isDamege = false;
