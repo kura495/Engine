@@ -21,6 +21,7 @@
 
 #include "PostProsess/renderTextrue/PostProsess.h"
 #include "PostProsess/RGBshift/renderTextrue/RGBshift.h"
+#include "PostProsess/GlitchNoise/renderTexture/PPGlitchNoise.h"
 
 class GameManager
 {
@@ -54,7 +55,8 @@ private:
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
 	std::unique_ptr<PostProsess> renderTextrue;
-	std::unique_ptr<RGBshift> renderTextrue2;
+	std::unique_ptr<RGBshift> rgbShift;
+	std::unique_ptr<PPGlitchNoise> glitchNoise;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

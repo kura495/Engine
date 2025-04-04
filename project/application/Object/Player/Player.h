@@ -136,4 +136,6 @@ private:
 	uint8_t causeOfDeath_;
 
 	Vector3 move;
+
+	std::vector<Vector3> pushForce;
 };

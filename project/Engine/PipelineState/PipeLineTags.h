@@ -18,4 +18,5 @@ enum class PostProsessType {
 	LuminanceBasedOutline,
 	RGBtoHSV,
 	RGBshift,
+	GlitchNoise
 };

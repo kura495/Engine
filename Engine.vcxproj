@@ -254,6 +254,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\Engine\PostProsess\Dissolve\Pipeline\Dissolve.cpp" />
     <ClCompile Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.cpp" />
     <ClCompile Include="project\Engine\PostProsess\GaussianFilter\Pipeline\GaussianFilter.cpp" />
+    <ClCompile Include="project\Engine\PostProsess\GlitchNoise\Pipeline\GlitchNoise.cpp" />
+    <ClCompile Include="project\Engine\PostProsess\GlitchNoise\renderTexture\PPGlitchNoise.cpp" />
     <ClCompile Include="project\Engine\PostProsess\GrayScale\Pipeline\GrayScale.cpp" />
     <ClCompile Include="project\Engine\PostProsess\LuminanceBasedOutline\Pipeline\LuminanceBasedOutline.cpp" />
     <ClCompile Include="project\Engine\PostProsess\Pipeline\PostProsessPSO.cpp" />
@@ -308,6 +310,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.h" />
+    <ClInclude Include="project\Engine\PostProsess\GlitchNoise\Pipeline\GlitchNoise.h" />
+    <ClInclude Include="project\Engine\PostProsess\GlitchNoise\renderTexture\PPGlitchNoise.h" />
     <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.h" />
     <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />
@@ -550,6 +554,22 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="resources\hlsl\FullScreen.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>

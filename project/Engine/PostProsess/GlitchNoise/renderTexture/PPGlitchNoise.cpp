@@ -1,6 +1,6 @@
-#include "RGBshift.h"
-bool RGBshift::isEnableFlag = false;
-void RGBshift::Update()
+#include "PPGlitchNoise.h"
+bool PPGlitchNoise::isEnableFlag = false;
+void PPGlitchNoise::Update()
 {
 	if (isEnableFlag) {
 		addEaseT = 0.004f;
@@ -14,7 +14,7 @@ void RGBshift::Update()
 	}
 }
 
-void RGBshift::Reset()
+void PPGlitchNoise::Reset()
 {
 	easeT = 0.08f;
 	materialData->w = 0.0f;

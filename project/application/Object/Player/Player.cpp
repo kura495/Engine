@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Scenes/State/Play/GamePlayPhase/PlayPhase/PlayPhase.h"
-
+#include "Boss.h"
 void Player::Init(std::vector<Model*> models)
 {
 	name = "Player";
@@ -140,7 +140,11 @@ void Player::OnCollision(const ICollider& ICollider)
 		gravity = kgravity;
 		isOnFloorFlag = true;
 	}
-
+	ImGui::Begin("pushForceLog");
+	for (Vector3 aaaaa : pushForce) {
+		ImGui::DragFloat3("colliderA", &aaaaa.x);
+	}
+	ImGui::End();
 	state_->OnCollision(this,ICollider);
 	return;
 }
