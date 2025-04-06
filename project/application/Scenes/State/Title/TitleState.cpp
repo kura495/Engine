@@ -16,11 +16,12 @@ void TitleState::Init()
 
 void TitleState::Update()
 {
-	Vector2 test = Input::GetPadTrreger();
 	if (0 < Input::GetPadTrreger().x && 0 < Input::GetPadTrreger().y) {
 		ImGui::Begin("Title");
 		ImGui::Text("Push");
 		ImGui::End();
+		int vibValue = (int)Input::GetPadTrreger().x;
+		Input::VibrateController(vibValue * 10, vibValue * 10);
 	}
 	ImGui::Begin("Title");
 	Vector2 Test = Input::GetPadTrreger();

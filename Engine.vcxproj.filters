@@ -1513,8 +1513,12 @@
     <FxCompile Include="resources\hlsl\Skining\SkinningObject3d.VS.hlsl">
       <Filter>リソース ファイル\hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.PS.hlsl" />
-    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.VS.hlsl" />
+    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.PS.hlsl">
+      <Filter>リソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.VS.hlsl">
+      <Filter>リソース ファイル\hlsl</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="project\externals\imgui\LICENSE.txt">

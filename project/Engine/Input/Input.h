@@ -93,7 +93,7 @@ public:
 	/// <param name="leftMotor">低周波数ランブルモータ(大きい振動)</param>
 	/// <param name="rightMotor">高周波ランブルモータ(細かい振動)</param>
 	/// <param name="second">振動させる秒数</param>
-	static void VibrateController(int leftMotor, int rightMotor, float second);
+	static void VibrateController(int leftMotor, int rightMotor, float second = kDeltaTime);
 	/// <summary>
 	/// 未完成のため使用不可
 	/// </summary>
