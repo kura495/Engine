@@ -12,10 +12,15 @@ void TitleState::Init()
 	ufo_ = std::make_unique<UFO>();
 	ufo_->Init();
 
+	followCamera = std::make_unique<FollowCamera>();
+	followCamera->Initialize();
 }
 
 void TitleState::Update()
 {
+	Renderer::SetViewProj(followCamera->GetParameter());
+
+
 	if (0 < Input::GetPadTrreger().x && 0 < Input::GetPadTrreger().y) {
 		ImGui::Begin("Title");
 		ImGui::Text("Push");

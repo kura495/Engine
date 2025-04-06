@@ -6,6 +6,7 @@
 #include "Editer/Editer.h"
 #include "Object/Transition/Fade/Fade.h"
 #include "Object/SkyDome/SkyDome.h"
+#include "Object/Camera/FollowCamera.h"
 #include "ParticleSystem/ParticleSystem.h"
 #include "UFO/UFO.h"
 
@@ -22,6 +23,7 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
+	std::unique_ptr<FollowCamera>followCamera;
 
 	std::unique_ptr<UFO> ufo_;
 	//天球
