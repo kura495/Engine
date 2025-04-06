@@ -121,7 +121,7 @@ public:
 	static Vector2 GetPadTrreger() { return Vector2{ (float)joyState.Gamepad.bLeftTrigger,(float)joyState.Gamepad.bRightTrigger }; };
 private:
 	Input() = default;
-	~Input() { VibrateController(VIBRATION_MIN, VIBRATION_MIN, 0.0f); };
+	~Input() { VibrateController(VIBRATION_MIN, VIBRATION_MIN, kDeltaTime); };
 	Input(const Input& obj) = delete;
 	Input& operator=(const Input& obj) = delete;
 	/// <summary>

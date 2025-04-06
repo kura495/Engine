@@ -26,5 +26,6 @@ private:
 	std::unique_ptr<UFO> ufo_;
 	//天球
 	std::unique_ptr<SkyDome> skyDome_;
-
+	//振動の倍率
+	int vibScale = 100;
 };

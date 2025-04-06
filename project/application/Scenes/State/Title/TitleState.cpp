@@ -21,8 +21,10 @@ void TitleState::Update()
 		ImGui::Text("Push");
 		ImGui::End();
 		int vibValue = (int)Input::GetPadTrreger().x;
-		Input::VibrateController(vibValue * 10, vibValue * 10);
+		//大きい振動を感じれるようにleftMotorを大きくする
+		Input::VibrateController(vibValue * vibScale * vibScale, vibValue * vibScale);
 	}
+
 	ImGui::Begin("Title");
 	Vector2 Test = Input::GetPadTrreger();
 	ImGui::Text("%f",Test.x);
