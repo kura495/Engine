@@ -13,11 +13,6 @@
 class TitleState :public IGameState
 {
 public:	
-	enum UFOState {
-		Idle,//停止状態
-		Normal,//通常速度
-		Boost,//最高速度の状態
-	};
 	TitleState() { StateNo = GameStateNo::TITLE; };
 	void Init()override;
 	void Update()override;

@@ -25,6 +25,7 @@ public:
 		//ステートが変わって後の処理が出来なくなってエラーが出る
 		state_->Init(this);
 	}
+	UFOState GetState() { return state_->GetStateType(); }
 
 private:
 	//UFOのモデル

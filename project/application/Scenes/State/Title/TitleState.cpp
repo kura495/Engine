@@ -20,12 +20,13 @@ void TitleState::Update()
 {
 	Renderer::SetViewProj(followCamera->GetParameter());
 
-
-	if (0 < Input::GetPadTrreger().x && 0 < Input::GetPadTrreger().y) {
-		ImGui::Begin("Title");
-		ImGui::Text("Push");
-		ImGui::End();
-		int vibValue = (int)Input::GetPadTrreger().x;
+	//UFOの状態によってコントローラーをバイブレーションをさせる
+	if (ufo_->GetState() == UFOState::Normal) {
+		int vibValue = (int)Input::GetPadTrreger().x + (int)Input::GetPadTrreger().y;
+		Input::VibrateController(vibValue * vibScale, vibValue * vibScale);
+	}
+	else if (ufo_->GetState() == UFOState::Boost) {
+		int vibValue = (int)Input::GetPadTrreger().x + (int)Input::GetPadTrreger().y;
 		//大きい振動を感じれるようにleftMotorを大きくする
 		Input::VibrateController(vibValue * vibScale * vibScale, vibValue * vibScale);
 	}
