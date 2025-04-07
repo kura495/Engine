@@ -5,6 +5,7 @@
 #include "UFO/state/Idle/Idle.h"
 #include "UFO/state/Normal/Normal.h"
 #include "UFO/state/Boost/Boost.h"
+#include "UFO/state/StartAnime/StartAnime.h"
 class UFO
 {
 public:

@@ -22,8 +22,15 @@ void UFO::Update()
 			ChangeState<Boost>();
 		}
 	}
-	else if(state_.get()->GetStateType() != UFOState::Normal) {
-		ChangeState<Normal>();
+	else if(Input::GetPadTrreger().x >= 1 && Input::GetPadTrreger().y >= 1) {
+		if (state_.get()->GetStateType() != UFOState::Normal) {
+			ChangeState<Normal>();
+		}
+	}
+	else if (Input::GetPadTrreger().x == 0 && Input::GetPadTrreger().y == 0) {
+		if (state_.get()->GetStateType() != UFOState::Idle) {
+			ChangeState<Idle>();
+		}
 	}
 }
 

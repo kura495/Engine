@@ -24,11 +24,21 @@ void TitleState::Update()
 	if (ufo_->GetState() == UFOState::Normal) {
 		int vibValue = (int)Input::GetPadTrreger().x + (int)Input::GetPadTrreger().y;
 		Input::VibrateController(vibValue * vibScale, vibValue * vibScale);
+		countSecond += kDeltaTime;
 	}
 	else if (ufo_->GetState() == UFOState::Boost) {
 		int vibValue = (int)Input::GetPadTrreger().x + (int)Input::GetPadTrreger().y;
 		//大きい振動を感じれるようにleftMotorを大きくする
 		Input::VibrateController(vibValue * vibScale * vibScale, vibValue * vibScale);
+
+		countSecond += kDeltaTime * countScale;
+	}
+	else if (ufo_->GetState() == UFOState::Idle) {
+		//countFrameを0以下にしないために実装
+		countSecond = (std::max)(0.0f, countSecond - kDeltaTime);
+	}
+	if (countSecond >= kMaxSecond) {
+		ufo_->ChangeState<StartAnime>();
 	}
 
 	ImGui::Begin("Title");

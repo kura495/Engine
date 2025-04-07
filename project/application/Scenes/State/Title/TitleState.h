@@ -25,4 +25,10 @@ private:
 	std::unique_ptr<SkyDome> skyDome_;
 	//振動の倍率
 	int vibScale = 100;
+	//カウント(フレーム)
+	float countSecond = 0;
+	//カウントの最大値(秒数)
+	const float kMaxSecond = 2.0f;
+	//カウントの倍率
+	int countScale = 2;
 };
