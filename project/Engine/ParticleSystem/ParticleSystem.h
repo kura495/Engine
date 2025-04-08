@@ -106,7 +106,7 @@ private:
 	//インスタンスの数
 	static const uint32_t kNumMaxInstance = 100;
 	//生きているインスタンスの数
-	uint32_t numInstance = 0;
+	static uint32_t numInstance;
 
 	ModelData modelData;
 

@@ -1,5 +1,5 @@
 #include "Normal.h"
-
+#include "UFO/UFO.h"
 void Normal::Init(UFO* ufo)
 {
 	ufo;
@@ -17,10 +17,14 @@ void Normal::Init(UFO* ufo)
 }
 void Normal::Update(UFO* ufo)
 {
-	ufo;
+	ufo->GetWorld().transform.translate = homePosition + random::Generate(-2.0f,2.0f);
 	//パーティクル生成
 	Particle_->CustumSpawnParticle(ParticleEmitter);
 	Particle_->Update();
+
+	if (Input::GetPadTrreger().x == 255 && Input::GetPadTrreger().y == 255) {
+		ufo->ChangeState<Boost>();
+	}
 }
 void Normal::Draw(UFO* ufo)
 {

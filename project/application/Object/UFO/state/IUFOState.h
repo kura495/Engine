@@ -5,6 +5,7 @@ enum class UFOState {
 	Idle,
 	Normal,
 	Boost,
+	StartAnime,
 };
 class IUFOState {
 public:

@@ -1,5 +1,5 @@
-﻿#include "ParticleSystem.h"
-
+#include "ParticleSystem.h"
+uint32_t ParticleSystem::numInstance = 0;
 void ParticleSystem::Init(const std::string filePath)
 {
 	textureManager_ = TextureManager::GetInstance();
@@ -87,6 +87,9 @@ void ParticleSystem::Draw(const ViewProjection& viewProjection)
 
 void ParticleSystem::ParticleSpawn(ParticleSystem& particle, Emitter& emitter)
 {
+	if (numInstance >= kNumMaxInstance) {
+		return;
+	}
 	emitter.frequencyTime += kDeltaTime;
 	if (emitter.frequency <= emitter.frequencyTime) {
 
@@ -98,6 +101,9 @@ void ParticleSystem::ParticleSpawn(ParticleSystem& particle, Emitter& emitter)
 
 void ParticleSystem::ParticleCustumSpawn(ParticleSystem& particle, Emitter& emitter)
 {
+	if (numInstance >= kNumMaxInstance) {
+		return;
+	}
 	emitter.frequencyTime += kDeltaTime;
 	if (emitter.frequency <= emitter.frequencyTime) {
 		particle.CustumSpawnParticle(emitter);

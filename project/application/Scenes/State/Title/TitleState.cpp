@@ -37,7 +37,9 @@ void TitleState::Update()
 		countSecond = (std::max)(0.0f, countSecond - kDeltaTime);
 	}
 	if (countSecond >= kMaxSecond) {
-		ufo_->ChangeState<StartAnime>();
+		if (ufo_->GetState() != UFOState::StartAnime) {
+			ufo_->ChangeState<StartAnime>();
+		}
 	}
 
 	ImGui::Begin("Title");

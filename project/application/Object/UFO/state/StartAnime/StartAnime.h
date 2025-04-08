@@ -3,7 +3,7 @@
 class StartAnime : public IUFOState
 {
 public:
-	StartAnime() { stateType = UFOState::Normal; }
+	StartAnime() { stateType = UFOState::StartAnime; }
 	void Init(UFO* ufo)override;
 	void Update(UFO* ufo)override;
 	void Draw(UFO* ufo)override;

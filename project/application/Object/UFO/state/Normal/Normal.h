@@ -13,4 +13,6 @@ private:
 	Particle CustomParticle();
 	void UpdateParticle(Particle& particle);
 	Emitter ParticleEmitter;
+	//中心
+	Vector3 homePosition = { 0.0f,0.0f,0.0f };
 };

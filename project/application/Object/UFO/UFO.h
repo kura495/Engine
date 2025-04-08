@@ -16,6 +16,7 @@ public:
 	void Update();
 	void Draw();
 
+	WorldTransform& GetWorld() { return world_; };
 	/// <summary>
 	/// ステートを切り替える
 	/// </summary>
@@ -30,8 +31,8 @@ public:
 
 private:
 	//UFOのモデル
-	std::unique_ptr<Model> UFOmodel_;
-	WorldTransform UFOWorld_;
+	std::unique_ptr<Model> model_;
+	WorldTransform world_;
 	//ステート
 	std::unique_ptr<IUFOState> state_;
 };

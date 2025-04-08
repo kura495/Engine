@@ -1,9 +1,8 @@
 #include "Boost.h"
-
+#include "UFO/UFO.h"
 void Boost::Init(UFO* ufo)
 {
 	ufo;
-
 	//パーティクル初期化
 	Particle_ = std::make_unique<ParticleSystem>();
 	Particle_->Init("project/resources/circle2.dds");
@@ -18,7 +17,7 @@ void Boost::Init(UFO* ufo)
 }
 void Boost::Update(UFO* ufo)
 {
-	ufo;
+	ufo->GetWorld().transform.translate = homePosition + random::Generate(-2.0f, 2.0f);
 	//パーティクル生成
 	Particle_->CustumSpawnParticle(ParticleEmitter);
 	Particle_->Update();
