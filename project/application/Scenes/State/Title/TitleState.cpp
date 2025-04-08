@@ -24,7 +24,6 @@ void TitleState::Update()
 	if (ufo_->GetState() == UFOState::Normal) {
 		int vibValue = (int)Input::GetPadTrreger().x + (int)Input::GetPadTrreger().y;
 		Input::VibrateController(vibValue * vibScale, vibValue * vibScale);
-		countSecond += kDeltaTime;
 	}
 	else if (ufo_->GetState() == UFOState::Boost) {
 		int vibValue = (int)Input::GetPadTrreger().x + (int)Input::GetPadTrreger().y;

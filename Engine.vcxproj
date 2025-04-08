@@ -179,6 +179,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="project\application\Object\Meteor\Meteor.cpp" />
     <ClCompile Include="project\application\Object\UFO\state\Normal\Normal.cpp" />
     <ClCompile Include="project\application\Object\UFO\state\Idle\Idle.cpp" />
     <ClCompile Include="project\application\Object\UFO\state\Boost\Boost.cpp" />
@@ -306,6 +307,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="project\application\Object\Meteor\Meteor.h" />
     <ClInclude Include="project\application\Object\UFO\state\IUFOState.h" />
     <ClInclude Include="project\application\Object\UFO\state\Normal\Normal.h" />
     <ClInclude Include="project\application\Object\UFO\state\Idle\Idle.h" />
