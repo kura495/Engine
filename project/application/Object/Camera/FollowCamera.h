@@ -43,21 +43,11 @@ public:
 #pragma endregion シェイク
 private:
 	void ImGui();
-#pragma region
 
-	const float kinterParameterMin_ = 0.7f;
-	const float kinterParameterMax_ = 1.0f;
 	float interParameter_ = 1.0f;
 
 	Vector3 prePos_;
 	Vector3 currentPos_;
-
-	bool resetFlag_ = true;
-	float lerpTTitle = 0.0f;
-	float addValueTitle = 0.01f;
-	Vector3 resetTransform;
-	Quaternion resetRotate;
-#pragma endregion PlaySceneInit用
 
 	//追従対象
 	const WorldTransform* target_ = nullptr;

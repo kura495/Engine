@@ -10,12 +10,14 @@ void UFO::Init()
 	world_.transform.translate.z = 10.0f;
 	world_.Update();
 
-	ChangeState<Normal>();
+	ChangeState<Idle>();
 }
 
 void UFO::Update()
 {
 	state_->Update(this);
+
+	world_.Update();
 }
 
 void UFO::Draw()

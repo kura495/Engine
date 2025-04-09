@@ -14,6 +14,7 @@ void TitleState::Init()
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
+	followCamera->GetParameter().translation_ = {0.0f,0.0f,-20.0f};
 }
 
 void TitleState::Update()
@@ -30,7 +31,7 @@ void TitleState::Update()
 		//大きい振動を感じれるようにleftMotorを大きくする
 		Input::VibrateController(vibValue * vibScale * vibScale, vibValue * vibScale);
 
-		countSecond += kDeltaTime * countScale;
+		countSecond += kDeltaTime;
 	}
 	else if (ufo_->GetState() == UFOState::Idle) {
 		//countFrameを0以下にしないために実装
@@ -48,6 +49,7 @@ void TitleState::Update()
 	ImGui::Text("%f",Test.y);
 	ImGui::End();
 
+	followCamera->Update();
 	skyDome_->Update();
 	ufo_->Update();
 }

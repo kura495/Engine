@@ -17,13 +17,16 @@ void Normal::Init(UFO* ufo)
 }
 void Normal::Update(UFO* ufo)
 {
-	ufo->GetWorld().transform.translate = homePosition + random::Generate(-2.0f,2.0f);
+	ufo->GetWorld().transform.translate = homePosition + random::Generate(-1.0f,1.0f);
 	//パーティクル生成
 	Particle_->CustumSpawnParticle(ParticleEmitter);
 	Particle_->Update();
 
 	if (Input::GetPadTrreger().x == 255 && Input::GetPadTrreger().y == 255) {
 		ufo->ChangeState<Boost>();
+	}
+	else if (Input::GetPadTrreger().x == 0 && Input::GetPadTrreger().y == 0) {
+		ufo->ChangeState<Idle>();
 	}
 }
 void Normal::Draw(UFO* ufo)

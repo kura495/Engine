@@ -21,6 +21,10 @@ void Boost::Update(UFO* ufo)
 	//パーティクル生成
 	Particle_->CustumSpawnParticle(ParticleEmitter);
 	Particle_->Update();
+
+	if (Input::GetPadTrreger().x <=254 && Input::GetPadTrreger().y <= 254) {
+		ufo->ChangeState<Normal>();
+	}
 }
 void Boost::Draw(UFO* ufo)
 {
