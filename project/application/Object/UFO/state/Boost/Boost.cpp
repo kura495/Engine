@@ -8,8 +8,8 @@ void Boost::Update(UFO* ufo)
 {
 	ufo->GetWorld().transform.translate = homePosition + random::Generate(-0.2f, 0.2f);
 
-	ufo->Particle_->CustumSpawnParticle(ufo->ParticleEmitter);
-	ufo->Particle_->Update();
+	ufo->particle_->CustumSpawnParticle(ufo->particleEmitter);
+	ufo->particle_->Update();
 
 	if (Input::GetPadTrreger().x <=254 && Input::GetPadTrreger().y <= 254) {
 		ufo->GetWorld().transform.translate = homePosition;
@@ -18,5 +18,5 @@ void Boost::Update(UFO* ufo)
 }
 void Boost::Draw(UFO* ufo)
 {
-	ufo->Particle_->RendererDraw();
+	ufo->particle_->RendererDraw();
 }

@@ -9,8 +9,8 @@ void Normal::Update(UFO* ufo)
 {
 	ufo->GetWorld().transform.translate = homePosition + random::Generate(-0.01f,0.01f);
 
-	ufo->Particle_->CustumSpawnParticle(ufo->ParticleEmitter);
-	ufo->Particle_->Update();
+	ufo->particle_->CustumSpawnParticle(ufo->particleEmitter);
+	ufo->particle_->Update();
 
 	if (Input::GetPadTrreger().x == 255 && Input::GetPadTrreger().y == 255) {
 		ufo->ChangeState<Boost>();
@@ -21,6 +21,6 @@ void Normal::Update(UFO* ufo)
 }
 void Normal::Draw(UFO* ufo)
 {
-	ufo->Particle_->RendererDraw();
+	ufo->particle_->RendererDraw();
 }
 
