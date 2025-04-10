@@ -7,10 +7,12 @@ void UFO::Init()
 	model_.reset(Model::CreateModelFromObj("project/resources/UFO", "UFO.obj"));
 
 	world_.Init();
-	world_.transform.translate.z = 10.0f;
-	world_.Update();
 
 	ChangeState<Idle>();
+
+	particle_ = std::make_unique<ParticleSystem>();
+	particle_->Init("project/resources/circle2.dds");
+	particle_->CustumSpawnFunc;
 }
 
 void UFO::Update()
@@ -25,4 +27,41 @@ void UFO::Draw()
 	model_->RendererDraw(world_);
 
 	state_->Draw(this);
+}
+
+Particle UFO::CustomParticle()
+{
+	Particle particle{};
+
+	particle.currentTime = 0.0f;
+	particle.lifeTime = random::Generate<float>(0.0f, 0.5f);
+
+	particle.transform.translate = { random::Generate<float>(-0.7f,0.7f),random::Generate<float>(-0.5f,0.0f),10.0f };
+	particle.transform.scale = ParticleEmitter.particleRadius;
+
+	particle.color = { 0.7f,0.5f,0.5f,1.0f };
+
+	return particle;
+}
+void UFO::UpdateParticle(Particle& particle)
+{
+	particle.transform.translate.z -= 0.1f;
+
+	Vector3 translate = particle.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	//色をセット
+	particleEmitter.color.w = alpha;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
+}
+void UFO::UpdateParticle2(Particle& particle)
+{
+	particle.transform.translate.z -= 0.4f;
+
+	Vector3 translate = particle.transform.translate;
+	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	//色をセット
+	particleEmitter.color.w = alpha;
+	particle.currentTime += kDeltaTime;
+	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }

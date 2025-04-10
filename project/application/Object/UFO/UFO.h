@@ -29,10 +29,19 @@ public:
 	}
 	UFOState GetState() { return state_->GetStateType(); }
 
+	std::unique_ptr<ParticleSystem> particle_;
+	Emitter particleEmitter;
 private:
 	//UFOのモデル
 	std::unique_ptr<Model> model_;
 	WorldTransform world_;
 	//ステート
 	std::unique_ptr<IUFOState> state_;
+	//SRVが解放できないため
+	//パーティクル関連
+
+	Particle CustomParticle();
+	void UpdateParticle(Particle& particle);
+	void UpdateParticle2(Particle& particle);
+
 };
