@@ -5,6 +5,7 @@
 #include "WorldTransform/WorldTransform.h"
 #include "Editer/Editer.h"
 #include "Object/Transition/Fade/Fade.h"
+#include "Object/Transition/Fade/Fade.h"
 #include "Object/SkyDome/SkyDome.h"
 #include "Object/Camera/FollowCamera.h"
 #include "ParticleSystem/ParticleSystem.h"
@@ -31,4 +32,6 @@ private:
 	const float kMaxSecond = 2.0f;
 	//カウントの倍率
 	int countScale = 2;
+	//画面遷移演出
+	Fade fade;
 };

@@ -4,6 +4,8 @@ void TitleState::Init()
 {
 	StateNo = GameStateNo::TITLE;
 
+	Editer::GetInstance()->SetViewProjection(&Renderer::GetViewProjection());
+	Editer::GetInstance()->IsEnable(true);
 
 	//天球
 	skyDome_ = std::make_unique<SkyDome>();
@@ -15,6 +17,8 @@ void TitleState::Init()
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
 	followCamera->GetParameter().translation_ = {0.0f,0.0f,-20.0f};
+	//フェードイン
+	fade.InInit("project/resources/BlackTexture.png");
 }
 
 void TitleState::Update()
@@ -37,6 +41,11 @@ void TitleState::Update()
 		//countFrameを0以下にしないために実装
 		countSecond = (std::max)(0.0f, countSecond - kDeltaTime);
 	}
+	else if (ufo_->GetState() == UFOState::StartAnime) {
+		if (fade.In(1.0f)) {
+			StateNo = GameStateNo::PLAY;
+		}
+	}
 	if (countSecond >= kMaxSecond) {
 		if (ufo_->GetState() != UFOState::StartAnime) {
 			ufo_->ChangeState<StartAnime>();
@@ -58,4 +67,6 @@ void TitleState::Draw()
 {
 	skyDome_->Draw();
 	ufo_->Draw();
+
+	fade.Draw();
 }

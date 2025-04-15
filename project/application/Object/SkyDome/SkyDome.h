@@ -2,8 +2,7 @@
 //天球クラス//
 #include "Object/IObject.h"
 
-class SkyDome : public IObject
-{
+class SkyDome{
 public:
 	void Init();
 	void Update();
@@ -13,4 +12,6 @@ private:
 	void ImGui();
 	Vector3 uvT;
 	Vector3 color;
+	std::vector<Model*> models_;
+	WorldTransform world_;
 };
