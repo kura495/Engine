@@ -34,4 +34,7 @@ private:
 	int countScale = 2;
 	//画面遷移演出
 	Fade fade;
+	//タイトル用画像
+	std::unique_ptr<Sprite> titleSprite;
+	WorldTransform title;
 };

@@ -20,11 +20,6 @@ void TitlePhase::Init(GamePlayState* playState)
 	tutorialWorld_.transform.translate.z = -3.0f;
 	tutorialWorld_.transform.translate.x = -2.0f;
 	tutorialWorld_.Update();
-
-	titleSprite = std::make_unique<Sprite>();
-	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
-	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/Title.png");
-	title.Init();
 }
 
 void TitlePhase::Update(GamePlayState* playState)
@@ -58,7 +53,6 @@ void TitlePhase::Update(GamePlayState* playState)
 void TitlePhase::Draw(GamePlayState* playState)
 {
 	playState;
-	titleSprite->RendererDraw(title);
 
 	woodBox->RendererDraw(woodBoxWorld_);
 	tutorialModel[0]->RendererDraw(tutorialWorld_);

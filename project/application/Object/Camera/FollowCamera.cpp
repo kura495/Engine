@@ -101,6 +101,12 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 	target_ = target;
 	Reset();
 }
+void FollowCamera::LockAt(const WorldTransform& target)
+{
+	Vector3 lockVector;
+	lockVector = parameter.translation_ - target.transform.translate;
+	parameter.rotation_ = Quaternion::EulerToQuaterion(lockVector).Normalize();
+}
 void FollowCamera::ReStert()
 {
 	rotate_ = { 0.0f,0.0f,0.0f };

@@ -30,6 +30,10 @@ public:
 	/// </summary>
 	/// <param name="target">ターゲットのWorldTransform</param>
 	void SetTarget(const WorldTransform* target);
+	/// <summary>
+	/// 
+	/// </summary>
+	void LockAt(const WorldTransform& target);
 
 	void ReStert();
 
