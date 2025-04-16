@@ -59,11 +59,6 @@ void TitleState::Update()
 	}
 
 	ufo_->ImGui();
-	ImGui::Begin("Title");
-	Vector2 Test = Input::GetPadTrreger();
-	ImGui::Text("%f",Test.x);
-	ImGui::Text("%f",Test.y);
-	ImGui::End();
 
 	skyDome_->Update();
 	ufo_->Update();
