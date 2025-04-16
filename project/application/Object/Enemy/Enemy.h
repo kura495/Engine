@@ -30,14 +30,15 @@ public:
 	/// </summary>
 	void ImGui();
 
+	int32_t HP_;
+	bool isDamage = false;
 protected://関数
 	//追加用ImGui overrideするだけで追加可能
 	virtual void AddImGui(){};
 
-	bool isDamage = false;
+
 	const int kDamageInterval = 60;
 
-	int32_t HP_;
 
 	Player* player_ = nullptr;
 	//識別用の名前　変えることでImGuiのタブネームを変えることができる

@@ -43,7 +43,7 @@ public:
 #pragma endregion シェイク
 private:
 	void ImGui();
-
+	void ShakeFanction();
 	float interParameter_ = 1.0f;
 
 	Vector3 prePos_;

@@ -89,6 +89,13 @@ void FollowCamera::ImGui()
 #endif
 }
 
+void FollowCamera::ShakeFanction()
+{
+	Vector3 ramdomTranslate = { random::Generate<float>(-1.0f, 1.0f),random::Generate<float>(-1.0f, 1.0f) ,random::Generate<float>(-1.0f, 1.0f) };
+
+	parameter.translation_ += ramdomTranslate;
+}
+
 void FollowCamera::SetTarget(const WorldTransform* target)
 {
 	target_ = target;
