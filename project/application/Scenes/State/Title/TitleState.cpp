@@ -20,6 +20,11 @@ void TitleState::Init()
 
 	//フェードイン
 	fade.InInit("project/resources/BlackTexture.png");
+
+	titleSprite = std::make_unique<Sprite>();
+	titleSprite->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
+	titleSprite->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/Title.png");
+	title.Init();
 }
 
 void TitleState::Update()
@@ -69,6 +74,7 @@ void TitleState::Draw()
 {
 	skyDome_->Draw();
 	ufo_->Draw();
+	titleSprite->RendererDraw(title);
 
 	fade.Draw();
 }
