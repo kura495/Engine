@@ -14,6 +14,8 @@ void UFO::Init()
 	particle_->Init("project/resources/circle2.dds");
 	particle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 	particle_->UpdateFunc = [this](Particle& particle) {return UpdateParticle(particle); };
+
+
 }
 
 void UFO::Update()
@@ -26,8 +28,17 @@ void UFO::Update()
 void UFO::Draw()
 {
 	model_->RendererDraw(world_);
-
+	particle_->RendererDraw();
 	state_->Draw(this);
+}
+
+void UFO::ImGui()
+{
+#ifdef _DEBUG
+	ImGui::Begin("UFO");
+	ImGui::DragFloat3("world",&world_.transform.translate.x);
+	ImGui::End();
+#endif
 }
 
 Particle UFO::CustomParticle()

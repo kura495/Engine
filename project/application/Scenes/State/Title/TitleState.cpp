@@ -16,7 +16,8 @@ void TitleState::Init()
 
 	followCamera = std::make_unique<FollowCamera>();
 	followCamera->Initialize();
-	followCamera->GetParameter().translation_ = {0.0f,0.0f,-20.0f};
+	followCamera->GetParameter().translation_ = {0.0f,0.0f,-10.0f};
+
 	//フェードイン
 	fade.InInit("project/resources/BlackTexture.png");
 }
@@ -42,7 +43,7 @@ void TitleState::Update()
 		countSecond = (std::max)(0.0f, countSecond - kDeltaTime);
 	}
 	else if (ufo_->GetState() == UFOState::StartAnime) {
-		if (fade.In(1.0f)) {
+		if (fade.In(3.0f)) {
 			StateNo = GameStateNo::PLAY;
 		}
 	}
@@ -52,13 +53,14 @@ void TitleState::Update()
 		}
 	}
 
+	ufo_->ImGui();
 	ImGui::Begin("Title");
 	Vector2 Test = Input::GetPadTrreger();
 	ImGui::Text("%f",Test.x);
 	ImGui::Text("%f",Test.y);
 	ImGui::End();
 
-	followCamera->Update();
+	//followCamera->Update();
 	skyDome_->Update();
 	ufo_->Update();
 }

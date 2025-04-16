@@ -16,6 +16,8 @@ public:
 	void Update();
 	void Draw();
 
+	void ImGui();
+
 	WorldTransform& GetWorld() { return world_; };
 	/// <summary>
 	/// ステートを切り替える
