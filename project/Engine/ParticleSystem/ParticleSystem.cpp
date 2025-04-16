@@ -36,7 +36,6 @@ void ParticleSystem::Update(bool billboardFlag)
 		billboardMatrix.m[3][2] = 0.0f;
 	}
 
-
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
 		//一定時間経過したパーティクルを削除
 		if ((*particleIt).lifeTime <= (*particleIt).currentTime) {

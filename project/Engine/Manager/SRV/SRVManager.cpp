@@ -12,7 +12,7 @@ DESCRIPTERHANDLE SRVManager::GetDescriptorHandle()
 	result.CPU = GetCPUDescriptorHandle();
 	result.GPU = GetGPUDescriptorHandle();
 	SRVValue += 1;
-	assert(SUCCEEDED(SRVValue == 120));
+	assert(SUCCEEDED(SRVValue <= 120));
 	return result;
 }
 

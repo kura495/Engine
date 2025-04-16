@@ -98,7 +98,7 @@ Particle PDead::CustomParticle()
 	randomValue.x = random::Generate<float>(-0.1f,0.1f);
 	randomValue.y = random::Generate<float>(-0.1f,0.1f);
 	randomValue.z = random::Generate<float>(-0.1f,0.1f);
-	particle.transform.translate = deadParticleEmitter.world_.transform.translate + randomValue;
+	particle.transform.translate = deadParticleEmitter.world_.transform.translate/* + randomValue*/;
 	particle.transform.scale = deadParticleEmitter.particleRadius;
 	//移動量を決める
 	randomValue.x = random::Generate<float>(-1.0f, 1.0f);

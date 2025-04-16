@@ -20,6 +20,9 @@ void ERoot::Update(Boss* boss)
 	if (boss->GetPlayer()->GetState() == PlayerState::Dead) {
 		return;
 	}
+	if (boss->isDamage) {
+		return;
+	}
 	//攻撃をする
 	if (isAttackSelect == AttackState::RocketPunch) {
 		boss->ChangeState<EAttackRocketPunch>();
