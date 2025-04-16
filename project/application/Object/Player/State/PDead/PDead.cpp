@@ -10,7 +10,7 @@ PDead::PDead()
 	deadParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	//エミッター設定
-	deadParticleEmitter.count = 100;
+	deadParticleEmitter.count = 10;
 	deadParticleEmitter.frequency = 0.2f;
 	deadParticleEmitter.frequencyTime = 0.2f;
 	deadParticleEmitter.particleRadius = { 0.2f,0.2f,1.0f };
@@ -38,6 +38,10 @@ void PDead::Init(Player* player)
 }
 void PDead::Update(Player* player)
 {
+	ImGui::Begin("PDead");
+	ImGui::DragFloat3("Trans",&deadParticleEmitter.world_.transform.translate.x);
+	ImGui::End();
+
 	if (player->GetCauseOfDeath() == Player::CauseOfDeath::Normal) {
 		NormalDeadUpdate(player);
 	}
@@ -98,7 +102,7 @@ Particle PDead::CustomParticle()
 	randomValue.x = random::Generate<float>(-0.1f,0.1f);
 	randomValue.y = random::Generate<float>(-0.1f,0.1f);
 	randomValue.z = random::Generate<float>(-0.1f,0.1f);
-	particle.transform.translate = deadParticleEmitter.world_.transform.translate/* + randomValue*/;
+	particle.transform.translate = deadParticleEmitter.world_.transform.translate + randomValue;
 	particle.transform.scale = deadParticleEmitter.particleRadius;
 	//移動量を決める
 	randomValue.x = random::Generate<float>(-1.0f, 1.0f);
