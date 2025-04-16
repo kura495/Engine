@@ -65,7 +65,6 @@ void TitleState::Update()
 	ImGui::Text("%f",Test.y);
 	ImGui::End();
 
-	//followCamera->Update();
 	skyDome_->Update();
 	ufo_->Update();
 }

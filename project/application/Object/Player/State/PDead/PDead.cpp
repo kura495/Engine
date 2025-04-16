@@ -33,7 +33,7 @@ void PDead::Init(Player* player)
 		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN,0.5f);
 	}
 	else {
-		Input::VibrateController(1024, 1024,1.0f);
+		Input::VibrateController(20480, 20480,0.5f);
 	}
 }
 void PDead::Update(Player* player)
