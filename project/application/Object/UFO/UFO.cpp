@@ -15,7 +15,11 @@ void UFO::Init()
 	particle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 	particle_->UpdateFunc = [this](Particle& particle) {return UpdateParticle(particle); };
 
-
+	particleEmitter.count = 25;
+	particleEmitter.frequency = 0.2f;
+	particleEmitter.frequencyTime = 0.2f;
+	particleEmitter.particleRadius = { 0.2f,0.2f,1.0f };
+	particleEmitter.speed = { 1.0f,1.0f,1.0f };
 }
 
 void UFO::Update()
@@ -28,7 +32,6 @@ void UFO::Update()
 void UFO::Draw()
 {
 	model_->RendererDraw(world_);
-	particle_->RendererDraw();
 	state_->Draw(this);
 }
 
@@ -48,7 +51,7 @@ Particle UFO::CustomParticle()
 	particle.currentTime = 0.0f;
 	particle.lifeTime = random::Generate<float>(0.0f, 0.5f);
 
-	particle.transform.translate = { random::Generate<float>(-0.7f,0.7f),random::Generate<float>(-0.5f,0.0f),10.0f };
+	particle.transform.translate = { random::Generate<float>(-0.7f,0.7f),random::Generate<float>(-0.5f,0.0f),0.0f };
 	particle.transform.scale = particleEmitter.particleRadius;
 
 	particle.color = { 0.7f,0.5f,0.5f,1.0f };

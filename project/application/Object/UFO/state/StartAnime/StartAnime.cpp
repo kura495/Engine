@@ -12,5 +12,5 @@ void StartAnime::Update(UFO* ufo)
 }
 void StartAnime::Draw(UFO* ufo)
 {
-	ufo;
+	ufo->particle_->RendererDraw();
 }
