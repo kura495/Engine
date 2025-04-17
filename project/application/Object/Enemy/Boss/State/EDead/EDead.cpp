@@ -3,7 +3,7 @@
 EDead::EDead()
 {
 	stateType = BossState::Dead;
-	deadParticle_ = new ParticleSystem();
+	deadParticle_ = std::make_unique<ParticleSystem>();
 	deadParticle_->Init("project/resources/circle2.dds");
 	deadParticle_->UpdateFunc = [this](Particle& particle) { UpdateParticle(particle); };
 

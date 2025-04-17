@@ -11,7 +11,7 @@ public:
 	std::string ShowState()override;
 private:
 	//死亡パーティクル
-	ParticleSystem* deadParticle_;
+	std::unique_ptr<ParticleSystem> deadParticle_;
 	Emitter deadEnemyParticleEmitter;
 	void UpdateParticle(Particle& particle);
 };

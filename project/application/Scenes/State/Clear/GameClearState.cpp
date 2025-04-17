@@ -30,7 +30,7 @@ void GameClearState::Update()
 
 	if (IsCanPush) {
 		if (fade.In(1.0f)) {
-			StateNo = GameStateNo::PLAY;
+			StateNo = GameStateNo::TITLE;
 			IsCanPush = false;
 		}
 	}
