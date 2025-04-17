@@ -6,7 +6,6 @@ void GameOverState::Init()
 
 	Editer::GetInstance()->IsEnable(false);
 
-	textureManager_ = TextureManager::GetInstance();
 	texture_world_.Init();
 
 	texture = std::make_unique<Sprite>();

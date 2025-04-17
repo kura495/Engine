@@ -37,4 +37,6 @@ private:
 	//タイトル用画像
 	std::unique_ptr<Sprite> titleSprite;
 	WorldTransform title;
+
+	std::unique_ptr<Sprite>texture;
 };

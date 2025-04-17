@@ -11,10 +11,17 @@ void EAttackSlam::Init(Boss* boss)
 	boss->SetColliderAttribute(Boss::ColliderType::AttackHund,Collider::Tag::EnemyAttackFront | Collider::Tag::EnemyAttackSlam);
 
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Boss/attackPlayer.mp3", false);
+
+	phase_ = Follow;
 }
 void EAttackSlam::Update(Boss* boss)
 {
-	if (IsAttackFlag) {
+	if (phase_ == SlamPhase::Follow) {
+		if (FollowPlayer(boss)) {
+			phase_ = SlamPhase::Attack;
+		}
+	}
+	else if (phase_ == SlamPhase::Attack) {
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
 
 		boss->GetWorld().transform.translate.y -= Ease::InBack(easeT);
@@ -26,19 +33,34 @@ void EAttackSlam::Update(Boss* boss)
 		//位置が0になったら
 		if (boss->GetWorld().transform.translate.y <= 0) {
 			boss->isSlamFlag = true;
-			addEaseT = 0.01f;
+			addEaseT = 0.05f;
 			boss->SetColliderUse(Boss::ColliderType::AttackArm, false);
 			boss->SetColliderUse(Boss::ColliderType::AttackHund, false);
 			boss->GetWorld().transform.translate.y = 0.5f;
 			easeT = 0.0f;
-			IsAttackFlag = false;
+			phase_ = SlamPhase::Return;
+			//IsAttackFlag = false;
+
+		}
+	}
+	else if (phase_ == SlamPhase::Return) {
+		easeT = (std::min)(easeT + addEaseT, 1.0f);
+
+		if (easeT == 1.0f) {
+			addEaseT = 0.01f;
 			//初期位置に戻す
 			boss->ChangeState<EReturnPosition>();
 		}
+
 	}
-	else if (FollowPlayer(boss)) {
-		IsAttackFlag = true;
-	}
+
+
+	//if (IsAttackFlag) {
+	//	
+	//}
+	//else if (FollowPlayer(boss)) {
+	//	IsAttackFlag = true;
+	//}
 }
 void EAttackSlam::Draw(Boss* boss)
 {

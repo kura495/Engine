@@ -14,11 +14,4 @@ private:
 	const float subStertCount = 0.005f;
 	//画面遷移演出
 	Fade fade;
-
-	//木箱のモデル
-	std::unique_ptr<Model> woodBox;
-	WorldTransform woodBoxWorld_;
-	//チュートリアル的なボタン表示
-	std::vector<Model*> tutorialModel;
-	WorldTransform tutorialWorld_;
 };

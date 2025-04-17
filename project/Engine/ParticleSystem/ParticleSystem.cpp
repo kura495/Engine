@@ -147,6 +147,10 @@ void ParticleSystem::ImGui()
 {
 	ImGui::Begin("Emitter");
 	ImGui::InputFloat3("translate",&Testemitter.world_.transform.translate.x);
+	//TODO:SRV解放できず 解決を目指す
+	int test = sRVManager_->GetSRVValue();
+	ImGui::InputInt("Value", &test);
+
 	ImGui::End();
 }
 
