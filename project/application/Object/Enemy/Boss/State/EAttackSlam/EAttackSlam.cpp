@@ -39,8 +39,6 @@ void EAttackSlam::Update(Boss* boss)
 			boss->GetWorld().transform.translate.y = 0.5f;
 			easeT = 0.0f;
 			phase_ = SlamPhase::Return;
-			//IsAttackFlag = false;
-
 		}
 	}
 	else if (phase_ == SlamPhase::Return) {
@@ -53,14 +51,6 @@ void EAttackSlam::Update(Boss* boss)
 		}
 
 	}
-
-
-	//if (IsAttackFlag) {
-	//	
-	//}
-	//else if (FollowPlayer(boss)) {
-	//	IsAttackFlag = true;
-	//}
 }
 void EAttackSlam::Draw(Boss* boss)
 {

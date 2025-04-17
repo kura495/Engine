@@ -38,7 +38,7 @@ void EAttackRocketPunch::Update(Boss* boss)
 	if (modeFlag == mode::Stay) {
 		addEaseT = 0.02f;
 		//当たり判定を通常に変更
-		if (easeT >= 0.3f) {
+		if (easeT >= 0.1f) {
 			boss->SetColliderAttribute(Boss::ColliderType::AttackArm, Collider::Tag::Enemy);
 			boss->SetColliderAttribute(Boss::ColliderType::AttackHund, Collider::Tag::Enemy);
 		}
