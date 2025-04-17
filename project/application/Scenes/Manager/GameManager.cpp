@@ -66,6 +66,9 @@ void GameManager::Gameloop() {
 			prevSceneNum_ = currentSceneNum_;
 			currentSceneNum_ = state_->GetSceneNum();
 			if (prevSceneNum_ != currentSceneNum_) {
+				if (currentSceneNum_ == GameStateNo::TITLE) {
+					state_ = std::make_unique<TitleState>();
+				}
 				if (currentSceneNum_ == GameStateNo::PLAY) {
 					state_ = std::make_unique<GamePlayState>();
 				}

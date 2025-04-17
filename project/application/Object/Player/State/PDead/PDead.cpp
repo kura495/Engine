@@ -38,10 +38,11 @@ void PDead::Init(Player* player)
 }
 void PDead::Update(Player* player)
 {
+#ifdef _DEBUG
 	ImGui::Begin("PDead");
 	ImGui::DragFloat3("Trans",&deadParticleEmitter.world_.transform.translate.x);
 	ImGui::End();
-
+#endif
 	if (player->GetCauseOfDeath() == Player::CauseOfDeath::Normal) {
 		NormalDeadUpdate(player);
 	}

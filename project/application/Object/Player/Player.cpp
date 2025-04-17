@@ -140,11 +140,13 @@ void Player::OnCollision(const ICollider& ICollider)
 		gravity = kgravity;
 		isOnFloorFlag = true;
 	}
+#ifdef _DEBUG
 	ImGui::Begin("pushForceLog");
 	for (Vector3 aaaaa : pushForce) {
 		ImGui::DragFloat3("colliderA", &aaaaa.x);
 	}
 	ImGui::End();
+#endif
 	state_->OnCollision(this,ICollider);
 	return;
 }
