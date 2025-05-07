@@ -189,7 +189,7 @@ void ParticleSystem::CreateSRV()
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 
 	textureSrvHandle = sRVManager_->GetDescriptorHandle();
-	//ImGui分
+	//ImGui分メモリの位置をずらす
 	textureSrvHandle.CPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	textureSrvHandle.GPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	int test = sRVManager_->GetSRVValue();
