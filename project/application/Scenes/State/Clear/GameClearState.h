@@ -11,6 +11,7 @@
 class GameClearState :public IGameState
 {
 public:
+	GameClearState() { StateNo = GameStateNo::CLEAR; };
 	void Init()override;
 	void Update()override;
 	void Draw()override;

@@ -42,16 +42,19 @@ void GameManager::Initialize()
 	//グローバル変数読み込み
 	GlobalVariables::GetInstance()->LoadFiles();
 	//State
-	state_ = std::make_unique<GamePlayState>();
-	currentSceneNum_ = PLAY;
+	state_ = std::make_unique<TitleState>();
+	currentSceneNum_ = state_.get()->GetSceneNum();
 	state_->Init();
 
 	renderTextrue = std::make_unique<PostProsess>();
 	renderTextrue->Init();
 	renderTextrue->Create(1);
-	renderTextrue2 = std::make_unique<RGBshift>();
-	renderTextrue2->Init();
-	renderTextrue2->Create(2);
+	rgbShift = std::make_unique<RGBshift>();
+	rgbShift->Init();
+	rgbShift->Create(2);
+	glitchNoise = std::make_unique<PPGlitchNoise>();
+	glitchNoise->Init();
+	glitchNoise->Create(3);
 }
 void GameManager::Gameloop() {
 	while (msg.message != WM_QUIT) {
@@ -63,6 +66,9 @@ void GameManager::Gameloop() {
 			prevSceneNum_ = currentSceneNum_;
 			currentSceneNum_ = state_->GetSceneNum();
 			if (prevSceneNum_ != currentSceneNum_) {
+				if (currentSceneNum_ == GameStateNo::TITLE) {
+					state_ = std::make_unique<TitleState>();
+				}
 				if (currentSceneNum_ == GameStateNo::PLAY) {
 					state_ = std::make_unique<GamePlayState>();
 				}
@@ -82,8 +88,11 @@ void GameManager::Gameloop() {
 			light->Update();
 			GlobalVariables::GetInstance()->Update();
 			state_->Update();
+			//ポストエフェクトアップデート
 			renderTextrue->Update();
-			renderTextrue2->Update();
+			rgbShift->Update();
+			glitchNoise->Update();
+
 			renderer_->Update();
 #pragma endregion
 #pragma region Draw
@@ -93,22 +102,30 @@ void GameManager::Gameloop() {
 			renderer_->Draw();
 			renderTextrue->PostDraw();
 
-			renderTextrue2->PreDraw();
+			rgbShift->PreDraw();
 			//パイプラインの変更
 			renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
 			//レンダーテクスチャの内容を書き込み
 			renderTextrue->Draw();
-			renderTextrue2->PostDraw();
-			//directXのSRVに書き込む設定に変更
-			directX->PreDraw();
+			rgbShift->PostDraw();
+
+			glitchNoise->PreDraw();
 			//ここにPipelineとDrawを書き込んでいく
 			renderer_->ChangePipeline(PostProsessType::RGBshift);
-			renderTextrue2->Draw();
+			rgbShift->Draw();
+			glitchNoise->PostDraw();
+
+			//directXのSRVに書き込む設定に変更
+			directX->PreDraw();
+			renderer_->ChangePipeline(PostProsessType::GlitchNoise);
+			glitchNoise->Draw();
+
 			editer->Draw();
 			imGuiManager->EndFrame();
+			
 			directX->PostDraw();
 
-			//流れと使い方
+			//流れと使い方(ポストエフェクト)
 			//描画先A->PreDraw();
 			//描画したい物->Draw();
 			//描画先A->PostDraw();

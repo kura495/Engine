@@ -10,6 +10,7 @@
 class GameOverState :public IGameState
 {
 public:
+	GameOverState() { StateNo = GameStateNo::GAMEOVER; };
 	void Init()override;
 	void Update()override;
 	void Draw()override;

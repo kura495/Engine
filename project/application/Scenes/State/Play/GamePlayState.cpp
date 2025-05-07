@@ -2,7 +2,7 @@
 
 void GamePlayState::Init()
 {
-	StateNo = GameStateNo::PLAY;
+
 
 	//基本機能生成
 	Editer::GetInstance()->SetViewProjection(&Renderer::GetViewProjection());
@@ -15,8 +15,6 @@ void GamePlayState::Init()
 	playerModel_.push_back(Model::CreateModelFromObj("project/resources/Player", "player.gltf"));
 	playerModel_.push_back(Model::CreateModelFromObj("project/resources/Weapon", "Weapon.obj"));
 
-	followCamera = std::make_unique<FollowCamera>();
-	followCamera->Initialize();
 	//コリジョンマネージャー
 	collisionManager = std::make_unique<CollisionManager>();
 	collisionManager->Init();
@@ -24,7 +22,11 @@ void GamePlayState::Init()
 	player_ = std::make_unique<Player>();
 	player_->Init(playerModel_);
 	
+	followCamera = std::make_unique<FollowCamera>();
+	followCamera->Initialize();
+
 	followCamera->SetTarget(&player_->GetWorld());
+	followCamera->SetOffset(cameraOffset);
 	followCamera->Update();
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();

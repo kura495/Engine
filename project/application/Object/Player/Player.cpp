@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Scenes/State/Play/GamePlayPhase/PlayPhase/PlayPhase.h"
-
+#include "Boss.h"
 void Player::Init(std::vector<Model*> models)
 {
 	name = "Player";
@@ -122,14 +122,17 @@ void Player::OnCollision(const ICollider& ICollider)
 		causeOfDeath_ = CauseOfDeath::Normal;
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
-			if (ICollider.GetCenter().x < world_.transform.translate.x) {
-				world_.transform.translate.x = 1.5f;
-			}
-			if (ICollider.GetCenter().x > world_.transform.translate.x) {
-				world_.transform.translate.x = -1.5f;
-			}
-			
-			world_.Update();
+
+		world_.transform.translate -= move;
+		world_.Update();
+
+		//TODO:押し戻しをする処理
+		/*if (ICollider.GetCenter().x < world_.transform.translate.x) {
+			world_.transform.translate.x = 1.5f;
+		}
+		if (ICollider.GetCenter().x > world_.transform.translate.x) {
+			world_.transform.translate.x = -1.5f;
+		}*/
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
@@ -137,7 +140,13 @@ void Player::OnCollision(const ICollider& ICollider)
 		gravity = kgravity;
 		isOnFloorFlag = true;
 	}
-
+#ifdef _DEBUG
+	ImGui::Begin("pushForceLog");
+	for (Vector3 aaaaa : pushForce) {
+		ImGui::DragFloat3("colliderA", &aaaaa.x);
+	}
+	ImGui::End();
+#endif
 	state_->OnCollision(this,ICollider);
 	return;
 }
@@ -170,8 +179,9 @@ void Player::AttackOnCollision(const ICollider& collider)
 		Audio::Stop(SEattack, true,false);
 		Audio::Play(SEHitattack, 1.0f);
 		//ヒットストップ
-		PlayPhase::HitStop(0.1f);
-
+		PlayPhase::HitStop(hitStopValue);
+		//コントローラー振動
+		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN, vibValue);
 	}
 	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		colliders_[ColliderType::Attack].IsUsing = false;
@@ -185,9 +195,10 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
 		//ヒットストップ
-		PlayPhase::HitStop(0.1f);
+		PlayPhase::HitStop(hitStopValue);
+		//コントローラー振動
+		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN, vibValue);
 	}
-
 }
 #pragma endregion Collider
 void Player::UpdateAttackHitParticle(Particle& particle)
@@ -236,6 +247,7 @@ void Player::ImGui()
 	ImGui::DragFloat3("Translate", &world_.transform.translate.x, 0.1f);
 	ImGui::Text("%d", HP_);
 	ImGui::Text(state_->ShowState().c_str());
+
 	ImGui::End();
 }
 bool Player::Move()

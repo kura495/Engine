@@ -10,10 +10,10 @@ PDead::PDead()
 	deadParticle_->CustumSpawnFunc = [this]() { return CustomParticle(); };
 	deadParticle_->UpdateFunc = [this](Particle& particle) {return UpdatedeadParticle(particle); };
 	//エミッター設定
-	deadParticleEmitter.count = 100;
-	deadParticleEmitter.frequency = 0.1f;
-	deadParticleEmitter.particleRadius = { 0.1f,0.1f,1.0f };
-	deadParticleEmitter.color = { 1.0f,1.0f,1.0f };
+	deadParticleEmitter.count = 10;
+	deadParticleEmitter.frequency = 0.2f;
+	deadParticleEmitter.frequencyTime = 0.2f;
+	deadParticleEmitter.particleRadius = { 0.2f,0.2f,1.0f };
 	deadParticleEmitter.speed = { 1.0f,1.0f,1.0f };
 	//アニメーション設定
 	deadAnimation = std::make_unique<Animation>();
@@ -33,11 +33,16 @@ void PDead::Init(Player* player)
 		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN,0.5f);
 	}
 	else {
-		Input::VibrateController(1024, 1024,1.0f);
+		Input::VibrateController(20480, 20480,0.5f);
 	}
 }
 void PDead::Update(Player* player)
 {
+#ifdef _DEBUG
+	ImGui::Begin("PDead");
+	ImGui::DragFloat3("Trans",&deadParticleEmitter.world_.transform.translate.x);
+	ImGui::End();
+#endif
 	if (player->GetCauseOfDeath() == Player::CauseOfDeath::Normal) {
 		NormalDeadUpdate(player);
 	}
@@ -68,7 +73,7 @@ void PDead::NormalDeadUpdate(Player* player)
 		RGBshift::isEnableFlag = false;
 	}
 	if (isModelDraw == false) {
-		easeT = (std::min)(easeT + 0.01f, 1.0f);
+		easeT = (std::min)(easeT + 0.02f, 1.0f);
 		//パーティクル生成
 		deadParticle_->CustumSpawnParticle(deadParticleEmitter);
 		deadParticle_->Update();
@@ -92,20 +97,25 @@ Particle PDead::CustomParticle()
 {
 	Particle particle{};
 	
-	particle.color = { 0.5f,0.5f,1.0f };
 	particle.currentTime = 0.0f;
 	particle.lifeTime = 2.0f;
-	Vector3 aaaaa;
-	aaaaa.x = random::Generate<float>(-0.1f,0.1f);
-	aaaaa.y = random::Generate<float>(-0.1f,0.1f);
-	aaaaa.z = random::Generate<float>(-0.1f,0.1f);
-	particle.transform.translate = deadParticleEmitter.world_.transform.translate + aaaaa;
+	Vector3 randomValue;
+	randomValue.x = random::Generate<float>(-0.1f,0.1f);
+	randomValue.y = random::Generate<float>(-0.1f,0.1f);
+	randomValue.z = random::Generate<float>(-0.1f,0.1f);
+	particle.transform.translate = deadParticleEmitter.world_.transform.translate + randomValue;
 	particle.transform.scale = deadParticleEmitter.particleRadius;
 	//移動量を決める
-	aaaaa.x = random::Generate<float>(-0.1f, 0.1f);
-	aaaaa.y = random::Generate<float>(-0.1f, 0.1f);
-	aaaaa.z = random::Generate<float>(-0.1f, 0.1f);
-	particle.velocity = aaaaa;
+	randomValue.x = random::Generate<float>(-1.0f, 1.0f);
+	randomValue.y = random::Generate<float>(-1.0f, 1.0f);
+	randomValue.z = random::Generate<float>(-1.0f, 1.0f);
+	particle.velocity = randomValue;
+
+	randomValue.x = random::Generate<float>(0.5f, 1.0f);
+	randomValue.y = random::Generate<float>(0.0f, 0.3f);
+	randomValue.z = random::Generate<float>(0.0f, 0.3f);
+	particle.color = { randomValue.x,randomValue.y,randomValue.z,1.0f };
+
 	return particle;
 }
 void PDead::UpdatedeadParticle(Particle& particle)
@@ -119,7 +129,6 @@ void PDead::UpdatedeadParticle(Particle& particle)
 	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
 	//色をセット
 	deadParticleEmitter.color.w = alpha;
-	particle.color = deadParticleEmitter.color;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }

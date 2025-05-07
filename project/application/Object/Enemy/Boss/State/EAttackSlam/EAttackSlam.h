@@ -1,5 +1,10 @@
 #pragma once
 #include "../IBossState.h"
+enum SlamPhase {
+	Follow,
+	Attack,
+	Return,
+};
 class EAttackSlam : public IBossState
 {
 public:
@@ -12,13 +17,15 @@ public:
 	std::string ShowState()override;
 private:
 	bool FollowPlayer(Boss* boss);
-	//FollowPlayerの速度の定数
-	const float kFollowPlayerSpeed = 0.5f;
+	//FollowPlayerの速度
+	float kFollowPlayerSpeed = 0.4f;
 	//FollowPlayerがtrueを返す一定距離
-	const float kConstantDistance = 0.2f;
+	const float kConstantDistance = 0.4f;
+
+	SlamPhase phase_ = Follow;
 
 	//AttackSlamPlayer
-	bool IsAttackFlag = false;
+	//bool IsAttackFlag = false;
 	//叩きつけを一回以上しているか
 	bool isSlam2ndFlag = true;
 	//SEハンドル

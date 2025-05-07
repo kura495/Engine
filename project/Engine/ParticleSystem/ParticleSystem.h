@@ -104,9 +104,9 @@ private:
 	void ImGui();
 
 	//インスタンスの数
-	static const uint32_t kNumMaxInstance = 100;
+	const uint32_t kNumMaxInstance = 100;
 	//生きているインスタンスの数
-	uint32_t numInstance = 0;
+	uint32_t numInstance;
 
 	ModelData modelData;
 

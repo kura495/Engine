@@ -49,6 +49,10 @@ void EnemyManager::ImGui()
 	for (Enemy* enemy : enemys_){
 		enemy->ImGui();
 	}
+	ImGui::Begin("ColliderLog2");
+	Vector3 aaaaa = bossEnemy_->GetWorld().transform.translate - player_->GetWorld().transform.translate;
+	ImGui::DragFloat3("colliderA", &aaaaa.x);
+	ImGui::End();
 }
 void EnemyManager::ClearJudge()
 {

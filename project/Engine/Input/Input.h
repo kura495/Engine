@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 //インプットクラス//
 #define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
 #include <dinput.h>
@@ -93,7 +93,7 @@ public:
 	/// <param name="leftMotor">低周波数ランブルモータ(大きい振動)</param>
 	/// <param name="rightMotor">高周波ランブルモータ(細かい振動)</param>
 	/// <param name="second">振動させる秒数</param>
-	static void VibrateController(int leftMotor, int rightMotor, float second);
+	static void VibrateController(int leftMotor, int rightMotor, float second = kDeltaTime);
 	/// <summary>
 	/// 未完成のため使用不可
 	/// </summary>
@@ -118,9 +118,10 @@ public:
 	/// <returns>bool</returns>
 	static bool GetPadPrecede(uint32_t buttonNumber,int delayTime);
 
+	static Vector2 GetPadTrreger() { return Vector2{ (float)joyState.Gamepad.bLeftTrigger,(float)joyState.Gamepad.bRightTrigger }; };
 private:
 	Input() = default;
-	~Input() { VibrateController(VIBRATION_MIN, VIBRATION_MIN, 0.0f); };
+	~Input() { VibrateController(VIBRATION_MIN, VIBRATION_MIN, kDeltaTime); };
 	Input(const Input& obj) = delete;
 	Input& operator=(const Input& obj) = delete;
 	/// <summary>

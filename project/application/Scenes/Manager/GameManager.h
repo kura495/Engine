@@ -8,6 +8,7 @@
 #include "Light/Light.h"
 #include "Utility/ImGuiManager.h"
 
+#include "Scenes/State/Title/TitleState.h"
 #include "Scenes/State/Play/GamePlayState.h"
 #include "Scenes/State/Clear/GameClearState.h"
 #include "Scenes/State/GameOver/GameOverState.h"
@@ -21,6 +22,7 @@
 
 #include "PostProsess/renderTextrue/PostProsess.h"
 #include "PostProsess/RGBshift/renderTextrue/RGBshift.h"
+#include "PostProsess/GlitchNoise/renderTexture/PPGlitchNoise.h"
 
 class GameManager
 {
@@ -54,7 +56,8 @@ private:
 	Vector4 ClearColor{ 0.1f,0.25f,0.5f,1.0f };
 	//ポストプロセス
 	std::unique_ptr<PostProsess> renderTextrue;
-	std::unique_ptr<RGBshift> renderTextrue2;
+	std::unique_ptr<RGBshift> rgbShift;
+	std::unique_ptr<PPGlitchNoise> glitchNoise;
 
 	int currentSceneNum_;
 	int prevSceneNum_;

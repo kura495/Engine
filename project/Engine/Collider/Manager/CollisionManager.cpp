@@ -207,8 +207,8 @@ bool CollisionManager::CheckCollision(OBBoxCollider* colliderA, OBBoxCollider* c
 		return false;
 	
 	// 分離平面が存在しないので「衝突している」
-	colliderA->pushForce = CalculateMTV(colliderA, colliderB);
-	colliderB->pushForce = colliderA->pushForce;
+	colliderB->pushForce = CalculateMTV(colliderA, colliderB);
+	colliderA->pushForce = colliderB->pushForce;
 
 	return true;
 }
@@ -263,7 +263,7 @@ Vector3 CollisionManager::CalculateMTV(OBBoxCollider* obb1, OBBoxCollider* obb2)
 		}
 	}
 
-	return mtvAxis * minOverlap;
+	return mtvAxis.Normalize() * minOverlap;
 }
 float CollisionManager::CalculateOverlap(OBBoxCollider* obb1, OBBoxCollider* obb2,Vector3& axis) {
 	// 軸の正規化

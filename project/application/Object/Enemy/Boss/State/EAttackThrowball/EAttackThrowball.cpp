@@ -33,7 +33,10 @@ void EAttackThrowball::Update(Boss* boss)
 	ball->Update();
 	//3回球に当たったらやられ状態にする
 	if (countHitBall >= 3) {
-		boss->ChangeState<EDown>();
+		boss->HP_ -= 1;
+
+		boss->isDamage = true;
+		boss->ChangeState<ERoot>();
 		return;
 	}
 	//ボールが一定のラインを超えたらルートビヘイビアーに戻す

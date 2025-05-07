@@ -6,6 +6,9 @@ void PauseMenu::Init()
 	sprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 	sprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/BlackTexture.png");
 	sprite_->SetColor({ 1.0f,1.0f,1.0f,0.7f });
+	tutorialSprite_ = std::make_unique<Sprite>();
+	tutorialSprite_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
+	tutorialSprite_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/control_Tuto.png");
 	world_.Init();
 }
 bool PauseMenu::Update()
@@ -31,5 +34,6 @@ void PauseMenu::Draw()
 {
 	if (IsPause) {
 		sprite_->RendererDraw(world_);
+		tutorialSprite_->RendererDraw(world_);
 	}
 }

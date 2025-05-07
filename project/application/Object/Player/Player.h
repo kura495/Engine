@@ -71,6 +71,8 @@ public:
 	bool isCompleteReStert = false;
 	void ReStert();
 private:
+	Vector3 uvT;
+
 	void ImGui();
 
 	bool isDamege = false;
@@ -94,7 +96,8 @@ private:
 	//攻撃の当たり判定
 	void AttackColliderInit();
 	void AttackOnCollision(const ICollider& collider);
-
+	float hitStopValue = 0.1f;
+	float vibValue = 0.2f;
 #pragma endregion Collider
 
 #pragma region
@@ -134,4 +137,6 @@ private:
 	uint8_t causeOfDeath_;
 
 	Vector3 move;
+
+	std::vector<Vector3> pushForce;
 };

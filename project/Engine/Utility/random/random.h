@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 #include "Math/Math_Structs.h"
+using namespace Math;
 class random
 {
 public:
@@ -25,6 +26,20 @@ public:
 			std::uniform_real_distribution<T> distribution(Min, Max);
 			return distribution(randomEngine);
 		}
+	}
+	static Vector3 Generate(Vector3 Min, Vector3 Max) {
+		Vector3 result;
+		result.x = Generate<float>(Min.x,Max.x);
+		result.y = Generate<float>(Min.y,Max.y);
+		result.z = Generate<float>(Min.z,Max.z);
+		return result;
+	}
+	static Vector3 Generate(float Min, float Max) {
+		Vector3 result;
+		result.x = Generate<float>(Min,Max);
+		result.y = Generate<float>(Min,Max);
+		result.z = Generate<float>(Min,Max);
+		return result;
 	}
 private:
 

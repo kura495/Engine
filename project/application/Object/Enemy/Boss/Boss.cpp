@@ -17,7 +17,7 @@ void Boss::Init(std::vector<Model*> models)
 	ChangeState<ESpawn>();
 	name = "Boss";
 	//初期値を設定
-	HP_ = 10;
+	HP_ = 4;
 }
 void Boss::Update()
 {
@@ -31,6 +31,9 @@ void Boss::Update()
 			colliders_[Boss::ColliderType::DamageArm].IsUsing = true;
 			colliders_[Boss::ColliderType::DamageHund].IsUsing = true;
 
+		}
+		if (HP_ <= 0 && state_->GetStateType() != BossState::Dead) {
+			ChangeState<EDead>();
 		}
 	}
 
@@ -86,9 +89,7 @@ void Boss::OnCollisionDamage(const ICollider& collider)
 {
 	if (collider.GetcollitionAttribute() == Collider::Tag::Weapon) {
 		HP_ -= 1;
-		if (HP_ <= 0) {
-			ChangeState<EDead>();
-		}
+
 		isDamage = true;
 		colliders_[Boss::ColliderType::DamageArm].IsUsing = false;
 		colliders_[Boss::ColliderType::DamageHund].IsUsing = false;

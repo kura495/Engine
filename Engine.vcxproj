@@ -179,6 +179,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="project\application\Object\Meteor\Meteor.cpp" />
+    <ClCompile Include="project\application\Object\UFO\state\Normal\Normal.cpp" />
+    <ClCompile Include="project\application\Object\UFO\state\Idle\Idle.cpp" />
+    <ClCompile Include="project\application\Object\UFO\state\Boost\Boost.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.cpp" />
     <ClCompile Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.cpp" />
@@ -207,6 +211,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Object\SkyBox\SkyBox.cpp" />
     <ClCompile Include="project\application\Object\SkyDome\SkyDome.cpp" />
     <ClCompile Include="project\application\Object\Transition\Fade\Fade.cpp" />
+    <ClCompile Include="project\application\Object\UFO\state\StartAnime\StartAnime.cpp" />
+    <ClCompile Include="project\application\Object\UFO\UFO.cpp" />
     <ClCompile Include="project\application\Object\UI\Life\Life_UI.cpp" />
     <ClCompile Include="project\application\Scenes\Manager\GameManager.cpp" />
     <ClCompile Include="project\application\Scenes\State\Clear\GameClearState.cpp" />
@@ -217,6 +223,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayState.cpp" />
     <ClCompile Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.cpp" />
+    <ClCompile Include="project\application\Scenes\State\Title\TitleState.cpp" />
     <ClCompile Include="project\Engine\Animation\Animation.cpp" />
     <ClCompile Include="project\Engine\Audio\Audio.cpp" />
     <ClCompile Include="project\Engine\Camera\DebugCamera\DebugCamera.cpp" />
@@ -254,6 +261,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\Engine\PostProsess\Dissolve\Pipeline\Dissolve.cpp" />
     <ClCompile Include="project\Engine\Object\Line\PipeLine\DrawLinePSO.cpp" />
     <ClCompile Include="project\Engine\PostProsess\GaussianFilter\Pipeline\GaussianFilter.cpp" />
+    <ClCompile Include="project\Engine\PostProsess\GlitchNoise\Pipeline\GlitchNoise.cpp" />
+    <ClCompile Include="project\Engine\PostProsess\GlitchNoise\renderTexture\PPGlitchNoise.cpp" />
     <ClCompile Include="project\Engine\PostProsess\GrayScale\Pipeline\GrayScale.cpp" />
     <ClCompile Include="project\Engine\PostProsess\LuminanceBasedOutline\Pipeline\LuminanceBasedOutline.cpp" />
     <ClCompile Include="project\Engine\PostProsess\Pipeline\PostProsessPSO.cpp" />
@@ -298,9 +307,16 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClCompile Include="project\application\Scenes\State\Play\GamePlayPhase\ReStertPhase\ReStertPhase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="project\application\Object\Meteor\Meteor.h" />
+    <ClInclude Include="project\application\Object\UFO\state\IUFOState.h" />
+    <ClInclude Include="project\application\Object\UFO\state\Normal\Normal.h" />
+    <ClInclude Include="project\application\Object\UFO\state\Idle\Idle.h" />
+    <ClInclude Include="project\application\Object\UFO\state\Boost\Boost.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EReStert\EReStert.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\ESwordAttack\ESwordAttack.h" />
     <ClInclude Include="project\application\Object\Player\State\PReStert\PReStert.h" />
+    <ClInclude Include="project\application\Object\UFO\state\StartAnime\StartAnime.h" />
+    <ClInclude Include="project\application\Object\UFO\UFO.h" />
     <ClInclude Include="project\application\Object\UI\Life\Life_UI.h" />
     <ClInclude Include="project\application\Scenes\State\Play\PauseMenu\PauseMenu.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\ClearPhase\ClearPhase.h" />
@@ -308,6 +324,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\GamePlayStatePhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\PlayPhase\PlayPhase.h" />
     <ClInclude Include="project\application\Scenes\State\Play\GamePlayPhase\TitlePhase\TitlePhase.h" />
+    <ClInclude Include="project\application\Scenes\State\Title\TitleState.h" />
+    <ClInclude Include="project\Engine\PostProsess\GlitchNoise\Pipeline\GlitchNoise.h" />
+    <ClInclude Include="project\Engine\PostProsess\GlitchNoise\renderTexture\PPGlitchNoise.h" />
     <ClInclude Include="project\Engine\Utility\GlobalTime.h" />
     <ClInclude Include="project\application\Object\Enemy\Boss\State\EAttackRocketPunch\EAttackRocketPunch.h" />
     <ClInclude Include="project\application\Object\Player\State\PAttack\PAttack.h" />
@@ -550,6 +569,22 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatFormVersion)\x64\dxil.dll"</Command>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="project\resources\hlsl\GlitchNoise\GlitchNoise.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="resources\hlsl\FullScreen.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>

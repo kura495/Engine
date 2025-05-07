@@ -49,7 +49,7 @@ enum class StageBehavior {
 class GamePlayState : public IGameState
 {
 public:
-
+	GamePlayState() { StateNo = GameStateNo::PLAY; };
 	void Init()override;
 	void Update()override;
 	void Draw()override;
@@ -73,6 +73,7 @@ private:
 	std::unique_ptr<EnemyManager> enemyManager;
 	std::unique_ptr<CollisionManager> collisionManager;
 	std::unique_ptr<FollowCamera>followCamera;
+	Vector3 cameraOffset = { 0.0f, 3.0f, -10.0f };
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<GamePlayStatePhase> phase_;

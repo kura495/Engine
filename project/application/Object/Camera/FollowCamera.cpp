@@ -89,10 +89,23 @@ void FollowCamera::ImGui()
 #endif
 }
 
+void FollowCamera::ShakeFanction()
+{
+	Vector3 ramdomTranslate = { random::Generate<float>(-1.0f, 1.0f),random::Generate<float>(-1.0f, 1.0f) ,random::Generate<float>(-1.0f, 1.0f) };
+
+	parameter.translation_ += ramdomTranslate;
+}
+
 void FollowCamera::SetTarget(const WorldTransform* target)
 {
 	target_ = target;
 	Reset();
+}
+void FollowCamera::LockAt(const WorldTransform& target)
+{
+	Vector3 lockVector;
+	lockVector = parameter.translation_ - target.transform.translate;
+	parameter.rotation_ = Quaternion::EulerToQuaterion(lockVector).Normalize();
 }
 void FollowCamera::ReStert()
 {

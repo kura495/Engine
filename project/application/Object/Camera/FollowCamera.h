@@ -30,8 +30,14 @@ public:
 	/// </summary>
 	/// <param name="target">ターゲットのWorldTransform</param>
 	void SetTarget(const WorldTransform* target);
+	/// <summary>
+	/// 
+	/// </summary>
+	void LockAt(const WorldTransform& target);
 
 	void ReStert();
+
+	void SetOffset(Vector3 offset) { offsetPos = offset; };
 
 	static WorkInterpolation workInter;
 
@@ -41,21 +47,11 @@ public:
 #pragma endregion シェイク
 private:
 	void ImGui();
-#pragma region
-
-	const float kinterParameterMin_ = 0.7f;
-	const float kinterParameterMax_ = 1.0f;
+	void ShakeFanction();
 	float interParameter_ = 1.0f;
 
 	Vector3 prePos_;
 	Vector3 currentPos_;
-
-	bool resetFlag_ = true;
-	float lerpTTitle = 0.0f;
-	float addValueTitle = 0.01f;
-	Vector3 resetTransform;
-	Quaternion resetRotate;
-#pragma endregion PlaySceneInit用
 
 	//追従対象
 	const WorldTransform* target_ = nullptr;
@@ -70,5 +66,5 @@ private:
 	//追従対象からのオフセットを計算する
 	Vector3 OffsetCalc();
 
-	Vector3 offsetPos = { 0.0f, 3.0f, -10.0f };
+	Vector3 offsetPos = { 0.0f,0.0f,0.0f};
 };

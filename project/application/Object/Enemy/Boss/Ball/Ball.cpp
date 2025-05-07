@@ -57,7 +57,6 @@ void Ball::Update()
 void Ball::Draw()
 {
 	particle_->RendererDraw();
-	//models_[0]->RendererDraw(world_);
 }
 
 void Ball::ColliderInit()
@@ -79,10 +78,6 @@ void Ball::OnCollision(const ICollider& colliderA)
 			accelValue += 1.0f;
 			forTargetVector = playerToBomb.Normalize() * kSpeedValue * accelValue;
 			isHit = false;
-			//地面で反射する用のコード
-			/*easeT = 0.0f;
-			boundFlag = false;
-			PrePos = world_.transform.translate;*/
 		}
 	}
 	if (colliderA.GetcollitionAttribute() == Collider::Tag::EnemyCore){

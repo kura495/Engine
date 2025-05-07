@@ -20,7 +20,7 @@ public:
 	void ThrowBall(Vector3 StertPos,Vector3 targetVector) {
 		boundFlag = false;
 		isThrowFlag = true;
-		accelValue = 1.0f;
+		accelValue = 1.4f;
 		stertPos = StertPos;
 		world_.transform.translate = stertPos;
 		//方向を決める
@@ -47,7 +47,7 @@ private:
 	//プレイヤーに向かっていく速さの倍数
 	float kSpeedValue = 0.2f;
 	//プレイヤーが叩くたびに増える加速値
-	float accelValue = 1.0f;
+	float accelValue = 1.4f;
 	//プレイヤー方向へ向かうベクトル
 	Vector3 forTargetVector;
 	//投げたかどうかのフラグ

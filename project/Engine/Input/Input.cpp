@@ -1,4 +1,4 @@
-﻿#include"Input.h"
+#include"Input.h"
 
 std::list<ListData> Input::joy_stack;
 std::list<ListData> Input::joy_stacklog;
@@ -64,7 +64,6 @@ void Input::Update()
 
 	//前フレームの結果を代入
 	joyStatePre = joyState;
-
 	GetJoystickState();
 	UpdateJoyState();
 #ifdef _DEBUG

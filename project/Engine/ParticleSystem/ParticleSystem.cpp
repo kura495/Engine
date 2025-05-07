@@ -1,5 +1,4 @@
-﻿#include "ParticleSystem.h"
-
+#include "ParticleSystem.h"
 void ParticleSystem::Init(const std::string filePath)
 {
 	textureManager_ = TextureManager::GetInstance();
@@ -35,7 +34,6 @@ void ParticleSystem::Update(bool billboardFlag)
 		billboardMatrix.m[3][1] = 0.0f;
 		billboardMatrix.m[3][2] = 0.0f;
 	}
-
 
 	for (std::list<Particle>::iterator particleIt = particles.begin(); particleIt != particles.end();) {
 		//一定時間経過したパーティクルを削除
@@ -149,6 +147,10 @@ void ParticleSystem::ImGui()
 {
 	ImGui::Begin("Emitter");
 	ImGui::InputFloat3("translate",&Testemitter.world_.transform.translate.x);
+	//TODO:SRV解放できず 解決を目指す
+	int test = sRVManager_->GetSRVValue();
+	ImGui::InputInt("Value", &test);
+
 	ImGui::End();
 }
 
@@ -187,10 +189,11 @@ void ParticleSystem::CreateSRV()
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 
 	textureSrvHandle = sRVManager_->GetDescriptorHandle();
-	//ImGui分
+	//ImGui分メモリの位置をずらす
 	textureSrvHandle.CPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	textureSrvHandle.GPU.ptr += directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
+	int test = sRVManager_->GetSRVValue();
+	test = test;
 	directX_->GetDevice()->CreateShaderResourceView(InstancingResource.Get(),&instancingSrvDesc, textureSrvHandle.CPU);
 }
 
