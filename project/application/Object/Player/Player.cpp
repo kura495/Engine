@@ -41,14 +41,12 @@ void Player::Init(std::vector<Model*> models)
 	//音声
 	SEattack = Audio::LoadAudioMP3("project/resources/sound/Player/attack.mp3", false);
 	SEHitattack = Audio::LoadAudioMP3("project/resources/sound/Player/Hitattack.mp3", false);
-
 	ChangeState<PRoot>();
 }
 void Player::Update()
 {
 	//パッドの状態をゲット
 	input->GetJoystickState(joyState);
-	
 	if (isDyingFlag == false) {
 		//ダメージを受けた時、落っこちた時の処理
 		if (isDamege && HP_ >= 1 || world_.transform.translate.y <= -10.0f) {
@@ -73,11 +71,9 @@ void Player::Update()
 		gravity = std::min(gravity + kgravity,0.98f);
 	}
 	isOnFloorFlag = false;
-
 #ifdef USE_IMGUI
 	ImGui();
 #endif
-
 	world_.Update();
 }
 void Player::Draw()
@@ -100,8 +96,8 @@ void Player::SetColliderAttribute(int number, uint32_t collisionAttribute)
 void Player::ColliderInit()
 {
 	colliders_[ColliderType::pCollider].Init(&world_);
-	colliders_[ColliderType::pCollider].SetSize({ 0.5f,0.7f,0.5f });
-	colliders_[ColliderType::pCollider].SetOffset({ 0.0f,0.7f,0.0f });
+	colliders_[ColliderType::pCollider].SetSize(colliderSize);
+	colliders_[ColliderType::pCollider].SetOffset(colliderOffset);
 	colliders_[ColliderType::pCollider].OnCollision = [this](ICollider& collider) { OnCollision(collider); };
 	colliders_[ColliderType::pCollider].SetcollitionAttribute(Collider::Tag::Player);
 	colliders_[ColliderType::pCollider].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon);
@@ -125,14 +121,6 @@ void Player::OnCollision(const ICollider& ICollider)
 
 		world_.transform.translate -= move;
 		world_.Update();
-
-		//TODO:押し戻しをする処理
-		/*if (ICollider.GetCenter().x < world_.transform.translate.x) {
-			world_.transform.translate.x = 1.5f;
-		}
-		if (ICollider.GetCenter().x > world_.transform.translate.x) {
-			world_.transform.translate.x = -1.5f;
-		}*/
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {
 		world_.transform.translate.y = ICollider.GetCenter().y;
@@ -155,11 +143,10 @@ void Player::AttackColliderInit()
 	attackColliderWorld_.SetParent(&world_);
 	colliders_[ColliderType::Attack].Init(&attackColliderWorld_);
 	colliders_[ColliderType::Attack].SetSize({ 1.0f,1.0f,1.0f });
-	colliders_[ColliderType::Attack].SetOffset({ 0.0f,0.5f,1.0f });
+	colliders_[ColliderType::Attack].SetOffset(attackColliderOffset);
 	colliders_[ColliderType::Attack].OnCollision = [this](ICollider& collider) { AttackOnCollision(collider); };
 	colliders_[ColliderType::Attack].SetcollitionAttribute(Collider::Tag::Weapon);
 	colliders_[ColliderType::Attack].SetcollisionMask(~Collider::Tag::Player & ~Collider::Tag::Weapon & ~Collider::Tag::Floor);
-
 	colliders_[ColliderType::Attack].IsUsing = false;
 	colliders_[ColliderType::Attack].colliderName = "PlayerAttack";
 }
@@ -237,7 +224,6 @@ void Player::ReStert()
 	isDead = false;
 	isDyingFlag = false;
 	ChangeState<PReStert>();
-	
 }
 void Player::ImGui()
 {
@@ -247,7 +233,6 @@ void Player::ImGui()
 	ImGui::DragFloat3("Translate", &world_.transform.translate.x, 0.1f);
 	ImGui::Text("%d", HP_);
 	ImGui::Text(state_->ShowState().c_str());
-
 	ImGui::End();
 }
 bool Player::Move()
@@ -256,7 +241,6 @@ bool Player::Move()
 	move = {0.0f,0.0f,0.0f };
 	//移動量
 	if (joyState.Gamepad.sThumbLX != 0 && joyState.Gamepad.sThumbLY != 0) {
-
 	#pragma region
 		//スティックから移動量を計算
 		move = {
@@ -275,24 +259,18 @@ bool Player::Move()
 		move.y = 0.0f;
 		//移動
 		world_.transform.translate = world_.transform.translate + move;
-
 	#pragma endregion 移動
 	#pragma region
 		//移動ベクトルをカメラの角度だけ回転
 		//追従対象からロックオン対象へのベクトル
 		Vector3 sub = move;
-
 		//プレイヤーの現在の向き
 		sub = sub.Normalize();
-
 		Vector3 cross = Vector3::Normalize(Vector3::Cross({ 0.0f,0.0f,1.0f }, sub));
 		float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
-
 		//行きたい方向のQuaternionの作成
 		world_.transform.quaternion = Quaternion::MakeRotateAxisAngleQuaternion(cross, std::acos(dot));
-
 	#pragma endregion プレイヤーの回転
-
 		return true;
 	}
 	return false;

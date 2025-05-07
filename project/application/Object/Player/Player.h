@@ -93,9 +93,12 @@ private:
 	//プレイヤーキャラ事態の当たり判定
 	void ColliderInit();
 	void OnCollision(const ICollider& collider);
+	Vector3 colliderSize = { 0.5f,0.7f,0.5f };
+	Vector3 colliderOffset = { 0.0f,0.7f,0.0f };
 	//攻撃の当たり判定
 	void AttackColliderInit();
 	void AttackOnCollision(const ICollider& collider);
+	Vector3 attackColliderOffset = { 0.0f,0.5f,1.0f };
 	float hitStopValue = 0.1f;
 	float vibValue = 0.2f;
 #pragma endregion Collider
