@@ -179,8 +179,9 @@ void Player::AttackOnCollision(const ICollider& collider)
 		Audio::Stop(SEattack, true,false);
 		Audio::Play(SEHitattack, 1.0f);
 		//ヒットストップ
-		PlayPhase::HitStop(0.1f);
-
+		PlayPhase::HitStop(hitStopValue);
+		//コントローラー振動
+		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN, vibValue);
 	}
 	if (collider.GetcollitionAttribute() == Collider::Tag::EnemyBall) {
 		colliders_[ColliderType::Attack].IsUsing = false;
@@ -194,9 +195,10 @@ void Player::AttackOnCollision(const ICollider& collider)
 		AttackHitBombParticleEmitter.world_.transform.translate.y += 1.0f;
 		attackHitBombParticle_->SpawnParticle(AttackHitBombParticleEmitter);
 		//ヒットストップ
-		PlayPhase::HitStop(0.1f);
+		PlayPhase::HitStop(hitStopValue);
+		//コントローラー振動
+		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN, vibValue);
 	}
-
 }
 #pragma endregion Collider
 void Player::UpdateAttackHitParticle(Particle& particle)

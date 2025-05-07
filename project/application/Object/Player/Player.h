@@ -96,7 +96,8 @@ private:
 	//攻撃の当たり判定
 	void AttackColliderInit();
 	void AttackOnCollision(const ICollider& collider);
-
+	float hitStopValue = 0.1f;
+	float vibValue = 0.2f;
 #pragma endregion Collider
 
 #pragma region
