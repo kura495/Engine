@@ -68,7 +68,7 @@ void Player::Update()
 	}
 	//地面にいないなら落ちるスピードが加速する
 	if (isOnFloorFlag == false) {
-		gravity = std::min(gravity + kgravity,0.98f);
+		gravity = std::min(gravity + kgravity, maxGravity);
 	}
 	isOnFloorFlag = false;
 #ifdef USE_IMGUI
@@ -238,7 +238,7 @@ void Player::ImGui()
 bool Player::Move()
 {
 	//加算量を0に戻す
-	move = {0.0f,0.0f,0.0f };
+	move = { 0.0f,0.0f,0.0f };
 	//移動量
 	if (joyState.Gamepad.sThumbLX != 0 && joyState.Gamepad.sThumbLY != 0) {
 	#pragma region

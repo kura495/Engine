@@ -82,6 +82,7 @@ private:
 	std::unique_ptr<IPlayerState> state_;
 #pragma endregion State
 
+	const float maxGravity = 0.98f;
 	const float kgravity = 0.03f;
 	float gravity = 0.03f;
 
