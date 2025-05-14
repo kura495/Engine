@@ -68,7 +68,7 @@ void FollowCamera::Update() {
 
 void FollowCamera::Shake()
 {
-	Vector3 ramdomTranslate = { random::Generate<float>(-1.0f, 1.0f),random::Generate<float>(-1.0f, 1.0f) ,random::Generate<float>(-1.0f, 1.0f) };
+	Vector3 ramdomTranslate = { random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue, maxShakeValue) };
 
 	parameter.translation_ += ramdomTranslate;
 }

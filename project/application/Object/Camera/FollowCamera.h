@@ -67,4 +67,7 @@ private:
 	Vector3 OffsetCalc();
 
 	Vector3 offsetPos = { 0.0f,0.0f,0.0f};
+
+	float minShakeValue = -0.7f;
+	float maxShakeValue =  0.7f;
 };
