@@ -31,7 +31,7 @@ void ReStertPhase::Update(GamePlayState* playState)
 		}
 	}
 	else if (phase == Phase::FadeOut) {
-		if (fade.Out(3.0f)) {
+		if (fade.Out(1.0f)) {
 			playState->ChangePhase<PlayPhase>();
 		}
 	}

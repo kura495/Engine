@@ -17,6 +17,7 @@ void EDead::Init(Boss* boss)
 	deadEnemyParticleEmitter.speed = { 2.0f,2.0f,2.0f };
 	deadEnemyParticleEmitter.world_.transform.translate = boss->GetWorld().transform.translate;
 	easeT = 0.0f;
+	boss->isSlamFlag = false;
 }
 
 void EDead::Update(Boss* boss)

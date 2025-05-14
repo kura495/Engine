@@ -12,8 +12,8 @@ void EReStert::Init(Boss* boss)
 
 void EReStert::Update(Boss* boss)
 {
-	easeT = (std::min)(easeT + kDeltaTime, kStateChangeSecond);
-	if (easeT == kStateChangeSecond) {
+	easeT = (std::min)(easeT + kDeltaTime, kMaxEaseValue);
+	if (easeT == kMaxEaseValue) {
 		boss->ChangeState<ERoot>();
 	}
 }

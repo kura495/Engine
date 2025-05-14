@@ -762,7 +762,6 @@
     <ClCompile Include="project\application\Object\UFO\state\Idle\Idle.cpp" />
     <ClCompile Include="project\application\Object\UFO\state\Normal\Normal.cpp" />
     <ClCompile Include="project\application\Object\UFO\state\StartAnime\StartAnime.cpp" />
-    <ClCompile Include="project\application\Object\Meteor\Meteor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1428,7 +1427,6 @@
     <ClInclude Include="project\application\Object\UFO\state\Normal\Normal.h" />
     <ClInclude Include="project\application\Object\UFO\state\IUFOState.h" />
     <ClInclude Include="project\application\Object\UFO\state\StartAnime\StartAnime.h" />
-    <ClInclude Include="project\application\Object\Meteor\Meteor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

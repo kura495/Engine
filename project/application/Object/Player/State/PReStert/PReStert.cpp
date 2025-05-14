@@ -11,8 +11,8 @@ void PReStert::Init(Player* player)
 }
 void PReStert::Update(Player* player)
 {
-	easeT = (std::min)(easeT + kDeltaTime, 1.0f);
-	if (easeT == 1.0f) {
+	easeT = (std::min)(easeT + kDeltaTime, kMaxEaseValue);
+	if (easeT == kMaxEaseValue) {
 		player->isCompleteReStert = true;
 		player->ChangeState<PRoot>();
 	}
