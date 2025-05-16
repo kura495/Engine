@@ -32,7 +32,7 @@ void CollisionManager::Draw()
 {
 #ifdef _DEBUG
 	for (ICollider* collider : Colliders_) {
-		if (collider->IsDalete == false) {
+		if (collider->IsUsing) {
 			collider->CollisionDraw();
 		}
 	}
