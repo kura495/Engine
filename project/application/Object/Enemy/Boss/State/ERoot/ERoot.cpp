@@ -39,7 +39,7 @@ void ERoot::Update(Boss* boss)
 		//叩きつけ攻撃
 		boss->ChangeState<EAttackSlam>();
 		//次の攻撃を設定
-		isAttackSelect = AttackState::SwordSlash;
+		isAttackSelect = AttackState::Slam;
 	}
 	else if (isAttackSelect == AttackState::SwordSlash) {
 		boss->ChangeState<ESwordAttack>();

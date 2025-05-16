@@ -3,7 +3,6 @@
 void GamePlayState::Init()
 {
 
-
 	//基本機能生成
 	Editer::GetInstance()->SetViewProjection(&Renderer::GetViewProjection());
 	Editer::GetInstance()->IsEnable(true);

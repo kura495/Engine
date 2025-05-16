@@ -15,7 +15,7 @@ void SkyDome::Update()
 	ImGui::End();
 	world_.Update();
 #endif
-	uvT.x += 0.001f;
+	uvT.x += 0.0001f;
 	models_[0]->GetMaterial()->uvTransform = MakeTranslateMatrix(uvT);
 }
 
