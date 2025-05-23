@@ -60,6 +60,14 @@ void GamePlayState::Update()
 		followCamera->isShake = false;
 	}
 	floorManager->Update();
+#ifdef _DEBUG
+	ImGui::Begin("CameraFunctionTest");
+	if (ImGui::Button("LockAt")) {
+		followCamera->LockAt(enemyManager->GetBossWorld());
+	}
+	ImGui::End();
+#endif
+
 
 	skyDome_->Update();
 }

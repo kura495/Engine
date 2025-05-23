@@ -31,8 +31,9 @@ void FollowCamera::Update() {
 	Vector3 EulerRot;
 
 	EulerRot.x = rotate_.x;
-	EulerRot.y = rotate_.y;
+	EulerRot.y = rotate_.y - lockVector.y;
 	EulerRot.z = rotate_.z;
+	//lockVector.y = 0;
 	parameter.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {
@@ -103,9 +104,9 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 }
 void FollowCamera::LockAt(const WorldTransform& target)
 {
-	Vector3 lockVector;
-	lockVector = parameter.translation_ - target.transform.translate;
-	parameter.rotation_ = Quaternion::EulerToQuaterion(lockVector).Normalize();
+	if (target_) {
+		lockVector = target.transform.translate - target_->transform.translate;
+	}
 }
 void FollowCamera::ReStert()
 {

@@ -21,6 +21,7 @@ public:
 
 	bool GetSlamFlag() { return bossEnemy_->GetSlamFlag(); };
 
+	WorldTransform& GetBossWorld() { return bossEnemy_->GetWorld(); };
 private:
 	void ImGui();
 	//ゲームクリアの条件を記載

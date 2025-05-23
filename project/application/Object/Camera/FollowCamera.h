@@ -52,7 +52,7 @@ private:
 
 	Vector3 prePos_;
 	Vector3 currentPos_;
-
+	Vector3 lockVector;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド
