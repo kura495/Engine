@@ -31,7 +31,7 @@ void FollowCamera::Update() {
 	Vector3 EulerRot;
 
 	EulerRot.x = rotate_.x;
-	EulerRot.y = rotate_.y - lockVector.y;
+	EulerRot.y = rotate_.y + rat;
 	EulerRot.z = rotate_.z;
 	//lockVector.y = 0;
 	parameter.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
@@ -106,6 +106,18 @@ void FollowCamera::LockAt(const WorldTransform& target)
 {
 	if (target_) {
 		lockVector = target.transform.translate - target_->transform.translate;
+
+
+		if (lockVector.z != 0.0) {
+			rat = std::asin(lockVector.x / std::sqrt(lockVector.x * lockVector.x + lockVector.z * lockVector.z));
+
+			if (lockVector.z < 0.0) {
+				rat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> -rat : -std::numbers::pi_v<float> -rat;
+			}
+		}
+		else {
+			rat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
+		}
 	}
 }
 void FollowCamera::ReStert()
