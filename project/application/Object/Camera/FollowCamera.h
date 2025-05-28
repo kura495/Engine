@@ -53,9 +53,9 @@ private:
 	Vector3 prePos_;
 	Vector3 currentPos_;
 
-	Vector3 lockVector;
-	float rat;
-	
+	Vector3 lockVector = { 0.0f,0.0f,0.0f };
+	float rat = 0.0f;
+	float lockRat = 0.0f;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド

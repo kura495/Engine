@@ -30,10 +30,12 @@ void FollowCamera::Update() {
 
 	Vector3 EulerRot;
 
+	lockRat = (std::min)(lockRat + kDeltaTime,rat);
+	//rotate_.y += lockRat;
 	EulerRot.x = rotate_.x;
-	EulerRot.y = rotate_.y + rat;
+	EulerRot.y = rotate_.y + lockRat;
 	EulerRot.z = rotate_.z;
-	//lockVector.y = 0;
+
 	parameter.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
 
 	if (target_) {
@@ -137,6 +139,8 @@ void FollowCamera::ReStert()
 		//オフセット分と追従座標の補間分ずらす
 		parameter.translation_ = workInter.interTarget_ + offset;
 	}
+
+	lockRat = 0.0f;
 }
 void FollowCamera::Reset()
 {
