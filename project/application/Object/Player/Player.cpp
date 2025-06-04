@@ -119,7 +119,13 @@ void Player::OnCollision(const ICollider& ICollider)
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Enemy) {
 
-		world_.transform.translate -= move;
+		if (ICollider.pushForce.x < 0) {
+			world_.transform.translate += ICollider.pushForce / 2;	
+		}
+		else if (ICollider.pushForce.x > 0) {
+			world_.transform.translate -= ICollider.pushForce / 2;	
+		}
+
 		world_.Update();
 	}
 	if (ICollider.GetcollitionAttribute() == Collider::Tag::Floor) {

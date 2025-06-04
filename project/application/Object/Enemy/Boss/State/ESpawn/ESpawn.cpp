@@ -34,8 +34,8 @@ void ESpawn::Update(Boss* boss)
 	ParticleSystem::ParticleCustumSpawn(*sleepParticle_,sleepParticleEmitter);
 	//パーティクル更新
 	sleepParticle_->Update();
-
-	boss->ChangeState<EReturnPosition>();
+	boss;
+	//boss->ChangeState<EReturnPosition>();
 
 }
 
