@@ -60,6 +60,9 @@ private:
 	Vector3 lockVector = { 0.0f,0.0f,0.0f };
 	float rat = 0.0f;
 	float lockRat = 0.0f;
+	float preLockRat = 0.0f;
+	Quaternion ratQua;
+	Quaternion StartQua;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド
@@ -79,4 +82,9 @@ private:
 	float maxShakeValue =  0.7f;
 
 	LockAtMode lockAtMode_ = LockAtMode::min;
+
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float addEaseT = 0.02f;
 };

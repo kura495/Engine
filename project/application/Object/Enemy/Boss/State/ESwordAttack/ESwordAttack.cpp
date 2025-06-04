@@ -26,10 +26,11 @@ void ESwordAttack::Update(Boss* boss)
 			phase_ = Phase::MakeSword;
 			easeT = 0.0f;
 			addEaseT = 0.015f;
+			boss->getCamera()->LockAt(boss->GetWorld());
 		}
 	}
 	if (phase_ == Phase::MakeSword) {
-		boss->getCamera()->LockAt(boss->GetWorld());
+
 		beamSword_->SetModelSize({1.0f,1.0f,easeT});
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
 		if (easeT == 1.0f) {

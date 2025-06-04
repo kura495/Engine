@@ -27,13 +27,13 @@ void ERoot::Update(Boss* boss)
 	if (isAttackSelect == AttackState::RocketPunch) {
 		boss->ChangeState<EAttackRocketPunch>();
 		//次の攻撃を設定
-		isAttackSelect = AttackState::Throw;
+		isAttackSelect = AttackState::SwordSlash;
 	}
 	else if (isAttackSelect == AttackState::Throw) {
 		//ボールを投げる攻撃
 		boss->ChangeState<EAttackThrowball>();
 		//次の攻撃を設定
-		isAttackSelect = AttackState::Slam;
+		isAttackSelect = AttackState::SwordSlash;
 	}
 	else if (isAttackSelect == AttackState::Slam) {
 		//叩きつけ攻撃
@@ -44,7 +44,7 @@ void ERoot::Update(Boss* boss)
 	else if (isAttackSelect == AttackState::SwordSlash) {
 		boss->ChangeState<ESwordAttack>();
 		//次の攻撃を設定
-		isAttackSelect = AttackState::RocketPunch;
+		isAttackSelect = AttackState::SwordSlash;
 	}
 }
 

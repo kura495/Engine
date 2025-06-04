@@ -27,16 +27,16 @@ void FollowCamera::Update() {
 			rotate_.x = -1.0f;
 		}
 	}
-
 	Vector3 EulerRot;
-	if (lockAtMode_ == LockAtMode::min) {
-		lockRat = (std::min)(lockRat + kDeltaTime,rat);
-	}else if (lockAtMode_ == LockAtMode::max) {
-		lockRat = (std::max)(lockRat - kDeltaTime,rat);
+	if (easeT != 1.0f) {
+		easeT = (std::min)(easeT + addEaseT, 1.0f);
+		if (easeT == 1.0f) {
+			rotate_.y = LerpShortAngle(preLockRat, rat, easeT);
+		}
 	}
 
 	EulerRot.x = rotate_.x;
-	EulerRot.y = rotate_.y/* + lockRat*/;
+	EulerRot.y = rotate_.y;
 	EulerRot.z = rotate_.z;
 
 	parameter.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
@@ -90,7 +90,8 @@ void FollowCamera::ImGui()
 	if (ImGui::Button("isShakeOff")) {
 		isShake = false;
 	}
-	ImGui::Text("%f", &rat);
+	ImGui::Text("%f",rat);
+	ImGui::Text("%f",rotate_.y);
 	ImGui::End();
 #endif
 }
@@ -109,6 +110,8 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 }
 void FollowCamera::LockAt(const WorldTransform& target)
 {
+	preLockRat = rotate_.y;
+	easeT = 0.0f;
 	if (target_) {
 		lockVector = target.transform.translate - target_->transform.translate;
 
@@ -123,9 +126,9 @@ void FollowCamera::LockAt(const WorldTransform& target)
 			rat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
 		}
 	}
-	if (rotate_.y + rat < rat) {
+	if (rotate_.y < rat) {
 		lockAtMode_ = LockAtMode::min;
-	}else if(rotate_.y + rat > rat) {
+	}else if(rotate_.y > rat) {
 		lockAtMode_ = LockAtMode::max;
 	}
 }

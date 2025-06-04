@@ -67,6 +67,9 @@ void PlaneObject::CrashEffect()
 		ImGui::Begin("PlaneObject");
 		ImGui::Text("Crash");
 		ImGui::End();
+		if (easeT > 9.5f) {
+			collider.IsUsing = false;
+		}
 	if (easeT == 1.0f) {
 		easeT = 0.0f;
 		isCrash = false;
