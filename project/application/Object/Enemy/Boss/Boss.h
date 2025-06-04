@@ -35,10 +35,20 @@ public:
 	void Init(std::vector<Model*> models)override;
 	void Update()override;
 	void Draw()override;
+	/// <summary>
+	/// リスタートの時に呼び出す処理
+	/// </summary>
 	void ReStert();
 
-	bool GetSlamFlag() { return isSlamFlag; };
+	FollowCamera* getCamera() { return camera_; };
+	void SetCamera(FollowCamera* camera) { camera_ = camera; };
 
+	bool GetSlamFlag() { return isSlamFlag; };
+	/// <summary>
+	/// コライダーON,OFFの切り替え
+	/// </summary>
+	/// <param name="number">コライダー要素番号</param>
+	/// <param name="flag">bool型</param>
 	void SetColliderUse(int number,bool flag);
 	void SetColliderAttribute(int number, uint32_t collisionAttribute);
 	Animation* GetAnime() { return animationArmLDamage.get(); };
@@ -91,4 +101,6 @@ private:
 #pragma endregion Animation
 	std::vector<float> items;
 	std::string name;
+
+	FollowCamera* camera_;
 };

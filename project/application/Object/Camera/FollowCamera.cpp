@@ -29,11 +29,14 @@ void FollowCamera::Update() {
 	}
 
 	Vector3 EulerRot;
+	if (lockAtMode_ == LockAtMode::min) {
+		lockRat = (std::min)(lockRat + kDeltaTime,rat);
+	}else if (lockAtMode_ == LockAtMode::max) {
+		lockRat = (std::max)(lockRat - kDeltaTime,rat);
+	}
 
-	lockRat = (std::min)(lockRat + kDeltaTime,rat);
-	//rotate_.y += lockRat;
 	EulerRot.x = rotate_.x;
-	EulerRot.y = rotate_.y + lockRat;
+	EulerRot.y = rotate_.y/* + lockRat*/;
 	EulerRot.z = rotate_.z;
 
 	parameter.rotation_ = Quaternion::EulerToQuaterion(EulerRot);
@@ -87,7 +90,7 @@ void FollowCamera::ImGui()
 	if (ImGui::Button("isShakeOff")) {
 		isShake = false;
 	}
-
+	ImGui::Text("%f", &rat);
 	ImGui::End();
 #endif
 }
@@ -109,7 +112,6 @@ void FollowCamera::LockAt(const WorldTransform& target)
 	if (target_) {
 		lockVector = target.transform.translate - target_->transform.translate;
 
-
 		if (lockVector.z != 0.0) {
 			rat = std::asin(lockVector.x / std::sqrt(lockVector.x * lockVector.x + lockVector.z * lockVector.z));
 
@@ -120,6 +122,11 @@ void FollowCamera::LockAt(const WorldTransform& target)
 		else {
 			rat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
 		}
+	}
+	if (rotate_.y + rat < rat) {
+		lockAtMode_ = LockAtMode::min;
+	}else if(rotate_.y + rat > rat) {
+		lockAtMode_ = LockAtMode::max;
 	}
 }
 void FollowCamera::ReStert()

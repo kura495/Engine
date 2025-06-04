@@ -22,6 +22,8 @@ public:
 	bool GetSlamFlag() { return bossEnemy_->GetSlamFlag(); };
 
 	WorldTransform& GetBossWorld() { return bossEnemy_->GetWorld(); };
+
+	void SetFollowCamera(FollowCamera* followCamera) { bossEnemy_->SetCamera(followCamera); };
 private:
 	void ImGui();
 	//ゲームクリアの条件を記載

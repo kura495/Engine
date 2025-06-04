@@ -19,6 +19,10 @@ struct WorkInterpolation {
 	//カメラ補間の媒介変数
 	Vector3 interParameter_ = {1.0f,1.0f,1.0f};
 };
+enum LockAtMode {
+	min,
+	max
+};
 
 class FollowCamera : public Camera
 {
@@ -40,13 +44,13 @@ public:
 	void SetOffset(Vector3 offset) { offsetPos = offset; };
 
 	static WorkInterpolation workInter;
-
+	void ImGui();
 #pragma region
 	void Shake();
 	bool isShake = false;
 #pragma endregion シェイク
 private:
-	void ImGui();
+
 	void ShakeFanction();
 	float interParameter_ = 1.0f;
 
@@ -73,4 +77,6 @@ private:
 
 	float minShakeValue = -0.7f;
 	float maxShakeValue =  0.7f;
+
+	LockAtMode lockAtMode_ = LockAtMode::min;
 };

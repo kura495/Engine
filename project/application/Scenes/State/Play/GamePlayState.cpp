@@ -30,6 +30,7 @@ void GamePlayState::Init()
 	//enemyManager
 	enemyManager = std::make_unique<EnemyManager>();
 	enemyManager->Init(player_.get());
+	enemyManager->SetFollowCamera(followCamera.get());
 	//天球
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Init();
@@ -60,14 +61,6 @@ void GamePlayState::Update()
 		followCamera->isShake = false;
 	}
 	floorManager->Update();
-#ifdef _DEBUG
-	ImGui::Begin("CameraFunctionTest");
-	if (ImGui::Button("LockAt")) {
-		followCamera->LockAt(enemyManager->GetBossWorld());
-	}
-	ImGui::End();
-#endif
-
 
 	skyDome_->Update();
 }
