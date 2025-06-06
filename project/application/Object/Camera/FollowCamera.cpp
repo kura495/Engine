@@ -4,9 +4,9 @@ WorkInterpolation FollowCamera::workInter;
 
 void FollowCamera::Initialize() {
 	workInter.interTarget_ = { 0.0f,0.0f,0.0f };
-	workInter.interParameter_.x = 0.7f;
-	workInter.interParameter_.y = 0.7f;
-	workInter.interParameter_.z = 0.7f;
+	workInter.interParameter_.x = 0.5f;
+	workInter.interParameter_.y = 0.5f;
+	workInter.interParameter_.z = 0.5f;
 } 
 
 void FollowCamera::Update() {
@@ -45,19 +45,14 @@ void FollowCamera::Update() {
 		currentPos_ = target_->transform.translate;
 
 		if (prePos_.x != currentPos_.x || prePos_.y != currentPos_.y || prePos_.z != currentPos_.z) {
-			interParameter_ = 0.5f;
+			interParameter_ = 0.3f;
 		}
 		else {
-			interParameter_ = 1.0f;
+			interParameter_ = (std::min)(interParameter_ + workInter.addeaseT, 1.0f);
 		}
-
-		workInter.interParameter_.x = (std::min)(workInter.interParameter_.x + 0.05f, interParameter_);
-		workInter.interParameter_.y = (std::min)(workInter.interParameter_.y + 0.05f, interParameter_);
-		workInter.interParameter_.z = (std::min)(workInter.interParameter_.z + 0.05f, interParameter_);
 		//追従座標の補間
-		workInter.interTarget_.x = Vector3::Lerp(workInter.interTarget_, currentPos_, workInter.interParameter_.x).x;
-		workInter.interTarget_.y = Vector3::Lerp(workInter.interTarget_, currentPos_, workInter.interParameter_.y).y;
-		workInter.interTarget_.z = Vector3::Lerp(workInter.interTarget_, currentPos_, workInter.interParameter_.z).z;
+		workInter.interTarget_ = Vector3::Lerp(workInter.interTarget_, currentPos_, interParameter_);
+
 
 		Vector3 offset = OffsetCalc();
 		//オフセット分と追従座標の補間分ずらす

@@ -54,12 +54,6 @@ void GamePlayState::Update()
 
 	Renderer::SetViewProj(followCamera->GetParameter());
 
-	if (enemyManager->GetSlamFlag()) {
-		followCamera->isShake = true;
-	}
-	else {
-		followCamera->isShake = false;
-	}
 	floorManager->Update();
 
 	skyDome_->Update();

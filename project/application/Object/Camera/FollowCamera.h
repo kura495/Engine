@@ -18,6 +18,9 @@ struct WorkInterpolation {
 	float targetAngleY_ = 0.0f;
 	//カメラ補間の媒介変数
 	Vector3 interParameter_ = {1.0f,1.0f,1.0f};
+	//線形補間の1フレームごとの加山地
+	float addeaseT = 0.02f;
+
 };
 class WorkLockAt {
 public:

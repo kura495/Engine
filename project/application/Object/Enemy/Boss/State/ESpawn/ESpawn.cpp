@@ -34,6 +34,10 @@ void ESpawn::Update(Boss* boss)
 	ParticleSystem::ParticleCustumSpawn(*sleepParticle_,sleepParticleEmitter);
 	//パーティクル更新
 	sleepParticle_->Update();
+	//カメラの揺れをオフに
+	boss->getCamera()->isShake = false;
+	boss->getCamera()->SetFOV(45.0f);
+
 
 	boss->ChangeState<EReturnPosition>();
 
