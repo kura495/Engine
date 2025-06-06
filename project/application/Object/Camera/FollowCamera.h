@@ -19,10 +19,6 @@ struct WorkInterpolation {
 	//カメラ補間の媒介変数
 	Vector3 interParameter_ = {1.0f,1.0f,1.0f};
 };
-enum LockAtMode {
-	min,
-	max
-};
 
 class FollowCamera : public Camera
 {
@@ -57,12 +53,7 @@ private:
 	Vector3 prePos_;
 	Vector3 currentPos_;
 
-	Vector3 lockVector = { 0.0f,0.0f,0.0f };
-	float rat = 0.0f;
-	float lockRat = 0.0f;
-	float preLockRat = 0.0f;
-	Quaternion ratQua;
-	Quaternion StartQua;
+	float lockAtRat = 0.0f;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド
@@ -80,8 +71,6 @@ private:
 
 	float minShakeValue = -0.7f;
 	float maxShakeValue =  0.7f;
-
-	LockAtMode lockAtMode_ = LockAtMode::min;
 
 	//現在のTの値
 	float easeT = 0.0f;
