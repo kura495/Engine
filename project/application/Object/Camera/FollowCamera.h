@@ -19,6 +19,54 @@ struct WorkInterpolation {
 	//カメラ補間の媒介変数
 	Vector3 interParameter_ = {1.0f,1.0f,1.0f};
 };
+class WorkLockAt {
+public:
+	/// <summary>
+	/// ターゲットの方向に線形補間をしながら指定した軸を回転
+	/// </summary>
+	/// <param name="cameraRatVector">回転させるオイラー角</param>
+	void Update(float& cameraRatVector) {
+		if (flag) {
+			easeT = (std::min)(easeT + AddEaseT, 1.0f);
+			cameraRatVector = LerpShortAngle(cameraRatVector, cameraRatVector + lockAtRat, easeT);
+			if (easeT == 1.0f) {
+				flag = false;
+			}
+		}
+	}
+	//有効化フラグ
+	bool flag = false;
+	//回転
+	float lockAtRat = 0.0f;
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float AddEaseT = 0.02f;
+};
+class WorkFOV {
+public:
+	/// <summary>
+	/// FOVを線形補間しながら変更
+	/// </summary>
+	/// <param name="FOV"></param>
+	void Update(float& FOV) {
+		if (flag) {
+			easeT = (std::min)(easeT + AddEaseT, 1.0f);
+			FOV = Lerp(FOV, newFOVvalue, easeT);
+			if (easeT == 1.0f) {
+				flag = false;
+			}
+		}
+	}
+	//有効化フラグ
+	bool flag = false;
+	//変更する値
+	float newFOVvalue = 0.0f;
+	//現在のTの値
+	float easeT = 0.0f;
+	//raseTに毎フレーム加算する値
+	float AddEaseT = 0.02f;
+};
 
 class FollowCamera : public Camera
 {
@@ -39,6 +87,8 @@ public:
 
 	void SetOffset(Vector3 offset) { offsetPos = offset; };
 
+	void SetFOV(float FOVvalue);
+
 	static WorkInterpolation workInter;
 	void ImGui();
 #pragma region
@@ -53,7 +103,8 @@ private:
 	Vector3 prePos_;
 	Vector3 currentPos_;
 
-	float lockAtRat = 0.0f;
+	WorkLockAt workLockAt;
+	WorkFOV workFOV;
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド
@@ -71,9 +122,4 @@ private:
 
 	float minShakeValue = -0.7f;
 	float maxShakeValue =  0.7f;
-
-	//現在のTの値
-	float easeT = 0.0f;
-	//raseTに毎フレーム加算する値
-	float addEaseT = 0.02f;
 };

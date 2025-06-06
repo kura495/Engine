@@ -20,6 +20,8 @@ struct CameraParameter {
 	Quaternion rotation_ = { 0, 0, 0, 1 };
 	// ローカル座標
 	Vector3 translation_ = { 0.0f, 0.0f, 0.0f };
+	// 垂直方向視野角
+	float FOV = 45.0f;
 };
 /// <summary>
 /// ビュープロジェクション変換データ
@@ -37,8 +39,7 @@ struct ViewProjection {
 #pragma endregion
 
 #pragma region 射影行列の設定
-	// 垂直方向視野角
-	float FOV = 45.0f;
+
 	// ビューポートのアスペクト比
 	float aspectRatio = (float)16 / 9;
 	// 深度限界（手前側）

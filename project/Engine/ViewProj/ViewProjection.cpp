@@ -35,5 +35,5 @@ void ViewProjection::UpdateViewMatrix(){
 }
 
 void ViewProjection::UpdateProjectionMatrix(){
-	matProjection = MakePerspectiveFovMatrix(FOV, aspectRatio, nearZ, farZ);
+	matProjection = MakePerspectiveFovMatrix(parameter.FOV, aspectRatio, nearZ, farZ);
 }

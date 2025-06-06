@@ -28,10 +28,10 @@ void FollowCamera::Update() {
 		}
 	}
 	Vector3 EulerRot;
-	if (easeT != 1.0f) {
-		easeT = (std::min)(easeT + addEaseT, 1.0f);
-		rotate_.y = LerpShortAngle(rotate_.y, rotate_.y + lockAtRat, easeT);
-	}
+	//LockAtの更新処理
+	workLockAt.Update(rotate_.y);
+	//FOVの変更処理
+	workFOV.Update(parameter.FOV);
 
 	EulerRot.x = rotate_.x;
 	EulerRot.y = rotate_.y;
@@ -77,6 +77,13 @@ void FollowCamera::Shake()
 	parameter.translation_ += ramdomTranslate;
 }
 
+void FollowCamera::SetFOV(float FOVvalue)
+{
+	workFOV.easeT = 0.0f;
+	workFOV.newFOVvalue = FOVvalue;
+	workFOV.flag = true;
+}
+
 void FollowCamera::ImGui()
 {
 #ifdef _DEBUG
@@ -107,21 +114,22 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 void FollowCamera::LockAt(const WorldTransform& target)
 {
 	Vector3 lockVector = { 0.0f,0.0f,0.0f };
-	easeT = 0.0f;
+	workLockAt.easeT = 0.0f;
 	if (target_) {
 		lockVector = target.transform.translate - target_->transform.translate;
 		lockVector = lockVector.Normalize();
 		if (lockVector.z != 0.0) {
-			lockAtRat = std::asin(lockVector.x / std::sqrt(lockVector.x * lockVector.x + lockVector.z * lockVector.z));
+			workLockAt.lockAtRat = std::asin(lockVector.x / std::sqrt(lockVector.x * lockVector.x + lockVector.z * lockVector.z));
 
 			if (lockVector.z < 0.0) {
-				lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> -lockAtRat : -std::numbers::pi_v<float> -lockAtRat;
+				workLockAt.lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> -workLockAt.lockAtRat : -std::numbers::pi_v<float> -workLockAt.lockAtRat;
 			}
 		}
 		else {
-			lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
+			workLockAt.lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
 		}
 	}
+	workLockAt.flag = true;
 }
 void FollowCamera::ReStert()
 {

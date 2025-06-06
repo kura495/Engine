@@ -27,6 +27,7 @@ void ESwordAttack::Update(Boss* boss)
 			easeT = 0.0f;
 			addEaseT = 0.015f;
 			boss->getCamera()->LockAt(boss->GetWorld());
+			boss->getCamera()->SetFOV(60.0f);
 		}
 	}
 	if (phase_ == Phase::MakeSword) {
@@ -53,6 +54,7 @@ void ESwordAttack::Update(Boss* boss)
 
 		easeT = (std::min)(easeT + addEaseT, 1.0f);
 		if (easeT == 1.0f) {
+			boss->getCamera()->SetFOV(45.0f);
 			boss->ChangeState<EReturnPosition>();
 		}
 	}
