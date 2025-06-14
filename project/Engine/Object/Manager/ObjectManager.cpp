@@ -57,7 +57,7 @@ void ObjectManager::Draw()
 	}
 }
 
-void ObjectManager::LordFile(std::string fileName)
+void ObjectManager::LordFile()
 {
 	globalVariables->CreateGroup("Editor");
 #pragma region

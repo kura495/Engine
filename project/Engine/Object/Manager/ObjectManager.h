@@ -38,7 +38,7 @@ public:
 	/// jsonファイルの読み込み
 	/// </summary>
 	/// <param name="fileName">ファイル名</param>
-	void LordFile(std::string fileName);
+	void LordFile();
 	/// <summary>
 	/// ブレンダーで作ったシーンファイルを読み込み
 	/// </summary>
