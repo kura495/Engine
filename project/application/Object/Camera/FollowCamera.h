@@ -90,9 +90,11 @@ public:
 
 	void SetOffset(Vector3 offset) { offsetPos = offset; };
 
-	void SetFOV(float FOVvalue);
+	static void SetFOV(float FOVvalue);
 
 	static WorkInterpolation workInter;
+	static WorkFOV workFOV;
+
 	void ImGui();
 #pragma region
 	void Shake();
@@ -107,7 +109,7 @@ private:
 	Vector3 currentPos_;
 
 	WorkLockAt workLockAt;
-	WorkFOV workFOV;
+
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 	// ゲームパッド

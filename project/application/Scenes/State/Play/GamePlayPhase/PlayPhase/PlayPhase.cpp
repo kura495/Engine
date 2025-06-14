@@ -8,8 +8,11 @@ void PlayPhase::Init(GamePlayState* playState)
 }
 
 void PlayPhase::Update(GamePlayState* playState)
-{
+{	
+	
 	if (HitStopUpdate()) {
+		//変更したFOVを変更するため
+		playState->GetFollowCamera()->Update();
 		return;
 	}
 
@@ -42,13 +45,18 @@ void PlayPhase::HitStop(float second)
 {
 	HitStopCount = second;
 	TargetTime = 0.0f;
+	FollowCamera::SetFOV(75.0f);
 }
 
 bool PlayPhase::HitStopUpdate()
 {
+
 	TargetTime += kDeltaTime;
 	if (TargetTime < HitStopCount) {
 		return true;
+	}
+	else if (TargetTime > HitStopCount) {
+		FollowCamera::SetFOV(45.0f);
 	}
 	return false;
 }

@@ -73,7 +73,7 @@ private:
 	std::unique_ptr<EnemyManager> enemyManager;
 	std::unique_ptr<CollisionManager> collisionManager;
 	std::unique_ptr<FollowCamera>followCamera;
-	Vector3 cameraOffset = { 0.0f, 3.0f, -10.0f };
+	Vector3 cameraOffset = { 0.0f, 2.0f, -12.0f };
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<GamePlayStatePhase> phase_;

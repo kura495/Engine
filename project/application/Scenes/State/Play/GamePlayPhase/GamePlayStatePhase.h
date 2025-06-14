@@ -4,6 +4,7 @@
 #include "Object/Transition/Fade/Fade.h"
 #include "Input.h"
 #include "Texture/TextureManager.h"
+#include "Object/Camera/FollowCamera.h"
 class GamePlayState;
 class GamePlayStatePhase {
 public:
