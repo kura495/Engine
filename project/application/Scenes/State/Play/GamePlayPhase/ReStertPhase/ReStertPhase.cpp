@@ -13,14 +13,11 @@ void ReStertPhase::Init(GamePlayState* playState)
 
 void ReStertPhase::Update(GamePlayState* playState)
 {
-	easeT = (std::min)(easeT + kDeltaTime, 1.0f);
-
 	playState->GetCollisionManager()->Update();
 
 	if (phase == Phase::FadeIn) {
-		if (fade.In(1.0f)) {
+		if (fade.In(0.5f)) {
 			phase = Phase::ReStertFanc;
-			easeT = 0.0f;
 		}
 	}
 	else if (phase == Phase::ReStertFanc) {
@@ -31,7 +28,7 @@ void ReStertPhase::Update(GamePlayState* playState)
 		}
 	}
 	else if (phase == Phase::FadeOut) {
-		if (fade.Out(1.0f)) {
+		if (fade.Out(0.5f)) {
 			playState->ChangePhase<PlayPhase>();
 		}
 	}

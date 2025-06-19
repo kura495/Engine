@@ -73,7 +73,7 @@ void PDead::NormalDeadUpdate(Player* player)
 		RGBshift::isEnableFlag = false;
 	}
 	if (isModelDraw == false) {
-		easeT = (std::min)(easeT + 0.02f, 1.0f);
+		easeT = (std::min)(easeT + 0.04f, 1.0f);
 		//パーティクル生成
 		deadParticle_->CustumSpawnParticle(deadParticleEmitter);
 		deadParticle_->Update();
