@@ -6,7 +6,6 @@ void PlayPhase::Init(GamePlayState* playState)
 {
 	playState->GetPlayer()->ChangeState<PJump>();
 }
-
 void PlayPhase::Update(GamePlayState* playState)
 {	
 	
@@ -33,14 +32,11 @@ void PlayPhase::Update(GamePlayState* playState)
 			playState->ChangePhase<ReStertPhase>();
 		}
 	}
-
 }
-
 void PlayPhase::Draw(GamePlayState* playState)
 {
 	playState->GetPlayer()->Draw();
 }
-
 void PlayPhase::HitStop(float second)
 {
 	HitStopCount = second;
@@ -48,10 +44,8 @@ void PlayPhase::HitStop(float second)
 	FollowCamera::SetFOV(55.0f);
 	FollowCamera::isShake = true;
 }
-
 bool PlayPhase::HitStopUpdate()
 {
-
 	TargetTime += kDeltaTime;
 	if (TargetTime < HitStopCount) {
 		return true;
