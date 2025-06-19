@@ -19,8 +19,6 @@ void PlaneObject::Update()
 		CrashEffect();
 	}
 	world_.Update();
-	ImGui::Begin("PlaneObject");
-	ImGui::End();
 }
 
 void PlaneObject::Draw()
@@ -64,9 +62,7 @@ void PlaneObject::CrashEffect()
 	Vector3 ramdomTranslate = { random::Generate<float>(-0.1f, 0.1f),0.0f ,random::Generate<float>(-0.1f, 0.1f) };
 	world_.transform.translate += ramdomTranslate;
 	saveramdomTranslate = ramdomTranslate;
-		ImGui::Begin("PlaneObject");
-		ImGui::Text("Crash");
-		ImGui::End();
+
 		if (easeT > 9.5f) {
 			collider.IsUsing = false;
 		}
