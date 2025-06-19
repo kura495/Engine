@@ -65,6 +65,8 @@ private:
 	void Initialize();
 	void Gameloop();
 	void Release();
+
+	void ChangeScene();
 };
 
 

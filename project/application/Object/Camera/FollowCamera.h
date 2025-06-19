@@ -98,11 +98,10 @@ public:
 	void ImGui();
 #pragma region
 	void Shake();
-	bool isShake = false;
+	static bool isShake;
 #pragma endregion シェイク
 private:
 
-	void ShakeFanction();
 	float interParameter_ = 1.0f;
 
 	Vector3 prePos_;

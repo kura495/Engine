@@ -65,79 +65,66 @@ void GameManager::Gameloop() {
 		else {
 			prevSceneNum_ = currentSceneNum_;
 			currentSceneNum_ = state_->GetSceneNum();
-			if (prevSceneNum_ != currentSceneNum_) {
-				if (currentSceneNum_ == GameStateNo::TITLE) {
-					state_ = std::make_unique<TitleState>();
-				}
-				if (currentSceneNum_ == GameStateNo::PLAY) {
-					state_ = std::make_unique<GamePlayState>();
-				}
-				if (currentSceneNum_ == GameStateNo::GAMEOVER) {
-					state_ = std::make_unique<GameOverState>();
-				}
-				if (currentSceneNum_ == GameStateNo::CLEAR) {
-					state_ = std::make_unique<GameClearState>();
-				}
-				state_->Init();
-			}
-			imGuiManager->BeginFrame();
-#pragma region Update
-			editer->Update();
-			objectManager->Update();
-			input->Update();
-			light->Update();
-			GlobalVariables::GetInstance()->Update();
-			state_->Update();
-			//ポストエフェクトアップデート
-			renderTextrue->Update();
-			rgbShift->Update();
-			glitchNoise->Update();
+			ChangeScene();
+		}
 
-			renderer_->Update();
+		imGuiManager->BeginFrame();
+#pragma region Update
+		editer->Update();
+		objectManager->Update();
+		input->Update();
+		light->Update();
+		GlobalVariables::GetInstance()->Update();
+		state_->Update();
+		//ポストエフェクトアップデート
+		renderTextrue->Update();
+		rgbShift->Update();
+		glitchNoise->Update();
+
+		renderer_->Update();
 #pragma endregion
 #pragma region Draw
-			//renderTextureに書き込む設定に変更
-			renderTextrue->PreDraw();
-			state_->Draw();
-			renderer_->Draw();
-			renderTextrue->PostDraw();
+		//renderTextureに書き込む設定に変更
+		renderTextrue->PreDraw();
+		state_->Draw();
+		renderer_->Draw();
+		renderTextrue->PostDraw();
 
-			rgbShift->PreDraw();
-			//パイプラインの変更
-			renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
-			//レンダーテクスチャの内容を書き込み
-			renderTextrue->Draw();
-			rgbShift->PostDraw();
+		rgbShift->PreDraw();
+		//パイプラインの変更
+		renderer_->ChangePipeline(PostProsessType::PostProsessPSO);
+		//レンダーテクスチャの内容を書き込み
+		renderTextrue->Draw();
+		rgbShift->PostDraw();
 
-			glitchNoise->PreDraw();
-			//ここにPipelineとDrawを書き込んでいく
-			renderer_->ChangePipeline(PostProsessType::RGBshift);
-			rgbShift->Draw();
-			glitchNoise->PostDraw();
+		glitchNoise->PreDraw();
+		//ここにPipelineとDrawを書き込んでいく
+		renderer_->ChangePipeline(PostProsessType::RGBshift);
+		rgbShift->Draw();
+		glitchNoise->PostDraw();
 
-			//directXのSRVに書き込む設定に変更
-			directX->PreDraw();
-			renderer_->ChangePipeline(PostProsessType::GlitchNoise);
-			glitchNoise->Draw();
+		//directXのSRVに書き込む設定に変更
+		directX->PreDraw();
+		renderer_->ChangePipeline(PostProsessType::GlitchNoise);
+		glitchNoise->Draw();
 
-			editer->Draw();
-			imGuiManager->EndFrame();
+		editer->Draw();
+		imGuiManager->EndFrame();
 			
-			directX->PostDraw();
+		directX->PostDraw();
 
-			//流れと使い方(ポストエフェクト)
-			//描画先A->PreDraw();
-			//描画したい物->Draw();
-			//描画先A->PostDraw();
-			//描画先B->PreDraw();
-			//描画先A->Draw();
-			//描画先B->PostDraw();
-			//directX->PreDraw();
-			//描画先B->Draw();
-			//directX->PostDraw();
+		//流れと使い方(ポストエフェクト)
+		//描画先A->PreDraw();
+		//描画したい物->Draw();
+		//描画先A->PostDraw();
+		//描画先B->PreDraw();
+		//描画先A->Draw();
+		//描画先B->PostDraw();
+		//directX->PreDraw();
+		//描画先B->Draw();
+		//directX->PostDraw();
 
 #pragma endregion
-		}
 	}
 }
 
@@ -146,4 +133,22 @@ void GameManager::Release() {
 
 	ImGui_ImplDX12_Shutdown();
 	CoUninitialize();
+}
+
+void GameManager::ChangeScene(){
+	if (prevSceneNum_ != currentSceneNum_) {
+		if (currentSceneNum_ == GameStateNo::TITLE) {
+			state_ = std::make_unique<TitleState>();
+		}
+		if (currentSceneNum_ == GameStateNo::PLAY) {
+			state_ = std::make_unique<GamePlayState>();
+		}
+		if (currentSceneNum_ == GameStateNo::GAMEOVER) {
+			state_ = std::make_unique<GameOverState>();
+		}
+		if (currentSceneNum_ == GameStateNo::CLEAR) {
+			state_ = std::make_unique<GameClearState>();
+		}
+		state_->Init();
+	}
 }
