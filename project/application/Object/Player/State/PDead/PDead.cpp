@@ -126,9 +126,9 @@ void PDead::UpdatedeadParticle(Particle& particle)
 	//エミッターがパーティクルの半径を決める
 	particle.transform.scale = deadParticleEmitter.particleRadius;
 	Vector3 translate = particle.transform.translate;
-	float alpha = 1.0f - (particle.currentTime / particle.lifeTime);
+	float alpha = 1.0f - easeT;
 	//色をセット
-	deadParticleEmitter.color.w = alpha;
+	particle.color.w = alpha;
 	particle.currentTime += kDeltaTime;
 	particle.matWorld = MakeAffineMatrix(particle.transform.scale, Vector3{ 0.0f,0.0f,0.0f }, translate);
 }
