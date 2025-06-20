@@ -3,16 +3,18 @@
 #include "application/Object/Player/Player.h"
 void EReStert::Init(Boss* boss)
 {
-	boss->GetWorld().transform.translate = initialPosition;
-	boss->GetWorld().transform.quaternion = Quaternion::IdentityQuaternion();
-	boss->GetWorld().Update();
+	PrePos = boss->GetWorld().transform.translate;
+	PreQua = boss->GetWorld().transform.quaternion;
 	easeT = 0.0f;
 	isAttackSelect = AttackState::RocketPunch;
 }
 
 void EReStert::Update(Boss* boss)
 {
+
 	easeT = (std::min)(easeT + kDeltaTime, kMaxEaseValue);
+	boss->GetWorld().transform.translate = Vector3::Lerp(PrePos, initialPosition, easeT);
+	boss->GetWorld().transform.quaternion = Quaternion::Slerp(PreQua, Quaternion::IdentityQuaternion(), easeT);
 	if (easeT == kMaxEaseValue) {
 		boss->ChangeState<ERoot>();
 	}

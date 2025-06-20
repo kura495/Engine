@@ -14,7 +14,7 @@ private:
 	//ステートを切り替えるまでの時間
 	const float kMaxEaseValue = 1.0f;
 	//初期位置
-	Math::Vector3 initialPosition{ 0.0f,0.0f,-3.0f };
+	Math::Vector3 initialPosition{ 0.0f,2.0f,-3.0f };
 
 
 };

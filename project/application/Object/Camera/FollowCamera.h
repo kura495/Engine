@@ -19,7 +19,7 @@ struct WorkInterpolation {
 	//カメラ補間の媒介変数
 	Vector3 interParameter_ = {1.0f,1.0f,1.0f};
 	//線形補間の1フレームごとの加山地
-	float addeaseT = 0.02f;
+	float addeaseT = 0.0002f;
 
 };
 class WorkLockAt {
@@ -99,11 +99,14 @@ public:
 #pragma region
 	void Shake();
 	static bool isShake;
+	void SetDelayFlag(bool flag) {
+		DelayFlag = flag;
+	};
 #pragma endregion シェイク
 private:
 
 	float interParameter_ = 1.0f;
-
+	bool DelayFlag = false;
 	Vector3 prePos_;
 	Vector3 currentPos_;
 

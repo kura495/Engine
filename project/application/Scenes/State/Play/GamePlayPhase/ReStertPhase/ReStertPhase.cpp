@@ -13,22 +13,21 @@ void ReStertPhase::Init(GamePlayState* playState)
 
 void ReStertPhase::Update(GamePlayState* playState)
 {
-	playState->GetCollisionManager()->Update();
 
-	if (phase == Phase::FadeIn) {
-		if (fade.In(0.5f)) {
-			phase = Phase::ReStertFanc;
-		}
-	}
-	else if (phase == Phase::ReStertFanc) {
+	playState->GetEnemyManager()->Update();
+	playState->GetFollowCamera()->Update();
+	playState->GetCollisionManager()->Update();
+	if (phase == Phase::ReStertFanc) {
 		if (life_UI->Animation()) {
-			playState->ReStert();
 			phase = Phase::FadeOut;
 			fade.OutInit("project/resources/BlackTexture.png");
+			playState->ReStert();
 		}
 	}
 	else if (phase == Phase::FadeOut) {
+
 		if (fade.Out(0.5f)) {
+
 			playState->ChangePhase<PlayPhase>();
 		}
 	}
@@ -37,7 +36,8 @@ void ReStertPhase::Update(GamePlayState* playState)
 void ReStertPhase::Draw(GamePlayState* playState)
 {
 	playState->GetPlayer()->Draw();
-	fade.Draw();
+	//TODO:画像を表示させない
+	//fade.Draw();
 	if (phase == Phase::ReStertFanc) {
 		life_UI->Draw();
 	}

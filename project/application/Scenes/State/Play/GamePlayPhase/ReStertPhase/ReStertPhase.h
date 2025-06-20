@@ -21,6 +21,6 @@ private:
 	//現在のTの値
 	float easeT = 0.0f;
 
-	uint8_t phase = Phase::FadeIn;
+	uint8_t phase = Phase::ReStertFanc;
 };
 
