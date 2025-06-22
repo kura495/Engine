@@ -100,7 +100,7 @@ private:
 	void AttackColliderInit();
 	void AttackOnCollision(const ICollider& collider);
 	Vector3 attackColliderOffset = { 0.0f,0.5f,1.0f };
-	float hitStopValue = 0.1f;
+	float hitStopValue = 0.2f;
 	float vibValue = 0.2f;
 #pragma endregion Collider
 

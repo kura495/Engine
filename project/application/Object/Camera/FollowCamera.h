@@ -125,8 +125,6 @@ public:
 
 	void ImGui();
 #pragma region
-	void Shake();
-	static bool isShake;
 	void SetDelayFlag(bool flag) {
 		DelayFlag = flag;
 	};

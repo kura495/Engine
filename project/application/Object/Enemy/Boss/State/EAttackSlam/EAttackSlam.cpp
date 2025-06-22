@@ -40,7 +40,7 @@ void EAttackSlam::Update(Boss* boss)
 			easeT = 0.0f;
 			phase_ = SlamPhase::Return;
 			//カメラの揺れをオンに
-			boss->getCamera()->SetShake(0.5f);
+			boss->getCamera()->SetShake(1.0f);
 		}
 	}
 	else if (phase_ == SlamPhase::Return) {
@@ -48,8 +48,6 @@ void EAttackSlam::Update(Boss* boss)
 
 		if (easeT == 1.0f) {
 			addEaseT = 0.01f;
-			//カメラの揺れをオフに
-			//boss->getCamera()->isShake = false;
 			//初期位置に戻す
 			boss->ChangeState<EReturnPosition>();
 		}

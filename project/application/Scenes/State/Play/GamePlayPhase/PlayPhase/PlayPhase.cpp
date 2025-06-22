@@ -42,8 +42,7 @@ void PlayPhase::HitStop(float second)
 	HitStopCount = second;
 	TargetTime = 0.0f;
 	FollowCamera::SetFOV(55.0f);
-	FollowCamera::SetShake(0.5f);
-	//FollowCamera::isShake = true;
+	FollowCamera::SetShake(0.4f);
 }
 bool PlayPhase::HitStopUpdate()
 {
@@ -52,8 +51,8 @@ bool PlayPhase::HitStopUpdate()
 		return true;
 	}
 	else if (TargetTime > HitStopCount) {
-		FollowCamera::SetFOV(45.0f);
-		//FollowCamera::isShake = false;
+		FollowCamera::SetFOV(45.0f);	
+
 	}
 	return false;
 }
