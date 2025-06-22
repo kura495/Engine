@@ -45,7 +45,6 @@ public:
 	void Init(const std::string filePath);
 
 	void Update(bool billboardFlag = true);
-
 	//関数ポインタ　UpdateParticleを入れる
 	using UpdateFunction = std::function<void(Particle&)>;
 	UpdateFunction UpdateFunc;

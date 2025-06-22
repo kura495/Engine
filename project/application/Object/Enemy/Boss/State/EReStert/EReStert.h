@@ -14,7 +14,11 @@ private:
 	float easeT = 0.0f;
 	//ステートを切り替えるまでの時間
 	const float kMaxEaseValue = 1.5f;
-	//初期位置
+	//戻る前の位置を保存する変数
+	Math::Vector3 PrePos = { 0.0f,0.0f,0.0f };
+	//戻る前の回転を保存する変数
+	Math::Quaternion PreQua = Math::Quaternion::IdentityQuaternion();
+	//固定の位置
 	Math::Vector3 initialPosition{ 0.0f,5.5f,35.0f };
 };
 

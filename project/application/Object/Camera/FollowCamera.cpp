@@ -46,8 +46,10 @@ void FollowCamera::Update() {
 		prePos_ = currentPos_;
 
 		currentPos_ = target_->transform.translate;
-
 		if (prePos_.x != currentPos_.x || prePos_.y != currentPos_.y || prePos_.z != currentPos_.z) {
+			DelayFlag = true;
+		}
+		if (DelayFlag) {
 			interParameter_ = 0.3f;
 		}
 		else {
@@ -137,18 +139,18 @@ void FollowCamera::ReStert()
 	rotate_ = { 0.0f,0.0f,0.0f };
 	//回転をしていない状態にリセット
 	parameter.rotation_ = Quaternion::IdentityQuaternion();
-	//ターゲットがあるなら補間をなくす
-	if (target_) {
-		prePos_ = currentPos_;
+	////ターゲットがあるなら補間をなくす
+	//if (target_) {
+	//	prePos_ = currentPos_;
 
-		currentPos_ = target_->transform.translate;
-		
-		workInter.interTarget_ = currentPos_;
+	//	currentPos_ = target_->transform.translate;
+	//	
+	//	workInter.interTarget_ = currentPos_;
 
-		Vector3 offset = OffsetCalc();
-		//オフセット分と追従座標の補間分ずらす
-		parameter.translation_ = workInter.interTarget_ + offset;
-	}
+	//	Vector3 offset = OffsetCalc();
+	//	//オフセット分と追従座標の補間分ずらす
+	//	parameter.translation_ = workInter.interTarget_ + offset;
+	//}
 }
 void FollowCamera::Reset()
 {
