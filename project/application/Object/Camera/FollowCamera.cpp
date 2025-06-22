@@ -2,6 +2,7 @@
 
 WorkInterpolation FollowCamera::workInter;
 WorkFOV FollowCamera::workFOV;
+WorkShake FollowCamera::workShake;
 bool FollowCamera::isShake = false;
 
 void FollowCamera::Initialize() {
@@ -61,17 +62,20 @@ void FollowCamera::Update() {
 		parameter.translation_ = workInter.interTarget_ + offset;
 	}
 
+	//カメラのシェイク処理
+	workShake.Update(parameter.translation_);
+
 	//画面を揺らす
-	if (isShake) {
-		Shake();
-	}
+	//if (isShake) {
+	//	Shake();
+	//}
 }
 
 void FollowCamera::Shake()
 {
-	Vector3 ramdomTranslate = { random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue, maxShakeValue) };
+	//Vector3 ramdomTranslate = { random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue, maxShakeValue) };
 
-	parameter.translation_ += ramdomTranslate;
+	//parameter.translation_ += ramdomTranslate;
 }
 
 void FollowCamera::SetFOV(float FOVvalue)
@@ -79,6 +83,13 @@ void FollowCamera::SetFOV(float FOVvalue)
 	workFOV.easeT = 0.0f;
 	workFOV.newFOVvalue = FOVvalue;
 	workFOV.flag = true;
+}
+
+void FollowCamera::SetShake(float Time)
+{
+	workShake.easeT = 0.0f;
+	workShake.timer = Time;
+	workShake.flag = true;
 }
 
 void FollowCamera::ImGui()

@@ -70,6 +70,32 @@ public:
 	//raseTに毎フレーム加算する値
 	float AddEaseT = 0.02f;
 };
+class WorkShake {
+public:
+	void Update(Vector3& translate) {
+		if (flag) {
+			easeT = (std::min)(easeT + kDeltaTime, timer);
+			
+			Vector3 ramdomTranslate = { random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue, maxShakeValue) };
+
+			translate += ramdomTranslate;
+			
+			if (easeT == timer) {
+				flag = false;
+			}
+		}
+	}
+	//ランダム最低値
+	const float minShakeValue = -0.7f;
+	//ランダム最高値
+	const float maxShakeValue = 0.7f;
+	//有効化フラグ
+	bool flag = false;
+	//止める時間
+	float timer = 0.0f;
+	//現在のTの値
+	float easeT = 0.0f;
+};
 
 class FollowCamera : public Camera
 {
@@ -91,9 +117,11 @@ public:
 	void SetOffset(Vector3 offset) { offsetPos = offset; };
 
 	static void SetFOV(float FOVvalue);
+	static void SetShake(float Time);
 
 	static WorkInterpolation workInter;
 	static WorkFOV workFOV;
+	static WorkShake workShake;
 
 	void ImGui();
 #pragma region
@@ -124,6 +152,4 @@ private:
 
 	Vector3 offsetPos = { 0.0f,0.0f,0.0f};
 
-	float minShakeValue = -0.7f;
-	float maxShakeValue =  0.7f;
 };
