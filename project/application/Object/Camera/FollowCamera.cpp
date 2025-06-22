@@ -10,7 +10,6 @@ void FollowCamera::Initialize() {
 	workInter.interParameter_.y = 0.5f;
 	workInter.interParameter_.z = 0.5f;
 } 
-
 void FollowCamera::Update() {
 
 	//スティックでのカメラ回転
@@ -79,7 +78,6 @@ void FollowCamera::SetShake(float Time)
 	workShake.timer = Time;
 	workShake.flag = true;
 }
-
 void FollowCamera::ImGui()
 {
 #ifdef _DEBUG
@@ -88,7 +86,6 @@ void FollowCamera::ImGui()
 	ImGui::End();
 #endif
 }
-
 void FollowCamera::SetTarget(const WorldTransform* target)
 {
 	target_ = target;
