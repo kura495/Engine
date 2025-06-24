@@ -18,7 +18,7 @@ struct WorkInterpolation {
 	float targetAngleY_ = 0.0f;
 	//カメラ補間の媒介変数
 	Vector3 interParameter_ = {1.0f,1.0f,1.0f};
-	//線形補間の1フレームごとの加山地
+	//線形補間の1フレームごとの加算値
 	float addeaseT = 0.0002f;
 
 };
@@ -86,9 +86,9 @@ public:
 		}
 	}
 	//ランダム最低値
-	const float minShakeValue = -0.7f;
+	float minShakeValue = -0.7f;
 	//ランダム最高値
-	const float maxShakeValue = 0.7f;
+	float maxShakeValue = 0.7f;
 	//有効化フラグ
 	bool flag = false;
 	//止める時間
@@ -117,7 +117,12 @@ public:
 	void SetOffset(Vector3 offset) { offsetPos = offset; };
 
 	static void SetFOV(float FOVvalue);
-	static void SetShake(float Time);
+	/// <summary>
+	/// カメラを揺らす演出
+	/// </summary>
+	/// <param name="Time">何秒揺らすか</param>
+	/// <param name="ShakeValue">揺れの幅　x = min y = max</param>
+	static void SetShake(float Time, Vector2 ShakeValue = {-0.7f,0.7f });
 
 	static WorkInterpolation workInter;
 	static WorkFOV workFOV;

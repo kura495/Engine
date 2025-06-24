@@ -42,7 +42,7 @@ void PlayPhase::HitStop(float second)
 	HitStopCount = second;
 	TargetTime = 0.0f;
 	FollowCamera::SetFOV(55.0f);
-	FollowCamera::SetShake(0.4f);
+	FollowCamera::SetShake(0.3f,{-0.3f,0.0f});
 }
 bool PlayPhase::HitStopUpdate()
 {

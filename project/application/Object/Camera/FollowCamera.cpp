@@ -72,11 +72,13 @@ void FollowCamera::SetFOV(float FOVvalue)
 	workFOV.newFOVvalue = FOVvalue;
 	workFOV.flag = true;
 }
-void FollowCamera::SetShake(float Time)
+void FollowCamera::SetShake(float Time,Vector2 ShakeValue)
 {
 	workShake.easeT = 0.0f;
 	workShake.timer = Time;
 	workShake.flag = true;
+	workShake.minShakeValue = ShakeValue.x;
+	workShake.maxShakeValue = ShakeValue.y;
 }
 void FollowCamera::ImGui()
 {
