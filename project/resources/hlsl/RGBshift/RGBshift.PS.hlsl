@@ -5,7 +5,7 @@ struct VertexShaderOutput
 };
 struct Material
 {
-    float32_t4 color; //元の色
+    float32_t4 texcoord; //位置
 };
 struct PixelShaderOutput
 {
@@ -32,7 +32,7 @@ ConstantBuffer<Material> gMaterial : register(b0);
 PixelShaderOutput main(VertexShaderOutput input)
 {
     PixelShaderOutput output;
-    if (gMaterial.color.a == 0)
+    if (gMaterial.texcoord.a == 0)
     {
         output.color = gTexture.Sample(gSampler, input.texcoord);
     }
@@ -40,11 +40,11 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         output.color = 0.0f;
         float32_t2 newTexcoord = input.texcoord;
-        newTexcoord.x = gMaterial.color.r + input.texcoord.x;
+        newTexcoord.x = gMaterial.texcoord.x + input.texcoord.x;
         output.color.r = gTexture.Sample(gSampler, newTexcoord).r;
-        newTexcoord.x = gMaterial.color.g + input.texcoord.x;
+        newTexcoord.x = gMaterial.texcoord.y + input.texcoord.x;
         output.color.g = gTexture.Sample(gSampler, newTexcoord).g;
-        newTexcoord.x = gMaterial.color.b + input.texcoord.x;
+        newTexcoord.x = gMaterial.texcoord.z + input.texcoord.x;
         output.color.b = gTexture.Sample(gSampler, newTexcoord).b;
     }
 
