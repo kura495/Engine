@@ -101,12 +101,17 @@ void FollowCamera::LockAt(const WorldTransform& target)
 		lockVector = target.transform.translate - target_->transform.translate;
 		lockVector = lockVector.Normalize();
 		if (lockVector.z != 0.0) {
+			//asinでsinから角度を計算
 			workLockAt.lockAtRat = std::asin(lockVector.x / std::sqrt(lockVector.x * lockVector.x + lockVector.z * lockVector.z));
-
+			//zが手前に向いている
 			if (lockVector.z < 0.0) {
-				workLockAt.lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> -workLockAt.lockAtRat : -std::numbers::pi_v<float> -workLockAt.lockAtRat;
+				//xが0より大きいかどうか
+				//大きい = 円の右下
+				//小さい = 円の左下
+				workLockAt.lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> - workLockAt.lockAtRat : -std::numbers::pi_v<float> -workLockAt.lockAtRat;
 			}
 		}
+		//zが真上を向いている場合
 		else {
 			workLockAt.lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
 		}

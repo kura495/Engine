@@ -216,7 +216,6 @@ void Input::UpdateVibration()
 		//情報の、経過フレームを計算
 		vibData_.countFrame += kDeltaTime;
 	}
-
 	vibration_.wLeftMotorSpeed = WORD(vibData_.leftMotor);
 	vibration_.wRightMotorSpeed = WORD(vibData_.rightMotor);
 	//バイブレーションの情報

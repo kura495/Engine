@@ -22,6 +22,7 @@ struct WorkInterpolation {
 	float addeaseT = 0.0002f;
 
 };
+//ベクトル方向に向ける処理クラス
 class WorkLockAt {
 public:
 	/// <summary>
@@ -124,10 +125,6 @@ public:
 	/// <param name="ShakeValue">揺れの幅　x = min y = max</param>
 	static void SetShake(float Time, Vector2 ShakeValue = {-0.7f,0.7f });
 
-	static WorkInterpolation workInter;
-	static WorkFOV workFOV;
-	static WorkShake workShake;
-
 	void ImGui();
 #pragma region
 	void SetDelayFlag(bool flag) {
@@ -135,6 +132,10 @@ public:
 	};
 #pragma endregion シェイク
 private:
+
+	static WorkInterpolation workInter;
+	static WorkFOV workFOV;
+	static WorkShake workShake;
 
 	float interParameter_ = 1.0f;
 	bool DelayFlag = false;

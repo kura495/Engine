@@ -29,12 +29,6 @@ void PDead::Init(Player* player)
 	deadParticleEmitter.world_.transform.translate.y += 1.0f;
 	//アニメーション設定
 	deadAnimation->AnimeInit(*player->Getmodels()[Player::PlayerModel::MainBody], true);
-	if (player->GetCauseOfDeath() == Player::CauseOfDeath::Slam) {
-		Input::VibrateController(VIBRATION_MAX, VIBRATION_MIN,0.5f);
-	}
-	else {
-		Input::VibrateController(20480, 20480,0.5f);
-	}
 }
 void PDead::Update(Player* player)
 {
