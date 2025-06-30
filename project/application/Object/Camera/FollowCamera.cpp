@@ -68,17 +68,11 @@ void FollowCamera::Update() {
 }
 void FollowCamera::SetFOV(float FOVvalue)
 {
-	workFOV.easeT = 0.0f;
-	workFOV.newFOVvalue = FOVvalue;
-	workFOV.flag = true;
+	workFOV.Init(FOVvalue);
 }
 void FollowCamera::SetShake(float Time,Vector2 ShakeValue)
 {
-	workShake.easeT = 0.0f;
-	workShake.timer = Time;
-	workShake.flag = true;
-	workShake.minShakeValue = ShakeValue.x;
-	workShake.maxShakeValue = ShakeValue.y;
+	workShake.Init(Time,ShakeValue);
 }
 void FollowCamera::ImGui()
 {
@@ -95,46 +89,13 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 }
 void FollowCamera::LockAt(const WorldTransform& target)
 {
-	Vector3 lockVector = { 0.0f,0.0f,0.0f };
-	workLockAt.easeT = 0.0f;
-	if (target_) {
-		lockVector = target.transform.translate - target_->transform.translate;
-		lockVector = lockVector.Normalize();
-		if (lockVector.z != 0.0) {
-			//asinでsinから角度を計算
-			workLockAt.lockAtRat = std::asin(lockVector.x / std::sqrt(lockVector.x * lockVector.x + lockVector.z * lockVector.z));
-			//zが手前に向いている
-			if (lockVector.z < 0.0) {
-				//xが0より大きいかどうか
-				//大きい = 円の右下
-				//小さい = 円の左下
-				workLockAt.lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> - workLockAt.lockAtRat : -std::numbers::pi_v<float> -workLockAt.lockAtRat;
-			}
-		}
-		//zが真上を向いている場合
-		else {
-			workLockAt.lockAtRat = (lockVector.x >= 0.0) ? std::numbers::pi_v<float> / 2.0f : -std::numbers::pi_v<float> / 2.0f;
-		}
-	}
-	workLockAt.flag = true;
+	workLockAt.Init(target_->transform.translate,target);
 }
 void FollowCamera::ReStert()
 {
 	rotate_ = { 0.0f,0.0f,0.0f };
 	//回転をしていない状態にリセット
 	parameter.rotation_ = Quaternion::IdentityQuaternion();
-	////ターゲットがあるなら補間をなくす
-	//if (target_) {
-	//	prePos_ = currentPos_;
-
-	//	currentPos_ = target_->transform.translate;
-	//	
-	//	workInter.interTarget_ = currentPos_;
-
-	//	Vector3 offset = OffsetCalc();
-	//	//オフセット分と追従座標の補間分ずらす
-	//	parameter.translation_ = workInter.interTarget_ + offset;
-	//}
 }
 void FollowCamera::Reset()
 {
