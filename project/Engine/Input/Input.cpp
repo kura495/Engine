@@ -175,7 +175,7 @@ bool Input::GetJoystickState()
 void Input::UpdateJoyState()
 {
 	//ボタン入力情報の更新
-	UpdateButtan();
+	UpdateButton();
 	//バイブレーション情報の更新
 	UpdateVibration();
 }
@@ -239,7 +239,7 @@ void Input::ImGui()
 	ImGui::End();
 }
 
-void Input::UpdateButtan()
+void Input::UpdateButton()
 {
 	// スタックされた入力情報の、経過フレームを計算
 	for (auto& data : joy_stack) {

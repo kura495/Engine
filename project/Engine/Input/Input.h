@@ -142,7 +142,7 @@ private:
 	/// <summary>
 	/// コントローラーのボタン入力に関する更新
 	/// </summary>
-	void UpdateButtan();
+	void UpdateButton();
 	/// <summary>
 	/// コントローラーのバイブレーションに関する更新
 	/// </summary>
