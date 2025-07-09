@@ -1,8 +1,8 @@
 #include "FollowCamera.h"
 
 WorkInterpolation FollowCamera::workInter;
-WorkFOV FollowCamera::workFOV;
-WorkShake FollowCamera::workShake;
+FOV FollowCamera::workFOV;
+Shake FollowCamera::workShake;
 
 void FollowCamera::Initialize() {
 	workInter.interTarget_ = { 0.0f,0.0f,0.0f };
@@ -87,7 +87,7 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 	target_ = target;
 	Reset();
 }
-void FollowCamera::LockAt(const WorldTransform& target)
+void FollowCamera::LockAtInit(const WorldTransform& target)
 {
 	workLockAt.Init(target_->transform.translate,target);
 }
