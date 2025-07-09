@@ -74,6 +74,10 @@ void FollowCamera::SetShake(float Time,Vector2 ShakeValue)
 {
 	workShake.Init(Time,ShakeValue);
 }
+void FollowCamera::SetLockAt(const WorldTransform& target)
+{
+	workLockAt.Init(target_->transform.translate,target);
+}
 void FollowCamera::ImGui()
 {
 #ifdef _DEBUG
@@ -87,10 +91,7 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 	target_ = target;
 	Reset();
 }
-void FollowCamera::LockAtInit(const WorldTransform& target)
-{
-	workLockAt.Init(target_->transform.translate,target);
-}
+
 void FollowCamera::ReStert()
 {
 	rotate_ = { 0.0f,0.0f,0.0f };
