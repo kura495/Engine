@@ -38,15 +38,11 @@ public:
 	/// </summary>
 	/// <param name="target">ターゲットのWorldTransform</param>
 	void SetTarget(const WorldTransform* target);
+
 	/// <summary>
-	/// 
+	/// FOVを調節する機能
 	/// </summary>
-	void LockAtInit(const WorldTransform& target);
-
-	void ReStert();
-
-	void SetOffset(Vector3 offset) { offsetPos = offset; };
-
+	/// <param name="FOVvalue">視野角の広さ</param>
 	static void SetFOV(float FOVvalue);
 	/// <summary>
 	/// カメラを揺らす演出
@@ -54,6 +50,16 @@ public:
 	/// <param name="Time">何秒揺らすか</param>
 	/// <param name="ShakeValue">揺れの幅　x = min y = max</param>
 	static void SetShake(float Time, Vector2 ShakeValue = { -0.7f,0.7f });
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="target">対象のWorldTransform</param>
+	void SetLockAt(const WorldTransform& target);
+
+	void ReStert();
+
+	void SetOffset(Vector3 offset) { offsetPos = offset; };
+
 
 	void ImGui();
 #pragma region
