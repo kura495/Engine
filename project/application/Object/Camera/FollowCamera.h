@@ -10,9 +10,9 @@
 #include "Calc.h"
 #include "Utility/random/random.h"
 
-#include "Work/FOV/FOV.h"
-#include "Work/LockAt/LockAt.h"
-#include "Work/Shake/Shake.h"
+#include "Work/FOV/WorkFOV.h"
+#include "Work/LockAt/WorkLockAt.h"
+#include "Work/Shake/WorkShake.h"
 
 //カメラ補間用ワーク
 struct WorkInterpolation {
@@ -70,9 +70,9 @@ public:
 private:
 
 	static WorkInterpolation workInter;
-	static FOV workFOV;
-	static Shake workShake;
-	LockAt workLockAt;
+	static WorkFOV workFOV;
+	static WorkShake workShake;
+	WorkLockAt workLockAt;
 
 	float interParameter_ = 1.0f;
 	bool DelayFlag = false;

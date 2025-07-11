@@ -1,8 +1,8 @@
 #include "FollowCamera.h"
 
 WorkInterpolation FollowCamera::workInter;
-FOV FollowCamera::workFOV;
-Shake FollowCamera::workShake;
+WorkFOV FollowCamera::workFOV;
+WorkShake FollowCamera::workShake;
 
 void FollowCamera::Initialize() {
 	workInter.interTarget_ = { 0.0f,0.0f,0.0f };

@@ -26,7 +26,7 @@ void ESwordAttack::Update(Boss* boss)
 			phase_ = Phase::MakeSword;
 			easeT = 0.0f;
 			addEaseT = 0.015f;
-			boss->getCamera()->LockAtInit(boss->GetWorld());
+			boss->getCamera()->SetLockAt(boss->GetWorld());
 			boss->getCamera()->SetFOV(60.0f);
 		}
 	}
