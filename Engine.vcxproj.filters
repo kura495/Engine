@@ -762,6 +762,9 @@
     <ClCompile Include="project\application\Object\UFO\state\Idle\Idle.cpp" />
     <ClCompile Include="project\application\Object\UFO\state\Normal\Normal.cpp" />
     <ClCompile Include="project\application\Object\UFO\state\StartAnime\StartAnime.cpp" />
+    <ClCompile Include="project\application\Object\Camera\Work\FOV\WorkFOV.cpp" />
+    <ClCompile Include="project\application\Object\Camera\Work\LockAt\WorkLockAt.cpp" />
+    <ClCompile Include="project\application\Object\Camera\Work\Shake\WorkShake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="project\application\Object\Box\BoxObject.h">
@@ -1428,9 +1431,9 @@
     <ClInclude Include="project\application\Object\UFO\state\IUFOState.h" />
     <ClInclude Include="project\application\Object\UFO\state\StartAnime\StartAnime.h" />
     <ClInclude Include="project\application\Object\Camera\Work\InterFace\Iwork.h" />
-    <ClInclude Include="project\application\Object\Camera\Work\Shake\Shake.h" />
-    <ClInclude Include="project\application\Object\Camera\Work\LockAt\LockAt.h" />
-    <ClInclude Include="project\application\Object\Camera\Work\FOV\FOV.h" />
+    <ClInclude Include="project\application\Object\Camera\Work\Shake\WorkShake.h" />
+    <ClInclude Include="project\application\Object\Camera\Work\LockAt\WorkLockAt.h" />
+    <ClInclude Include="project\application\Object\Camera\Work\FOV\WorkFOV.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\hlsl\Object3d.hlsli">

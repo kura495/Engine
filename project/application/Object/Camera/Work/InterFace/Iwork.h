@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector/Vector3.h"
 #include "Calc.h"
+#include "GlobalTime.h"
 
 /// <summary>
 /// work基底クラス

@@ -5,7 +5,7 @@
 using namespace Math;
 
 
-class Shake : public Iwork {
+class WorkShake : public Iwork {
 public:
 	/// <summary>
 	/// 初期化処理
@@ -13,30 +13,12 @@ public:
 	/// </summary>
 	/// <param name="Time">有効時間</param>
 	/// <param name="ShakeValue">揺れの大きさ x = 最小値 y = 最大値</param>
-	void Init(float Time, Vector2 ShakeValue) {
-		easeT = 0.0f;
-		flag = true;
-		timer = Time;
-		minShakeValue = ShakeValue.x;
-		maxShakeValue = ShakeValue.y;
-	}
+	void Init(float Time, Vector2 ShakeValue);
 	/// <summary>
 	/// 揺らす処理
 	/// </summary>
 	/// <param name="translate">揺らす物の座標</param>
-	void Update(Vector3& translate) {
-		if (flag) {
-			easeT = (std::min)(easeT + kDeltaTime, timer);
-
-			Vector3 ramdomTranslate = { random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue,maxShakeValue),random::Generate<float>(minShakeValue, maxShakeValue) };
-
-			translate += ramdomTranslate;
-
-			if (easeT == timer) {
-				flag = false;
-			}
-		}
-	}
+	void Update(Vector3& translate);
 private:
 	//ランダム最低値
 	float minShakeValue = -0.7f;
