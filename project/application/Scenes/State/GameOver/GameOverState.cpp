@@ -17,7 +17,7 @@ void GameOverState::Init()
 	ui_world_.Init();
 
 	ui_ = std::make_unique<Sprite>();
-	ui_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/GameOver_Button.png");
+	ui_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/AButton_ui.png");
 	ui_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 }
 
@@ -39,7 +39,6 @@ void GameOverState::Update()
 	ImGui::End();
 
 	ui_world_.transform.translate.y = ui_move_Value_;
-
 	ui_world_.Update();
 
 	time++;

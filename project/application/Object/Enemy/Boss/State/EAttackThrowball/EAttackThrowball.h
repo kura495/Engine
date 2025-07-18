@@ -20,4 +20,7 @@ private:
 	int SEthrowBall;
 	//ボールに当たった回数
 	int countHitBall;
+
+	std::unique_ptr<Sprite>ui_;
+	WorldTransform ui_world_;
 };

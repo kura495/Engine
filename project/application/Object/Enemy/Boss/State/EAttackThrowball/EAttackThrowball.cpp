@@ -20,6 +20,12 @@ void EAttackThrowball::Init(Boss* boss)
 
 	boss->SetColliderUse(Boss::ColliderType::AttackArm, false);
 	boss->SetColliderUse(Boss::ColliderType::AttackHund, false);
+
+	ui_world_.Init();
+
+	ui_ = std::make_unique<Sprite>();
+	ui_->TextureHandle = TextureManager::GetInstance()->LoadTexture("project/resources/Attack.png");
+	ui_->Initialize({ 0.0f,0.0f }, { 0.0f,720.0f }, { 1280.0f,0.0f }, { 1280.0f,720.0f });
 }
 
 void EAttackThrowball::Update(Boss* boss)
@@ -49,6 +55,8 @@ void EAttackThrowball::Draw(Boss* boss)
 {
 	boss->Getmodels()[Boss::BossModel::MainBody]->RendererDraw(boss->GetWorld());
 	ball->Draw();
+
+	ui_->RendererDraw(ui_world_);
 }
 void EAttackThrowball::OnCollisionAttack(Boss* boss, const ICollider& collider)
 {

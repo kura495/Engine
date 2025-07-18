@@ -18,10 +18,16 @@ public:
 private:
 	TextureManager* textureManager_;
 
-	std::unique_ptr<Sprite>texture;
+	std::unique_ptr<Sprite>background_;
 	uint32_t textureHundle;
-	WorldTransform texture_world_;
-	XINPUT_STATE joyState;
+	WorldTransform bg_world_;
+
+	std::unique_ptr<Sprite>ui_;
+	WorldTransform ui_world_;
+	float ui_move_Value_;
+	float ui_move_add_Value_ = 0.1f;
+	float ui_move_MAX_ = 0.0f;
+	float ui_move_MIN_ = -5.0f;
 
 	bool IsCanPush = false;
 	int time = 0;
