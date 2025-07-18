@@ -38,7 +38,7 @@ struct ViewProjection {
 	CameraParameter parameter;
 #pragma endregion
 
-#pragma region 射影行列の設定
+#pragma region 透視投影行列の設定
 
 	// ビューポートのアスペクト比
 	float aspectRatio = (float)16 / 9;
@@ -50,7 +50,7 @@ struct ViewProjection {
 
 	// ビュー行列
 	Matrix4x4 matView={};
-	// 射影行列
+	// 透視投影行列
 	Matrix4x4 matProjection={};
 	// カメラ行列
 	Matrix4x4 CameraMatrix={};

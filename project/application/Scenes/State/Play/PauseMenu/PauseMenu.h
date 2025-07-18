@@ -15,4 +15,6 @@ private:
 	std::unique_ptr<Sprite> sprite_;
 	std::unique_ptr<Sprite> tutorialSprite_;
 	WorldTransform world_;
+
+	std::unique_ptr<Sprite> UI_manual;
 };

@@ -41,6 +41,8 @@ void GamePlayState::Init()
 	pauseMenu_ = std::make_unique<PauseMenu>();
 	pauseMenu_->Init();
 
+
+
 	ChangePhase<TitlePhase>();
 
 }
@@ -78,6 +80,7 @@ void GamePlayState::Draw()
 	collisionManager->Draw();
 
 	pauseMenu_->Draw();
+
 }
 
 void GamePlayState::ReStert()
