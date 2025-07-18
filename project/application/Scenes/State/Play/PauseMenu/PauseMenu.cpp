@@ -43,6 +43,6 @@ void PauseMenu::Draw()
 		tutorialSprite_->RendererDraw(world_);
 	}
 
-		UI_manual->RendererDraw(world_);
+	UI_manual->RendererDraw(world_);
 
 }
